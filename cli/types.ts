@@ -1,0 +1,1 @@
+export type DpodSchemaType = "dpod_items" | "document" | "items";

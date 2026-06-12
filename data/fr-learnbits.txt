@@ -1,0 +1,5 @@
+- placement des pronoms
+	- le pronom d'objet direct (le) se place avant le pronom d'objet indirect de la troisième personne (lui)
+		- il lui donne le livre -> il le lui donne
+		- tu rends le livre à ta soeur? -> oui, je le lui rends
+		- tu ne les lui donnes pas
