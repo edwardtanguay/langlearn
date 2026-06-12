@@ -35,6 +35,7 @@ export default defineNuxtConfig({
 		}
 	},
 	nitro: {
+		trustProxy: true,
 		esbuild: {
 			options: {
 				target: 'es2022'
