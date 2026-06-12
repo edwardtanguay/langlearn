@@ -6,6 +6,9 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 
 	modules: ['@nuxt/ui', '@nuxtjs/color-mode', '@nuxtjs/kinde'],
+	icon: {
+		serverBundle: 'remote'
+	},
 	colorMode: {
 		preference: 'dark',
 		classSuffix: ''

@@ -3,3 +3,87 @@
 		- il lui donne le livre -> il le lui donne
 		- tu rends le livre à ta soeur? -> oui, je le lui rends
 		- tu ne les lui donnes pas
+- règles de liaison
+	- INFO
+		- VIDEO: Parler plus fluide en français avec liaisons --> https://www.youtube.com/watch?v=MQmKXExTBX4
+		- PDF: Les liaison --> https://drive.google.com/file/d/1uMX-5TEKgILlRblS2LOA4ODRK3Vy e1HN
+- conjugaison de verbes
+	- temps verbaux avec codes
+		- PRES: present / présent de l'indicatif [mem: present]
+		- IMPE: imperfect / imparfait de l'indicatif [mem: sherry]
+		- PRPE: present perfect / passé composé [mem: wedding]
+		- SIMP: simple past / passé simple [mem: bart simpson]
+		- FUTU: future / futur [mem: jet pointing up]
+		- COND: conditional / conditionnel [mem: air conditioner]
+		- PRSU: present subjunctive / présent du subjonctif [mem: submarine in Laboe]
+		- IMSU: imperfect subjunctive / imparfait du subjoncitf [mem: Titan]
+		- IPER: imperative / impéritif [mem: king on throne]
+		- PRPA: present participle / participe présent
+	- temps verbaux en français
+		- présent de l'indicatif
+		- imparfait de l'indicatif 
+		- passé composé
+		- passé simple
+		- futur
+		- conditionnel
+		- présent du subjonctif
+		- imparfait du subjoncitf
+		- impéritif
+		- participe présent
+	- verbes regulières									
+		- ER (parler, manger, aimer, chanter, travailler, aller, arriver)
+			- PRES: -e, -es, -e, -ons, -ez, -ent
+			- IMPE: -ais, -ais, -ait, -ions, -iez, -aient
+			- PRPE: ai/suis -é
+			- SIMP: -ai, -as, -a, -âmes, -âtes, -èrent
+			- FUTU: -erai, -eras, -era, -erons, -erez, -eront
+			- COND: -erais, -erais, -erait, -erions, -eriez, -eraient
+			- PRSU: -e, -es, -e, -ions, -iez, -ent
+			- IMSU: -asse, -asse, -ât, -assions, -assiez, -assent
+			- IPER: -e, -ons, -ez
+			- PRPA: -ant
+		- IR (finir, choisir, grandir, réussir, remplir, partir, sortir) [mem: ear, blue velvet lawn]
+			- PRES: -is, -is, -it, -issons, -issez, -issent
+			- IMPE: -issais, -issais, -issait, -issions, -issiez, -issaient
+			- PRPE: ai/suis -i
+			- SIMP: -is, -is, -it, -îmes, -îtes, -irent
+			- FUTU: -irai, -iras, -ira, -irons, -irez, -iront 
+			- COND: -irais, -irais, -irait, -irions, -iriez, -iraient
+			- PRSU: -isse, -isses, -isse, -issions, -issiez, -issent
+			- IMSU: -isse, -isses, -ît, -issions, -issiez, -issent
+			- IPER: -is, -issons, -issez
+			- PRPA: -issant
+		- RE (vendre, prendre, attendre, mettre, dire, desendre, naître) [mem: ree, Astoria bridge]
+			- PRES: -s, -s, -, -ons, -ez, -ent
+			- IMPE: -ais, -ais, -ait, -ions, -iez, -aient
+			- PRPE: ai/suis  -u
+			- SIMP: -is, -is, -it, -îmes, -îtes, -irent
+			- FUTU: -rai, -ras, -ra, -rons, -rez, -ront
+			- COND: -rais, -rais, -rait, -rions, -riez, -raient
+			- PRSU: -e, -es, -e, -ions, -iez, -ent
+			- IMSU: -isse, -isses, -ît, -issions, -issiez, -issent
+			- IPER: -s, -ons, -ez
+			- PRPA: -ant
+	- verbes importants
+		- être
+			- IMPE: étais, étais, était, étions, étiez, étaient
+			- PRES: suis, es, est, sommes, êtes, sont
+			- PRPE: ai/suis été
+			- SIMP: fus, fus, fut, fûmes, fûtes, furent
+			- FUTU: serai, seras, sera, serons, serez, seront
+			- COND: serais, serais, serait, serions, seriez, seraient
+			- PRSU: sois, sois, soit, soyons, soyez, soient
+			- IMSU: fusse, fusses, fût, fussions, fussiez, fussent
+			- IPER: sois, soyons, soyez
+			- PRPA: étant		
+		- avoir
+			- PRES: ai, as, a, avons, avez, ont
+			- IMPE: avais, avais, avait, avions, aviez, avaient
+			- PRPE: ai/eu eu
+			- SIMP: eus, eus, eut, eûmes, eûtes, eurent
+			- FUTU: aurai, auras, aura, aurons, aurez, auront
+			- COND: aurais, aurais, aurait, aurions, auriez, auraient
+			- PRSU: aie, aies, ait, ayons, ayez, aient
+			- IMSU: eusse, eusses, eût, eussions, eussiez, eussent
+			- IPER: aie, ayons, ayez
+			- PRPA: ayant			
