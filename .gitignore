@@ -24,5 +24,4 @@ logs
 !.env.example
 
 # generated files
-output
 debug

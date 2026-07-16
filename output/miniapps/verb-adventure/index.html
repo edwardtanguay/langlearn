@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Aventure des Verbes - French Conjugation Game</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Quicksand', 'sans-serif'],
+            display: ['Fredoka', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    @keyframes pageFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    body {
+      opacity: 0;
+      animation: pageFadeIn 0.5s ease-out forwards;
+    }
+    .custom-bounce {
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .floating-companion {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(3deg); }
+    }
+    .map-path-dash {
+      stroke-dasharray: 8;
+      animation: dash 30s linear infinite;
+    }
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -1000;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-sky-100 to-sky-200 min-h-screen flex flex-col justify-between selection:bg-amber-300/50">
+
+  <!-- Sound Toggle & Back to Hub Header -->
+  <header class="max-w-5xl w-full mx-auto px-4 pt-4 sm:pt-6 flex justify-between items-center">
+    <a href="../index.html" class="flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white border border-sky-200 text-sky-700 font-bold rounded-2xl shadow-sm transition-all duration-200 text-sm hover:-translate-x-0.5">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      <span>Back to Hub</span>
+    </a>
+    
+    <div class="flex items-center gap-2">
+      <!-- Sound FX controller -->
+      <button id="soundToggle" onclick="toggleSound()" class="p-2.5 bg-white/80 hover:bg-white border border-sky-200 text-sky-700 rounded-2xl shadow-sm transition-all duration-200">
+        <span id="soundIcon" class="text-lg">🔊</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Game Workspace -->
+  <main class="max-w-5xl w-full mx-auto px-4 py-6 flex-1 flex flex-col items-center justify-center">
+    
+    <!-- Title & Narrative -->
+    <div class="text-center mb-6">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-sky-950 font-display tracking-wide drop-shadow-sm flex items-center justify-center gap-2">
+        🏰 L'Aventure des Verbes
+      </h1>
+      <p class="text-sm sm:text-base text-sky-850 font-medium max-w-xl mx-auto mt-1">
+        Master French verbs <strong class="text-amber-700">être</strong> and <strong class="text-emerald-700">avoir</strong> to climb the Mountain of Wisdom and claim the Golden Crown!
+      </p>
+    </div>
+
+    <!-- Start / Character Selection Screen -->
+    <div id="setupScreen" class="w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-white/60 space-y-6 animate-fade-in">
+      <h2 class="text-2xl font-bold text-center text-sky-900 font-display">Choose Your Hero</h2>
+      
+      <div class="grid grid-cols-3 gap-3">
+        <!-- Knight -->
+        <button onclick="selectHero('knight')" id="hero-knight" class="hero-card border-4 border-amber-400 bg-amber-50 hover:bg-amber-100/70 p-4 rounded-2xl transition-all duration-200 flex flex-col items-center gap-2 group">
+          <div class="text-4xl group-hover:scale-110 transition-transform">🛡️</div>
+          <span class="font-bold text-amber-800 text-sm sm:text-base">Knight</span>
+        </button>
+        <!-- Wizard -->
+        <button onclick="selectHero('wizard')" id="hero-wizard" class="hero-card border-4 border-transparent bg-purple-50 hover:bg-purple-100/70 p-4 rounded-2xl transition-all duration-200 flex flex-col items-center gap-2 group">
+          <div class="text-4xl group-hover:scale-110 transition-transform">🧙</div>
+          <span class="font-bold text-purple-800 text-sm sm:text-base">Wizard</span>
+        </button>
+        <!-- Elf -->
+        <button onclick="selectHero('elf')" id="hero-elf" class="hero-card border-4 border-transparent bg-emerald-50 hover:bg-emerald-100/70 p-4 rounded-2xl transition-all duration-200 flex flex-col items-center gap-2 group">
+          <div class="text-4xl group-hover:scale-110 transition-transform">🏹</div>
+          <span class="font-bold text-emerald-800 text-sm sm:text-base">Elf</span>
+        </button>
+      </div>
+
+      <!-- Difficulty / Adventure Mode -->
+      <div class="bg-sky-50/60 p-4 rounded-2xl border border-sky-100 space-y-2">
+        <label class="block text-sky-850 font-bold text-sm">Choose Quest Difficulty:</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="selectDifficulty('novice')" id="diff-novice" class="diff-btn py-2.5 px-4 bg-sky-600 text-white font-bold rounded-xl transition-all duration-150 border-b-4 border-sky-800">
+            Novice (Present & Imperfect)
+          </button>
+          <button onclick="selectDifficulty('champion')" id="diff-champion" class="diff-btn py-2.5 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-xl transition-all duration-150 border-b-4 border-gray-400">
+            Champion (All Tenses)
+          </button>
+        </div>
+      </div>
+
+      <button onclick="startAdventure()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-display text-xl font-bold rounded-2xl shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 text-center block">
+        Start Journey 🚀
+      </button>
+    </div>
+
+    <!-- Active Gameplay Screen -->
+    <div id="gameScreen" class="hidden w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: Adventure Map -->
+      <div class="lg:col-span-5 bg-white/95 rounded-3xl p-4 sm:p-5 shadow-lg border-2 border-white/65 flex flex-col justify-between">
+        
+        <!-- Stats Tracker -->
+        <div class="flex justify-between items-center bg-sky-50/80 p-3 rounded-2xl border border-sky-100/50 mb-4">
+          <div class="flex items-center gap-1.5 font-bold text-sky-900">
+            <span id="heroEmoji" class="text-xl">🛡️</span>
+            <span id="heroNameText">Knight</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1">
+              <span class="text-rose-500 text-lg">❤️</span>
+              <span id="heartsText" class="font-bold text-sky-950">3/3</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-amber-500 text-lg">🪙</span>
+              <span id="coinsText" class="font-bold text-sky-950">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cheerful Adventure Map Container -->
+        <div class="relative w-full h-[320px] bg-gradient-to-b from-sky-200 via-emerald-100 to-emerald-200 rounded-2xl overflow-hidden border-2 border-sky-300/40 shadow-inner flex items-center justify-center">
+          
+          <!-- Decorative Clouds/Sun inside the map -->
+          <div class="absolute top-2 right-4 text-3xl opacity-80 floating-companion">☀️</div>
+          <div class="absolute top-3 left-6 text-2xl opacity-60 floating-companion" style="animation-delay: 1.5s;">☁️</div>
+          
+          <!-- Drawing path lines -->
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 240" fill="none">
+            <path d="M 40,200 Q 80,180 150,190 T 260,150 Q 250,90 150,90 T 40,60 Q 150,20 260,35" stroke="#fcd34d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" class="map-path-dash" />
+            <path d="M 40,200 Q 80,180 150,190 T 260,150 Q 250,90 150,90 T 40,60 Q 150,20 260,35" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          <!-- Level Nodes -->
+          <!-- Node 1: Meadow (Present) -->
+          <div id="node-0" class="absolute left-[30px] bottom-[28px] flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-emerald-500 border-4 border-white text-white font-bold flex items-center justify-center shadow-md text-xs relative z-10 transition-all duration-300">1</div>
+            <span class="text-[10px] font-extrabold text-emerald-800 bg-white/90 px-1 rounded shadow-sm mt-0.5">Meadow</span>
+          </div>
+
+          <!-- Node 2: Forest (Imperfect) -->
+          <div id="node-1" class="absolute left-[135px] bottom-[38px] flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-gray-300 border-4 border-white text-gray-500 font-bold flex items-center justify-center shadow-md text-xs relative z-10 transition-all duration-300">2</div>
+            <span class="text-[10px] font-extrabold text-emerald-800 bg-white/90 px-1 rounded shadow-sm mt-0.5">Forest</span>
+          </div>
+
+          <!-- Node 3: River (Future) -->
+          <div id="node-2" class="absolute right-[28px] bottom-[78px] flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-gray-300 border-4 border-white text-gray-500 font-bold flex items-center justify-center shadow-md text-xs relative z-10 transition-all duration-300">3</div>
+            <span class="text-[10px] font-extrabold text-blue-800 bg-white/90 px-1 rounded shadow-sm mt-0.5">River</span>
+          </div>
+
+          <!-- Node 4: Gates (Conditional) -->
+          <div id="node-3" class="absolute left-[28px] top-[48px] flex flex-col items-center">
+            <div class="w-9 h-9 rounded-full bg-gray-300 border-4 border-white text-gray-500 font-bold flex items-center justify-center shadow-md text-xs relative z-10 transition-all duration-300">4</div>
+            <span class="text-[10px] font-extrabold text-purple-800 bg-white/90 px-1 rounded shadow-sm mt-0.5">Gates</span>
+          </div>
+
+          <!-- Node 5: Castle (Mixed Final boss) -->
+          <div id="node-4" class="absolute right-[28px] top-[24px] flex flex-col items-center">
+            <div class="w-10 h-10 rounded-full bg-gray-300 border-4 border-amber-400 text-gray-500 font-bold flex items-center justify-center shadow-md text-xs relative z-10 transition-all duration-300">👑</div>
+            <span class="text-[10px] font-extrabold text-amber-800 bg-white/90 px-1 rounded shadow-sm mt-0.5">Castle</span>
+          </div>
+
+          <!-- Character Token Container -->
+          <div id="characterToken" class="absolute left-[30px] bottom-[58px] text-3xl transition-all duration-500 ease-out z-20 custom-bounce pointer-events-none drop-shadow-md">
+            🛡️
+          </div>
+        </div>
+
+        <!-- Companion Speech Bubble -->
+        <div class="mt-4 flex items-start gap-2.5 bg-amber-50 border border-amber-200/80 p-3 rounded-2xl">
+          <div class="text-3xl floating-companion shrink-0">🦉</div>
+          <div class="space-y-0.5">
+            <span class="block text-[11px] font-bold text-amber-800 uppercase tracking-wide">Pierre the Owl</span>
+            <p id="owlBubble" class="text-xs text-amber-950 font-medium">
+              Welcome, brave explorer! Master each verb scroll to pass the magical gates!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Active Card/Quest Area -->
+      <div class="lg:col-span-7 flex flex-col">
+        <div class="flex-1 bg-white rounded-3xl p-6 shadow-lg border-2 border-white/65 flex flex-col justify-between min-h-[380px]">
+          
+          <!-- Level Header & Progress bar -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <span id="levelTitleText" class="text-lg font-bold text-sky-950 font-display">Level 1: Meadow of Present</span>
+              <span id="levelProgressText" class="text-xs font-extrabold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full">Question 1/3</span>
+            </div>
+            
+            <div class="w-full bg-sky-100/70 h-3 rounded-full overflow-hidden">
+              <div id="levelProgressBar" class="bg-gradient-to-r from-sky-500 to-indigo-500 h-full w-[33%] transition-all duration-300"></div>
+            </div>
+          </div>
+
+          <!-- Main Question Box -->
+          <div id="questionContainer" class="my-6 text-center space-y-5 flex-1 flex flex-col justify-center">
+            <div class="bg-sky-50/50 border border-sky-100 rounded-2xl py-6 px-4">
+              <p class="text-xs font-bold text-sky-600 uppercase tracking-wider mb-1" id="questionPromptHeader">Conjugate in the Present tense</p>
+              
+              <div class="text-3xl font-extrabold text-sky-950 font-display my-2">
+                <span id="pronounText" class="text-indigo-600">Nous</span> (<span id="verbText" class="underline decoration-indigo-400">être</span>)
+              </div>
+              
+              <p class="text-sm font-semibold text-sky-850 mt-1">
+                Choose the correct French conjugation:
+              </p>
+            </div>
+
+            <!-- Choice Grid -->
+            <div id="choicesGrid" class="grid grid-cols-2 gap-3">
+              <button onclick="submitAnswer(0)" class="choice-btn py-3 px-4 bg-white hover:bg-sky-50 border-2 border-sky-150 hover:border-sky-400 font-bold text-sky-900 rounded-xl transition-all duration-150 shadow-sm text-sm sm:text-base">
+                sommes
+              </button>
+              <button onclick="submitAnswer(1)" class="choice-btn py-3 px-4 bg-white hover:bg-sky-50 border-2 border-sky-150 hover:border-sky-400 font-bold text-sky-900 rounded-xl transition-all duration-150 shadow-sm text-sm sm:text-base">
+                suis
+              </button>
+              <button onclick="submitAnswer(2)" class="choice-btn py-3 px-4 bg-white hover:bg-sky-50 border-2 border-sky-150 hover:border-sky-400 font-bold text-sky-900 rounded-xl transition-all duration-150 shadow-sm text-sm sm:text-base">
+                êtes
+              </button>
+              <button onclick="submitAnswer(3)" class="choice-btn py-3 px-4 bg-white hover:bg-sky-50 border-2 border-sky-150 hover:border-sky-400 font-bold text-sky-900 rounded-xl transition-all duration-150 shadow-sm text-sm sm:text-base">
+                sont
+              </button>
+            </div>
+          </div>
+
+          <!-- Feedback / Continue Screen -->
+          <div id="feedbackContainer" class="hidden my-6 text-center space-y-4 py-8">
+            <div id="feedbackIcon" class="text-6xl animate-bounce">🎉</div>
+            <h3 id="feedbackTitle" class="text-2xl font-bold font-display text-emerald-600">Correct!</h3>
+            <p id="feedbackText" class="text-sm font-medium text-gray-600">Great job! +10 Gold coins earned.</p>
+            <button onclick="nextStep()" class="px-8 py-3 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-600 text-white font-bold rounded-xl transition-all shadow-md">
+              Continue Quest ➔
+            </button>
+          </div>
+
+          <!-- Quick Conjugation Cheat Sheet Reference for Avoir & Être -->
+          <div class="border-t border-sky-100 pt-4 flex justify-between items-center">
+            <button onclick="openCheatSheet()" class="text-xs font-bold text-sky-600 hover:text-sky-850 flex items-center gap-1">
+              📖 Open Scroll of Verbs (Cheat Sheet)
+            </button>
+            <span id="streakBadge" class="text-xs font-extrabold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md hidden">
+              🔥 Streak: 3
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Win / Loss Screen -->
+    <div id="endScreen" class="hidden w-full max-w-xl bg-white rounded-3xl p-8 shadow-xl border-4 border-white/60 text-center space-y-6">
+      <div id="endEmoji" class="text-7xl animate-bounce">👑</div>
+      <h2 id="endTitle" class="text-3xl font-extrabold text-sky-950 font-display">Quest Completed!</h2>
+      <p id="endText" class="text-sky-850 font-medium max-w-md mx-auto">
+        You successfully completed the adventure, retrieved the Golden Crown, and demonstrated absolute conjugation mastery!
+      </p>
+      
+      <div class="bg-amber-50/60 border border-amber-100 rounded-2xl p-4 inline-flex flex-col items-center gap-1">
+        <span class="text-xs font-bold text-amber-800 uppercase tracking-wider">Treasures Collected</span>
+        <div class="flex items-center gap-3 text-lg font-bold text-sky-950">
+          <span>🪙 <span id="finalCoins">120</span> Coins</span>
+          <span>🔥 Max Streak: <span id="finalStreak">5</span></span>
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="restartGame()" class="flex-1 py-3 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-600 text-white font-bold rounded-xl shadow-md transition-all">
+          Adventure Again 🔁
+        </button>
+        <a href="../index.html" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl shadow-sm transition-all flex items-center justify-center">
+          Back to Hub
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Copyright Footer -->
+  <footer class="py-6 text-center text-xs text-sky-700/60 font-semibold mt-4">
+    <p>🏰 L'Aventure des Verbes &bull; Built with Joy &bull; <a href="../index.html" class="underline hover:text-sky-900">LangLearn Mini Apps Hub</a></p>
+  </footer>
+
+  <!-- Cheat Sheet Modal -->
+  <div id="cheatSheetModal" class="fixed inset-0 bg-sky-900/60 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full mx-4 max-h-[85vh] overflow-y-auto shadow-2xl relative border-4 border-sky-300/30">
+      
+      <button onclick="closeCheatSheet()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">✕</button>
+      
+      <h3 class="text-2xl font-bold text-sky-950 font-display mb-6 flex items-center gap-2">📖 The Scroll of Être & Avoir</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        
+        <!-- Être Conjugations -->
+        <div class="bg-blue-50/50 p-4 rounded-2xl border border-blue-100 space-y-4">
+          <h4 class="text-base font-extrabold text-blue-900 font-display flex items-center gap-1.5 border-b border-blue-100 pb-1">
+            <span>✨</span> être (to be)
+          </h4>
+          
+          <div class="space-y-3">
+            <div>
+              <span class="block text-xs font-bold text-blue-700 uppercase">Présent (Present)</span>
+              <p class="font-medium text-sky-950">je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont</p>
+            </div>
+            <div>
+              <span class="block text-xs font-bold text-blue-700 uppercase">Imparfait (Imperfect)</span>
+              <p class="font-medium text-sky-950">j'étais, tu étais, il/elle était, nous étions, vous étiez, ils/elles étaient</p>
+            </div>
+            <div>
+              <span class="block text-xs font-bold text-blue-700 uppercase">Futur (Future)</span>
+              <p class="font-medium text-sky-950">je serai, tu seras, il/elle sera, nous serons, vous serez, ils/elles seront</p>
+            </div>
+            <div>
+              <span class="block text-xs font-bold text-blue-700 uppercase">Conditionnel (Conditional)</span>
+              <p class="font-medium text-sky-950">je serais, tu serais, il/elle serait, nous serions, vous seriez, ils/elles seraient</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avoir Conjugations -->
+        <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-100 space-y-4">
+          <h4 class="text-base font-extrabold text-amber-950 font-display flex items-center gap-1.5 border-b border-amber-100 pb-1">
+            <span>🪙</span> avoir (to have)
+          </h4>
+          
+          <div class="space-y-3">
+            <div>
+              <span class="block text-xs font-bold text-amber-700 uppercase">Présent (Present)</span>
+              <p class="font-medium text-sky-950">j'ai, tu as, il/elle a, nous avons, vous avez, ils/elles ont</p>
+            </div>
+            <div>
+              <span class="block text-xs font-bold text-amber-700 uppercase">Imparfait (Imperfect)</span>
+              <p class="font-medium text-sky-950">j'avais, tu avais, il/elle avait, nous avions, vous aviez, ils/elles avaient</p>
+            </div>
+            <div>
+              <span class="block text-xs font-bold text-amber-700 uppercase">Futur (Future)</span>
+              <p class="font-medium text-sky-950">j'aurai, tu auras, il/elle aura, nous aurons, vous aurez, ils/elles auront</p>
+            </div>
+            <div>
+              <span class="block text-xs font-bold text-amber-700 uppercase">Conditionnel (Conditional)</span>
+              <p class="font-medium text-sky-950">j'aurais, tu aurais, il/elle aurait, nous aurions, vous auriez, ils/elles auraient</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <button onclick="closeCheatSheet()" class="w-full mt-6 py-2.5 bg-sky-900 text-white font-bold rounded-xl hover:bg-sky-950 transition-all">
+        Back to the Adventure
+      </button>
+
+    </div>
+  </div>
+
+  <!-- JavaScript Gameplay Engine -->
+  <script>
+    // Audio synthesizer context using Web Audio API
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        if (type === 'correct') {
+          // Cheerful chime: quick double beep ascending
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, audioCtx.currentTime); // A4
+          gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+          osc.start();
+          osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+          gain.gain.setValueAtTime(0.1, audioCtx.currentTime + 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+          osc.stop(audioCtx.currentTime + 0.4);
+        } else if (type === 'incorrect') {
+          // Buzz sound descending
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+          osc.frequency.linearRampToValueAtTime(110, audioCtx.currentTime + 0.3);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.4);
+        } else if (type === 'levelup') {
+          // Ascending major chord
+          const now = audioCtx.currentTime;
+          const notes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5
+          notes.forEach((freq, idx) => {
+            const oscNode = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscNode.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscNode.type = 'sine';
+            oscNode.frequency.value = freq;
+            gainNode.gain.setValueAtTime(0, now);
+            gainNode.gain.linearRampToValueAtTime(0.08, now + idx * 0.1);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.5 + idx * 0.1);
+            oscNode.start(now + idx * 0.08);
+            oscNode.stop(now + 0.6 + idx * 0.1);
+          });
+        }
+      } catch (e) {
+        console.error("Audio system disabled/failed", e);
+      }
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const soundIcon = document.getElementById('soundIcon');
+      soundIcon.textContent = soundEnabled ? '🔊' : '🔇';
+    }
+
+    // Dataset definition
+    const conjugations = {
+      être: {
+        novice: {
+          présent: ['suis', 'es', 'est', 'sommes', 'êtes', 'sont'],
+          imparfait: ['étais', 'étais', 'était', 'étions', 'étiez', 'étaient']
+        },
+        champion: {
+          présent: ['suis', 'es', 'est', 'sommes', 'êtes', 'sont'],
+          imparfait: ['étais', 'étais', 'était', 'étions', 'étiez', 'étaient'],
+          futur: ['serai', 'seras', 'sera', 'serons', 'serez', 'seront'],
+          conditionnel: ['serais', 'serais', 'serait', 'serions', 'seriez', 'seraient']
+        }
+      },
+      avoir: {
+        novice: {
+          présent: ['ai', 'as', 'a', 'avons', 'avez', 'ont'],
+          imparfait: ['avais', 'avais', 'avait', 'avions', 'aviez', 'avaient']
+        },
+        champion: {
+          présent: ['ai', 'as', 'a', 'avons', 'avez', 'ont'],
+          imparfait: ['avais', 'avais', 'avait', 'avions', 'aviez', 'avaient'],
+          futur: ['aurai', 'auras', 'aura', 'aurons', 'aurez', 'auront'],
+          conditionnel: ['aurais', 'aurais', 'aurait', 'aurions', 'auriez', 'auraient']
+        }
+      }
+    };
+
+    const pronouns = ['Je / J\'', 'Tu', 'Il / Elle / On', 'Nous', 'Vous', 'Ils / Elles'];
+
+    // Map level nodes paths
+    const mapCoordinates = [
+      { left: '30px', bottom: '58px' }, // Meadow
+      { left: '135px', bottom: '68px' }, // Forest
+      { left: '235px', bottom: '108px' }, // River
+      { left: '28px', bottom: '158px' }, // Gates
+      { left: '228px', bottom: '190px' }  // Castle (Final Crown)
+    ];
+
+    const levelDetails = {
+      novice: [
+        { title: 'Level 1: Meadow of Present (être)', verb: 'être', tense: 'présent' },
+        { title: 'Level 2: Forest of Past (avoir)', verb: 'avoir', tense: 'présent' },
+        { title: 'Level 3: River of Present (mixed)', verb: 'both', tense: 'présent' },
+        { title: 'Level 4: Gates of Imperfect (être)', verb: 'être', tense: 'imparfait' },
+        { title: 'Level 5: Castle of Imperfect (avoir)', verb: 'avoir', tense: 'imparfait' }
+      ],
+      champion: [
+        { title: 'Level 1: Meadow of Present', verb: 'both', tense: 'présent' },
+        { title: 'Level 2: Forest of Imperfect', verb: 'both', tense: 'imparfait' },
+        { title: 'Level 3: River of Future', verb: 'both', tense: 'futur' },
+        { title: 'Level 4: Gates of Conditional', verb: 'both', tense: 'conditionnel' },
+        { title: 'Level 5: Castle of Wisdom (Mixed)', verb: 'both', tense: 'mixed' }
+      ]
+    };
+
+    // State Variables
+    let selectedHeroType = 'knight';
+    let difficulty = 'novice';
+    let currentLevelIndex = 0;
+    let questionIndex = 0; // Out of 3 questions per level
+    const questionsPerLevel = 3;
+    
+    let score = 0;
+    let coins = 0;
+    let hearts = 3;
+    let currentStreak = 0;
+    let maxStreak = 0;
+
+    let currentQuestion = null;
+
+    // UI elements references
+    const setupScreen = document.getElementById('setupScreen');
+    const gameScreen = document.getElementById('gameScreen');
+    const endScreen = document.getElementById('endScreen');
+
+    // Selection functions
+    function selectHero(hero) {
+      selectedHeroType = hero;
+      document.querySelectorAll('.hero-card').forEach(card => card.classList.remove('border-amber-400', 'bg-amber-50'));
+      document.querySelectorAll('.hero-card').forEach(card => card.classList.add('border-transparent'));
+      
+      const selectedCard = document.getElementById(`hero-${hero}`);
+      selectedCard.classList.remove('border-transparent');
+      selectedCard.classList.add('border-amber-400', 'bg-amber-50');
+      
+      // Sync visual emojis
+      let emoji = '🛡️';
+      if (hero === 'wizard') emoji = '🧙';
+      if (hero === 'elf') emoji = '🏹';
+      document.getElementById('characterToken').textContent = emoji;
+      document.getElementById('heroEmoji').textContent = emoji;
+      document.getElementById('heroNameText').textContent = hero.charAt(0).toUpperCase() + hero.slice(1);
+    }
+
+    function selectDifficulty(diff) {
+      difficulty = diff;
+      document.querySelectorAll('.diff-btn').forEach(btn => {
+        btn.className = "diff-btn py-2.5 px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-xl transition-all duration-150 border-b-4 border-gray-400";
+      });
+      const actBtn = document.getElementById(`diff-${diff}`);
+      actBtn.className = "diff-btn py-2.5 px-4 bg-sky-600 text-white font-bold rounded-xl transition-all duration-150 border-b-4 border-sky-800";
+    }
+
+    function startAdventure() {
+      // Initialize state
+      currentLevelIndex = 0;
+      questionIndex = 0;
+      coins = 0;
+      hearts = 3;
+      currentStreak = 0;
+      maxStreak = 0;
+
+      // Update UI Stats
+      updateStats();
+
+      // Show setup node statuses
+      updateMapNodes();
+
+      // Start gameplay
+      setupScreen.classList.add('hidden');
+      gameScreen.classList.remove('hidden');
+      endScreen.classList.add('hidden');
+
+      loadQuestion();
+    }
+
+    function updateStats() {
+      document.getElementById('heartsText').textContent = `${hearts}/3`;
+      document.getElementById('coinsText').textContent = coins;
+      
+      // Move character token
+      const token = document.getElementById('characterToken');
+      const pos = mapCoordinates[currentLevelIndex];
+      token.style.left = pos.left;
+      token.style.bottom = pos.bottom;
+
+      // Streak badge
+      const streakBadge = document.getElementById('streakBadge');
+      if (currentStreak >= 3) {
+        streakBadge.textContent = `🔥 Streak: ${currentStreak}`;
+        streakBadge.classList.remove('hidden');
+      } else {
+        streakBadge.classList.add('hidden');
+      }
+    }
+
+    function updateMapNodes() {
+      for (let i = 0; i < 5; i++) {
+        const node = document.getElementById(`node-${i}`).firstElementChild;
+        if (i < currentLevelIndex) {
+          // Completed
+          node.className = "w-9 h-9 rounded-full bg-emerald-500 border-4 border-white text-white font-bold flex items-center justify-center shadow-md text-xs relative z-10 transition-all duration-300";
+          if (i === 4) node.textContent = '👑';
+        } else if (i === currentLevelIndex) {
+          // Active
+          node.className = "w-9 h-9 rounded-full bg-amber-400 border-4 border-white text-white font-bold flex items-center justify-center shadow-md text-xs relative z-10 transition-all duration-300 animate-pulse scale-110";
+          if (i === 4) node.textContent = '👑';
+        } else {
+          // Locked
+          node.className = "w-9 h-9 rounded-full bg-gray-300 border-4 border-white text-gray-500 font-bold flex items-center justify-center shadow-md text-xs relative z-10 transition-all duration-300";
+          if (i === 4) node.textContent = '👑';
+        }
+      }
+    }
+
+    function loadQuestion() {
+      // Clear previous inputs
+      document.getElementById('questionContainer').classList.remove('hidden');
+      document.getElementById('feedbackContainer').classList.add('hidden');
+
+      const levelsList = levelDetails[difficulty];
+      const level = levelsList[currentLevelIndex];
+
+      // Update progress headers
+      document.getElementById('levelTitleText').textContent = level.title;
+      document.getElementById('levelProgressText').textContent = `Question ${questionIndex + 1}/${questionsPerLevel}`;
+      
+      const pct = ((questionIndex) / questionsPerLevel) * 100;
+      document.getElementById('levelProgressBar').style.width = `${pct}%`;
+
+      // Select verb
+      let verb = level.verb;
+      if (verb === 'both') {
+        verb = Math.random() > 0.5 ? 'être' : 'avoir';
+      }
+
+      // Select tense
+      let tense = level.tense;
+      if (tense === 'mixed') {
+        const tenses = ['présent', 'imparfait', 'futur', 'conditionnel'];
+        tense = tenses[Math.floor(Math.random() * tenses.length)];
+      }
+
+      // Select pronoun index (0-5)
+      const pronounIdx = Math.floor(Math.random() * 6);
+      const pronoun = pronouns[pronounIdx];
+
+      // Retrieve correct conjugation
+      const correctVerbArr = conjugations[verb][difficulty][tense] || conjugations[verb]['champion'][tense];
+      const correctAnswer = correctVerbArr[pronounIdx];
+
+      // Format custom pronoun text
+      let displayPronoun = pronoun;
+      if (pronounIdx === 0) {
+        // Handle vowel contractions for 'avoir'
+        if (verb === 'avoir' && (tense === 'présent' || tense === 'imparfait' || tense === 'futur' || tense === 'conditionnel')) {
+          displayPronoun = "J'";
+        } else {
+          displayPronoun = "Je";
+        }
+      }
+
+      currentQuestion = {
+        verb: verb,
+        tense: tense,
+        pronoun: displayPronoun,
+        answer: correctAnswer
+      };
+
+      // Set prompt text
+      document.getElementById('questionPromptHeader').textContent = `Conjugate ${verb} in the ${tense.toUpperCase()}`;
+      document.getElementById('pronounText').textContent = displayPronoun;
+      document.getElementById('verbText').textContent = verb;
+
+      // Make options (1 correct, 3 wrong distractors from the same tense/verb or adjacent verb)
+      const distractors = new Set();
+      
+      // Distractors from same verb conjugations
+      const allTenseConjs = Object.values(conjugations[verb][difficulty]).flatMap(arr => arr);
+      allTenseConjs.forEach(val => {
+        if (val !== correctAnswer) distractors.add(val);
+      });
+
+      // Distractors from the other verb to mix things up
+      const otherVerb = verb === 'être' ? 'avoir' : 'être';
+      const otherTenseConjs = Object.values(conjugations[otherVerb][difficulty]).flatMap(arr => arr);
+      otherTenseConjs.forEach(val => {
+        if (val !== correctAnswer) distractors.add(val);
+      });
+
+      // Convert Set to Array and shuffle
+      const distractorArr = Array.from(distractors).filter(v => v !== correctAnswer);
+      const chosenDistractors = [];
+      while(chosenDistractors.length < 3 && distractorArr.length > 0) {
+        const randIdx = Math.floor(Math.random() * distractorArr.length);
+        chosenDistractors.push(distractorArr.splice(randIdx, 1)[0]);
+      }
+
+      // If we still don't have enough distractors, fill in placeholders (shouldn't happen)
+      while(chosenDistractors.length < 3) {
+        chosenDistractors.push('erais');
+      }
+
+      const choices = [correctAnswer, ...chosenDistractors];
+      // Shuffle choices
+      choices.sort(() => Math.random() - 0.5);
+
+      // Render choices buttons
+      const choicesGrid = document.getElementById('choicesGrid');
+      choicesGrid.innerHTML = '';
+      choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = "choice-btn py-3 px-4 bg-white hover:bg-sky-50 border-2 border-sky-200 hover:border-indigo-400 font-bold text-sky-900 rounded-xl transition-all duration-150 shadow-sm text-sm sm:text-base";
+        btn.textContent = choice;
+        btn.onclick = () => checkAnswer(choice, btn);
+        choicesGrid.appendChild(btn);
+      });
+
+      // Update Pierre the Owl companion tips/encouragements
+      updateOwlTips(verb, tense);
+    }
+
+    function updateOwlTips(verb, tense) {
+      const tips = {
+        'être': {
+          'présent': 'Remember: "nous sommes" and "vous êtes" are irregular but very common!',
+          'imparfait': 'The imperfect stem for être is "ét-". Just add standard endings like -ais, -ait, -ions!',
+          'futur': 'The future stem for être is "ser-". (e.g. Je serai, Nous serons)',
+          'conditionnel': 'Conditionnel uses the future stem "ser-" + imperfect endings. (e.g. je serais)'
+        },
+        'avoir': {
+          'présent': 'Watch out! "nous avons" and "ils ont" sound similar, but "ils ont" starts with an O!',
+          'imparfait': 'The imperfect stem for avoir is "av-". Just add standard endings!',
+          'futur': 'The future stem for avoir is "aur-". (e.g. j\'aurai, tu auras)',
+          'conditionnel': 'Conditionnel uses the future stem "aur-" + imperfect endings. (e.g. j\'aurais)'
+        }
+      };
+      const text = tips[verb]?.[tense] || "Take your time! You are doing amazingly well.";
+      document.getElementById('owlBubble').textContent = text;
+    }
+
+    function checkAnswer(chosen, btnElement) {
+      const isCorrect = (chosen === currentQuestion.answer);
+      
+      // Disable other choices buttons
+      const buttons = document.querySelectorAll('.choice-btn');
+      buttons.forEach(btn => btn.disabled = true);
+
+      if (isCorrect) {
+        playSound('correct');
+        btnElement.className = "choice-btn py-3 px-4 bg-emerald-500 border-2 border-emerald-600 font-bold text-white rounded-xl shadow-md transition-all duration-150 text-sm sm:text-base";
+        
+        coins += 10;
+        currentStreak++;
+        if (currentStreak > maxStreak) maxStreak = currentStreak;
+
+        // Visual coin burst effect if possible or just normal feedback
+        setTimeout(() => {
+          showFeedback(true);
+        }, 600);
+      } else {
+        playSound('incorrect');
+        btnElement.className = "choice-btn py-3 px-4 bg-rose-500 border-2 border-rose-600 font-bold text-white rounded-xl shadow-md transition-all duration-150 text-sm sm:text-base animate-shake";
+        
+        // Highlight correct answer
+        buttons.forEach(btn => {
+          if (btn.textContent === currentQuestion.answer) {
+            btn.className = "choice-btn py-3 px-4 bg-emerald-500 border-2 border-emerald-600 font-bold text-white rounded-xl shadow-md transition-all duration-150 text-sm sm:text-base";
+          }
+        });
+
+        hearts--;
+        currentStreak = 0;
+
+        setTimeout(() => {
+          if (hearts <= 0) {
+            showEndScreen(false);
+          } else {
+            showFeedback(false);
+          }
+        }, 1200);
+      }
+    }
+
+    function showFeedback(isCorrect) {
+      document.getElementById('questionContainer').classList.add('hidden');
+      const feedback = document.getElementById('feedbackContainer');
+      feedback.classList.remove('hidden');
+
+      const fbIcon = document.getElementById('feedbackIcon');
+      const fbTitle = document.getElementById('feedbackTitle');
+      const fbText = document.getElementById('feedbackText');
+
+      if (isCorrect) {
+        fbIcon.textContent = "🎉";
+        fbTitle.textContent = "Correct!";
+        fbTitle.className = "text-2xl font-bold font-display text-emerald-600";
+        fbText.textContent = `Excellent work! You earned +10 Gold coins.`;
+      } else {
+        fbIcon.textContent = "😢";
+        fbTitle.textContent = "Oops!";
+        fbTitle.className = "text-2xl font-bold font-display text-rose-600";
+        fbText.textContent = `The correct form was "${currentQuestion.answer}". Lost 1 Heart.`;
+      }
+      
+      updateStats();
+    }
+
+    function nextStep() {
+      questionIndex++;
+      if (questionIndex >= questionsPerLevel) {
+        // Level cleared!
+        playSound('levelup');
+        currentLevelIndex++;
+        questionIndex = 0;
+        
+        if (currentLevelIndex >= 5) {
+          // Completed game!
+          showEndScreen(true);
+          return;
+        } else {
+          // Go to next level
+          updateMapNodes();
+          // Level milestone bonus coins
+          coins += 25;
+          
+          let levelNames = ["Forest of Past", "River of Future", "Gates of Conditional", "Castle of Wisdom"];
+          alert(`🎉 Level Cleared! You reached the ${levelNames[currentLevelIndex - 1]}! Bonus +25 Coins.`);
+        }
+      }
+
+      updateStats();
+      loadQuestion();
+    }
+
+    function showEndScreen(isWin) {
+      gameScreen.classList.add('hidden');
+      endScreen.classList.remove('hidden');
+
+      const endEmoji = document.getElementById('endEmoji');
+      const endTitle = document.getElementById('endTitle');
+      const endText = document.getElementById('endText');
+
+      if (isWin) {
+        endEmoji.textContent = "👑";
+        endTitle.textContent = "Victory!";
+        endTitle.className = "text-3xl font-extrabold text-amber-600 font-display";
+        endText.textContent = `Incredible job! You successfully completed your quest, retrieved the Golden Crown of Verbs, and proved your mastery over être and avoir!`;
+      } else {
+        endEmoji.textContent = "💀";
+        endTitle.textContent = "Quest Failed";
+        endTitle.className = "text-3xl font-extrabold text-rose-600 font-display";
+        endText.textContent = `You ran out of hearts. Do not worry, brave adventurer! Check the scroll rules, gather your strength, and try again!`;
+      }
+
+      document.getElementById('finalCoins').textContent = coins;
+      document.getElementById('finalStreak').textContent = maxStreak;
+    }
+
+    function restartGame() {
+      setupScreen.classList.remove('hidden');
+      endScreen.classList.add('hidden');
+    }
+
+    // Modal scroll sheet control
+    function openCheatSheet() {
+      const modal = document.getElementById('cheatSheetModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeCheatSheet() {
+      const modal = document.getElementById('cheatSheetModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+  </script>
+</body>
+</html>

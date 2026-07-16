@@ -1,0 +1,190 @@
+- days of week
+- months
+- numbers 1-100
+- time
+- learn phrases
+	- I want to speak Russian
+		- я хочу говорить по-русски
+- verbs
+	- 1. to be
+		- быть [bweet]
+	- 2. to say 
+		- сказать [skah-ZAHT]
+	- 3. to be able to
+		- мочь [much]
+	- 4. to know
+		- знать [iz-NAHT]
+	- 5. to speak
+		- говорить [goh-vah-REET]
+		- я хочу говорить по-русски
+	- 6. to become
+		- стать [staht]
+	- 7. to want
+		- хотеть [*OH-tyet]
+	- 8. to see
+		- видеть [VEE-dyet]
+	- 9. to go
+		- идти [ee-TYEE]
+	- 10. to stand
+		- стоять [STAH-yet]
+		- Почему ты там стоишь?
+	- 11. to think
+		- думать [DOO-mut]
+	- 12. to ask
+		- спросить [sprah-SEET]
+	- 13. to live
+		- жить [*EET]
+	- 14. to watch
+		- смотреть [smoht-RAYT]
+	- 15. to have
+		- иметь [EE-myit]
+	- 16. to understand 
+		- понять (perfective) [POHN-yet]
+	- 17. to sit
+		- сидеть [SEE-dyit]
+	- 18. to make/do
+		- делать [DYEH-lit]
+	- 19. to make/do and finish it
+		- сделать [ZDYEH-lit]
+	- 20. to take
+		- взять [VZYET]
+	- 21. to understand
+		- понимать (imperfective) [pohn-yah-MAHT]
+		- я понимаю [pohn-yah-MIGH-yoo]
+	- 22. to seem/appear
+		- казаться [koh-ZAHT-tsyah]
+	- 23. to start
+		- начать [nah-CHAHT]
+	- 24. to see
+		- увидеть [oo-VEE-dyit]
+	- 25. to give
+		- давать [da-VAHT]
+	- 26. to set off (go)
+		- пойти [poy-EE-tyah]
+	- 27. to stay
+		- остаться [oh-STAT-tsah]
+	- 28. to exit 
+		- выйти [VYEE-tyeh]
+	- 29. to give
+		- дать [dat]
+	- 30. to work
+		- работать [rah-BOH-tyet]
+	- 31. to turn out to be
+		- оказаться [ah-kah-ZAHT-seh]
+	- 32. to answer
+		- ответить [ot-VYE-teet]
+	- 33. to think for awhile
+		- подумать [poh-DOO-met]
+	- 34. to love
+		- любить [LYOO-beet]
+	- 35. to mean
+		- значить [ZNAH-chit]
+	- 36. to wait
+		- ждать [ZHDYAHT]
+	- 37. to look/watch
+		- посмотреть [pohs-mah-TREHT]
+	- 38. to find
+		- найти [NIGH-ee-tyah]
+	- 39. to lie (be situated)
+		- лежать [lyeh-ZHAT]
+	- 40. to decide
+		- решить [ree-SHEET]
+	- 41. to receive
+		- получить [poh-loo-CHEET]
+	- 42. to write
+		- писать [pee-SAHT]
+	- 43. to listen
+		- слушать [SLOO-shit]
+	- 44. to return
+		- вернуться [vehr-NOOT-sah]
+	- 45. to count/consider
+		- считать [shih-TAT]
+	- 46. to remember
+		- помнить [POHM-neet]
+	- 47. to find out
+		- узнать [ooz-NAHT]
+	- 48. to arrive
+		- прийти [PREE-ee-tee]
+	- 49. to walk
+		- ходить [*AH-deet]
+	- 50. to notice
+		- заметить [zahm-YEH-tit]
+		
+		
+		
+	- to come
+		- приходить
+		- [pree-*AH-deet]
+	- to go
+		- идти
+		- [EE-tyee]
+	- to 
+		- 
+		- 
+	- to use
+		- использовать
+		- [eez-POHL-zoh-vat]
+	- to see
+		- смотреть
+		- [SMUT-pyet]
+	- to eat
+		- есть [yest]
+		- PRES: 
+			- Я ем [yem]
+			- ты ешь [yesh]
+			- он ест / она ест [yest]
+			- мы едим [YEE-deem]
+				- мы сейчас едим [say-CHASS]
+				- мы едим позже [POHZH-nah]
+			- вы едите [yih-DEE-tyah]
+			- они едят [ah-NEE yay-DYAT]
+	- to give
+		- дать 
+		- [daht]
+		
+- links
+	- conjugate
+		- https://conjugator.reverso.net/conjugation-russian.html
+		- https://cooljugator.com/ru
+		- 
+- todo
+	- check these off from reverso
+		-----------------------
+		быть
+		иметь
+		дышать
+		видеть
+		слышать
+		знать
+		думать
+		есть
+		пить
+		бояться
+		спать
+		жить
+		умирать
+		хотеть
+		идти
+		лежать
+		сидеть
+		стоять
+		давать
+		брать
+		считать
+		говорить
+		сказать
+		играть
+		работать
+		помнить
+		смеяться
+		читать
+		писать
+		любить
+		-----------------------
+- questions
+	- imperfective/perfective aspect
+	- no verb for "to have", e.g. У меня
+	- делать vs. сделать
+	- понять vs. понимать
+- podcasts/videos
+	- Diana Panchenko

@@ -1,3 +1,137 @@
+- background listening
+	- Parle Français Channel
+		- https://www.youtube.com/@parlefrancaischannel/videos
+- daily
+	- tv5monde
+		- RFI
+			- shorter
+				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260703-le-smartphone-un-moyen-de-contraception
+				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260624-la-colombie-a-un-nouveau-pr%C3%A9sident
+				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260624-romances-virtuelles-en-cor%C3%A9e-du-sud
+				- x https://francaisfacile.rfi.fr/fr/r%C3%A9viser/20250602-les-temps-du-pass%C3%A9?utm_slink=rfi.my%2FBivB
+				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260605-marjane-satrapi-une-vie-d-engagement-et-de-cr%C3%A9ation
+				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260515-universit%C3%A9s-en-france-combien-payent-les-%C3%A9tudiants-%C3%A9trangers
+				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260318-semaine-de-la-langue-fran%C3%A7aise-et-de-la-francophonie
+				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260116-rdc-naissance-exceptionnelle-de-jumeaux-gorilles
+				- .. https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20250626-le-poulpe-un-animal-%C3%A9tonnant
+				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260527-ferrari-lance-sa-voiture-%C3%A9lectrique
+				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260710-bal%C3%A9ares-les-l%C3%A9zards-en-danger
+				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260701-le-jardinage-un-antid%C3%A9presseur
+				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20240619-pacte-vert-europ%C3%A9en-une-bonne-nouvelle-pour-la-nature
+				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20231026-fruits-et-l%C3%A9gumes-quelles-diff%C3%A9rences
+				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20251023-florence-mendez-ou-l-humour-engag%C3%A9
+				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20250801-sorci%C3%A8res-une-exposition-pour-d%C3%A9passer-les-clich%C3%A9s
+				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20250226-premi%C3%A8re-vente-aux-ench%C3%A8res-d-%C5%93uvres-cr%C3%A9%C3%A9es-avec-l-ia
+			- longer: RFI francais facile
+				- https://francaisfacile.rfi.fr/fr/podcasts/journal-en-fran%C3%A7ais-facile/20260713-tha%C3%AFlande-un-bar-en-feu-pr%C3%A8s-de-bangkok-ukraine-volodymyr-zelensky-est-%C3%A0-paris-important-incendie-en-foret-de-fontainebleau
+			- longer tests
+				- x https://francaisfacile.rfi.fr/fr/r%C3%A9viser/20240328-delf-b2-entrainement-%C3%A0-l-%C3%A9preuve-de-compr%C3%A9hension-orale-session-4
+				
+		- tv5monde
+			- x https://apprendre.tv5monde.com/fr/exercices/b1-intermediaire/lintelligence-artificielle-menace-t-elle-leducation
+			- x https://apprendre.tv5monde.com/fr/exercices/b1-intermediaire/les-racines-de-linfluence
+			- x https://apprendre.tv5monde.com/fr/exercices/b1-intermediaire/dystopie-ou-realite-le-succes-du-roman-1984
+			- x https://apprendre.tv5monde.com/fr/exercices/b1-intermediaire/une-comedienne-paris
+			- x https://apprendre.tv5monde.com/fr/exercices/b1-intermediaire/les-cles-du-langage
+			- x https://apprendre.tv5monde.com/fr/exercices/a2-elementaire/les-donnees-personnelles-sur-internet 
+			- https://apprendre.tv5monde.com/fr/exercices/a2-elementaire/se-preparer-aux-grandes-ecoles-francaises
+			- https://apprendre.tv5monde.com/fr/exercices/a2-elementaire/maitriser-les-particularites-du-passe-compose
+			- https://apprendre.tv5monde.com/fr/exercices/a2-elementaire/lintelligence-artificielle-avantages-et-risques
+			- https://apprendre.tv5monde.com/fr/exercices/a2-elementaire/droit-leducation-ou-en-est
+			- https://apprendre.tv5monde.com/fr/exercices/a2-elementaire/spotify-20-ans
+			- https://apprendre.tv5monde.com/fr/exercices/b1-intermediaire/la-retroaction
+			- https://apprendre.tv5monde.com/fr/exercices/b2-avance/la-chine-influenceuse-discrete-de-linformation
+			- https://apprendre.tv5monde.com/fr/exercices/a2-elementaire/apprendre-tester-recommencer
+			- https://apprendre.tv5monde.com/fr/exercices/b1-intermediaire/ce-que-les-jeunes-attendent-de-la-francophonie
+			- https://apprendre.tv5monde.com/fr/exercices/b1-intermediaire/alliances-francaises-la-diplomatie-culturelle
+			- https://apprendre.tv5monde.com/fr/exercices/a1-debutant/le-travail-et-la-famille
+		- groups
+			- https://enseigner.tv5monde.com/fiches-pedagogiques-fle/la-grande-explication
+- Cours VHS
+	- MONDAY
+		- ,, SIGNED-UP 7:00 Französisch B1/B2
+			- **** [monday mornings, fun, light, young teacher]
+			- Mo, 14.09.-07.12., 07:00 - 08:30
+			- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=791220
+			- course
+				- Commencez la semaine en français ! Vous comprenez quand on vous parle mais vous avez des difficultés à vous exprimer à l'oral et/ou cherchez parfois le bon mot ? Ce cours est pour vous ! Ce cours de conversation se concentre sur la prise de parole spontanée autour de différents thèmes de société. Des exercices de vocabulaire et de grammaire seront aussi proposés selon les besoins des participants. Venez profiter de l'atmosphère bienveillante de la classe pour faire de rapides progrès ! Ce cours convient aussi aux personnes qui souhaitent se préparer au Delf ou Telc. Lehrmaterial wird von der Kursleitung zur Verfügung gestellt.
+			- Segrestin, Adèle
+				- La Rochelle
+				- https://www.linkedin.com/in/adele-segrestin/?locale=en	
+		- )) CHOOSE-BETWEEN(+intense, dedicated, photo, only B2) 18:00-19:30: Französisch B2 Conversation & littèrature & grammaire
+				- ***[very intellectual, older academic professor type, lived in Algeria, give presentations]
+				- Mo, 14.09.-30.11., 18:00 - 19:30
+				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=799049
+				- Belakhdar, Christine
+					- https://www.google.com/imgres?q=Belakhdar%2C%20Christine&imgurl=https%3A%2F%2Fsujetverlag.de%2Fwp-content%2Fuploads%2F2022%2F06%2FChristine_BelakdharSW2-scaled-e1655969327496.jpg&imgrefurl=https%3A%2F%2Fsujetverlag.de%2Fautoren%2Fuebersetzer%2Fbio-christine-belakhdar%2F%3Flang%3Den&docid=Ch0ZEiCD2FTq2M&tbnid=nT-zw2wJ4_mgDM&vet=12ahUKEwj71_CouLuVAxVYRvEDHUuyB7UQnPAOegQIOxAA..i&w=1849&h=1849&hcb=2&ved=2ahUKEwj71_CouLuVAxVYRvEDHUuyB7UQnPAOegQIOxAA
+					- Christine Belakhdar, geboren 1957, lebte nach dem Romanistik-Studium elf Jahre in Algerien. Seit 1994 ist sie wieder in Berlin und arbeitet zusammen mit ihrem Mann als Literaturübersetzerin und Kulturvermittlerin. 2007 gründete sie den deutsch-algerischen Kulturverein Yedd – deutsch-algerische Kultur e. V..
+				- Vous etes déjà en mesure de préparer une présentation sur un sujet de votre choix.
+		- )) CHOOSE-BETWEEN(- no photo, -C1) 19:15 Online: Französisch B2/C1 - Lundi langue et société
+			- ** [older French woman, 10 yeras in Berlin, studied Cergy-Pontoise (Paris) and Montpellier]
+			- Mo, 21.09.-30.11., 19:15 - 20:45
+			- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=791083
+			- course
+				- Vous avez un bon niveau de français et maîtrisez relativement bien la grammaire ? Vous aimez discuter de sujets qui vous intéressent ou de l'actualité en France, en Europe et dans le monde ?
+				- Alors ce cours est fait pour vous ! Vous pouvez y exprimer dans une ambiance conviviale et multiculturelle vos expériences et réflexions personnelles. Vous présentez librement votre opinion et perfectionnez votre expression orale et - si besoin - écrite en améliorant votre compréhension orale (radio ou vidéo) et écrite (articles de journaux, textes littéraires ou BD).
+				- Vous avez envie d'échanger avec d'autres en français sur des thèmes que vous ou votre professeure proposerez ? Soyez les bienvenu·e·s ! Les sujets de discussion seront choisis ensemble et le matériel sera fourni à l'avance par la professeure.
+			- Whitmore, Sabrine			
+				- Ich heiße Sabrine Whitmore. Ich bin in Paris (Frankreich) geboren und Französischmuttersprachlehrerin. Ich unterrichte seit circa 20 Jahren. Seit 10 Jahren wohne ich in Berlin. Ich liebe diese Stadt sehr. Ich studierte in der Universität Cergy-Pontoise und in der Universität Montpellier in Frankreich. 2001 absolvierte ich ein praxisbezogenes Hochschuldiplom als Übersetzerin für den juristischen und wirtschaftswissenschaftlichen Bereich (DESS) und 2007 erlangte ich ein Hochschuldiplom für Französisch als Fremdsprache (Maîtrise). Außer Französisch und Deutsch spreche ich Englisch. Wenn ich Französisch-Unterricht in den Volkshochschulen gebe, freue ich mich sehr darauf, andere Leute aus verschieden Ländern kennenzulernen und es macht mir Spaß meine Kultur mit ihnen zu teilen.		
+	- TUESDAY
+		- )) YES 16:00 Konversation A2/B1
+			- *****[an international traveler from Grenoble, Erasmus Heidelberg, Regensburg, Madrid, USA Stipendium for tennis, does art, lives in Berlin, pronunciation important]
+			- Di, 08.09.-01.12., 16-17:30
+			- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=792968
+			- Alexandre Schuck, Grenoble
+				- ART:https://www.saatchiart.com/en-de/account/profile/1548611?srsltid=AfmBOooStwBAlmHcvWYVt31pbqCIwYpqEXhs01Xq26Yf3bMD0lsOM_La
+				- Alexandre Schuck ist Kursleiter für Französisch an der Volkshochschule. Als Deutsch-Franzose ist er in Grenoble (Frankreich) aufgewachsen, wo er frühzeitig seine Leidenschaft für Sprachen entdeckt hat. Nach dem Bachelorstudium, in dessen Rahmen er ein Jahr als Erasmus-Student in Heidelberg verbrachte, studierte er weiter in Regensburg und Madrid und absolvierte schließlich einen Masterstudiengang in interkulturellen Europastudien. Seine akademische Laufbahn führte ihn zudem in die USA, wo er ein Stipendium für Tennis erhielt. Seit vielen Jahren lebt er in Deutschland, derzeit in Berlin. In seinen Kursen legt er besonderen Wert darauf, dass auf das Verständnis und die individuellen Bedürfnisse jedes Teilnehmenden geachtet wird. Er nimmt sich Zeit, die sprachlichen Grundregeln der französischen Sprache klar zu vermitteln. Wichtig für ihn ist von Beginn an auch die Aussprache, die er als solides Fundament für das Erlernen einer Sprache betrachtet.
+		- ,, SIGNED-UP 18:30 Französisch B1/B2 Cours de conversation Online
+			- ***[also from Grenoble, woman seems to work in international companies, is author, got degree from Potsdam]
+			- Di, 08.09-13.10., 18:30-20:00
+			- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=797913
+			- Französisch B1/B2 Cours de conversation Online
+			- ****[10 years in Berlin, from Grenoble, has MA in teaching like me, studied at Uni Potsdam)
+			- course
+				- Ce cours vous entraîne à la conversation à partir de sujets généraux, de photographies, d'articles de journaux ou de textes littéraires. Vous allez aussi apprendre les techniques de communication importantes pour améliorer votre niveau B1/B2. Le matériel est distribué par la professeure.
+			- Bernanoce, Edwige
+				- kommt aus den französischen Alpen und lebt seit zehn Jahren in Berlin. Sie ist Französischlehrerin, Fotografin und Naturpädagogin. Sie hat ein Studium an der Universität Grenoble-Alpes (B. A. in Medi enwissenschaften, M. A. in Theaterwissenschaften, M. A. in Sprachdidaktik mit Schwerpunkt Französisch) und Lehramt an der Universität Potsdam absolviert.
+	- THURSDAY
+		- x NO Französisch B1/B2 online
+			- **[not too much info or photos him, would be tight to make it after Gymnastik)
+			- course
+				- Do. 10.09.-26.11., 19:30-21:30
+				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=784225
+				- Vous souhaitez vous exprimer avec aisance et précision sur différents thèmes, même inconnus. À l?aide de documents écrits et audio tirés de l?actualité du monde francophone (article de presse, film, journal télévisé, émission de radio...), vous pourrez enrichir votre vocabulaire, améliorer votre compréhension écrite et orale et vous exprimer sur différents sujets. En fonction des souhaits et des besoins des participants, nous pourrons également réviser certains points grammaticaux, tels que le subjonctif, les pronoms relatifs et les temps du passé.			
+			- Estrampes, Stéphane
+				- Traducteur et formateur en Français Langue Étrangère / Freier Übersetzer und Dozent für Französisch
+				- https://www.linkedin.com/in/stephane-estrampes-61b3357a/
+				- Université Paris Descartes
+	- FRIDAY
+		- )) YES Französisch B1 parler français
+			- *** [young, fun teacher, had another course with interesting grammar book, studied Germistik in France
+			- course
+				- Fr. 11.09.-11.12., 18:15 - 19:45
+				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=786883
+				- Sie haben bereits B1-Französischkenntnisse, aber es fehlt Ihnen noch an Praxis? Sie wollen in die französische Alltagssprache eintauchen und en passant Ihre Sprachkenntnisse verbessern? Dann sind Sie in diesem Konversationskurs genau richtig! In jedem Unterricht werden wir uns mit einem bestimmten Thema beschäftigen und direkt Ihre Sprachkenntnisse in die Praxis umsetzen: Lernen Sie, spontan und frei zu reden!
+			- Meilhac, Mélanie
+				- PHOTO: https://www.berlin.de/imgscale4/r3zu4/vhs/_assets/steglitz-zehlendorf/m-meilhac_foto.jpg
+				- https://www.berlin.de/vhs/volkshochschulen/steglitz-zehlendorf/kurse/fremdsprachen/kursleitende-altgriechisch-bis-indonesisch-1580077.php
+				- hat in Frankreich Germanistik auf Lehramt studiert
+				- tous ses cours: https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseList.aspx
+- quels sont les 10 livres de littérature française les plus classiques pour les jeunes hommes
+	- Voyage au centre de la Terre
+	- Les Trois Mousquetaires
+	- Le Comte de Monte-Cristo
+	- L'Étranger
+	- Le Grand Meaulnes
+	- La Peste
+	- Le Rouge et le Noir
+	- Les Misérables
+	- La Condition humaine
+- online platforms to learn languages
+	- italki
+		- https://www.italki.com/de/dashboard
+- grammar books
+	- https://www.amazon.de/Grammaire-progressive-fran%C3%A7ais-niveau-1C%C3%A9d%C3%A9rom/dp/2090381973
 - placement des pronoms
 	- le pronom d'objet direct (le) se place avant le pronom d'objet indirect de la troisième personne (lui)
 		- il lui donne le livre -> il le lui donne
@@ -19,71 +153,308 @@
 		- IMSU: imperfect subjunctive / imparfait du subjoncitf [mem: Titan]
 		- IPER: imperative / impéritif [mem: king on throne]
 		- PRPA: present participle / participe présent
-	- temps verbaux en français
-		- présent de l'indicatif
-		- imparfait de l'indicatif 
+		- PAPA: past participle / participe passé
+	- version abrégée des temps verbaux
+		- présent
+		- imparfait 
 		- passé composé
 		- passé simple
 		- futur
 		- conditionnel
-		- présent du subjonctif
-		- imparfait du subjoncitf
+		- subjonctif (présent)
+		- subjoncitf (imparfait)
 		- impéritif
 		- participe présent
-	- verbes regulières									
-		- ER (parler, manger, aimer, chanter, travailler, aller, arriver)
-			- PRES: -e, -es, -e, -ons, -ez, -ent
-			- IMPE: -ais, -ais, -ait, -ions, -iez, -aient
-			- PRPE: ai/suis -é
-			- SIMP: -ai, -as, -a, -âmes, -âtes, -èrent
-			- FUTU: -erai, -eras, -era, -erons, -erez, -eront
-			- COND: -erais, -erais, -erait, -erions, -eriez, -eraient
-			- PRSU: -e, -es, -e, -ions, -iez, -ent
-			- IMSU: -asse, -asse, -ât, -assions, -assiez, -assent
-			- IPER: -e, -ons, -ez
-			- PRPA: -ant
-		- IR (finir, choisir, grandir, réussir, remplir, partir, sortir) [mem: ear, blue velvet lawn]
-			- PRES: -is, -is, -it, -issons, -issez, -issent
-			- IMPE: -issais, -issais, -issait, -issions, -issiez, -issaient
-			- PRPE: ai/suis -i
-			- SIMP: -is, -is, -it, -îmes, -îtes, -irent
-			- FUTU: -irai, -iras, -ira, -irons, -irez, -iront 
-			- COND: -irais, -irais, -irait, -irions, -iriez, -iraient
-			- PRSU: -isse, -isses, -isse, -issions, -issiez, -issent
-			- IMSU: -isse, -isses, -ît, -issions, -issiez, -issent
-			- IPER: -is, -issons, -issez
-			- PRPA: -issant
-		- RE (vendre, prendre, attendre, mettre, dire, desendre, naître) [mem: ree, Astoria bridge]
-			- PRES: -s, -s, -, -ons, -ez, -ent
-			- IMPE: -ais, -ais, -ait, -ions, -iez, -aient
-			- PRPE: ai/suis  -u
-			- SIMP: -is, -is, -it, -îmes, -îtes, -irent
-			- FUTU: -rai, -ras, -ra, -rons, -rez, -ront
-			- COND: -rais, -rais, -rait, -rions, -riez, -raient
-			- PRSU: -e, -es, -e, -ions, -iez, -ent
-			- IMSU: -isse, -isses, -ît, -issions, -issiez, -issent
-			- IPER: -s, -ons, -ez
-			- PRPA: -ant
-	- verbes importants
-		- être
-			- IMPE: étais, étais, était, étions, étiez, étaient
-			- PRES: suis, es, est, sommes, êtes, sont
-			- PRPE: ai/suis été
-			- SIMP: fus, fus, fut, fûmes, fûtes, furent
-			- FUTU: serai, seras, sera, serons, serez, seront
-			- COND: serais, serais, serait, serions, seriez, seraient
-			- PRSU: sois, sois, soit, soyons, soyez, soient
-			- IMSU: fusse, fusses, fût, fussions, fussiez, fussent
-			- IPER: sois, soyons, soyez
-			- PRPA: étant		
-		- avoir
-			- PRES: ai, as, a, avons, avez, ont
-			- IMPE: avais, avais, avait, avions, aviez, avaient
-			- PRPE: ai/eu eu
-			- SIMP: eus, eus, eut, eûmes, eûtes, eurent
-			- FUTU: aurai, auras, aura, aurons, aurez, auront
-			- COND: aurais, aurais, aurait, aurions, auriez, auraient
-			- PRSU: aie, aies, ait, ayons, ayez, aient
-			- IMSU: eusse, eusses, eût, eussions, eussiez, eussent
-			- IPER: aie, ayons, ayez
-			- PRPA: ayant			
+	- verbes
+		- informations générales
+			- taille des groupes
+				- 1e groupe = 90%
+				- 2e groupe =  3%
+				- 3e groupe =  7%
+		- 1e groupe: verbes réguliers en -er
+			- memory-location
+				- hot AIR balloon in Alps valley
+			- exemples
+				- parler, manger, aimer, chanter, travailler, arriver
+			- conjugaisons
+				- PRES: -e, -es, -e, -ons, -ez, -ent
+				- IMPE: -ais, -ais, -ait, -ions, -iez, -aient
+				- PRPE: ai/suis -é
+				- SIMP: -ai, -as, -a, -âmes, -âtes, -èrent
+				- FUTU: -erai, -eras, -era, -erons, -erez, -eront
+				- COND: -erais, -erais, -erait, -erions, -eriez, -eraient
+				- PRSU: -e, -es, -e, -ions, -iez, -ent
+				- IMSU: -asse, -asse, -ât, -assions, -assiez, -assent
+				- IPER: -e, -ons, -ez
+				- PRPA: -ant
+			- exceptions
+				- manger
+					- IMPE: mang-, mange-
+					- IMSU: mang-, mange-
+		- 2e groupe: verbes réguliers en -ir avec -iss-
+			- memory-location
+				- the EAR on blue velvet lawn
+			- exemples
+				- finir, choisir, grandir, réussir, remplir
+			- conjugaisons
+				- PRES: -is, -is, -it, -issons, -issez, -issent
+				- IMPE: -issais, -issais, -issait, -issions, -issiez, -issaient
+				- PRPE: ai/suis -i
+				- SIMP: -is, -is, -it, -îmes, -îtes, -irent
+				- FUTU: -irai, -iras, -ira, -irons, -irez, -iront 
+				- COND: -irais, -irais, -irait, -irions, -iriez, -iraient
+				- PRSU: -isse, -isses, -isse, -issions, -issiez, -issent
+				- IMSU: -isse, -isses, -ît, -issions, -issiez, -issent
+				- IPER: -is, -issons, -issez
+				- PRPA: -issant
+		- 3e groupe: verbes à irrégularité modérée
+			- 3.1 sous-groupe: -re
+				- memory-location
+					- REE on Astoria bridge
+				- exemples
+					- vendre, prendre, attendre, mettre, dire, desendre, naître, perdre, répondre
+				- conjugaisons
+					- PRES: -s, -s, -, -ons, -ez, -ent
+					- IMPE: -ais, -ais, -ait, -ions, -iez, -aient
+					- PRPE: ai/suis -u
+					- SIMP: -is, -is, -it, -îmes, -îtes, -irent
+					- FUTU: -rai, -ras, -ra, -rons, -rez, -ront
+					- COND: -rais, -rais, -rait, -rions, -riez, -raient
+					- PRSU: -e, -es, -e, -ions, -iez, -ent
+					- IMSU: -isse, -isses, -ît, -issions, -issiez, -issent
+					- IPER: -s, -ons, -ez
+					- PRPA: -ant
+			- 3.2 sous-groupe: -ir (PRPA = -ant)
+				- verbs
+					- partir, sortir, dormir, sentir, servir, mentir
+				- memory-location
+					- Seattle needle (partir)
+					- memory-link: sss+dmp
+				- conjugaisons
+					- identique à 3.1 à l'exception de
+						- PRES: racine perd la dernière consonne au singulier
+							- partir: je [par]s 
+							- dormir: je [dor]s 
+							- sortir: je [sor]s
+						- FUTU, COND: racine + i 
+							- partir: je [parti]rai
+							- dormir: je [dormi]rai 
+							- sortir: je [sorti]rai
+						- PRPE: ai/suis -i
+				- verbes similaires
+					- repartir, repartir, repartir? More useful examples are repartir and s’appartir is not standard in modern French.
+					- ressortir, ressortir, sortir à nouveau
+					- endormir, rendormir, s’endormir
+					- ressentir, pressentir, consentir
+					- desservir, resservir, servir de nouveau
+					- démentir
+			- 3.3 sous-groupe: venir, tenir
+				- memory-location
+					- appartement à Paris
+				- conjugaisons
+					- identique à 3.1 à l'exception de
+						- venir
+							- PRES: vien-/ven-/vienn-
+								- viens, viens, vient, venons, venez, viennent
+							- SIMP: vin-/vîn- (suffix minus "i")
+								- vins, vins, vint, vînmes, vîntes, vinrent
+							- PRSU: vienn-/ven-
+								- vienne, viennes, vienne, venions, veniez, viennent
+							- IMSU: vin-/vîn- (suffix minus "i")
+								- vinsse, vinsses, vînt, vinssions, vinssiez, vinssent
+						- tenir
+							- PRES: tien-/ten-/tienn-
+								- tiens, tiens, tient, tenons, tenez, tiennent
+							- SIMP: tin-/tîn- (suffix minus "i")
+								- tins, tins, tint, tînmes, tîntes, tinrent
+							- PRSU: tienn-/ten-
+								- tienne, tiennes, tienne, tenions, teniez, tiennent
+							- IMSU: tin-/tîn- (suffix minus "i")
+								- tinsse, tinsses, tînt, tinssions, tinssiez, tinssent
+				- verbes similaires
+					- devenir, revenir, parvenir, intervenir, prévenir, survenir, subvenir, convenir, circonvenir, contrevenir, advenir, se souvenir, ressouvenir, redevenir, provenir, obvenir, bienvenir
+					- retenir, contenir, maintenir, détenir, obtenir, appartenir, soutenir, entretenir, s’abstenir, abstenir
+			- 3.4 sous-groupe: prendre
+				- conjugaisons
+					- identique à 3.1 à l'exception de
+						- IMPE: pren-
+						- SIMP: pr-
+						- PRSU: prenn-, prenn-, prenn-, prenn-, pren-, pren-, prenn-
+						- IMSU: pr-
+				- verbes similaires
+					- prendre, apprendre, comprendre, surprendre
+			- 3.5 sous-groupe: mettre
+				- conjugaisons
+					- identique à 3.1 à l'exception de
+						- PRES: met-, met-, met-, mett-, mett-, met-
+						- SIMP: m-
+						- IMSU: m-
+				- verbes similaires
+					- admettre, permettre, promettre, soumettre, transmettre, remettre, commettre, omettre, émettre, interromettre
+			- 3.6 sous-groupe: dire, lire, écrire
+				- conjugaisons
+					- identique à 3.1 à l'exception de
+						- dire
+							- PRES: di-, di-, dit, dis-, dites, dis-
+							- IMPE: dis-
+							- SIMP: d-
+							- PRSU: dis-
+							- IMSU: d-
+						- écrire
+							- PRES: écri-, écri-, écrit, écriv-, écriv-, écriv-
+							- IMPE: écriv-
+							- SIMP: écriv-
+							- PRSU: écriv-
+							- IMSU: écriv-
+						- lire
+							- PRES: l-, l-, lit, lis-, lis-, lis-
+							- IMPE: lis-
+							- SIMP: lus, lus, lut, lûmes, lûtes, lurent
+							- PRSU: lis-
+							- IMSU: lusse, lusses, lût, lussions, lussiez, lussent
+				- verbes similaires
+					- redire, contredire
+					- décrire, inscrire
+					- relire
+			- 3.7 sous-groupe: boire, croire, voir
+				- conjugaisons
+					- identique à 3.1 à l'exception de
+						- boire
+							- PRES: boi-, boi-, boit, buv-, buv-, boiv-
+							- IMPE: buv-
+							- SIMP: bus, bus, but, bûmes, bûtes, burent
+							- PRSU: boiv-, boiv-, boiv-, buv-, buv-, boiv-
+							- IMSU: busse, busses, bût, bussions, bussiez, bussent
+						- croire
+							- PRES: croi-, croi-, croit, croy-, croy-, croi-
+							- IMPE: croy-
+							- SIMP: crus, crus, crut, crûmes, crûtes, crurent
+							- PRSU: croi-, croi-, croi-, croy-, croy-, croi-
+							- IMSU: crusse, crusses, crût, crussions, crussiez, crussent
+						- voir
+							- PRES: voi-, voi-, voit, voy-, voy-, voi-
+							- IMPE: voy-
+							- SIMP: v-
+							- PRSU: voi-, voi-, voi-, voy-, voy-, voi-
+							- IMSU: v-
+				- verbes similaires
+					- revoir, prévoir, entrevoir, apercevoir, concevoir, décevoir, percevoir, recevoir
+			- 3.8 sous-groupe: couvrir, offrir, ouvrir, soufrir
+				- conjugaisons
+					- identique à 3.1 à l'exception de
+						- couvrir
+							- PRES: couvre, couvre-, couvre
+							- PRPE: ai couvert
+							- FUTU: couvri-
+							- COND: couvri-
+						- offrir
+							- PRES: offre, offre-, offre
+							- PRPE: ai offert
+							- FUTU: offri-
+							- COND: offri-
+						- ouvrir
+							- PRES: ouvre, ouvre-, ouvre
+							- PRPE: ai ouvert
+							- FUTU: ouvri-
+							- COND: ouvri-
+						- souffrir
+							- PRES: souffre, souffre-, souffre
+							- PRPE: ai souffert
+							- FUTU: souffri-
+							- COND: souffri-
+		- 4e groupe: verbes hautement irréguliers
+			- 4.1 sous-groupe: être, avoir, aller
+				- conjugaisons
+					- être
+						- PRES: suis, es, est, sommes, êtes, sont
+						- IMPE: étais, étais, était, étions, étiez, étaient
+						- PRPE: ai été
+						- SIMP: fus, fus, fut, fûmes, fûtes, furent
+						- FUTU: serai, seras, sera, serons, serez, seront
+						- COND: serais, serais, serait, serions, seriez, seraient
+						- PRSU: sois, sois, soit, soyons, soyez, soient
+						- IMSU: fusse, fusses, fût, fussions, fussiez, fussent
+						- IPER: sois, soyons, soyez
+						- PRPA: étant		
+					- avoir
+						- PRES: ai, as, a, avons, avez, ont
+						- IMPE: avais, avais, avait, avions, aviez, avaient
+						- PRPE: ai eu
+						- SIMP: eus, eus, eut, eûmes, eûtes, eurent
+						- FUTU: aurai, auras, aura, aurons, aurez, auront
+						- COND: aurais, aurais, aurait, aurions, auriez, auraient
+						- PRSU: aie, aies, ait, ayons, ayez, aient
+						- IMSU: eusse, eusses, eût, eussions, eussiez, eussent
+						- IPER: aie, ayons, ayez
+						- PRPA: ayant
+					- aller
+						- PRES: vais, vas, va, allons, allez, vont
+						- IMPE: allais, allais, allait, allions, alliez, allaient
+						- PRPE: suis allé
+						- SIMP: allai, allas, alla, allâmes, allâtes, allèrent
+						- FUTU: irai, iras, ira, irons, irez, iront
+						- COND: irais, irais, irait, irions, iriez, iraient
+						- PRSU: aille, ailles, aille, allions, alliez, aillent
+						- IMSU: allasse, allasses, allât, allassions, allassiez, allassent
+						- IPER: va, allons, allez
+						- PRPA: allant
+			- 4.2 sous-groupe: vouloir, devoir, pouvoir, savoir
+				- conjugaisons
+					- vouloir
+						- PRES: veux, veux, veut, voulons, voulez, veulent
+						- IMPE: voulais, voulais, voulait, voulions, vouliez, voulaient
+						- PRPE: ai voulu
+						- SIMP: voulus, voulus, voulut, voulûmes, voulûtes, voulurent
+						- FUTU: voudrai, voudras, voudra, voudrons, voudrez, voudront
+						- COND: voudrais, voudrais, voudrait, voudrions, voudriez, voudraient
+						- PRSU: veuille, veuilles, veuille, voulions, vouliez, veuillent
+						- IMSU: voulusse, voulusses, voulût, voulussions, voulussiez, voulussent
+						- IPER: veuille, veuillons, veuillez
+						- PRPA: voulant
+					- devoir
+						- PRES: dois, dois, doit, devons, devez, doivent
+						- IMPE: devais, devais, devait, devions, deviez, devaient
+						- PRPE: ai dû
+						- SIMP: dus, dus, dut, dûmes, dûtes, durent
+						- FUTU: devrai, devras, devra, devrons, devrez, devront
+						- COND: devrais, devrais, devrait, devrions, devriez, devraient
+						- PRSU: doive, doives, doive, devions, deviez, doivent
+						- IMSU: dusse, dusses, dût, dussions, dussiez, dussent
+						- IPER: dois, devons, devez
+						- PRPA: devant
+					- pouvoir
+						- PRES: peux, peux, peut, pouvons, pouvez, peuvent
+						- IMPE: pouvais, pouvais, pouvait, pouvions, pouviez, pouvaient
+						- PRPE: ai pu
+						- SIMP: pus, pus, put, pûmes, pûtes, purent
+						- FUTU: pourrai, pourras, pourra, pourrons, pourrez, pourront
+						- COND: pourrais, pourrais, pourrait, pourrions, pourriez, pourraient
+						- PRSU: puisse, puisses, puisse, puissions, puissiez, puissent
+						- IMSU: pusse, pusses, pût, pussions, puissiez, pussent
+						- IPER: -
+						- PRPA: pouvant
+					- savoir
+						- PRES: sais, sais, sait, savons, savez, savent
+						- IMPE: savais, savais, savait, savions, saviez, savaient
+						- PRPE: ai su
+						- SIMP: sus, sus, sut, sûmes, sûtes, surent
+						- FUTU: saurai, sauras, saura, saurons, saurez, sauront
+						- COND: saurais, saurais, saurait, saurions, sauriez, sauraient
+						- PRSU: sache, saches, sache, sachions, sachiez, sachent
+						- IMSU: susse, susses, sût, sussions, sussiez, sussent
+						- IPER: sache, sachons, sachez
+						- PRPA: sachant
+			- 4.3 sous-groupe: faire
+				- conjugaisons
+					- faire
+						- PRES: fais, fais, fait, faisons, faites, font
+						- IMPE: faisais, faisais, faisait, faisions, faisiez, faisaient
+						- PRPE: ai fait
+						- SIMP: fis, fis, fit, fûmes, fûtes, firent
+						- FUTU: ferai, feras, fera, ferons, ferez, feront
+						- COND: ferais, ferais, ferait, ferions, feriez, feraient
+						- PRSU: fasse, fasses, fasse, fassions, fassiez, fassent
+						- IMSU: fisse, fisses, fît, fissions, fissiez, fissent
+						- IPER: fais, faisons, faites
+						- PRPA: faisant
+

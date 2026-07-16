@@ -1,0 +1,3534 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verb Tense Defense</title>
+  <!-- Google Fonts: Share Tech Mono, Orbitron & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-color: #0d0e15;
+      --panel-color: #161925;
+      --neon-cyan: #00f0ff;
+      --neon-magenta: #ff007f;
+      --neon-green: #39ff14;
+      --neon-yellow: #fffb00;
+      --text-main: #f0f3f8;
+      --text-muted: #8a99ad;
+      --glow-cyan: 0 0 10px rgba(0, 240, 255, 0.4), 0 0 20px rgba(0, 240, 255, 0.2);
+      --glow-magenta: 0 0 10px rgba(255, 0, 127, 0.4), 0 0 20px rgba(255, 0, 127, 0.2);
+      --glow-green: 0 0 10px rgba(57, 255, 20, 0.4), 0 0 20px rgba(57, 255, 20, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    .modal-content, .modal-content * {
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: pageFadeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes pageFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Header styling */
+    header {
+      background-color: rgba(22, 25, 37, 0.8);
+      border-bottom: 2px solid rgba(0, 240, 255, 0.2);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-back {
+      color: var(--neon-cyan);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(0, 240, 255, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .btn-back:hover {
+      background: rgba(0, 240, 255, 0.2);
+      box-shadow: var(--glow-cyan);
+      transform: translateX(-2px);
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      text-shadow: 0 0 30px rgba(255, 0, 127, 0.2);
+    }
+
+    .controls-top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-btn {
+      background: none;
+      border: 1px solid rgba(138, 153, 173, 0.3);
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .header-btn:hover {
+      color: var(--text-main);
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .header-btn.active {
+      color: var(--neon-cyan);
+      border-color: var(--neon-cyan);
+    }
+
+    /* Game area */
+    .game-container {
+      flex: 1 !important;
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #gameCanvas {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: radial-gradient(circle at center, #111424 0%, #08090d 100%);
+    }
+
+    /* Bottom Control Dashboard */
+    .dashboard {
+      background-color: var(--panel-color);
+      border-top: 2px solid rgba(255, 0, 127, 0.2);
+      padding: 15px 30px 200px 30px !important;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 10;
+      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.7);
+      flex: 0 0 auto !important;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-box {
+      flex: 1;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    .stat-val {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      text-shadow: var(--glow-cyan);
+    }
+
+    .stat-val.magenta {
+      color: var(--neon-magenta);
+      text-shadow: var(--glow-magenta);
+    }
+
+    .stat-val.green {
+      color: var(--neon-green);
+      text-shadow: var(--glow-green);
+    }
+
+    /* Challenge Panel */
+    .challenge-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .prompt-box {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(255, 0, 127, 0.1) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 75px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.1);
+    }
+
+    .prompt-verb {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+      letter-spacing: 1px;
+    }
+
+    .prompt-details {
+      font-size: 0.9rem;
+      color: var(--neon-cyan);
+      margin-top: 3px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .prompt-verb, .prompt-details {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    @keyframes pulsateText {
+      0%, 100% { transform: scale(1); filter: brightness(1); text-shadow: var(--glow-cyan); }
+      50% { transform: scale(1.15); filter: brightness(1.4); text-shadow: 0 0 15px var(--neon-cyan), 0 0 25px rgba(0, 240, 255, 0.8); color: #fff; }
+    }
+
+    .pulsating {
+      animation: pulsateText 0.8s ease-in-out 3;
+    }
+
+    .inputs-container {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      grid-template-rows: auto auto !important;
+      grid-auto-flow: column !important;
+      gap: 12px 24px !important;
+      width: 100% !important;
+      max-width: 800px !important;
+      margin: 0 auto !important;
+    }
+
+    .input-wrapper {
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 5px !important;
+      width: auto !important;
+    }
+
+    .input-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .conjugation-input {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(138, 153, 173, 0.4);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 12px 35px 12px 12px;
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .conjugation-input:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+
+    .conjugation-input.correct {
+      border-color: var(--neon-green) !important;
+      background: rgba(57, 255, 20, 0.05);
+      color: var(--neon-green);
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+    }
+
+    .conjugation-input.incorrect {
+      border-color: var(--neon-magenta) !important;
+      background: rgba(255, 0, 127, 0.05);
+      animation: shake 0.3s ease;
+    }
+
+    .input-status-icon {
+      position: absolute;
+      right: 12px;
+      top: 32px;
+      font-size: 1.1rem;
+      display: none;
+    }
+
+    .conjugation-input.correct + .input-status-icon {
+      display: block;
+      color: var(--neon-green);
+    }
+
+    .result-display-incorrect {
+      background: rgba(255, 0, 127, 0.05);
+      border: 1px solid var(--neon-magenta);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 8px;
+      width: 100%;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.15);
+    }
+
+    /* Accents panel */
+    .accents-bar {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .accent-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .accent-btn:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      transform: translateY(-1px);
+    }
+
+    /* Modal / Info screen styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 11, 18, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      padding: 30px 0;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: var(--panel-color);
+      border: 2px solid var(--neon-cyan);
+      box-shadow: var(--glow-cyan);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 550px;
+      padding: 30px;
+      position: relative;
+      margin: auto;
+      animation: modalSlide 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes modalSlide {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--neon-cyan);
+      text-shadow: var(--glow-cyan);
+      text-transform: uppercase;
+    }
+
+    .modal-body {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-main);
+      margin-bottom: 25px;
+    }
+
+    .modal-body p {
+      margin-bottom: 12px;
+    }
+
+    .modal-body ul {
+      margin-left: 20px;
+      margin-bottom: 15px;
+      list-style-type: square;
+    }
+
+    .modal-body li {
+      margin-bottom: 6px;
+    }
+
+    .modal-close-btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+      color: white;
+      border: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-close-btn:hover {
+      box-shadow: var(--glow-magenta);
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    /* Keyframe animations */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    /* Floating score animation indicator */
+    .floating-text {
+      position: absolute;
+      color: var(--neon-magenta);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      pointer-events: none;
+      text-shadow: var(--glow-magenta);
+      animation: floatUp 1.2s ease-out forwards;
+    }
+
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-80px); opacity: 0; }
+    }
+
+    .info-boxes-container {
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    @media (max-width: 768px) {
+      .info-boxes-container {
+        flex-direction: column;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255,255,255,0.25);
+    }
+
+    .mobile-blocker {
+      display: none;
+    }
+    @media (max-width: 1024px) {
+      .mobile-blocker {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #0d0e15;
+        z-index: 999999;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 30px;
+        box-sizing: border-box;
+      }
+      .mobile-blocker h2 {
+        font-family: 'Orbitron', sans-serif;
+        color: var(--neon-magenta);
+        text-shadow: var(--glow-magenta);
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .mobile-blocker p {
+        color: var(--text-main);
+        font-size: 1rem;
+        line-height: 1.6;
+        max-width: 500px;
+        margin-bottom: 30px;
+      }
+      .mobile-blocker img {
+        max-width: 90%;
+        max-height: 45vh;
+        border-radius: 12px;
+        border: 2px solid var(--neon-cyan);
+        box-shadow: var(--glow-cyan);
+        margin-bottom: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Blocker Overlay -->
+  <div class="mobile-blocker">
+    <h2>Ordinateur Uniquement</h2>
+    <img src="game_screenshot.png" alt="Aperçu du jeu" />
+    <p>Désolé ! Ce jeu de défense de conjugaison nécessite un clavier physique et un écran plus large pour être joué de manière optimale. S'il te plaît, ouvre ce jeu sur un ordinateur.</p>
+  </div>
+
+  <!-- Game Header -->
+  <header>
+    <div class="logo-container">
+      <a href="../index.html" class="btn-back">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Retour au Hub
+      </a>
+      <h1>Verb Tense Defense</h1>
+    </div>
+    
+    <div class="controls-top">
+      <button class="header-btn" id="audioBtn" onclick="toggleAudio()">
+        <span id="audioIcon">🔊</span> Son: Activé
+      </button>
+      <button class="header-btn" onclick="openHelp()">
+        ❓ Guide
+      </button>
+    </div>
+  </header>
+
+  <!-- Interactive Canvas Game Board -->
+  <div class="game-container" id="canvasContainer">
+    <canvas id="gameCanvas"></canvas>
+  </div>
+
+  <!-- Command Dashboard -->
+  <div class="dashboard">
+    <!-- Level, score and health status indicators -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-label">Vague</div>
+        <div id="waveVal" class="stat-val magenta">1</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Score</div>
+        <div id="scoreVal" class="stat-val magenta">00000</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Villes Restantes</div>
+        <div id="citiesVal" class="stat-val green">3 / 3</div>
+      </div>
+    </div>
+
+    <!-- Active Conjugation Challenge Panel -->
+    <div class="challenge-panel">
+      <div class="prompt-box">
+        <div id="promptDetails" class="prompt-details">Initialisation...</div>
+        <div id="promptVerb" class="prompt-verb">ATTENTE...</div>
+        <div id="promptTranslation" style="font-size: 0.85rem; color: rgba(255, 251, 0, 0.75); margin-top: 4px; font-weight: 600; display: none;"></div>
+      </div>
+
+      <!-- French Verbs inputs -->
+      <div class="inputs-container">
+        <!-- Présent -->
+        <div class="input-wrapper">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+            <span id="hintPresent" style="font-size: 1.05rem; color: var(--neon-yellow); font-weight: 600; font-family: 'Roboto', 'Inter', 'Segoe UI', sans-serif;"></span>
+            <label class="input-label" style="margin-bottom: 0; font-size: 0.8rem; color: var(--text-muted); font-family: 'Roboto', 'Inter', sans-serif;" for="inputPresent">Présent</label>
+          </div>
+          <input type="text" id="inputPresent" class="conjugation-input" placeholder="..." autocomplete="off" spellcheck="false" disabled>
+          <span class="input-status-icon">✓</span>
+        </div>
+
+        <!-- Imparfait -->
+        <div class="input-wrapper">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+            <span id="hintImparfait" style="font-size: 1.05rem; color: var(--neon-yellow); font-weight: 600; font-family: 'Roboto', 'Inter', 'Segoe UI', sans-serif;"></span>
+            <label class="input-label" style="margin-bottom: 0; font-size: 0.8rem; color: var(--text-muted); font-family: 'Roboto', 'Inter', sans-serif;" for="inputImparfait">Imparfait</label>
+          </div>
+          <input type="text" id="inputImparfait" class="conjugation-input" placeholder="..." autocomplete="off" spellcheck="false" disabled>
+          <span class="input-status-icon">✓</span>
+        </div>
+
+        <!-- Passé Composé -->
+        <div class="input-wrapper">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+            <span id="hintPassesCompose" style="font-size: 1.05rem; color: var(--neon-yellow); font-weight: 600; font-family: 'Roboto', 'Inter', 'Segoe UI', sans-serif;"></span>
+            <label class="input-label" style="margin-bottom: 0; font-size: 0.8rem; color: var(--text-muted); font-family: 'Roboto', 'Inter', sans-serif;" for="inputPassesCompose">Passé Composé</label>
+          </div>
+          <input type="text" id="inputPassesCompose" class="conjugation-input" placeholder="..." autocomplete="off" spellcheck="false" disabled>
+          <span class="input-status-icon">✓</span>
+        </div>
+
+        <!-- Passé Simple -->
+        <div class="input-wrapper">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
+            <span id="hintPassesSimple" style="font-size: 1.05rem; color: var(--neon-yellow); font-weight: 600; font-family: 'Roboto', 'Inter', 'Segoe UI', sans-serif;"></span>
+            <label class="input-label" style="margin-bottom: 0; font-size: 0.8rem; color: var(--text-muted); font-family: 'Roboto', 'Inter', sans-serif;" for="inputPassesSimple">Passé Simple</label>
+          </div>
+          <input type="text" id="inputPassesSimple" class="conjugation-input" placeholder="..." autocomplete="off" spellcheck="false" disabled>
+          <span class="input-status-icon">✓</span>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  <!-- Instruction Guide / Start Screen Modal -->
+  <div class="modal-overlay open" id="helpModal">
+    <div class="modal-content">
+      <a href="../index.html" style="position: absolute; top: -35px; left: 0; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; opacity: 0.7; transition: opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Retour au Menu
+      </a>
+      <h2 class="modal-title">Verb Tense Defense</h2>
+      <div class="modal-body">
+        <p>Commandant, <strong>des missiles de conjugaison s'approchent de nos villes !</strong> Ta mission est de défendre notre territoire en conjuguant correctement les verbes.</p>
+        <p><strong>Règles du jeu :</strong></p>
+        <ul>
+          <li>Un verbe et un pronom s'affichent dans la zone de commande.</li>
+          <li>Tu dois taper les formes correspondantes au <strong>Présent</strong>, à l'<strong>Imparfait</strong>, au <strong>Passé Composé</strong>, et au <strong>Passé Simple</strong>.</li>
+          <li>Appuie sur <strong>Entrée</strong> pour envoyer un tir de défense.</li>
+          <li>Un tir correct ralentit le missile. Si les 4 réponses sont correctes, le missile est pulvérisé !</li>
+          <li>Si le missile touche une ville avant d'être détruit, la ville est rasée.</li>
+        </ul>
+        <p><em>Sélectionne un mode pour démarrer la mission. Bonne chance !</em></p>
+      </div>
+      <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; width: 100%;">
+        <!-- Mode Régulier -->
+        <div style="flex: 1; min-width: 150px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+          <button class="modal-close-btn" style="width: 100%; background: linear-gradient(90deg, var(--neon-cyan), #00bfff); font-size: 0.82rem; line-height: 1.2;" onclick="startGameWithMode('regular')">Verbes<br>Réguliers</button>
+          <a href="#" style="font-size: 0.7rem; color: var(--text-muted); text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='var(--neon-cyan)'" onmouseout="this.style.color='var(--text-muted)'" onclick="toggleVerbList(event,'regular')">Voir les verbes</a>
+        </div>
+        <!-- Mode Expert -->
+        <div style="flex: 1; min-width: 150px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+          <button class="modal-close-btn" style="width: 100%; background: linear-gradient(90deg, var(--neon-magenta), #cc0066); font-size: 0.82rem; line-height: 1.2;" onclick="startGameWithMode('expert')">Verbes<br>Irréguliers</button>
+          <a href="#" style="font-size: 0.7rem; color: var(--text-muted); text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='var(--neon-cyan)'" onmouseout="this.style.color='var(--text-muted)'" onclick="toggleVerbList(event,'expert')">Voir les verbes</a>
+        </div>
+        <!-- Mots Clés -->
+        <div style="flex: 1; min-width: 150px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+          <button class="modal-close-btn" style="width: 100%; background: linear-gradient(90deg, var(--neon-yellow), #d4af37); color: #000; font-weight: bold; font-size: 0.82rem; line-height: 1.2;" onclick="startGameWithMode('mots-cles')">Verbes<br>Clés</button>
+          <a href="#" style="font-size: 0.7rem; color: var(--text-muted); text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='var(--neon-cyan)'" onmouseout="this.style.color='var(--text-muted)'" onclick="toggleVerbList(event,'mots-cles')">Voir les verbes</a>
+        </div>
+      </div>
+      
+      <div id="verbListContainer" style="display:none; font-size: 0.9rem; color: var(--neon-cyan); text-align: center; line-height: 1.7; width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; padding: 12px; margin-top: 15px;"></div>
+
+      <!-- High Score Board on opening screen -->
+      <div id="highScoresContainer" style="margin-top: 20px; padding: 12px; border-radius: 12px; background: rgba(0,0,0,0.35); border: 1px solid rgba(0, 240, 255, 0.2); text-align: center;">
+        <h3 style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--neon-cyan); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">🏆 Meilleurs Scores 🏆</h3>
+        <div id="highScoresList" style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: var(--text-main); display: flex; flex-direction: column; gap: 4px;">
+          <!-- Loaded dynamically from localStorage -->
+        </div>
+        <div id="resetScoreWrapper" style="margin-top: 10px; font-size: 0.75rem;">
+          <a href="#" id="resetScoreLink" onclick="confirmResetScores(event)" style="color: var(--text-muted); text-decoration: underline; transition: color 0.2s;">Réinitialiser les scores</a>
+          <div id="resetScoreConfirm" style="display: none; margin-top: 5px; gap: 8px; justify-content: center; align-items: center;">
+            <span style="color: var(--neon-magenta); font-weight: bold;">Es-tu sûr ?</span>
+            <button class="header-btn" onclick="performResetScores()" style="padding: 2px 8px; font-size: 0.7rem; border-color: var(--neon-magenta); color: var(--neon-magenta); background: rgba(255,0,127,0.1); cursor: pointer;">Oui</button>
+            <button class="header-btn" onclick="cancelResetScores()" style="padding: 2px 8px; font-size: 0.7rem; cursor: pointer;">Non</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review / Second Chance Modal -->
+  <div class="modal-overlay" id="reviewModal">
+    <div id="reviewModalContent" class="modal-content" style="border-color: var(--neon-magenta); box-shadow: var(--glow-magenta); max-width: 1100px;">
+      <h2 id="reviewModalTitle" class="modal-title" style="color: var(--neon-magenta); text-shadow: var(--glow-magenta); font-size: 1.6rem; margin-bottom: 4px;">Impact ! Ville détruite</h2>
+      <div id="reviewCityStatusRow" style="text-align: center; margin-bottom: 12px; font-size: 1.3rem; display: flex; justify-content: center; gap: 8px;"></div>
+      <div class="modal-body">
+        <p id="reviewModalDesc" style="font-size: 1rem; margin-bottom: 12px; text-align: center;">Le missile a percuté nos défenses. Révise tes réponses et la conjugaison complète :</p>
+        
+        <div class="info-boxes-container">
+          <!-- Challenge prompt comparison -->
+          <div style="flex: 1.25; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,0,127,0.2); display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="background: rgba(255, 0, 127, 0.08); border: 1px solid rgba(255, 0, 127, 0.25); padding: 10px 14px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 1.2rem; font-family: 'Roboto', 'Inter', 'Segoe UI', sans-serif; font-weight: bold;">
+              <div>
+                <span id="reviewHeaderPronoun" style="color: var(--neon-cyan); font-weight: bold;"></span> 
+                <span id="reviewHeaderVerb" style="color: #fff; font-weight: 900; text-transform: lowercase;"></span>
+              </div>
+              <span id="reviewHeaderTranslation" style="color: var(--neon-yellow); opacity: 0.85; font-size: 0.95rem; font-weight: 600;"></span>
+            </div>
+            
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px; margin: 15px 0; font-size: 0.82rem; line-height: 1.8;">
+              <p style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 2px;"><strong>Présent :</strong> <span id="reviewPres">-</span></p>
+              <p style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 2px;"><strong>Imparfait :</strong> <span id="reviewImp">-</span></p>
+              <p style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 2px;"><strong>Passé Composé :</strong> <span id="reviewPC">-</span></p>
+              <p style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 2px;"><strong>Passé Simple :</strong> <span id="reviewPS">-</span></p>
+            </div>
+
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; font-size: 0.85rem; margin-top: auto;">
+              <a id="reviewVerifyLink" href="#" target="_blank" style="color: var(--neon-cyan); text-decoration: underline; font-weight: 500;">Verify Accuracy</a>
+              <a id="reviewAICopyLink" href="#" style="color: var(--neon-yellow); text-decoration: underline; font-weight: 500;">Text for AI example creation</a>
+            </div>
+          </div>
+
+          <!-- Conjugation Table for whole verb -->
+          <div style="flex: 1; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column;">
+            <h3 style="font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: var(--neon-cyan); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">Conjugaison</h3>
+            <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 6px; flex: 1; display: flex; align-items: center;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.74rem; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.15); color: var(--text-muted); font-weight: bold;">
+                    <th style="padding: 6px;">Pronom</th>
+                    <th style="padding: 6px;">Présent</th>
+                    <th style="padding: 6px;">Imparfait</th>
+                    <th style="padding: 6px;">Passé Composé</th>
+                    <th style="padding: 6px;">Passé Simple</th>
+                  </tr>
+                </thead>
+                <tbody id="reviewFullTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Integrated Leaderboard & Round Score Breakdown Container -->
+        <div style="display: flex; justify-content: center; gap: 20px; align-items: stretch; margin-bottom: 14px; flex-wrap: wrap;">
+          
+          <!-- Round Score Breakdown Panel -->
+          <div id="roundScoreBreakdownBox" style="background: rgba(0,0,0,0.35); border: 1px solid rgba(0,240,255,0.2); border-radius: 10px; padding: 8px 14px; width: 320px; font-family: 'Inter', sans-serif; font-size: 0.88rem; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; text-align: left; line-height: 1.6;">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- Integrated High Scores / Current Score leaderboard -->
+          <div id="reviewScoreBox" style="background: rgba(0,0,0,0.35); border: 1px solid rgba(0,240,255,0.2); border-radius: 10px; padding: 8px 14px; width: 320px; box-sizing: border-box;">
+            <div style="font-family: 'Share Tech Mono', monospace; font-size: 1.15rem; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; margin-bottom: 6px;">🏆 Meilleurs Scores</div>
+            <div id="reviewScoreLeaderboard" style="display: flex; flex-direction: column; gap: 4px; font-family: 'Share Tech Mono', monospace; font-size: 1.05rem;">
+              <!-- populated dynamically -->
+            </div>
+            <div id="reviewCurrentScoreOutside" style="display: none; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); padding: 6px 6px 3px 6px; justify-content: space-between; align-items: center; font-family: 'Share Tech Mono', monospace; box-sizing: border-box; font-size: 0.88rem;"></div>
+          </div>
+
+        </div>
+        
+        <div id="reviewModalFooter" style="text-align: center; margin-top: 10px;">
+          <p style="font-weight: 700; color: var(--neon-cyan); font-size: 0.95rem;">Le prochain missile sera neutralisé avec ces MÊMES réponses.</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Mémorise-les bien avant de relancer !</p>
+        </div>
+        
+        <!-- Selector for the next verb (only shown on success/dismiss of review) -->
+        <button id="reviewCloseBtn" class="modal-close-btn" tabindex="0" style="background: linear-gradient(90deg, var(--neon-magenta), var(--neon-cyan)); margin-top: 15px;" onclick="closeReviewModal()">Let's do this</button>
+
+        <div id="nextVerbSelectorContainer" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; display: none;">
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">ou choisis un verbe spécifique ou un groupe de verbes sur lequel tu aimerais t'évaluer :</div>
+          <div id="availableVerbsList" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+            <!-- Verb links loaded dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*========================================================================
+     * French Verb Conjugations Database
+     ========================================================================*/
+    const VERB_DATABASE = {
+      "partir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: { "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles" },
+        present: { "je": ["pars"], "tu": ["pars"], "il": ["part"], "nous": ["partons"], "vous": ["partez"], "ils": ["partent"] },
+        imparfait: { "je": ["partais"], "tu": ["partais"], "il": ["partait"], "nous": ["partions"], "vous": ["partiez"], "ils": ["partaient"] },
+        passe_compose: { "je": ["suis parti", "suis partie"], "tu": ["es parti", "es partie"], "il": ["est parti", "est partie"], "nous": ["sommes partis", "sommes parties"], "vous": ["êtes partis", "êtes parties", "êtes parti", "êtes partie"], "ils": ["sont partis", "sont parties"] },
+        passe_simple: { "je": ["partis"], "tu": ["partis"], "il": ["partit"], "nous": ["partîmes"], "vous": ["partîtes"], "ils": ["partirent"] }
+      },
+      "sortir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: { "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles" },
+        present: { "je": ["sors"], "tu": ["sors"], "il": ["sort"], "nous": ["sortons"], "vous": ["sortez"], "ils": ["sortent"] },
+        imparfait: { "je": ["sortais"], "tu": ["sortais"], "il": ["sortait"], "nous": ["sortions"], "vous": ["sortiez"], "ils": ["sortaient"] },
+        passe_compose: { "je": ["suis sorti", "suis sortie"], "tu": ["es sorti", "es sortie"], "il": ["est sorti", "est sortie"], "nous": ["sommes sortis", "sommes sorties"], "vous": ["êtes sortis", "êtes sorties", "êtes sorti", "êtes sortie"], "ils": ["sont sortis", "sont sorties"] },
+        passe_simple: { "je": ["sortis"], "tu": ["sortis"], "il": ["sortit"], "nous": ["sortîmes"], "vous": ["sortîtes"], "ils": ["sortirent"] }
+      },
+      "dormir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: { "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles" },
+        present: { "je": ["dors"], "tu": ["dors"], "il": ["dort"], "nous": ["dormons"], "vous": ["dormez"], "ils": ["dorment"] },
+        imparfait: { "je": ["dormais"], "tu": ["dormais"], "il": ["dormait"], "nous": ["dormions"], "vous": ["dormiez"], "ils": ["dormaient"] },
+        passe_compose: { "je": ["ai dormi"], "tu": ["as dormi"], "il": ["a dormi"], "nous": ["avons dormi"], "vous": ["avez dormi"], "ils": ["ont dormi"] },
+        passe_simple: { "je": ["dormis"], "tu": ["dormis"], "il": ["dormit"], "nous": ["dormîmes"], "vous": ["dormîtes"], "ils": ["dormirent"] }
+      },
+      "sentir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: { "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles" },
+        present: { "je": ["sens"], "tu": ["sens"], "il": ["sent"], "nous": ["sentons"], "vous": ["sentez"], "ils": ["sentent"] },
+        imparfait: { "je": ["sentais"], "tu": ["sentais"], "il": ["sentait"], "nous": ["sentions"], "vous": ["sentiez"], "ils": ["sentaient"] },
+        passe_compose: { "je": ["ai senti"], "tu": ["as senti"], "il": ["a senti"], "nous": ["avons senti"], "vous": ["avez senti"], "ils": ["ont senti"] },
+        passe_simple: { "je": ["sentis"], "tu": ["sentis"], "il": ["sentit"], "nous": ["sentîmes"], "vous": ["sentîtes"], "ils": ["sentirent"] }
+      },
+      "être": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["suis"], "tu": ["es"], "il": ["est"],
+          "nous": ["sommes"], "vous": ["êtes"], "ils": ["sont"]
+        },
+        imparfait: {
+          "je": ["étais"], "tu": ["étais"], "il": ["était"],
+          "nous": ["étions"], "vous": ["étiez"], "ils": ["étaient"]
+        },
+        passe_compose: {
+          "je": ["ai été"], "tu": ["as été"], "il": ["a été"],
+          "nous": ["avons été"], "vous": ["avez été"], "ils": ["ont été"]
+        },
+        passe_simple: {
+          "je": ["fus"], "tu": ["fus"], "il": ["fut"],
+          "nous": ["fûmes"], "vous": ["fûtes"], "ils": ["furent"]
+        }
+      },
+      "avoir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["ai"], "tu": ["as"], "il": ["a"],
+          "nous": ["avons"], "vous": ["avez"], "ils": ["ont"]
+        },
+        imparfait: {
+          "je": ["avais"], "tu": ["avais"], "il": ["avait"],
+          "nous": ["avions"], "vous": ["aviez"], "ils": ["avaient"]
+        },
+        passe_compose: {
+          "je": ["ai eu"], "tu": ["as eu"], "il": ["a eu"],
+          "nous": ["avons eu"], "vous": ["avez eu"], "ils": ["ont eu"]
+        },
+        passe_simple: {
+          "je": ["eus"], "tu": ["eus"], "il": ["eut"],
+          "nous": ["eûmes"], "vous": ["eûtes"], "ils": ["eurent"]
+        }
+      },
+      "faire": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["fais"], "tu": ["fais"], "il": ["fait"],
+          "nous": ["faisons"], "vous": ["faites"], "ils": ["font"]
+        },
+        imparfait: {
+          "je": ["faisais"], "tu": ["faisais"], "il": ["faisait"],
+          "nous": ["faisions"], "vous": ["faisiez"], "ils": ["faisaient"]
+        },
+        passe_compose: {
+          "je": ["ai fait"], "tu": ["as fait"], "il": ["a fait"],
+          "nous": ["avons fait"], "vous": ["avez fait"], "ils": ["ont fait"]
+        },
+        passe_simple: {
+          "je": ["fis"], "tu": ["fis"], "il": ["fit"],
+          "nous": ["fîmes"], "vous": ["fîtes"], "ils": ["firent"]
+        }
+      },
+      "aller": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["vais"], "tu": ["vas"], "il": ["va"],
+          "nous": ["allons"], "vous": ["allez"], "ils": ["vont"]
+        },
+        imparfait: {
+          "je": ["allais"], "tu": ["allais"], "il": ["allait"],
+          "nous": ["allions"], "vous": ["alliez"], "ils": ["allaient"]
+        },
+        passe_compose: {
+          "je": ["suis allé", "suis allée"],
+          "tu": ["es allé", "es allée"],
+          "il": ["est allé", "est allée"],
+          "nous": ["sommes allés", "sommes allées"],
+          "vous": ["êtes allés", "êtes allées", "êtes allé", "êtes allée"],
+          "ils": ["sont allés", "sont allées"]
+        },
+        passe_simple: {
+          "je": ["allai"], "tu": ["allas"], "il": ["alla"],
+          "nous": ["allâmes"], "vous": ["allâtes"], "ils": ["allèrent"]
+        }
+      },
+      "dire": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["dis"], "tu": ["dis"], "il": ["dit"],
+          "nous": ["disons"], "vous": ["dites"], "ils": ["disent"]
+        },
+        imparfait: {
+          "je": ["disais"], "tu": ["disais"], "il": ["disait"],
+          "nous": ["disions"], "vous": ["disiez"], "ils": ["disaient"]
+        },
+        passe_compose: {
+          "je": ["ai dit"], "tu": ["as dit"], "il": ["a dit"],
+          "nous": ["avons dit"], "vous": ["avez dit"], "ils": ["ont dit"]
+        },
+        passe_simple: {
+          "je": ["dis"], "tu": ["dis"], "il": ["dit"],
+          "nous": ["dîmes"], "vous": ["dîtes"], "ils": ["dirent"]
+        }
+      },
+      "pouvoir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["peux"], "tu": ["peux"], "il": ["peut"],
+          "nous": ["pouvons"], "vous": ["pouvez"], "ils": ["peuvent"]
+        },
+        imparfait: {
+          "je": ["pouvais"], "tu": ["pouvais"], "il": ["pouvait"],
+          "nous": ["pouvions"], "vous": ["pouviez"], "ils": ["pouvaient"]
+        },
+        passe_compose: {
+          "je": ["ai pu"], "tu": ["as pu"], "il": ["a pu"],
+          "nous": ["avons pu"], "vous": ["avez pu"], "ils": ["ont pu"]
+        },
+        passe_simple: {
+          "je": ["pus"], "tu": ["pus"], "il": ["put"],
+          "nous": ["pûmes"], "vous": ["pûtes"], "ils": ["purent"]
+        }
+      },
+      "vouloir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["veux"], "tu": ["veux"], "il": ["veut"],
+          "nous": ["voulons"], "vous": ["voulez"], "ils": ["veulent"]
+        },
+        imparfait: {
+          "je": ["voulais"], "tu": ["voulais"], "il": ["voulait"],
+          "nous": ["voulions"], "vous": ["vouliez"], "ils": ["voulaient"]
+        },
+        passe_compose: {
+          "je": ["ai voulu"], "tu": ["as voulu"], "il": ["a voulu"],
+          "nous": ["avons voulu"], "vous": ["avez voulu"], "ils": ["ont voulu"]
+        },
+        passe_simple: {
+          "je": ["voulus"], "tu": ["voulus"], "il": ["voulut"],
+          "nous": ["voulûmes"], "vous": ["voulûtes"], "ils": ["voulurent"]
+        }
+      },
+      "devoir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["dois"], "tu": ["dois"], "il": ["doit"],
+          "nous": ["devons"], "vous": ["devez"], "ils": ["doivent"]
+        },
+        imparfait: {
+          "je": ["devais"], "tu": ["devais"], "il": ["devait"],
+          "nous": ["devions"], "vous": ["deviez"], "ils": ["devaient"]
+        },
+        passe_compose: {
+          "je": ["ai dû"], "tu": ["as dû"], "il": ["a dû"],
+          "nous": ["avons dû"], "vous": ["avez dû"], "ils": ["ont dû"]
+        },
+        passe_simple: {
+          "je": ["dus"], "tu": ["dus"], "il": ["dut"],
+          "nous": ["dûmes"], "vous": ["dûtes"], "ils": ["durent"]
+        }
+      },
+      "voir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["vois"], "tu": ["vois"], "il": ["voit"],
+          "nous": ["voyons"], "vous": ["voyez"], "ils": ["voient"]
+        },
+        imparfait: {
+          "je": ["voyais"], "tu": ["voyais"], "il": ["voyait"],
+          "nous": ["voyions"], "vous": ["voyiez"], "ils": ["voyaient"]
+        },
+        passe_compose: {
+          "je": ["ai vu"], "tu": ["as vu"], "il": ["a vu"],
+          "nous": ["avons vu"], "vous": ["avez vu"], "ils": ["ont vu"]
+        },
+        passe_simple: {
+          "je": ["vis"], "tu": ["vis"], "il": ["vit"],
+          "nous": ["vîmes"], "vous": ["vîtes"], "ils": ["virent"]
+        }
+      },
+      "savoir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["sais"], "tu": ["sais"], "il": ["sait"],
+          "nous": ["savons"], "vous": ["savez"], "ils": ["savent"]
+        },
+        imparfait: {
+          "je": ["savais"], "tu": ["savais"], "il": ["savait"],
+          "nous": ["savions"], "vous": ["saviez"], "ils": ["savaient"]
+        },
+        passe_compose: {
+          "je": ["ai su"], "tu": ["as su"], "il": ["a su"],
+          "nous": ["avons su"], "vous": ["avez su"], "ils": ["ont su"]
+        },
+        passe_simple: {
+          "je": ["sus"], "tu": ["sus"], "il": ["sut"],
+          "nous": ["sûmes"], "vous": ["sûtes"], "ils": ["surent"]
+        }
+      },
+      "prendre": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["prends"], "tu": ["prends"], "il": ["prend"],
+          "nous": ["prenons"], "vous": ["prenez"], "ils": ["prennent"]
+        },
+        imparfait: {
+          "je": ["prenais"], "tu": ["prenais"], "il": ["prenait"],
+          "nous": ["prenions"], "vous": ["preniez"], "ils": ["prenaient"]
+        },
+        passe_compose: {
+          "je": ["ai pris"], "tu": ["as pris"], "il": ["a pris"],
+          "nous": ["avons pris"], "vous": ["avez pris"], "ils": ["ont pris"]
+        },
+        passe_simple: {
+          "je": ["pris"], "tu": ["pris"], "il": ["prit"],
+          "nous": ["prîmes"], "vous": ["prîtes"], "ils": ["prirent"]
+        }
+      },
+      "venir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["viens"], "tu": ["viens"], "il": ["vient"],
+          "nous": ["venons"], "vous": ["venez"], "ils": ["viennent"]
+        },
+        imparfait: {
+          "je": ["venais"], "tu": ["venais"], "il": ["venait"],
+          "nous": ["venions"], "vous": ["veniez"], "ils": ["venaient"]
+        },
+        passe_compose: {
+          "je": ["suis venu", "suis venue"],
+          "tu": ["es venu", "es venue"],
+          "il": ["est venu", "est venue"],
+          "nous": ["sommes venus", "sommes venues"],
+          "vous": ["êtes venus", "êtes venues", "êtes venu", "êtes venue"],
+          "ils": ["sont venus", "sont venues"]
+        },
+        passe_simple: {
+          "je": ["vins"], "tu": ["vins"], "il": ["vint"],
+          "nous": ["vînmes"], "vous": ["vîntes"], "ils": ["vinrent"]
+        }
+      },
+      "finir": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["finis"], "tu": ["finis"], "il": ["finit"],
+          "nous": ["finissons"], "vous": ["finissez"], "ils": ["finissent"]
+        },
+        imparfait: {
+          "je": ["finissais"], "tu": ["finissais"], "il": ["finissait"],
+          "nous": ["finissions"], "vous": ["finissiez"], "ils": ["finissaient"]
+        },
+        passe_compose: {
+          "je": ["ai fini"], "tu": ["as fini"], "il": ["a fini"],
+          "nous": ["avons fini"], "vous": ["avez fini"], "ils": ["ont fini"]
+        },
+        passe_simple: {
+          "je": ["finis"], "tu": ["finis"], "il": ["finit"],
+          "nous": ["finîmes"], "vous": ["finîtes"], "ils": ["finirent"]
+        }
+      },
+      "écrire": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["écris"], "tu": ["écris"], "il": ["écrit"],
+          "nous": ["écrivons"], "vous": ["écrivez"], "ils": ["écrivent"]
+        },
+        imparfait: {
+          "je": ["écrivais"], "tu": ["écrivais"], "il": ["écrivait"],
+          "nous": ["écrivions"], "vous": ["écriviez"], "ils": ["écrivaient"]
+        },
+        passe_compose: {
+          "je": ["ai écrit"], "tu": ["as écrit"], "il": ["a écrit"],
+          "nous": ["avons écrit"], "vous": ["avez écrit"], "ils": ["ont écrit"]
+        },
+        passe_simple: {
+          "je": ["écrivis"], "tu": ["écrivis"], "il": ["écrivit"],
+          "nous": ["écrivîmes"], "vous": ["écrivîtes"], "ils": ["écrivirent"]
+        }
+      },
+      "lire": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["lis"], "tu": ["lis"], "il": ["lit"],
+          "nous": ["lisons"], "vous": ["lisez"], "ils": ["lisent"]
+        },
+        imparfait: {
+          "je": ["lisais"], "tu": ["lisais"], "il": ["lisait"],
+          "nous": ["lisions"], "vous": ["lisiez"], "ils": ["lisaient"]
+        },
+        passe_compose: {
+          "je": ["ai lu"], "tu": ["as lu"], "il": ["a lu"],
+          "nous": ["avons lu"], "vous": ["avez lu"], "ils": ["ont lu"]
+        },
+        passe_simple: {
+          "je": ["lus"], "tu": ["lus"], "il": ["lut"],
+          "nous": ["lûmes"], "vous": ["lûtes"], "ils": ["lurent"]
+        }
+      },
+      "mettre": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["mets"], "tu": ["mets"], "il": ["met"],
+          "nous": ["mettons"], "vous": ["mettez"], "ils": ["mettent"]
+        },
+        imparfait: {
+          "je": ["mettais"], "tu": ["mettais"], "il": ["mettait"],
+          "nous": ["mettions"], "vous": ["mettiez"], "ils": ["mettaient"]
+        },
+        passe_compose: {
+          "je": ["ai mis"], "tu": ["as mis"], "il": ["a mis"],
+          "nous": ["avons mis"], "vous": ["avez mis"], "ils": ["ont mis"]
+        },
+        passe_simple: {
+          "je": ["mis"], "tu": ["mis"], "il": ["mit"],
+          "nous": ["mîmes"], "vous": ["mîtes"], "ils": ["mirent"]
+        }
+      },
+      "manger": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["mange"], "tu": ["manges"], "il": ["mange"],
+          "nous": ["mangeons"], "vous": ["mangez"], "ils": ["mangent"]
+        },
+        imparfait: {
+          "je": ["mangeais"], "tu": ["mangeais"], "il": ["mangeait"],
+          "nous": ["mangions"], "vous": ["mangiez"], "ils": ["mangeaient"]
+        },
+        passe_compose: {
+          "je": ["ai mangé"], "tu": ["as mangé"], "il": ["a mangé"],
+          "nous": ["avons mangé"], "vous": ["avez mangé"], "ils": ["ont mangé"]
+        },
+        passe_simple: {
+          "je": ["mangeai"], "tu": ["mangeas"], "il": ["mangea"],
+          "nous": ["mangeâmes"], "vous": ["mangeâtes"], "ils": ["mangèrent"]
+        }
+      },
+      "commencer": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["commence"], "tu": ["commences"], "il": ["commence"],
+          "nous": ["commençons"], "vous": ["commencez"], "ils": ["commencent"]
+        },
+        imparfait: {
+          "je": ["commençais"], "tu": ["commençais"], "il": ["commençait"],
+          "nous": ["commencions"], "vous": ["commenciez"], "ils": ["commençaient"]
+        },
+        passe_compose: {
+          "je": ["ai commencé"], "tu": ["as commencé"], "il": ["a commencé"],
+          "nous": ["avons commencé"], "vous": ["avez commencé"], "ils": ["ont commencé"]
+        },
+        passe_simple: {
+          "je": ["commençai"], "tu": ["commenças"], "il": ["commença"],
+          "nous": ["commençâmes"], "vous": ["commençâtes"], "ils": ["commencèrent"]
+        }
+      },
+      "parler": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["parle"], "tu": ["parles"], "il": ["parle"],
+          "nous": ["parlons"], "vous": ["parlez"], "ils": ["parlent"]
+        },
+        imparfait: {
+          "je": ["parlais"], "tu": ["parlais"], "il": ["parlait"],
+          "nous": ["parlions"], "vous": ["parliez"], "ils": ["parlaient"]
+        },
+        passe_compose: {
+          "je": ["ai parlé"], "tu": ["as parlé"], "il": ["a parlé"],
+          "nous": ["avons parlé"], "vous": ["avez parlé"], "ils": ["ont parlé"]
+        },
+        passe_simple: {
+          "je": ["parlai"], "tu": ["parlas"], "il": ["parla"],
+          "nous": ["parlâmes"], "vous": ["parlâtes"], "ils": ["parlèrent"]
+        }
+      },
+      "aimer": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["aime"], "tu": ["aimes"], "il": ["aime"],
+          "nous": ["aimons"], "vous": ["aimez"], "ils": ["aiment"]
+        },
+        imparfait: {
+          "je": ["aimais"], "tu": ["aimais"], "il": ["aimait"],
+          "nous": ["aimions"], "vous": ["aimiez"], "ils": ["aimaient"]
+        },
+        passe_compose: {
+          "je": ["ai aimé"], "tu": ["as aimé"], "il": ["a aimé"],
+          "nous": ["avons aimé"], "vous": ["avez aimé"], "ils": ["ont aimé"]
+        },
+        passe_simple: {
+          "je": ["aimai"], "tu": ["aimas"], "il": ["aima"],
+          "nous": ["aimâmes"], "vous": ["aimâtes"], "ils": ["aimèrent"]
+        }
+      },
+      "vendre": {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: {
+          "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+        },
+        present: {
+          "je": ["vends"], "tu": ["vends"], "il": ["vend"],
+          "nous": ["vendons"], "vous": ["vendez"], "ils": ["vendent"]
+        },
+        imparfait: {
+          "je": ["vendais"], "tu": ["vendais"], "il": ["vendait"],
+          "nous": ["vendions"], "vous": ["vendiez"], "ils": ["vendaient"]
+        },
+        passe_compose: {
+          "je": ["ai vendu"], "tu": ["as vendu"], "il": ["a vendu"],
+          "nous": ["avons vendu"], "vous": ["avez vendu"], "ils": ["ont vendu"]
+        },
+        passe_simple: {
+          "je": ["vendis"], "tu": ["vendis"], "il": ["vendit"],
+          "nous": ["vendîmes"], "vous": ["vendîtes"], "ils": ["vendirent"]
+        }
+      }
+    };
+
+    /*========================================================================
+     * Web Audio API Synthesizer (Audio feedback)
+     ========================================================================*/
+    let isAudioEnabled = true;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleAudio() {
+      isAudioEnabled = !isAudioEnabled;
+      const audioBtn = document.getElementById('audioBtn');
+      const audioIcon = document.getElementById('audioIcon');
+      if (isAudioEnabled) {
+        audioIcon.innerText = "🔊";
+        audioBtn.innerHTML = `🔊 Son: Activé`;
+        audioBtn.classList.remove('active');
+      } else {
+        audioIcon.innerText = "🔇";
+        audioBtn.innerHTML = `🔇 Son: Coupé`;
+        audioBtn.classList.add('active');
+      }
+    }
+
+    function playWarningSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      const now = audioCtx.currentTime;
+      const numBeeps = 8;
+      
+      for (let i = 0; i < numBeeps; i++) {
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        osc.type = 'triangle'; // Softer timbre
+        osc.frequency.setValueAtTime(380, now + (i * 0.16));
+        // Soft pitch bend down
+        osc.frequency.exponentialRampToValueAtTime(300, now + (i * 0.16) + 0.12);
+        
+        // Lower volume level
+        gainNode.gain.setValueAtTime(0.08, now + (i * 0.16));
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.16) + 0.12);
+        
+        osc.start(now + (i * 0.16));
+        osc.stop(now + (i * 0.16) + 0.12);
+      }
+    }
+
+    function playDangerBonusSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      const now = audioCtx.currentTime;
+      
+      // Dramatic rapid dissonant alarm/bonus round chord sweep
+      const notes = [220, 330, 440, 660, 880, 660, 440, 330];
+      notes.forEach((freq, index) => {
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, now + index * 0.06);
+        
+        gainNode.gain.setValueAtTime(0.12, now + index * 0.06);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + index * 0.06 + 0.15);
+        
+        osc.start(now + index * 0.06);
+        osc.stop(now + index * 0.06 + 0.15);
+      });
+    }
+
+    function playLaserSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.15);
+      
+      gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+      
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.15);
+    }
+
+    function playGlitchLaserSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(350, audioCtx.currentTime);
+      osc.frequency.linearRampToValueAtTime(80, audioCtx.currentTime + 0.22);
+      
+      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime + 0.05);
+      gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime + 0.1);
+      gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime + 0.14);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
+      
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.22);
+    }
+
+    function playExplosionSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      const bufferSize = audioCtx.sampleRate * 0.4;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      
+      const noiseNode = audioCtx.createBufferSource();
+      noiseNode.buffer = buffer;
+      
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+      filter.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.4);
+      
+      const gainNode = audioCtx.createGain();
+      gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+      
+      noiseNode.connect(filter);
+      filter.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      noiseNode.start();
+      noiseNode.stop(audioCtx.currentTime + 0.4);
+    }
+
+    function playCityDestroyedSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      
+      const duration = 4.8;
+      const bufferSize = audioCtx.sampleRate * duration;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      
+      let lastOut = 0.0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        data[i] = (lastOut + (0.02 * white)) / 1.02;
+        lastOut = data[i];
+        data[i] *= 3.5;
+      }
+      
+      const noiseNode = audioCtx.createBufferSource();
+      noiseNode.buffer = buffer;
+      
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(150, audioCtx.currentTime);
+      filter.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + duration);
+      
+      const gainNode = audioCtx.createGain();
+      gainNode.gain.setValueAtTime(1.5, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      
+      noiseNode.connect(filter);
+      filter.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      noiseNode.start();
+      noiseNode.stop(audioCtx.currentTime + duration);
+    }
+
+    function playSuccessSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      const now = audioCtx.currentTime;
+      const duration = 1.8;
+
+      // Sub-bass impact thump
+      const subOsc = audioCtx.createOscillator();
+      const subGain = audioCtx.createGain();
+      subOsc.connect(subGain);
+      subGain.connect(audioCtx.destination);
+      subOsc.type = 'sine';
+      subOsc.frequency.setValueAtTime(100, now);
+      subOsc.frequency.linearRampToValueAtTime(10, now + 0.25);
+      subGain.gain.setValueAtTime(0.45, now);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      subOsc.start(now);
+      subOsc.stop(now + 0.25);
+
+      // Noise blast & rumble
+      const bufferSize = audioCtx.sampleRate * duration;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      
+      const noiseNode = audioCtx.createBufferSource();
+      noiseNode.buffer = buffer;
+      
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800, now);
+      filter.frequency.exponentialRampToValueAtTime(20, now + duration);
+      
+      const noiseGain = audioCtx.createGain();
+      noiseGain.gain.setValueAtTime(0.45, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      
+      noiseNode.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(audioCtx.destination);
+      
+      noiseNode.start(now);
+      noiseNode.stop(now + duration);
+    }
+
+    function playTornadoSirenSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      const now = audioCtx.currentTime;
+      const duration = 7.2;
+      
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      osc1.connect(gainNode);
+      osc2.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      osc1.type = 'sawtooth';
+      osc2.type = 'sine';
+      
+      osc1.frequency.setValueAtTime(580, now);
+      osc2.frequency.setValueAtTime(584, now);
+      
+      const numSweeps = 18;
+      for (let i = 0; i < numSweeps; i++) {
+        const time = now + (i * 0.4);
+        osc1.frequency.linearRampToValueAtTime(i % 2 === 0 ? 680 : 480, time + 0.35);
+        osc2.frequency.linearRampToValueAtTime(i % 2 === 0 ? 684 : 484, time + 0.35);
+      }
+      
+      gainNode.gain.setValueAtTime(0.0, now);
+      gainNode.gain.linearRampToValueAtTime(0.02, now + 0.1);
+      gainNode.gain.linearRampToValueAtTime(0.02, now + duration - 0.5);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      
+      osc1.start(now);
+      osc2.start(now);
+      osc1.stop(now + duration);
+      osc2.stop(now + duration);
+    }
+
+    function playErrorSound() {
+      if (!isAudioEnabled) return;
+      initAudio();
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(120, audioCtx.currentTime + 0.08);
+      
+      gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+      
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.2);
+    }
+
+    /*========================================================================
+     * Canvas Game Engine Setup
+     ========================================================================*/
+      const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const container = document.getElementById("canvasContainer");
+
+    // Game stats state
+    let score = 0;
+    let sessionAccumulatedScore = 0;
+    let wave = 1;
+    let isGameRunning = false;
+    let stars = [];
+    let cities = [];
+    let activeMissile = null;
+    let interceptors = [];
+    let explosions = [];
+    let particles = [];
+
+     // Question / conjugation target state
+    let currentVerb = "";
+    let currentPronoun = "";
+    let selectedPronounDisplay = "";
+    let retrySameChallenge = false;
+    let gameMode = "expert"; // 'regular' or 'expert'
+    
+    let lastSpeedBonusAmount = 0;
+    let lastMissileTimeTaken = "0.0";
+    let totalSpeedBonusesEarned = 0;
+    
+    // First try flags for scoring and UI
+    let isFirstTryForCurrentVerb = true;
+    let currentVerbFirstTryCorrectCount = 0;
+    
+    // Globals for floating text
+    let floatingTexts = [];
+
+    const REGULAR_VERBS = [
+      "parler", "aimer", "finir", "vendre",
+      "chanter", "danser", "écouter", "regarder", "habiter", "étudier", "travailler",
+      "jouer", "donner", "porter", "penser", "chercher", "trouver", "fermer",
+      "demander", "préparer", "visiter", "refuser", "accepter", "garder",
+      "choisir", "réussir", "grandir", "obéir", "punir", "remplir", "réfléchir", "bâtir",
+      "attendre", "entendre", "répondre", "rendre",
+      "marcher", "sauter", "grimper", "laver", "pleurer", "dessiner", "brûler", "compter", "tousser", "saluer",
+      "applaudir", "ralentir", "rougir", "blanchir", "guérir", "grossir"
+    ];
+
+    // Top 14 most important French verbs (Mots Clés mode)
+    const TOP_VERBS = [
+      "être", "avoir", "faire", "dire", "aller",
+      "pouvoir", "vouloir", "devoir", "savoir", "voir",
+      "prendre", "venir", "mettre", "donner"
+    ];
+
+    // Helper to generate completely regular verb conjugations
+    function addRegularVerb(verb, group) {
+      let base = verb.slice(0, -2);
+      let pronounDisplay = {
+        "je": "je", "tu": "tu", "il": "il / elle / on", "nous": "nous", "vous": "vous", "ils": "ils / elles"
+      };
+
+      let present, imparfait, passe_compose, passe_simple;
+
+      if (group === 'er') {
+        present = {
+          "je": [base + "e"], "tu": [base + "es"], "il": [base + "e"],
+          "nous": [base + "ons"], "vous": [base + "ez"], "ils": [base + "ent"]
+        };
+        imparfait = {
+          "je": [base + "ais"], "tu": [base + "ais"], "il": [base + "ait"],
+          "nous": [base + "ions"], "vous": [base + "iez"], "ils": [base + "aient"]
+        };
+        passe_compose = {
+          "je": ["ai " + base + "é"], "tu": ["as " + base + "é"], "il": ["a " + base + "é"],
+          "nous": ["avons " + base + "é"], "vous": ["avez " + base + "é"], "ils": ["ont " + base + "é"]
+        };
+        passe_simple = {
+          "je": [base + "ai"], "tu": [base + "as"], "il": [base + "a"],
+          "nous": [base + "âmes"], "vous": [base + "âtes"], "ils": [base + "èrent"]
+        };
+      } else if (group === 'ir') {
+        present = {
+          "je": [base + "is"], "tu": [base + "is"], "il": [base + "it"],
+          "nous": [base + "issons"], "vous": [base + "issez"], "ils": [base + "issent"]
+        };
+        imparfait = {
+          "je": [base + "issais"], "tu": [base + "issais"], "il": [base + "issait"],
+          "nous": [base + "missions", base + "issions"], "vous": [base + "issiez"], "ils": [base + "issaient"]
+        };
+        // Quick correction: "nous" in imparfait for ir verbs is base + "issions"
+        imparfait.nous = [base + "issions"];
+        passe_compose = {
+          "je": ["ai " + base + "i"], "tu": ["as " + base + "i"], "il": ["a " + base + "i"],
+          "nous": ["avons " + base + "i"], "vous": ["avez " + base + "i"], "ils": ["ont " + base + "i"]
+        };
+        passe_simple = {
+          "je": [base + "is"], "tu": [base + "is"], "il": [base + "it"],
+          "nous": [base + "îmes"], "vous": [base + "îtes"], "ils": [base + "irent"]
+        };
+      } else if (group === 're') {
+        present = {
+          "je": [base + "s"], "tu": [base + "s"], "il": [base],
+          "nous": [base + "ons"], "vous": [base + "ez"], "ils": [base + "ent"]
+        };
+        imparfait = {
+          "je": [base + "ais"], "tu": [base + "ais"], "il": [base + "ait"],
+          "nous": [base + "ions"], "vous": [base + "iez"], "ils": [base + "aient"]
+        };
+        passe_compose = {
+          "je": ["ai " + base + "u"], "tu": ["as " + base + "u"], "il": ["a " + base + "u"],
+          "nous": ["avons " + base + "u"], "vous": ["avez " + base + "u"], "ils": ["ont " + base + "u"]
+        };
+        passe_simple = {
+          "je": [base + "is"], "tu": [base + "is"], "il": [base + "it"],
+          "nous": [base + "îmes"], "vous": [base + "îtes"], "ils": [base + "irent"]
+        };
+      }
+
+      VERB_DATABASE[verb] = {
+        pronouns: ["je", "tu", "il", "nous", "vous", "ils"],
+        pronounDisplay: pronounDisplay,
+        present: present,
+        imparfait: imparfait,
+        passe_compose: passe_compose,
+        passe_simple: passe_simple
+      };
+    }
+
+    // Populate extra regular verbs
+    const EXTRA_ER = ["chanter", "danser", "écouter", "regarder", "habiter", "étudier", "travailler", "jouer", "donner", "porter", "penser", "chercher", "trouver", "fermer", "demander", "préparer", "visiter", "refuser", "accepter", "garder", "marcher", "sauter", "grimper", "laver", "pleurer", "dessiner", "brûler", "compter", "tousser", "saluer"];
+    const EXTRA_IR = ["choisir", "réussir", "grandir", "obéir", "punir", "remplir", "réfléchir", "bâtir", "applaudir", "ralentir", "rougir", "blanchir", "guérir", "grossir"];
+    const EXTRA_RE = ["attendre", "entendre", "répondre", "perdre", "rendre", "défendre", "mordre", "tondre", "tordre", "fondre"];
+
+    EXTRA_ER.forEach(v => addRegularVerb(v, 'er'));
+    EXTRA_IR.forEach(v => addRegularVerb(v, 'ir'));
+    EXTRA_RE.forEach(v => addRegularVerb(v, 're'));
+
+    let correctAnswers = {
+      present: null,
+      imparfait: null,
+      passe_compose: null,
+      passe_simple: null
+    };
+
+    let precedingFailureState = null;
+
+    let initialMistakes = {
+      present: false,
+      imparfait: false,
+      passe_compose: false,
+      passe_simple: false
+    };
+
+    const PRESENT_INTROS = ["Aujourd'hui", "En ce moment", "Maintenant", "Actuellement", "Chaque jour"];
+    const IMPARFAIT_INTROS = ["Quand j'étais jeune", "À l'époque", "Tous les lundis", "Autrefois", "À cette époque-là"];
+    const PC_INTROS = ["Hier soir", "Ce matin", "La semaine dernière", "Hier", "L'année passée"];
+    const PS_INTROS = ["Soudain", "Tout à coup", "Ce jour-là", "Un beau jour", "Soudainement"];
+
+    let lastSelectedIntros = { present: "", imparfait: "", passe_compose: "", passe_simple: "" };
+    function getRandomIntro(array, key) {
+      let filtered = array.filter(item => item !== lastSelectedIntros[key]);
+      if (filtered.length === 0) filtered = array; // fallback
+      const chosen = filtered[Math.floor(Math.random() * filtered.length)];
+      lastSelectedIntros[key] = chosen;
+      return chosen + "...";
+    }
+
+    let initialMistakeValues = {
+      present: "",
+      imparfait: "",
+      passe_compose: "",
+      passe_simple: ""
+    };
+
+    let lastTypedValues = {
+      present: "",
+      imparfait: "",
+      passe_compose: "",
+      passe_simple: ""
+    };
+
+    const VERB_TRANSLATIONS = {
+      "partir": "to leave", "sortir": "to go out", "dormir": "to sleep", "sentir": "to feel / smell",
+      "être": "to be", "avoir": "to have", "faire": "to do / make", "aller": "to go",
+      "dire": "to say / tell", "pouvoir": "to be able to", "vouloir": "to want",
+      "devoir": "to have to / must", "voir": "to see", "savoir": "to know (facts)",
+      "prendre": "to take", "venir": "to come", "finir": "to finish",
+      "écrire": "to write", "lire": "to read", "mettre": "to put",
+      "manger": "to eat", "commencer": "to begin", "parler": "to speak / talk",
+      "aimer": "to like / love", "vendre": "to sell", "chanter": "to sing",
+      "danser": "to dance", "écouter": "to listen", "regarder": "to watch / look at",
+      "habiter": "to live / reside", "étudier": "to study", "travailler": "to work",
+      "jouer": "to play", "donner": "to give", "porter": "to wear / carry",
+      "penser": "to think", "chercher": "to look for", "trouver": "to find",
+      "fermer": "to close", "demander": "to ask", "préparer": "to prepare",
+      "visiter": "to visit", "refuser": "to refuse", "accepter": "to accept",
+      "garder": "to keep", "choisir": "to choose", "réussir": "to succeed",
+      "grandir": "to grow", "obéir": "to obey", "punir": "to punish",
+      "remplir": "to fill", "réfléchir": "to think / reflect", "bâtir": "to build",
+      "attendre": "to wait for", "entendre": "to hear", "répondre": "to answer",
+      "perdre": "to lose", "rendre": "to return / give back", "défendre": "to defend",
+      "marcher": "to walk", "sauter": "to jump", "grimper": "to climb", "laver": "to wash",
+      "pleurer": "to cry", "dessiner": "to draw", "brûler": "to burn", "compter": "to count",
+      "tousser": "to cough", "saluer": "to greet", "applaudir": "to applaud", "ralentir": "to slow down",
+      "rougir": "to blush", "blanchir": "to whiten", "guérir": "to cure / heal", "grossir": "to gain weight",
+      "mordre": "to bite", "tondre": "to mow", "tordre": "to twist", "fondre": "to melt"
+    };
+
+    // DOM Inputs & Stats Elements
+    const scoreVal = document.getElementById("scoreVal");
+    const waveVal = document.getElementById("waveVal");
+    const citiesVal = document.getElementById("citiesVal");
+    const promptVerb = document.getElementById("promptVerb");
+    const promptDetails = document.getElementById("promptDetails");
+
+    const inputPres = document.getElementById("inputPresent");
+    const inputImp = document.getElementById("inputImparfait");
+    const inputPC = document.getElementById("inputPassesCompose");
+    const inputPS = document.getElementById("inputPassesSimple");
+
+    function resizeCanvas() {
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+      generateStars();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function generateStars() {
+      stars = [];
+      for (let i = 0; i < 60; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * (canvas.height - 100),
+          size: Math.random() * 1.5 + 0.5,
+          alpha: Math.random() * 0.7 + 0.3,
+          speed: Math.random() * 0.02 + 0.005
+        });
+      }
+    }
+
+    // Procedurally generate building data for a city matching the SVG skyline style
+    function genCityBuildings(cityWidth) {
+      // Fixed 3-building layout matching the SVG icon style:
+      // Left: teal/green, shorter; Center: blue, tallest with antenna; Right: purple, medium
+      const w = cityWidth;
+      const leftW  = Math.round(w * 0.30);
+      const centW  = Math.round(w * 0.36);
+      const rightW = Math.round(w * 0.30);
+      const leftH  = Math.round(w * 0.55) + Math.floor(Math.random() * 6);
+      const centH  = Math.round(w * 0.90) + Math.floor(Math.random() * 8);
+      const rightH = Math.round(w * 0.70) + Math.floor(Math.random() * 6);
+
+      function makeGrid(h, bw) {
+        const winRows = Math.max(1, Math.floor((h - 8) / 8));
+        const winCols = Math.max(1, Math.floor((bw - 4) / 6));
+        const grid = [];
+        for (let i = 0; i < winRows * winCols; i++) grid.push(Math.random() > 0.28);
+        return { grid, winRows, winCols };
+      }
+
+      const left  = makeGrid(leftH,  leftW);
+      const cent  = makeGrid(centH,  centW);
+      const right = makeGrid(rightH, rightW);
+      const gap = Math.round((w - leftW - centW - rightW) / 2);
+
+      return [
+        { x: 0,                       w: leftW,  h: leftH,  topColor:'#00695C', botColor:'#004D40', roofColor:'#4DB6AC', winColor:'#FFF176', ...left  },
+        { x: leftW + gap,             w: centW,  h: centH,  topColor:'#1565C0', botColor:'#0D47A1', roofColor:'#42A5F5', winColor:'#FFF176', ...cent,  hasAntenna: true },
+        { x: leftW + gap + centW + gap, w: rightW, h: rightH, topColor:'#6A1B9A', botColor:'#4A148C', roofColor:'#CE93D8', winColor:'#FFF176', ...right }
+      ];
+    }
+
+    function genCityRubble(cityWidth) {
+      const colors = ['#3a2010', '#4a3020', '#5a4030', '#2a1808'];
+      const rubble = [];
+      const count = 6 + Math.floor(Math.random() * 5);
+      for (let r = 0; r < count; r++) {
+        rubble.push({
+          x: Math.floor(Math.random() * (cityWidth - 6)),
+          y: Math.floor(Math.random() * 8),
+          w: 2 + Math.floor(Math.random() * 8),
+          h: 1 + Math.floor(Math.random() * 5),
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+      return rubble;
+    }
+
+    function initCities() {
+      cities = [];
+      const numCities = 3;
+      const gap = canvas.width / (numCities + 1);
+      for (let i = 0; i < numCities; i++) {
+        const w = 66;
+        cities.push({
+          x: gap * (i + 1),
+          y: canvas.height - 35,
+          width: w,
+          height: 45,
+          alive: true,
+          health: 100,
+          _buildings: genCityBuildings(w),
+          _rubble: genCityRubble(w)
+        });
+      }
+      updateCitiesIndicator();
+    }
+
+    function updateCitiesIndicator() {
+      const aliveCount = cities.filter(c => c.alive).length;
+      citiesVal.innerText = `${aliveCount} / 3`;
+    }
+
+    /*========================================================================
+     * Game Mechanics & Scoring
+     ========================================================================*/
+    let missileTimeoutId = null;
+
+    function startGame() {
+      document.getElementById("helpModal").classList.remove("open");
+      initAudio();
+      isGameRunning = true;
+      score = 0;
+      sessionAccumulatedScore = 0;
+      wave = 0;
+      totalSpeedBonusesEarned = 0;
+      scoreVal.innerText = "00000";
+      waveVal.innerText = "0";
+      
+      if (missileTimeoutId) {
+        clearTimeout(missileTimeoutId);
+        missileTimeoutId = null;
+      }
+      
+      resizeCanvas();
+      initCities();
+      nextWave();
+      
+      requestAnimationFrame(gameLoop);
+    }
+
+    function startGameWithMode(mode) {
+      gameMode = mode;
+      startGame();
+    }
+
+    function restartGame() {
+      document.getElementById("helpModal").classList.add("open");
+    }
+
+    function endGame() {
+      isGameRunning = false;
+      playCityDestroyedSound();
+      openReviewModal(false);
+    }
+
+    let nextForcedVerb = null;
+
+    function nextWave() {
+      wave++;
+      waveVal.innerText = wave;
+
+      isFirstTryForCurrentVerb = true;
+      currentVerbFirstTryCorrectCount = 0;
+      precedingFailureState = null;
+
+      if (!retrySameChallenge) {
+        if (nextForcedVerb) {
+          currentVerb = nextForcedVerb;
+          nextForcedVerb = null; // reset forced verb selection
+        } else {
+          let verbs = Object.keys(VERB_DATABASE);
+          if (gameMode === "regular") {
+            verbs = verbs.filter(v => REGULAR_VERBS.includes(v));
+          } else if (gameMode === "mots-cles") {
+            verbs = TOP_VERBS.filter(v => verbs.includes(v));
+          }
+          currentVerb = verbs[Math.floor(Math.random() * verbs.length)];
+        }
+        
+        const targetVerbInfo = VERB_DATABASE[currentVerb];
+        currentPronoun = targetVerbInfo.pronouns[Math.floor(Math.random() * targetVerbInfo.pronouns.length)];
+
+        // Handle random single instance of 3rd person if selected
+        if (currentPronoun === 'il') {
+          selectedPronounDisplay = ["Il", "Elle", "On"][Math.floor(Math.random() * 3)];
+        } else if (currentPronoun === 'ils') {
+          selectedPronounDisplay = ["Ils", "Elles"][Math.floor(Math.random() * 2)];
+        } else {
+          selectedPronounDisplay = targetVerbInfo.pronounDisplay[currentPronoun];
+        }
+      } else {
+        retrySameChallenge = false;
+      }
+
+      // Reset state of correct submissions & mistakes tracking
+      correctAnswers.present = null;
+      correctAnswers.imparfait = null;
+      correctAnswers.passe_compose = null;
+      correctAnswers.passe_simple = null;
+
+      initialMistakes.present = false;
+      initialMistakes.imparfait = false;
+      initialMistakes.passe_compose = false;
+      initialMistakes.passe_simple = false;
+
+      initialMistakeValues.present = "";
+      initialMistakeValues.imparfait = "";
+      initialMistakeValues.passe_compose = "";
+      initialMistakeValues.passe_simple = "";
+
+      lastTypedValues.present = "";
+      lastTypedValues.imparfait = "";
+      lastTypedValues.passe_compose = "";
+      lastTypedValues.passe_simple = "";
+
+      if (missileTimeoutId) {
+        clearTimeout(missileTimeoutId);
+        missileTimeoutId = null;
+      }
+
+      // Show translation from the start of the wave while it pulsates
+      const translationEl = document.getElementById("promptTranslation");
+      translationEl.innerText = `(${VERB_TRANSLATIONS[currentVerb] || ''})`;
+      translationEl.style.display = "block";
+
+      // Update UI Panel
+      promptVerb.innerText = currentVerb.charAt(0).toUpperCase() + currentVerb.slice(1);
+      promptDetails.innerText = selectedPronounDisplay;
+
+      document.getElementById("hintPresent").innerText = getRandomIntro(PRESENT_INTROS, "present");
+      document.getElementById("hintImparfait").innerText = getRandomIntro(IMPARFAIT_INTROS, "imparfait");
+      document.getElementById("hintPassesCompose").innerText = getRandomIntro(PC_INTROS, "passe_compose");
+      document.getElementById("hintPassesSimple").innerText = getRandomIntro(PS_INTROS, "passe_simple");
+
+      // Pulsate both person and verb info (lasts 4 seconds: 0.8s * 5)
+      promptDetails.classList.remove("pulsating");
+      promptVerb.classList.remove("pulsating");
+      void promptDetails.offsetWidth; // trigger reflow
+      promptDetails.classList.add("pulsating");
+      promptVerb.classList.add("pulsating");
+
+      // Reset & enable inputs
+      resetInputs();
+
+      // Determine a target city to fall towards
+      const aliveCities = cities.filter(c => c.alive);
+      if (aliveCities.length === 0) return;
+      const targetCity = aliveCities[Math.floor(Math.random() * aliveCities.length)];
+
+      // Spawn new missile from top immediately
+      const startX = Math.random() * canvas.width;
+      const speed = (0.35 + (wave * 0.08)) * (canvas.height / 500); 
+
+      playTornadoSirenSound(); // Start warning sound immediately
+
+      activeMissile = {
+        startX: startX,
+        startY: 0,
+        x: startX,
+        y: 0,
+        targetX: targetCity.x,
+        targetY: targetCity.y,
+        targetCity: targetCity,
+        speed: speed,
+        originalSpeed: speed,
+        destroyed: false,
+        launchTime: Date.now(),
+        duration: 15000 + (Math.random() * 5000)
+      };
+    }
+
+    function resetInputs() {
+      [inputPres, inputImp, inputPC, inputPS].forEach(input => {
+        input.value = "";
+        input.disabled = false;
+        input.style.display = "block";
+        input.className = "conjugation-input";
+
+        // Remove any previously appended incorrect result displays
+        const wrapper = input.parentElement;
+        const oldOverlay = wrapper.querySelector(".result-display-incorrect");
+        if (oldOverlay) oldOverlay.remove();
+      });
+      // Focus on first input (present)
+      inputPres.focus();
+    }
+
+    function insertAccent(char) {
+      const activeEl = document.activeElement;
+      if (activeEl && activeEl.classList.contains('conjugation-input')) {
+        const start = activeEl.selectionStart;
+        const end = activeEl.selectionEnd;
+        const text = activeEl.value;
+        activeEl.value = text.substring(0, start) + char + text.substring(end);
+        activeEl.focus();
+        activeEl.selectionStart = activeEl.selectionEnd = start + 1;
+      }
+    }
+
+    // Verify user answers
+    function resetInputEl(inputEl) {
+      inputEl.value = "";
+      inputEl.disabled = false;
+      inputEl.style.display = "block";
+      inputEl.className = "conjugation-input";
+      const wrapper = inputEl.parentElement;
+      const oldOverlay = wrapper.querySelector(".result-display-incorrect");
+      if (oldOverlay) oldOverlay.remove();
+    }
+
+    function focusNextEnabledInput(currentEl) {
+      const inputs = [inputPres, inputImp, inputPC, inputPS];
+      const currentIndex = inputs.indexOf(currentEl);
+      if (currentIndex === -1) return;
+      
+      // Look for the next enabled input sequentially
+      for (let i = currentIndex + 1; i < inputs.length; i++) {
+        if (!inputs[i].disabled) {
+          inputs[i].focus();
+          return;
+        }
+      }
+      
+      // If we didn't find one after, wrap around and check before
+      for (let i = 0; i < currentIndex; i++) {
+        if (!inputs[i].disabled) {
+          inputs[i].focus();
+          return;
+        }
+      }
+    }
+
+    function getExpectedConjugations(type, pronounKey, displayPronoun) {
+      const verbForms = VERB_DATABASE[currentVerb][type][pronounKey];
+      const p = displayPronoun.toLowerCase().trim();
+      
+      if (pronounKey === "je") {
+        return verbForms.flatMap(form => {
+          const cleanForm = form.toLowerCase().trim();
+          const firstChar = cleanForm.charAt(0);
+          const vowels = "aeiouyéèêàâîïôûùh";
+          if (vowels.includes(firstChar)) {
+            return [`j'${cleanForm}`, `j' ${cleanForm}`];
+          } else {
+            return [`je ${cleanForm}`];
+          }
+        });
+      }
+      
+      return verbForms.map(form => `${p} ${form.toLowerCase().trim()}`);
+    }
+
+    // Verify user answers
+    function checkSingleInput(inputEl) {
+      if (inputEl.disabled) return;
+
+      const type = inputEl.id === "inputPresent" ? "present" :
+                   inputEl.id === "inputImparfait" ? "imparfait" : 
+                   inputEl.id === "inputPassesCompose" ? "passe_compose" : "passe_simple";
+
+      const val = inputEl.value.trim();
+      if (!val) return; // Ignore empty submissions
+
+      lastTypedValues[type] = val;
+
+      // Get correct answers list requiring the person word
+      const possibleAnswers = getExpectedConjugations(type, currentPronoun, selectedPronounDisplay);
+
+      // Match helper (normalizes double-spaces and basic punctuation)
+      let cleanVal = val.toLowerCase().replace(/\s+/g, ' ');
+      
+      const isCorrect = possibleAnswers.some(ans => {
+        return cleanVal === ans;
+      });
+
+      if (isCorrect) {
+        inputEl.classList.remove("incorrect");
+        inputEl.classList.add("correct");
+        inputEl.disabled = true;
+        correctAnswers[type] = 'correct';
+
+        if (isFirstTryForCurrentVerb) {
+          currentVerbFirstTryCorrectCount++;
+        }
+
+        // Check if all four inputs are now correct
+        const allCorrect = (type === 'present' || correctAnswers.present === 'correct') &&
+                           (type === 'imparfait' || correctAnswers.imparfait === 'correct') && 
+                           (type === 'passe_compose' || correctAnswers.passe_compose === 'correct') && 
+                           (type === 'passe_simple' || correctAnswers.passe_simple === 'correct');
+
+        triggerDefenseShot(true, allCorrect);
+        
+        focusNextEnabledInput(inputEl);
+
+      } else {
+        // Record mistake for this tense
+        if (!initialMistakes[type]) {
+          initialMistakes[type] = true;
+          initialMistakeValues[type] = val;
+        }
+
+        inputEl.disabled = true;
+        inputEl.style.display = "none";
+        correctAnswers[type] = 'incorrect';
+
+        const wrapper = inputEl.parentElement;
+        const resultDiv = document.createElement("div");
+        resultDiv.className = "result-display-incorrect";
+        resultDiv.innerHTML = `❌ <span style="color: #8B0000;">${val}</span> <span style="color: var(--text-muted); margin: 0 4px;">➔</span> <span style="color: var(--neon-green); font-weight: bold;">${possibleAnswers[0]}</span>`;
+        wrapper.appendChild(resultDiv);
+
+        triggerDefenseShot(false, false);
+        
+        focusNextEnabledInput(inputEl);
+      }
+
+      // Check current correct answers count
+      const correctCount = Object.values(correctAnswers).filter(status => status === 'correct').length;
+      
+      // Stop pulsating once first answer is correct
+      if (correctCount >= 1) {
+        promptDetails.classList.remove("pulsating");
+        promptVerb.classList.remove("pulsating");
+      }
+
+      // Show english translation until third answer is correct
+      const translationEl = document.getElementById("promptTranslation");
+      if (correctCount < 3) {
+        translationEl.innerText = `(${VERB_TRANSLATIONS[currentVerb] || ''})`;
+        translationEl.style.display = "block";
+      } else {
+        translationEl.style.display = "none";
+      }
+
+      // Check if all four inputs are answered (none are null)
+      const allFourAnswered = correctAnswers.present !== null &&
+                               correctAnswers.imparfait !== null &&
+                               correctAnswers.passe_compose !== null &&
+                               correctAnswers.passe_simple !== null;
+
+      if (allFourAnswered) {
+        const hasMistake = correctAnswers.present === 'incorrect' ||
+                           correctAnswers.imparfait === 'incorrect' ||
+                           correctAnswers.passe_compose === 'incorrect' ||
+                           correctAnswers.passe_simple === 'incorrect';
+        if (hasMistake) {
+          playDangerBonusSound();
+          setTimeout(() => {
+            if (!isGameRunning || !activeMissile) return;
+            const inputsToReset = [];
+            if (correctAnswers.present === 'incorrect') {
+              resetInputEl(inputPres);
+              correctAnswers.present = null;
+              inputsToReset.push(inputPres);
+            }
+            if (correctAnswers.imparfait === 'incorrect') {
+              resetInputEl(inputImp);
+              correctAnswers.imparfait = null;
+              inputsToReset.push(inputImp);
+            }
+            if (correctAnswers.passe_compose === 'incorrect') {
+              resetInputEl(inputPC);
+              correctAnswers.passe_compose = null;
+              inputsToReset.push(inputPC);
+            }
+            if (correctAnswers.passe_simple === 'incorrect') {
+              resetInputEl(inputPS);
+              correctAnswers.passe_simple = null;
+              inputsToReset.push(inputPS);
+            }
+            // Focus first cleared input
+            if (inputsToReset.length > 0) {
+              inputsToReset[0].focus();
+            }
+          }, 1000);
+        }
+      }
+    }
+
+    function triggerDefenseShot(isHit = true, isFinishingShot = false) {
+      if (!activeMissile) return;
+
+      if (isHit) {
+        playLaserSound();
+      } else {
+        playGlitchLaserSound();
+      }
+
+      const offset = isHit ? 0 : (Math.random() > 0.5 ? 120 : -120);
+      const heightOffset = isHit ? 0 : Math.max(10, activeMissile.y - (Math.random() * 80 + 40));
+
+      const interceptor = {
+        startX: canvas.width / 2,
+        startY: canvas.height - 10,
+        x: canvas.width / 2,
+        y: canvas.height - 10,
+        targetX: isHit ? activeMissile.x : activeMissile.x + offset,
+        targetY: isHit ? activeMissile.y : heightOffset,
+        progress: 0,
+        speed: 0.08,
+        isMiss: !isHit,
+        isFinishingShot: isFinishingShot
+      };
+      
+      interceptors.push(interceptor);
+
+      if (isHit) {
+        // Slow down only to first shot speed level (70% speed)
+        activeMissile.speed = Math.max(0.08, activeMissile.originalSpeed * 0.70);
+        if (isFirstTryForCurrentVerb) {
+          score += 100;
+          scoreVal.innerText = String(score).padStart(5, '0');
+        }
+      } else {
+        floatingTexts.push({ x: activeMissile.x, y: activeMissile.y - 20, text: "MANQUÉ !", life: 60, maxLife: 60, color: '#ff007f' });
+      }
+    }
+
+    function triggerFullDestruction() {
+      if (!activeMissile) return;
+
+      playSuccessSound();
+
+      // Speed bonus: capture position before marking destroyed
+      const timeTaken = Date.now() - activeMissile.launchTime;
+      lastMissileTimeTaken = (timeTaken / 1000).toFixed(1);
+      const missileX = activeMissile.x;
+      const missileY = activeMissile.y;
+
+      activeMissile.destroyed = true;
+
+      let bonus = 0;
+      if (timeTaken <= 15000) { bonus = 1000; }
+      else if (timeTaken <= 20000) { bonus = 500; }
+
+      lastSpeedBonusAmount = bonus; // Save the bonus amount for UI display
+
+      createExplosion(missileX, missileY, 45, varColor('--neon-cyan'), true, bonus > 0);
+
+      if (bonus > 0) {
+        score += bonus;
+        totalSpeedBonusesEarned += bonus;
+        floatingTexts.push({
+          x: missileX,
+          y: missileY - 20,
+          text: `+${bonus}`,
+          life: 90,
+          maxLife: 90,
+          color: '#ff3333',
+          fontSize: "bold 32px 'Share Tech Mono', monospace",
+          align: 'center',
+          slowFloat: true
+        });
+      }
+
+      score += 500;
+      floatingTexts.push({ x: missileX, y: missileY - 55, text: "500", life: 80, maxLife: 80, color: '#ff3333', fontSize: "bold 20px 'Share Tech Mono', monospace" });
+      scoreVal.innerText = String(score).padStart(5, '0');
+
+
+
+      setTimeout(() => {
+        openReviewModal(true);
+      }, 1200);
+    }
+
+    function varColor(cssVarName) {
+      return getComputedStyle(document.documentElement).getPropertyValue(cssVarName).trim();
+    }
+
+    function createExplosion(x, y, radius, color, playSound = true, isBonusExplosion = false) {
+      if (playSound) playExplosionSound();
+
+      explosions.push({
+        x: x,
+        y: y,
+        currentRadius: 2,
+        maxRadius: radius,
+        alpha: 1,
+        color: color
+      });
+
+      if (isBonusExplosion) {
+        // Fireworks sparkles effect
+        const count = 90;
+        const colors = ['#FFD700', '#FF3366', '#00FF66', '#00FFFF', '#FFFF00', '#FFFFFF'];
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const velocity = Math.random() * 4.5 + 1.5;
+          particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * velocity,
+            vy: Math.sin(angle) * velocity,
+            size: Math.random() * 2.8 + 1.2,
+            alpha: 1,
+            decay: Math.random() * 0.015 + 0.01,
+            color: colors[Math.floor(Math.random() * colors.length)]
+          });
+        }
+      } else {
+        const count = 30;
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const velocity = Math.random() * 3 + 1;
+          particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * velocity,
+            vy: Math.sin(angle) * velocity,
+            size: Math.random() * 3 + 1,
+            alpha: 1,
+            decay: Math.random() * 0.03 + 0.015,
+            color: color
+          });
+        }
+      }
+    }
+
+    function createCityExplosion(x, y, radius, color) {
+      playCityDestroyedSound();
+
+      explosions.push({
+        x: x,
+        y: y,
+        currentRadius: 2,
+        maxRadius: radius * 0.5,
+        alpha: 1,
+        color: color,
+        decay: 0.0047, // Doubled duration (approx 3.6s duration)
+        isCity: true
+      });
+
+      const count = 55;
+      for (let i = 0; i < count; i++) {
+        // Aim particles upwards (canvas y is negative)
+        const angle = Math.PI * 1.15 + Math.random() * Math.PI * 0.7;
+        const velocity = (Math.random() * 5.0 + 2.0) * 0.5;
+        particles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * velocity,
+          vy: Math.sin(angle) * velocity,
+          size: (Math.random() * 4.2 + 1.8) * 0.5,
+          alpha: 1,
+          decay: Math.random() * 0.006 + 0.004, // Doubled duration particle decay (approx 3.6s)
+          color: color,
+          isCity: true
+        });
+      }
+    }
+
+    // Wire listeners
+    [inputPres, inputImp, inputPC, inputPS].forEach(input => {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === "Enter") {
+          checkSingleInput(input);
+        }
+      });
+    });
+
+    document.getElementById("reviewAICopyLink").addEventListener('click', (e) => {
+      e.preventDefault();
+      copyAIPrompt();
+    });
+
+    function copyAIPrompt() {
+      const promptText = `Pourrais-tu me donner un exemple de phrase en français pour le verbe '${currentVerb}' conjugué avec le pronom '${selectedPronounDisplay.toLowerCase()}' aux temps suivants : le Présent, l'Imparfait, le Passé Composé, et le Passé Simple ? Donne uniquement une liste à puces des phrases en français sans écrire le nom des temps, sans traduction, et assure-toi d'inclure pour chaque phrase une référence temporelle logique qui convient au temps (par exemple, "Aujourd'hui...", "Hier...", "Quand j'étais jeune...", etc.).`;
+      
+      navigator.clipboard.writeText(promptText).then(() => {
+        const copyLink = document.getElementById("reviewAICopyLink");
+        const originalText = copyLink.innerText;
+        copyLink.innerText = "Copied!";
+        copyLink.style.color = "var(--neon-green)";
+        setTimeout(() => {
+          copyLink.innerText = originalText;
+          copyLink.style.color = "var(--neon-yellow)";
+        }, 2000);
+      }).catch(err => {
+        console.error("Failed to copy: ", err);
+      });
+    }
+
+    function getRandomVerbOfGroup(group) {
+      let verbs = Object.keys(VERB_DATABASE);
+      if (gameMode === "regular") {
+        verbs = verbs.filter(v => REGULAR_VERBS.includes(v));
+      }
+      verbs = verbs.filter(v => v.endsWith(group));
+      if (verbs.length === 0) return null;
+      return verbs[Math.floor(Math.random() * verbs.length)];
+    }
+
+    function selectNextVerb(verbName) {
+      const clean = verbName.trim().toLowerCase();
+      if (clean === "random verb" || clean === "random" || clean === "aléatoire" || clean === "verbe aléatoire") {
+        nextForcedVerb = null;
+      } else if (clean === "-er verb" || clean === "-er verbe" || clean === "verbe -er") {
+        nextForcedVerb = getRandomVerbOfGroup("er");
+      } else if (clean === "-ir verb" || clean === "-ir verbe" || clean === "verbe -ir") {
+        nextForcedVerb = getRandomVerbOfGroup("ir");
+      } else if (clean === "-re verb" || clean === "-re verbe" || clean === "verbe -re") {
+        nextForcedVerb = getRandomVerbOfGroup("re");
+      } else if (VERB_DATABASE[clean]) {
+        nextForcedVerb = clean;
+      } else {
+        alert("Le verbe '" + verbName + "' n'est pas dans la base de données.");
+        return;
+      }
+      closeReviewModal();
+    }
+
+    function populateAvailableVerbs() {
+      const listContainer = document.getElementById("availableVerbsList");
+      listContainer.innerHTML = "";
+      
+      let verbs = Object.keys(VERB_DATABASE);
+      if (gameMode === "regular") {
+        verbs = verbs.filter(v => REGULAR_VERBS.includes(v));
+      } else if (gameMode === "mots-cles") {
+        verbs = TOP_VERBS.filter(v => verbs.includes(v));
+      }
+      verbs.sort();
+
+      verbs.forEach(v => {
+        const link = document.createElement("a");
+        link.href = "#";
+        link.innerText = v;
+        link.style.cssText = "color: var(--neon-cyan); background: rgba(0,240,255,0.05); border: 1px solid rgba(0,240,255,0.15); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; text-decoration: none; font-weight: 500; transition: all 0.2s;";
+        link.onmouseover = () => {
+          link.style.background = "rgba(0,240,255,0.2)";
+          link.style.borderColor = "var(--neon-cyan)";
+        };
+        link.onmouseout = () => {
+          link.style.background = "rgba(0,240,255,0.05)";
+          link.style.borderColor = "rgba(0,240,255,0.15)";
+        };
+        link.onclick = (e) => {
+          e.preventDefault();
+          selectNextVerb(v);
+        };
+        listContainer.appendChild(link);
+      });
+
+      // Group shortcut selections
+      const erLink = document.createElement("a");
+      erLink.href = "#";
+      erLink.innerText = "🎲 Verbe -er";
+      erLink.style.cssText = "color: var(--neon-cyan); background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; text-decoration: none; font-weight: 600; transition: all 0.2s;";
+      erLink.onclick = (e) => {
+        e.preventDefault();
+        selectNextVerb("-er verb");
+      };
+      listContainer.appendChild(erLink);
+
+      const irLink = document.createElement("a");
+      irLink.href = "#";
+      irLink.innerText = "🎲 Verbe -ir";
+      irLink.style.cssText = "color: var(--neon-cyan); background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; text-decoration: none; font-weight: 600; transition: all 0.2s;";
+      irLink.onclick = (e) => {
+        e.preventDefault();
+        selectNextVerb("-ir verb");
+      };
+      listContainer.appendChild(irLink);
+
+      const reLink = document.createElement("a");
+      reLink.href = "#";
+      reLink.innerText = "🎲 Verbe -re";
+      reLink.style.cssText = "color: var(--neon-cyan); background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; text-decoration: none; font-weight: 600; transition: all 0.2s;";
+      reLink.onclick = (e) => {
+        e.preventDefault();
+        selectNextVerb("-re verb");
+      };
+      listContainer.appendChild(reLink);
+
+      // Focus the continue button
+      setTimeout(() => {
+        const btn = document.getElementById("reviewCloseBtn");
+        if (btn) btn.focus();
+      }, 50);
+    }
+
+    /*========================================================================
+     * Main Render Loop
+     ========================================================================*/
+    function gameLoop() {
+      if (!isGameRunning) return;
+
+      // 1. Clear Frame
+      ctx.fillStyle = 'rgba(13, 14, 21, 0.45)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 2. Draw Starfield
+      stars.forEach(star => {
+        star.y += star.speed;
+        if (star.y > canvas.height - 100) star.y = 0;
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        ctx.fillRect(star.x, star.y, star.size, star.size);
+      });
+
+      // 3. Draw Cities
+      cities.forEach(city => {
+        if (!city.alive) {
+          // Rubble / burnt ground
+          ctx.fillStyle = '#1a1010';
+          ctx.fillRect(city.x - city.width / 2 - 4, canvas.height - 18, city.width + 8, 12);
+          // Scattered rubble blocks
+          const rubble = city._rubble;
+          if (rubble) {
+            rubble.forEach(r => {
+              ctx.fillStyle = r.color;
+              ctx.fillRect(city.x - city.width/2 + r.x, canvas.height - 18 + r.y, r.w, r.h);
+            });
+          }
+          // Smoke wisps
+          ctx.globalAlpha = 0.18;
+          ctx.fillStyle = '#888';
+          for (let si = 0; si < 3; si++) {
+            const sx = city.x - 14 + si * 14;
+            ctx.beginPath();
+            ctx.arc(sx, canvas.height - 26 - si * 6, 5 + si * 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.globalAlpha = 1.0;
+          return;
+        }
+
+        const bx = city.x - city.width / 2;
+        const ground = canvas.height - 6;
+        const buildings = city._buildings;
+
+        if (buildings) {
+          buildings.forEach(b => {
+            // Building body gradient
+            const g = ctx.createLinearGradient(bx + b.x, ground - b.h, bx + b.x + b.w, ground);
+            g.addColorStop(0, b.topColor);
+            g.addColorStop(1, b.botColor);
+            ctx.fillStyle = g;
+            ctx.fillRect(bx + b.x, ground - b.h, b.w, b.h);
+
+            // Roof accent line
+            ctx.fillStyle = b.roofColor;
+            ctx.fillRect(bx + b.x, ground - b.h, b.w, 2);
+
+            // Antenna on center building
+            if (b.hasAntenna) {
+              ctx.fillStyle = '#90CAF9';
+              ctx.fillRect(bx + b.x + Math.floor(b.w / 2) - 1, ground - b.h - 7, 2, 7);
+            }
+
+            // Windows
+            ctx.fillStyle = b.winColor;
+            ctx.globalAlpha = 0.85;
+            for (let wr = 0; wr < b.winRows; wr++) {
+              for (let wc = 0; wc < b.winCols; wc++) {
+                if (b.grid[wr * b.winCols + wc]) {
+                  ctx.fillRect(bx + b.x + 2 + wc * 6, ground - b.h + 5 + wr * 8, 3, 4);
+                }
+              }
+            }
+            ctx.globalAlpha = 1.0;
+          });
+        }
+
+        // Shield dome glow around alive city
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.15)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(city.x, ground - 5, city.width * 0.62, Math.PI, 0);
+        ctx.stroke();
+      });
+
+      // 4. Update and Draw active missile
+      if (activeMissile && !activeMissile.destroyed) {
+        const hitsCount = Object.values(correctAnswers).filter(status => status === 'correct').length;
+
+        let missileColor = varColor('--neon-magenta');
+        let drawX = activeMissile.x;
+        
+        if (hitsCount >= 1 && hitsCount < 3) {
+          missileColor = "#ff7700"; // Damaged: Faded orange
+        } else if (hitsCount >= 3) {
+          missileColor = "#fffb00"; // Heavily damaged: Neon yellow
+        }
+
+        // Trailing sparks (more dramatic and dynamic)
+        if (hitsCount >= 1 && Math.random() < 0.6) {
+          const numSparks = hitsCount < 3 ? 2 : 4;
+          for (let s = 0; s < numSparks; s++) {
+            particles.push({
+              x: drawX,
+              y: activeMissile.y,
+              vx: (Math.random() * 2 - 1) * 0.9,
+              vy: Math.random() * 1.5 + 0.5,
+              size: Math.random() * 2.2 + 1.0,
+              alpha: 1,
+              decay: Math.random() * 0.04 + 0.03,
+              color: hitsCount < 3 ? '#ff7700' : '#fffb00'
+            });
+          }
+        }
+
+        // Line trail
+        ctx.strokeStyle = hitsCount === 0 ? 'rgba(255, 0, 127, 0.25)' : 
+                          hitsCount < 3 ? 'rgba(255, 119, 0, 0.35)' : 'rgba(255, 251, 0, 0.45)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(activeMissile.startX, activeMissile.startY);
+        ctx.lineTo(drawX, activeMissile.y);
+        ctx.stroke();
+
+        // Missile Head (shrinks as it gets hit)
+        const headRadius = hitsCount === 0 ? 6 : (hitsCount < 3 ? 4 : 2.5);
+        ctx.shadowColor = missileColor;
+        ctx.shadowBlur = hitsCount === 0 ? 10 : (hitsCount < 3 ? 6 : 4);
+        ctx.fillStyle = missileColor;
+        ctx.beginPath();
+        ctx.arc(drawX, activeMissile.y, headRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Draw Count Up Timer (Hides after 20s)
+        if (activeMissile.launchTime) {
+          const elapsedS = (Date.now() - activeMissile.launchTime) / 1000;
+          if (elapsedS < 20) {
+            const seconds = elapsedS.toFixed(1) + "s";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            ctx.font = "11px Orbitron";
+            ctx.fillText(seconds, drawX + 12, activeMissile.y + 4);
+          }
+          
+          // Subtle grey timer at the very top of canvas
+          ctx.fillStyle = "rgba(150, 150, 150, 0.6)";
+          ctx.font = "14px 'Share Tech Mono', monospace";
+          ctx.textAlign = "center";
+          ctx.fillText(elapsedS.toFixed(1) + "s", canvas.width / 2, 25);
+          ctx.textAlign = "left"; // reset
+        }
+
+        const dx = activeMissile.targetX - activeMissile.startX;
+        const dy = activeMissile.targetY - activeMissile.startY;
+        const distTotal = Math.sqrt(dx*dx + dy*dy);
+
+        const vx = (dx / distTotal) * activeMissile.speed;
+        const vy = (dy / distTotal) * activeMissile.speed;
+
+        activeMissile.x += vx;
+        activeMissile.y += vy;
+
+        if (activeMissile.y >= activeMissile.targetY) {
+          activeMissile.targetCity.alive = false;
+          updateCitiesIndicator();
+
+          // Calculate time taken until city destruction
+          const timeTaken = Date.now() - activeMissile.launchTime;
+          lastMissileTimeTaken = (timeTaken / 1000).toFixed(1);
+
+          createCityExplosion(activeMissile.x, activeMissile.targetY, 95, varColor('--neon-magenta'));
+
+          activeMissile.destroyed = true;
+          activeMissile = null;
+
+          [inputPres, inputImp, inputPC, inputPS].forEach(input => input.disabled = true);
+
+          setTimeout(() => {
+            openReviewModal(false);
+          }, 2600);
+        }
+      }
+
+      // 5. Update and Draw defense interceptor lasers
+      for (let i = interceptors.length - 1; i >= 0; i--) {
+        const beam = interceptors[i];
+        beam.progress += beam.speed;
+
+        if (beam.progress >= 1) {
+          createExplosion(beam.targetX, beam.targetY, beam.isMiss ? 10 : 25, beam.isMiss ? varColor('--neon-magenta') : varColor('--neon-green'), !beam.isMiss);
+          
+          if (!beam.isMiss) {
+            // Burst sparks off the hit missile head
+            const sparkCount = 18;
+            for (let s = 0; s < sparkCount; s++) {
+              const angle = Math.random() * Math.PI * 2;
+              const velocity = Math.random() * 4.5 + 2.0;
+              particles.push({
+                x: beam.targetX,
+                y: beam.targetY,
+                vx: Math.cos(angle) * velocity,
+                vy: Math.sin(angle) * velocity,
+                size: Math.random() * 2.8 + 1.2,
+                alpha: 1,
+                decay: Math.random() * 0.05 + 0.02,
+                color: '#ffaa00'
+              });
+            }
+          }
+          
+          if (beam.isFinishingShot) {
+            triggerFullDestruction();
+          }
+
+          interceptors.splice(i, 1);
+          continue;
+        }
+
+        ctx.strokeStyle = beam.isMiss ? varColor('--neon-magenta') : varColor('--neon-cyan');
+        ctx.lineWidth = 3;
+        ctx.shadowColor = beam.isMiss ? varColor('--neon-magenta') : varColor('--neon-cyan');
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.moveTo(beam.startX, beam.startY);
+        const curX = beam.startX + (beam.targetX - beam.startX) * beam.progress;
+        const curY = beam.startY + (beam.targetY - beam.startY) * beam.progress;
+        ctx.lineTo(curX, curY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      // 6. Handle Explosions
+      for (let i = explosions.length - 1; i >= 0; i--) {
+        const exp = explosions[i];
+        exp.currentRadius += 2.5;
+        exp.alpha -= exp.decay || 0.035;
+        if (exp.isCity) {
+          exp.y -= 0.8;
+        }
+
+        if (exp.alpha <= 0) {
+          explosions.splice(i, 1);
+          continue;
+        }
+
+        ctx.strokeStyle = exp.color;
+        ctx.lineWidth = 2.5;
+        ctx.globalAlpha = exp.alpha;
+        ctx.beginPath();
+        ctx.arc(exp.x, exp.y, exp.currentRadius, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        ctx.fillStyle = exp.color;
+        ctx.globalAlpha = exp.alpha * 0.15;
+        ctx.beginPath();
+        ctx.arc(exp.x, exp.y, exp.currentRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+      }
+
+      // 7. Update and Draw floating texts
+      for (let i = floatingTexts.length - 1; i >= 0; i--) {
+        const ft = floatingTexts[i];
+        ft.life--;
+        ft.y -= ft.slowFloat ? 0.3 : 1; // float slower for fireworks duration
+        if (ft.life <= 0) {
+          floatingTexts.splice(i, 1);
+          continue;
+        }
+        ctx.fillStyle = ft.color;
+        ctx.globalAlpha = ft.life / ft.maxLife;
+        ctx.font = ft.fontSize || "bold 16px 'Share Tech Mono', monospace";
+        if (ft.align) ctx.textAlign = ft.align;
+        ctx.fillText(ft.text, ft.x, ft.y);
+        ctx.textAlign = "left"; // reset
+        ctx.globalAlpha = 1.0;
+      }
+
+      // 8. Handle Particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const pt = particles[i];
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        if (pt.isCity) {
+          pt.vy += 0.08; // Gravity effect
+        }
+        pt.alpha -= pt.decay;
+
+        if (pt.alpha <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.fillStyle = pt.color;
+        ctx.globalAlpha = pt.alpha;
+        ctx.fillRect(pt.x, pt.y, pt.size, pt.size);
+        ctx.globalAlpha = 1.0;
+      }
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    function openHelp() {
+      isGameRunning = false;
+      document.getElementById("helpModal").classList.add("open");
+    }
+
+    function openReviewModal(isSuccessState = false) {
+      isGameRunning = false;
+
+      // Capture any unsubmitted inputs as mistakes before recalculating
+      const tenses = ['present', 'imparfait', 'passe_compose', 'passe_simple'];
+      const inputs = [inputPres, inputImp, inputPC, inputPS];
+      tenses.forEach((type, index) => {
+        if (correctAnswers[type] !== 'correct') {
+          initialMistakes[type] = true;
+          const val = inputs[index] ? inputs[index].value.trim() : "";
+          initialMistakeValues[type] = val;
+          lastTypedValues[type] = val;
+        }
+      });
+
+      // Force recalculation of score to align exactly with wave breakdown math
+      const failureState = precedingFailureState;
+      const mistakesObj = failureState ? failureState.initialMistakes : initialMistakes;
+      const initialMistakeCount = Object.values(mistakesObj).filter(m => m === true).length;
+      const correctCount = 4 - initialMistakeCount;
+      const correctPts = correctCount * 100;
+      
+      let cityPts = 0;
+      if (isSuccessState) {
+        cityPts = 500;
+      }
+
+      let bonusPts = 0;
+      let bonusLabel = "Aucun bonus";
+      if (isSuccessState) {
+        bonusPts = lastSpeedBonusAmount;
+        if (bonusPts === 1000) {
+          bonusLabel = "Moins de 15 secondes";
+        } else if (bonusPts === 500) {
+          bonusLabel = "Moins de 20 secondes";
+        }
+      }
+
+      const totalRound = correctPts + cityPts + bonusPts;
+      score = sessionAccumulatedScore + totalRound;
+      scoreVal.innerText = String(score).padStart(5, '0');
+
+      const targetVerbInfo = VERB_DATABASE[currentVerb];
+
+      let pDisplay = selectedPronounDisplay.toLowerCase().replace(/\s*\(j['’]\)/gi, "");
+      document.getElementById("reviewHeaderPronoun").innerText = `(${pDisplay})`;
+      document.getElementById("reviewHeaderVerb").innerText = currentVerb.toLowerCase();
+      const translation = VERB_TRANSLATIONS[currentVerb] || '';
+      document.getElementById("reviewHeaderTranslation").innerText = translation ? `(${translation})` : '';
+      
+      document.getElementById("reviewVerifyLink").href = `https://conjugator.reverso.net/conjugation-french-verb-${currentVerb}.html`;
+      // Build the integrated leaderboard in the review modal
+      (function buildReviewLeaderboard() {
+        const lb = document.getElementById('reviewScoreLeaderboard');
+        if (!lb) return;
+        const scores = loadHighScores(); // sorted desc
+        const top3 = scores.slice(0, 3);
+        const currentEntry = { initials: '—', score: score, current: true, wave: wave };
+        
+        const isInTop3 = top3.length < 3 || score >= top3[top3.length - 1].score;
+        let merged = [...top3];
+
+        if (isInTop3) {
+          // Merge current player in top 3 and keep only 3 rows
+          let insertIdx = merged.findIndex(s => score >= s.score);
+          if (insertIdx === -1) insertIdx = merged.length;
+          merged.splice(insertIdx, 0, currentEntry);
+          merged = merged.slice(0, 3);
+          document.getElementById("reviewCurrentScoreOutside").style.display = "none";
+        } else {
+          // Display top 3 inside, and display player outside
+          const out = document.getElementById("reviewCurrentScoreOutside");
+          out.style.display = "flex";
+          out.innerHTML = `
+            <span style="font-size:1.0rem;opacity:0.7;margin-right:8px;width:16px;text-align:center;">👤</span>
+            <span style="flex:1;margin:0 6px;color:#ff4444;font-weight:600;font-size:1.0rem;text-align:left;">TOI</span>
+            <span style="color:#ff4444;font-weight:normal;font-size:1.0rem;">${String(score).padStart(5, '0')} - Vague ${String(wave).padStart(2, '0')}</span>
+          `;
+        }
+
+        lb.innerHTML = '';
+        merged.forEach((item, i) => {
+          const isCurrentScore = item.current;
+          const medals = ['🥈','🥇','🥉'];
+          // Determine medal based on rank in full list
+          let medal = isCurrentScore ? (medals[i] || '▸') : (medals[i] || '·');
+          
+          const row = document.createElement('div');
+          row.style.cssText = `display:flex;justify-content:space-between;align-items:center;padding:3px 6px;border-radius:5px;${
+            isCurrentScore ? 'background:rgba(0,0,0,0.55);border:1px solid rgba(255,0,127,0.45);' : 'border:1px solid transparent;'
+          }`;
+          const spanMedal = document.createElement('span');
+          spanMedal.style.cssText = 'font-size:1.0rem;opacity:0.7;margin-right:8px;width:16px;text-align:center;';
+          spanMedal.textContent = medal;
+
+          const spanName = document.createElement('span');
+          spanName.style.cssText = `flex:1;margin:0 6px;color:${
+            isCurrentScore ? '#ff4444' : 'var(--text-main)'
+          };font-weight:600;font-size:1.0rem;text-align:left;`;
+          spanName.textContent = isCurrentScore ? 'TOI' : (item.initials || '???');
+
+          const spanScore = document.createElement('span');
+          spanScore.style.cssText = `color:${
+            isCurrentScore ? '#ff4444' : 'var(--neon-green)'
+          };font-weight:normal;font-size:1.0rem;text-shadow:${
+            isCurrentScore ? 'none' : 'none'
+          };`;
+          const displayWave = item.wave ? ` - Vague ${String(item.wave).padStart(2, '0')}` : '';
+          spanScore.textContent = String(item.score).padStart(5, '0') + displayWave;
+
+          row.appendChild(spanMedal);
+          row.appendChild(spanName);
+          row.appendChild(spanScore);
+          lb.appendChild(row);
+        });
+        if (merged.length === 0) {
+          lb.innerHTML = '<div style="color:var(--text-muted);font-size:0.9rem;text-align:center;padding:4px;">Aucun score enregistré</div>';
+        }
+      })();
+
+      // Render remaining city status icons
+      const cityStatusRow = document.getElementById("reviewCityStatusRow");
+      cityStatusRow.innerHTML = "";
+      cities.forEach(city => {
+        const iconSpan = document.createElement("span");
+        iconSpan.style.display = "inline-flex";
+        iconSpan.style.alignItems = "center";
+        iconSpan.style.justifyContent = "center";
+        iconSpan.style.margin = "0 6px";
+        if (city.alive) {
+          // Colorful mini city skyline icon
+          iconSpan.innerHTML = `
+            <svg width="32" height="28" viewBox="0 0 32 28" style="filter: drop-shadow(0 0 5px rgba(0,240,255,0.7));">
+              <!-- Ground -->
+              <rect x="0" y="25" width="32" height="3" fill="#1a2a3a" rx="1"/>
+              <!-- Tall center building -->
+              <rect x="11" y="8" width="10" height="17" fill="#1565C0" rx="1"/>
+              <rect x="11" y="8" width="10" height="2" fill="#42A5F5"/>
+              <!-- Antenna -->
+              <rect x="15.5" y="4" width="1" height="5" fill="#90CAF9"/>
+              <!-- Windows center -->
+              <rect x="13" y="11" width="2" height="2" fill="#FFF176" opacity="0.9"/>
+              <rect x="17" y="11" width="2" height="2" fill="#FFF176" opacity="0.9"/>
+              <rect x="13" y="15" width="2" height="2" fill="#FFF176" opacity="0.7"/>
+              <rect x="17" y="15" width="2" height="2" fill="#FFF176" opacity="0.5"/>
+              <rect x="13" y="19" width="2" height="2" fill="#FFF176" opacity="0.9"/>
+              <rect x="17" y="19" width="2" height="2" fill="#FFF176" opacity="0.8"/>
+              <!-- Left building -->
+              <rect x="2" y="14" width="8" height="11" fill="#00695C" rx="1"/>
+              <rect x="2" y="14" width="8" height="2" fill="#4DB6AC"/>
+              <rect x="4" y="17" width="2" height="2" fill="#FFF176" opacity="0.8"/>
+              <rect x="7" y="17" width="2" height="2" fill="#FFF176" opacity="0.5"/>
+              <rect x="4" y="21" width="2" height="2" fill="#FFF176" opacity="0.9"/>
+              <!-- Right building -->
+              <rect x="22" y="12" width="8" height="13" fill="#6A1B9A" rx="1"/>
+              <rect x="22" y="12" width="8" height="2" fill="#CE93D8"/>
+              <rect x="24" y="15" width="2" height="2" fill="#FFF176" opacity="0.9"/>
+              <rect x="27" y="15" width="2" height="2" fill="#FFF176" opacity="0.5"/>
+              <rect x="24" y="19" width="2" height="2" fill="#FFF176" opacity="0.7"/>
+              <rect x="27" y="19" width="2" height="2" fill="#FFF176" opacity="0.9"/>
+            </svg>
+          `;
+        } else {
+          // Explosion / fire icon — destroyed city
+          iconSpan.innerHTML = `
+            <svg width="32" height="28" viewBox="0 0 32 28" style="filter: drop-shadow(0 0 6px rgba(255,80,0,0.9));">
+              <!-- Ground / rubble -->
+              <rect x="0" y="24" width="32" height="4" fill="#2a1a0a" rx="1"/>
+              <rect x="3" y="22" width="5" height="3" fill="#3a2010" rx="1"/>
+              <rect x="11" y="23" width="8" height="2" fill="#3a2010" rx="1"/>
+              <rect x="22" y="21" width="6" height="4" fill="#3a2010" rx="1"/>
+              <!-- Outer flame petals -->
+              <ellipse cx="16" cy="17" rx="10" ry="8" fill="#FF6D00" opacity="0.7"/>
+              <!-- Mid flame -->
+              <ellipse cx="16" cy="14" rx="7" ry="7" fill="#FF9800"/>
+              <!-- Inner flame core -->
+              <ellipse cx="16" cy="12" rx="4" ry="5" fill="#FFEB3B"/>
+              <!-- Bright hot core -->
+              <ellipse cx="16" cy="11" rx="2" ry="3" fill="#FFFFFF" opacity="0.85"/>
+              <!-- Smoke puffs -->
+              <circle cx="10" cy="7" r="4" fill="#555" opacity="0.45"/>
+              <circle cx="16" cy="4" r="5" fill="#444" opacity="0.4"/>
+              <circle cx="22" cy="6" r="4" fill="#555" opacity="0.4"/>
+            </svg>
+          `;
+        }
+        cityStatusRow.appendChild(iconSpan);
+      });
+
+      // Update review modal styling & text depending on success or failure
+      const mContent = document.getElementById("reviewModalContent");
+      const mTitle = document.getElementById("reviewModalTitle");
+      const mDesc = document.getElementById("reviewModalDesc");
+      const mBtn = document.getElementById("reviewCloseBtn");
+      const mFooter = document.getElementById("reviewModalFooter");
+
+      const aliveCount = cities.filter(c => c.alive).length;
+      const isGameOver = (aliveCount === 0);
+      let isInTopThree = false;
+
+      if (isGameOver) {
+        // Game Over modal override (magenta)
+        mContent.style.borderColor = "var(--neon-magenta)";
+        mContent.style.boxShadow = "var(--glow-magenta)";
+        
+        mTitle.innerText = "Mission Terminée";
+        mTitle.style.color = "var(--neon-magenta)";
+        mTitle.style.textShadow = "var(--glow-magenta)";
+        
+        mDesc.innerText = "Toutes tes villes ont été anéanties. Révise la conjugaison complète ci-dessus :";
+        
+        mBtn.style.display = "none"; // Hide standard close button
+        document.getElementById("nextVerbSelectorContainer").style.display = "none";
+
+        const topThree = loadHighScores().slice(0, 3);
+        isInTopThree = topThree.length < 3 || score > topThree[topThree.length - 1].score;
+
+        if (isInTopThree) {
+          mFooter.innerHTML = `
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px;">
+              <p style="font-size: 1.1rem; font-weight: bold; color: var(--neon-cyan); margin-bottom: 8px;">Félicitations ! Ton score est dans le Top 3 !</p>
+              <div id="gameOverInitialsWrapper" style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 15px;">
+                <input type="text" id="gameOverInitialsInput" maxlength="3" placeholder="AAA" onkeydown="if(event.key==='Enter') saveGameOverHighScore()" style="width: 80px; text-align: center; background: rgba(0,0,0,0.5); border: 2px solid var(--neon-cyan); border-radius: 8px; color: #fff; font-family: 'Orbitron', sans-serif; font-size: 1.4rem; padding: 6px; font-weight: 700; text-transform: uppercase; outline: none; box-shadow: var(--glow-cyan);" />
+                <button class="header-btn" onclick="saveGameOverHighScore()" style="padding: 10px 20px; font-family: 'Orbitron', sans-serif; font-weight: bold; background: rgba(0, 240, 255, 0.15); border-color: var(--neon-cyan); color: var(--neon-cyan); cursor: pointer; border-radius: 8px;">Valider</button>
+              </div>
+              <a id="gameOverReturnBtn" href="#" onclick="goToStartScreen(event)" style="color: var(--text-muted); text-decoration: underline; font-size: 0.9rem;">Retourner à l'accueil</a>
+            </div>
+          `;
+          setTimeout(() => {
+            const inp = document.getElementById("gameOverInitialsInput");
+            if (inp) {
+              inp.focus();
+              inp.select();
+            }
+          }, 150);
+        } else {
+          mFooter.innerHTML = `
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px;">
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Dommage, ton score n'est pas suffisant pour entrer dans le Top 3.</p>
+              <a href="#" onclick="goToStartScreen(event)" style="color: var(--text-muted); text-decoration: underline; font-size: 0.9rem;">Retourner à l'accueil</a>
+            </div>
+          `;
+        }
+      } else if (isSuccessState) {
+        // Success styling (green)
+        mContent.style.borderColor = "var(--neon-green)";
+        mContent.style.boxShadow = "var(--glow-green)";
+        
+        mTitle.innerText = "Victoire ! Missile détruit";
+        mTitle.style.color = "var(--neon-green)";
+        mTitle.style.textShadow = "var(--glow-green)";
+        
+        const timeString = lastMissileTimeTaken.replace(',', '.');
+        if (lastSpeedBonusAmount > 0) {
+          mDesc.innerHTML = `Missile détruit en ${timeString} secondes <span style="color: var(--text-muted); margin: 0 6px;">--></span> <span style="color: #ff3333; font-weight: bold;">+${lastSpeedBonusAmount} points bonus !</span>`;
+        } else {
+          mDesc.innerHTML = `Missile détruit en ${timeString} secondes`;
+        }
+        
+        mBtn.style.display = "block"; // Show button in success state
+        mBtn.innerHTML = "Continuer la mission";
+        mBtn.style.background = "linear-gradient(90deg, var(--neon-green), var(--panel-color))";
+        mBtn.style.border = "2px solid var(--neon-green)";
+        mBtn.style.color = "#fff";
+        mBtn.style.fontWeight = "700";
+        mBtn.style.fontSize = "1.2rem";
+        mBtn.style.padding = "14px";
+        mBtn.style.boxShadow = "var(--glow-green)";
+        mBtn.onclick = () => closeReviewModal();
+        
+        mFooter.innerHTML = "";
+        retrySameChallenge = false; // load next verb on dismiss
+ 
+        document.getElementById("nextVerbSelectorContainer").style.display = "block";
+        populateAvailableVerbs();
+      } else {
+        // Failure styling (magenta)
+        mContent.style.borderColor = "var(--neon-magenta)";
+        mContent.style.boxShadow = "var(--glow-magenta)";
+        
+        mTitle.innerText = "Impact ! Ville détruite";
+        mTitle.style.color = "var(--neon-magenta)";
+        mTitle.style.textShadow = "var(--glow-magenta)";
+        
+        const timeString = lastMissileTimeTaken.replace('.', ',');
+        mDesc.innerHTML = `Ville détruite en ${timeString} secondes`;
+        
+        mBtn.style.display = "block"; // Show button in failure state
+        mBtn.innerHTML = `Reprendre le verbe <span style="color: var(--neon-cyan); font-weight: 900; text-shadow: var(--glow-cyan); text-transform: uppercase;">${currentVerb}</span>`;
+        mBtn.style.background = "linear-gradient(90deg, var(--neon-magenta), var(--panel-color))";
+        mBtn.style.border = "2px solid var(--neon-magenta)";
+        mBtn.style.color = "#fff";
+        mBtn.style.fontWeight = "700";
+        mBtn.style.fontSize = "1.2rem";
+        mBtn.style.padding = "14px";
+        mBtn.onclick = () => closeReviewModal();
+        
+        mFooter.innerHTML = `
+          <p style="font-weight: 700; color: var(--neon-cyan); font-size: 0.95rem;">Le prochain missile sera neutralisé avec ces MÊMES réponses.</p>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Mémorise-les bien avant de relancer !</p>
+        `;
+        retrySameChallenge = true; // repeat challenge on dismiss
+
+        document.getElementById("nextVerbSelectorContainer").style.display = "none";
+      }
+      
+      const hasCurrentMistake = Object.values(correctAnswers).includes('incorrect') || 
+                                Object.values(initialMistakes).includes(true);
+
+      let sourceState = {
+        lastTypedValues: lastTypedValues,
+        correctAnswers: correctAnswers,
+        initialMistakes: failureState ? failureState.initialMistakes : initialMistakes,
+        initialMistakeValues: failureState ? failureState.initialMistakeValues : initialMistakeValues
+      };
+      
+      if (!isSuccessState && !hasCurrentMistake && precedingFailureState) {
+        sourceState = precedingFailureState;
+      }
+
+      if (!isSuccessState) {
+        precedingFailureState = {
+          lastTypedValues: { ...lastTypedValues },
+          correctAnswers: { ...correctAnswers },
+          initialMistakes: failureState ? { ...failureState.initialMistakes } : { ...initialMistakes },
+          initialMistakeValues: failureState ? { ...failureState.initialMistakeValues } : { ...initialMistakeValues }
+        };
+      } else {
+        precedingFailureState = null;
+      }
+
+      const buildComparisonHTML = (type, inputEl) => {
+        const val = sourceState.lastTypedValues[type] || "";
+        const possibleAnswers = getExpectedConjugations(type, currentPronoun, selectedPronounDisplay);
+        const isCorrect = sourceState.correctAnswers[type] === 'correct';
+
+        // In case of failure (retaking the verb), any initial mistake is displayed as incorrect
+        if (!isSuccessState && sourceState.initialMistakes[type]) {
+          const displayVal = sourceState.initialMistakeValues[type] || "[vide]";
+          return `❌ <span style="color: #ff3333;">${displayVal}</span> <span style="color: var(--text-muted); margin: 0 6px;">➔</span> <span style="color: var(--neon-green); font-weight: bold;">${possibleAnswers[0]}</span>`;
+        }
+
+        // If they succeeded (isSuccessState is true) and corrected it, we can show it as Corrigé in orange
+        if (isSuccessState && sourceState.initialMistakes[type]) {
+          const displayVal = sourceState.initialMistakeValues[type] || "[vide]";
+          return `❌ <span style="color: #ffaa00;">${displayVal}</span> <span style="color: var(--text-muted); margin: 0 6px;">➔</span> <span style="color: var(--neon-green); font-weight: bold;">${possibleAnswers[0]} ✅</span> <span style="color: #ffaa00; font-size: 0.85rem; margin-left: 8px;">(Corrigé)</span>`;
+        }
+
+        if (isCorrect) {
+          return `<span style="color: var(--neon-green); font-weight: bold;">${val} ✅</span>`;
+        } else {
+          const displayVal = val || "[vide]";
+          return `❌ <span style="color: #ff3333;">${displayVal}</span> <span style="color: var(--text-muted); margin: 0 6px;">➔</span> <span style="color: var(--neon-green); font-weight: bold;">${possibleAnswers[0]}</span>`;
+        }
+      };
+
+      document.getElementById("reviewPres").innerHTML = buildComparisonHTML('present', inputPres);
+      document.getElementById("reviewImp").innerHTML = buildComparisonHTML('imparfait', inputImp);
+      document.getElementById("reviewPC").innerHTML = buildComparisonHTML('passe_compose', inputPC);
+      document.getElementById("reviewPS").innerHTML = buildComparisonHTML('passe_simple', inputPS);
+
+      const tableBody = document.getElementById("reviewFullTableBody");
+      tableBody.innerHTML = "";
+      
+      targetVerbInfo.pronouns.forEach(pronoun => {
+        const row = document.createElement("tr");
+        row.style.borderBottom = "1px solid rgba(255,255,255,0.06)";
+        if (pronoun === currentPronoun) {
+          row.style.backgroundColor = isSuccessState ? "rgba(57, 255, 20, 0.12)" : "rgba(255, 0, 127, 0.15)";
+          row.style.borderLeft = isSuccessState ? "3px solid var(--neon-green)" : "3px solid var(--neon-magenta)";
+        }
+        
+        let pDisplay = targetVerbInfo.pronounDisplay[pronoun];
+        if (pronoun === currentPronoun) {
+          pDisplay = selectedPronounDisplay.toLowerCase();
+        } else if (pronoun === 'il') {
+          pDisplay = ["il", "elle", "on"][Math.floor(Math.random() * 3)];
+        } else if (pronoun === 'ils') {
+          pDisplay = ["ils", "elles"][Math.floor(Math.random() * 2)];
+        }
+        pDisplay = pDisplay.replace(/\s*\(j['’]\)/gi, "");
+        
+        row.innerHTML = `
+          <td style="padding: 6px; color: var(--neon-cyan); font-weight: bold;">${pDisplay.toLowerCase()}</td>
+          <td style="padding: 6px; color: var(--text-main);">${targetVerbInfo.present[pronoun].join(" / ")}</td>
+          <td style="padding: 6px; color: var(--text-main);">${targetVerbInfo.imparfait[pronoun].join(" / ")}</td>
+          <td style="padding: 6px; color: var(--text-main);">${targetVerbInfo.passe_compose[pronoun].join(" / ")}</td>
+          <td style="padding: 6px; color: var(--text-main);">${targetVerbInfo.passe_simple[pronoun].join(" / ")}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+
+      // Populate Round Score Breakdown
+      (function buildRoundScoreBreakdown() {
+        const breakdownBox = document.getElementById("roundScoreBreakdownBox");
+        if (!breakdownBox) return;
+
+
+
+        const correctPtsStr = correctPts > 0 
+          ? `${correctCount} x 100 = <span style="color: #ff3333; font-weight: bold;">${correctPts} pts</span>` 
+          : `${correctCount} x 100 = ${correctPts} pts`;
+
+        const cityPtsStr = cityPts > 0 
+          ? `<span style="color: #ff3333; font-weight: bold;">${cityPts} pts</span>` 
+          : `${cityPts} pts`;
+
+        const bonusPtsStr = bonusPts > 0 
+          ? `<span style="color: #ff3333; font-weight: bold;">${bonusPts} pts</span>` 
+          : `${bonusPts} pts`;
+
+        breakdownBox.innerHTML = `
+          <div style="font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 700; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; margin-bottom: 8px;">📊 SCORE DE LA VAGUE</div>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Réponses 1er essai :</span>
+              <span>${correctPtsStr}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Ville sauvée :</span>
+              <span>${cityPtsStr}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>${bonusLabel} :</span>
+              <span>${bonusPtsStr}</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 5px; margin-top: 5px; font-weight: bold;">
+              <span style="color: var(--neon-yellow);">TOTAL :</span>
+              <span style="color: #ff3333;">${totalRound} pts</span>
+            </div>
+          </div>
+        `;
+      })();
+
+      document.getElementById("reviewModal").classList.add("open");
+      // Only auto-focus the close button when NOT showing the initials input
+      if (!(isGameOver && isInTopThree)) {
+        document.getElementById("reviewCloseBtn").focus();
+      }
+    }
+
+    function closeReviewModal() {
+      sessionAccumulatedScore = score;
+      document.getElementById("reviewModal").classList.remove("open");
+      activeMissile = null;
+      const aliveCount = cities.filter(c => c.alive).length;
+      if (aliveCount === 0) {
+        updateHighScoresDisplay();
+        document.getElementById("helpModal").classList.add("open");
+      } else {
+        isGameRunning = true;
+        nextWave();
+        requestAnimationFrame(gameLoop);
+      }
+    }
+
+    /*========================================================================
+     * High Scores Local Storage Management
+     *========================================================================*/
+    function loadHighScores() {
+      const scoresJSON = localStorage.getItem("pastTenseDefense_highScores");
+      let scores = [];
+      if (scoresJSON) {
+        try {
+          scores = JSON.parse(scoresJSON);
+        } catch (e) {
+          scores = [];
+        }
+      }
+      return scores;
+    }
+
+
+
+    function updateHighScoresDisplay() {
+      const scores = loadHighScores();
+      const listEl = document.getElementById("highScoresList");
+      if (!listEl) return;
+      
+      listEl.innerHTML = "";
+      
+      // Show top 3
+      const topThree = scores.slice(0, 3);
+      if (topThree.length === 0) {
+        listEl.innerHTML = `<div style="color: var(--text-muted); font-style: italic; font-size: 0.8rem; padding: 4px 0;">Aucun record enregistré</div>`;
+        return;
+      }
+      
+      topThree.forEach((item, index) => {
+        const medal = index === 0 ? "🥈" : index === 1 ? "🥇" : "🥉";
+        const row = document.createElement("div");
+        row.style.cssText = "display: flex; justify-content: space-between; align-items: center; padding: 4px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); font-family: 'Share Tech Mono', monospace; font-size: 0.95rem;";
+        row.innerHTML = `
+          <span style="font-weight: normal;">${medal} ${item.initials}</span>
+          <span style="color: var(--neon-green); font-weight: normal;">${String(item.score).padStart(5, '0')}</span>
+          <span style="color: var(--text-muted); font-size: 0.88rem;">Vague ${String(item.wave).padStart(2, '0')}</span>
+        `;
+        listEl.appendChild(row);
+      });
+    }
+
+    function saveGameOverHighScore() {
+      const input = document.getElementById("gameOverInitialsInput");
+      if (!input) return;
+      
+      const initials = input.value.trim().toUpperCase() || "AAA";
+      
+      const scores = loadHighScores();
+      scores.push({
+        initials: initials,
+        score: score,
+        wave: wave
+      });
+      
+      // Sort descending, limit to 10
+      scores.sort((a, b) => b.score - a.score);
+      const topScores = scores.slice(0, 10);
+      
+      localStorage.setItem("pastTenseDefense_highScores", JSON.stringify(topScores));
+      
+      // Show confirmation inside the initials wrapper box
+      const wrapper = document.getElementById("gameOverInitialsWrapper");
+      if (wrapper) {
+        wrapper.innerHTML = `<p style="color: var(--neon-green); font-size: 1.1rem; font-weight: bold; margin-top: 10px; text-shadow: var(--glow-green);">🏆 SCORE ENREGISTRÉ !</p>`;
+      }
+      
+      updateHighScoresDisplay();
+    }
+
+    function goToStartScreen(e) {
+      if (e) e.preventDefault();
+      document.getElementById("reviewModal").classList.remove("open");
+      updateHighScoresDisplay();
+      document.getElementById("helpModal").classList.add("open");
+    }
+
+    /* Score reset confirmation helpers (in French) */
+    function confirmResetScores(e) {
+      if (e) e.preventDefault();
+      document.getElementById("resetScoreLink").style.display = "none";
+      document.getElementById("resetScoreConfirm").style.display = "flex";
+    }
+
+    function cancelResetScores() {
+      document.getElementById("resetScoreLink").style.display = "inline";
+      document.getElementById("resetScoreConfirm").style.display = "none";
+    }
+
+    function performResetScores() {
+      localStorage.removeItem("pastTenseDefense_highScores");
+      updateHighScoresDisplay();
+      cancelResetScores();
+    }
+
+    let activeVerbMode = null;
+
+    // Toggle verb list visibility on start screen
+    function toggleVerbList(e, modeId) {
+      e.preventDefault();
+      const container = document.getElementById('verbListContainer');
+      
+      // If clicking the same link that is currently open, close it
+      if (container.style.display === 'block' && activeVerbMode === modeId) {
+        container.style.display = 'none';
+        activeVerbMode = null;
+        return;
+      }
+      
+      const allVerbs = Object.keys(VERB_DATABASE);
+      let verbsToShow = [];
+      if (modeId === 'regular') {
+        verbsToShow = REGULAR_VERBS.filter(v => allVerbs.includes(v));
+      } else if (modeId === 'expert') {
+        verbsToShow = allVerbs;
+      } else if (modeId === 'mots-cles') {
+        verbsToShow = TOP_VERBS.filter(v => allVerbs.includes(v));
+      }
+      
+      container.textContent = verbsToShow.slice().sort().join(', ');
+      container.style.display = 'block';
+      activeVerbMode = modeId;
+    }
+
+    // Remove the old self-invoking function since we populate dynamically now
+    // Populate all three verb lists on the start screen
+    // (function populateStartScreenVerbLists() { ... })();
+
+    // Load list initially on script start
+    updateHighScoresDisplay();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover France : L'Aventure Intellectuelle</title>
+  
+  <!-- Google Fonts for clean, readable modern web typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            romantic: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              300: '#fda4af',
+              400: '#fb7185',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              950: '#4c0519',
+            },
+            midnight: {
+              900: '#150e22',
+              950: '#05030a',
+            }
+          }
+        },
+      },
+    }
+  </script>
+  
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop-in {
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    body {
+      opacity: 0;
+      animation: fadeIn 0.5s ease-out forwards;
+      background: radial-gradient(circle at top, #1e112a 0%, #090514 100%);
+    }
+    .glass-card {
+      background: rgba(20, 15, 30, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+    }
+    .glass-card-hover:hover {
+      border: 1px solid rgba(244, 63, 94, 0.5);
+      box-shadow: 0 15px 35px -10px rgba(244, 63, 94, 0.3);
+    }
+    
+    /* Make all texts easily selectable/copyable with mouse */
+    body, p, h1, h2, h3, h4, h5, span, button, div {
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+    }
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col justify-between font-sans selection:bg-rose-500/30 selection:text-rose-200">
+
+  <!-- Header Navigation -->
+  <header class="w-full border-b border-rose-950/40 bg-midnight-950/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">🌹</span>
+        <h1 class="font-semibold text-2xl tracking-wide bg-gradient-to-r from-rose-400 to-amber-300 bg-clip-text text-transparent">
+          Discover France
+        </h1>
+      </div>
+      <a href="../index.html" class="flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-750 text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-900 transition-all duration-300">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span>Retour au Hub</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Game Container -->
+  <main class="max-w-5xl w-full mx-auto px-6 py-10 flex-1 flex flex-col justify-center">
+    
+    <!-- SECTION 1: HOME/WELCOME -->
+    <div id="screen-welcome" class="space-y-10 animate-fade-in">
+      <div class="text-center space-y-6">
+        <span class="inline-block px-5 py-2 bg-rose-500/15 border border-rose-500/30 text-rose-300 text-sm font-bold uppercase tracking-wider rounded-full">
+          Jeu Littéraire & Linguistique • Niveau B1
+        </span>
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight">
+          Un Voyage de l'Esprit <br>
+          <span class="text-rose-400 font-light">et des Sens</span>
+        </h2>
+        <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
+          Parcours les 13 régions de France métropolitaine. Échange des mots spirituels lors de rencontres fascinantes, explore les subtilités de la langue française à un niveau B1, et relève le défi du grand marathon de Dijon !
+        </p>
+      </div>
+
+      <div class="glass-card rounded-3xl p-10 max-w-2xl mx-auto space-y-8 relative overflow-hidden">
+        <div class="absolute -right-12 -top-12 w-36 h-36 bg-rose-500/10 rounded-full blur-2xl"></div>
+        <div class="absolute -left-12 -bottom-12 w-36 h-36 bg-amber-500/10 rounded-full blur-2xl"></div>
+        
+        <h3 class="text-2xl font-bold text-rose-300 flex items-center gap-3">
+          <span>🎯</span> Règle du Jeu
+        </h3>
+        <p class="text-slate-200 text-base md:text-lg leading-relaxed">
+          Dans chaque région, tu devras accomplir <strong class="text-amber-300">3 défis (culturels du XIXe-XXe siècle ou de grammaire B1)</strong>.
+          <br><br>
+          Si tu te trompes, tu pourras relire l'explication et retenter ta chance immédiatement. Tu as la possibilité de copier une invitation à la <strong>Conversation</strong> pour poursuivre le dialogue avec chaque personnage sur ton IA préférée !
+        </p>
+        
+        <div class="pt-4 text-center">
+          <button onclick="startGame()" class="px-10 py-5 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white text-lg font-bold rounded-full shadow-lg shadow-rose-500/20 hover:shadow-rose-500/40 transition-all duration-300 hover:scale-105">
+            Commencer le Voyage
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: MAP / DASHBOARD -->
+    <div id="screen-dashboard" class="hidden space-y-10 animate-fade-in">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-rose-950/30 pb-8">
+        <div>
+          <h2 class="text-4xl font-bold text-white">Ton Itinéraire Français</h2>
+          <p class="text-slate-300 text-base mt-2">Sélectionne une région pour poursuivre tes rencontres et tes défis.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <div class="bg-rose-500/10 border border-rose-500/20 rounded-2xl px-6 py-4 flex items-center gap-4">
+            <span class="text-2xl">🗺️</span>
+            <div>
+              <div class="text-xs text-rose-300 font-bold uppercase tracking-wider">Progression</div>
+              <div class="text-xl font-bold text-white" id="global-progress">0 / 13 accomplies</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regions Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="regions-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Bottom Controls (Reset button at the bottom) -->
+      <div class="pt-10 flex justify-center border-t border-rose-950/20">
+        <button id="reset-progress-btn" onclick="handleResetClick(this)" class="px-6 py-3 bg-slate-900 border border-slate-700 hover:bg-slate-800 hover:border-rose-500/40 text-slate-300 text-sm font-semibold rounded-full transition-all duration-300">
+          🗑️ Réinitialiser la progression
+        </button>
+      </div>
+    </div>
+
+    <!-- SECTION 3: ADVENTURE & QUESTION AREA -->
+    <div id="screen-adventure" class="hidden space-y-8 animate-fade-in">
+      <!-- Back to Dashboard -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <button onclick="showDashboard()" class="inline-flex items-center gap-2 text-rose-400 hover:text-rose-300 text-base font-bold transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          <span>Retourner à la carte</span>
+        </button>
+
+        <!-- Toast notification for prompt copy -->
+        <span id="copy-toast" class="hidden text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-4 py-1.5 rounded-full text-sm font-semibold animate-fade-in">
+          Prompt copié pour l'IA !
+        </span>
+      </div>
+
+      <!-- Region Header / Narrative Panel -->
+      <div class="glass-card rounded-3xl p-8 md:p-10 space-y-8 relative overflow-hidden">
+        <div class="absolute -right-24 -top-24 w-64 h-64 bg-rose-500/5 rounded-full blur-3xl"></div>
+        
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <span class="text-sm font-bold text-rose-400 uppercase tracking-widest" id="adventure-region-tag">Région</span>
+            <h3 class="text-3xl md:text-4xl font-bold text-white mt-1" id="adventure-region-name">Nom de la Région</h3>
+          </div>
+          <span class="px-4 py-2 bg-rose-950/40 border border-rose-800/40 text-rose-300 rounded-full text-sm font-bold font-mono" id="adventure-region-status">
+            Objectif 1/3
+          </span>
+        </div>
+
+        <!-- Narrative Description -->
+        <div class="space-y-4 text-slate-100 text-base md:text-lg leading-relaxed border-l-2 border-rose-500/30 pl-5 py-2 font-light" id="adventure-narrative">
+          <!-- Text content describing situation -->
+        </div>
+
+        <!-- Conversation button shown directly below narrative -->
+        <div class="pt-2 flex justify-start">
+          <button onclick="copyRoleplayPrompt()" class="flex items-center gap-1.5 text-sm text-rose-400 hover:text-rose-300 bg-rose-500/10 border border-rose-500/20 px-5 py-2.5 rounded-xl transition-colors font-bold uppercase tracking-wider">
+            <span>📋 Conversation</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Question Card -->
+      <div class="glass-card rounded-3xl p-8 md:p-10 space-y-8 border-amber-500/10" id="question-panel">
+        <div class="space-y-3">
+          <div class="inline-block px-4 py-1.5 bg-rose-500/15 text-rose-300 text-sm font-bold rounded-lg uppercase tracking-wider" id="question-sub-tag">
+            Défi
+          </div>
+          <h4 class="text-xl md:text-2xl leading-relaxed text-white font-medium" id="question-text">
+            Question...
+          </h4>
+        </div>
+
+        <!-- Answer Options -->
+        <div class="grid grid-cols-1 gap-4" id="options-container">
+          <!-- Options rendered dynamically -->
+        </div>
+
+        <!-- Submit/Next Panel (hidden initially) -->
+        <div id="feedback-panel" class="hidden rounded-2xl p-6 border border-slate-800/60 transition-all duration-300">
+          <div class="flex gap-4">
+            <div class="text-3xl" id="feedback-icon">🎉</div>
+            <div class="space-y-2 flex-1">
+              <h5 class="font-bold text-lg" id="feedback-title">Correct !</h5>
+              <p class="text-base text-slate-300 leading-relaxed animate-fade-in" id="feedback-explanation">
+                Explication...
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end">
+            <button id="next-button" onclick="nextStep()" class="px-8 py-3 bg-rose-600 hover:bg-rose-500 text-white text-base font-bold rounded-full transition-all duration-300">
+              Continuer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CELEBRATION MODAL FOR REGION ACCOMPLISHED -->
+    <div id="celebration-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-6 z-50 hidden">
+      <div class="glass-card rounded-3xl p-8 md:p-12 max-w-lg w-full text-center space-y-6 animate-pop-in relative overflow-hidden border-2 border-emerald-500/30">
+        <div class="text-6xl animate-bounce">✨🏆</div>
+        <h3 class="text-3xl font-bold text-emerald-400" id="celebration-region-title">Région Accomplie !</h3>
+        <p class="text-slate-300 text-base md:text-lg leading-relaxed" id="celebration-text">
+          Tu as brillamment accompli les 3 défis de cette région !
+        </p>
+        <div class="pt-4">
+          <button onclick="closeCelebration()" class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-base font-bold rounded-full transition-all duration-300">
+            Retourner au Voyage
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: EPILOGUE / GAME COMPLETED -->
+    <div id="screen-epilogue" class="hidden text-center space-y-10 max-w-3xl mx-auto animate-fade-in">
+      <div class="space-y-4">
+        <span class="text-7xl">🏆</span>
+        <h2 class="text-5xl md:text-6xl font-bold text-white leading-tight">
+          Carnet de Voyage Accomplie
+        </h2>
+        <p class="text-lg text-rose-300">
+          "Le vrai voyage de découverte ne consiste pas à chercher de nouveaux paysages, mais à avoir de nouveaux yeux."
+        </p>
+      </div>
+
+      <div class="glass-card rounded-3xl p-10 space-y-8 text-left relative overflow-hidden border border-emerald-500/20">
+        <div class="absolute -right-16 -top-16 w-36 h-36 bg-amber-500/15 rounded-full blur-2xl"></div>
+        <h3 class="text-3xl font-bold text-white border-b border-rose-950/30 pb-4">
+          Épilogue : Souvenirs de France
+        </h3>
+        <p class="text-slate-200 text-base md:text-lg leading-relaxed font-light">
+          Ton odyssée s'achève avec succès. Tu as exploré les 13 régions de France métropolitaine, surmonté tous les défis de la langue française au niveau B1, et brillamment couru le marathon à Dijon. Les cœurs conquis et les esprits séduits tout au long de ton chemin témoignent de ta maîtrise de la culture et de la langue. Félicitations !
+        </p>
+        
+        <div class="pt-6 text-center flex flex-col sm:flex-row justify-center gap-6">
+          <button onclick="restartGame()" class="px-8 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-full text-base transition-all duration-300 border border-slate-700">
+            Recommencer l'aventure
+          </button>
+          <a href="../index.html" class="px-8 py-3.5 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-bold rounded-full text-base shadow-md transition-all duration-300">
+            Retourner aux Mini-Apps
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-10 text-center text-sm text-slate-500 border-t border-slate-900/50 bg-midnight-950/60 mt-10">
+    <p>Discover France &bull; Développé en HTML/JS pour LangLearn</p>
+  </footer>
+
+  <!-- Script for Game Logic -->
+  <script>
+    // Searchable Terms for Dynamic Highlighting
+    const SEARCHABLE_TERMS = [
+      // Bourgogne
+      "Route des Grands Crus", "Dijon", "Kir", "Henri Vincenot", "Gustave Eiffel", "Félix Kir", "Gaston Gérard", "Robert Poujade", "Eugène Viollet-le-Duc",
+      // Île-de-France
+      "Café de Flore", "Saint-Germain-des-Prés", "Jean-Paul Sartre", "Simone de Beauvoir", "Hector Guimard", "Art Nouveau", "La Sorbonne", "La Coupole", "Le Procope",
+      // PACA
+      "Avignon", "Rocher des Doms", "Marcel Pagnol", "René Char", "Vaucluse", "L'Isle-sur-la-Sorgue", "Aubagne", "pont d'Avignon", "Jean Giono", "Albert Camus", "Paul Éluard", "Louis Aragon",
+      // Nouvelle-Aquitaine
+      "Saint-Émilion", "Dune du Pilat", "Arcachon", "vins de Bordeaux", "Gironde", "Pomerols", "ostréiculture", "Napoléon III",
+      // Bretagne
+      "Saint-Malo", "Grand Bé", "Chateaubriand", "François-René de Chateaubriand",
+      // Grand Est
+      "Petite France", "Strasbourg", "Auguste Bartholdi", "Verdun", "Colmar", "Bartholdi", "Cathédrale", "Camille Claudel", "Jean Arp", "Reims",
+      // Auvergne-Rhône-Alpes
+      "Lyon", "frères Lumière", "Cinématographe", "Jean Moulin", "Vieux Lyon", "Mères lyonnaises",
+      // Normandie
+      "Rouen", "Monet", "Cabourg", "Marcel Proust", "débarquement de Normandie", "Étretat", "Aiguille creuse", "D-Day",
+      // Occitanie
+      "Toulouse", "Cité de l'Espace", "Saint-Exupéry", "Aéropostale", "Pierre Soulages", "outrenoir", "Garonne", "Capitole", "Canal du Midi", "Jean Mermoz", "Henri Guillaumet",
+      // Hauts-de-France
+      "Vieille Bourse", "Lille", "bassin minier", "bataille de la Somme", "Braderie de Lille", "Somme",
+      // Centre-Val de Loire
+      "Val de Loire", "Balzac", "Tours", "Amboise", "Loire", "Ronsard", "Renaissance", "Honoré de Balzac", "Gustave Flaubert", "Stendhal",
+      // Pays de la Loire
+      "Nantes", "Jules Verne", "Machines de l'Île", "24 Heures du Mans", "Sarthe", "Victor Hugo", "Émile Zola", "Le Grand Prix de France", "Le Rallye des Pays de la Loire",
+      // Corse
+      "Bonifacio", "Ajaccio", "Napoléon Bonaparte", "GR20", "GR10", "Le sentier des Douaniers", "Louis-Napoléon Bonaparte", "Louis XVIII", "Alfred de Vigny"
+    ];
+
+    // Helper to get search icons HTML (scaled, space-free standard SVG paths)
+    function getSearchIconsHtml(termName) {
+      const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(termName)}`;
+      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(termName)}`;
+      const youtubeUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(termName)}`;
+      return `
+        <a href="${googleUrl}" target="_blank" onclick="event.stopPropagation()" title="Rechercher '${termName}' sur le Web" class="text-rose-500 hover:text-rose-400 transition-colors inline-flex items-center ml-1">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          </svg>
+        </a>
+        <a href="${mapsUrl}" target="_blank" onclick="event.stopPropagation()" title="Rechercher '${termName}' sur Google Maps" class="text-rose-500 hover:text-rose-400 transition-colors inline-flex items-center ml-1">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+          </svg>
+        </a>
+        <a href="${youtubeUrl}" target="_blank" onclick="event.stopPropagation()" title="Rechercher '${termName}' sur YouTube" class="text-rose-500 hover:text-rose-400 transition-colors inline-flex items-center ml-1">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.86-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186zM9.5,15.5v-7l6.5,3.5L9.5,15.5z"/>
+          </svg>
+        </a>
+      `;
+    }
+
+    // Helper to highlight terms, inject search links, and strip surrounding quotes
+    function highlightTerms(text) {
+      if (!text) return text;
+      
+      // Sort by length descending to match longer phrases first
+      const sortedTerms = [...SEARCHABLE_TERMS].sort((a, b) => b.length - a.length);
+      
+      let result = text;
+      const placeholders = [];
+      
+      sortedTerms.forEach((term) => {
+        const escapedTerm = term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        // Match term, capturing any optional quotes on either side of it
+        const regex = new RegExp('(["\'«“”]?)(' + escapedTerm + ')(["\'»“”]?)', 'gi');
+        
+        result = result.replace(regex, (match, quoteLeft, termText, quoteRight) => {
+          // If match contains quotes on both sides, we strip them
+          const finalWord = termText;
+          const ph = `___TERM_PLACEHOLDER_${placeholders.length}___`;
+          placeholders.push({
+            placeholder: ph,
+            originalText: finalWord,
+            searchTerm: term
+          });
+          return ph;
+        });
+      });
+      
+      // Replace placeholders with clean HTML
+      placeholders.forEach(item => {
+        const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(item.searchTerm)}`;
+        const html = `
+          <span class="inline-flex items-center gap-0.5">
+            <a href="${googleUrl}" target="_blank" onclick="event.stopPropagation()" title="Rechercher '${item.searchTerm}' sur Google" class="font-bold text-inherit hover:underline transition-all duration-250">${item.originalText}</a>
+            ${getSearchIconsHtml(item.searchTerm)}
+          </span>
+        `;
+        result = result.replace(item.placeholder, html);
+      });
+      
+      return result;
+    }
+
+    // Game Data (B1 Grammar & 19th/20th-century culture)
+    const REGIONS = [
+      {
+        id: 'bourgogne',
+        name: 'Bourgogne-Franche-Comté',
+        city: 'Dijon',
+        avatar: '🏃‍♀️',
+        character: 'Camille',
+        tagline: 'Entre vignobles et marathon royal',
+        situation: "Camille est sur la ligne de départ du marathon de Dijon. Elle s'échauffe activement sous un soleil frais d'octobre. Elle s'approche de toi d'un pas rythmé et te propose de courir ensemble en disant :",
+        aiPrompt: "Tu es Camille, un préparateur physique passionné d'histoire bourguignonne, athlétique, cultivé, vif et très encourageant. Je suis un voyageur courant le marathon de Dijon. Nous courons ensemble sur la Route des Grands Crus et flirtons intellectuellement tout en courant. Parle-moi uniquement en français de niveau B1, en me tutoyant, avec une note d'humour, d'esprit et de séduction sportive. Lance la conversation par une salutation et une phrase d'ouverture enthousiaste par rapport au marathon de Dijon et à notre course commune.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« Bien que le romancier bourguignon Henri Vincenot ______ (écrire) sur la vie rurale, ses livres restent très appréciés des citadins. »",
+            options: ["ait écrit", "a écrit", "écrira"],
+            correct: 0,
+            explanation: "Après 'bien que', on emploie le subjonctif. L'antériorité exige le subjonctif passé 'ait écrit'.",
+            learnedSummary: "Le subjonctif passé obligatoire après la locution 'bien que'"
+          },
+          {
+            type: 'culture',
+            text: "Quel célèbre ingénieur français, né à Dijon en 1832, a conçu la structure métallique de la Statue de la Liberté avant d'ériger sa célèbre tour parisienne ?",
+            options: ["Gustave Eiffel", "Eugène Viollet-le-Duc", "Auguste Bartholdi"],
+            correct: 0,
+            explanation: "Gustave Eiffel est né à Dijon en 1832 et y a commencé ses premières études avant d'entrer à l'École Centrale.",
+            learnedSummary: "Gustave Eiffel, originaire de Dijon"
+          },
+          {
+            type: 'culture',
+            text: "Quel maire emblématique de Dijon du XXe siècle, chanoine et résistant, a popularisé le cocktail composé de vin blanc aligoté et de crème de cassis qui porte aujourd'hui son nom ?",
+            options: ["Félix Kir", "Gaston Gérard", "Robert Poujade"],
+            correct: 0,
+            explanation: "Le chanoine Félix Kir, maire de Dijon de 1945 à 1968, offrait systématiquement ce cocktail à ses invités officiels.",
+            learnedSummary: "Le cocktail 'Kir' du chanoine Félix Kir"
+          }
+        ]
+      },
+      {
+        id: 'ile-de-france',
+        name: 'Île-de-France',
+        city: 'Paris',
+        avatar: '☕',
+        character: 'Morgane',
+        tagline: 'Cafés littéraires et débats d\'idées',
+        situation: "Morgane est attablée à la terrasse du Café de Flore à Saint-Germain-des-Prés. Elle referme un livre de Jean-Paul Sartre, réajuste ses lunettes et t'observe avec un léger sourire en te disant :",
+        aiPrompt: "Tu es Morgane, doctorante en philosophie à la Sorbonne, habituée du Café de Flore. Tu es vive, cynique mais joueuse, extrêmement cultivée et séduisante par ton intelligence. Je suis un voyageur s'étant assis près de ta table. Nous débattons de l'existentialisme de Sartre et de Simone de Beauvoir. Parle-moi uniquement en français de niveau B1, en me tutoyant, avec du flirt intellectuel raffiné. Lance la conversation en me posant une question provocante ou intrigante sur la liberté humaine d'après Jean-Paul Sartre.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« L'existentialisme est une philosophie ______ (dont / où / laquelle) Simone de Beauvoir a brillamment exposé les aspects féministes dans son œuvre majeure. »",
+            options: ["dont", "où", "laquelle"],
+            correct: 0,
+            explanation: "On dit 'exposer les aspects de...', donc 'dont' remplace le complément du nom introduit par la préposition 'de'.",
+            learnedSummary: "Le pronom relatif 'dont' remplaçant un complément introduit par 'de'"
+          },
+          {
+            type: 'culture',
+            text: "Quel café mythique de Saint-Germain-des-Prés servait de quartier général de création et d'écriture à Jean-Paul Sartre et Simone de Beauvoir au milieu du XXe siècle ?",
+            options: ["Le Café de Flore", "La Coupole", "Le Procope"],
+            correct: 0,
+            explanation: "Le Café de Flore était le lieu central où le couple de philosophes passait ses journées à écrire et à échanger avec ses contemporains.",
+            learnedSummary: "Le Café de Flore et l'existentialisme"
+          },
+          {
+            type: 'grammar',
+            text: "« Les lignes de métro parisiennes, que l'architecte Hector Guimard a ______ (decorées / décoré / décorer) dans le style Art Nouveau, sont uniques. »",
+            options: ["décorées", "décoré", "décorer"],
+            correct: 0,
+            explanation: "Le COD 'que' (représentant 'les lignes de métro', féminin pluriel) est placé avant l'auxiliaire 'avoir'. Le participe s'accorde donc au féminin pluriel.",
+            learnedSummary: "L'accord du participe passé avec l'auxiliaire avoir quand le COD précède"
+          }
+        ]
+      },
+      {
+        id: 'paca',
+        name: 'Provence-Alpes-Côte d\'Azur',
+        city: 'Avignon',
+        avatar: '☀️',
+        character: 'Mathieu',
+        tagline: 'Sous le soleil du Palais des Papes',
+        situation: "Mathieu est assis sur un banc du Rocher des Doms à Avignon, un carnet de croquis à la main. Il contemple le pont d'Avignon au loin, tourne son regard vers toi et t'interpelle chaleureusement pour t'inviter dans son œuvre :",
+        aiPrompt: "Tu es Mathieu, un artiste-peintre né à Avignon, sensible aux couleurs, à la poésie de René Char et à la lumière provençale. Tu es romantique, observateur et doucement séducteur. Je suis un voyageur t'observant peindre près du Rocher des Doms. Parle-moi uniquement en français de niveau B1, en me tutoyant, avec des références à l'art, à la lumière et un flirt délicat. Commence la conversation en me disant pourquoi tu souhaites m'inclure dans ton croquis.",
+        goals: [
+          {
+            type: 'culture',
+            text: "Quel célèbre auteur du XXe siècle a enchanté la Provence à travers ses souvenirs d'enfance décrits dans 'La Gloire de mon père' et 'Le Château de ma mère' ?",
+            options: ["Marcel Pagnol", "Jean Giono", "Albert Camus"],
+            correct: 0,
+            explanation: "Marcel Pagnol a immortalisé les collines de l'Aubagne et la culture provençale dans ses romans autobiographiques.",
+            learnedSummary: "Marcel Pagnol et les collines de l'Aubagne"
+          },
+          {
+            type: 'grammar',
+            text: "« Je crains que le mistral ne ______ (soit) trop fort ce soir pour que nous puissions nous promener sur les remparts d'Avignon. »",
+            options: ["soit", "est", "serait"],
+            correct: 0,
+            explanation: "Après les verbes de crainte au présent ('craindre que'), la subordonnée utilise le subjonctif ('soit') précédé du 'ne' explétif.",
+            learnedSummary: "Le subjonctif présent requis après l'expression de crainte"
+          },
+          {
+            type: 'culture',
+            text: "Quel grand poète et résistant français du XXe siècle, originaire de L'Isle-sur-la-Sorgue dans le Vaucluse, a écrit le recueil de notes de guerre 'Feuillets d'Hypnos' ?",
+            options: ["René Char", "Paul Éluard", "Louis Aragon"],
+            correct: 0,
+            explanation: "René Char, grande figure de la poésie française et chef de maquis en Provence, a rédigé ces notes pendant l'Occupation.",
+            learnedSummary: "Le poète résistant René Char"
+          }
+        ]
+      },
+      {
+        id: 'nouvelle-aquitaine',
+        name: 'Nouvelle-Aquitaine',
+        city: 'Bordeaux',
+        avatar: '🍷',
+        character: 'Chloé',
+        tagline: 'Vignobles de prestige et brise marine',
+        situation: "Chloé se tient au milieu des vignobles de Saint-Émilion. Elle inspecte les grappes de raisin sous la brise marine, puis lève son verre de rouge et t'invite à la rejoindre pour une dégustation :",
+        aiPrompt: "Tu es Chloé, œnologue originaire d'Arcachon, spécialisée dans les bordeaux et les pomerols. Tu es sensuelle, intelligente, fière du terroir girondin. Je suis un voyageur à un atelier de dégustation dans une cave de Saint-Émilion. Parle-moi uniquement en français de niveau B1, en me tutoyant, en utilisant des métaphores sur le vin, la terre, le temps et le plaisir des sens avec esprit. Commence la conversation en me tendant un verre et en me demandant de deviner les arômes de ce millésime.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« Si nous avions pris le temps d'escalader la Dune du Pilat à la tombée de la nuit, nous ______ (avoir) une vue magnifique sur le bassin d'Arcachon. »",
+            options: ["aurions eu", "avions eu", "aurions"],
+            correct: 0,
+            explanation: "Avec 'si' + plus-que-parfait ('si nous avions pris'), la conséquence dans le passé se met au conditionnel passé ('aurions eu').",
+            learnedSummary: "Le conditionnel passé pour exprimer un regret ou une hypothèse non réalisée"
+          },
+          {
+            type: 'culture',
+            text: "En quelle année a été établi le célèbre classement des vins de Bordeaux, commandé par Napoléon III à l'occasion de l'Exposition universelle de Paris, fixant la liste des grands crus ?",
+            options: ["1855", "1900", "1936"],
+            correct: 0,
+            explanation: "Le classement officiel des vins de Bordeaux de 1855 sert toujours de référence de nos jours pour les grands crus.",
+            learnedSummary: "Le classement des vins de Bordeaux de 1855"
+          },
+          {
+            type: 'grammar',
+            text: "« C'est en ______ (étudiant) les techniques modernes d'ostréiculture dans le bassin d'Arcachon que l'on comprend l'équilibre fragile de cette lagune. »",
+            options: ["étudiant", "étudier", "étudié"],
+            correct: 0,
+            explanation: "Le gérondif ('en étudiant') exprime le moyen par lequel on acquiert la compréhension de la lagune.",
+            learnedSummary: "L'emploi du gérondif en français pour exprimer la simultanéité ou le moyen"
+          }
+        ]
+      },
+      {
+        id: 'bretagne',
+        name: 'Bretagne',
+        city: 'Saint-Malo',
+        avatar: '🌊',
+        character: 'Elouan',
+        tagline: 'Légendes celtes et remparts corsaires',
+        situation: "Elouan marche sur les remparts balayés par le vent à Saint-Malo. Il s'arrête face à la mer déchaînée, remonte le col de son manteau et se tourne vers toi pour partager ses pensées sur le large :",
+        aiPrompt: "Tu es Elouan, océanographe et conteur breton à Saint-Malo. Tu es fier, lié aux elements marins et aux légendes celtes. Tu t'exprimes avec poésie, force et une franchise un peu sauvage. Je suis un voyageur à tes côtés sur les remparts malouins. Parle-moi uniquement en français de niveau B1, en me tutoyant, en évoquant la mer, le vent, Chateaubriand et en flirtant subtilement avec moi. Débute la conversation en me demandant si je crains les tempêtes ou si la mer m'attire.",
+        goals: [
+          {
+            type: 'culture',
+            text: "Quel illustre écrivain romantique français du XIXe siècle, né à Saint-Malo en 1768, est enterré selon ses dernières volontés sur l'îlot du Grand Bé face à la mer ?",
+            options: ["François-René de Chateaubriand", "Victor Hugo", "Alfred de Vigny"],
+            correct: 0,
+            explanation: "Chateaubriand repose sur le rocher du Grand Bé à Saint-Malo, face au large qu'il a tant décrit dans ses 'Mémoires d'outre-tombe'.",
+            learnedSummary: "Le tombeau de Chateaubriand au Grand Bé"
+          },
+          {
+            type: 'grammar',
+            text: "« Saint-Malo est une cité corsaire ______ (dont / où / par laquelle) une grande partie des remparts en granit a été épargnée lors des bombardements alliés d'août 1944. »",
+            options: ["dont", "où", "par laquelle"],
+            correct: 0,
+            explanation: "On dit 'une partie de...', donc le pronom relatif de possession 'dont' ('dont une grande partie') est requis.",
+            learnedSummary: "Le pronom relatif 'dont' exprimant la possession ou l'origine"
+          },
+          {
+            type: 'culture',
+            text: "En quelle année s'achevèrent les titanesques travaux de reconstruction à l'identique du centre historique de Saint-Malo, détruit à 80 % pendant la Seconde Guerre mondiale ?",
+            options: ["1972", "1953", "1948"],
+            correct: 0,
+            explanation: "La reconstruction minutieuse de la ville corsaire à l'identique a duré près de 30 ans pour se terminer officiellement en 1972.",
+            learnedSummary: "La reconstruction de Saint-Malo (1972)"
+          }
+        ]
+      },
+      {
+        id: 'grand-est',
+        name: 'Grand Est',
+        city: 'Strasbourg',
+        avatar: '🥨',
+        character: 'Amélie',
+        tagline: 'Au cœur de l\'Europe rhénane',
+        situation: "Amélie s'avance vers toi sur le pont de la Petite France à Strasbourg, sous les colombages illuminés. Elle tient deux billets pour la visite du Parlement européen et te glisse d'un ton complice :",
+        aiPrompt: "Tu es Amélie, interprète trilingue travaillant au Parlement européen à Strasbourg. Tu es vive, polyglotte, passionnée par les nuances sémantiques, les ponts culturels rhénans et l'histoire franco-allemande. Je suis un voyageur à la terrasse d'un café devant la cathédrale. Parle-moi uniquement en français de niveau B1, en me tutoyant, en évoquant les langues, la traduction, Gutenberg et en flirtant subtilement. Lance la conversation en me disant ce que signifie pour toi 'traduire un sentiment'.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« Bien qu'Amélie ______ (vouloir) travailler à Bruxelles, elle préfère finalement la douceur de vivre de Strasbourg. »",
+            options: ["veuille", "veut", "voudrait"],
+            correct: 0,
+            explanation: "Après la conjonction 'bien que', le subjonctif présent 'veuille' est obligatoire.",
+            learnedSummary: "Le subjonctif présent requis après les conjonctions d'opposition"
+          },
+          {
+            type: 'culture',
+            text: "Quel grand sculpteur alsacien du XIXe siècle, né à Colmar en 1834, a conçu la célèbre 'Statue de la Liberté' offerte par la France aux États-Unis ?",
+            options: ["Auguste Bartholdi", "Camille Claudel", "Jean Arp"],
+            correct: 0,
+            explanation: "Auguste Bartholdi a imaginé la statue de New York ainsi que le célèbre Lion de Belfort, nés de ses ateliers alsaciens.",
+            learnedSummary: "Le sculpteur alsacien Auguste Bartholdi"
+          },
+          {
+            type: 'culture',
+            text: "Quel site historique de la Meuse dans le Grand Est fut le théâtre en 1916 d'une bataille de dix mois, symbole de la guerre d'usure de la Première Guerre mondiale ?",
+            options: ["Verdun", "Reims", "Strasbourg"],
+            correct: 0,
+            explanation: "La bataille de Verdun en 1916 fit plus de 300 000 morts et disparus français et allemands, devenant un symbole fort de réconciliation franco-allemande.",
+            learnedSummary: "Verdun, symbole de la Première Guerre"
+          }
+        ]
+      },
+      {
+        id: 'auvergne-rhone-alpes',
+        name: 'Auvergne-Rhône-Alpes',
+        city: 'Lyon',
+        avatar: '🦁',
+        character: 'Lucas',
+        tagline: 'Capitale de la gastronomie et collines soyeuses',
+        situation: "Lucas nettoie le comptoir en étain de son bistrot lyonnais, dans le quartier Saint-Jean. Il lève les yeux vers toi alors que tu t'installes pour goûter des spécialités, et t'accueille d'un air enjoué :",
+        aiPrompt: "Tu es Lucas, un jeune chef passionné à Lyon. Tu es fier de l'héritage des 'Mères lyonnaises', créatif, amateur d'histoire de la soie et de traboules. Je suis un voyageur attablé dans ton bouchon du Vieux Lyon. Parle-moi uniquement en français de niveau B1, en me tutoyant, en mêlant métaphores culinaires lyonnaises, esprit républicain et séduction raffinée. Lance notre échange en me suggérant un plat particulier de ta création qui éveille les esprits.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« Si les frères Lumière n'avaient pas inventé le Cinématographe à Lyon en 1895, le septième art ______ (connaître) un autre essor. »",
+            options: ["aurait connu", "connaissait", "connaîtra"],
+            correct: 0,
+            explanation: "La structure 'si + plus-que-parfait' ('si les frères Lumière n'avaient pas inventé') introduit une conséquence passée au conditionnel passé ('aurait connu').",
+            learnedSummary: "Le conditionnel passé pour exprimer l'irréel du passé dans les subordonnées de condition"
+          },
+          {
+            type: 'culture',
+            text: "En quelle année s'est tenue à Lyon la toute première projection cinématographique publique et payante de l'histoire, dans le hangar des usines Lumière ?",
+            options: ["1895", "1905", "1920"],
+            correct: 0,
+            explanation: "Louis et Auguste Lumière ont déposé le brevet du Cinématographe en 1895 et réalisé les premières projections la même année.",
+            learnedSummary: "L'invention du cinéma à Lyon en 1895"
+          },
+          {
+            type: 'culture',
+            text: "Quel leader majeur de la Résistance intérieure française, capturé par la Gestapo à Caluire-et-Cuire près de Lyon en 1943, a unifié les réseaux sous l'autorité du général de Gaulle ?",
+            options: ["Jean Moulin", "Pierre Brossolette", "Lucie Aubrac"],
+            correct: 0,
+            explanation: "Jean Moulin est décédé des suites de ses tortures en juillet 1943 sans avoir livré aucun secret à Klaus Barbie.",
+            learnedSummary: "Jean Moulin et la Résistance lyonnaise"
+          }
+        ]
+      },
+      {
+        id: 'normandie',
+        name: 'Normandie',
+        city: 'Rouen',
+        avatar: '🍏',
+        character: 'Léonie',
+        tagline: 'Falaises d\'albâtre et impressionnisme',
+        situation: "Léonie range ses toiles sous le porche de la cathédrale de Rouen sous une pluie fine. Elle essuie un éclat de peinture sur son front, tourne la tête vers toi et t'invite à l'abri :",
+        aiPrompt: "Tu es Léonie, guide d'art impressionniste à Étretat et peintre à tes heures. Tu es sensible, contemplative, fascinée par Monet, Courbet et la côte normande. Je suis un voyageur à tes côtés face à l'Aiguille creuse d'Étretat. Parle-moi uniquement en français de niveau B1, en me tutoyant, en parlant d'esthétique impressionniste, du ciel, des falaises et en flirtant délicatement. Débute notre entretien en me montrant une de tes esquisses inachevées sous la pluie rouennaise.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« Bien que Monet ______ (peindre) la cathédrale de Rouen sous différentes lumières en 1892, sa série comporte plus de trente toiles. »",
+            options: ["ait peint", "a peint", "peignait"],
+            correct: 0,
+            explanation: "'Bien que' est suivi du subjonctif passé 'ait peint' pour marquer une concession accomplie.",
+            learnedSummary: "Le subjonctif passé pour marquer la concession après 'bien que'"
+          },
+          {
+            type: 'culture',
+            text: "Quel célèbre romancier français du XXe siècle a immortalisé la station balnéaire normande de Cabourg sous le nom fictionnel de 'Balbec' dans son chef-d'œuvre 'À la recherche du temps perdu' ?",
+            options: ["Marcel Proust", "Gustave Flaubert", "Guy de Maupassant"],
+            correct: 0,
+            explanation: "Marcel Proust séjournait régulièrement au Grand Hôtel de Cabourg, qui lui inspira les descriptions de Balbec.",
+            learnedSummary: "Marcel Proust et Cabourg (Balbec)"
+          },
+          {
+            type: 'culture',
+            text: "Sur quelles côtes normandes s'est déroulé le débarquement allié du 6 juin 1944 (D-Day), amorçant la libération de l'Europe de l'Ouest ?",
+            options: ["Les plages d'Omaha, Utah, Gold, Juno et Sword", "La baie de Somme", "Les falaises d'Étretat"],
+            correct: 0,
+            explanation: "Ces cinq plages de la Manche et du Calvados ont vu débarquer plus de 150 000 soldats alliés lors de l'opération Overlord.",
+            learnedSummary: "Le débarquement de Normandie (1944)"
+          }
+        ]
+      },
+      {
+        id: 'occitanie',
+        name: 'Occitanie',
+        city: 'Toulouse',
+        avatar: '🚀',
+        character: 'Gabriel',
+        tagline: 'La ville rose et l\'aventure spatiale',
+        situation: "Gabriel observe la maquette de la fusée Ariane à la Cité de l'Espace à Toulouse. Il se tourne vers toi avec un regard pétillant, t'invite du regard à observer le ciel et s'apprête à te confier ses rêves :",
+        aiPrompt: "Tu es Gabriel, ingénieur aéronautique à Toulouse, féru de la brique rose du Capitole, de l'histoire de l'Aéropostale (Saint-Exupéry) et du Canal du Midi. Tu es intelligent, rêveur d'espace, charmant et calme. Je suis un voyageur à tes côtés sur les ponts de Toulouse. Parle-moi uniquement en français de niveau B1, en me tutoyant, en mêlant références spatiales, poésie occitane et flirt intellectuel. Débute notre entretien en partageant un secret d'astrophysique ou une pensée romantique liée aux constellations.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« L'aéronautique est un domaine d'excellence ______ (auquel / de quoi / dont) Toulouse doit sa renommée mondiale contemporaine. »",
+            options: ["auquel", "de quoi", "dont"],
+            correct: 0,
+            explanation: "On dit 'devoir sa renommée à un domaine', le pronom contracté 'auquel' convient donc (auquel Toulouse doit...).",
+            learnedSummary: "Le pronom relatif contracté 'auquel' pour un complément d'objet indirect"
+          },
+          {
+            type: 'culture',
+            text: "Quel écrivain et pilote français du XXe siècle, auteur du célèbre conte philosophique 'Le Petit Prince', commença sa carrière aéronautique à Toulouse-Montaudran chez Latécoère ?",
+            options: ["Antoine de Saint-Exupéry", "Jean Mermoz", "Henri Guillaumet"],
+            correct: 0,
+            explanation: "Saint-Exupéry fut pilote de l'Aéropostale au départ de Toulouse avant de devenir l'écrivain majeur que l'on connaît.",
+            learnedSummary: "Saint-Exupéry et l'Aéropostale toulousaine"
+          },
+          {
+            type: 'culture',
+            text: "Quel célèbre artiste peintre français contemporain du XXe siècle, né à Rodez, est internationalement connu pour ses œuvres explorant les nuances de l'outrenoir ?",
+            options: ["Pierre Soulages", "Yves Klein", "Jean Dubuffet"],
+            correct: 0,
+            explanation: "Pierre Soulages a développé l'outrenoir, utilisant la lumière se reflétant sur la matière noire de ses toiles.",
+            learnedSummary: "Pierre Soulages et l'Outrenoir"
+          }
+        ]
+      },
+      {
+        id: 'hauts-de-france',
+        name: 'Hauts-de-France',
+        city: 'Lille',
+        avatar: '🔔',
+        character: 'Manon',
+        tagline: 'Chaleur du Nord et beffrois majestueux',
+        situation: "Manon t'attend à l'entrée de la Vieille Bourse de Lille. Elle termine une gaufre à la vanille de chez Meert, plisse les yeux sous la brume d'automne et s'exclame joyeusement pour briser la glace :",
+        aiPrompt: "Tu es Manon, historienne de l'art à Lille, fière de l'héritage flamand, de la convivialité des Hauts-de-France et des beffrois classés. Tu es dynamique, chaleureuse, spirituelle et accueillante. Je suis un voyageur à la Braderie de Lille ou sur la Grand'Place. Parle-moi uniquement en français de niveau B1, en me tutoyant, en partageant des anecdotes sur le beffroi de Lille et en flirtant chaleureusement. Débute notre conversation en m'invitant à partager un moment autour d'un plat lillois.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« Le bassin minier du Nord-Pas-de-Calais est un territoire ______ (dont / où / lequel) le patrimoine industriel a été inscrit à l'UNESCO en 2012. »",
+            options: ["dont", "où", "lequel"],
+            correct: 0,
+            explanation: "'Dont' exprime le rapport de possession ('le patrimoine du bassin minier').",
+            learnedSummary: "Le pronom relatif simple 'dont' pour marquer la possession"
+          },
+          {
+            type: 'culture',
+            text: "Quelle tragique bataille de 1916 dans la Somme, opposant les forces britanniques et françaises à l'Empire allemand, fut l'une des plus meurtrières de l'histoire humaine ?",
+            options: ["La bataille de la Somme", "La bataille de la Marne", "La bataille de la Lys"],
+            correct: 0,
+            explanation: "La bataille de la Somme fit plus d'un million de victimes toutes nations condondues en l'espace de 5 mois.",
+            learnedSummary: "La bataille de la Somme (1916)"
+          },
+          {
+            type: 'grammar',
+            text: "« Pour que la Braderie de Lille ______ (pouvoir) accueillir des millions de visiteurs, la municipalité mobilise des milliers d'agents de sécurité. »",
+            options: ["puisse", "peut", "pourra"],
+            correct: 0,
+            explanation: "La conjonction de but 'pour que' réclame toujours le subjonctif présent ('puisse').",
+            learnedSummary: "Le subjonctif présent obligatoire après la conjonction 'pour que'"
+          }
+        ]
+      },
+      {
+        id: 'centre-val-de-loire',
+        name: 'Centre-Val de Loire',
+        city: 'Tours',
+        avatar: '🏰',
+        character: 'Victor',
+        tagline: 'La vallée des rois et la pureté de la langue',
+        situation: "Victor t'attend près de la maison de Balzac au cœur de la vallée de la Loire. Il arrange son écharpe en cachemire sous les arbres dorés du jardin, te salue avec déférence et engage le dialogue :",
+        aiPrompt: "Tu es Victor, guide culturel et littéraire dans le Val de Loire (Tours, Amboise). Tu es courtois, élégant dans ta langue, adepte de la Pléiade (Ronsard) et de la douceur de vivre tourangelle. Je suis un voyageur à la place Plumereau. Parle-moi uniquement en français de niveau B1, en me tutoyant, en employant des termes élégants et classiques, et en flirtant de manière très distinguée. Lance notre dialogue en me récitant ou m'évoquant un vers poétique sur la Loire sauvage.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« Honoré de Balzac a rédigé plusieurs romans dans le Val de Loire, ______ (où / dont / lequel) il appréciait particulièrement la tranquillité inspirante. »",
+            options: ["dont", "où", "lequel"],
+            correct: 0,
+            explanation: "On dit 'apprécier la tranquillité de quelque chose', le pronom relatif de possession 'dont' ('dont il appréciait...') convient donc.",
+            learnedSummary: "Le pronom relatif 'dont' comme complément d'objet direct introduit par 'de'"
+          },
+          {
+            type: 'culture',
+            text: "Quel illustre romancier réaliste du XIXe siècle, auteur du monument littéraire 'La Comédie humaine', est né à Tours en 1799 ?",
+            options: ["Honoré de Balzac", "Gustave Flaubert", "Stendhal"],
+            correct: 0,
+            explanation: "Honoré de Balzac est né à Tours et a puisé son inspiration dans les paysages de Touraine qu'il décrit souvent avec précision.",
+            learnedSummary: "Honoré de Balzac, enfant de Tours"
+          },
+          {
+            type: 'grammar',
+            text: "« Il est regrettable que la Loire ______ (connaître) parfois des crues imprévisibles malgré sa beauté sauvage. »",
+            options: ["connaisse", "connaît", "connaîtra"],
+            correct: 0,
+            explanation: "L'expression de sentiment négatif/regret 'Il est regrettable que' exige l'emploi du subjonctif présent ('connaisse').",
+            learnedSummary: "Le subjonctif présent obligatoire après des structures exprimant le regret"
+          }
+        ]
+      },
+      {
+        id: 'pays-de-la-loire',
+        name: 'Pays de la Loire',
+        city: 'Nantes',
+        avatar: '🐘',
+        character: 'Sophie',
+        tagline: 'Machines de l\'Île et embruns marins',
+        situation: "Sophie se tient près du grand éléphant mécanique en marche de Nantes. Le bourdonnement des rouages et l'eau projetée créent une ambiance fantastique. Elle se tourne vers toi avec un rire complice :",
+        aiPrompt: "Tu es Sophie, scénographe théâtrale à Nantes, passionnée par l'art mécanique (les Machines de l'Île, Royal de Luxe) et l'univers fantastique de Jules Verne. Tu es moderne, imaginative, aventureuse et pleine de fantaisie. Je suis un voyageur à tes côtés sur l'île de Nantes. Parle-moi uniquement en français de niveau B1, en me tutoyant, avec des notes d'imaginaire, d'ingénierie créative et de séduction ludique. Débute notre entretien en me proposant de grimper sur le dos de l'éléphant géant pour explorer ensemble l'horizon.",
+        goals: [
+          {
+            type: 'culture',
+            text: "Quel célèbre auteur de romans d'aventures et d'anticipation, né à Nantes en 1828, a écrit 'Voyage au centre de la Terre' et 'Le Tour du monde en quatre-vingts jours' ?",
+            options: ["Jules Verne", "Victor Hugo", "Émile Zola"],
+            correct: 0,
+            explanation: "Jules Verne a passé son enfance à observer le port de Nantes, ce qui a nourri son goût pour l'exploration et le progrès technique.",
+            learnedSummary: "L'imaginaire de Jules Verne à Nantes"
+          },
+          {
+            type: 'grammar',
+            text: "« Pourvu que la parade des Machines de l'Île ______ (plaire) aux spectateurs, la troupe théâtrale continuera ses représentations. »",
+            options: ["plaise", "plaît", "plaira"],
+            correct: 0,
+            explanation: "La locution conjonctive de condition 'pourvu que' réclame le subjonctif présent ('plaise').",
+            learnedSummary: "Le subjonctif présent après la conjonction restrictive 'pourvu que'"
+          },
+          {
+            type: 'culture',
+            text: "Quelle célèbre course d'endurance de 24 heures se déroule chaque année depuis 1923 dans la Sarthe, attirant les constructeurs du monde entier ?",
+            options: ["Les 24 Heures du Mans", "Le Grand Prix de France", "Le Rallye des Pays de la Loire"],
+            correct: 0,
+            explanation: "Les 24 Heures du Mans est la plus ancienne et l'une des plus prestigieuses courses d'endurance automobile au monde.",
+            learnedSummary: "Les mythiques 24 Heures du Mans"
+          }
+        ]
+      },
+      {
+        id: 'corse',
+        name: 'Corse',
+        city: 'Ajaccio',
+        avatar: '🛶',
+        character: 'Petru',
+        tagline: 'L\'Île de Beauté entre maquis et falaises',
+        situation: "Petru amarre son voilier au vieux port de Bonifacio, sous les citadelles suspendues au-dessus du vide. Il essuie les embruns sur son bras bronzé, relève le regard vers toi et te dit d'une voix calme :",
+        aiPrompt: "Tu es Petru, un marin et chanteur corse habitant Bonifacio, fier de l'Île de Beauté, de la culture des bergers et des chants polyphoniques ancestraux. Tu es fier, mystérieux, intense et séducteur. Je suis un voyageur à tes côtés sur les falaises de Bonifacio. Parle-moi uniquement en français de niveau B1, en me tutoyant, avec references à la montagne, à la mer, aux vents corses et un flirt poétique. Entame notre discussion par une question sur mes intentions sur son île sauvage.",
+        goals: [
+          {
+            type: 'grammar',
+            text: "« Il est indispensable que tu ______ (comprendre) l'attachement viscéral des Corses à leur terre et à leur culture ancestrale. »",
+            options: ["comprennes", "comprends", "comprendras"],
+            correct: 0,
+            explanation: "La tournure impersonnelle d'obligation 'Il est indispensable que' exige le subjonctif présent ('comprennes').",
+            learnedSummary: "Le subjonctif présent après une expression d'obligation ou nécessité"
+          },
+          {
+            type: 'culture',
+            text: "Quel célèbre personnage historique, empereur des Français né à Ajaccio en 1769, a profondément marqué l'Europe du XIXe siècle par ses guerres et son Code civil ?",
+            options: ["Napoléon Bonaparte", "Louis-Napoléon Bonaparte", "Louis XVIII"],
+            correct: 0,
+            explanation: "Napoléon Bonaparte naquit à Ajaccio le 15 août 1769, un an seulement après le rattachement de la Corse à la France.",
+            learnedSummary: "Napoléon Bonaparte, né à Ajaccio"
+          },
+          {
+            type: 'culture',
+            text: "Quel célèbre sentier de grande randonnée sauvage de près de 180 kilomètres traverse la Corse du nord au sud à travers la haute montagne ?",
+            options: ["Le GR20", "Le GR10", "Le sentier des Douaniers"],
+            correct: 0,
+            explanation: "Le GR20 est considéré comme l'un des sentiers de randonnée les plus difficiles et les plus sauvages d'Europe.",
+            learnedSummary: "Le sentier de randonnée GR20"
+          }
+        ]
+      }
+    ];
+
+    // Initialize Game state
+    let gameState = {
+      accomplishedGoals: {}, // { regionId: [goalIndexes] }
+      currentRegion: null,
+      currentQuestionIndex: 0
+    };
+
+    // Load state from localStorage if available
+    function loadGameState() {
+      const saved = localStorage.getItem('learn_france_state');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          gameState = parsed;
+          if (!gameState.accomplishedGoals) {
+            gameState.accomplishedGoals = {};
+          }
+        } catch(e) {
+          console.error("Error loading save state", e);
+        }
+      }
+    }
+
+    // Save state to localStorage
+    function saveGameState() {
+      localStorage.setItem('learn_france_state', JSON.stringify(gameState));
+    }
+
+    // Start Game / Transition to Dashboard
+    function startGame() {
+      document.getElementById('screen-welcome').classList.add('hidden');
+      document.getElementById('screen-dashboard').classList.remove('hidden');
+      renderDashboard();
+    }
+
+    // Show Dashboard
+    function showDashboard() {
+      document.getElementById('screen-adventure').classList.add('hidden');
+      document.getElementById('screen-epilogue').classList.add('hidden');
+      document.getElementById('screen-dashboard').classList.remove('hidden');
+      renderDashboard();
+    }
+
+    // Restart Game
+    function restartGame() {
+      gameState.accomplishedGoals = {};
+      gameState.currentRegion = null;
+      gameState.currentQuestionIndex = 0;
+      saveGameState();
+      showDashboard();
+    }
+
+    // Check if region is fully accomplished (all 3 goals)
+    function isRegionCompleted(regionId) {
+      const goals = gameState.accomplishedGoals[regionId] || [];
+      return goals.length === 3;
+    }
+
+    // Count total accomplished regions
+    function countAccomplishedRegions() {
+      let count = 0;
+      REGIONS.forEach(region => {
+        if (isRegionCompleted(region.id)) {
+          count++;
+        }
+      });
+      return count;
+    }
+
+    // Render Regions on Dashboard
+    function renderDashboard() {
+      const container = document.getElementById('regions-container');
+      container.innerHTML = '';
+      
+      const accomplishedCount = countAccomplishedRegions();
+      document.getElementById('global-progress').innerText = `${accomplishedCount} / ${REGIONS.length} région${accomplishedCount > 1 ? 's' : ''} accomplie${accomplishedCount > 1 ? 's' : ''}`;
+      
+      if (accomplishedCount === REGIONS.length) {
+        document.getElementById('screen-dashboard').classList.add('hidden');
+        document.getElementById('screen-epilogue').classList.remove('hidden');
+        return;
+      }
+
+      REGIONS.forEach(region => {
+        const completedGoals = gameState.accomplishedGoals[region.id] || [];
+        const isCompleted = completedGoals.length === 3;
+        
+        const card = document.createElement('div');
+        card.className = `glass-card rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${isCompleted ? 'border-emerald-500/40 bg-emerald-950/10' : 'glass-card-hover'}`;
+        
+        let statusBadge = '';
+        if (isCompleted) {
+          statusBadge = `<span class="px-4 py-1.5 bg-emerald-500/15 text-emerald-400 text-sm font-bold tracking-wider uppercase rounded-full">Accomplie ✅</span>`;
+        } else if (region.id === 'bourgogne') {
+          statusBadge = `<span class="px-4 py-1.5 bg-amber-500/15 text-amber-300 text-sm font-bold tracking-wider uppercase rounded-full">Événement Marathon 🏃‍♀️</span>`;
+        } else {
+          statusBadge = `<span class="px-4 py-1.5 bg-rose-500/10 text-rose-400 text-sm font-bold tracking-wider uppercase rounded-full">Disponible</span>`;
+        }
+
+        // Generate indicators for the 3 goals
+        let goalsHtml = '<div class="flex flex-col gap-3 mt-4">';
+        for (let i = 0; i < 3; i++) {
+          const goalDone = completedGoals.includes(i);
+          const noteText = goalDone ? region.goals[i].learnedSummary : "(Non accompli)";
+          const typeLabel = region.goals[i].type === 'grammar' ? 'Grammaire' : 'Culture';
+          
+          goalsHtml += `
+            <div class="flex items-start gap-3 bg-slate-900/60 border border-slate-800/80 p-3 rounded-lg text-base">
+              <span class="mt-0.5 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center ${goalDone ? 'bg-emerald-500 text-white' : 'bg-slate-700'} text-xs">
+                ${goalDone ? '✓' : ''}
+              </span>
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-slate-350 text-sm">Défi ${i + 1}</span>
+                  <span class="text-xs px-1.5 py-0.5 rounded ${region.goals[i].type === 'grammar' ? 'bg-purple-950/40 text-purple-400' : 'bg-amber-950/40 text-amber-300'} font-semibold">${typeLabel}</span>
+                </div>
+                <div class="text-sm ${goalDone ? 'text-emerald-400 font-medium' : 'text-slate-500'} mt-0.5">
+                  ${highlightTerms(noteText)}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        goalsHtml += '</div>';
+
+        card.innerHTML = `
+          <div class="space-y-5">
+            <div class="flex justify-between items-start">
+              <div class="text-4xl p-3 bg-rose-500/10 rounded-2xl text-rose-400">
+                ${region.avatar}
+              </div>
+              ${statusBadge}
+            </div>
+            <div class="space-y-2">
+              <h3 class="text-2xl font-bold text-white flex items-center gap-1.5">
+                <a href="https://www.google.com/search?q=${encodeURIComponent(region.name)}" target="_blank" class="hover:underline transition-colors">${region.name}</a>
+                <span class="inline-flex items-center gap-1">${getSearchIconsHtml(region.name)}</span>
+              </h3>
+              <p class="text-base text-rose-350 font-medium">${highlightTerms(region.tagline)}</p>
+              <p class="text-base text-slate-300 font-normal">Ville phare : ${region.city} • Rencontre : ${region.character}</p>
+              ${goalsHtml}
+            </div>
+          </div>
+          <div class="mt-8">
+            ${isCompleted 
+              ? `<button class="w-full py-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-bold rounded-xl cursor-default">
+                  Voyage Complété dans cette région
+                 </button>`
+              : `<button onclick="visitRegion('${region.id}')" class="w-full py-3.5 bg-rose-950/40 hover:bg-rose-500 border border-rose-500/20 hover:border-rose-500 text-rose-300 hover:text-white text-sm font-bold rounded-xl transition-all duration-300">
+                  Retrouver ${region.character} à ${region.city}
+                 </button>`
+            }
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Travel to a Region
+    function visitRegion(regionId) {
+      const region = REGIONS.find(r => r.id === regionId);
+      if (!region) return;
+      
+      gameState.currentRegion = region;
+      
+      // Find the first uncompleted goal index
+      const completed = gameState.accomplishedGoals[regionId] || [];
+      let nextUncompletedIndex = 0;
+      for (let i = 0; i < 3; i++) {
+        if (!completed.includes(i)) {
+          nextUncompletedIndex = i;
+          break;
+        }
+      }
+      
+      gameState.currentQuestionIndex = nextUncompletedIndex;
+      saveGameState();
+      
+      // Update Adventure Views
+      document.getElementById('adventure-region-tag').innerText = `Destination : ${region.city}`;
+      document.getElementById('adventure-region-name').innerHTML = `
+        <span class="flex items-center gap-1.5">
+          <a href="https://www.google.com/search?q=${encodeURIComponent(region.name)}" target="_blank" class="hover:underline transition-colors">${region.name}</a>
+          <span class="inline-flex items-center gap-1">${getSearchIconsHtml(region.name)}</span>
+        </span>
+      `;
+      document.getElementById('adventure-narrative').innerHTML = `<p>${highlightTerms(region.situation)}</p>`;
+      
+      // Transition Screens
+      document.getElementById('screen-dashboard').classList.add('hidden');
+      document.getElementById('screen-adventure').classList.remove('hidden');
+      
+      loadQuestion();
+    }
+
+    // Copy the roleplay prompt to clipboard
+    function copyRoleplayPrompt() {
+      const region = gameState.currentRegion;
+      if (!region || !region.aiPrompt) return;
+      
+      navigator.clipboard.writeText(region.aiPrompt).then(() => {
+        const toast = document.getElementById('copy-toast');
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+          toast.classList.add('hidden');
+        }, 3000);
+      }).catch(err => {
+        console.error("Impossible de copier", err);
+      });
+    }
+
+    // Load current step question
+    function loadQuestion() {
+      const region = gameState.currentRegion;
+      const qIndex = gameState.currentQuestionIndex;
+      const goal = region.goals[qIndex];
+      
+      // Update Question Progress indicator
+      document.getElementById('adventure-region-status').innerText = `Défi ${qIndex + 1} / 3`;
+      
+      const subTag = document.getElementById('question-sub-tag');
+      if (goal.type === 'grammar') {
+        subTag.innerText = "Défi Grammaire B1";
+        subTag.className = "inline-block px-4 py-1.5 bg-rose-500/15 text-rose-350 text-sm font-bold rounded-lg uppercase tracking-wider";
+      } else {
+        subTag.innerText = "Défi Culturel & Historique";
+        subTag.className = "inline-block px-4 py-1.5 bg-amber-500/15 text-amber-455 text-sm font-bold rounded-lg uppercase tracking-wider";
+      }
+      
+      document.getElementById('question-text').innerHTML = highlightTerms(goal.text);
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      // Hide feedback panel
+      document.getElementById('feedback-panel').classList.add('hidden');
+      
+      goal.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.onclick = () => submitAnswer(idx);
+        btn.className = "w-full text-left p-5 rounded-xl border border-slate-800/80 hover:border-rose-500/50 bg-slate-950/40 hover:bg-rose-950/10 text-slate-200 hover:text-white text-base font-semibold transition-all duration-300 flex justify-between items-center group";
+        btn.innerHTML = `
+          <span>${highlightTerms(opt)}</span>
+          <span class="w-6 h-6 rounded-full border border-slate-700 group-hover:border-rose-500 flex items-center justify-center text-xs text-transparent group-hover:text-rose-400 font-bold">✓</span>
+        `;
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    // Submit user answer
+    function submitAnswer(optionIndex) {
+      const region = gameState.currentRegion;
+      const qIndex = gameState.currentQuestionIndex;
+      const goal = region.goals[qIndex];
+      
+      const isCorrect = (optionIndex === goal.correct);
+      const buttons = document.getElementById('options-container').querySelectorAll('button');
+      
+      if (isCorrect) {
+        // Correct answer selected - disable all and highlight correct
+        buttons.forEach((btn, idx) => {
+          btn.disabled = true;
+          if (idx === goal.correct) {
+            btn.className = "w-full text-left p-5 rounded-xl border border-emerald-500/40 bg-emerald-950/15 text-emerald-200 text-base font-semibold flex justify-between items-center";
+            btn.innerHTML = `<span>${highlightTerms(goal.options[idx])}</span><span class="text-emerald-400 font-bold">✓ Correct</span>`;
+          } else {
+            btn.className = "w-full text-left p-5 rounded-xl border border-slate-800/40 bg-slate-950/10 text-slate-500 text-base font-semibold flex justify-between items-center opacity-55";
+          }
+        });
+        
+        // Setup feedback
+        const fbPanel = document.getElementById('feedback-panel');
+        document.getElementById('feedback-icon').innerText = "✨";
+        document.getElementById('feedback-title').innerText = "Magnifique !";
+        document.getElementById('feedback-explanation').innerHTML = highlightTerms(goal.explanation);
+        
+        document.getElementById('next-button').innerText = qIndex < 2 ? "Valider le défi et continuer" : "Terminer la région";
+        
+        fbPanel.className = "mt-8 rounded-2xl p-6 border border-emerald-500/20 bg-emerald-950/10 text-emerald-300 animate-fade-in";
+        fbPanel.classList.remove('hidden');
+
+        // Mark goal as completed in state
+        if (!gameState.accomplishedGoals[region.id]) {
+          gameState.accomplishedGoals[region.id] = [];
+        }
+        if (!gameState.accomplishedGoals[region.id].includes(qIndex)) {
+          gameState.accomplishedGoals[region.id].push(qIndex);
+        }
+        saveGameState();
+      } else {
+        // Incorrect answer - highlight this choice, keep options active to guess again
+        buttons[optionIndex].className = "w-full text-left p-5 rounded-xl border border-rose-500/40 bg-rose-950/15 text-rose-300 text-base font-semibold flex justify-between items-center";
+        buttons[optionIndex].innerHTML = `<span>${highlightTerms(goal.options[optionIndex])}</span><span class="text-rose-400 font-bold">✗ Incorrect</span>`;
+        
+        // Show incorrect explanation helper
+        const fbPanel = document.getElementById('feedback-panel');
+        document.getElementById('feedback-icon').innerText = "💡";
+        document.getElementById('feedback-title').innerText = "Essaie encore...";
+        document.getElementById('feedback-explanation').innerHTML = highlightTerms(goal.explanation) + " Réflechis et propose une autre réponse.";
+        
+        // Hide next button during guess-again mode
+        document.getElementById('next-button').innerText = "Choisir une autre option";
+        
+        fbPanel.className = "mt-8 rounded-2xl p-6 border border-amber-500/20 bg-amber-955/10 text-amber-300 animate-fade-in";
+        fbPanel.classList.remove('hidden');
+      }
+    }
+
+    // Step to Next Goal or finish region
+    function nextStep() {
+      const region = gameState.currentRegion;
+      const completed = gameState.accomplishedGoals[region.id] || [];
+      
+      // Find if we still have uncompleted questions in this region
+      let nextUncompletedIndex = -1;
+      for (let i = 0; i < 3; i++) {
+        if (!completed.includes(i)) {
+          nextUncompletedIndex = i;
+          break;
+        }
+      }
+
+      if (nextUncompletedIndex !== -1) {
+        // Move to the next uncompleted question
+        gameState.currentQuestionIndex = nextUncompletedIndex;
+        saveGameState();
+        loadQuestion();
+      } else {
+        // All 3 goals are done for this region!
+        document.getElementById('screen-adventure').classList.add('hidden');
+        
+        // Show celebration popup
+        document.getElementById('celebration-region-title').innerText = `${region.name} Accomplie !`;
+        document.getElementById('celebration-text').innerText = `Félicitations ! Tu as validé tous les défis de grammaire et de culture avec ${region.character} à ${region.city}. La région rejoint ton carnet de voyage avec succès.`;
+        document.getElementById('celebration-modal').classList.remove('hidden');
+        
+        gameState.currentRegion = null;
+        saveGameState();
+      }
+    }
+
+    // Close Celebration Modal and return to dashboard
+    function closeCelebration() {
+      document.getElementById('celebration-modal').classList.add('hidden');
+      showDashboard();
+    }
+
+    // Reset Progress Double-click Confirmation State
+    let confirmResetState = false;
+    let confirmResetTimeout = null;
+
+    function handleResetClick(btn) {
+      if (!confirmResetState) {
+        confirmResetState = true;
+        btn.innerText = "⚠️ Confirmer la réinitialisation ?";
+        btn.className = "px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold rounded-full transition-all duration-300 shadow-md shadow-rose-600/20";
+        
+        confirmResetTimeout = setTimeout(() => {
+          revertResetButton(btn);
+        }, 4000);
+      } else {
+        clearTimeout(confirmResetTimeout);
+        confirmResetState = false;
+        restartGame();
+        // Revert button styling post-reset
+        setTimeout(() => {
+          revertResetButton(document.getElementById('reset-progress-btn'));
+        }, 100);
+      }
+    }
+
+    function revertResetButton(btn) {
+      confirmResetState = false;
+      if (btn) {
+        btn.innerText = "🗑️ Réinitialiser la progression";
+        btn.className = "px-6 py-3 bg-slate-900 border border-slate-700 hover:bg-slate-800 hover:border-rose-500/40 text-slate-300 text-sm font-semibold rounded-full transition-all duration-300";
+      }
+    }
+
+    // Initialize Game state
+    loadGameState();
+  </script>
+</body>
+</html>
