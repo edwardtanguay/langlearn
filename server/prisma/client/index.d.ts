@@ -14,15 +14,30 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model DbTest
+ * Model User
  * 
  */
-export type DbTest = $Result.DefaultSelection<Prisma.$DbTestPayload>
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
- * Model Task
+ * Model Flashcard
  * 
  */
-export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
+export type Flashcard = $Result.DefaultSelection<Prisma.$FlashcardPayload>
+/**
+ * Model UserFlashcardActivity
+ * 
+ */
+export type UserFlashcardActivity = $Result.DefaultSelection<Prisma.$UserFlashcardActivityPayload>
+/**
+ * Model Tag
+ * 
+ */
+export type Tag = $Result.DefaultSelection<Prisma.$TagPayload>
+/**
+ * Model FlashcardTag
+ * 
+ */
+export type FlashcardTag = $Result.DefaultSelection<Prisma.$FlashcardTagPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -33,8 +48,8 @@ export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more DbTests
- * const dbTests = await prisma.dbTest.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  *
@@ -56,8 +71,8 @@ export class PrismaClient<
    * const prisma = new PrismaClient({
    *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
    * })
-   * // Fetch zero or more DbTests
-   * const dbTests = await prisma.dbTest.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    *
@@ -146,24 +161,54 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.dbTest`: Exposes CRUD operations for the **DbTest** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more DbTests
-    * const dbTests = await prisma.dbTest.findMany()
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
     * ```
     */
-  get dbTest(): Prisma.DbTestDelegate<ExtArgs, ClientOptions>;
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.task`: Exposes CRUD operations for the **Task** model.
+   * `prisma.flashcard`: Exposes CRUD operations for the **Flashcard** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Tasks
-    * const tasks = await prisma.task.findMany()
+    * // Fetch zero or more Flashcards
+    * const flashcards = await prisma.flashcard.findMany()
     * ```
     */
-  get task(): Prisma.TaskDelegate<ExtArgs, ClientOptions>;
+  get flashcard(): Prisma.FlashcardDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userFlashcardActivity`: Exposes CRUD operations for the **UserFlashcardActivity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserFlashcardActivities
+    * const userFlashcardActivities = await prisma.userFlashcardActivity.findMany()
+    * ```
+    */
+  get userFlashcardActivity(): Prisma.UserFlashcardActivityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tag`: Exposes CRUD operations for the **Tag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tags
+    * const tags = await prisma.tag.findMany()
+    * ```
+    */
+  get tag(): Prisma.TagDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.flashcardTag`: Exposes CRUD operations for the **FlashcardTag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FlashcardTags
+    * const flashcardTags = await prisma.flashcardTag.findMany()
+    * ```
+    */
+  get flashcardTag(): Prisma.FlashcardTagDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -598,8 +643,11 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    DbTest: 'DbTest',
-    Task: 'Task'
+    User: 'User',
+    Flashcard: 'Flashcard',
+    UserFlashcardActivity: 'UserFlashcardActivity',
+    Tag: 'Tag',
+    FlashcardTag: 'FlashcardTag'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -615,155 +663,377 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dbTest" | "task"
+      modelProps: "user" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      DbTest: {
-        payload: Prisma.$DbTestPayload<ExtArgs>
-        fields: Prisma.DbTestFieldRefs
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.DbTestFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload> | null
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.DbTestFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findFirst: {
-            args: Prisma.DbTestFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload> | null
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.DbTestFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findMany: {
-            args: Prisma.DbTestFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>[]
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           create: {
-            args: Prisma.DbTestCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           createMany: {
-            args: Prisma.DbTestCreateManyArgs<ExtArgs>
+            args: Prisma.UserCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.DbTestCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>[]
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           delete: {
-            args: Prisma.DbTestDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           update: {
-            args: Prisma.DbTestUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           deleteMany: {
-            args: Prisma.DbTestDeleteManyArgs<ExtArgs>
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.DbTestUpdateManyArgs<ExtArgs>
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.DbTestUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>[]
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           upsert: {
-            args: Prisma.DbTestUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$DbTestPayload>
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           aggregate: {
-            args: Prisma.DbTestAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateDbTest>
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
           }
           groupBy: {
-            args: Prisma.DbTestGroupByArgs<ExtArgs>
-            result: $Utils.Optional<DbTestGroupByOutputType>[]
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
           }
           count: {
-            args: Prisma.DbTestCountArgs<ExtArgs>
-            result: $Utils.Optional<DbTestCountAggregateOutputType> | number
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
           }
         }
       }
-      Task: {
-        payload: Prisma.$TaskPayload<ExtArgs>
-        fields: Prisma.TaskFieldRefs
+      Flashcard: {
+        payload: Prisma.$FlashcardPayload<ExtArgs>
+        fields: Prisma.FlashcardFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.TaskFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
+            args: Prisma.FlashcardFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.TaskFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.FlashcardFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>
           }
           findFirst: {
-            args: Prisma.TaskFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
+            args: Prisma.FlashcardFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.TaskFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.FlashcardFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>
           }
           findMany: {
-            args: Prisma.TaskFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+            args: Prisma.FlashcardFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>[]
           }
           create: {
-            args: Prisma.TaskCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.FlashcardCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>
           }
           createMany: {
-            args: Prisma.TaskCreateManyArgs<ExtArgs>
+            args: Prisma.FlashcardCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.TaskCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+            args: Prisma.FlashcardCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>[]
           }
           delete: {
-            args: Prisma.TaskDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.FlashcardDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>
           }
           update: {
-            args: Prisma.TaskUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.FlashcardUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>
           }
           deleteMany: {
-            args: Prisma.TaskDeleteManyArgs<ExtArgs>
+            args: Prisma.FlashcardDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.TaskUpdateManyArgs<ExtArgs>
+            args: Prisma.FlashcardUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.TaskUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+            args: Prisma.FlashcardUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>[]
           }
           upsert: {
-            args: Prisma.TaskUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.FlashcardUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardPayload>
           }
           aggregate: {
-            args: Prisma.TaskAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTask>
+            args: Prisma.FlashcardAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFlashcard>
           }
           groupBy: {
-            args: Prisma.TaskGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TaskGroupByOutputType>[]
+            args: Prisma.FlashcardGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FlashcardGroupByOutputType>[]
           }
           count: {
-            args: Prisma.TaskCountArgs<ExtArgs>
-            result: $Utils.Optional<TaskCountAggregateOutputType> | number
+            args: Prisma.FlashcardCountArgs<ExtArgs>
+            result: $Utils.Optional<FlashcardCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserFlashcardActivity: {
+        payload: Prisma.$UserFlashcardActivityPayload<ExtArgs>
+        fields: Prisma.UserFlashcardActivityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFlashcardActivityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFlashcardActivityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFlashcardActivityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFlashcardActivityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>
+          }
+          findMany: {
+            args: Prisma.UserFlashcardActivityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>[]
+          }
+          create: {
+            args: Prisma.UserFlashcardActivityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>
+          }
+          createMany: {
+            args: Prisma.UserFlashcardActivityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserFlashcardActivityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>[]
+          }
+          delete: {
+            args: Prisma.UserFlashcardActivityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>
+          }
+          update: {
+            args: Prisma.UserFlashcardActivityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserFlashcardActivityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserFlashcardActivityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserFlashcardActivityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserFlashcardActivityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardActivityPayload>
+          }
+          aggregate: {
+            args: Prisma.UserFlashcardActivityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserFlashcardActivity>
+          }
+          groupBy: {
+            args: Prisma.UserFlashcardActivityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserFlashcardActivityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserFlashcardActivityCountArgs<ExtArgs>
+            result: $Utils.Optional<UserFlashcardActivityCountAggregateOutputType> | number
+          }
+        }
+      }
+      Tag: {
+        payload: Prisma.$TagPayload<ExtArgs>
+        fields: Prisma.TagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TagFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TagFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          findFirst: {
+            args: Prisma.TagFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TagFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          findMany: {
+            args: Prisma.TagFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
+          }
+          create: {
+            args: Prisma.TagCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          createMany: {
+            args: Prisma.TagCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TagCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
+          }
+          delete: {
+            args: Prisma.TagDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          update: {
+            args: Prisma.TagUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          deleteMany: {
+            args: Prisma.TagDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TagUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TagUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
+          }
+          upsert: {
+            args: Prisma.TagUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          aggregate: {
+            args: Prisma.TagAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTag>
+          }
+          groupBy: {
+            args: Prisma.TagGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TagCountArgs<ExtArgs>
+            result: $Utils.Optional<TagCountAggregateOutputType> | number
+          }
+        }
+      }
+      FlashcardTag: {
+        payload: Prisma.$FlashcardTagPayload<ExtArgs>
+        fields: Prisma.FlashcardTagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FlashcardTagFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FlashcardTagFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>
+          }
+          findFirst: {
+            args: Prisma.FlashcardTagFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FlashcardTagFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>
+          }
+          findMany: {
+            args: Prisma.FlashcardTagFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>[]
+          }
+          create: {
+            args: Prisma.FlashcardTagCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>
+          }
+          createMany: {
+            args: Prisma.FlashcardTagCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FlashcardTagCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>[]
+          }
+          delete: {
+            args: Prisma.FlashcardTagDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>
+          }
+          update: {
+            args: Prisma.FlashcardTagUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>
+          }
+          deleteMany: {
+            args: Prisma.FlashcardTagDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FlashcardTagUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FlashcardTagUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>[]
+          }
+          upsert: {
+            args: Prisma.FlashcardTagUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FlashcardTagPayload>
+          }
+          aggregate: {
+            args: Prisma.FlashcardTagAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFlashcardTag>
+          }
+          groupBy: {
+            args: Prisma.FlashcardTagGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FlashcardTagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FlashcardTagCountArgs<ExtArgs>
+            result: $Utils.Optional<FlashcardTagCountAggregateOutputType> | number
           }
         }
       }
@@ -875,8 +1145,11 @@ export namespace Prisma {
     comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
-    dbTest?: DbTestOmit
-    task?: TaskOmit
+    user?: UserOmit
+    flashcard?: FlashcardOmit
+    userFlashcardActivity?: UserFlashcardActivityOmit
+    tag?: TagOmit
+    flashcardTag?: FlashcardTagOmit
   }
 
   /* Types for Logging */
@@ -952,352 +1225,508 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    flashcards: number
+    activities: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    flashcards?: boolean | UserCountOutputTypeCountFlashcardsArgs
+    activities?: boolean | UserCountOutputTypeCountActivitiesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFlashcardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FlashcardWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserFlashcardActivityWhereInput
+  }
+
+
+  /**
+   * Count Type FlashcardCountOutputType
+   */
+
+  export type FlashcardCountOutputType = {
+    copies: number
+    activities: number
+    tags: number
+  }
+
+  export type FlashcardCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    copies?: boolean | FlashcardCountOutputTypeCountCopiesArgs
+    activities?: boolean | FlashcardCountOutputTypeCountActivitiesArgs
+    tags?: boolean | FlashcardCountOutputTypeCountTagsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FlashcardCountOutputType without action
+   */
+  export type FlashcardCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardCountOutputType
+     */
+    select?: FlashcardCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FlashcardCountOutputType without action
+   */
+  export type FlashcardCountOutputTypeCountCopiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FlashcardWhereInput
+  }
+
+  /**
+   * FlashcardCountOutputType without action
+   */
+  export type FlashcardCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserFlashcardActivityWhereInput
+  }
+
+  /**
+   * FlashcardCountOutputType without action
+   */
+  export type FlashcardCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FlashcardTagWhereInput
+  }
+
+
+  /**
+   * Count Type TagCountOutputType
+   */
+
+  export type TagCountOutputType = {
+    flashcards: number
+  }
+
+  export type TagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    flashcards?: boolean | TagCountOutputTypeCountFlashcardsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagCountOutputType
+     */
+    select?: TagCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountFlashcardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FlashcardTagWhereInput
+  }
+
 
   /**
    * Models
    */
 
   /**
-   * Model DbTest
+   * Model User
    */
 
-  export type AggregateDbTest = {
-    _count: DbTestCountAggregateOutputType | null
-    _avg: DbTestAvgAggregateOutputType | null
-    _sum: DbTestSumAggregateOutputType | null
-    _min: DbTestMinAggregateOutputType | null
-    _max: DbTestMaxAggregateOutputType | null
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  export type DbTestAvgAggregateOutputType = {
-    id: number | null
+  export type UserAvgAggregateOutputType = {
+    minutesToTestAgain: number | null
   }
 
-  export type DbTestSumAggregateOutputType = {
-    id: number | null
+  export type UserSumAggregateOutputType = {
+    minutesToTestAgain: number | null
   }
 
-  export type DbTestMinAggregateOutputType = {
-    id: number | null
-    status: string | null
-    updatedAt: Date | null
+  export type UserMinAggregateOutputType = {
+    id: string | null
+    firstName: string | null
+    lastName: string | null
+    email: string | null
+    minutesToTestAgain: number | null
   }
 
-  export type DbTestMaxAggregateOutputType = {
-    id: number | null
-    status: string | null
-    updatedAt: Date | null
+  export type UserMaxAggregateOutputType = {
+    id: string | null
+    firstName: string | null
+    lastName: string | null
+    email: string | null
+    minutesToTestAgain: number | null
   }
 
-  export type DbTestCountAggregateOutputType = {
+  export type UserCountAggregateOutputType = {
     id: number
-    status: number
-    updatedAt: number
+    firstName: number
+    lastName: number
+    email: number
+    minutesToTestAgain: number
     _all: number
   }
 
 
-  export type DbTestAvgAggregateInputType = {
-    id?: true
+  export type UserAvgAggregateInputType = {
+    minutesToTestAgain?: true
   }
 
-  export type DbTestSumAggregateInputType = {
-    id?: true
+  export type UserSumAggregateInputType = {
+    minutesToTestAgain?: true
   }
 
-  export type DbTestMinAggregateInputType = {
+  export type UserMinAggregateInputType = {
     id?: true
-    status?: true
-    updatedAt?: true
+    firstName?: true
+    lastName?: true
+    email?: true
+    minutesToTestAgain?: true
   }
 
-  export type DbTestMaxAggregateInputType = {
+  export type UserMaxAggregateInputType = {
     id?: true
-    status?: true
-    updatedAt?: true
+    firstName?: true
+    lastName?: true
+    email?: true
+    minutesToTestAgain?: true
   }
 
-  export type DbTestCountAggregateInputType = {
+  export type UserCountAggregateInputType = {
     id?: true
-    status?: true
-    updatedAt?: true
+    firstName?: true
+    lastName?: true
+    email?: true
+    minutesToTestAgain?: true
     _all?: true
   }
 
-  export type DbTestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which DbTest to aggregate.
+     * Filter which User to aggregate.
      */
-    where?: DbTestWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DbTests to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: DbTestOrderByWithRelationInput | DbTestOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: DbTestWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DbTests from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DbTests.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned DbTests
+     * Count returned Users
     **/
-    _count?: true | DbTestCountAggregateInputType
+    _count?: true | UserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: DbTestAvgAggregateInputType
+    _avg?: UserAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: DbTestSumAggregateInputType
+    _sum?: UserSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: DbTestMinAggregateInputType
+    _min?: UserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: DbTestMaxAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type GetDbTestAggregateType<T extends DbTestAggregateArgs> = {
-        [P in keyof T & keyof AggregateDbTest]: P extends '_count' | 'count'
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateDbTest[P]>
-      : GetScalarType<T[P], AggregateDbTest[P]>
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
   }
 
 
 
 
-  export type DbTestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DbTestWhereInput
-    orderBy?: DbTestOrderByWithAggregationInput | DbTestOrderByWithAggregationInput[]
-    by: DbTestScalarFieldEnum[] | DbTestScalarFieldEnum
-    having?: DbTestScalarWhereWithAggregatesInput
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: DbTestCountAggregateInputType | true
-    _avg?: DbTestAvgAggregateInputType
-    _sum?: DbTestSumAggregateInputType
-    _min?: DbTestMinAggregateInputType
-    _max?: DbTestMaxAggregateInputType
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type DbTestGroupByOutputType = {
-    id: number
-    status: string
-    updatedAt: Date
-    _count: DbTestCountAggregateOutputType | null
-    _avg: DbTestAvgAggregateOutputType | null
-    _sum: DbTestSumAggregateOutputType | null
-    _min: DbTestMinAggregateOutputType | null
-    _max: DbTestMaxAggregateOutputType | null
+  export type UserGroupByOutputType = {
+    id: string
+    firstName: string
+    lastName: string
+    email: string
+    minutesToTestAgain: number
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  type GetDbTestGroupByPayload<T extends DbTestGroupByArgs> = Prisma.PrismaPromise<
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<DbTestGroupByOutputType, T['by']> &
+      PickEnumerable<UserGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof DbTestGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], DbTestGroupByOutputType[P]>
-            : GetScalarType<T[P], DbTestGroupByOutputType[P]>
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type DbTestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    status?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["dbTest"]>
+    firstName?: boolean
+    lastName?: boolean
+    email?: boolean
+    minutesToTestAgain?: boolean
+    flashcards?: boolean | User$flashcardsArgs<ExtArgs>
+    activities?: boolean | User$activitiesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
 
-  export type DbTestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    status?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["dbTest"]>
+    firstName?: boolean
+    lastName?: boolean
+    email?: boolean
+    minutesToTestAgain?: boolean
+  }, ExtArgs["result"]["user"]>
 
-  export type DbTestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    status?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["dbTest"]>
+    firstName?: boolean
+    lastName?: boolean
+    email?: boolean
+    minutesToTestAgain?: boolean
+  }, ExtArgs["result"]["user"]>
 
-  export type DbTestSelectScalar = {
+  export type UserSelectScalar = {
     id?: boolean
-    status?: boolean
-    updatedAt?: boolean
+    firstName?: boolean
+    lastName?: boolean
+    email?: boolean
+    minutesToTestAgain?: boolean
   }
 
-  export type DbTestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "status" | "updatedAt", ExtArgs["result"]["dbTest"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "minutesToTestAgain", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    flashcards?: boolean | User$flashcardsArgs<ExtArgs>
+    activities?: boolean | User$activitiesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $DbTestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "DbTest"
-    objects: {}
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {
+      flashcards: Prisma.$FlashcardPayload<ExtArgs>[]
+      activities: Prisma.$UserFlashcardActivityPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      status: string
-      updatedAt: Date
-    }, ExtArgs["result"]["dbTest"]>
+      id: string
+      firstName: string
+      lastName: string
+      email: string
+      minutesToTestAgain: number
+    }, ExtArgs["result"]["user"]>
     composites: {}
   }
 
-  type DbTestGetPayload<S extends boolean | null | undefined | DbTestDefaultArgs> = $Result.GetResult<Prisma.$DbTestPayload, S>
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
-  type DbTestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<DbTestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: DbTestCountAggregateInputType | true
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
     }
 
-  export interface DbTestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DbTest'], meta: { name: 'DbTest' } }
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
     /**
-     * Find zero or one DbTest that matches the filter.
-     * @param {DbTestFindUniqueArgs} args - Arguments to find a DbTest
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
      * @example
-     * // Get one DbTest
-     * const dbTest = await prisma.dbTest.findUnique({
+     * // Get one User
+     * const user = await prisma.user.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends DbTestFindUniqueArgs>(args: SelectSubset<T, DbTestFindUniqueArgs<ExtArgs>>): Prisma__DbTestClient<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DbTest that matches the filter or throw an error with `error.code='P2025'`
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {DbTestFindUniqueOrThrowArgs} args - Arguments to find a DbTest
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one DbTest
-     * const dbTest = await prisma.dbTest.findUniqueOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends DbTestFindUniqueOrThrowArgs>(args: SelectSubset<T, DbTestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DbTestClient<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first DbTest that matches the filter.
+     * Find the first User that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DbTestFindFirstArgs} args - Arguments to find a DbTest
+     * @param {UserFindFirstArgs} args - Arguments to find a User
      * @example
-     * // Get one DbTest
-     * const dbTest = await prisma.dbTest.findFirst({
+     * // Get one User
+     * const user = await prisma.user.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends DbTestFindFirstArgs>(args?: SelectSubset<T, DbTestFindFirstArgs<ExtArgs>>): Prisma__DbTestClient<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first DbTest that matches the filter or
+     * Find the first User that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DbTestFindFirstOrThrowArgs} args - Arguments to find a DbTest
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one DbTest
-     * const dbTest = await prisma.dbTest.findFirstOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends DbTestFindFirstOrThrowArgs>(args?: SelectSubset<T, DbTestFindFirstOrThrowArgs<ExtArgs>>): Prisma__DbTestClient<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more DbTests that matches the filter.
+     * Find zero or more Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DbTestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all DbTests
-     * const dbTests = await prisma.dbTest.findMany()
+     * // Get all Users
+     * const users = await prisma.user.findMany()
      * 
-     * // Get first 10 DbTests
-     * const dbTests = await prisma.dbTest.findMany({ take: 10 })
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const dbTestWithIdOnly = await prisma.dbTest.findMany({ select: { id: true } })
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends DbTestFindManyArgs>(args?: SelectSubset<T, DbTestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a DbTest.
-     * @param {DbTestCreateArgs} args - Arguments to create a DbTest.
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
      * @example
-     * // Create one DbTest
-     * const DbTest = await prisma.dbTest.create({
+     * // Create one User
+     * const User = await prisma.user.create({
      *   data: {
-     *     // ... data to create a DbTest
+     *     // ... data to create a User
      *   }
      * })
      * 
      */
-    create<T extends DbTestCreateArgs>(args: SelectSubset<T, DbTestCreateArgs<ExtArgs>>): Prisma__DbTestClient<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many DbTests.
-     * @param {DbTestCreateManyArgs} args - Arguments to create many DbTests.
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
      * @example
-     * // Create many DbTests
-     * const dbTest = await prisma.dbTest.createMany({
+     * // Create many Users
+     * const user = await prisma.user.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends DbTestCreateManyArgs>(args?: SelectSubset<T, DbTestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many DbTests and returns the data saved in the database.
-     * @param {DbTestCreateManyAndReturnArgs} args - Arguments to create many DbTests.
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
      * @example
-     * // Create many DbTests
-     * const dbTest = await prisma.dbTest.createManyAndReturn({
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many DbTests and only return the `id`
-     * const dbTestWithIdOnly = await prisma.dbTest.createManyAndReturn({
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -1307,28 +1736,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends DbTestCreateManyAndReturnArgs>(args?: SelectSubset<T, DbTestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a DbTest.
-     * @param {DbTestDeleteArgs} args - Arguments to delete one DbTest.
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
      * @example
-     * // Delete one DbTest
-     * const DbTest = await prisma.dbTest.delete({
+     * // Delete one User
+     * const User = await prisma.user.delete({
      *   where: {
-     *     // ... filter to delete one DbTest
+     *     // ... filter to delete one User
      *   }
      * })
      * 
      */
-    delete<T extends DbTestDeleteArgs>(args: SelectSubset<T, DbTestDeleteArgs<ExtArgs>>): Prisma__DbTestClient<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one DbTest.
-     * @param {DbTestUpdateArgs} args - Arguments to update one DbTest.
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
      * @example
-     * // Update one DbTest
-     * const dbTest = await prisma.dbTest.update({
+     * // Update one User
+     * const user = await prisma.user.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1338,30 +1767,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends DbTestUpdateArgs>(args: SelectSubset<T, DbTestUpdateArgs<ExtArgs>>): Prisma__DbTestClient<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more DbTests.
-     * @param {DbTestDeleteManyArgs} args - Arguments to filter DbTests to delete.
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
      * @example
-     * // Delete a few DbTests
-     * const { count } = await prisma.dbTest.deleteMany({
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends DbTestDeleteManyArgs>(args?: SelectSubset<T, DbTestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more DbTests.
+     * Update zero or more Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DbTestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many DbTests
-     * const dbTest = await prisma.dbTest.updateMany({
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1371,14 +1800,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends DbTestUpdateManyArgs>(args: SelectSubset<T, DbTestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more DbTests and returns the data updated in the database.
-     * @param {DbTestUpdateManyAndReturnArgs} args - Arguments to update many DbTests.
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
      * @example
-     * // Update many DbTests
-     * const dbTest = await prisma.dbTest.updateManyAndReturn({
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1387,8 +1816,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more DbTests and only return the `id`
-     * const dbTestWithIdOnly = await prisma.dbTest.updateManyAndReturn({
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -1401,56 +1830,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends DbTestUpdateManyAndReturnArgs>(args: SelectSubset<T, DbTestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one DbTest.
-     * @param {DbTestUpsertArgs} args - Arguments to update or create a DbTest.
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
      * @example
-     * // Update or create a DbTest
-     * const dbTest = await prisma.dbTest.upsert({
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
      *   create: {
-     *     // ... data to create a DbTest
+     *     // ... data to create a User
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the DbTest we want to update
+     *     // ... the filter for the User we want to update
      *   }
      * })
      */
-    upsert<T extends DbTestUpsertArgs>(args: SelectSubset<T, DbTestUpsertArgs<ExtArgs>>): Prisma__DbTestClient<$Result.GetResult<Prisma.$DbTestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of DbTests.
+     * Count the number of Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DbTestCountArgs} args - Arguments to filter DbTests to count.
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
      * @example
-     * // Count the number of DbTests
-     * const count = await prisma.dbTest.count({
+     * // Count the number of Users
+     * const count = await prisma.user.count({
      *   where: {
-     *     // ... the filter for the DbTests we want to count
+     *     // ... the filter for the Users we want to count
      *   }
      * })
     **/
-    count<T extends DbTestCountArgs>(
-      args?: Subset<T, DbTestCountArgs>,
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], DbTestCountAggregateOutputType>
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a DbTest.
+     * Allows you to perform aggregations operations on a User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DbTestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1470,13 +1899,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends DbTestAggregateArgs>(args: Subset<T, DbTestAggregateArgs>): Prisma.PrismaPromise<GetDbTestAggregateType<T>>
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
 
     /**
-     * Group by DbTest.
+     * Group by User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {DbTestGroupByArgs} args - Group by arguments.
+     * @param {UserGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1491,14 +1920,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends DbTestGroupByArgs,
+      T extends UserGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: DbTestGroupByArgs['orderBy'] }
-        : { orderBy?: DbTestGroupByArgs['orderBy'] },
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1547,21 +1976,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, DbTestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDbTestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the DbTest model
+   * Fields of the User model
    */
-  readonly fields: DbTestFieldRefs;
+  readonly fields: UserFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for DbTest.
+   * The delegate class that acts as a "Promise-like" for User.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__DbTestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    flashcards<T extends User$flashcardsArgs<ExtArgs> = {}>(args?: Subset<T, User$flashcardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    activities<T extends User$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1588,700 +2019,964 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the DbTest model
+   * Fields of the User model
    */
-  interface DbTestFieldRefs {
-    readonly id: FieldRef<"DbTest", 'Int'>
-    readonly status: FieldRef<"DbTest", 'String'>
-    readonly updatedAt: FieldRef<"DbTest", 'DateTime'>
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'String'>
+    readonly firstName: FieldRef<"User", 'String'>
+    readonly lastName: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly minutesToTestAgain: FieldRef<"User", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * DbTest findUnique
+   * User findUnique
    */
-  export type DbTestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which DbTest to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: DbTestWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
   }
 
   /**
-   * DbTest findUniqueOrThrow
+   * User findUniqueOrThrow
    */
-  export type DbTestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which DbTest to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: DbTestWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
   }
 
   /**
-   * DbTest findFirst
+   * User findFirst
    */
-  export type DbTestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which DbTest to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: DbTestWhereInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DbTests to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: DbTestOrderByWithRelationInput | DbTestOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for DbTests.
+     * Sets the position for searching for Users.
      */
-    cursor?: DbTestWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DbTests from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DbTests.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DbTests.
+     * Filter by unique combinations of Users.
      */
-    distinct?: DbTestScalarFieldEnum | DbTestScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * DbTest findFirstOrThrow
+   * User findFirstOrThrow
    */
-  export type DbTestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which DbTest to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: DbTestWhereInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DbTests to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: DbTestOrderByWithRelationInput | DbTestOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for DbTests.
+     * Sets the position for searching for Users.
      */
-    cursor?: DbTestWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DbTests from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DbTests.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DbTests.
+     * Filter by unique combinations of Users.
      */
-    distinct?: DbTestScalarFieldEnum | DbTestScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * DbTest findMany
+   * User findMany
    */
-  export type DbTestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter, which DbTests to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: DbTestWhereInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of DbTests to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: DbTestOrderByWithRelationInput | DbTestOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing DbTests.
+     * Sets the position for listing Users.
      */
-    cursor?: DbTestWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` DbTests from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` DbTests.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of DbTests.
+     * Filter by unique combinations of Users.
      */
-    distinct?: DbTestScalarFieldEnum | DbTestScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * DbTest create
+   * User create
    */
-  export type DbTestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data needed to create a DbTest.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<DbTestCreateInput, DbTestUncheckedCreateInput>
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
 
   /**
-   * DbTest createMany
+   * User createMany
    */
-  export type DbTestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many DbTests.
+     * The data used to create many Users.
      */
-    data: DbTestCreateManyInput | DbTestCreateManyInput[]
+    data: UserCreateManyInput | UserCreateManyInput[]
   }
 
   /**
-   * DbTest createManyAndReturn
+   * User createManyAndReturn
    */
-  export type DbTestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelectCreateManyAndReturn<ExtArgs> | null
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data used to create many DbTests.
+     * The data used to create many Users.
      */
-    data: DbTestCreateManyInput | DbTestCreateManyInput[]
+    data: UserCreateManyInput | UserCreateManyInput[]
   }
 
   /**
-   * DbTest update
+   * User update
    */
-  export type DbTestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data needed to update a DbTest.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<DbTestUpdateInput, DbTestUncheckedUpdateInput>
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Choose, which DbTest to update.
+     * The data needed to update a User.
      */
-    where: DbTestWhereUniqueInput
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
   }
 
   /**
-   * DbTest updateMany
+   * User updateMany
    */
-  export type DbTestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update DbTests.
+     * The data used to update Users.
      */
-    data: XOR<DbTestUpdateManyMutationInput, DbTestUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which DbTests to update
+     * Filter which Users to update
      */
-    where?: DbTestWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many DbTests to update.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * DbTest updateManyAndReturn
+   * User updateManyAndReturn
    */
-  export type DbTestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data used to update DbTests.
+     * The data used to update Users.
      */
-    data: XOR<DbTestUpdateManyMutationInput, DbTestUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which DbTests to update
+     * Filter which Users to update
      */
-    where?: DbTestWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many DbTests to update.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * DbTest upsert
+   * User upsert
    */
-  export type DbTestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The filter to search for the DbTest to update in case it exists.
+     * Choose, which related nodes to fetch as well
      */
-    where: DbTestWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
     /**
-     * In case the DbTest found by the `where` argument doesn't exist, create a new DbTest with this data.
+     * The filter to search for the User to update in case it exists.
      */
-    create: XOR<DbTestCreateInput, DbTestUncheckedCreateInput>
+    where: UserWhereUniqueInput
     /**
-     * In case the DbTest was found with the provided `where` argument, update it with this data.
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
      */
-    update: XOR<DbTestUpdateInput, DbTestUncheckedUpdateInput>
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
   }
 
   /**
-   * DbTest delete
+   * User delete
    */
-  export type DbTestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the User
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the User
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * Filter which DbTest to delete.
+     * Choose, which related nodes to fetch as well
      */
-    where: DbTestWhereUniqueInput
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
   }
 
   /**
-   * DbTest deleteMany
+   * User deleteMany
    */
-  export type DbTestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which DbTests to delete
+     * Filter which Users to delete
      */
-    where?: DbTestWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many DbTests to delete.
+     * Limit how many Users to delete.
      */
     limit?: number
   }
 
   /**
-   * DbTest without action
+   * User.flashcards
    */
-  export type DbTestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$flashcardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the DbTest
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: DbTestSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the DbTest
+     * Omit specific fields from the Flashcard
      */
-    omit?: DbTestOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardInclude<ExtArgs> | null
+    where?: FlashcardWhereInput
+    orderBy?: FlashcardOrderByWithRelationInput | FlashcardOrderByWithRelationInput[]
+    cursor?: FlashcardWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FlashcardScalarFieldEnum | FlashcardScalarFieldEnum[]
+  }
+
+  /**
+   * User.activities
+   */
+  export type User$activitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    where?: UserFlashcardActivityWhereInput
+    orderBy?: UserFlashcardActivityOrderByWithRelationInput | UserFlashcardActivityOrderByWithRelationInput[]
+    cursor?: UserFlashcardActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserFlashcardActivityScalarFieldEnum | UserFlashcardActivityScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model Task
+   * Model Flashcard
    */
 
-  export type AggregateTask = {
-    _count: TaskCountAggregateOutputType | null
-    _min: TaskMinAggregateOutputType | null
-    _max: TaskMaxAggregateOutputType | null
+  export type AggregateFlashcard = {
+    _count: FlashcardCountAggregateOutputType | null
+    _avg: FlashcardAvgAggregateOutputType | null
+    _sum: FlashcardSumAggregateOutputType | null
+    _min: FlashcardMinAggregateOutputType | null
+    _max: FlashcardMaxAggregateOutputType | null
   }
 
-  export type TaskMinAggregateOutputType = {
+  export type FlashcardAvgAggregateOutputType = {
+    rank: number | null
+  }
+
+  export type FlashcardSumAggregateOutputType = {
+    rank: number | null
+  }
+
+  export type FlashcardMinAggregateOutputType = {
     id: string | null
-    title: string | null
-    completed: boolean | null
+    ownerId: string | null
+    front: string | null
+    back: string | null
+    frontLanguage: string | null
+    backLanguage: string | null
+    pronunciation: string | null
     createdAt: Date | null
+    status: string | null
+    rank: number | null
+    memoryHook: string | null
+    nextTestTime: Date | null
+    copiedFromId: string | null
   }
 
-  export type TaskMaxAggregateOutputType = {
+  export type FlashcardMaxAggregateOutputType = {
     id: string | null
-    title: string | null
-    completed: boolean | null
+    ownerId: string | null
+    front: string | null
+    back: string | null
+    frontLanguage: string | null
+    backLanguage: string | null
+    pronunciation: string | null
     createdAt: Date | null
+    status: string | null
+    rank: number | null
+    memoryHook: string | null
+    nextTestTime: Date | null
+    copiedFromId: string | null
   }
 
-  export type TaskCountAggregateOutputType = {
+  export type FlashcardCountAggregateOutputType = {
     id: number
-    title: number
-    completed: number
+    ownerId: number
+    front: number
+    back: number
+    frontLanguage: number
+    backLanguage: number
+    pronunciation: number
     createdAt: number
+    status: number
+    rank: number
+    memoryHook: number
+    nextTestTime: number
+    copiedFromId: number
     _all: number
   }
 
 
-  export type TaskMinAggregateInputType = {
-    id?: true
-    title?: true
-    completed?: true
-    createdAt?: true
+  export type FlashcardAvgAggregateInputType = {
+    rank?: true
   }
 
-  export type TaskMaxAggregateInputType = {
-    id?: true
-    title?: true
-    completed?: true
-    createdAt?: true
+  export type FlashcardSumAggregateInputType = {
+    rank?: true
   }
 
-  export type TaskCountAggregateInputType = {
+  export type FlashcardMinAggregateInputType = {
     id?: true
-    title?: true
-    completed?: true
+    ownerId?: true
+    front?: true
+    back?: true
+    frontLanguage?: true
+    backLanguage?: true
+    pronunciation?: true
     createdAt?: true
+    status?: true
+    rank?: true
+    memoryHook?: true
+    nextTestTime?: true
+    copiedFromId?: true
+  }
+
+  export type FlashcardMaxAggregateInputType = {
+    id?: true
+    ownerId?: true
+    front?: true
+    back?: true
+    frontLanguage?: true
+    backLanguage?: true
+    pronunciation?: true
+    createdAt?: true
+    status?: true
+    rank?: true
+    memoryHook?: true
+    nextTestTime?: true
+    copiedFromId?: true
+  }
+
+  export type FlashcardCountAggregateInputType = {
+    id?: true
+    ownerId?: true
+    front?: true
+    back?: true
+    frontLanguage?: true
+    backLanguage?: true
+    pronunciation?: true
+    createdAt?: true
+    status?: true
+    rank?: true
+    memoryHook?: true
+    nextTestTime?: true
+    copiedFromId?: true
     _all?: true
   }
 
-  export type TaskAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Task to aggregate.
+     * Filter which Flashcard to aggregate.
      */
-    where?: TaskWhereInput
+    where?: FlashcardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Tasks to fetch.
+     * Determine the order of Flashcards to fetch.
      */
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    orderBy?: FlashcardOrderByWithRelationInput | FlashcardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TaskWhereUniqueInput
+    cursor?: FlashcardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Tasks from the position of the cursor.
+     * Take `±n` Flashcards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Tasks.
+     * Skip the first `n` Flashcards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Tasks
+     * Count returned Flashcards
     **/
-    _count?: true | TaskCountAggregateInputType
+    _count?: true | FlashcardCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FlashcardAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FlashcardSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TaskMinAggregateInputType
+    _min?: FlashcardMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TaskMaxAggregateInputType
+    _max?: FlashcardMaxAggregateInputType
   }
 
-  export type GetTaskAggregateType<T extends TaskAggregateArgs> = {
-        [P in keyof T & keyof AggregateTask]: P extends '_count' | 'count'
+  export type GetFlashcardAggregateType<T extends FlashcardAggregateArgs> = {
+        [P in keyof T & keyof AggregateFlashcard]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTask[P]>
-      : GetScalarType<T[P], AggregateTask[P]>
+        : GetScalarType<T[P], AggregateFlashcard[P]>
+      : GetScalarType<T[P], AggregateFlashcard[P]>
   }
 
 
 
 
-  export type TaskGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TaskWhereInput
-    orderBy?: TaskOrderByWithAggregationInput | TaskOrderByWithAggregationInput[]
-    by: TaskScalarFieldEnum[] | TaskScalarFieldEnum
-    having?: TaskScalarWhereWithAggregatesInput
+  export type FlashcardGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FlashcardWhereInput
+    orderBy?: FlashcardOrderByWithAggregationInput | FlashcardOrderByWithAggregationInput[]
+    by: FlashcardScalarFieldEnum[] | FlashcardScalarFieldEnum
+    having?: FlashcardScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TaskCountAggregateInputType | true
-    _min?: TaskMinAggregateInputType
-    _max?: TaskMaxAggregateInputType
+    _count?: FlashcardCountAggregateInputType | true
+    _avg?: FlashcardAvgAggregateInputType
+    _sum?: FlashcardSumAggregateInputType
+    _min?: FlashcardMinAggregateInputType
+    _max?: FlashcardMaxAggregateInputType
   }
 
-  export type TaskGroupByOutputType = {
+  export type FlashcardGroupByOutputType = {
     id: string
-    title: string
-    completed: boolean
+    ownerId: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation: string | null
     createdAt: Date
-    _count: TaskCountAggregateOutputType | null
-    _min: TaskMinAggregateOutputType | null
-    _max: TaskMaxAggregateOutputType | null
+    status: string
+    rank: number
+    memoryHook: string | null
+    nextTestTime: Date | null
+    copiedFromId: string | null
+    _count: FlashcardCountAggregateOutputType | null
+    _avg: FlashcardAvgAggregateOutputType | null
+    _sum: FlashcardSumAggregateOutputType | null
+    _min: FlashcardMinAggregateOutputType | null
+    _max: FlashcardMaxAggregateOutputType | null
   }
 
-  type GetTaskGroupByPayload<T extends TaskGroupByArgs> = Prisma.PrismaPromise<
+  type GetFlashcardGroupByPayload<T extends FlashcardGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<TaskGroupByOutputType, T['by']> &
+      PickEnumerable<FlashcardGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TaskGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof FlashcardGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TaskGroupByOutputType[P]>
-            : GetScalarType<T[P], TaskGroupByOutputType[P]>
+              : GetScalarType<T[P], FlashcardGroupByOutputType[P]>
+            : GetScalarType<T[P], FlashcardGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TaskSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type FlashcardSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title?: boolean
-    completed?: boolean
+    ownerId?: boolean
+    front?: boolean
+    back?: boolean
+    frontLanguage?: boolean
+    backLanguage?: boolean
+    pronunciation?: boolean
     createdAt?: boolean
-  }, ExtArgs["result"]["task"]>
+    status?: boolean
+    rank?: boolean
+    memoryHook?: boolean
+    nextTestTime?: boolean
+    copiedFromId?: boolean
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
+    copies?: boolean | Flashcard$copiesArgs<ExtArgs>
+    activities?: boolean | Flashcard$activitiesArgs<ExtArgs>
+    tags?: boolean | Flashcard$tagsArgs<ExtArgs>
+    _count?: boolean | FlashcardCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["flashcard"]>
 
-  export type TaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type FlashcardSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title?: boolean
-    completed?: boolean
+    ownerId?: boolean
+    front?: boolean
+    back?: boolean
+    frontLanguage?: boolean
+    backLanguage?: boolean
+    pronunciation?: boolean
     createdAt?: boolean
-  }, ExtArgs["result"]["task"]>
+    status?: boolean
+    rank?: boolean
+    memoryHook?: boolean
+    nextTestTime?: boolean
+    copiedFromId?: boolean
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
+  }, ExtArgs["result"]["flashcard"]>
 
-  export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type FlashcardSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title?: boolean
-    completed?: boolean
+    ownerId?: boolean
+    front?: boolean
+    back?: boolean
+    frontLanguage?: boolean
+    backLanguage?: boolean
+    pronunciation?: boolean
     createdAt?: boolean
-  }, ExtArgs["result"]["task"]>
+    status?: boolean
+    rank?: boolean
+    memoryHook?: boolean
+    nextTestTime?: boolean
+    copiedFromId?: boolean
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
+  }, ExtArgs["result"]["flashcard"]>
 
-  export type TaskSelectScalar = {
+  export type FlashcardSelectScalar = {
     id?: boolean
-    title?: boolean
-    completed?: boolean
+    ownerId?: boolean
+    front?: boolean
+    back?: boolean
+    frontLanguage?: boolean
+    backLanguage?: boolean
+    pronunciation?: boolean
     createdAt?: boolean
+    status?: boolean
+    rank?: boolean
+    memoryHook?: boolean
+    nextTestTime?: boolean
+    copiedFromId?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "completed" | "createdAt", ExtArgs["result"]["task"]>
+  export type FlashcardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerId" | "front" | "back" | "frontLanguage" | "backLanguage" | "pronunciation" | "createdAt" | "status" | "rank" | "memoryHook" | "nextTestTime" | "copiedFromId", ExtArgs["result"]["flashcard"]>
+  export type FlashcardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
+    copies?: boolean | Flashcard$copiesArgs<ExtArgs>
+    activities?: boolean | Flashcard$activitiesArgs<ExtArgs>
+    tags?: boolean | Flashcard$tagsArgs<ExtArgs>
+    _count?: boolean | FlashcardCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FlashcardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
+  }
+  export type FlashcardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
+  }
 
-  export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Task"
-    objects: {}
+  export type $FlashcardPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Flashcard"
+    objects: {
+      owner: Prisma.$UserPayload<ExtArgs>
+      copiedFrom: Prisma.$FlashcardPayload<ExtArgs> | null
+      copies: Prisma.$FlashcardPayload<ExtArgs>[]
+      activities: Prisma.$UserFlashcardActivityPayload<ExtArgs>[]
+      tags: Prisma.$FlashcardTagPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      title: string
-      completed: boolean
+      ownerId: string
+      front: string
+      back: string
+      frontLanguage: string
+      backLanguage: string
+      pronunciation: string | null
       createdAt: Date
-    }, ExtArgs["result"]["task"]>
+      status: string
+      rank: number
+      memoryHook: string | null
+      nextTestTime: Date | null
+      copiedFromId: string | null
+    }, ExtArgs["result"]["flashcard"]>
     composites: {}
   }
 
-  type TaskGetPayload<S extends boolean | null | undefined | TaskDefaultArgs> = $Result.GetResult<Prisma.$TaskPayload, S>
+  type FlashcardGetPayload<S extends boolean | null | undefined | FlashcardDefaultArgs> = $Result.GetResult<Prisma.$FlashcardPayload, S>
 
-  type TaskCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TaskFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TaskCountAggregateInputType | true
+  type FlashcardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FlashcardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FlashcardCountAggregateInputType | true
     }
 
-  export interface TaskDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Task'], meta: { name: 'Task' } }
+  export interface FlashcardDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Flashcard'], meta: { name: 'Flashcard' } }
     /**
-     * Find zero or one Task that matches the filter.
-     * @param {TaskFindUniqueArgs} args - Arguments to find a Task
+     * Find zero or one Flashcard that matches the filter.
+     * @param {FlashcardFindUniqueArgs} args - Arguments to find a Flashcard
      * @example
-     * // Get one Task
-     * const task = await prisma.task.findUnique({
+     * // Get one Flashcard
+     * const flashcard = await prisma.flashcard.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends TaskFindUniqueArgs>(args: SelectSubset<T, TaskFindUniqueArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends FlashcardFindUniqueArgs>(args: SelectSubset<T, FlashcardFindUniqueArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Task that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Flashcard that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {TaskFindUniqueOrThrowArgs} args - Arguments to find a Task
+     * @param {FlashcardFindUniqueOrThrowArgs} args - Arguments to find a Flashcard
      * @example
-     * // Get one Task
-     * const task = await prisma.task.findUniqueOrThrow({
+     * // Get one Flashcard
+     * const flashcard = await prisma.flashcard.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends TaskFindUniqueOrThrowArgs>(args: SelectSubset<T, TaskFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends FlashcardFindUniqueOrThrowArgs>(args: SelectSubset<T, FlashcardFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Task that matches the filter.
+     * Find the first Flashcard that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskFindFirstArgs} args - Arguments to find a Task
+     * @param {FlashcardFindFirstArgs} args - Arguments to find a Flashcard
      * @example
-     * // Get one Task
-     * const task = await prisma.task.findFirst({
+     * // Get one Flashcard
+     * const flashcard = await prisma.flashcard.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends TaskFindFirstArgs>(args?: SelectSubset<T, TaskFindFirstArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends FlashcardFindFirstArgs>(args?: SelectSubset<T, FlashcardFindFirstArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Task that matches the filter or
+     * Find the first Flashcard that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskFindFirstOrThrowArgs} args - Arguments to find a Task
+     * @param {FlashcardFindFirstOrThrowArgs} args - Arguments to find a Flashcard
      * @example
-     * // Get one Task
-     * const task = await prisma.task.findFirstOrThrow({
+     * // Get one Flashcard
+     * const flashcard = await prisma.flashcard.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends TaskFindFirstOrThrowArgs>(args?: SelectSubset<T, TaskFindFirstOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends FlashcardFindFirstOrThrowArgs>(args?: SelectSubset<T, FlashcardFindFirstOrThrowArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Tasks that matches the filter.
+     * Find zero or more Flashcards that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {FlashcardFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Tasks
-     * const tasks = await prisma.task.findMany()
+     * // Get all Flashcards
+     * const flashcards = await prisma.flashcard.findMany()
      * 
-     * // Get first 10 Tasks
-     * const tasks = await prisma.task.findMany({ take: 10 })
+     * // Get first 10 Flashcards
+     * const flashcards = await prisma.flashcard.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const taskWithIdOnly = await prisma.task.findMany({ select: { id: true } })
+     * const flashcardWithIdOnly = await prisma.flashcard.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends TaskFindManyArgs>(args?: SelectSubset<T, TaskFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends FlashcardFindManyArgs>(args?: SelectSubset<T, FlashcardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Task.
-     * @param {TaskCreateArgs} args - Arguments to create a Task.
+     * Create a Flashcard.
+     * @param {FlashcardCreateArgs} args - Arguments to create a Flashcard.
      * @example
-     * // Create one Task
-     * const Task = await prisma.task.create({
+     * // Create one Flashcard
+     * const Flashcard = await prisma.flashcard.create({
      *   data: {
-     *     // ... data to create a Task
+     *     // ... data to create a Flashcard
      *   }
      * })
      * 
      */
-    create<T extends TaskCreateArgs>(args: SelectSubset<T, TaskCreateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends FlashcardCreateArgs>(args: SelectSubset<T, FlashcardCreateArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Tasks.
-     * @param {TaskCreateManyArgs} args - Arguments to create many Tasks.
+     * Create many Flashcards.
+     * @param {FlashcardCreateManyArgs} args - Arguments to create many Flashcards.
      * @example
-     * // Create many Tasks
-     * const task = await prisma.task.createMany({
+     * // Create many Flashcards
+     * const flashcard = await prisma.flashcard.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends TaskCreateManyArgs>(args?: SelectSubset<T, TaskCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends FlashcardCreateManyArgs>(args?: SelectSubset<T, FlashcardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Tasks and returns the data saved in the database.
-     * @param {TaskCreateManyAndReturnArgs} args - Arguments to create many Tasks.
+     * Create many Flashcards and returns the data saved in the database.
+     * @param {FlashcardCreateManyAndReturnArgs} args - Arguments to create many Flashcards.
      * @example
-     * // Create many Tasks
-     * const task = await prisma.task.createManyAndReturn({
+     * // Create many Flashcards
+     * const flashcard = await prisma.flashcard.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Tasks and only return the `id`
-     * const taskWithIdOnly = await prisma.task.createManyAndReturn({
+     * // Create many Flashcards and only return the `id`
+     * const flashcardWithIdOnly = await prisma.flashcard.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -2291,28 +2986,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends TaskCreateManyAndReturnArgs>(args?: SelectSubset<T, TaskCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends FlashcardCreateManyAndReturnArgs>(args?: SelectSubset<T, FlashcardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Task.
-     * @param {TaskDeleteArgs} args - Arguments to delete one Task.
+     * Delete a Flashcard.
+     * @param {FlashcardDeleteArgs} args - Arguments to delete one Flashcard.
      * @example
-     * // Delete one Task
-     * const Task = await prisma.task.delete({
+     * // Delete one Flashcard
+     * const Flashcard = await prisma.flashcard.delete({
      *   where: {
-     *     // ... filter to delete one Task
+     *     // ... filter to delete one Flashcard
      *   }
      * })
      * 
      */
-    delete<T extends TaskDeleteArgs>(args: SelectSubset<T, TaskDeleteArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends FlashcardDeleteArgs>(args: SelectSubset<T, FlashcardDeleteArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Task.
-     * @param {TaskUpdateArgs} args - Arguments to update one Task.
+     * Update one Flashcard.
+     * @param {FlashcardUpdateArgs} args - Arguments to update one Flashcard.
      * @example
-     * // Update one Task
-     * const task = await prisma.task.update({
+     * // Update one Flashcard
+     * const flashcard = await prisma.flashcard.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2322,30 +3017,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends TaskUpdateArgs>(args: SelectSubset<T, TaskUpdateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends FlashcardUpdateArgs>(args: SelectSubset<T, FlashcardUpdateArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Tasks.
-     * @param {TaskDeleteManyArgs} args - Arguments to filter Tasks to delete.
+     * Delete zero or more Flashcards.
+     * @param {FlashcardDeleteManyArgs} args - Arguments to filter Flashcards to delete.
      * @example
-     * // Delete a few Tasks
-     * const { count } = await prisma.task.deleteMany({
+     * // Delete a few Flashcards
+     * const { count } = await prisma.flashcard.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends TaskDeleteManyArgs>(args?: SelectSubset<T, TaskDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends FlashcardDeleteManyArgs>(args?: SelectSubset<T, FlashcardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Tasks.
+     * Update zero or more Flashcards.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {FlashcardUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Tasks
-     * const task = await prisma.task.updateMany({
+     * // Update many Flashcards
+     * const flashcard = await prisma.flashcard.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2355,14 +3050,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends TaskUpdateManyArgs>(args: SelectSubset<T, TaskUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends FlashcardUpdateManyArgs>(args: SelectSubset<T, FlashcardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Tasks and returns the data updated in the database.
-     * @param {TaskUpdateManyAndReturnArgs} args - Arguments to update many Tasks.
+     * Update zero or more Flashcards and returns the data updated in the database.
+     * @param {FlashcardUpdateManyAndReturnArgs} args - Arguments to update many Flashcards.
      * @example
-     * // Update many Tasks
-     * const task = await prisma.task.updateManyAndReturn({
+     * // Update many Flashcards
+     * const flashcard = await prisma.flashcard.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2371,8 +3066,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Tasks and only return the `id`
-     * const taskWithIdOnly = await prisma.task.updateManyAndReturn({
+     * // Update zero or more Flashcards and only return the `id`
+     * const flashcardWithIdOnly = await prisma.flashcard.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -2385,56 +3080,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends TaskUpdateManyAndReturnArgs>(args: SelectSubset<T, TaskUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends FlashcardUpdateManyAndReturnArgs>(args: SelectSubset<T, FlashcardUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Task.
-     * @param {TaskUpsertArgs} args - Arguments to update or create a Task.
+     * Create or update one Flashcard.
+     * @param {FlashcardUpsertArgs} args - Arguments to update or create a Flashcard.
      * @example
-     * // Update or create a Task
-     * const task = await prisma.task.upsert({
+     * // Update or create a Flashcard
+     * const flashcard = await prisma.flashcard.upsert({
      *   create: {
-     *     // ... data to create a Task
+     *     // ... data to create a Flashcard
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Task we want to update
+     *     // ... the filter for the Flashcard we want to update
      *   }
      * })
      */
-    upsert<T extends TaskUpsertArgs>(args: SelectSubset<T, TaskUpsertArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends FlashcardUpsertArgs>(args: SelectSubset<T, FlashcardUpsertArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Tasks.
+     * Count the number of Flashcards.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskCountArgs} args - Arguments to filter Tasks to count.
+     * @param {FlashcardCountArgs} args - Arguments to filter Flashcards to count.
      * @example
-     * // Count the number of Tasks
-     * const count = await prisma.task.count({
+     * // Count the number of Flashcards
+     * const count = await prisma.flashcard.count({
      *   where: {
-     *     // ... the filter for the Tasks we want to count
+     *     // ... the filter for the Flashcards we want to count
      *   }
      * })
     **/
-    count<T extends TaskCountArgs>(
-      args?: Subset<T, TaskCountArgs>,
+    count<T extends FlashcardCountArgs>(
+      args?: Subset<T, FlashcardCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TaskCountAggregateOutputType>
+          : GetScalarType<T['select'], FlashcardCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Task.
+     * Allows you to perform aggregations operations on a Flashcard.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {FlashcardAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2454,13 +3149,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TaskAggregateArgs>(args: Subset<T, TaskAggregateArgs>): Prisma.PrismaPromise<GetTaskAggregateType<T>>
+    aggregate<T extends FlashcardAggregateArgs>(args: Subset<T, FlashcardAggregateArgs>): Prisma.PrismaPromise<GetFlashcardAggregateType<T>>
 
     /**
-     * Group by Task.
+     * Group by Flashcard.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskGroupByArgs} args - Group by arguments.
+     * @param {FlashcardGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2475,14 +3170,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TaskGroupByArgs,
+      T extends FlashcardGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TaskGroupByArgs['orderBy'] }
-        : { orderBy?: TaskGroupByArgs['orderBy'] },
+        ? { orderBy: FlashcardGroupByArgs['orderBy'] }
+        : { orderBy?: FlashcardGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2531,21 +3226,26 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TaskGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTaskGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, FlashcardGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFlashcardGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Task model
+   * Fields of the Flashcard model
    */
-  readonly fields: TaskFieldRefs;
+  readonly fields: FlashcardFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Task.
+   * The delegate class that acts as a "Promise-like" for Flashcard.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__FlashcardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    owner<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    copiedFrom<T extends Flashcard$copiedFromArgs<ExtArgs> = {}>(args?: Subset<T, Flashcard$copiedFromArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    copies<T extends Flashcard$copiesArgs<ExtArgs> = {}>(args?: Subset<T, Flashcard$copiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    activities<T extends Flashcard$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Flashcard$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tags<T extends Flashcard$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Flashcard$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2572,379 +3272,3699 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Task model
+   * Fields of the Flashcard model
    */
-  interface TaskFieldRefs {
-    readonly id: FieldRef<"Task", 'String'>
-    readonly title: FieldRef<"Task", 'String'>
-    readonly completed: FieldRef<"Task", 'Boolean'>
-    readonly createdAt: FieldRef<"Task", 'DateTime'>
+  interface FlashcardFieldRefs {
+    readonly id: FieldRef<"Flashcard", 'String'>
+    readonly ownerId: FieldRef<"Flashcard", 'String'>
+    readonly front: FieldRef<"Flashcard", 'String'>
+    readonly back: FieldRef<"Flashcard", 'String'>
+    readonly frontLanguage: FieldRef<"Flashcard", 'String'>
+    readonly backLanguage: FieldRef<"Flashcard", 'String'>
+    readonly pronunciation: FieldRef<"Flashcard", 'String'>
+    readonly createdAt: FieldRef<"Flashcard", 'DateTime'>
+    readonly status: FieldRef<"Flashcard", 'String'>
+    readonly rank: FieldRef<"Flashcard", 'Float'>
+    readonly memoryHook: FieldRef<"Flashcard", 'String'>
+    readonly nextTestTime: FieldRef<"Flashcard", 'DateTime'>
+    readonly copiedFromId: FieldRef<"Flashcard", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Task findUnique
+   * Flashcard findUnique
    */
-  export type TaskFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * Filter, which Task to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: TaskWhereUniqueInput
+    include?: FlashcardInclude<ExtArgs> | null
+    /**
+     * Filter, which Flashcard to fetch.
+     */
+    where: FlashcardWhereUniqueInput
   }
 
   /**
-   * Task findUniqueOrThrow
+   * Flashcard findUniqueOrThrow
    */
-  export type TaskFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * Filter, which Task to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: TaskWhereUniqueInput
+    include?: FlashcardInclude<ExtArgs> | null
+    /**
+     * Filter, which Flashcard to fetch.
+     */
+    where: FlashcardWhereUniqueInput
   }
 
   /**
-   * Task findFirst
+   * Flashcard findFirst
    */
-  export type TaskFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * Filter, which Task to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: TaskWhereInput
+    include?: FlashcardInclude<ExtArgs> | null
+    /**
+     * Filter, which Flashcard to fetch.
+     */
+    where?: FlashcardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Tasks to fetch.
+     * Determine the order of Flashcards to fetch.
      */
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    orderBy?: FlashcardOrderByWithRelationInput | FlashcardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Tasks.
+     * Sets the position for searching for Flashcards.
      */
-    cursor?: TaskWhereUniqueInput
+    cursor?: FlashcardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Tasks from the position of the cursor.
+     * Take `±n` Flashcards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Tasks.
+     * Skip the first `n` Flashcards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Tasks.
+     * Filter by unique combinations of Flashcards.
      */
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+    distinct?: FlashcardScalarFieldEnum | FlashcardScalarFieldEnum[]
   }
 
   /**
-   * Task findFirstOrThrow
+   * Flashcard findFirstOrThrow
    */
-  export type TaskFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * Filter, which Task to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: TaskWhereInput
+    include?: FlashcardInclude<ExtArgs> | null
+    /**
+     * Filter, which Flashcard to fetch.
+     */
+    where?: FlashcardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Tasks to fetch.
+     * Determine the order of Flashcards to fetch.
      */
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    orderBy?: FlashcardOrderByWithRelationInput | FlashcardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Tasks.
+     * Sets the position for searching for Flashcards.
      */
-    cursor?: TaskWhereUniqueInput
+    cursor?: FlashcardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Tasks from the position of the cursor.
+     * Take `±n` Flashcards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Tasks.
+     * Skip the first `n` Flashcards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Tasks.
+     * Filter by unique combinations of Flashcards.
      */
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+    distinct?: FlashcardScalarFieldEnum | FlashcardScalarFieldEnum[]
   }
 
   /**
-   * Task findMany
+   * Flashcard findMany
    */
-  export type TaskFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * Filter, which Tasks to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: TaskWhereInput
+    include?: FlashcardInclude<ExtArgs> | null
+    /**
+     * Filter, which Flashcards to fetch.
+     */
+    where?: FlashcardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Tasks to fetch.
+     * Determine the order of Flashcards to fetch.
      */
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    orderBy?: FlashcardOrderByWithRelationInput | FlashcardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Tasks.
+     * Sets the position for listing Flashcards.
      */
-    cursor?: TaskWhereUniqueInput
+    cursor?: FlashcardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Tasks from the position of the cursor.
+     * Take `±n` Flashcards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Tasks.
+     * Skip the first `n` Flashcards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Tasks.
+     * Filter by unique combinations of Flashcards.
      */
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+    distinct?: FlashcardScalarFieldEnum | FlashcardScalarFieldEnum[]
   }
 
   /**
-   * Task create
+   * Flashcard create
    */
-  export type TaskCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * The data needed to create a Task.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<TaskCreateInput, TaskUncheckedCreateInput>
+    include?: FlashcardInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Flashcard.
+     */
+    data: XOR<FlashcardCreateInput, FlashcardUncheckedCreateInput>
   }
 
   /**
-   * Task createMany
+   * Flashcard createMany
    */
-  export type TaskCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Tasks.
+     * The data used to create many Flashcards.
      */
-    data: TaskCreateManyInput | TaskCreateManyInput[]
+    data: FlashcardCreateManyInput | FlashcardCreateManyInput[]
   }
 
   /**
-   * Task createManyAndReturn
+   * Flashcard createManyAndReturn
    */
-  export type TaskCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelectCreateManyAndReturn<ExtArgs> | null
+    select?: FlashcardSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * The data used to create many Tasks.
+     * The data used to create many Flashcards.
      */
-    data: TaskCreateManyInput | TaskCreateManyInput[]
+    data: FlashcardCreateManyInput | FlashcardCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Task update
+   * Flashcard update
    */
-  export type TaskUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * The data needed to update a Task.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<TaskUpdateInput, TaskUncheckedUpdateInput>
+    include?: FlashcardInclude<ExtArgs> | null
     /**
-     * Choose, which Task to update.
+     * The data needed to update a Flashcard.
      */
-    where: TaskWhereUniqueInput
+    data: XOR<FlashcardUpdateInput, FlashcardUncheckedUpdateInput>
+    /**
+     * Choose, which Flashcard to update.
+     */
+    where: FlashcardWhereUniqueInput
   }
 
   /**
-   * Task updateMany
+   * Flashcard updateMany
    */
-  export type TaskUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Tasks.
+     * The data used to update Flashcards.
      */
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    data: XOR<FlashcardUpdateManyMutationInput, FlashcardUncheckedUpdateManyInput>
     /**
-     * Filter which Tasks to update
+     * Filter which Flashcards to update
      */
-    where?: TaskWhereInput
+    where?: FlashcardWhereInput
     /**
-     * Limit how many Tasks to update.
+     * Limit how many Flashcards to update.
      */
     limit?: number
   }
 
   /**
-   * Task updateManyAndReturn
+   * Flashcard updateManyAndReturn
    */
-  export type TaskUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FlashcardUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: FlashcardSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * The data used to update Tasks.
+     * The data used to update Flashcards.
      */
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    data: XOR<FlashcardUpdateManyMutationInput, FlashcardUncheckedUpdateManyInput>
     /**
-     * Filter which Tasks to update
+     * Filter which Flashcards to update
      */
-    where?: TaskWhereInput
+    where?: FlashcardWhereInput
     /**
-     * Limit how many Tasks to update.
+     * Limit how many Flashcards to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Flashcard upsert
+   */
+  export type FlashcardUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Flashcard
+     */
+    select?: FlashcardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Flashcard
+     */
+    omit?: FlashcardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Flashcard to update in case it exists.
+     */
+    where: FlashcardWhereUniqueInput
+    /**
+     * In case the Flashcard found by the `where` argument doesn't exist, create a new Flashcard with this data.
+     */
+    create: XOR<FlashcardCreateInput, FlashcardUncheckedCreateInput>
+    /**
+     * In case the Flashcard was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FlashcardUpdateInput, FlashcardUncheckedUpdateInput>
+  }
+
+  /**
+   * Flashcard delete
+   */
+  export type FlashcardDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Flashcard
+     */
+    select?: FlashcardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Flashcard
+     */
+    omit?: FlashcardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardInclude<ExtArgs> | null
+    /**
+     * Filter which Flashcard to delete.
+     */
+    where: FlashcardWhereUniqueInput
+  }
+
+  /**
+   * Flashcard deleteMany
+   */
+  export type FlashcardDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Flashcards to delete
+     */
+    where?: FlashcardWhereInput
+    /**
+     * Limit how many Flashcards to delete.
      */
     limit?: number
   }
 
   /**
-   * Task upsert
+   * Flashcard.copiedFrom
    */
-  export type TaskUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Flashcard$copiedFromArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * The filter to search for the Task to update in case it exists.
+     * Choose, which related nodes to fetch as well
      */
-    where: TaskWhereUniqueInput
-    /**
-     * In case the Task found by the `where` argument doesn't exist, create a new Task with this data.
-     */
-    create: XOR<TaskCreateInput, TaskUncheckedCreateInput>
-    /**
-     * In case the Task was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TaskUpdateInput, TaskUncheckedUpdateInput>
+    include?: FlashcardInclude<ExtArgs> | null
+    where?: FlashcardWhereInput
   }
 
   /**
-   * Task delete
+   * Flashcard.copies
    */
-  export type TaskDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Flashcard$copiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Flashcard
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: FlashcardSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Flashcard
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: FlashcardOmit<ExtArgs> | null
     /**
-     * Filter which Task to delete.
+     * Choose, which related nodes to fetch as well
      */
-    where: TaskWhereUniqueInput
+    include?: FlashcardInclude<ExtArgs> | null
+    where?: FlashcardWhereInput
+    orderBy?: FlashcardOrderByWithRelationInput | FlashcardOrderByWithRelationInput[]
+    cursor?: FlashcardWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FlashcardScalarFieldEnum | FlashcardScalarFieldEnum[]
   }
 
   /**
-   * Task deleteMany
+   * Flashcard.activities
    */
-  export type TaskDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Flashcard$activitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Tasks to delete
+     * Select specific fields to fetch from the UserFlashcardActivity
      */
-    where?: TaskWhereInput
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
     /**
-     * Limit how many Tasks to delete.
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    where?: UserFlashcardActivityWhereInput
+    orderBy?: UserFlashcardActivityOrderByWithRelationInput | UserFlashcardActivityOrderByWithRelationInput[]
+    cursor?: UserFlashcardActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserFlashcardActivityScalarFieldEnum | UserFlashcardActivityScalarFieldEnum[]
+  }
+
+  /**
+   * Flashcard.tags
+   */
+  export type Flashcard$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    where?: FlashcardTagWhereInput
+    orderBy?: FlashcardTagOrderByWithRelationInput | FlashcardTagOrderByWithRelationInput[]
+    cursor?: FlashcardTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FlashcardTagScalarFieldEnum | FlashcardTagScalarFieldEnum[]
+  }
+
+  /**
+   * Flashcard without action
+   */
+  export type FlashcardDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Flashcard
+     */
+    select?: FlashcardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Flashcard
+     */
+    omit?: FlashcardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserFlashcardActivity
+   */
+
+  export type AggregateUserFlashcardActivity = {
+    _count: UserFlashcardActivityCountAggregateOutputType | null
+    _min: UserFlashcardActivityMinAggregateOutputType | null
+    _max: UserFlashcardActivityMaxAggregateOutputType | null
+  }
+
+  export type UserFlashcardActivityMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    flashcardId: string | null
+    whenActedUpon: Date | null
+    actionTaken: string | null
+    actionDetails: string | null
+  }
+
+  export type UserFlashcardActivityMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    flashcardId: string | null
+    whenActedUpon: Date | null
+    actionTaken: string | null
+    actionDetails: string | null
+  }
+
+  export type UserFlashcardActivityCountAggregateOutputType = {
+    id: number
+    userId: number
+    flashcardId: number
+    whenActedUpon: number
+    actionTaken: number
+    actionDetails: number
+    _all: number
+  }
+
+
+  export type UserFlashcardActivityMinAggregateInputType = {
+    id?: true
+    userId?: true
+    flashcardId?: true
+    whenActedUpon?: true
+    actionTaken?: true
+    actionDetails?: true
+  }
+
+  export type UserFlashcardActivityMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    flashcardId?: true
+    whenActedUpon?: true
+    actionTaken?: true
+    actionDetails?: true
+  }
+
+  export type UserFlashcardActivityCountAggregateInputType = {
+    id?: true
+    userId?: true
+    flashcardId?: true
+    whenActedUpon?: true
+    actionTaken?: true
+    actionDetails?: true
+    _all?: true
+  }
+
+  export type UserFlashcardActivityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserFlashcardActivity to aggregate.
+     */
+    where?: UserFlashcardActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserFlashcardActivities to fetch.
+     */
+    orderBy?: UserFlashcardActivityOrderByWithRelationInput | UserFlashcardActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserFlashcardActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserFlashcardActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserFlashcardActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserFlashcardActivities
+    **/
+    _count?: true | UserFlashcardActivityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserFlashcardActivityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserFlashcardActivityMaxAggregateInputType
+  }
+
+  export type GetUserFlashcardActivityAggregateType<T extends UserFlashcardActivityAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserFlashcardActivity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserFlashcardActivity[P]>
+      : GetScalarType<T[P], AggregateUserFlashcardActivity[P]>
+  }
+
+
+
+
+  export type UserFlashcardActivityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserFlashcardActivityWhereInput
+    orderBy?: UserFlashcardActivityOrderByWithAggregationInput | UserFlashcardActivityOrderByWithAggregationInput[]
+    by: UserFlashcardActivityScalarFieldEnum[] | UserFlashcardActivityScalarFieldEnum
+    having?: UserFlashcardActivityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserFlashcardActivityCountAggregateInputType | true
+    _min?: UserFlashcardActivityMinAggregateInputType
+    _max?: UserFlashcardActivityMaxAggregateInputType
+  }
+
+  export type UserFlashcardActivityGroupByOutputType = {
+    id: string
+    userId: string
+    flashcardId: string
+    whenActedUpon: Date
+    actionTaken: string
+    actionDetails: string | null
+    _count: UserFlashcardActivityCountAggregateOutputType | null
+    _min: UserFlashcardActivityMinAggregateOutputType | null
+    _max: UserFlashcardActivityMaxAggregateOutputType | null
+  }
+
+  type GetUserFlashcardActivityGroupByPayload<T extends UserFlashcardActivityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserFlashcardActivityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserFlashcardActivityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserFlashcardActivityGroupByOutputType[P]>
+            : GetScalarType<T[P], UserFlashcardActivityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserFlashcardActivitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    flashcardId?: boolean
+    whenActedUpon?: boolean
+    actionTaken?: boolean
+    actionDetails?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userFlashcardActivity"]>
+
+  export type UserFlashcardActivitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    flashcardId?: boolean
+    whenActedUpon?: boolean
+    actionTaken?: boolean
+    actionDetails?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userFlashcardActivity"]>
+
+  export type UserFlashcardActivitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    flashcardId?: boolean
+    whenActedUpon?: boolean
+    actionTaken?: boolean
+    actionDetails?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userFlashcardActivity"]>
+
+  export type UserFlashcardActivitySelectScalar = {
+    id?: boolean
+    userId?: boolean
+    flashcardId?: boolean
+    whenActedUpon?: boolean
+    actionTaken?: boolean
+    actionDetails?: boolean
+  }
+
+  export type UserFlashcardActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "flashcardId" | "whenActedUpon" | "actionTaken" | "actionDetails", ExtArgs["result"]["userFlashcardActivity"]>
+  export type UserFlashcardActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+  }
+  export type UserFlashcardActivityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+  }
+  export type UserFlashcardActivityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+  }
+
+  export type $UserFlashcardActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserFlashcardActivity"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      flashcard: Prisma.$FlashcardPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      flashcardId: string
+      whenActedUpon: Date
+      actionTaken: string
+      actionDetails: string | null
+    }, ExtArgs["result"]["userFlashcardActivity"]>
+    composites: {}
+  }
+
+  type UserFlashcardActivityGetPayload<S extends boolean | null | undefined | UserFlashcardActivityDefaultArgs> = $Result.GetResult<Prisma.$UserFlashcardActivityPayload, S>
+
+  type UserFlashcardActivityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFlashcardActivityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserFlashcardActivityCountAggregateInputType | true
+    }
+
+  export interface UserFlashcardActivityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserFlashcardActivity'], meta: { name: 'UserFlashcardActivity' } }
+    /**
+     * Find zero or one UserFlashcardActivity that matches the filter.
+     * @param {UserFlashcardActivityFindUniqueArgs} args - Arguments to find a UserFlashcardActivity
+     * @example
+     * // Get one UserFlashcardActivity
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFlashcardActivityFindUniqueArgs>(args: SelectSubset<T, UserFlashcardActivityFindUniqueArgs<ExtArgs>>): Prisma__UserFlashcardActivityClient<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserFlashcardActivity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFlashcardActivityFindUniqueOrThrowArgs} args - Arguments to find a UserFlashcardActivity
+     * @example
+     * // Get one UserFlashcardActivity
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFlashcardActivityFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFlashcardActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserFlashcardActivityClient<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserFlashcardActivity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardActivityFindFirstArgs} args - Arguments to find a UserFlashcardActivity
+     * @example
+     * // Get one UserFlashcardActivity
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFlashcardActivityFindFirstArgs>(args?: SelectSubset<T, UserFlashcardActivityFindFirstArgs<ExtArgs>>): Prisma__UserFlashcardActivityClient<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserFlashcardActivity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardActivityFindFirstOrThrowArgs} args - Arguments to find a UserFlashcardActivity
+     * @example
+     * // Get one UserFlashcardActivity
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFlashcardActivityFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFlashcardActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserFlashcardActivityClient<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserFlashcardActivities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardActivityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserFlashcardActivities
+     * const userFlashcardActivities = await prisma.userFlashcardActivity.findMany()
+     * 
+     * // Get first 10 UserFlashcardActivities
+     * const userFlashcardActivities = await prisma.userFlashcardActivity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userFlashcardActivityWithIdOnly = await prisma.userFlashcardActivity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFlashcardActivityFindManyArgs>(args?: SelectSubset<T, UserFlashcardActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserFlashcardActivity.
+     * @param {UserFlashcardActivityCreateArgs} args - Arguments to create a UserFlashcardActivity.
+     * @example
+     * // Create one UserFlashcardActivity
+     * const UserFlashcardActivity = await prisma.userFlashcardActivity.create({
+     *   data: {
+     *     // ... data to create a UserFlashcardActivity
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserFlashcardActivityCreateArgs>(args: SelectSubset<T, UserFlashcardActivityCreateArgs<ExtArgs>>): Prisma__UserFlashcardActivityClient<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserFlashcardActivities.
+     * @param {UserFlashcardActivityCreateManyArgs} args - Arguments to create many UserFlashcardActivities.
+     * @example
+     * // Create many UserFlashcardActivities
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserFlashcardActivityCreateManyArgs>(args?: SelectSubset<T, UserFlashcardActivityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserFlashcardActivities and returns the data saved in the database.
+     * @param {UserFlashcardActivityCreateManyAndReturnArgs} args - Arguments to create many UserFlashcardActivities.
+     * @example
+     * // Create many UserFlashcardActivities
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserFlashcardActivities and only return the `id`
+     * const userFlashcardActivityWithIdOnly = await prisma.userFlashcardActivity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserFlashcardActivityCreateManyAndReturnArgs>(args?: SelectSubset<T, UserFlashcardActivityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserFlashcardActivity.
+     * @param {UserFlashcardActivityDeleteArgs} args - Arguments to delete one UserFlashcardActivity.
+     * @example
+     * // Delete one UserFlashcardActivity
+     * const UserFlashcardActivity = await prisma.userFlashcardActivity.delete({
+     *   where: {
+     *     // ... filter to delete one UserFlashcardActivity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserFlashcardActivityDeleteArgs>(args: SelectSubset<T, UserFlashcardActivityDeleteArgs<ExtArgs>>): Prisma__UserFlashcardActivityClient<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserFlashcardActivity.
+     * @param {UserFlashcardActivityUpdateArgs} args - Arguments to update one UserFlashcardActivity.
+     * @example
+     * // Update one UserFlashcardActivity
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserFlashcardActivityUpdateArgs>(args: SelectSubset<T, UserFlashcardActivityUpdateArgs<ExtArgs>>): Prisma__UserFlashcardActivityClient<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserFlashcardActivities.
+     * @param {UserFlashcardActivityDeleteManyArgs} args - Arguments to filter UserFlashcardActivities to delete.
+     * @example
+     * // Delete a few UserFlashcardActivities
+     * const { count } = await prisma.userFlashcardActivity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserFlashcardActivityDeleteManyArgs>(args?: SelectSubset<T, UserFlashcardActivityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserFlashcardActivities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardActivityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserFlashcardActivities
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserFlashcardActivityUpdateManyArgs>(args: SelectSubset<T, UserFlashcardActivityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserFlashcardActivities and returns the data updated in the database.
+     * @param {UserFlashcardActivityUpdateManyAndReturnArgs} args - Arguments to update many UserFlashcardActivities.
+     * @example
+     * // Update many UserFlashcardActivities
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserFlashcardActivities and only return the `id`
+     * const userFlashcardActivityWithIdOnly = await prisma.userFlashcardActivity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserFlashcardActivityUpdateManyAndReturnArgs>(args: SelectSubset<T, UserFlashcardActivityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserFlashcardActivity.
+     * @param {UserFlashcardActivityUpsertArgs} args - Arguments to update or create a UserFlashcardActivity.
+     * @example
+     * // Update or create a UserFlashcardActivity
+     * const userFlashcardActivity = await prisma.userFlashcardActivity.upsert({
+     *   create: {
+     *     // ... data to create a UserFlashcardActivity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserFlashcardActivity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserFlashcardActivityUpsertArgs>(args: SelectSubset<T, UserFlashcardActivityUpsertArgs<ExtArgs>>): Prisma__UserFlashcardActivityClient<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserFlashcardActivities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardActivityCountArgs} args - Arguments to filter UserFlashcardActivities to count.
+     * @example
+     * // Count the number of UserFlashcardActivities
+     * const count = await prisma.userFlashcardActivity.count({
+     *   where: {
+     *     // ... the filter for the UserFlashcardActivities we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserFlashcardActivityCountArgs>(
+      args?: Subset<T, UserFlashcardActivityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserFlashcardActivityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserFlashcardActivity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardActivityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserFlashcardActivityAggregateArgs>(args: Subset<T, UserFlashcardActivityAggregateArgs>): Prisma.PrismaPromise<GetUserFlashcardActivityAggregateType<T>>
+
+    /**
+     * Group by UserFlashcardActivity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardActivityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserFlashcardActivityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserFlashcardActivityGroupByArgs['orderBy'] }
+        : { orderBy?: UserFlashcardActivityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserFlashcardActivityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserFlashcardActivityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserFlashcardActivity model
+   */
+  readonly fields: UserFlashcardActivityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserFlashcardActivity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserFlashcardActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    flashcard<T extends FlashcardDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FlashcardDefaultArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserFlashcardActivity model
+   */
+  interface UserFlashcardActivityFieldRefs {
+    readonly id: FieldRef<"UserFlashcardActivity", 'String'>
+    readonly userId: FieldRef<"UserFlashcardActivity", 'String'>
+    readonly flashcardId: FieldRef<"UserFlashcardActivity", 'String'>
+    readonly whenActedUpon: FieldRef<"UserFlashcardActivity", 'DateTime'>
+    readonly actionTaken: FieldRef<"UserFlashcardActivity", 'String'>
+    readonly actionDetails: FieldRef<"UserFlashcardActivity", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserFlashcardActivity findUnique
+   */
+  export type UserFlashcardActivityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardActivity to fetch.
+     */
+    where: UserFlashcardActivityWhereUniqueInput
+  }
+
+  /**
+   * UserFlashcardActivity findUniqueOrThrow
+   */
+  export type UserFlashcardActivityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardActivity to fetch.
+     */
+    where: UserFlashcardActivityWhereUniqueInput
+  }
+
+  /**
+   * UserFlashcardActivity findFirst
+   */
+  export type UserFlashcardActivityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardActivity to fetch.
+     */
+    where?: UserFlashcardActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserFlashcardActivities to fetch.
+     */
+    orderBy?: UserFlashcardActivityOrderByWithRelationInput | UserFlashcardActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserFlashcardActivities.
+     */
+    cursor?: UserFlashcardActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserFlashcardActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserFlashcardActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserFlashcardActivities.
+     */
+    distinct?: UserFlashcardActivityScalarFieldEnum | UserFlashcardActivityScalarFieldEnum[]
+  }
+
+  /**
+   * UserFlashcardActivity findFirstOrThrow
+   */
+  export type UserFlashcardActivityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardActivity to fetch.
+     */
+    where?: UserFlashcardActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserFlashcardActivities to fetch.
+     */
+    orderBy?: UserFlashcardActivityOrderByWithRelationInput | UserFlashcardActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserFlashcardActivities.
+     */
+    cursor?: UserFlashcardActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserFlashcardActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserFlashcardActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserFlashcardActivities.
+     */
+    distinct?: UserFlashcardActivityScalarFieldEnum | UserFlashcardActivityScalarFieldEnum[]
+  }
+
+  /**
+   * UserFlashcardActivity findMany
+   */
+  export type UserFlashcardActivityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardActivities to fetch.
+     */
+    where?: UserFlashcardActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserFlashcardActivities to fetch.
+     */
+    orderBy?: UserFlashcardActivityOrderByWithRelationInput | UserFlashcardActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserFlashcardActivities.
+     */
+    cursor?: UserFlashcardActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserFlashcardActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserFlashcardActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserFlashcardActivities.
+     */
+    distinct?: UserFlashcardActivityScalarFieldEnum | UserFlashcardActivityScalarFieldEnum[]
+  }
+
+  /**
+   * UserFlashcardActivity create
+   */
+  export type UserFlashcardActivityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserFlashcardActivity.
+     */
+    data: XOR<UserFlashcardActivityCreateInput, UserFlashcardActivityUncheckedCreateInput>
+  }
+
+  /**
+   * UserFlashcardActivity createMany
+   */
+  export type UserFlashcardActivityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserFlashcardActivities.
+     */
+    data: UserFlashcardActivityCreateManyInput | UserFlashcardActivityCreateManyInput[]
+  }
+
+  /**
+   * UserFlashcardActivity createManyAndReturn
+   */
+  export type UserFlashcardActivityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserFlashcardActivities.
+     */
+    data: UserFlashcardActivityCreateManyInput | UserFlashcardActivityCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserFlashcardActivity update
+   */
+  export type UserFlashcardActivityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserFlashcardActivity.
+     */
+    data: XOR<UserFlashcardActivityUpdateInput, UserFlashcardActivityUncheckedUpdateInput>
+    /**
+     * Choose, which UserFlashcardActivity to update.
+     */
+    where: UserFlashcardActivityWhereUniqueInput
+  }
+
+  /**
+   * UserFlashcardActivity updateMany
+   */
+  export type UserFlashcardActivityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserFlashcardActivities.
+     */
+    data: XOR<UserFlashcardActivityUpdateManyMutationInput, UserFlashcardActivityUncheckedUpdateManyInput>
+    /**
+     * Filter which UserFlashcardActivities to update
+     */
+    where?: UserFlashcardActivityWhereInput
+    /**
+     * Limit how many UserFlashcardActivities to update.
      */
     limit?: number
   }
 
   /**
-   * Task without action
+   * UserFlashcardActivity updateManyAndReturn
    */
-  export type TaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFlashcardActivityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the UserFlashcardActivity
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: UserFlashcardActivitySelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the UserFlashcardActivity
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * The data used to update UserFlashcardActivities.
+     */
+    data: XOR<UserFlashcardActivityUpdateManyMutationInput, UserFlashcardActivityUncheckedUpdateManyInput>
+    /**
+     * Filter which UserFlashcardActivities to update
+     */
+    where?: UserFlashcardActivityWhereInput
+    /**
+     * Limit how many UserFlashcardActivities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserFlashcardActivity upsert
+   */
+  export type UserFlashcardActivityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserFlashcardActivity to update in case it exists.
+     */
+    where: UserFlashcardActivityWhereUniqueInput
+    /**
+     * In case the UserFlashcardActivity found by the `where` argument doesn't exist, create a new UserFlashcardActivity with this data.
+     */
+    create: XOR<UserFlashcardActivityCreateInput, UserFlashcardActivityUncheckedCreateInput>
+    /**
+     * In case the UserFlashcardActivity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserFlashcardActivityUpdateInput, UserFlashcardActivityUncheckedUpdateInput>
+  }
+
+  /**
+   * UserFlashcardActivity delete
+   */
+  export type UserFlashcardActivityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+    /**
+     * Filter which UserFlashcardActivity to delete.
+     */
+    where: UserFlashcardActivityWhereUniqueInput
+  }
+
+  /**
+   * UserFlashcardActivity deleteMany
+   */
+  export type UserFlashcardActivityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserFlashcardActivities to delete
+     */
+    where?: UserFlashcardActivityWhereInput
+    /**
+     * Limit how many UserFlashcardActivities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserFlashcardActivity without action
+   */
+  export type UserFlashcardActivityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardActivity
+     */
+    select?: UserFlashcardActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardActivity
+     */
+    omit?: UserFlashcardActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardActivityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Tag
+   */
+
+  export type AggregateTag = {
+    _count: TagCountAggregateOutputType | null
+    _min: TagMinAggregateOutputType | null
+    _max: TagMaxAggregateOutputType | null
+  }
+
+  export type TagMinAggregateOutputType = {
+    id: string | null
+    abbreviation: string | null
+    description: string | null
+  }
+
+  export type TagMaxAggregateOutputType = {
+    id: string | null
+    abbreviation: string | null
+    description: string | null
+  }
+
+  export type TagCountAggregateOutputType = {
+    id: number
+    abbreviation: number
+    description: number
+    _all: number
+  }
+
+
+  export type TagMinAggregateInputType = {
+    id?: true
+    abbreviation?: true
+    description?: true
+  }
+
+  export type TagMaxAggregateInputType = {
+    id?: true
+    abbreviation?: true
+    description?: true
+  }
+
+  export type TagCountAggregateInputType = {
+    id?: true
+    abbreviation?: true
+    description?: true
+    _all?: true
+  }
+
+  export type TagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tag to aggregate.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tags
+    **/
+    _count?: true | TagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TagMaxAggregateInputType
+  }
+
+  export type GetTagAggregateType<T extends TagAggregateArgs> = {
+        [P in keyof T & keyof AggregateTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTag[P]>
+      : GetScalarType<T[P], AggregateTag[P]>
+  }
+
+
+
+
+  export type TagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
+    orderBy?: TagOrderByWithAggregationInput | TagOrderByWithAggregationInput[]
+    by: TagScalarFieldEnum[] | TagScalarFieldEnum
+    having?: TagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TagCountAggregateInputType | true
+    _min?: TagMinAggregateInputType
+    _max?: TagMaxAggregateInputType
+  }
+
+  export type TagGroupByOutputType = {
+    id: string
+    abbreviation: string
+    description: string | null
+    _count: TagCountAggregateOutputType | null
+    _min: TagMinAggregateOutputType | null
+    _max: TagMaxAggregateOutputType | null
+  }
+
+  type GetTagGroupByPayload<T extends TagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TagGroupByOutputType[P]>
+            : GetScalarType<T[P], TagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    abbreviation?: boolean
+    description?: boolean
+    flashcards?: boolean | Tag$flashcardsArgs<ExtArgs>
+    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tag"]>
+
+  export type TagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    abbreviation?: boolean
+    description?: boolean
+  }, ExtArgs["result"]["tag"]>
+
+  export type TagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    abbreviation?: boolean
+    description?: boolean
+  }, ExtArgs["result"]["tag"]>
+
+  export type TagSelectScalar = {
+    id?: boolean
+    abbreviation?: boolean
+    description?: boolean
+  }
+
+  export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "abbreviation" | "description", ExtArgs["result"]["tag"]>
+  export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    flashcards?: boolean | Tag$flashcardsArgs<ExtArgs>
+    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Tag"
+    objects: {
+      flashcards: Prisma.$FlashcardTagPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      abbreviation: string
+      description: string | null
+    }, ExtArgs["result"]["tag"]>
+    composites: {}
+  }
+
+  type TagGetPayload<S extends boolean | null | undefined | TagDefaultArgs> = $Result.GetResult<Prisma.$TagPayload, S>
+
+  type TagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TagCountAggregateInputType | true
+    }
+
+  export interface TagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Tag'], meta: { name: 'Tag' } }
+    /**
+     * Find zero or one Tag that matches the filter.
+     * @param {TagFindUniqueArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TagFindUniqueArgs>(args: SelectSubset<T, TagFindUniqueArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Tag that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TagFindUniqueOrThrowArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TagFindUniqueOrThrowArgs>(args: SelectSubset<T, TagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindFirstArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TagFindFirstArgs>(args?: SelectSubset<T, TagFindFirstArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindFirstOrThrowArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TagFindFirstOrThrowArgs>(args?: SelectSubset<T, TagFindFirstOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Tags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tags
+     * const tags = await prisma.tag.findMany()
+     * 
+     * // Get first 10 Tags
+     * const tags = await prisma.tag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tagWithIdOnly = await prisma.tag.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TagFindManyArgs>(args?: SelectSubset<T, TagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Tag.
+     * @param {TagCreateArgs} args - Arguments to create a Tag.
+     * @example
+     * // Create one Tag
+     * const Tag = await prisma.tag.create({
+     *   data: {
+     *     // ... data to create a Tag
+     *   }
+     * })
+     * 
+     */
+    create<T extends TagCreateArgs>(args: SelectSubset<T, TagCreateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Tags.
+     * @param {TagCreateManyArgs} args - Arguments to create many Tags.
+     * @example
+     * // Create many Tags
+     * const tag = await prisma.tag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TagCreateManyArgs>(args?: SelectSubset<T, TagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tags and returns the data saved in the database.
+     * @param {TagCreateManyAndReturnArgs} args - Arguments to create many Tags.
+     * @example
+     * // Create many Tags
+     * const tag = await prisma.tag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TagCreateManyAndReturnArgs>(args?: SelectSubset<T, TagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Tag.
+     * @param {TagDeleteArgs} args - Arguments to delete one Tag.
+     * @example
+     * // Delete one Tag
+     * const Tag = await prisma.tag.delete({
+     *   where: {
+     *     // ... filter to delete one Tag
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TagDeleteArgs>(args: SelectSubset<T, TagDeleteArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Tag.
+     * @param {TagUpdateArgs} args - Arguments to update one Tag.
+     * @example
+     * // Update one Tag
+     * const tag = await prisma.tag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TagUpdateArgs>(args: SelectSubset<T, TagUpdateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Tags.
+     * @param {TagDeleteManyArgs} args - Arguments to filter Tags to delete.
+     * @example
+     * // Delete a few Tags
+     * const { count } = await prisma.tag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TagDeleteManyArgs>(args?: SelectSubset<T, TagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tags
+     * const tag = await prisma.tag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TagUpdateManyArgs>(args: SelectSubset<T, TagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tags and returns the data updated in the database.
+     * @param {TagUpdateManyAndReturnArgs} args - Arguments to update many Tags.
+     * @example
+     * // Update many Tags
+     * const tag = await prisma.tag.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TagUpdateManyAndReturnArgs>(args: SelectSubset<T, TagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Tag.
+     * @param {TagUpsertArgs} args - Arguments to update or create a Tag.
+     * @example
+     * // Update or create a Tag
+     * const tag = await prisma.tag.upsert({
+     *   create: {
+     *     // ... data to create a Tag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Tag we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TagUpsertArgs>(args: SelectSubset<T, TagUpsertArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagCountArgs} args - Arguments to filter Tags to count.
+     * @example
+     * // Count the number of Tags
+     * const count = await prisma.tag.count({
+     *   where: {
+     *     // ... the filter for the Tags we want to count
+     *   }
+     * })
+    **/
+    count<T extends TagCountArgs>(
+      args?: Subset<T, TagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Tag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TagAggregateArgs>(args: Subset<T, TagAggregateArgs>): Prisma.PrismaPromise<GetTagAggregateType<T>>
+
+    /**
+     * Group by Tag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TagGroupByArgs['orderBy'] }
+        : { orderBy?: TagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Tag model
+   */
+  readonly fields: TagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Tag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    flashcards<T extends Tag$flashcardsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$flashcardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Tag model
+   */
+  interface TagFieldRefs {
+    readonly id: FieldRef<"Tag", 'String'>
+    readonly abbreviation: FieldRef<"Tag", 'String'>
+    readonly description: FieldRef<"Tag", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Tag findUnique
+   */
+  export type TagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag findUniqueOrThrow
+   */
+  export type TagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag findFirst
+   */
+  export type TagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag findFirstOrThrow
+   */
+  export type TagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag findMany
+   */
+  export type TagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tags to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag create
+   */
+  export type TagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Tag.
+     */
+    data: XOR<TagCreateInput, TagUncheckedCreateInput>
+  }
+
+  /**
+   * Tag createMany
+   */
+  export type TagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Tags.
+     */
+    data: TagCreateManyInput | TagCreateManyInput[]
+  }
+
+  /**
+   * Tag createManyAndReturn
+   */
+  export type TagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * The data used to create many Tags.
+     */
+    data: TagCreateManyInput | TagCreateManyInput[]
+  }
+
+  /**
+   * Tag update
+   */
+  export type TagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Tag.
+     */
+    data: XOR<TagUpdateInput, TagUncheckedUpdateInput>
+    /**
+     * Choose, which Tag to update.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag updateMany
+   */
+  export type TagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Tags.
+     */
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
+    /**
+     * Filter which Tags to update
+     */
+    where?: TagWhereInput
+    /**
+     * Limit how many Tags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tag updateManyAndReturn
+   */
+  export type TagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * The data used to update Tags.
+     */
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
+    /**
+     * Filter which Tags to update
+     */
+    where?: TagWhereInput
+    /**
+     * Limit how many Tags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tag upsert
+   */
+  export type TagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Tag to update in case it exists.
+     */
+    where: TagWhereUniqueInput
+    /**
+     * In case the Tag found by the `where` argument doesn't exist, create a new Tag with this data.
+     */
+    create: XOR<TagCreateInput, TagUncheckedCreateInput>
+    /**
+     * In case the Tag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TagUpdateInput, TagUncheckedUpdateInput>
+  }
+
+  /**
+   * Tag delete
+   */
+  export type TagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter which Tag to delete.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag deleteMany
+   */
+  export type TagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tags to delete
+     */
+    where?: TagWhereInput
+    /**
+     * Limit how many Tags to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tag.flashcards
+   */
+  export type Tag$flashcardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    where?: FlashcardTagWhereInput
+    orderBy?: FlashcardTagOrderByWithRelationInput | FlashcardTagOrderByWithRelationInput[]
+    cursor?: FlashcardTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FlashcardTagScalarFieldEnum | FlashcardTagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag without action
+   */
+  export type TagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FlashcardTag
+   */
+
+  export type AggregateFlashcardTag = {
+    _count: FlashcardTagCountAggregateOutputType | null
+    _min: FlashcardTagMinAggregateOutputType | null
+    _max: FlashcardTagMaxAggregateOutputType | null
+  }
+
+  export type FlashcardTagMinAggregateOutputType = {
+    id: string | null
+    flashcardId: string | null
+    tagId: string | null
+  }
+
+  export type FlashcardTagMaxAggregateOutputType = {
+    id: string | null
+    flashcardId: string | null
+    tagId: string | null
+  }
+
+  export type FlashcardTagCountAggregateOutputType = {
+    id: number
+    flashcardId: number
+    tagId: number
+    _all: number
+  }
+
+
+  export type FlashcardTagMinAggregateInputType = {
+    id?: true
+    flashcardId?: true
+    tagId?: true
+  }
+
+  export type FlashcardTagMaxAggregateInputType = {
+    id?: true
+    flashcardId?: true
+    tagId?: true
+  }
+
+  export type FlashcardTagCountAggregateInputType = {
+    id?: true
+    flashcardId?: true
+    tagId?: true
+    _all?: true
+  }
+
+  export type FlashcardTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FlashcardTag to aggregate.
+     */
+    where?: FlashcardTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FlashcardTags to fetch.
+     */
+    orderBy?: FlashcardTagOrderByWithRelationInput | FlashcardTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FlashcardTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FlashcardTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FlashcardTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FlashcardTags
+    **/
+    _count?: true | FlashcardTagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FlashcardTagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FlashcardTagMaxAggregateInputType
+  }
+
+  export type GetFlashcardTagAggregateType<T extends FlashcardTagAggregateArgs> = {
+        [P in keyof T & keyof AggregateFlashcardTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFlashcardTag[P]>
+      : GetScalarType<T[P], AggregateFlashcardTag[P]>
+  }
+
+
+
+
+  export type FlashcardTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FlashcardTagWhereInput
+    orderBy?: FlashcardTagOrderByWithAggregationInput | FlashcardTagOrderByWithAggregationInput[]
+    by: FlashcardTagScalarFieldEnum[] | FlashcardTagScalarFieldEnum
+    having?: FlashcardTagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FlashcardTagCountAggregateInputType | true
+    _min?: FlashcardTagMinAggregateInputType
+    _max?: FlashcardTagMaxAggregateInputType
+  }
+
+  export type FlashcardTagGroupByOutputType = {
+    id: string
+    flashcardId: string
+    tagId: string
+    _count: FlashcardTagCountAggregateOutputType | null
+    _min: FlashcardTagMinAggregateOutputType | null
+    _max: FlashcardTagMaxAggregateOutputType | null
+  }
+
+  type GetFlashcardTagGroupByPayload<T extends FlashcardTagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FlashcardTagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FlashcardTagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FlashcardTagGroupByOutputType[P]>
+            : GetScalarType<T[P], FlashcardTagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FlashcardTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    flashcardId?: boolean
+    tagId?: boolean
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["flashcardTag"]>
+
+  export type FlashcardTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    flashcardId?: boolean
+    tagId?: boolean
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["flashcardTag"]>
+
+  export type FlashcardTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    flashcardId?: boolean
+    tagId?: boolean
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["flashcardTag"]>
+
+  export type FlashcardTagSelectScalar = {
+    id?: boolean
+    flashcardId?: boolean
+    tagId?: boolean
+  }
+
+  export type FlashcardTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "flashcardId" | "tagId", ExtArgs["result"]["flashcardTag"]>
+  export type FlashcardTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type FlashcardTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type FlashcardTagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    flashcard?: boolean | FlashcardDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+
+  export type $FlashcardTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FlashcardTag"
+    objects: {
+      flashcard: Prisma.$FlashcardPayload<ExtArgs>
+      tag: Prisma.$TagPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      flashcardId: string
+      tagId: string
+    }, ExtArgs["result"]["flashcardTag"]>
+    composites: {}
+  }
+
+  type FlashcardTagGetPayload<S extends boolean | null | undefined | FlashcardTagDefaultArgs> = $Result.GetResult<Prisma.$FlashcardTagPayload, S>
+
+  type FlashcardTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FlashcardTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FlashcardTagCountAggregateInputType | true
+    }
+
+  export interface FlashcardTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FlashcardTag'], meta: { name: 'FlashcardTag' } }
+    /**
+     * Find zero or one FlashcardTag that matches the filter.
+     * @param {FlashcardTagFindUniqueArgs} args - Arguments to find a FlashcardTag
+     * @example
+     * // Get one FlashcardTag
+     * const flashcardTag = await prisma.flashcardTag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FlashcardTagFindUniqueArgs>(args: SelectSubset<T, FlashcardTagFindUniqueArgs<ExtArgs>>): Prisma__FlashcardTagClient<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FlashcardTag that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FlashcardTagFindUniqueOrThrowArgs} args - Arguments to find a FlashcardTag
+     * @example
+     * // Get one FlashcardTag
+     * const flashcardTag = await prisma.flashcardTag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FlashcardTagFindUniqueOrThrowArgs>(args: SelectSubset<T, FlashcardTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FlashcardTagClient<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FlashcardTag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FlashcardTagFindFirstArgs} args - Arguments to find a FlashcardTag
+     * @example
+     * // Get one FlashcardTag
+     * const flashcardTag = await prisma.flashcardTag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FlashcardTagFindFirstArgs>(args?: SelectSubset<T, FlashcardTagFindFirstArgs<ExtArgs>>): Prisma__FlashcardTagClient<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FlashcardTag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FlashcardTagFindFirstOrThrowArgs} args - Arguments to find a FlashcardTag
+     * @example
+     * // Get one FlashcardTag
+     * const flashcardTag = await prisma.flashcardTag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FlashcardTagFindFirstOrThrowArgs>(args?: SelectSubset<T, FlashcardTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__FlashcardTagClient<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FlashcardTags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FlashcardTagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FlashcardTags
+     * const flashcardTags = await prisma.flashcardTag.findMany()
+     * 
+     * // Get first 10 FlashcardTags
+     * const flashcardTags = await prisma.flashcardTag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const flashcardTagWithIdOnly = await prisma.flashcardTag.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FlashcardTagFindManyArgs>(args?: SelectSubset<T, FlashcardTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FlashcardTag.
+     * @param {FlashcardTagCreateArgs} args - Arguments to create a FlashcardTag.
+     * @example
+     * // Create one FlashcardTag
+     * const FlashcardTag = await prisma.flashcardTag.create({
+     *   data: {
+     *     // ... data to create a FlashcardTag
+     *   }
+     * })
+     * 
+     */
+    create<T extends FlashcardTagCreateArgs>(args: SelectSubset<T, FlashcardTagCreateArgs<ExtArgs>>): Prisma__FlashcardTagClient<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FlashcardTags.
+     * @param {FlashcardTagCreateManyArgs} args - Arguments to create many FlashcardTags.
+     * @example
+     * // Create many FlashcardTags
+     * const flashcardTag = await prisma.flashcardTag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FlashcardTagCreateManyArgs>(args?: SelectSubset<T, FlashcardTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FlashcardTags and returns the data saved in the database.
+     * @param {FlashcardTagCreateManyAndReturnArgs} args - Arguments to create many FlashcardTags.
+     * @example
+     * // Create many FlashcardTags
+     * const flashcardTag = await prisma.flashcardTag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FlashcardTags and only return the `id`
+     * const flashcardTagWithIdOnly = await prisma.flashcardTag.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FlashcardTagCreateManyAndReturnArgs>(args?: SelectSubset<T, FlashcardTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FlashcardTag.
+     * @param {FlashcardTagDeleteArgs} args - Arguments to delete one FlashcardTag.
+     * @example
+     * // Delete one FlashcardTag
+     * const FlashcardTag = await prisma.flashcardTag.delete({
+     *   where: {
+     *     // ... filter to delete one FlashcardTag
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FlashcardTagDeleteArgs>(args: SelectSubset<T, FlashcardTagDeleteArgs<ExtArgs>>): Prisma__FlashcardTagClient<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FlashcardTag.
+     * @param {FlashcardTagUpdateArgs} args - Arguments to update one FlashcardTag.
+     * @example
+     * // Update one FlashcardTag
+     * const flashcardTag = await prisma.flashcardTag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FlashcardTagUpdateArgs>(args: SelectSubset<T, FlashcardTagUpdateArgs<ExtArgs>>): Prisma__FlashcardTagClient<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FlashcardTags.
+     * @param {FlashcardTagDeleteManyArgs} args - Arguments to filter FlashcardTags to delete.
+     * @example
+     * // Delete a few FlashcardTags
+     * const { count } = await prisma.flashcardTag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FlashcardTagDeleteManyArgs>(args?: SelectSubset<T, FlashcardTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FlashcardTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FlashcardTagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FlashcardTags
+     * const flashcardTag = await prisma.flashcardTag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FlashcardTagUpdateManyArgs>(args: SelectSubset<T, FlashcardTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FlashcardTags and returns the data updated in the database.
+     * @param {FlashcardTagUpdateManyAndReturnArgs} args - Arguments to update many FlashcardTags.
+     * @example
+     * // Update many FlashcardTags
+     * const flashcardTag = await prisma.flashcardTag.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FlashcardTags and only return the `id`
+     * const flashcardTagWithIdOnly = await prisma.flashcardTag.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FlashcardTagUpdateManyAndReturnArgs>(args: SelectSubset<T, FlashcardTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FlashcardTag.
+     * @param {FlashcardTagUpsertArgs} args - Arguments to update or create a FlashcardTag.
+     * @example
+     * // Update or create a FlashcardTag
+     * const flashcardTag = await prisma.flashcardTag.upsert({
+     *   create: {
+     *     // ... data to create a FlashcardTag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FlashcardTag we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FlashcardTagUpsertArgs>(args: SelectSubset<T, FlashcardTagUpsertArgs<ExtArgs>>): Prisma__FlashcardTagClient<$Result.GetResult<Prisma.$FlashcardTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FlashcardTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FlashcardTagCountArgs} args - Arguments to filter FlashcardTags to count.
+     * @example
+     * // Count the number of FlashcardTags
+     * const count = await prisma.flashcardTag.count({
+     *   where: {
+     *     // ... the filter for the FlashcardTags we want to count
+     *   }
+     * })
+    **/
+    count<T extends FlashcardTagCountArgs>(
+      args?: Subset<T, FlashcardTagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FlashcardTagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FlashcardTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FlashcardTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FlashcardTagAggregateArgs>(args: Subset<T, FlashcardTagAggregateArgs>): Prisma.PrismaPromise<GetFlashcardTagAggregateType<T>>
+
+    /**
+     * Group by FlashcardTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FlashcardTagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FlashcardTagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FlashcardTagGroupByArgs['orderBy'] }
+        : { orderBy?: FlashcardTagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FlashcardTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFlashcardTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FlashcardTag model
+   */
+  readonly fields: FlashcardTagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FlashcardTag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FlashcardTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    flashcard<T extends FlashcardDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FlashcardDefaultArgs<ExtArgs>>): Prisma__FlashcardClient<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FlashcardTag model
+   */
+  interface FlashcardTagFieldRefs {
+    readonly id: FieldRef<"FlashcardTag", 'String'>
+    readonly flashcardId: FieldRef<"FlashcardTag", 'String'>
+    readonly tagId: FieldRef<"FlashcardTag", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FlashcardTag findUnique
+   */
+  export type FlashcardTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * Filter, which FlashcardTag to fetch.
+     */
+    where: FlashcardTagWhereUniqueInput
+  }
+
+  /**
+   * FlashcardTag findUniqueOrThrow
+   */
+  export type FlashcardTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * Filter, which FlashcardTag to fetch.
+     */
+    where: FlashcardTagWhereUniqueInput
+  }
+
+  /**
+   * FlashcardTag findFirst
+   */
+  export type FlashcardTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * Filter, which FlashcardTag to fetch.
+     */
+    where?: FlashcardTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FlashcardTags to fetch.
+     */
+    orderBy?: FlashcardTagOrderByWithRelationInput | FlashcardTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FlashcardTags.
+     */
+    cursor?: FlashcardTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FlashcardTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FlashcardTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FlashcardTags.
+     */
+    distinct?: FlashcardTagScalarFieldEnum | FlashcardTagScalarFieldEnum[]
+  }
+
+  /**
+   * FlashcardTag findFirstOrThrow
+   */
+  export type FlashcardTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * Filter, which FlashcardTag to fetch.
+     */
+    where?: FlashcardTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FlashcardTags to fetch.
+     */
+    orderBy?: FlashcardTagOrderByWithRelationInput | FlashcardTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FlashcardTags.
+     */
+    cursor?: FlashcardTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FlashcardTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FlashcardTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FlashcardTags.
+     */
+    distinct?: FlashcardTagScalarFieldEnum | FlashcardTagScalarFieldEnum[]
+  }
+
+  /**
+   * FlashcardTag findMany
+   */
+  export type FlashcardTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * Filter, which FlashcardTags to fetch.
+     */
+    where?: FlashcardTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FlashcardTags to fetch.
+     */
+    orderBy?: FlashcardTagOrderByWithRelationInput | FlashcardTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FlashcardTags.
+     */
+    cursor?: FlashcardTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FlashcardTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FlashcardTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FlashcardTags.
+     */
+    distinct?: FlashcardTagScalarFieldEnum | FlashcardTagScalarFieldEnum[]
+  }
+
+  /**
+   * FlashcardTag create
+   */
+  export type FlashcardTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FlashcardTag.
+     */
+    data: XOR<FlashcardTagCreateInput, FlashcardTagUncheckedCreateInput>
+  }
+
+  /**
+   * FlashcardTag createMany
+   */
+  export type FlashcardTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FlashcardTags.
+     */
+    data: FlashcardTagCreateManyInput | FlashcardTagCreateManyInput[]
+  }
+
+  /**
+   * FlashcardTag createManyAndReturn
+   */
+  export type FlashcardTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * The data used to create many FlashcardTags.
+     */
+    data: FlashcardTagCreateManyInput | FlashcardTagCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FlashcardTag update
+   */
+  export type FlashcardTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FlashcardTag.
+     */
+    data: XOR<FlashcardTagUpdateInput, FlashcardTagUncheckedUpdateInput>
+    /**
+     * Choose, which FlashcardTag to update.
+     */
+    where: FlashcardTagWhereUniqueInput
+  }
+
+  /**
+   * FlashcardTag updateMany
+   */
+  export type FlashcardTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FlashcardTags.
+     */
+    data: XOR<FlashcardTagUpdateManyMutationInput, FlashcardTagUncheckedUpdateManyInput>
+    /**
+     * Filter which FlashcardTags to update
+     */
+    where?: FlashcardTagWhereInput
+    /**
+     * Limit how many FlashcardTags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FlashcardTag updateManyAndReturn
+   */
+  export type FlashcardTagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * The data used to update FlashcardTags.
+     */
+    data: XOR<FlashcardTagUpdateManyMutationInput, FlashcardTagUncheckedUpdateManyInput>
+    /**
+     * Filter which FlashcardTags to update
+     */
+    where?: FlashcardTagWhereInput
+    /**
+     * Limit how many FlashcardTags to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FlashcardTag upsert
+   */
+  export type FlashcardTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FlashcardTag to update in case it exists.
+     */
+    where: FlashcardTagWhereUniqueInput
+    /**
+     * In case the FlashcardTag found by the `where` argument doesn't exist, create a new FlashcardTag with this data.
+     */
+    create: XOR<FlashcardTagCreateInput, FlashcardTagUncheckedCreateInput>
+    /**
+     * In case the FlashcardTag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FlashcardTagUpdateInput, FlashcardTagUncheckedUpdateInput>
+  }
+
+  /**
+   * FlashcardTag delete
+   */
+  export type FlashcardTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
+    /**
+     * Filter which FlashcardTag to delete.
+     */
+    where: FlashcardTagWhereUniqueInput
+  }
+
+  /**
+   * FlashcardTag deleteMany
+   */
+  export type FlashcardTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FlashcardTags to delete
+     */
+    where?: FlashcardTagWhereInput
+    /**
+     * Limit how many FlashcardTags to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FlashcardTag without action
+   */
+  export type FlashcardTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FlashcardTag
+     */
+    select?: FlashcardTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FlashcardTag
+     */
+    omit?: FlashcardTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FlashcardTagInclude<ExtArgs> | null
   }
 
 
@@ -2959,23 +6979,64 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const DbTestScalarFieldEnum: {
+  export const UserScalarFieldEnum: {
     id: 'id',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email',
+    minutesToTestAgain: 'minutesToTestAgain'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const FlashcardScalarFieldEnum: {
+    id: 'id',
+    ownerId: 'ownerId',
+    front: 'front',
+    back: 'back',
+    frontLanguage: 'frontLanguage',
+    backLanguage: 'backLanguage',
+    pronunciation: 'pronunciation',
+    createdAt: 'createdAt',
     status: 'status',
-    updatedAt: 'updatedAt'
+    rank: 'rank',
+    memoryHook: 'memoryHook',
+    nextTestTime: 'nextTestTime',
+    copiedFromId: 'copiedFromId'
   };
 
-  export type DbTestScalarFieldEnum = (typeof DbTestScalarFieldEnum)[keyof typeof DbTestScalarFieldEnum]
+  export type FlashcardScalarFieldEnum = (typeof FlashcardScalarFieldEnum)[keyof typeof FlashcardScalarFieldEnum]
 
 
-  export const TaskScalarFieldEnum: {
+  export const UserFlashcardActivityScalarFieldEnum: {
     id: 'id',
-    title: 'title',
-    completed: 'completed',
-    createdAt: 'createdAt'
+    userId: 'userId',
+    flashcardId: 'flashcardId',
+    whenActedUpon: 'whenActedUpon',
+    actionTaken: 'actionTaken',
+    actionDetails: 'actionDetails'
   };
 
-  export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+  export type UserFlashcardActivityScalarFieldEnum = (typeof UserFlashcardActivityScalarFieldEnum)[keyof typeof UserFlashcardActivityScalarFieldEnum]
+
+
+  export const TagScalarFieldEnum: {
+    id: 'id',
+    abbreviation: 'abbreviation',
+    description: 'description'
+  };
+
+  export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+  export const FlashcardTagScalarFieldEnum: {
+    id: 'id',
+    flashcardId: 'flashcardId',
+    tagId: 'tagId'
+  };
+
+  export type FlashcardTagScalarFieldEnum = (typeof FlashcardTagScalarFieldEnum)[keyof typeof FlashcardTagScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2986,16 +7047,17 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   /**
    * Field references
    */
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
 
 
   /**
@@ -3006,16 +7068,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
+   * Reference to a field of type 'Int'
    */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'DateTime'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
     
 
 
@@ -3029,197 +7091,663 @@ export namespace Prisma {
    */
 
 
-  export type DbTestWhereInput = {
-    AND?: DbTestWhereInput | DbTestWhereInput[]
-    OR?: DbTestWhereInput[]
-    NOT?: DbTestWhereInput | DbTestWhereInput[]
-    id?: IntFilter<"DbTest"> | number
-    status?: StringFilter<"DbTest"> | string
-    updatedAt?: DateTimeFilter<"DbTest"> | Date | string
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: StringFilter<"User"> | string
+    firstName?: StringFilter<"User"> | string
+    lastName?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    minutesToTestAgain?: IntFilter<"User"> | number
+    flashcards?: FlashcardListRelationFilter
+    activities?: UserFlashcardActivityListRelationFilter
   }
 
-  export type DbTestOrderByWithRelationInput = {
+  export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    status?: SortOrder
-    updatedAt?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    minutesToTestAgain?: SortOrder
+    flashcards?: FlashcardOrderByRelationAggregateInput
+    activities?: UserFlashcardActivityOrderByRelationAggregateInput
   }
 
-  export type DbTestWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: DbTestWhereInput | DbTestWhereInput[]
-    OR?: DbTestWhereInput[]
-    NOT?: DbTestWhereInput | DbTestWhereInput[]
-    status?: StringFilter<"DbTest"> | string
-    updatedAt?: DateTimeFilter<"DbTest"> | Date | string
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    firstName?: StringFilter<"User"> | string
+    lastName?: StringFilter<"User"> | string
+    minutesToTestAgain?: IntFilter<"User"> | number
+    flashcards?: FlashcardListRelationFilter
+    activities?: UserFlashcardActivityListRelationFilter
+  }, "id" | "email">
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    minutesToTestAgain?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"User"> | string
+    firstName?: StringWithAggregatesFilter<"User"> | string
+    lastName?: StringWithAggregatesFilter<"User"> | string
+    email?: StringWithAggregatesFilter<"User"> | string
+    minutesToTestAgain?: IntWithAggregatesFilter<"User"> | number
+  }
+
+  export type FlashcardWhereInput = {
+    AND?: FlashcardWhereInput | FlashcardWhereInput[]
+    OR?: FlashcardWhereInput[]
+    NOT?: FlashcardWhereInput | FlashcardWhereInput[]
+    id?: StringFilter<"Flashcard"> | string
+    ownerId?: StringFilter<"Flashcard"> | string
+    front?: StringFilter<"Flashcard"> | string
+    back?: StringFilter<"Flashcard"> | string
+    frontLanguage?: StringFilter<"Flashcard"> | string
+    backLanguage?: StringFilter<"Flashcard"> | string
+    pronunciation?: StringNullableFilter<"Flashcard"> | string | null
+    createdAt?: DateTimeFilter<"Flashcard"> | Date | string
+    status?: StringFilter<"Flashcard"> | string
+    rank?: FloatFilter<"Flashcard"> | number
+    memoryHook?: StringNullableFilter<"Flashcard"> | string | null
+    nextTestTime?: DateTimeNullableFilter<"Flashcard"> | Date | string | null
+    copiedFromId?: StringNullableFilter<"Flashcard"> | string | null
+    owner?: XOR<UserScalarRelationFilter, UserWhereInput>
+    copiedFrom?: XOR<FlashcardNullableScalarRelationFilter, FlashcardWhereInput> | null
+    copies?: FlashcardListRelationFilter
+    activities?: UserFlashcardActivityListRelationFilter
+    tags?: FlashcardTagListRelationFilter
+  }
+
+  export type FlashcardOrderByWithRelationInput = {
+    id?: SortOrder
+    ownerId?: SortOrder
+    front?: SortOrder
+    back?: SortOrder
+    frontLanguage?: SortOrder
+    backLanguage?: SortOrder
+    pronunciation?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    status?: SortOrder
+    rank?: SortOrder
+    memoryHook?: SortOrderInput | SortOrder
+    nextTestTime?: SortOrderInput | SortOrder
+    copiedFromId?: SortOrderInput | SortOrder
+    owner?: UserOrderByWithRelationInput
+    copiedFrom?: FlashcardOrderByWithRelationInput
+    copies?: FlashcardOrderByRelationAggregateInput
+    activities?: UserFlashcardActivityOrderByRelationAggregateInput
+    tags?: FlashcardTagOrderByRelationAggregateInput
+  }
+
+  export type FlashcardWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FlashcardWhereInput | FlashcardWhereInput[]
+    OR?: FlashcardWhereInput[]
+    NOT?: FlashcardWhereInput | FlashcardWhereInput[]
+    ownerId?: StringFilter<"Flashcard"> | string
+    front?: StringFilter<"Flashcard"> | string
+    back?: StringFilter<"Flashcard"> | string
+    frontLanguage?: StringFilter<"Flashcard"> | string
+    backLanguage?: StringFilter<"Flashcard"> | string
+    pronunciation?: StringNullableFilter<"Flashcard"> | string | null
+    createdAt?: DateTimeFilter<"Flashcard"> | Date | string
+    status?: StringFilter<"Flashcard"> | string
+    rank?: FloatFilter<"Flashcard"> | number
+    memoryHook?: StringNullableFilter<"Flashcard"> | string | null
+    nextTestTime?: DateTimeNullableFilter<"Flashcard"> | Date | string | null
+    copiedFromId?: StringNullableFilter<"Flashcard"> | string | null
+    owner?: XOR<UserScalarRelationFilter, UserWhereInput>
+    copiedFrom?: XOR<FlashcardNullableScalarRelationFilter, FlashcardWhereInput> | null
+    copies?: FlashcardListRelationFilter
+    activities?: UserFlashcardActivityListRelationFilter
+    tags?: FlashcardTagListRelationFilter
   }, "id">
 
-  export type DbTestOrderByWithAggregationInput = {
+  export type FlashcardOrderByWithAggregationInput = {
     id?: SortOrder
-    status?: SortOrder
-    updatedAt?: SortOrder
-    _count?: DbTestCountOrderByAggregateInput
-    _avg?: DbTestAvgOrderByAggregateInput
-    _max?: DbTestMaxOrderByAggregateInput
-    _min?: DbTestMinOrderByAggregateInput
-    _sum?: DbTestSumOrderByAggregateInput
-  }
-
-  export type DbTestScalarWhereWithAggregatesInput = {
-    AND?: DbTestScalarWhereWithAggregatesInput | DbTestScalarWhereWithAggregatesInput[]
-    OR?: DbTestScalarWhereWithAggregatesInput[]
-    NOT?: DbTestScalarWhereWithAggregatesInput | DbTestScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"DbTest"> | number
-    status?: StringWithAggregatesFilter<"DbTest"> | string
-    updatedAt?: DateTimeWithAggregatesFilter<"DbTest"> | Date | string
-  }
-
-  export type TaskWhereInput = {
-    AND?: TaskWhereInput | TaskWhereInput[]
-    OR?: TaskWhereInput[]
-    NOT?: TaskWhereInput | TaskWhereInput[]
-    id?: StringFilter<"Task"> | string
-    title?: StringFilter<"Task"> | string
-    completed?: BoolFilter<"Task"> | boolean
-    createdAt?: DateTimeFilter<"Task"> | Date | string
-  }
-
-  export type TaskOrderByWithRelationInput = {
-    id?: SortOrder
-    title?: SortOrder
-    completed?: SortOrder
+    ownerId?: SortOrder
+    front?: SortOrder
+    back?: SortOrder
+    frontLanguage?: SortOrder
+    backLanguage?: SortOrder
+    pronunciation?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    status?: SortOrder
+    rank?: SortOrder
+    memoryHook?: SortOrderInput | SortOrder
+    nextTestTime?: SortOrderInput | SortOrder
+    copiedFromId?: SortOrderInput | SortOrder
+    _count?: FlashcardCountOrderByAggregateInput
+    _avg?: FlashcardAvgOrderByAggregateInput
+    _max?: FlashcardMaxOrderByAggregateInput
+    _min?: FlashcardMinOrderByAggregateInput
+    _sum?: FlashcardSumOrderByAggregateInput
   }
 
-  export type TaskWhereUniqueInput = Prisma.AtLeast<{
+  export type FlashcardScalarWhereWithAggregatesInput = {
+    AND?: FlashcardScalarWhereWithAggregatesInput | FlashcardScalarWhereWithAggregatesInput[]
+    OR?: FlashcardScalarWhereWithAggregatesInput[]
+    NOT?: FlashcardScalarWhereWithAggregatesInput | FlashcardScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Flashcard"> | string
+    ownerId?: StringWithAggregatesFilter<"Flashcard"> | string
+    front?: StringWithAggregatesFilter<"Flashcard"> | string
+    back?: StringWithAggregatesFilter<"Flashcard"> | string
+    frontLanguage?: StringWithAggregatesFilter<"Flashcard"> | string
+    backLanguage?: StringWithAggregatesFilter<"Flashcard"> | string
+    pronunciation?: StringNullableWithAggregatesFilter<"Flashcard"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Flashcard"> | Date | string
+    status?: StringWithAggregatesFilter<"Flashcard"> | string
+    rank?: FloatWithAggregatesFilter<"Flashcard"> | number
+    memoryHook?: StringNullableWithAggregatesFilter<"Flashcard"> | string | null
+    nextTestTime?: DateTimeNullableWithAggregatesFilter<"Flashcard"> | Date | string | null
+    copiedFromId?: StringNullableWithAggregatesFilter<"Flashcard"> | string | null
+  }
+
+  export type UserFlashcardActivityWhereInput = {
+    AND?: UserFlashcardActivityWhereInput | UserFlashcardActivityWhereInput[]
+    OR?: UserFlashcardActivityWhereInput[]
+    NOT?: UserFlashcardActivityWhereInput | UserFlashcardActivityWhereInput[]
+    id?: StringFilter<"UserFlashcardActivity"> | string
+    userId?: StringFilter<"UserFlashcardActivity"> | string
+    flashcardId?: StringFilter<"UserFlashcardActivity"> | string
+    whenActedUpon?: DateTimeFilter<"UserFlashcardActivity"> | Date | string
+    actionTaken?: StringFilter<"UserFlashcardActivity"> | string
+    actionDetails?: StringNullableFilter<"UserFlashcardActivity"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    flashcard?: XOR<FlashcardScalarRelationFilter, FlashcardWhereInput>
+  }
+
+  export type UserFlashcardActivityOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    flashcardId?: SortOrder
+    whenActedUpon?: SortOrder
+    actionTaken?: SortOrder
+    actionDetails?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+    flashcard?: FlashcardOrderByWithRelationInput
+  }
+
+  export type UserFlashcardActivityWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: TaskWhereInput | TaskWhereInput[]
-    OR?: TaskWhereInput[]
-    NOT?: TaskWhereInput | TaskWhereInput[]
-    title?: StringFilter<"Task"> | string
-    completed?: BoolFilter<"Task"> | boolean
-    createdAt?: DateTimeFilter<"Task"> | Date | string
+    AND?: UserFlashcardActivityWhereInput | UserFlashcardActivityWhereInput[]
+    OR?: UserFlashcardActivityWhereInput[]
+    NOT?: UserFlashcardActivityWhereInput | UserFlashcardActivityWhereInput[]
+    userId?: StringFilter<"UserFlashcardActivity"> | string
+    flashcardId?: StringFilter<"UserFlashcardActivity"> | string
+    whenActedUpon?: DateTimeFilter<"UserFlashcardActivity"> | Date | string
+    actionTaken?: StringFilter<"UserFlashcardActivity"> | string
+    actionDetails?: StringNullableFilter<"UserFlashcardActivity"> | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    flashcard?: XOR<FlashcardScalarRelationFilter, FlashcardWhereInput>
   }, "id">
 
-  export type TaskOrderByWithAggregationInput = {
+  export type UserFlashcardActivityOrderByWithAggregationInput = {
     id?: SortOrder
-    title?: SortOrder
-    completed?: SortOrder
-    createdAt?: SortOrder
-    _count?: TaskCountOrderByAggregateInput
-    _max?: TaskMaxOrderByAggregateInput
-    _min?: TaskMinOrderByAggregateInput
+    userId?: SortOrder
+    flashcardId?: SortOrder
+    whenActedUpon?: SortOrder
+    actionTaken?: SortOrder
+    actionDetails?: SortOrderInput | SortOrder
+    _count?: UserFlashcardActivityCountOrderByAggregateInput
+    _max?: UserFlashcardActivityMaxOrderByAggregateInput
+    _min?: UserFlashcardActivityMinOrderByAggregateInput
   }
 
-  export type TaskScalarWhereWithAggregatesInput = {
-    AND?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
-    OR?: TaskScalarWhereWithAggregatesInput[]
-    NOT?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Task"> | string
-    title?: StringWithAggregatesFilter<"Task"> | string
-    completed?: BoolWithAggregatesFilter<"Task"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
+  export type UserFlashcardActivityScalarWhereWithAggregatesInput = {
+    AND?: UserFlashcardActivityScalarWhereWithAggregatesInput | UserFlashcardActivityScalarWhereWithAggregatesInput[]
+    OR?: UserFlashcardActivityScalarWhereWithAggregatesInput[]
+    NOT?: UserFlashcardActivityScalarWhereWithAggregatesInput | UserFlashcardActivityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserFlashcardActivity"> | string
+    userId?: StringWithAggregatesFilter<"UserFlashcardActivity"> | string
+    flashcardId?: StringWithAggregatesFilter<"UserFlashcardActivity"> | string
+    whenActedUpon?: DateTimeWithAggregatesFilter<"UserFlashcardActivity"> | Date | string
+    actionTaken?: StringWithAggregatesFilter<"UserFlashcardActivity"> | string
+    actionDetails?: StringNullableWithAggregatesFilter<"UserFlashcardActivity"> | string | null
   }
 
-  export type DbTestCreateInput = {
-    id?: number
-    status?: string
-    updatedAt?: Date | string
+  export type TagWhereInput = {
+    AND?: TagWhereInput | TagWhereInput[]
+    OR?: TagWhereInput[]
+    NOT?: TagWhereInput | TagWhereInput[]
+    id?: StringFilter<"Tag"> | string
+    abbreviation?: StringFilter<"Tag"> | string
+    description?: StringNullableFilter<"Tag"> | string | null
+    flashcards?: FlashcardTagListRelationFilter
   }
 
-  export type DbTestUncheckedCreateInput = {
-    id?: number
-    status?: string
-    updatedAt?: Date | string
+  export type TagOrderByWithRelationInput = {
+    id?: SortOrder
+    abbreviation?: SortOrder
+    description?: SortOrderInput | SortOrder
+    flashcards?: FlashcardTagOrderByRelationAggregateInput
   }
 
-  export type DbTestUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DbTestUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DbTestCreateManyInput = {
-    id?: number
-    status?: string
-    updatedAt?: Date | string
-  }
-
-  export type DbTestUpdateManyMutationInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DbTestUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TaskCreateInput = {
+  export type TagWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    title: string
-    completed?: boolean
-    createdAt?: Date | string
+    abbreviation?: string
+    AND?: TagWhereInput | TagWhereInput[]
+    OR?: TagWhereInput[]
+    NOT?: TagWhereInput | TagWhereInput[]
+    description?: StringNullableFilter<"Tag"> | string | null
+    flashcards?: FlashcardTagListRelationFilter
+  }, "id" | "abbreviation">
+
+  export type TagOrderByWithAggregationInput = {
+    id?: SortOrder
+    abbreviation?: SortOrder
+    description?: SortOrderInput | SortOrder
+    _count?: TagCountOrderByAggregateInput
+    _max?: TagMaxOrderByAggregateInput
+    _min?: TagMinOrderByAggregateInput
   }
 
-  export type TaskUncheckedCreateInput = {
+  export type TagScalarWhereWithAggregatesInput = {
+    AND?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
+    OR?: TagScalarWhereWithAggregatesInput[]
+    NOT?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Tag"> | string
+    abbreviation?: StringWithAggregatesFilter<"Tag"> | string
+    description?: StringNullableWithAggregatesFilter<"Tag"> | string | null
+  }
+
+  export type FlashcardTagWhereInput = {
+    AND?: FlashcardTagWhereInput | FlashcardTagWhereInput[]
+    OR?: FlashcardTagWhereInput[]
+    NOT?: FlashcardTagWhereInput | FlashcardTagWhereInput[]
+    id?: StringFilter<"FlashcardTag"> | string
+    flashcardId?: StringFilter<"FlashcardTag"> | string
+    tagId?: StringFilter<"FlashcardTag"> | string
+    flashcard?: XOR<FlashcardScalarRelationFilter, FlashcardWhereInput>
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }
+
+  export type FlashcardTagOrderByWithRelationInput = {
+    id?: SortOrder
+    flashcardId?: SortOrder
+    tagId?: SortOrder
+    flashcard?: FlashcardOrderByWithRelationInput
+    tag?: TagOrderByWithRelationInput
+  }
+
+  export type FlashcardTagWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    title: string
-    completed?: boolean
-    createdAt?: Date | string
+    flashcardId_tagId?: FlashcardTagFlashcardIdTagIdCompoundUniqueInput
+    AND?: FlashcardTagWhereInput | FlashcardTagWhereInput[]
+    OR?: FlashcardTagWhereInput[]
+    NOT?: FlashcardTagWhereInput | FlashcardTagWhereInput[]
+    flashcardId?: StringFilter<"FlashcardTag"> | string
+    tagId?: StringFilter<"FlashcardTag"> | string
+    flashcard?: XOR<FlashcardScalarRelationFilter, FlashcardWhereInput>
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }, "id" | "flashcardId_tagId">
+
+  export type FlashcardTagOrderByWithAggregationInput = {
+    id?: SortOrder
+    flashcardId?: SortOrder
+    tagId?: SortOrder
+    _count?: FlashcardTagCountOrderByAggregateInput
+    _max?: FlashcardTagMaxOrderByAggregateInput
+    _min?: FlashcardTagMinOrderByAggregateInput
   }
 
-  export type TaskUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    completed?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type FlashcardTagScalarWhereWithAggregatesInput = {
+    AND?: FlashcardTagScalarWhereWithAggregatesInput | FlashcardTagScalarWhereWithAggregatesInput[]
+    OR?: FlashcardTagScalarWhereWithAggregatesInput[]
+    NOT?: FlashcardTagScalarWhereWithAggregatesInput | FlashcardTagScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FlashcardTag"> | string
+    flashcardId?: StringWithAggregatesFilter<"FlashcardTag"> | string
+    tagId?: StringWithAggregatesFilter<"FlashcardTag"> | string
   }
 
-  export type TaskUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    completed?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TaskCreateManyInput = {
+  export type UserCreateInput = {
     id?: string
-    title: string
-    completed?: boolean
+    firstName: string
+    lastName: string
+    email: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    minutesToTestAgain?: number
+  }
+
+  export type UserUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type FlashcardCreateInput = {
+    id?: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
     createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    owner: UserCreateNestedOneWithoutFlashcardsInput
+    copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
+    copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutFlashcardInput
+    tags?: FlashcardTagCreateNestedManyWithoutFlashcardInput
   }
 
-  export type TaskUpdateManyMutationInput = {
+  export type FlashcardUncheckedCreateInput = {
+    id?: string
+    ownerId: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copiedFromId?: string | null
+    copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
+    tags?: FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    completed?: BoolFieldUpdateOperationsInput | boolean
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
+    copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
+    copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput
+    tags?: FlashcardTagUpdateManyWithoutFlashcardNestedInput
   }
 
-  export type TaskUncheckedUpdateManyInput = {
+  export type FlashcardUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    completed?: BoolFieldUpdateOperationsInput | boolean
+    ownerId?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
+    copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
+    tags?: FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type FlashcardCreateManyInput = {
+    id?: string
+    ownerId: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copiedFromId?: string | null
+  }
+
+  export type FlashcardUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type FlashcardUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserFlashcardActivityCreateInput = {
+    id?: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+    user: UserCreateNestedOneWithoutActivitiesInput
+    flashcard: FlashcardCreateNestedOneWithoutActivitiesInput
+  }
+
+  export type UserFlashcardActivityUncheckedCreateInput = {
+    id?: string
+    userId: string
+    flashcardId: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+  }
+
+  export type UserFlashcardActivityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
+    flashcard?: FlashcardUpdateOneRequiredWithoutActivitiesNestedInput
+  }
+
+  export type UserFlashcardActivityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    flashcardId?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserFlashcardActivityCreateManyInput = {
+    id?: string
+    userId: string
+    flashcardId: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+  }
+
+  export type UserFlashcardActivityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserFlashcardActivityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    flashcardId?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TagCreateInput = {
+    id?: string
+    abbreviation: string
+    description?: string | null
+    flashcards?: FlashcardTagCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateInput = {
+    id?: string
+    abbreviation: string
+    description?: string | null
+    flashcards?: FlashcardTagUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviation?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    flashcards?: FlashcardTagUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviation?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    flashcards?: FlashcardTagUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagCreateManyInput = {
+    id?: string
+    abbreviation: string
+    description?: string | null
+  }
+
+  export type TagUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviation?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TagUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviation?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FlashcardTagCreateInput = {
+    id?: string
+    flashcard: FlashcardCreateNestedOneWithoutTagsInput
+    tag: TagCreateNestedOneWithoutFlashcardsInput
+  }
+
+  export type FlashcardTagUncheckedCreateInput = {
+    id?: string
+    flashcardId: string
+    tagId: string
+  }
+
+  export type FlashcardTagUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    flashcard?: FlashcardUpdateOneRequiredWithoutTagsNestedInput
+    tag?: TagUpdateOneRequiredWithoutFlashcardsNestedInput
+  }
+
+  export type FlashcardTagUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    flashcardId?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FlashcardTagCreateManyInput = {
+    id?: string
+    flashcardId: string
+    tagId: string
+  }
+
+  export type FlashcardTagUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FlashcardTagUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    flashcardId?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3236,44 +7764,7 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type DbTestCountOrderByAggregateInput = {
-    id?: SortOrder
-    status?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type DbTestAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type DbTestMaxOrderByAggregateInput = {
-    id?: SortOrder
-    status?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type DbTestMinOrderByAggregateInput = {
-    id?: SortOrder
-    status?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type DbTestSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+  export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
     notIn?: number[]
@@ -3281,12 +7772,59 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type FlashcardListRelationFilter = {
+    every?: FlashcardWhereInput
+    some?: FlashcardWhereInput
+    none?: FlashcardWhereInput
+  }
+
+  export type UserFlashcardActivityListRelationFilter = {
+    every?: UserFlashcardActivityWhereInput
+    some?: UserFlashcardActivityWhereInput
+    none?: UserFlashcardActivityWhereInput
+  }
+
+  export type FlashcardOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserFlashcardActivityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    minutesToTestAgain?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    minutesToTestAgain?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    minutesToTestAgain?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    firstName?: SortOrder
+    lastName?: SortOrder
+    email?: SortOrder
+    minutesToTestAgain?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    minutesToTestAgain?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -3306,6 +7844,167 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type FlashcardNullableScalarRelationFilter = {
+    is?: FlashcardWhereInput | null
+    isNot?: FlashcardWhereInput | null
+  }
+
+  export type FlashcardTagListRelationFilter = {
+    every?: FlashcardTagWhereInput
+    some?: FlashcardTagWhereInput
+    none?: FlashcardTagWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type FlashcardTagOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FlashcardCountOrderByAggregateInput = {
+    id?: SortOrder
+    ownerId?: SortOrder
+    front?: SortOrder
+    back?: SortOrder
+    frontLanguage?: SortOrder
+    backLanguage?: SortOrder
+    pronunciation?: SortOrder
+    createdAt?: SortOrder
+    status?: SortOrder
+    rank?: SortOrder
+    memoryHook?: SortOrder
+    nextTestTime?: SortOrder
+    copiedFromId?: SortOrder
+  }
+
+  export type FlashcardAvgOrderByAggregateInput = {
+    rank?: SortOrder
+  }
+
+  export type FlashcardMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ownerId?: SortOrder
+    front?: SortOrder
+    back?: SortOrder
+    frontLanguage?: SortOrder
+    backLanguage?: SortOrder
+    pronunciation?: SortOrder
+    createdAt?: SortOrder
+    status?: SortOrder
+    rank?: SortOrder
+    memoryHook?: SortOrder
+    nextTestTime?: SortOrder
+    copiedFromId?: SortOrder
+  }
+
+  export type FlashcardMinOrderByAggregateInput = {
+    id?: SortOrder
+    ownerId?: SortOrder
+    front?: SortOrder
+    back?: SortOrder
+    frontLanguage?: SortOrder
+    backLanguage?: SortOrder
+    pronunciation?: SortOrder
+    createdAt?: SortOrder
+    status?: SortOrder
+    rank?: SortOrder
+    memoryHook?: SortOrder
+    nextTestTime?: SortOrder
+    copiedFromId?: SortOrder
+  }
+
+  export type FlashcardSumOrderByAggregateInput = {
+    rank?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -3320,38 +8019,144 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type TaskCountOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    completed?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type TaskMaxOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    completed?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type TaskMinOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    completed?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FlashcardScalarRelationFilter = {
+    is?: FlashcardWhereInput
+    isNot?: FlashcardWhereInput
+  }
+
+  export type UserFlashcardActivityCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    flashcardId?: SortOrder
+    whenActedUpon?: SortOrder
+    actionTaken?: SortOrder
+    actionDetails?: SortOrder
+  }
+
+  export type UserFlashcardActivityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    flashcardId?: SortOrder
+    whenActedUpon?: SortOrder
+    actionTaken?: SortOrder
+    actionDetails?: SortOrder
+  }
+
+  export type UserFlashcardActivityMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    flashcardId?: SortOrder
+    whenActedUpon?: SortOrder
+    actionTaken?: SortOrder
+    actionDetails?: SortOrder
+  }
+
+  export type TagCountOrderByAggregateInput = {
+    id?: SortOrder
+    abbreviation?: SortOrder
+    description?: SortOrder
+  }
+
+  export type TagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    abbreviation?: SortOrder
+    description?: SortOrder
+  }
+
+  export type TagMinOrderByAggregateInput = {
+    id?: SortOrder
+    abbreviation?: SortOrder
+    description?: SortOrder
+  }
+
+  export type TagScalarRelationFilter = {
+    is?: TagWhereInput
+    isNot?: TagWhereInput
+  }
+
+  export type FlashcardTagFlashcardIdTagIdCompoundUniqueInput = {
+    flashcardId: string
+    tagId: string
+  }
+
+  export type FlashcardTagCountOrderByAggregateInput = {
+    id?: SortOrder
+    flashcardId?: SortOrder
+    tagId?: SortOrder
+  }
+
+  export type FlashcardTagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    flashcardId?: SortOrder
+    tagId?: SortOrder
+  }
+
+  export type FlashcardTagMinOrderByAggregateInput = {
+    id?: SortOrder
+    flashcardId?: SortOrder
+    tagId?: SortOrder
+  }
+
+  export type FlashcardCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
+    createMany?: FlashcardCreateManyOwnerInputEnvelope
+    connect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+  }
+
+  export type UserFlashcardActivityCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserFlashcardActivityCreateWithoutUserInput, UserFlashcardActivityUncheckedCreateWithoutUserInput> | UserFlashcardActivityCreateWithoutUserInput[] | UserFlashcardActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutUserInput | UserFlashcardActivityCreateOrConnectWithoutUserInput[]
+    createMany?: UserFlashcardActivityCreateManyUserInputEnvelope
+    connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+  }
+
+  export type FlashcardUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
+    createMany?: FlashcardCreateManyOwnerInputEnvelope
+    connect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+  }
+
+  export type UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserFlashcardActivityCreateWithoutUserInput, UserFlashcardActivityUncheckedCreateWithoutUserInput> | UserFlashcardActivityCreateWithoutUserInput[] | UserFlashcardActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutUserInput | UserFlashcardActivityCreateOrConnectWithoutUserInput[]
+    createMany?: UserFlashcardActivityCreateManyUserInputEnvelope
+    connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3362,27 +8167,334 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
+  export type FlashcardUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
+    upsert?: FlashcardUpsertWithWhereUniqueWithoutOwnerInput | FlashcardUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: FlashcardCreateManyOwnerInputEnvelope
+    set?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    disconnect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    delete?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    connect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    update?: FlashcardUpdateWithWhereUniqueWithoutOwnerInput | FlashcardUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: FlashcardUpdateManyWithWhereWithoutOwnerInput | FlashcardUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: FlashcardScalarWhereInput | FlashcardScalarWhereInput[]
+  }
+
+  export type UserFlashcardActivityUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserFlashcardActivityCreateWithoutUserInput, UserFlashcardActivityUncheckedCreateWithoutUserInput> | UserFlashcardActivityCreateWithoutUserInput[] | UserFlashcardActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutUserInput | UserFlashcardActivityCreateOrConnectWithoutUserInput[]
+    upsert?: UserFlashcardActivityUpsertWithWhereUniqueWithoutUserInput | UserFlashcardActivityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserFlashcardActivityCreateManyUserInputEnvelope
+    set?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    disconnect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    delete?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    update?: UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput | UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserFlashcardActivityUpdateManyWithWhereWithoutUserInput | UserFlashcardActivityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+  }
+
+  export type FlashcardUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
+    upsert?: FlashcardUpsertWithWhereUniqueWithoutOwnerInput | FlashcardUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: FlashcardCreateManyOwnerInputEnvelope
+    set?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    disconnect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    delete?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    connect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    update?: FlashcardUpdateWithWhereUniqueWithoutOwnerInput | FlashcardUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: FlashcardUpdateManyWithWhereWithoutOwnerInput | FlashcardUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: FlashcardScalarWhereInput | FlashcardScalarWhereInput[]
+  }
+
+  export type UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserFlashcardActivityCreateWithoutUserInput, UserFlashcardActivityUncheckedCreateWithoutUserInput> | UserFlashcardActivityCreateWithoutUserInput[] | UserFlashcardActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutUserInput | UserFlashcardActivityCreateOrConnectWithoutUserInput[]
+    upsert?: UserFlashcardActivityUpsertWithWhereUniqueWithoutUserInput | UserFlashcardActivityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserFlashcardActivityCreateManyUserInputEnvelope
+    set?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    disconnect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    delete?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    update?: UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput | UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserFlashcardActivityUpdateManyWithWhereWithoutUserInput | UserFlashcardActivityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutFlashcardsInput = {
+    create?: XOR<UserCreateWithoutFlashcardsInput, UserUncheckedCreateWithoutFlashcardsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFlashcardsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FlashcardCreateNestedOneWithoutCopiesInput = {
+    create?: XOR<FlashcardCreateWithoutCopiesInput, FlashcardUncheckedCreateWithoutCopiesInput>
+    connectOrCreate?: FlashcardCreateOrConnectWithoutCopiesInput
+    connect?: FlashcardWhereUniqueInput
+  }
+
+  export type FlashcardCreateNestedManyWithoutCopiedFromInput = {
+    create?: XOR<FlashcardCreateWithoutCopiedFromInput, FlashcardUncheckedCreateWithoutCopiedFromInput> | FlashcardCreateWithoutCopiedFromInput[] | FlashcardUncheckedCreateWithoutCopiedFromInput[]
+    connectOrCreate?: FlashcardCreateOrConnectWithoutCopiedFromInput | FlashcardCreateOrConnectWithoutCopiedFromInput[]
+    createMany?: FlashcardCreateManyCopiedFromInputEnvelope
+    connect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+  }
+
+  export type UserFlashcardActivityCreateNestedManyWithoutFlashcardInput = {
+    create?: XOR<UserFlashcardActivityCreateWithoutFlashcardInput, UserFlashcardActivityUncheckedCreateWithoutFlashcardInput> | UserFlashcardActivityCreateWithoutFlashcardInput[] | UserFlashcardActivityUncheckedCreateWithoutFlashcardInput[]
+    connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutFlashcardInput | UserFlashcardActivityCreateOrConnectWithoutFlashcardInput[]
+    createMany?: UserFlashcardActivityCreateManyFlashcardInputEnvelope
+    connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+  }
+
+  export type FlashcardTagCreateNestedManyWithoutFlashcardInput = {
+    create?: XOR<FlashcardTagCreateWithoutFlashcardInput, FlashcardTagUncheckedCreateWithoutFlashcardInput> | FlashcardTagCreateWithoutFlashcardInput[] | FlashcardTagUncheckedCreateWithoutFlashcardInput[]
+    connectOrCreate?: FlashcardTagCreateOrConnectWithoutFlashcardInput | FlashcardTagCreateOrConnectWithoutFlashcardInput[]
+    createMany?: FlashcardTagCreateManyFlashcardInputEnvelope
+    connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+  }
+
+  export type FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput = {
+    create?: XOR<FlashcardCreateWithoutCopiedFromInput, FlashcardUncheckedCreateWithoutCopiedFromInput> | FlashcardCreateWithoutCopiedFromInput[] | FlashcardUncheckedCreateWithoutCopiedFromInput[]
+    connectOrCreate?: FlashcardCreateOrConnectWithoutCopiedFromInput | FlashcardCreateOrConnectWithoutCopiedFromInput[]
+    createMany?: FlashcardCreateManyCopiedFromInputEnvelope
+    connect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+  }
+
+  export type UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput = {
+    create?: XOR<UserFlashcardActivityCreateWithoutFlashcardInput, UserFlashcardActivityUncheckedCreateWithoutFlashcardInput> | UserFlashcardActivityCreateWithoutFlashcardInput[] | UserFlashcardActivityUncheckedCreateWithoutFlashcardInput[]
+    connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutFlashcardInput | UserFlashcardActivityCreateOrConnectWithoutFlashcardInput[]
+    createMany?: UserFlashcardActivityCreateManyFlashcardInputEnvelope
+    connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+  }
+
+  export type FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput = {
+    create?: XOR<FlashcardTagCreateWithoutFlashcardInput, FlashcardTagUncheckedCreateWithoutFlashcardInput> | FlashcardTagCreateWithoutFlashcardInput[] | FlashcardTagUncheckedCreateWithoutFlashcardInput[]
+    connectOrCreate?: FlashcardTagCreateOrConnectWithoutFlashcardInput | FlashcardTagCreateOrConnectWithoutFlashcardInput[]
+    createMany?: FlashcardTagCreateManyFlashcardInputEnvelope
+    connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type UserUpdateOneRequiredWithoutFlashcardsNestedInput = {
+    create?: XOR<UserCreateWithoutFlashcardsInput, UserUncheckedCreateWithoutFlashcardsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFlashcardsInput
+    upsert?: UserUpsertWithoutFlashcardsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFlashcardsInput, UserUpdateWithoutFlashcardsInput>, UserUncheckedUpdateWithoutFlashcardsInput>
+  }
+
+  export type FlashcardUpdateOneWithoutCopiesNestedInput = {
+    create?: XOR<FlashcardCreateWithoutCopiesInput, FlashcardUncheckedCreateWithoutCopiesInput>
+    connectOrCreate?: FlashcardCreateOrConnectWithoutCopiesInput
+    upsert?: FlashcardUpsertWithoutCopiesInput
+    disconnect?: FlashcardWhereInput | boolean
+    delete?: FlashcardWhereInput | boolean
+    connect?: FlashcardWhereUniqueInput
+    update?: XOR<XOR<FlashcardUpdateToOneWithWhereWithoutCopiesInput, FlashcardUpdateWithoutCopiesInput>, FlashcardUncheckedUpdateWithoutCopiesInput>
+  }
+
+  export type FlashcardUpdateManyWithoutCopiedFromNestedInput = {
+    create?: XOR<FlashcardCreateWithoutCopiedFromInput, FlashcardUncheckedCreateWithoutCopiedFromInput> | FlashcardCreateWithoutCopiedFromInput[] | FlashcardUncheckedCreateWithoutCopiedFromInput[]
+    connectOrCreate?: FlashcardCreateOrConnectWithoutCopiedFromInput | FlashcardCreateOrConnectWithoutCopiedFromInput[]
+    upsert?: FlashcardUpsertWithWhereUniqueWithoutCopiedFromInput | FlashcardUpsertWithWhereUniqueWithoutCopiedFromInput[]
+    createMany?: FlashcardCreateManyCopiedFromInputEnvelope
+    set?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    disconnect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    delete?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    connect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    update?: FlashcardUpdateWithWhereUniqueWithoutCopiedFromInput | FlashcardUpdateWithWhereUniqueWithoutCopiedFromInput[]
+    updateMany?: FlashcardUpdateManyWithWhereWithoutCopiedFromInput | FlashcardUpdateManyWithWhereWithoutCopiedFromInput[]
+    deleteMany?: FlashcardScalarWhereInput | FlashcardScalarWhereInput[]
+  }
+
+  export type UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput = {
+    create?: XOR<UserFlashcardActivityCreateWithoutFlashcardInput, UserFlashcardActivityUncheckedCreateWithoutFlashcardInput> | UserFlashcardActivityCreateWithoutFlashcardInput[] | UserFlashcardActivityUncheckedCreateWithoutFlashcardInput[]
+    connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutFlashcardInput | UserFlashcardActivityCreateOrConnectWithoutFlashcardInput[]
+    upsert?: UserFlashcardActivityUpsertWithWhereUniqueWithoutFlashcardInput | UserFlashcardActivityUpsertWithWhereUniqueWithoutFlashcardInput[]
+    createMany?: UserFlashcardActivityCreateManyFlashcardInputEnvelope
+    set?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    disconnect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    delete?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    update?: UserFlashcardActivityUpdateWithWhereUniqueWithoutFlashcardInput | UserFlashcardActivityUpdateWithWhereUniqueWithoutFlashcardInput[]
+    updateMany?: UserFlashcardActivityUpdateManyWithWhereWithoutFlashcardInput | UserFlashcardActivityUpdateManyWithWhereWithoutFlashcardInput[]
+    deleteMany?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+  }
+
+  export type FlashcardTagUpdateManyWithoutFlashcardNestedInput = {
+    create?: XOR<FlashcardTagCreateWithoutFlashcardInput, FlashcardTagUncheckedCreateWithoutFlashcardInput> | FlashcardTagCreateWithoutFlashcardInput[] | FlashcardTagUncheckedCreateWithoutFlashcardInput[]
+    connectOrCreate?: FlashcardTagCreateOrConnectWithoutFlashcardInput | FlashcardTagCreateOrConnectWithoutFlashcardInput[]
+    upsert?: FlashcardTagUpsertWithWhereUniqueWithoutFlashcardInput | FlashcardTagUpsertWithWhereUniqueWithoutFlashcardInput[]
+    createMany?: FlashcardTagCreateManyFlashcardInputEnvelope
+    set?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    disconnect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    delete?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    update?: FlashcardTagUpdateWithWhereUniqueWithoutFlashcardInput | FlashcardTagUpdateWithWhereUniqueWithoutFlashcardInput[]
+    updateMany?: FlashcardTagUpdateManyWithWhereWithoutFlashcardInput | FlashcardTagUpdateManyWithWhereWithoutFlashcardInput[]
+    deleteMany?: FlashcardTagScalarWhereInput | FlashcardTagScalarWhereInput[]
+  }
+
+  export type FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput = {
+    create?: XOR<FlashcardCreateWithoutCopiedFromInput, FlashcardUncheckedCreateWithoutCopiedFromInput> | FlashcardCreateWithoutCopiedFromInput[] | FlashcardUncheckedCreateWithoutCopiedFromInput[]
+    connectOrCreate?: FlashcardCreateOrConnectWithoutCopiedFromInput | FlashcardCreateOrConnectWithoutCopiedFromInput[]
+    upsert?: FlashcardUpsertWithWhereUniqueWithoutCopiedFromInput | FlashcardUpsertWithWhereUniqueWithoutCopiedFromInput[]
+    createMany?: FlashcardCreateManyCopiedFromInputEnvelope
+    set?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    disconnect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    delete?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    connect?: FlashcardWhereUniqueInput | FlashcardWhereUniqueInput[]
+    update?: FlashcardUpdateWithWhereUniqueWithoutCopiedFromInput | FlashcardUpdateWithWhereUniqueWithoutCopiedFromInput[]
+    updateMany?: FlashcardUpdateManyWithWhereWithoutCopiedFromInput | FlashcardUpdateManyWithWhereWithoutCopiedFromInput[]
+    deleteMany?: FlashcardScalarWhereInput | FlashcardScalarWhereInput[]
+  }
+
+  export type UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput = {
+    create?: XOR<UserFlashcardActivityCreateWithoutFlashcardInput, UserFlashcardActivityUncheckedCreateWithoutFlashcardInput> | UserFlashcardActivityCreateWithoutFlashcardInput[] | UserFlashcardActivityUncheckedCreateWithoutFlashcardInput[]
+    connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutFlashcardInput | UserFlashcardActivityCreateOrConnectWithoutFlashcardInput[]
+    upsert?: UserFlashcardActivityUpsertWithWhereUniqueWithoutFlashcardInput | UserFlashcardActivityUpsertWithWhereUniqueWithoutFlashcardInput[]
+    createMany?: UserFlashcardActivityCreateManyFlashcardInputEnvelope
+    set?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    disconnect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    delete?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+    update?: UserFlashcardActivityUpdateWithWhereUniqueWithoutFlashcardInput | UserFlashcardActivityUpdateWithWhereUniqueWithoutFlashcardInput[]
+    updateMany?: UserFlashcardActivityUpdateManyWithWhereWithoutFlashcardInput | UserFlashcardActivityUpdateManyWithWhereWithoutFlashcardInput[]
+    deleteMany?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+  }
+
+  export type FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput = {
+    create?: XOR<FlashcardTagCreateWithoutFlashcardInput, FlashcardTagUncheckedCreateWithoutFlashcardInput> | FlashcardTagCreateWithoutFlashcardInput[] | FlashcardTagUncheckedCreateWithoutFlashcardInput[]
+    connectOrCreate?: FlashcardTagCreateOrConnectWithoutFlashcardInput | FlashcardTagCreateOrConnectWithoutFlashcardInput[]
+    upsert?: FlashcardTagUpsertWithWhereUniqueWithoutFlashcardInput | FlashcardTagUpsertWithWhereUniqueWithoutFlashcardInput[]
+    createMany?: FlashcardTagCreateManyFlashcardInputEnvelope
+    set?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    disconnect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    delete?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    update?: FlashcardTagUpdateWithWhereUniqueWithoutFlashcardInput | FlashcardTagUpdateWithWhereUniqueWithoutFlashcardInput[]
+    updateMany?: FlashcardTagUpdateManyWithWhereWithoutFlashcardInput | FlashcardTagUpdateManyWithWhereWithoutFlashcardInput[]
+    deleteMany?: FlashcardTagScalarWhereInput | FlashcardTagScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutActivitiesInput = {
+    create?: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivitiesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FlashcardCreateNestedOneWithoutActivitiesInput = {
+    create?: XOR<FlashcardCreateWithoutActivitiesInput, FlashcardUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: FlashcardCreateOrConnectWithoutActivitiesInput
+    connect?: FlashcardWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutActivitiesNestedInput = {
+    create?: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivitiesInput
+    upsert?: UserUpsertWithoutActivitiesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivitiesInput, UserUpdateWithoutActivitiesInput>, UserUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type FlashcardUpdateOneRequiredWithoutActivitiesNestedInput = {
+    create?: XOR<FlashcardCreateWithoutActivitiesInput, FlashcardUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: FlashcardCreateOrConnectWithoutActivitiesInput
+    upsert?: FlashcardUpsertWithoutActivitiesInput
+    connect?: FlashcardWhereUniqueInput
+    update?: XOR<XOR<FlashcardUpdateToOneWithWhereWithoutActivitiesInput, FlashcardUpdateWithoutActivitiesInput>, FlashcardUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type FlashcardTagCreateNestedManyWithoutTagInput = {
+    create?: XOR<FlashcardTagCreateWithoutTagInput, FlashcardTagUncheckedCreateWithoutTagInput> | FlashcardTagCreateWithoutTagInput[] | FlashcardTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: FlashcardTagCreateOrConnectWithoutTagInput | FlashcardTagCreateOrConnectWithoutTagInput[]
+    createMany?: FlashcardTagCreateManyTagInputEnvelope
+    connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+  }
+
+  export type FlashcardTagUncheckedCreateNestedManyWithoutTagInput = {
+    create?: XOR<FlashcardTagCreateWithoutTagInput, FlashcardTagUncheckedCreateWithoutTagInput> | FlashcardTagCreateWithoutTagInput[] | FlashcardTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: FlashcardTagCreateOrConnectWithoutTagInput | FlashcardTagCreateOrConnectWithoutTagInput[]
+    createMany?: FlashcardTagCreateManyTagInputEnvelope
+    connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+  }
+
+  export type FlashcardTagUpdateManyWithoutTagNestedInput = {
+    create?: XOR<FlashcardTagCreateWithoutTagInput, FlashcardTagUncheckedCreateWithoutTagInput> | FlashcardTagCreateWithoutTagInput[] | FlashcardTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: FlashcardTagCreateOrConnectWithoutTagInput | FlashcardTagCreateOrConnectWithoutTagInput[]
+    upsert?: FlashcardTagUpsertWithWhereUniqueWithoutTagInput | FlashcardTagUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: FlashcardTagCreateManyTagInputEnvelope
+    set?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    disconnect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    delete?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    update?: FlashcardTagUpdateWithWhereUniqueWithoutTagInput | FlashcardTagUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: FlashcardTagUpdateManyWithWhereWithoutTagInput | FlashcardTagUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: FlashcardTagScalarWhereInput | FlashcardTagScalarWhereInput[]
+  }
+
+  export type FlashcardTagUncheckedUpdateManyWithoutTagNestedInput = {
+    create?: XOR<FlashcardTagCreateWithoutTagInput, FlashcardTagUncheckedCreateWithoutTagInput> | FlashcardTagCreateWithoutTagInput[] | FlashcardTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: FlashcardTagCreateOrConnectWithoutTagInput | FlashcardTagCreateOrConnectWithoutTagInput[]
+    upsert?: FlashcardTagUpsertWithWhereUniqueWithoutTagInput | FlashcardTagUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: FlashcardTagCreateManyTagInputEnvelope
+    set?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    disconnect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    delete?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
+    update?: FlashcardTagUpdateWithWhereUniqueWithoutTagInput | FlashcardTagUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: FlashcardTagUpdateManyWithWhereWithoutTagInput | FlashcardTagUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: FlashcardTagScalarWhereInput | FlashcardTagScalarWhereInput[]
+  }
+
+  export type FlashcardCreateNestedOneWithoutTagsInput = {
+    create?: XOR<FlashcardCreateWithoutTagsInput, FlashcardUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: FlashcardCreateOrConnectWithoutTagsInput
+    connect?: FlashcardWhereUniqueInput
+  }
+
+  export type TagCreateNestedOneWithoutFlashcardsInput = {
+    create?: XOR<TagCreateWithoutFlashcardsInput, TagUncheckedCreateWithoutFlashcardsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutFlashcardsInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type FlashcardUpdateOneRequiredWithoutTagsNestedInput = {
+    create?: XOR<FlashcardCreateWithoutTagsInput, FlashcardUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: FlashcardCreateOrConnectWithoutTagsInput
+    upsert?: FlashcardUpsertWithoutTagsInput
+    connect?: FlashcardWhereUniqueInput
+    update?: XOR<XOR<FlashcardUpdateToOneWithWhereWithoutTagsInput, FlashcardUpdateWithoutTagsInput>, FlashcardUncheckedUpdateWithoutTagsInput>
+  }
+
+  export type TagUpdateOneRequiredWithoutFlashcardsNestedInput = {
+    create?: XOR<TagCreateWithoutFlashcardsInput, TagUncheckedCreateWithoutFlashcardsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutFlashcardsInput
+    upsert?: TagUpsertWithoutFlashcardsInput
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutFlashcardsInput, TagUpdateWithoutFlashcardsInput>, TagUncheckedUpdateWithoutFlashcardsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -3399,15 +8511,32 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3437,10 +8566,10 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3448,10 +8577,57 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -3468,17 +8644,992 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FlashcardCreateWithoutOwnerInput = {
+    id?: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
+    copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutFlashcardInput
+    tags?: FlashcardTagCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardUncheckedCreateWithoutOwnerInput = {
+    id?: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copiedFromId?: string | null
+    copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
+    tags?: FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardCreateOrConnectWithoutOwnerInput = {
+    where: FlashcardWhereUniqueInput
+    create: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type FlashcardCreateManyOwnerInputEnvelope = {
+    data: FlashcardCreateManyOwnerInput | FlashcardCreateManyOwnerInput[]
+  }
+
+  export type UserFlashcardActivityCreateWithoutUserInput = {
+    id?: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+    flashcard: FlashcardCreateNestedOneWithoutActivitiesInput
+  }
+
+  export type UserFlashcardActivityUncheckedCreateWithoutUserInput = {
+    id?: string
+    flashcardId: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+  }
+
+  export type UserFlashcardActivityCreateOrConnectWithoutUserInput = {
+    where: UserFlashcardActivityWhereUniqueInput
+    create: XOR<UserFlashcardActivityCreateWithoutUserInput, UserFlashcardActivityUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserFlashcardActivityCreateManyUserInputEnvelope = {
+    data: UserFlashcardActivityCreateManyUserInput | UserFlashcardActivityCreateManyUserInput[]
+  }
+
+  export type FlashcardUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: FlashcardWhereUniqueInput
+    update: XOR<FlashcardUpdateWithoutOwnerInput, FlashcardUncheckedUpdateWithoutOwnerInput>
+    create: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type FlashcardUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: FlashcardWhereUniqueInput
+    data: XOR<FlashcardUpdateWithoutOwnerInput, FlashcardUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type FlashcardUpdateManyWithWhereWithoutOwnerInput = {
+    where: FlashcardScalarWhereInput
+    data: XOR<FlashcardUpdateManyMutationInput, FlashcardUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type FlashcardScalarWhereInput = {
+    AND?: FlashcardScalarWhereInput | FlashcardScalarWhereInput[]
+    OR?: FlashcardScalarWhereInput[]
+    NOT?: FlashcardScalarWhereInput | FlashcardScalarWhereInput[]
+    id?: StringFilter<"Flashcard"> | string
+    ownerId?: StringFilter<"Flashcard"> | string
+    front?: StringFilter<"Flashcard"> | string
+    back?: StringFilter<"Flashcard"> | string
+    frontLanguage?: StringFilter<"Flashcard"> | string
+    backLanguage?: StringFilter<"Flashcard"> | string
+    pronunciation?: StringNullableFilter<"Flashcard"> | string | null
+    createdAt?: DateTimeFilter<"Flashcard"> | Date | string
+    status?: StringFilter<"Flashcard"> | string
+    rank?: FloatFilter<"Flashcard"> | number
+    memoryHook?: StringNullableFilter<"Flashcard"> | string | null
+    nextTestTime?: DateTimeNullableFilter<"Flashcard"> | Date | string | null
+    copiedFromId?: StringNullableFilter<"Flashcard"> | string | null
+  }
+
+  export type UserFlashcardActivityUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserFlashcardActivityWhereUniqueInput
+    update: XOR<UserFlashcardActivityUpdateWithoutUserInput, UserFlashcardActivityUncheckedUpdateWithoutUserInput>
+    create: XOR<UserFlashcardActivityCreateWithoutUserInput, UserFlashcardActivityUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserFlashcardActivityWhereUniqueInput
+    data: XOR<UserFlashcardActivityUpdateWithoutUserInput, UserFlashcardActivityUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserFlashcardActivityUpdateManyWithWhereWithoutUserInput = {
+    where: UserFlashcardActivityScalarWhereInput
+    data: XOR<UserFlashcardActivityUpdateManyMutationInput, UserFlashcardActivityUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserFlashcardActivityScalarWhereInput = {
+    AND?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+    OR?: UserFlashcardActivityScalarWhereInput[]
+    NOT?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+    id?: StringFilter<"UserFlashcardActivity"> | string
+    userId?: StringFilter<"UserFlashcardActivity"> | string
+    flashcardId?: StringFilter<"UserFlashcardActivity"> | string
+    whenActedUpon?: DateTimeFilter<"UserFlashcardActivity"> | Date | string
+    actionTaken?: StringFilter<"UserFlashcardActivity"> | string
+    actionDetails?: StringNullableFilter<"UserFlashcardActivity"> | string | null
+  }
+
+  export type UserCreateWithoutFlashcardsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    minutesToTestAgain?: number
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutFlashcardsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    minutesToTestAgain?: number
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutFlashcardsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFlashcardsInput, UserUncheckedCreateWithoutFlashcardsInput>
+  }
+
+  export type FlashcardCreateWithoutCopiesInput = {
+    id?: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    owner: UserCreateNestedOneWithoutFlashcardsInput
+    copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutFlashcardInput
+    tags?: FlashcardTagCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardUncheckedCreateWithoutCopiesInput = {
+    id?: string
+    ownerId: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copiedFromId?: string | null
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
+    tags?: FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardCreateOrConnectWithoutCopiesInput = {
+    where: FlashcardWhereUniqueInput
+    create: XOR<FlashcardCreateWithoutCopiesInput, FlashcardUncheckedCreateWithoutCopiesInput>
+  }
+
+  export type FlashcardCreateWithoutCopiedFromInput = {
+    id?: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    owner: UserCreateNestedOneWithoutFlashcardsInput
+    copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutFlashcardInput
+    tags?: FlashcardTagCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardUncheckedCreateWithoutCopiedFromInput = {
+    id?: string
+    ownerId: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
+    tags?: FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardCreateOrConnectWithoutCopiedFromInput = {
+    where: FlashcardWhereUniqueInput
+    create: XOR<FlashcardCreateWithoutCopiedFromInput, FlashcardUncheckedCreateWithoutCopiedFromInput>
+  }
+
+  export type FlashcardCreateManyCopiedFromInputEnvelope = {
+    data: FlashcardCreateManyCopiedFromInput | FlashcardCreateManyCopiedFromInput[]
+  }
+
+  export type UserFlashcardActivityCreateWithoutFlashcardInput = {
+    id?: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+    user: UserCreateNestedOneWithoutActivitiesInput
+  }
+
+  export type UserFlashcardActivityUncheckedCreateWithoutFlashcardInput = {
+    id?: string
+    userId: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+  }
+
+  export type UserFlashcardActivityCreateOrConnectWithoutFlashcardInput = {
+    where: UserFlashcardActivityWhereUniqueInput
+    create: XOR<UserFlashcardActivityCreateWithoutFlashcardInput, UserFlashcardActivityUncheckedCreateWithoutFlashcardInput>
+  }
+
+  export type UserFlashcardActivityCreateManyFlashcardInputEnvelope = {
+    data: UserFlashcardActivityCreateManyFlashcardInput | UserFlashcardActivityCreateManyFlashcardInput[]
+  }
+
+  export type FlashcardTagCreateWithoutFlashcardInput = {
+    id?: string
+    tag: TagCreateNestedOneWithoutFlashcardsInput
+  }
+
+  export type FlashcardTagUncheckedCreateWithoutFlashcardInput = {
+    id?: string
+    tagId: string
+  }
+
+  export type FlashcardTagCreateOrConnectWithoutFlashcardInput = {
+    where: FlashcardTagWhereUniqueInput
+    create: XOR<FlashcardTagCreateWithoutFlashcardInput, FlashcardTagUncheckedCreateWithoutFlashcardInput>
+  }
+
+  export type FlashcardTagCreateManyFlashcardInputEnvelope = {
+    data: FlashcardTagCreateManyFlashcardInput | FlashcardTagCreateManyFlashcardInput[]
+  }
+
+  export type UserUpsertWithoutFlashcardsInput = {
+    update: XOR<UserUpdateWithoutFlashcardsInput, UserUncheckedUpdateWithoutFlashcardsInput>
+    create: XOR<UserCreateWithoutFlashcardsInput, UserUncheckedCreateWithoutFlashcardsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFlashcardsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFlashcardsInput, UserUncheckedUpdateWithoutFlashcardsInput>
+  }
+
+  export type UserUpdateWithoutFlashcardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFlashcardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type FlashcardUpsertWithoutCopiesInput = {
+    update: XOR<FlashcardUpdateWithoutCopiesInput, FlashcardUncheckedUpdateWithoutCopiesInput>
+    create: XOR<FlashcardCreateWithoutCopiesInput, FlashcardUncheckedCreateWithoutCopiesInput>
+    where?: FlashcardWhereInput
+  }
+
+  export type FlashcardUpdateToOneWithWhereWithoutCopiesInput = {
+    where?: FlashcardWhereInput
+    data: XOR<FlashcardUpdateWithoutCopiesInput, FlashcardUncheckedUpdateWithoutCopiesInput>
+  }
+
+  export type FlashcardUpdateWithoutCopiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
+    copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput
+    tags?: FlashcardTagUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardUncheckedUpdateWithoutCopiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
+    tags?: FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardUpsertWithWhereUniqueWithoutCopiedFromInput = {
+    where: FlashcardWhereUniqueInput
+    update: XOR<FlashcardUpdateWithoutCopiedFromInput, FlashcardUncheckedUpdateWithoutCopiedFromInput>
+    create: XOR<FlashcardCreateWithoutCopiedFromInput, FlashcardUncheckedCreateWithoutCopiedFromInput>
+  }
+
+  export type FlashcardUpdateWithWhereUniqueWithoutCopiedFromInput = {
+    where: FlashcardWhereUniqueInput
+    data: XOR<FlashcardUpdateWithoutCopiedFromInput, FlashcardUncheckedUpdateWithoutCopiedFromInput>
+  }
+
+  export type FlashcardUpdateManyWithWhereWithoutCopiedFromInput = {
+    where: FlashcardScalarWhereInput
+    data: XOR<FlashcardUpdateManyMutationInput, FlashcardUncheckedUpdateManyWithoutCopiedFromInput>
+  }
+
+  export type UserFlashcardActivityUpsertWithWhereUniqueWithoutFlashcardInput = {
+    where: UserFlashcardActivityWhereUniqueInput
+    update: XOR<UserFlashcardActivityUpdateWithoutFlashcardInput, UserFlashcardActivityUncheckedUpdateWithoutFlashcardInput>
+    create: XOR<UserFlashcardActivityCreateWithoutFlashcardInput, UserFlashcardActivityUncheckedCreateWithoutFlashcardInput>
+  }
+
+  export type UserFlashcardActivityUpdateWithWhereUniqueWithoutFlashcardInput = {
+    where: UserFlashcardActivityWhereUniqueInput
+    data: XOR<UserFlashcardActivityUpdateWithoutFlashcardInput, UserFlashcardActivityUncheckedUpdateWithoutFlashcardInput>
+  }
+
+  export type UserFlashcardActivityUpdateManyWithWhereWithoutFlashcardInput = {
+    where: UserFlashcardActivityScalarWhereInput
+    data: XOR<UserFlashcardActivityUpdateManyMutationInput, UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardInput>
+  }
+
+  export type FlashcardTagUpsertWithWhereUniqueWithoutFlashcardInput = {
+    where: FlashcardTagWhereUniqueInput
+    update: XOR<FlashcardTagUpdateWithoutFlashcardInput, FlashcardTagUncheckedUpdateWithoutFlashcardInput>
+    create: XOR<FlashcardTagCreateWithoutFlashcardInput, FlashcardTagUncheckedCreateWithoutFlashcardInput>
+  }
+
+  export type FlashcardTagUpdateWithWhereUniqueWithoutFlashcardInput = {
+    where: FlashcardTagWhereUniqueInput
+    data: XOR<FlashcardTagUpdateWithoutFlashcardInput, FlashcardTagUncheckedUpdateWithoutFlashcardInput>
+  }
+
+  export type FlashcardTagUpdateManyWithWhereWithoutFlashcardInput = {
+    where: FlashcardTagScalarWhereInput
+    data: XOR<FlashcardTagUpdateManyMutationInput, FlashcardTagUncheckedUpdateManyWithoutFlashcardInput>
+  }
+
+  export type FlashcardTagScalarWhereInput = {
+    AND?: FlashcardTagScalarWhereInput | FlashcardTagScalarWhereInput[]
+    OR?: FlashcardTagScalarWhereInput[]
+    NOT?: FlashcardTagScalarWhereInput | FlashcardTagScalarWhereInput[]
+    id?: StringFilter<"FlashcardTag"> | string
+    flashcardId?: StringFilter<"FlashcardTag"> | string
+    tagId?: StringFilter<"FlashcardTag"> | string
+  }
+
+  export type UserCreateWithoutActivitiesInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+  }
+
+  export type UserUncheckedCreateWithoutActivitiesInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+  }
+
+  export type UserCreateOrConnectWithoutActivitiesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+  }
+
+  export type FlashcardCreateWithoutActivitiesInput = {
+    id?: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    owner: UserCreateNestedOneWithoutFlashcardsInput
+    copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
+    copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
+    tags?: FlashcardTagCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardUncheckedCreateWithoutActivitiesInput = {
+    id?: string
+    ownerId: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copiedFromId?: string | null
+    copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
+    tags?: FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardCreateOrConnectWithoutActivitiesInput = {
+    where: FlashcardWhereUniqueInput
+    create: XOR<FlashcardCreateWithoutActivitiesInput, FlashcardUncheckedCreateWithoutActivitiesInput>
+  }
+
+  export type UserUpsertWithoutActivitiesInput = {
+    update: XOR<UserUpdateWithoutActivitiesInput, UserUncheckedUpdateWithoutActivitiesInput>
+    create: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutActivitiesInput, UserUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type UserUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type FlashcardUpsertWithoutActivitiesInput = {
+    update: XOR<FlashcardUpdateWithoutActivitiesInput, FlashcardUncheckedUpdateWithoutActivitiesInput>
+    create: XOR<FlashcardCreateWithoutActivitiesInput, FlashcardUncheckedCreateWithoutActivitiesInput>
+    where?: FlashcardWhereInput
+  }
+
+  export type FlashcardUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: FlashcardWhereInput
+    data: XOR<FlashcardUpdateWithoutActivitiesInput, FlashcardUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type FlashcardUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
+    copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
+    copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
+    tags?: FlashcardTagUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardUncheckedUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
+    copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
+    tags?: FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardTagCreateWithoutTagInput = {
+    id?: string
+    flashcard: FlashcardCreateNestedOneWithoutTagsInput
+  }
+
+  export type FlashcardTagUncheckedCreateWithoutTagInput = {
+    id?: string
+    flashcardId: string
+  }
+
+  export type FlashcardTagCreateOrConnectWithoutTagInput = {
+    where: FlashcardTagWhereUniqueInput
+    create: XOR<FlashcardTagCreateWithoutTagInput, FlashcardTagUncheckedCreateWithoutTagInput>
+  }
+
+  export type FlashcardTagCreateManyTagInputEnvelope = {
+    data: FlashcardTagCreateManyTagInput | FlashcardTagCreateManyTagInput[]
+  }
+
+  export type FlashcardTagUpsertWithWhereUniqueWithoutTagInput = {
+    where: FlashcardTagWhereUniqueInput
+    update: XOR<FlashcardTagUpdateWithoutTagInput, FlashcardTagUncheckedUpdateWithoutTagInput>
+    create: XOR<FlashcardTagCreateWithoutTagInput, FlashcardTagUncheckedCreateWithoutTagInput>
+  }
+
+  export type FlashcardTagUpdateWithWhereUniqueWithoutTagInput = {
+    where: FlashcardTagWhereUniqueInput
+    data: XOR<FlashcardTagUpdateWithoutTagInput, FlashcardTagUncheckedUpdateWithoutTagInput>
+  }
+
+  export type FlashcardTagUpdateManyWithWhereWithoutTagInput = {
+    where: FlashcardTagScalarWhereInput
+    data: XOR<FlashcardTagUpdateManyMutationInput, FlashcardTagUncheckedUpdateManyWithoutTagInput>
+  }
+
+  export type FlashcardCreateWithoutTagsInput = {
+    id?: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    owner: UserCreateNestedOneWithoutFlashcardsInput
+    copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
+    copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardUncheckedCreateWithoutTagsInput = {
+    id?: string
+    ownerId: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copiedFromId?: string | null
+    copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
+  }
+
+  export type FlashcardCreateOrConnectWithoutTagsInput = {
+    where: FlashcardWhereUniqueInput
+    create: XOR<FlashcardCreateWithoutTagsInput, FlashcardUncheckedCreateWithoutTagsInput>
+  }
+
+  export type TagCreateWithoutFlashcardsInput = {
+    id?: string
+    abbreviation: string
+    description?: string | null
+  }
+
+  export type TagUncheckedCreateWithoutFlashcardsInput = {
+    id?: string
+    abbreviation: string
+    description?: string | null
+  }
+
+  export type TagCreateOrConnectWithoutFlashcardsInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutFlashcardsInput, TagUncheckedCreateWithoutFlashcardsInput>
+  }
+
+  export type FlashcardUpsertWithoutTagsInput = {
+    update: XOR<FlashcardUpdateWithoutTagsInput, FlashcardUncheckedUpdateWithoutTagsInput>
+    create: XOR<FlashcardCreateWithoutTagsInput, FlashcardUncheckedCreateWithoutTagsInput>
+    where?: FlashcardWhereInput
+  }
+
+  export type FlashcardUpdateToOneWithWhereWithoutTagsInput = {
+    where?: FlashcardWhereInput
+    data: XOR<FlashcardUpdateWithoutTagsInput, FlashcardUncheckedUpdateWithoutTagsInput>
+  }
+
+  export type FlashcardUpdateWithoutTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
+    copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
+    copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardUncheckedUpdateWithoutTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
+    copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type TagUpsertWithoutFlashcardsInput = {
+    update: XOR<TagUpdateWithoutFlashcardsInput, TagUncheckedUpdateWithoutFlashcardsInput>
+    create: XOR<TagCreateWithoutFlashcardsInput, TagUncheckedCreateWithoutFlashcardsInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutFlashcardsInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutFlashcardsInput, TagUncheckedUpdateWithoutFlashcardsInput>
+  }
+
+  export type TagUpdateWithoutFlashcardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviation?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TagUncheckedUpdateWithoutFlashcardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviation?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FlashcardCreateManyOwnerInput = {
+    id?: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+    copiedFromId?: string | null
+  }
+
+  export type UserFlashcardActivityCreateManyUserInput = {
+    id?: string
+    flashcardId: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+  }
+
+  export type FlashcardUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
+    copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput
+    tags?: FlashcardTagUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardUncheckedUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
+    copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
+    tags?: FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardUncheckedUpdateManyWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserFlashcardActivityUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    flashcard?: FlashcardUpdateOneRequiredWithoutActivitiesNestedInput
+  }
+
+  export type UserFlashcardActivityUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    flashcardId?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserFlashcardActivityUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    flashcardId?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FlashcardCreateManyCopiedFromInput = {
+    id?: string
+    ownerId: string
+    front: string
+    back: string
+    frontLanguage: string
+    backLanguage: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    status?: string
+    rank?: number
+    memoryHook?: string | null
+    nextTestTime?: Date | string | null
+  }
+
+  export type UserFlashcardActivityCreateManyFlashcardInput = {
+    id?: string
+    userId: string
+    whenActedUpon?: Date | string
+    actionTaken: string
+    actionDetails?: string | null
+  }
+
+  export type FlashcardTagCreateManyFlashcardInput = {
+    id?: string
+    tagId: string
+  }
+
+  export type FlashcardUpdateWithoutCopiedFromInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
+    copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput
+    tags?: FlashcardTagUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardUncheckedUpdateWithoutCopiedFromInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
+    tags?: FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput
+  }
+
+  export type FlashcardUncheckedUpdateManyWithoutCopiedFromInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    front?: StringFieldUpdateOperationsInput | string
+    back?: StringFieldUpdateOperationsInput | string
+    frontLanguage?: StringFieldUpdateOperationsInput | string
+    backLanguage?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
+    nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type UserFlashcardActivityUpdateWithoutFlashcardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
+  }
+
+  export type UserFlashcardActivityUncheckedUpdateWithoutFlashcardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
+    actionTaken?: StringFieldUpdateOperationsInput | string
+    actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FlashcardTagUpdateWithoutFlashcardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tag?: TagUpdateOneRequiredWithoutFlashcardsNestedInput
+  }
+
+  export type FlashcardTagUncheckedUpdateWithoutFlashcardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FlashcardTagUncheckedUpdateManyWithoutFlashcardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FlashcardTagCreateManyTagInput = {
+    id?: string
+    flashcardId: string
+  }
+
+  export type FlashcardTagUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    flashcard?: FlashcardUpdateOneRequiredWithoutTagsNestedInput
+  }
+
+  export type FlashcardTagUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    flashcardId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FlashcardTagUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    flashcardId?: StringFieldUpdateOperationsInput | string
   }
 
 

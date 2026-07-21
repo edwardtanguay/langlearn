@@ -13,7 +13,7 @@
 				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260515-universit%C3%A9s-en-france-combien-payent-les-%C3%A9tudiants-%C3%A9trangers
 				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260318-semaine-de-la-langue-fran%C3%A7aise-et-de-la-francophonie
 				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260116-rdc-naissance-exceptionnelle-de-jumeaux-gorilles
-				- .. https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20250626-le-poulpe-un-animal-%C3%A9tonnant
+				- x https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20250626-le-poulpe-un-animal-%C3%A9tonnant
 				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260527-ferrari-lance-sa-voiture-%C3%A9lectrique
 				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260710-bal%C3%A9ares-les-l%C3%A9zards-en-danger
 				- https://francaisfacile.rfi.fr/fr/actualit%C3%A9/20260701-le-jardinage-un-antid%C3%A9presseur

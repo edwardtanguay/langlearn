@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon } from '@heroicons/vue/24/outline'
+import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon } from '@heroicons/vue/24/outline'
 
 const mobileMenuOpen = ref(false)
 const navRef = ref<HTMLElement | null>(null)
@@ -26,28 +26,34 @@ const toggleColorMode = () => {
 }
 
 const config = useRuntimeConfig()
-const isBypass = config.public.bypassAuth
+const showColorModeToggle = config.public.showColorModeToggle
+const showDevPage = computed(() => config.public.showDevPage)
 
-const auth = !isBypass ? useAuth() : null
-const loggedIn = computed(() => isBypass ? true : (auth?.loggedIn ?? false))
-const user = computed(() => isBypass ? { given_name: 'Local', family_name: 'Developer', email: 'local.developer@example.com', picture: null } : (auth?.user ?? null))
+const auth = useAuth()
+const loggedIn = computed(() => auth?.loggedIn ?? false)
+const user = computed(() => auth?.user ?? null)
 
 const handleLogout = () => {
-  if (isBypass) {
-    alert("Auth bypass mode is enabled. In production, this will log you out via Kinde.")
-    navigateTo('/')
-  } else {
-    navigateTo('/api/logout', { external: true })
-  }
+  navigateTo('/api/logout', { external: true })
 }
 
 const route = useRoute()
 const isUserPage = computed(() => route.path === '/user')
 
-const navItems = [
-  { name: 'Home', path: '/', icon: HomeIcon },
-  { name: 'About', path: '/about', icon: DocumentTextIcon },
-]
+const navItems = computed(() => {
+  const items = []
+  if (loggedIn.value) {
+    items.push({ name: 'Flashcards', path: '/', icon: DocumentTextIcon })
+    items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
+  } else {
+    items.push({ name: 'Home', path: '/', icon: HomeIcon })
+  }
+  items.push({ name: 'About', path: '/about', icon: DocumentTextIcon })
+  if (showDevPage.value && loggedIn.value) {
+    items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
+  }
+  return items
+})
 </script>
 
 <template>
@@ -60,9 +66,9 @@ const navItems = [
           <NuxtLink :to="loggedIn ? '/user' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
             <div class="flex flex-row items-center gap-2.5">
               <template v-if="loggedIn">
-                <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0">
+                <div class="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0">
                   <img v-if="user?.picture" :src="user.picture" alt="Avatar" class="w-full h-full object-cover" />
-                  <span v-else class="text-sm">{{ user?.given_name?.[0] || 'U' }}</span>
+                  <span v-else class="text-sm text-white">{{ user?.given_name?.[0] || 'U' }}</span>
                 </div>
                 <span class="text-sm font-semibold text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-white transition-colors whitespace-nowrap">
                   {{ user?.given_name }} {{ user?.family_name }}
@@ -95,7 +101,8 @@ const navItems = [
           </NuxtLink>
 
           <!-- Desktop Color Mode Toggle -->
-          <button @click="toggleColorMode"
+          <button v-if="showColorModeToggle"
+                  @click="toggleColorMode"
                   class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800"
                   aria-label="Toggle dark mode">
             <SunIcon v-if="colorMode.value === 'dark'"
@@ -108,16 +115,21 @@ const navItems = [
           <ClientOnly>
             <button v-if="loggedIn"
                     @click="handleLogout"
-                    class="flex items-center space-x-2 text-red-650 hover:text-red-750 transition-colors font-medium dark:text-red-400 dark:hover:text-red-350">
+                    class="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white w-[76px] shrink-0 justify-end">
               <ArrowRightOnRectangleIcon class="h-5 w-5" />
               <span>Logout</span>
             </button>
+            <div v-else class="w-[76px] shrink-0"></div>
+            <template #fallback>
+              <div class="w-[76px] shrink-0"></div>
+            </template>
           </ClientOnly>
         </div>
 
         <div class="flex items-center space-x-2 md:hidden">
           <!-- Mobile Color Mode Toggle -->
-          <button @click.stop="toggleColorMode"
+          <button v-if="showColorModeToggle"
+                  @click.stop="toggleColorMode"
                   class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800"
                   aria-label="Toggle dark mode">
             <SunIcon v-if="colorMode.value === 'dark'"
@@ -149,22 +161,23 @@ const navItems = [
       <div v-if="mobileMenuOpen"
            class="md:hidden absolute left-0 right-0 border-t border-b border-gray-200 bg-white shadow-2xl z-50 dark:bg-gray-900 dark:border-gray-800">
         <div class="container-custom py-4 space-y-2">
-          <NuxtLink v-for="item in navItems"
-                    :key="item.path"
-                    :to="item.path"
-                    @click="mobileMenuOpen = false"
-                    class="flex items-center space-x-3 px-4 py-3 rounded-lg !text-gray-600 hover:bg-gray-100 hover:!text-black transition-colors font-medium dark:!text-gray-300 dark:hover:bg-gray-800 dark:hover:!text-white"
-                    active-class="bg-gray-100 !text-black dark:bg-gray-800 dark:!text-white">
-            <component :is="item.icon"
-                       class="h-5 w-5" />
-            <span>{{ item.name }}</span>
-          </NuxtLink>
+          <template v-for="item in navItems" :key="item.path">
+            <NuxtLink v-if="item.showOnMobile !== false"
+                      :to="item.path"
+                      @click="mobileMenuOpen = false"
+                      class="flex items-center space-x-3 px-4 py-3 rounded-lg !text-gray-600 hover:bg-gray-100 hover:!text-black transition-colors font-medium dark:!text-gray-300 dark:hover:bg-gray-800 dark:hover:!text-white"
+                      active-class="bg-gray-100 !text-black dark:bg-gray-800 dark:!text-white">
+              <component :is="item.icon"
+                         class="h-5 w-5" />
+              <span>{{ item.name }}</span>
+            </NuxtLink>
+          </template>
 
           <!-- Mobile Logout Button -->
           <ClientOnly>
             <button v-if="loggedIn"
                     @click="handleLogout(); mobileMenuOpen = false"
-                    class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-red-650 hover:bg-red-50/50 hover:text-red-750 dark:text-red-400 dark:hover:bg-red-950/25 transition-colors font-medium">
+                    class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black dark:text-gray-300 dark:hover:bg-gray-850/50 transition-colors font-medium">
               <ArrowRightOnRectangleIcon class="h-5 w-5" />
               <span>Logout</span>
             </button>

@@ -117,17 +117,49 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.DbTestScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  status: 'status',
-  updatedAt: 'updatedAt'
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  minutesToTestAgain: 'minutesToTestAgain'
 };
 
-exports.Prisma.TaskScalarFieldEnum = {
+exports.Prisma.FlashcardScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  completed: 'completed',
-  createdAt: 'createdAt'
+  ownerId: 'ownerId',
+  front: 'front',
+  back: 'back',
+  frontLanguage: 'frontLanguage',
+  backLanguage: 'backLanguage',
+  pronunciation: 'pronunciation',
+  createdAt: 'createdAt',
+  status: 'status',
+  rank: 'rank',
+  memoryHook: 'memoryHook',
+  nextTestTime: 'nextTestTime',
+  copiedFromId: 'copiedFromId'
+};
+
+exports.Prisma.UserFlashcardActivityScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  flashcardId: 'flashcardId',
+  whenActedUpon: 'whenActedUpon',
+  actionTaken: 'actionTaken',
+  actionDetails: 'actionDetails'
+};
+
+exports.Prisma.TagScalarFieldEnum = {
+  id: 'id',
+  abbreviation: 'abbreviation',
+  description: 'description'
+};
+
+exports.Prisma.FlashcardTagScalarFieldEnum = {
+  id: 'id',
+  flashcardId: 'flashcardId',
+  tagId: 'tagId'
 };
 
 exports.Prisma.SortOrder = {
@@ -135,10 +167,18 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  DbTest: 'DbTest',
-  Task: 'Task'
+  User: 'User',
+  Flashcard: 'Flashcard',
+  UserFlashcardActivity: 'UserFlashcardActivity',
+  Tag: 'Tag',
+  FlashcardTag: 'FlashcardTag'
 };
 
 /**

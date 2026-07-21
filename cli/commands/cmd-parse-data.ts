@@ -1,3 +1,2 @@
-import { DpodParser } from "../dpod/dpod-parser";
-
-DpodParser.execute();
+console.error('DEPRECATED: use CSV import as logged-in user instead');
+process.exit(1);

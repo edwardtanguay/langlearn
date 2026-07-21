@@ -25,3 +25,7 @@ logs
 
 # generated files
 debug
+
+# Local databases
+*.db
+*.db-journal

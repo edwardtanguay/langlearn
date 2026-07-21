@@ -9,8 +9,11 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "prisma:reset": "tsx prisma/seed.ts",
     "gh": "git log --pretty=format:\"%ad | %h | %s\" --date=format:\"%Y-%m-%d %H:%M:%S\"",
-    "backup": "bash -c 'git archive --format=zip HEAD -o \"../BACKUP/langlearn-$(date +%F-%H-%M-%S).zip\"'"
+    "backup": "bash -c 'git archive --format=zip HEAD -o \"../BACKUP/langlearn-$(date +%F-%H-%M-%S).zip\"'",
+    "db-backup": "tsx scripts/db-backup.ts",
+    "db-restore": "tsx scripts/db-restore.ts"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
@@ -24,6 +27,7 @@
     "@types/node": "^25.2.3",
     "autoprefixer": "^10.4.24",
     "dayjs": "^1.11.19",
+    "dotenv": "^17.4.2",
     "js-yaml": "^4.1.1",
     "nuxt": "^4.2.1",
     "tsx": "^4.21.0",
@@ -35,5 +39,8 @@
     "baseline-browser-mapping": "^2.9.19",
     "prisma": "^7.8.0",
     "vitest": "^4.0.18"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

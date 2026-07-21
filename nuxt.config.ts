@@ -1,6 +1,6 @@
 import env from "./app/lib/env";
+import { defineNuxtConfig } from 'nuxt/config';
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	compatibilityDate: '2025-07-15',
 	devtools: { enabled: true },
@@ -17,6 +17,7 @@ export default defineNuxtConfig({
 		port: 3149
 	},
 	app: {
+		pageTransition: { name: 'page', mode: 'out-in' },
 		head: {
 			title: 'LangLearn',
 			meta: [
@@ -44,7 +45,9 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			nodeEnv: env.NODE_ENV,
-			bypassAuth: process.env.NUXT_PUBLIC_BYPASS_AUTH === 'true'
+			showColorModeToggle: process.env.NUXT_PUBLIC_SHOW_COLOR_MODE_TOGGLE === 'true',
+			showDevPanel: process.env.NUXT_PUBLIC_SHOW_DEV_PANEL === 'true',
+			showDevPage: process.env.NUXT_PUBLIC_SHOW_DEV_PAGE === 'true'
 		}
 	}
 })

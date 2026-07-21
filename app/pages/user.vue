@@ -9,12 +9,9 @@ useHead({
   ]
 })
 
-const config = useRuntimeConfig()
-const isBypass = config.public.bypassAuth
-
-const auth = !isBypass ? useAuth() : null
-const loggedIn = computed(() => isBypass ? true : (auth?.loggedIn ?? false))
-const user = computed(() => isBypass ? { given_name: 'Local', family_name: 'Developer', email: 'local.developer@example.com', picture: null } : (auth?.user ?? null))
+const auth = useAuth()
+const loggedIn = computed(() => auth?.loggedIn ?? false)
+const user = computed(() => auth?.user ?? null)
 
 // If not logged in, redirect to home page
 onMounted(() => {
@@ -24,12 +21,7 @@ onMounted(() => {
 })
 
 const handleLogout = () => {
-  if (isBypass) {
-    alert("Auth bypass mode is enabled. In production, this will log you out via Kinde.")
-    navigateTo('/')
-  } else {
-    navigateTo('/api/logout', { external: true })
-  }
+  navigateTo('/api/logout', { external: true })
 }
 </script>
 
@@ -59,21 +51,15 @@ const handleLogout = () => {
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 text-left space-y-3">
           <div class="flex justify-between text-sm">
             <span class="text-gray-500 dark:text-gray-400">Authentication Method</span>
-            <span class="font-medium text-gray-900 dark:text-white">{{ isBypass ? 'Bypass Mock Auth' : 'Kinde Auth' }}</span>
+            <span class="font-medium text-gray-900 dark:text-white">Kinde Auth</span>
           </div>
         </div>
 
         <!-- Actions -->
         <div class="pt-4 flex flex-col gap-3">
-          <NuxtLink
-            to="/"
-            class="w-full px-6 py-3 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-850/50 text-center font-semibold rounded-xl transition-all"
-          >
-            Back to Tasks
-          </NuxtLink>
           <button
             @click="handleLogout"
-            class="w-full px-6 py-3 bg-red-50 border border-red-200 dark:bg-red-950/20 dark:border-red-900 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/40 dark:text-red-400 font-semibold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2"
+            class="w-full px-6 py-3 bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750 dark:text-gray-200 font-semibold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2"
           >
             <ArrowRightOnRectangleIcon class="h-5 w-5" />
             <span>Logout</span>

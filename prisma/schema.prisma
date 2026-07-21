@@ -8,15 +8,68 @@ generator client {
   output          = "../server/prisma/client"
 }
 
-model DbTest {
-  id        Int      @id @default(1)
-  status    String   @default("off")
-  updatedAt DateTime @updatedAt
+
+model User {
+  id                 String                 @id @default(uuid())
+  firstName          String
+  lastName           String
+  email              String                 @unique
+  minutesToTestAgain Int                    @default(10)
+  flashcards         Flashcard[]
+  activities         UserFlashcardActivity[]
 }
 
-model Task {
-  id        String   @id @default(uuid())
-  title     String
-  completed Boolean  @default(false)
-  createdAt DateTime @default(now())
+model Flashcard {
+  id            String                 @id @default(uuid())
+  ownerId       String
+  owner         User                   @relation(fields: [ownerId], references: [id])
+  front         String
+  back          String
+  frontLanguage String
+  backLanguage  String
+  pronunciation String?
+  createdAt     DateTime               @default(now())
+  
+  // Study progress state merged directly into the card
+  status        String                 @default("LEARNING")
+  rank          Float                  @default(2.5)
+  memoryHook    String?
+  nextTestTime  DateTime?
+  
+  // Self-referencing relation to track copied cards
+  copiedFromId  String?
+  copiedFrom    Flashcard?             @relation("CardCopies", fields: [copiedFromId], references: [id], onDelete: Restrict)
+  copies        Flashcard[]            @relation("CardCopies")
+  
+  activities     UserFlashcardActivity[]
+  tags           FlashcardTag[]
 }
+
+model UserFlashcardActivity {
+  id             String    @id @default(uuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id])
+  flashcardId    String
+  flashcard      Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+  whenActedUpon  DateTime  @default(now())
+  actionTaken    String
+  actionDetails  String?
+}
+
+model Tag {
+  id           String         @id @default(uuid())
+  abbreviation String         @unique
+  description  String?
+  flashcards   FlashcardTag[]
+}
+
+model FlashcardTag {
+  id          String    @id @default(uuid())
+  flashcardId String
+  flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+  tagId       String
+  tag         Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([flashcardId, tagId])
+}
+

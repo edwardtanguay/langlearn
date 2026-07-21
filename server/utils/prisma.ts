@@ -8,6 +8,7 @@ let prisma: PrismaClient
 if (globalForPrisma.prisma) {
   prisma = globalForPrisma.prisma
 } else {
+  console.log('Initializing Prisma Client with URL:', process.env.DATABASE_URL)
   const adapter = new PrismaLibSql({
     url: process.env.DATABASE_URL!,
     authToken: process.env.DATABASE_AUTH_TOKEN,
