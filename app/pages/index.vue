@@ -659,13 +659,12 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- Practice Session Completed -->
-                <div v-else-if="!isLoadingQueue" key="empty" class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40">
-                  <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/40 rounded-full flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  </div>
-                  <div class="space-y-1">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">All Caught Up!</h2>
-                    <p class="text-gray-500 dark:text-gray-400">You have no pending flashcards to review in this category.</p>
+                <div v-else-if="!isLoadingQueue" key="empty" class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40 space-y-2">
+                  <span class="text-base font-medium text-gray-600 dark:text-gray-400">no cards to test</span>
+                  <div>
+                    <NuxtLink to="/import" class="text-sm underline text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors">
+                      import cards
+                    </NuxtLink>
                   </div>
                 </div>
 
