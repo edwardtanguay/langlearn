@@ -1,3 +1,5 @@
+import { METADATA_MARKER } from './rank-config';
+
 export interface ParsedMetadataResult {
   cleanText: string;
   pronunciation?: string;
@@ -10,33 +12,24 @@ export function parseMetadata(text: string): ParsedMetadataResult {
     return { cleanText: '' };
   }
 
-  // Find all metadata tokens matching .. tag
-  // A metadata chunk starts with ".." up to the next ".." or end of line
-  const metadataRegex = /\.\.([^\.\s]+(?:\.[^\.\s]+)?(?:\s+[^.\s]+)*)/g;
-  
   let pronunciation: string | undefined;
   let memoryHook: string | undefined;
   let rank: number | undefined;
 
-  // Simple and robust parser: find indices of ".."
-  const parts: string[] = [];
-  let currentIndex = 0;
-  
-  // We can scan text for ".." markers
   const textLen = text.length;
+  const markerLen = METADATA_MARKER.length;
   let cleanTextBuilder = '';
   
   let i = 0;
   while (i < textLen) {
-    if (text[i] === '.' && text[i + 1] === '.') {
-      // We hit ".."
-      // Find end of this metadata chunk (either next ".." or end of string)
-      let endIdx = text.indexOf('..', i + 2);
+    if (text.substring(i, i + markerLen) === METADATA_MARKER) {
+      // Find end of this metadata chunk (either next METADATA_MARKER or end of string)
+      let endIdx = text.indexOf(METADATA_MARKER, i + markerLen);
       if (endIdx === -1) {
         endIdx = textLen;
       }
       
-      const chunk = text.substring(i + 2, endIdx).trim();
+      const chunk = text.substring(i + markerLen, endIdx).trim();
       i = endIdx; // advance loop pointer
 
       if (chunk.length > 0) {

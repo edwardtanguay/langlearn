@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { parseMetadata } from '~~/server/utils/metadata-parser'
+import { calculateOptimalRank } from '~~/server/utils/rank-config'
 
 useHead({
   title: 'LangLearn - Import Flashcards',
@@ -18,6 +20,9 @@ interface ParsedRow {
   lang2: string;
   text1: string;
   text2: string;
+  rank: number;
+  pronunciation: string;
+  memoryHook: string;
 }
 
 interface SkippedCard {
@@ -73,11 +78,33 @@ function handleFileChange(event: Event) {
     for (const line of lines) {
       const row = parseCSVLine(line);
       if (row.length >= 4) {
+        const rawText1 = row[2] ?? '';
+        const rawText2 = row[3] ?? '';
+
+        const meta1 = parseMetadata(rawText1);
+        const meta2 = parseMetadata(rawText2);
+
+        let frontClean = '';
+        if ((row[0] ?? '').toLowerCase() === 'english') {
+          frontClean = meta1.cleanText;
+        } else if ((row[1] ?? '').toLowerCase() === 'english') {
+          frontClean = meta2.cleanText;
+        } else {
+          frontClean = meta1.cleanText;
+        }
+
+        const rank = meta1.rank ?? meta2.rank ?? calculateOptimalRank(frontClean);
+        const pronunciation = meta1.pronunciation || meta2.pronunciation || '';
+        const memoryHook = meta1.memoryHook || meta2.memoryHook || '';
+
         rows.push({
           lang1: row[0] ?? '',
           lang2: row[1] ?? '',
-          text1: row[2] ?? '',
-          text2: row[3] ?? ''
+          text1: rawText1,
+          text2: rawText2,
+          rank,
+          pronunciation,
+          memoryHook
         });
       }
     }
@@ -195,9 +222,12 @@ async function handleImport() {
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 shadow-sm z-10">
                   <tr>
                     <th scope="col" class="px-6 py-3 whitespace-nowrap">Language&nbsp;1</th>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Language&nbsp;2</th>
                     <th scope="col" class="px-6 py-3 whitespace-nowrap">Text&nbsp;1</th>
+                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Language&nbsp;2</th>
                     <th scope="col" class="px-6 py-3 whitespace-nowrap">Text&nbsp;2</th>
+                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Rank</th>
+                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Pronunciation</th>
+                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Memory&nbsp;Hook</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -206,10 +236,13 @@ async function handleImport() {
                       {{ row.lang1 }}
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {{ row.lang2 }}
+                      {{ row.text1 }}
                     </td>
-                    <td class="px-6 py-4">{{ row.text1 }}</td>
+                    <td class="px-6 py-4">{{ row.lang2 }}</td>
                     <td class="px-6 py-4">{{ row.text2 }}</td>
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{ row.rank }}</td>
+                    <td class="px-6 py-4">{{ row.pronunciation }}</td>
+                    <td class="px-6 py-4">{{ row.memoryHook }}</td>
                   </tr>
                 </tbody>
               </table>

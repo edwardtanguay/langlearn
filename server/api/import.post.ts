@@ -1,6 +1,7 @@
 import { prisma } from '../utils/prisma'
 import { requireAuth } from '../utils/auth'
 import { parseMetadata } from '../utils/metadata-parser'
+import { calculateOptimalRank } from '../utils/rank-config'
 import crypto from 'crypto'
 
 function mapLanguage(lang: string): string {
@@ -115,7 +116,7 @@ export default defineEventHandler(async (event) => {
 
     const pronunciation = meta1.pronunciation || meta2.pronunciation || null;
     const memoryHook = meta1.memoryHook || meta2.memoryHook || null;
-    const rank = meta1.rank ?? meta2.rank ?? 2.5;
+    const rank = meta1.rank ?? meta2.rank ?? calculateOptimalRank(front);
 
     const flashcardId = crypto.randomUUID();
 
