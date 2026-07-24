@@ -288,9 +288,7 @@ const waitingCount = computed(() => {
 
 // Tab Switch Observer
 watch(activeTab, (tab) => {
-  if (tab === 'versions') {
-    loadVersions()
-  } else if (tab === 'users') {
+  if (tab === 'users') {
     loadUsers()
   } else if (tab === 'flashcard-flow') {
     loadDevCards()
