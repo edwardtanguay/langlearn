@@ -111,15 +111,6 @@ const handleLogout = () => {
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
           <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Actions</h2>
 
-          <!-- Red Delete All Flashcards Button -->
-          <button
-            @click="openConfirmModal"
-            class="w-full px-6 py-3 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
-          >
-            <TrashIcon class="h-5 w-5" />
-            <span>Delete all flashcards</span>
-          </button>
-
           <!-- Logout Button -->
           <button
             @click="handleLogout"
@@ -128,6 +119,16 @@ const handleLogout = () => {
             <ArrowRightOnRectangleIcon class="h-5 w-5" />
             <span>Logout</span>
           </button>
+
+          <!-- Centered Dark Red Text Link for Delete All Flashcards -->
+          <div class="pt-2 text-center">
+            <button
+              @click="openConfirmModal"
+              class="text-xs text-red-800 dark:text-red-900 hover:text-red-600 dark:hover:text-red-400 hover:underline transition-colors font-medium cursor-pointer"
+            >
+              Delete all flashcards
+            </button>
+          </div>
         </div>
       </div>
 

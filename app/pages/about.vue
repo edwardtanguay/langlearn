@@ -113,15 +113,45 @@ const saveAdminVersion = async () => {
     <!-- 1. INTRODUCTORY HERO SECTION -->
     <div class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-700/60 flex flex-col md:flex-row items-center gap-6 md:gap-8">
       <!-- Left: Fast Flashcards Symbol -->
-      <div class="shrink-0 w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center p-4 relative group">
-        <div class="absolute -top-1 -right-1">
-          <BoltIcon class="w-6 h-6 text-amber-400 animate-pulse" />
+      <div class="shrink-0 relative group flex items-center justify-center p-2">
+        <div class="absolute -top-1 -right-1 z-10">
+          <BoltIcon class="w-6 h-6 text-amber-400 animate-pulse drop-shadow-md" />
         </div>
-        <!-- Flashcard Stack SVG -->
-        <svg class="w-16 h-16 text-amber-400 transform -rotate-6 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <rect x="3" y="5" width="15" height="15" rx="2" stroke-width="2" class="opacity-40" />
-          <rect x="6" y="2" width="15" height="15" rx="2" stroke-width="2" />
-          <path d="M10 7h7M10 11h5" stroke-width="2" stroke-linecap="round" />
+        <!-- Flat Geometric Overlapping Flashcard Stack SVG with Tech Gradient -->
+        <svg class="w-24 h-24 transform transition-all duration-300 group-hover:scale-105 group-hover:rotate-1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cardGradBack" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.6" />
+              <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.4" />
+            </linearGradient>
+            <linearGradient id="cardGradMid" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ea580c" stop-opacity="0.85" />
+              <stop offset="100%" stop-color="#d97706" stop-opacity="0.7" />
+            </linearGradient>
+            <linearGradient id="cardGradFront" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#d97706" />
+            </linearGradient>
+            <linearGradient id="techLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#fef3c7" stop-opacity="0.4" />
+            </linearGradient>
+          </defs>
+
+          <!-- Back Card (Layer 1 - Violet/Indigo accent) -->
+          <rect x="22" y="14" width="56" height="42" rx="8" fill="url(#cardGradBack)" transform="rotate(-12 50 35)" />
+          
+          <!-- Middle Card (Layer 2 - Orange accent) -->
+          <rect x="24" y="24" width="56" height="42" rx="8" fill="url(#cardGradMid)" transform="rotate(-4 52 45)" />
+
+          <!-- Front Main Card (Layer 3 - Amber Tech Gradient) -->
+          <rect x="24" y="36" width="58" height="44" rx="8" fill="url(#cardGradFront)" class="drop-shadow-lg" />
+          
+          <!-- Geometric tech lines & text simulation on front card -->
+          <rect x="32" y="46" width="28" height="5" rx="2.5" fill="url(#techLineGrad)" />
+          <rect x="32" y="55" width="42" height="4" rx="2" fill="url(#techLineGrad)" opacity="0.75" />
+          <rect x="32" y="63" width="20" height="4" rx="2" fill="url(#techLineGrad)" opacity="0.5" />
+          <circle cx="68" cy="48.5" r="3.5" fill="#ffffff" opacity="0.9" />
         </svg>
       </div>
 

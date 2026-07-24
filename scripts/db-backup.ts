@@ -28,7 +28,20 @@ async function main() {
     fs.mkdirSync(backupDir, { recursive: true });
   }
 
-  const filename = `langlearn-data-${timestamp}.sqlite`;
+  // Query flashcard count from remote database
+  let flashcardCount = 0;
+  try {
+    const remoteDb = createClient({ url, authToken });
+    const countRes = await remoteDb.execute('SELECT COUNT(*) as count FROM Flashcard');
+    if (countRes.rows.length > 0 && countRes.rows[0].count !== undefined) {
+      flashcardCount = Number(countRes.rows[0].count);
+    }
+    remoteDb.close();
+  } catch (e) {
+    console.warn('Could not query remote flashcard count:', e);
+  }
+
+  const filename = `langlearn-data-${timestamp}-${flashcardCount}cards.sqlite`;
   const filePath = path.join(backupDir, filename);
 
   console.log(`Starting backup to ${filePath}...`);

@@ -23,6 +23,11 @@ useHead({
 
 const activeTab = ref<'versions' | 'flashcard-flow' | 'users'>('versions')
 
+const isBackgroundLoading = ref(false)
+const hasLoadedVersions = ref(false)
+const hasLoadedUsers = ref(false)
+const hasLoadedCards = ref(false)
+
 const config = useRuntimeConfig()
 const router = useRouter()
 const showDevPage = config.public.showDevPage
@@ -104,7 +109,11 @@ const itemForm = ref({
 const isEditingItem = ref(false)
 
 const loadVersions = async () => {
-  isLoadingVersions.value = true
+  if (!hasLoadedVersions.value) {
+    isLoadingVersions.value = true
+  } else {
+    isBackgroundLoading.value = true
+  }
   try {
     const data = await $fetch<Version[]>('/api/dev/versions')
     versions.value = data
@@ -114,10 +123,12 @@ const loadVersions = async () => {
         expandedVersions.value[v.id] = true
       }
     })
+    hasLoadedVersions.value = true
   } catch (err) {
     console.error('Failed to load versions:', err)
   } finally {
     isLoadingVersions.value = false
+    isBackgroundLoading.value = false
   }
 }
 
@@ -254,13 +265,19 @@ const userForm = ref<{ id: string; firstName: string; lastName: string; role: 'a
 })
 
 const loadUsers = async () => {
-  isLoadingUsers.value = true
+  if (!hasLoadedUsers.value) {
+    isLoadingUsers.value = true
+  } else {
+    isBackgroundLoading.value = true
+  }
   try {
     usersList.value = await $fetch<UserEntry[]>('/api/dev/users')
+    hasLoadedUsers.value = true
   } catch (err) {
     console.error('Failed to load users:', err)
   } finally {
     isLoadingUsers.value = false
+    isBackgroundLoading.value = false
   }
 }
 
@@ -326,13 +343,19 @@ const languageColors: Record<string, string> = {
 }
 
 const loadDevCards = async () => {
-  try {
+  if (!hasLoadedCards.value) {
     isLoadingCards.value = true
+  } else {
+    isBackgroundLoading.value = true
+  }
+  try {
     flashcards.value = await $fetch<DevFlashcard[]>('/api/dev/flashcards')
+    hasLoadedCards.value = true
   } catch (err) {
     console.error('Failed to load dev cards:', err)
   } finally {
     isLoadingCards.value = false
+    isBackgroundLoading.value = false
   }
 }
 
@@ -488,33 +511,40 @@ onUnmounted(() => {
         </div>
 
         <!-- Sub-Menu Navigation Tabs -->
-        <div class="flex bg-gray-900 border border-gray-800 p-1 rounded-lg space-x-1">
-          <button
-            @click="activeTab = 'versions'"
-            class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
-            :class="activeTab === 'versions' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
-          >
-            <HashtagIcon class="w-4 h-4" />
-            <span>Versions</span>
-          </button>
+        <div class="flex items-center gap-3">
+          <div v-if="isBackgroundLoading" class="flex items-center gap-1.5 text-xs font-mono text-amber-400 bg-amber-950/40 border border-amber-800/40 px-2.5 py-1 rounded-md animate-pulse">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-spin"></span>
+            <span>Syncing...</span>
+          </div>
 
-          <button
-            @click="activeTab = 'flashcard-flow'"
-            class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
-            :class="activeTab === 'flashcard-flow' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
-          >
-            <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
-            <span>Flashcard Flow</span>
-          </button>
+          <div class="flex bg-gray-900 border border-gray-800 p-1 rounded-lg space-x-1">
+            <button
+              @click="activeTab = 'versions'"
+              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
+              :class="activeTab === 'versions' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
+            >
+              <HashtagIcon class="w-4 h-4" />
+              <span>Versions</span>
+            </button>
 
-          <button
-            @click="activeTab = 'users'"
-            class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
-            :class="activeTab === 'users' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
-          >
-            <UserGroupIcon class="w-4 h-4" />
-            <span>Users</span>
-          </button>
+            <button
+              @click="activeTab = 'flashcard-flow'"
+              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
+              :class="activeTab === 'flashcard-flow' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
+            >
+              <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+              <span>Flashcard Flow</span>
+            </button>
+
+            <button
+              @click="activeTab = 'users'"
+              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
+              :class="activeTab === 'users' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
+            >
+              <UserGroupIcon class="w-4 h-4" />
+              <span>Users</span>
+            </button>
+          </div>
         </div>
       </div>
 
