@@ -71,7 +71,10 @@ onMounted(() => {
 })
 
 const displayedVersions = computed(() => {
-  const list = [...versions.value]
+  let list = [...versions.value]
+  if (!isAdmin.value) {
+    list = list.filter(v => v.status !== 'IN_PROGRESS')
+  }
   if (adminEditMode.value) {
     list.sort((a, b) => {
       if (a.status === 'IN_PROGRESS' && b.status !== 'IN_PROGRESS') return -1
@@ -211,14 +214,26 @@ const saveAdminItem = async () => {
     const tempId = 'temp-item-' + Date.now()
     const verObj = versions.value.find(v => v.id === payload.versionId)
     if (verObj) {
-      verObj.versionItems.push({
+      const newItemObj: VersionItem = {
         id: tempId,
         versionId: payload.versionId,
         type: payload.type,
         status: payload.status,
         body: payload.body.trim(),
-        orderWithinVersion: verObj.versionItems.length + 1
-      })
+        orderWithinVersion: 1
+      }
+      if (payload.afterItemId === 'TOP') {
+        verObj.versionItems.unshift(newItemObj)
+      } else if (payload.afterItemId) {
+        const targetIdx = verObj.versionItems.findIndex(i => i.id === payload.afterItemId)
+        if (targetIdx !== -1) {
+          verObj.versionItems.splice(targetIdx + 1, 0, newItemObj)
+        } else {
+          verObj.versionItems.push(newItemObj)
+        }
+      } else {
+        verObj.versionItems.push(newItemObj)
+      }
     }
     showEditItemModal.value = false
 
@@ -356,6 +371,9 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
         <p class="text-sm md:text-base text-gray-300 font-medium leading-relaxed">
           LangLearn integrates modern, no-cost tools like Google Translate and AI search into your language learning flow to help you learn languages faster and with a self-directed, personal approach.
         </p>
+        <div class="pt-2 text-xs text-gray-400 font-medium">
+          More projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer" class="text-white underline hover:text-amber-300 transition-colors">Edward</a>
+        </div>
       </div>
     </div>
 
@@ -393,60 +411,58 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
         No versions published yet.
       </div>
 
-      <!-- Minimal Version List -->
-      <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="(ver, index) in displayedVersions" :key="ver.id" class="space-y-2">
-          <!-- Minimal Version Title -->
-          <div class="flex items-center space-x-3 text-base">
-            <span class="font-bold font-mono text-gray-900 dark:text-white">
-              v{{ ver.versionNumber }}{{ ver.title ? ' ' + ver.title : '' }}{{ ver.publishDate ? ' - ' + formatPublishDate(ver.publishDate) : '' }}{{ index === 0 && ver.publishDate ? ' ' + getRelativeDateStr(ver.publishDate) : '' }}
-            </span>
-            <template v-if="isAdmin && adminEditMode">
-              <span class="text-gray-400 text-xs">|</span>
-              <button @click="openEditVersion(ver)" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-200 hover:underline">edit</button>
-              <span class="text-gray-400 text-xs">|</span>
-              <button @click="openAddItem(ver.id)" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-200 hover:underline">add item</button>
-              <span class="text-gray-400 text-xs">|</span>
-              <button @click="deleteVersion(ver)" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-200 hover:underline">delete</button>
-            </template>
+      <!-- Version Cards List -->
+      <div v-else class="space-y-8 text-sm text-gray-800 dark:text-gray-200">
+        <div v-for="ver in displayedVersions" :key="ver.id" class="space-y-3">
+          <!-- Full-Width Version Panel Card -->
+          <div class="bg-gray-900/90 dark:bg-gray-900 border border-gray-800 rounded-xl p-4 md:p-5 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2.5">
+                <span class="font-mono font-bold text-amber-400 text-lg md:text-xl">
+                  v{{ ver.versionNumber }}
+                </span>
+                <span v-if="ver.title" class="font-bold text-white text-lg md:text-xl">
+                  {{ ver.title }}
+                </span>
+              </div>
+              <div v-if="ver.publishDate" class="text-xs text-gray-400 font-mono">
+                {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
+              </div>
+            </div>
+
+            <!-- Right-aligned Version CRUD Actions -->
+            <div v-if="isAdmin && adminEditMode" class="text-xs text-gray-400 shrink-0 self-end md:self-center font-mono">
+              ( <button @click="openEditVersion(ver)" class="hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-400 hover:text-red-300 cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="hover:text-white cursor-pointer transition-colors">add item</button> )
+            </div>
           </div>
 
-          <!-- Features Section -->
-          <div v-if="ver.versionItems.filter(i => i.type === 'FEATURE').length > 0" class="pl-4 space-y-1">
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">features</h4>
-            <ul class="pl-5 list-disc space-y-1 text-xs text-gray-700 dark:text-gray-300">
-              <li v-for="item in ver.versionItems.filter(i => i.type === 'FEATURE')" :key="item.id">
-                <div class="inline-flex items-center space-x-2">
-                  <span>{{ item.body }}</span>
-                  <span v-if="isAdmin && adminEditMode" class="text-gray-400 dark:text-gray-500 text-[11px]">
-                    (<button @click="reorderItem(item.id, 'UP')" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">up</button> |
-                    <button @click="reorderItem(item.id, 'DOWN')" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">down</button> |
-                    <button @click="openEditItem(item)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">edit</button> |
-                    <button @click="deleteItem(item)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">delete</button> |
-                    <button @click="openAddItem(ver.id, item.id)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">add</button>)
+          <!-- Version Items (Features & Bug Fixes OUTSIDE panel) -->
+          <div class="pl-2 pr-2 space-y-3">
+            <!-- Features Section -->
+            <div v-if="ver.versionItems.filter(i => i.type === 'FEATURE').length > 0" class="space-y-1.5">
+              <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">features</h4>
+              <ul class="space-y-1.5 text-xs text-gray-300">
+                <li v-for="item in ver.versionItems.filter(i => i.type === 'FEATURE')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
+                  <span class="flex-1">• {{ item.body }}</span>
+                  <span v-if="isAdmin && adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
+                    ( <button @click="reorderItem(item.id, 'UP')" class="hover:text-white cursor-pointer">up</button> | <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-white cursor-pointer">down</button> | <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | <button @click="openAddItem(ver.id, item.id)" class="hover:text-white cursor-pointer">add item</button> )
                   </span>
-                </div>
-              </li>
-            </ul>
-          </div>
+                </li>
+              </ul>
+            </div>
 
-          <!-- Bug Fixes Section -->
-          <div v-if="ver.versionItems.filter(i => i.type === 'BUGFIX').length > 0" class="pl-4 space-y-1">
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">bug fixes</h4>
-            <ul class="pl-5 list-disc space-y-1 text-xs text-gray-700 dark:text-gray-300">
-              <li v-for="item in ver.versionItems.filter(i => i.type === 'BUGFIX')" :key="item.id">
-                <div class="inline-flex items-center space-x-2">
-                  <span>{{ item.body }}</span>
-                  <span v-if="isAdmin && adminEditMode" class="text-gray-400 dark:text-gray-500 text-[11px]">
-                    (<button @click="reorderItem(item.id, 'UP')" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">up</button> |
-                    <button @click="reorderItem(item.id, 'DOWN')" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">down</button> |
-                    <button @click="openEditItem(item)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">edit</button> |
-                    <button @click="deleteItem(item)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">delete</button> |
-                    <button @click="openAddItem(ver.id, item.id)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">add</button>)
+            <!-- Bug Fixes Section -->
+            <div v-if="ver.versionItems.filter(i => i.type === 'BUGFIX').length > 0" class="space-y-1.5">
+              <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">bug fixes</h4>
+              <ul class="space-y-1.5 text-xs text-gray-300">
+                <li v-for="item in ver.versionItems.filter(i => i.type === 'BUGFIX')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
+                  <span class="flex-1">• {{ item.body }}</span>
+                  <span v-if="isAdmin && adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
+                    ( <button @click="reorderItem(item.id, 'UP')" class="hover:text-white cursor-pointer">up</button> | <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-white cursor-pointer">down</button> | <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | <button @click="openAddItem(ver.id, item.id)" class="hover:text-white cursor-pointer">add item</button> )
                   </span>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

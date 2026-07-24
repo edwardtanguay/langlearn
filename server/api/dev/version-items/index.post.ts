@@ -14,7 +14,21 @@ export default defineEventHandler(async (event) => {
 
   let nextOrder = 1
 
-  if (body.afterItemId) {
+  if (body.afterItemId === 'TOP') {
+    nextOrder = 1
+    const itemsToShift = await prisma.versionItem.findMany({
+      where: {
+        versionId: body.versionId,
+        orderWithinVersion: { gte: 1 }
+      }
+    })
+    for (const item of itemsToShift) {
+      await prisma.versionItem.update({
+        where: { id: item.id },
+        data: { orderWithinVersion: item.orderWithinVersion + 1 }
+      })
+    }
+  } else if (body.afterItemId) {
     const targetItem = await prisma.versionItem.findUnique({
       where: { id: body.afterItemId }
     })
