@@ -125,10 +125,10 @@ const loadVersions = async () => {
   }
 }
 
-function formatPublishDate(dateStr: string | null | undefined) {
+function formatPublishDate(dateStr: string | null | undefined): string {
   if (!dateStr) return ''
   const d = new Date(dateStr)
-  return d.toISOString().split('T')[0]
+  return d.toISOString().split('T')[0] ?? ''
 }
 
 // Version CRUD
@@ -140,7 +140,7 @@ const openAddVersionModal = () => {
 
 const openEditVersionModal = (v: Version) => {
   isEditingVersion.value = true
-  const formattedDate = v.publishDate ? new Date(v.publishDate).toISOString().split('T')[0] : ''
+  const formattedDate = formatPublishDate(v.publishDate)
   versionForm.value = { id: v.id, versionNumber: v.versionNumber, status: v.status, publishDate: formattedDate }
   showVersionModal.value = true
 }

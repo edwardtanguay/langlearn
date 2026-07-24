@@ -79,7 +79,7 @@ onMounted(() => {
 function formatPublishDate(dateStr: string | null | undefined) {
   if (!dateStr) return ''
   const d = new Date(dateStr)
-  return d.toISOString().split('T')[0]
+  return d.toISOString().split('T')[0] ?? ''
 }
 
 const openAddVersion = () => {
@@ -90,7 +90,7 @@ const openAddVersion = () => {
 
 const openEditVersion = (ver: Version) => {
   isNewVersion.value = false
-  const formattedDate = ver.publishDate ? new Date(ver.publishDate).toISOString().split('T')[0] : ''
+  const formattedDate = formatPublishDate(ver.publishDate)
   editingVersion.value = { id: ver.id, versionNumber: ver.versionNumber, status: ver.status, publishDate: formattedDate }
   showEditVersionModal.value = true
 }
