@@ -316,12 +316,20 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
     console.error('Failed to reorder:', err)
   }
 }
+
+const isFirstInList = (item: VersionItem, list: VersionItem[]): boolean => {
+  return list.length > 0 && list[0]?.id === item.id
+}
+
+const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
+  return list.length > 0 && list[list.length - 1]?.id === item.id
+}
 </script>
 
 <template>
   <div class="max-w-4xl mx-auto py-10 px-4 min-h-[600px] space-y-12">
     <!-- 1. INTRODUCTORY HERO SECTION -->
-    <div class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-700/60 flex flex-col md:flex-row items-center gap-6 md:gap-8">
+    <div class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-700/60 flex flex-col md:flex-row items-center md:items-start gap-3 md:gap-8">
       <!-- Left: Fast Flashcards Symbol -->
       <div class="shrink-0 relative group flex items-center justify-center p-2">
         <div class="absolute -top-1 -right-1 z-10">
@@ -365,13 +373,15 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
         </svg>
       </div>
 
-      <!-- Right: Text Description -->
-      <div class="space-y-2 text-center md:text-left">
-        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">About LangLearn</h1>
-        <p class="text-sm md:text-base text-gray-300 font-medium leading-relaxed">
-          LangLearn integrates modern, no-cost tools like Google Translate and AI search into your language learning flow to help you learn languages faster and with a self-directed, personal approach.
-        </p>
-        <div class="pt-2 text-xs text-gray-400 font-medium">
+      <!-- Right: Text Description & Author Link -->
+      <div class="flex-1 flex flex-col md:flex-row md:items-start justify-between gap-4 text-center md:text-left w-full">
+        <div class="space-y-2 max-w-2xl">
+          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">About LangLearn</h1>
+          <p class="text-sm md:text-base text-gray-300 font-medium leading-relaxed">
+            LangLearn integrates modern, no-cost tools like Google Translate and AI search into your language learning flow to help you learn languages faster and with a self-directed, personal approach.
+          </p>
+        </div>
+        <div class="pt-1 md:pt-0 text-xs text-gray-400 font-medium shrink-0 md:text-right">
           More projects by <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer" class="text-white underline hover:text-amber-300 transition-colors">Edward</a>
         </div>
       </div>
@@ -379,11 +389,11 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
 
     <!-- 2. VERSIONS DISPLAY -->
     <div class="space-y-6">
-      <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-3">
+      <div class="flex items-start justify-between">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <span>Version History</span>
         </h2>
-        <div v-if="isAdmin" class="flex items-center space-x-3">
+        <div v-if="isAdmin" class="hidden md:flex items-center space-x-3">
           <button
             v-if="adminEditMode"
             @click="openAddVersion"
@@ -415,24 +425,24 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
       <div v-else class="space-y-8 text-sm text-gray-800 dark:text-gray-200">
         <div v-for="ver in displayedVersions" :key="ver.id" class="space-y-3">
           <!-- Full-Width Version Panel Card -->
-          <div class="bg-gray-900/90 dark:bg-gray-900 border border-gray-800 rounded-xl p-4 md:p-5 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div class="space-y-1">
-              <div class="flex items-center space-x-2.5">
-                <span class="font-mono font-bold text-amber-400 text-lg md:text-xl">
+          <div class="bg-gray-800/40 dark:bg-gray-800/40 rounded-xl p-2.5 md:p-3.5 shadow-sm space-y-2">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-2">
+              <div class="flex items-baseline space-x-2.5">
+                <span class="font-mono font-bold text-amber-400 text-base md:text-lg">
                   v{{ ver.versionNumber }}
                 </span>
-                <span v-if="ver.title" class="font-bold text-white text-lg md:text-xl">
+                <span v-if="ver.title" class="font-bold text-white text-base md:text-lg">
                   {{ ver.title }}
                 </span>
               </div>
-              <div v-if="ver.publishDate" class="text-xs text-gray-400 font-mono">
+              <div v-if="ver.publishDate" class="text-xs text-gray-400 font-mono shrink-0 pt-0.5">
                 {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
               </div>
             </div>
 
             <!-- Right-aligned Version CRUD Actions -->
-            <div v-if="isAdmin && adminEditMode" class="text-xs text-gray-400 shrink-0 self-end md:self-center font-mono">
-              ( <button @click="openEditVersion(ver)" class="hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-400 hover:text-red-300 cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="hover:text-white cursor-pointer transition-colors">add item</button> )
+            <div v-if="isAdmin && adminEditMode" class="text-xs text-gray-400 shrink-0 font-mono text-right pt-1">
+              ( <button @click="openEditVersion(ver)" class="hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-400 hover:text-red-300 cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors">add item</button> )
             </div>
           </div>
 
@@ -443,9 +453,26 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
               <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">features</h4>
               <ul class="space-y-1.5 text-xs text-gray-300">
                 <li v-for="item in ver.versionItems.filter(i => i.type === 'FEATURE')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
-                  <span class="flex-1">• {{ item.body }}</span>
+                  <div class="flex items-start gap-2 flex-1 min-w-0">
+                    <span class="shrink-0 text-gray-400 select-none">•</span>
+                    <span class="flex-1 break-words">{{ item.body }}</span>
+                  </div>
                   <span v-if="isAdmin && adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
-                    ( <button @click="reorderItem(item.id, 'UP')" class="hover:text-white cursor-pointer">up</button> | <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-white cursor-pointer">down</button> | <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | <button @click="openAddItem(ver.id, item.id)" class="hover:text-white cursor-pointer">add item</button> )
+                    ( 
+                    <button 
+                      @click="!isFirstInList(item, ver.versionItems.filter(i => i.type === 'FEATURE')) && reorderItem(item.id, 'UP')" 
+                      :disabled="isFirstInList(item, ver.versionItems.filter(i => i.type === 'FEATURE'))" 
+                      :class="isFirstInList(item, ver.versionItems.filter(i => i.type === 'FEATURE')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
+                    >up</button> | 
+                    <button 
+                      @click="!isLastInList(item, ver.versionItems.filter(i => i.type === 'FEATURE')) && reorderItem(item.id, 'DOWN')" 
+                      :disabled="isLastInList(item, ver.versionItems.filter(i => i.type === 'FEATURE'))" 
+                      :class="isLastInList(item, ver.versionItems.filter(i => i.type === 'FEATURE')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
+                    >down</button> | 
+                    <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
+                    <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | 
+                    <button @click="openAddItem(ver.id, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
+                    )
                   </span>
                 </li>
               </ul>
@@ -456,9 +483,26 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
               <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">bug fixes</h4>
               <ul class="space-y-1.5 text-xs text-gray-300">
                 <li v-for="item in ver.versionItems.filter(i => i.type === 'BUGFIX')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
-                  <span class="flex-1">• {{ item.body }}</span>
+                  <div class="flex items-start gap-2 flex-1 min-w-0">
+                    <span class="shrink-0 text-gray-400 select-none">•</span>
+                    <span class="flex-1 break-words">{{ item.body }}</span>
+                  </div>
                   <span v-if="isAdmin && adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
-                    ( <button @click="reorderItem(item.id, 'UP')" class="hover:text-white cursor-pointer">up</button> | <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-white cursor-pointer">down</button> | <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | <button @click="openAddItem(ver.id, item.id)" class="hover:text-white cursor-pointer">add item</button> )
+                    ( 
+                    <button 
+                      @click="!isFirstInList(item, ver.versionItems.filter(i => i.type === 'BUGFIX')) && reorderItem(item.id, 'UP')" 
+                      :disabled="isFirstInList(item, ver.versionItems.filter(i => i.type === 'BUGFIX'))" 
+                      :class="isFirstInList(item, ver.versionItems.filter(i => i.type === 'BUGFIX')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
+                    >up</button> | 
+                    <button 
+                      @click="!isLastInList(item, ver.versionItems.filter(i => i.type === 'BUGFIX')) && reorderItem(item.id, 'DOWN')" 
+                      :disabled="isLastInList(item, ver.versionItems.filter(i => i.type === 'BUGFIX'))" 
+                      :class="isLastInList(item, ver.versionItems.filter(i => i.type === 'BUGFIX')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
+                    >down</button> | 
+                    <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
+                    <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | 
+                    <button @click="openAddItem(ver.id, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
+                    )
                   </span>
                 </li>
               </ul>
