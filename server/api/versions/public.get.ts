@@ -15,5 +15,18 @@ export default defineEventHandler(async (event) => {
     orderBy: { versionNumber: 'desc' }
   })
 
-  return versions
+  const unassignedItems = await prisma.versionItem.findMany({
+    where: { versionId: null },
+    orderBy: { orderWithinVersion: 'asc' },
+    include: {
+      startedByUser: {
+        select: { id: true, firstName: true, lastName: true, email: true }
+      }
+    }
+  })
+
+  return {
+    versions,
+    unassignedItems
+  }
 })

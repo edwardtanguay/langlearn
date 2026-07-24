@@ -5,20 +5,21 @@ export default defineEventHandler(async (event) => {
   const admin = await requireAdmin(event)
   const body = await readBody(event)
 
-  if (!body?.versionId || !body?.body) {
+  if (!body?.body) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'versionId and body are required'
+      statusMessage: 'body is required'
     })
   }
 
+  const targetVersionId = body.versionId || null
   let nextOrder = 1
 
   if (body.afterItemId === 'TOP') {
     nextOrder = 1
     const itemsToShift = await prisma.versionItem.findMany({
       where: {
-        versionId: body.versionId,
+        versionId: targetVersionId,
         orderWithinVersion: { gte: 1 }
       }
     })
@@ -37,7 +38,7 @@ export default defineEventHandler(async (event) => {
       // Shift all subsequent items in the same version up by 1
       const itemsToShift = await prisma.versionItem.findMany({
         where: {
-          versionId: body.versionId,
+          versionId: targetVersionId,
           orderWithinVersion: { gte: nextOrder }
         }
       })
@@ -49,14 +50,14 @@ export default defineEventHandler(async (event) => {
       }
     } else {
       const lastItem = await prisma.versionItem.findFirst({
-        where: { versionId: body.versionId },
+        where: { versionId: targetVersionId },
         orderBy: { orderWithinVersion: 'desc' }
       })
       nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
     }
   } else {
     const lastItem = await prisma.versionItem.findFirst({
-      where: { versionId: body.versionId },
+      where: { versionId: targetVersionId },
       orderBy: { orderWithinVersion: 'desc' }
     })
     nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
@@ -64,9 +65,8 @@ export default defineEventHandler(async (event) => {
 
   const newItem = await prisma.versionItem.create({
     data: {
-      versionId: body.versionId,
+      versionId: targetVersionId,
       type: body.type || 'BUGFIX',
-      status: body.status || 'PROPOSED',
       body: body.body.trim(),
       startedByUserId: admin.dbId || admin.id,
       orderWithinVersion: nextOrder

@@ -25,68 +25,28 @@ export default defineEventHandler(async (event) => {
 
   const type = body?.type === 'FEATURE' ? 'FEATURE' : 'BUGFIX'
 
-  // 1. Find IN_PROGRESS version
-  let targetVersion = await prisma.version.findFirst({
-    where: { status: 'IN_PROGRESS' },
-    orderBy: { createdAt: 'desc' }
-  })
-
-  // 2. If no IN_PROGRESS version, find FUTURE version and upgrade to IN_PROGRESS
-  if (!targetVersion) {
-    targetVersion = await prisma.version.findFirst({
-      where: { status: 'FUTURE' },
-      orderBy: { createdAt: 'asc' }
-    })
-
-    if (targetVersion) {
-      targetVersion = await prisma.version.update({
-        where: { id: targetVersion.id },
-        data: { status: 'IN_PROGRESS' }
-      })
-    }
-  }
-
-  // 3. If no IN_PROGRESS or FUTURE version, create a new IN_PROGRESS version
-  if (!targetVersion) {
-    const lastVersion = await prisma.version.findFirst({
-      orderBy: { versionNumber: 'desc' }
-    })
-
-    const nextVerStr = lastVersion ? incrementMinorVersion(lastVersion.versionNumber) : '0.1.0'
-
-    targetVersion = await prisma.version.create({
-      data: {
-        versionNumber: nextVerStr,
-        status: 'IN_PROGRESS'
-      }
-    })
-  }
-
-  // Calculate order within version
+  // Calculate order within unassigned items (versionId === null)
   const lastItem = await prisma.versionItem.findFirst({
-    where: { versionId: targetVersion.id },
+    where: { versionId: null },
     orderBy: { orderWithinVersion: 'desc' }
   })
   const nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
 
   const newItem = await prisma.versionItem.create({
     data: {
-      versionId: targetVersion.id,
+      versionId: null,
       type,
-      status: 'PROPOSED',
       body: itemBody,
       startedByUserId: user.dbId || user.id,
       orderWithinVersion: nextOrder
     },
     include: {
-      version: true,
       startedByUser: true
     }
   })
 
   return {
     success: true,
-    item: newItem,
-    versionNumber: targetVersion.versionNumber
+    item: newItem
   }
 })

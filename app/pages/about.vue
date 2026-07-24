@@ -11,9 +11,8 @@ useHead({
 
 interface VersionItem {
   id: string
-  versionId: string
+  versionId: string | null
   type: 'FEATURE' | 'BUGFIX'
-  status: 'PROPOSED' | 'IN_PROGRESS' | 'IMPLEMENTED'
   body: string
   orderWithinVersion: number
 }
@@ -22,34 +21,36 @@ interface Version {
   id: string
   versionNumber: string
   title?: string | null
-  status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'
+  status: 'PUBLISHED' | 'IN_PROGRESS'
   publishDate?: string | null
   versionItems: VersionItem[]
 }
 
 const versions = ref<Version[]>([])
+const unassignedItems = ref<VersionItem[]>([])
 const isLoading = ref(true)
 const isAdmin = ref(false)
 const adminEditMode = ref(false)
 
 // Edit Modals for Admin
 const showEditItemModal = ref(false)
-const editingItem = ref<{ id: string; versionId: string; afterItemId: string; body: string; type: 'FEATURE' | 'BUGFIX'; status: 'PROPOSED' | 'IN_PROGRESS' | 'IMPLEMENTED' }>({
-  id: '', versionId: '', afterItemId: '', body: '', type: 'BUGFIX', status: 'PROPOSED'
+const editingItem = ref<{ id: string; versionId: string; afterItemId: string; body: string; type: 'FEATURE' | 'BUGFIX' }>({
+  id: '', versionId: 'none', afterItemId: '', body: '', type: 'BUGFIX'
 })
 const isNewItem = ref(false)
 
 const showEditVersionModal = ref(false)
-const editingVersion = ref<{ id: string; versionNumber: string; title: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'; publishDate: string }>({
-  id: '', versionNumber: '', title: '', status: 'FUTURE', publishDate: ''
+const editingVersion = ref<{ id: string; versionNumber: string; title: string; status: 'PUBLISHED' | 'IN_PROGRESS'; publishDate: string }>({
+  id: '', versionNumber: '', title: '', status: 'IN_PROGRESS', publishDate: ''
 })
 const isNewVersion = ref(false)
 
 const loadData = async () => {
   isLoading.value = true
   try {
-    const data = await $fetch<Version[]>('/api/versions/public')
-    versions.value = data
+    const data = await $fetch<{ versions: Version[]; unassignedItems: VersionItem[] }>('/api/versions/public')
+    versions.value = data.versions || []
+    unassignedItems.value = data.unassignedItems || []
 
     try {
       const me = await $fetch<{ role: string }>('/api/user/me')
@@ -115,7 +116,7 @@ function getRelativeDateStr(dateStr: string | null | undefined): string {
 
 const openAddVersion = () => {
   isNewVersion.value = true
-  editingVersion.value = { id: '', versionNumber: '', title: '', status: 'FUTURE', publishDate: '' }
+  editingVersion.value = { id: '', versionNumber: '', title: '', status: 'IN_PROGRESS', publishDate: '' }
   showEditVersionModal.value = true
 }
 
@@ -193,126 +194,70 @@ const deleteVersion = async (ver: Version) => {
   }
 }
 
-const openAddItem = (versionId: string, afterItemId?: string) => {
+const openAddItem = (versionId: string | null, afterItemId?: string) => {
   isNewItem.value = true
-  editingItem.value = { id: '', versionId, afterItemId: afterItemId || '', body: '', type: 'BUGFIX', status: 'PROPOSED' }
+  editingItem.value = { id: '', versionId: versionId || 'none', afterItemId: afterItemId || '', body: '', type: 'BUGFIX' }
   showEditItemModal.value = true
 }
 
 const openEditItem = (item: VersionItem) => {
   isNewItem.value = false
-  editingItem.value = { id: item.id, versionId: item.versionId, afterItemId: '', body: item.body, type: item.type, status: item.status }
+  editingItem.value = { id: item.id, versionId: item.versionId || 'none', afterItemId: '', body: item.body, type: item.type }
   showEditItemModal.value = true
 }
 
 const saveAdminItem = async () => {
   if (!editingItem.value.body.trim()) return
-  const snapshot = JSON.parse(JSON.stringify(versions.value))
-  const payload = { ...editingItem.value }
+  showEditItemModal.value = false
 
-  if (isNewItem.value) {
-    const tempId = 'temp-item-' + Date.now()
-    const verObj = versions.value.find(v => v.id === payload.versionId)
-    if (verObj) {
-      const newItemObj: VersionItem = {
-        id: tempId,
-        versionId: payload.versionId,
-        type: payload.type,
-        status: payload.status,
-        body: payload.body.trim(),
-        orderWithinVersion: 1
-      }
-      if (payload.afterItemId === 'TOP') {
-        verObj.versionItems.unshift(newItemObj)
-      } else if (payload.afterItemId) {
-        const targetIdx = verObj.versionItems.findIndex(i => i.id === payload.afterItemId)
-        if (targetIdx !== -1) {
-          verObj.versionItems.splice(targetIdx + 1, 0, newItemObj)
-        } else {
-          verObj.versionItems.push(newItemObj)
-        }
-      } else {
-        verObj.versionItems.push(newItemObj)
-      }
+  try {
+    const payload = {
+      ...editingItem.value,
+      versionId: editingItem.value.versionId === 'none' ? null : editingItem.value.versionId
     }
-    showEditItemModal.value = false
 
-    try {
-      const created = await $fetch<VersionItem>('/api/dev/version-items', {
+    if (isNewItem.value) {
+      await $fetch<VersionItem>('/api/dev/version-items', {
         method: 'POST',
         body: payload
       })
-      if (verObj) {
-        const itemIdx = verObj.versionItems.findIndex(i => i.id === tempId)
-        if (itemIdx !== -1) verObj.versionItems[itemIdx] = created
-      }
-    } catch (err: any) {
-      versions.value = snapshot
-      alert(err.data?.statusMessage || 'Failed to save item')
-    }
-  } else {
-    for (const v of versions.value) {
-      const targetItem = v.versionItems.find(i => i.id === payload.id)
-      if (targetItem) {
-        targetItem.type = payload.type
-        targetItem.status = payload.status
-        targetItem.body = payload.body.trim()
-        break
-      }
-    }
-    showEditItemModal.value = false
-
-    try {
+    } else {
       await $fetch(`/api/dev/version-items/${payload.id}`, {
         method: 'PUT',
         body: payload
       })
-    } catch (err: any) {
-      versions.value = snapshot
-      alert(err.data?.statusMessage || 'Failed to save item')
     }
+    await loadData()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to save item')
   }
 }
 
 const deleteItem = async (item: VersionItem) => {
   if (!confirm('Are you sure you want to delete this item?')) return
-  const snapshot = JSON.parse(JSON.stringify(versions.value))
-  for (const v of versions.value) {
-    v.versionItems = v.versionItems.filter(i => i.id !== item.id)
-  }
   try {
+    if (item.versionId === null) {
+      unassignedItems.value = unassignedItems.value.filter(i => i.id !== item.id)
+    } else {
+      for (const v of versions.value) {
+        v.versionItems = v.versionItems.filter(i => i.id !== item.id)
+      }
+    }
     await $fetch(`/api/dev/version-items/${item.id}`, { method: 'DELETE' })
   } catch (err: any) {
-    versions.value = snapshot
+    await loadData()
     alert(err.data?.statusMessage || 'Failed to delete item')
   }
 }
 
 const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
-  const snapshot = JSON.parse(JSON.stringify(versions.value))
-  for (const v of versions.value) {
-    const idx = v.versionItems.findIndex(i => i.id === itemId)
-    if (idx !== -1) {
-      const targetIdx = direction === 'UP' ? idx - 1 : idx + 1
-      if (targetIdx >= 0 && targetIdx < v.versionItems.length) {
-        const item = v.versionItems[idx]
-        const targetItem = v.versionItems[targetIdx]
-        if (item && targetItem) {
-          v.versionItems[idx] = targetItem
-          v.versionItems[targetIdx] = item
-        }
-      }
-      break
-    }
-  }
-
   try {
     await $fetch('/api/dev/version-items/reorder', {
       method: 'POST',
       body: { itemId, direction }
     })
+    await loadData()
   } catch (err: any) {
-    versions.value = snapshot
     console.error('Failed to reorder:', err)
   }
 }
@@ -417,16 +362,104 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
         Loading version history...
       </div>
 
-      <div v-else-if="displayedVersions.length === 0" class="py-6 text-gray-500 text-sm">
+      <div v-else-if="displayedVersions.length === 0 && (!isAdmin || unassignedItems.length === 0)" class="py-6 text-gray-500 text-sm">
         No versions published yet.
       </div>
 
       <!-- Version Cards List -->
       <div v-else class="space-y-8 text-sm text-gray-800 dark:text-gray-200">
+        
+        <!-- Proposed Features & Bug Fixes (Admin section for unassigned items) -->
+        <div v-if="isAdmin" class="space-y-3">
+          <div class="bg-amber-950/30 dark:bg-amber-950/20 border border-amber-800/40 rounded-xl p-2.5 md:p-3.5 shadow-sm space-y-2">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
+              <div class="flex items-center space-x-2.5">
+                <span class="font-bold text-amber-400 text-base md:text-lg">
+                  Proposed features & bug fixes
+                </span>
+                <span class="text-xs font-mono text-amber-400/70">
+                  ({{ unassignedItems.length }} unassigned)
+                </span>
+              </div>
+            </div>
+            <div v-if="adminEditMode" class="text-xs text-gray-400 shrink-0 font-mono text-right pt-1">
+              ( <button @click="openAddItem(null, 'TOP')" class="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors">add item</button> )
+            </div>
+          </div>
+
+          <div v-if="unassignedItems.length === 0" class="pl-3 text-xs text-gray-500 italic">
+            No proposed features or bug fixes yet.
+          </div>
+
+          <!-- Unassigned Items List -->
+          <div v-else class="pl-2 pr-2 space-y-3">
+            <!-- Features Section -->
+            <div v-if="unassignedItems.filter(i => i.type === 'FEATURE').length > 0" class="space-y-1.5">
+              <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">features</h4>
+              <ul class="space-y-1.5 text-xs text-gray-300">
+                <li v-for="item in unassignedItems.filter(i => i.type === 'FEATURE')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
+                  <div class="flex items-start gap-2 flex-1 min-w-0">
+                    <span class="shrink-0 text-gray-400 select-none">•</span>
+                    <span class="flex-1 break-words">{{ item.body }}</span>
+                  </div>
+                  <span v-if="adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
+                    ( 
+                    <button 
+                      @click="!isFirstInList(item, unassignedItems.filter(i => i.type === 'FEATURE')) && reorderItem(item.id, 'UP')" 
+                      :disabled="isFirstInList(item, unassignedItems.filter(i => i.type === 'FEATURE'))" 
+                      :class="isFirstInList(item, unassignedItems.filter(i => i.type === 'FEATURE')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
+                    >up</button> | 
+                    <button 
+                      @click="!isLastInList(item, unassignedItems.filter(i => i.type === 'FEATURE')) && reorderItem(item.id, 'DOWN')" 
+                      :disabled="isLastInList(item, unassignedItems.filter(i => i.type === 'FEATURE'))" 
+                      :class="isLastInList(item, unassignedItems.filter(i => i.type === 'FEATURE')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
+                    >down</button> | 
+                    <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
+                    <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | 
+                    <button @click="openAddItem(null, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
+                    )
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Bug Fixes Section -->
+            <div v-if="unassignedItems.filter(i => i.type === 'BUGFIX').length > 0" class="space-y-1.5">
+              <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">bug fixes</h4>
+              <ul class="space-y-1.5 text-xs text-gray-300">
+                <li v-for="item in unassignedItems.filter(i => i.type === 'BUGFIX')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
+                  <div class="flex items-start gap-2 flex-1 min-w-0">
+                    <span class="shrink-0 text-gray-400 select-none">•</span>
+                    <span class="flex-1 break-words">{{ item.body }}</span>
+                  </div>
+                  <span v-if="adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
+                    ( 
+                    <button 
+                      @click="!isFirstInList(item, unassignedItems.filter(i => i.type === 'BUGFIX')) && reorderItem(item.id, 'UP')" 
+                      :disabled="isFirstInList(item, unassignedItems.filter(i => i.type === 'BUGFIX'))" 
+                      :class="isFirstInList(item, unassignedItems.filter(i => i.type === 'BUGFIX')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
+                    >up</button> | 
+                    <button 
+                      @click="!isLastInList(item, unassignedItems.filter(i => i.type === 'BUGFIX')) && reorderItem(item.id, 'DOWN')" 
+                      :disabled="isLastInList(item, unassignedItems.filter(i => i.type === 'BUGFIX'))" 
+                      :class="isLastInList(item, unassignedItems.filter(i => i.type === 'BUGFIX')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
+                    >down</button> | 
+                    <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
+                    <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | 
+                    <button @click="openAddItem(null, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
+                    )
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Standard Version Cards -->
         <div v-for="ver in displayedVersions" :key="ver.id" class="space-y-3">
           <!-- Full-Width Version Panel Card -->
           <div class="bg-gray-800/40 dark:bg-gray-800/40 rounded-xl p-2.5 md:p-3.5 shadow-sm space-y-2">
-            <div class="flex flex-col md:flex-row md:items-start justify-between gap-2">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
               <div class="flex items-baseline space-x-2.5">
                 <span class="font-mono font-bold text-amber-400 text-base md:text-lg">
                   v{{ ver.versionNumber }}
@@ -435,7 +468,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
                   {{ ver.title }}
                 </span>
               </div>
-              <div v-if="ver.publishDate" class="text-xs text-gray-400 font-mono shrink-0 pt-0.5">
+              <div v-if="ver.publishDate" class="text-xs sm:text-sm text-gray-400 font-mono shrink-0">
                 {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
               </div>
             </div>
@@ -516,32 +549,31 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
     <div v-if="showEditVersionModal && editingVersion" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl space-y-4">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewVersion ? 'Admin Create: Version' : 'Admin Edit: Version' }}</h3>
-        <div class="space-y-3 text-xs">
+        <form @submit.prevent="saveAdminVersion" class="space-y-3 text-xs">
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Number</label>
-            <input v-model="editingVersion.versionNumber" type="text" placeholder="0.3.0" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+            <input v-model="editingVersion.versionNumber" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="0.3.0" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Title</label>
-            <input v-model="editingVersion.title" type="text" placeholder="Added version history" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+            <input v-model="editingVersion.title" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="Added version history" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
-            <label class="block text-gray-700 dark:text-gray-300 mb-1">Publish Date (Optional)</label>
-            <input v-model="editingVersion.publishDate" type="date" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+            <label class="block text-gray-700 dark:text-gray-300 mb-1">Publish Date (YYYY-MM-DD)</label>
+            <input v-model="editingVersion.publishDate" @keydown.enter.exact.prevent="saveAdminVersion" type="date" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Status</label>
             <select v-model="editingVersion.status" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
-              <option value="FUTURE">FUTURE</option>
               <option value="IN_PROGRESS">IN_PROGRESS</option>
               <option value="PUBLISHED">PUBLISHED</option>
             </select>
           </div>
-        </div>
-        <div class="flex justify-end space-x-2 pt-2">
-          <button @click="showEditVersionModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
-          <button @click="saveAdminVersion" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">Save</button>
-        </div>
+          <div class="flex justify-end space-x-2 pt-2">
+            <button type="button" @click="showEditVersionModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+            <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">Save</button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -549,7 +581,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
     <div v-if="showEditItemModal && editingItem" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-lg shadow-2xl space-y-4">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewItem ? 'Admin Add: Roadmap Item' : 'Admin Edit: Roadmap Item' }}</h3>
-        <div class="space-y-3 text-xs">
+        <form @submit.prevent="saveAdminItem" class="space-y-3 text-xs">
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Type</label>
@@ -559,23 +591,24 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
               </select>
             </div>
             <div>
-              <label class="block text-gray-700 dark:text-gray-300 mb-1">Status</label>
-              <select v-model="editingItem.status" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
-                <option value="PROPOSED">PROPOSED</option>
-                <option value="IN_PROGRESS">IN_PROGRESS</option>
-                <option value="IMPLEMENTED">IMPLEMENTED</option>
+              <label class="block text-gray-700 dark:text-gray-300 mb-1">Version</label>
+              <select v-model="editingItem.versionId" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
+                <option value="none">none (Proposed)</option>
+                <option v-for="ver in versions" :key="ver.id" :value="ver.id">
+                  v{{ ver.versionNumber }} {{ ver.title ? `- ${ver.title}` : '' }}
+                </option>
               </select>
             </div>
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Description / Body</label>
-            <textarea v-model="editingItem.body" rows="3" placeholder="Describe the feature or bug fix..." class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white"></textarea>
+            <textarea v-model="editingItem.body" @keydown.enter.exact.prevent="saveAdminItem" rows="3" placeholder="Describe the feature or bug fix..." class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white"></textarea>
           </div>
-        </div>
-        <div class="flex justify-end space-x-2 pt-2">
-          <button @click="showEditItemModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
-          <button @click="saveAdminItem" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">Save</button>
-        </div>
+          <div class="flex justify-end space-x-2 pt-2">
+            <button type="button" @click="showEditItemModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+            <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">Save</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

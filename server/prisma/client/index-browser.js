@@ -140,7 +140,6 @@ exports.Prisma.VersionItemScalarFieldEnum = {
   id: 'id',
   versionId: 'versionId',
   type: 'type',
-  status: 'status',
   body: 'body',
   startedByUserId: 'startedByUserId',
   orderWithinVersion: 'orderWithinVersion',

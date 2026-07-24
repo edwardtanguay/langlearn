@@ -3870,7 +3870,6 @@ export namespace Prisma {
     id: string | null
     versionId: string | null
     type: string | null
-    status: string | null
     body: string | null
     startedByUserId: string | null
     orderWithinVersion: number | null
@@ -3882,7 +3881,6 @@ export namespace Prisma {
     id: string | null
     versionId: string | null
     type: string | null
-    status: string | null
     body: string | null
     startedByUserId: string | null
     orderWithinVersion: number | null
@@ -3894,7 +3892,6 @@ export namespace Prisma {
     id: number
     versionId: number
     type: number
-    status: number
     body: number
     startedByUserId: number
     orderWithinVersion: number
@@ -3916,7 +3913,6 @@ export namespace Prisma {
     id?: true
     versionId?: true
     type?: true
-    status?: true
     body?: true
     startedByUserId?: true
     orderWithinVersion?: true
@@ -3928,7 +3924,6 @@ export namespace Prisma {
     id?: true
     versionId?: true
     type?: true
-    status?: true
     body?: true
     startedByUserId?: true
     orderWithinVersion?: true
@@ -3940,7 +3935,6 @@ export namespace Prisma {
     id?: true
     versionId?: true
     type?: true
-    status?: true
     body?: true
     startedByUserId?: true
     orderWithinVersion?: true
@@ -4037,9 +4031,8 @@ export namespace Prisma {
 
   export type VersionItemGroupByOutputType = {
     id: string
-    versionId: string
+    versionId: string | null
     type: string
-    status: string
     body: string
     startedByUserId: string | null
     orderWithinVersion: number
@@ -4070,13 +4063,12 @@ export namespace Prisma {
     id?: boolean
     versionId?: boolean
     type?: boolean
-    status?: boolean
     body?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    version?: boolean | VersionDefaultArgs<ExtArgs>
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["versionItem"]>
 
@@ -4084,13 +4076,12 @@ export namespace Prisma {
     id?: boolean
     versionId?: boolean
     type?: boolean
-    status?: boolean
     body?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    version?: boolean | VersionDefaultArgs<ExtArgs>
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["versionItem"]>
 
@@ -4098,13 +4089,12 @@ export namespace Prisma {
     id?: boolean
     versionId?: boolean
     type?: boolean
-    status?: boolean
     body?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    version?: boolean | VersionDefaultArgs<ExtArgs>
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["versionItem"]>
 
@@ -4112,7 +4102,6 @@ export namespace Prisma {
     id?: boolean
     versionId?: boolean
     type?: boolean
-    status?: boolean
     body?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
@@ -4120,31 +4109,30 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type VersionItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionId" | "type" | "status" | "body" | "startedByUserId" | "orderWithinVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["versionItem"]>
+  export type VersionItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionId" | "type" | "body" | "startedByUserId" | "orderWithinVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["versionItem"]>
   export type VersionItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    version?: boolean | VersionDefaultArgs<ExtArgs>
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }
   export type VersionItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    version?: boolean | VersionDefaultArgs<ExtArgs>
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }
   export type VersionItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    version?: boolean | VersionDefaultArgs<ExtArgs>
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }
 
   export type $VersionItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "VersionItem"
     objects: {
-      version: Prisma.$VersionPayload<ExtArgs>
+      version: Prisma.$VersionPayload<ExtArgs> | null
       startedByUser: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      versionId: string
+      versionId: string | null
       type: string
-      status: string
       body: string
       startedByUserId: string | null
       orderWithinVersion: number
@@ -4544,7 +4532,7 @@ export namespace Prisma {
    */
   export interface Prisma__VersionItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    version<T extends VersionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VersionDefaultArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    version<T extends VersionItem$versionArgs<ExtArgs> = {}>(args?: Subset<T, VersionItem$versionArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     startedByUser<T extends VersionItem$startedByUserArgs<ExtArgs> = {}>(args?: Subset<T, VersionItem$startedByUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4578,7 +4566,6 @@ export namespace Prisma {
     readonly id: FieldRef<"VersionItem", 'String'>
     readonly versionId: FieldRef<"VersionItem", 'String'>
     readonly type: FieldRef<"VersionItem", 'String'>
-    readonly status: FieldRef<"VersionItem", 'String'>
     readonly body: FieldRef<"VersionItem", 'String'>
     readonly startedByUserId: FieldRef<"VersionItem", 'String'>
     readonly orderWithinVersion: FieldRef<"VersionItem", 'Int'>
@@ -4980,6 +4967,25 @@ export namespace Prisma {
      * Limit how many VersionItems to delete.
      */
     limit?: number
+  }
+
+  /**
+   * VersionItem.version
+   */
+  export type VersionItem$versionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    where?: VersionWhereInput
   }
 
   /**
@@ -9544,7 +9550,6 @@ export namespace Prisma {
     id: 'id',
     versionId: 'versionId',
     type: 'type',
-    status: 'status',
     body: 'body',
     startedByUserId: 'startedByUserId',
     orderWithinVersion: 'orderWithinVersion',
@@ -9794,23 +9799,21 @@ export namespace Prisma {
     OR?: VersionItemWhereInput[]
     NOT?: VersionItemWhereInput | VersionItemWhereInput[]
     id?: StringFilter<"VersionItem"> | string
-    versionId?: StringFilter<"VersionItem"> | string
+    versionId?: StringNullableFilter<"VersionItem"> | string | null
     type?: StringFilter<"VersionItem"> | string
-    status?: StringFilter<"VersionItem"> | string
     body?: StringFilter<"VersionItem"> | string
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
     createdAt?: DateTimeFilter<"VersionItem"> | Date | string
     updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
-    version?: XOR<VersionScalarRelationFilter, VersionWhereInput>
+    version?: XOR<VersionNullableScalarRelationFilter, VersionWhereInput> | null
     startedByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type VersionItemOrderByWithRelationInput = {
     id?: SortOrder
-    versionId?: SortOrder
+    versionId?: SortOrderInput | SortOrder
     type?: SortOrder
-    status?: SortOrder
     body?: SortOrder
     startedByUserId?: SortOrderInput | SortOrder
     orderWithinVersion?: SortOrder
@@ -9825,23 +9828,21 @@ export namespace Prisma {
     AND?: VersionItemWhereInput | VersionItemWhereInput[]
     OR?: VersionItemWhereInput[]
     NOT?: VersionItemWhereInput | VersionItemWhereInput[]
-    versionId?: StringFilter<"VersionItem"> | string
+    versionId?: StringNullableFilter<"VersionItem"> | string | null
     type?: StringFilter<"VersionItem"> | string
-    status?: StringFilter<"VersionItem"> | string
     body?: StringFilter<"VersionItem"> | string
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
     createdAt?: DateTimeFilter<"VersionItem"> | Date | string
     updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
-    version?: XOR<VersionScalarRelationFilter, VersionWhereInput>
+    version?: XOR<VersionNullableScalarRelationFilter, VersionWhereInput> | null
     startedByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type VersionItemOrderByWithAggregationInput = {
     id?: SortOrder
-    versionId?: SortOrder
+    versionId?: SortOrderInput | SortOrder
     type?: SortOrder
-    status?: SortOrder
     body?: SortOrder
     startedByUserId?: SortOrderInput | SortOrder
     orderWithinVersion?: SortOrder
@@ -9859,9 +9860,8 @@ export namespace Prisma {
     OR?: VersionItemScalarWhereWithAggregatesInput[]
     NOT?: VersionItemScalarWhereWithAggregatesInput | VersionItemScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"VersionItem"> | string
-    versionId?: StringWithAggregatesFilter<"VersionItem"> | string
+    versionId?: StringNullableWithAggregatesFilter<"VersionItem"> | string | null
     type?: StringWithAggregatesFilter<"VersionItem"> | string
-    status?: StringWithAggregatesFilter<"VersionItem"> | string
     body?: StringWithAggregatesFilter<"VersionItem"> | string
     startedByUserId?: StringNullableWithAggregatesFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntWithAggregatesFilter<"VersionItem"> | number
@@ -10287,20 +10287,18 @@ export namespace Prisma {
   export type VersionItemCreateInput = {
     id?: string
     type?: string
-    status?: string
     body: string
     orderWithinVersion?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    version: VersionCreateNestedOneWithoutVersionItemsInput
+    version?: VersionCreateNestedOneWithoutVersionItemsInput
     startedByUser?: UserCreateNestedOneWithoutVersionItemsInput
   }
 
   export type VersionItemUncheckedCreateInput = {
     id?: string
-    versionId: string
+    versionId?: string | null
     type?: string
-    status?: string
     body: string
     startedByUserId?: string | null
     orderWithinVersion?: number
@@ -10311,20 +10309,18 @@ export namespace Prisma {
   export type VersionItemUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    version?: VersionUpdateOneRequiredWithoutVersionItemsNestedInput
+    version?: VersionUpdateOneWithoutVersionItemsNestedInput
     startedByUser?: UserUpdateOneWithoutVersionItemsNestedInput
   }
 
   export type VersionItemUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    versionId?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
@@ -10334,9 +10330,8 @@ export namespace Prisma {
 
   export type VersionItemCreateManyInput = {
     id?: string
-    versionId: string
+    versionId?: string | null
     type?: string
-    status?: string
     body: string
     startedByUserId?: string | null
     orderWithinVersion?: number
@@ -10347,7 +10342,6 @@ export namespace Prisma {
   export type VersionItemUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10356,9 +10350,8 @@ export namespace Prisma {
 
   export type VersionItemUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    versionId?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
@@ -10874,9 +10867,9 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type VersionScalarRelationFilter = {
-    is?: VersionWhereInput
-    isNot?: VersionWhereInput
+  export type VersionNullableScalarRelationFilter = {
+    is?: VersionWhereInput | null
+    isNot?: VersionWhereInput | null
   }
 
   export type UserNullableScalarRelationFilter = {
@@ -10888,7 +10881,6 @@ export namespace Prisma {
     id?: SortOrder
     versionId?: SortOrder
     type?: SortOrder
-    status?: SortOrder
     body?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
@@ -10904,7 +10896,6 @@ export namespace Prisma {
     id?: SortOrder
     versionId?: SortOrder
     type?: SortOrder
-    status?: SortOrder
     body?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
@@ -10916,7 +10907,6 @@ export namespace Prisma {
     id?: SortOrder
     versionId?: SortOrder
     type?: SortOrder
-    status?: SortOrder
     body?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
@@ -11313,10 +11303,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type VersionUpdateOneRequiredWithoutVersionItemsNestedInput = {
+  export type VersionUpdateOneWithoutVersionItemsNestedInput = {
     create?: XOR<VersionCreateWithoutVersionItemsInput, VersionUncheckedCreateWithoutVersionItemsInput>
     connectOrCreate?: VersionCreateOrConnectWithoutVersionItemsInput
     upsert?: VersionUpsertWithoutVersionItemsInput
+    disconnect?: VersionWhereInput | boolean
+    delete?: VersionWhereInput | boolean
     connect?: VersionWhereUniqueInput
     update?: XOR<XOR<VersionUpdateToOneWithWhereWithoutVersionItemsInput, VersionUpdateWithoutVersionItemsInput>, VersionUncheckedUpdateWithoutVersionItemsInput>
   }
@@ -11843,19 +11835,17 @@ export namespace Prisma {
   export type VersionItemCreateWithoutStartedByUserInput = {
     id?: string
     type?: string
-    status?: string
     body: string
     orderWithinVersion?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    version: VersionCreateNestedOneWithoutVersionItemsInput
+    version?: VersionCreateNestedOneWithoutVersionItemsInput
   }
 
   export type VersionItemUncheckedCreateWithoutStartedByUserInput = {
     id?: string
-    versionId: string
+    versionId?: string | null
     type?: string
-    status?: string
     body: string
     orderWithinVersion?: number
     createdAt?: Date | string
@@ -11955,9 +11945,8 @@ export namespace Prisma {
     OR?: VersionItemScalarWhereInput[]
     NOT?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
     id?: StringFilter<"VersionItem"> | string
-    versionId?: StringFilter<"VersionItem"> | string
+    versionId?: StringNullableFilter<"VersionItem"> | string | null
     type?: StringFilter<"VersionItem"> | string
-    status?: StringFilter<"VersionItem"> | string
     body?: StringFilter<"VersionItem"> | string
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
@@ -11968,7 +11957,6 @@ export namespace Prisma {
   export type VersionItemCreateWithoutVersionInput = {
     id?: string
     type?: string
-    status?: string
     body: string
     orderWithinVersion?: number
     createdAt?: Date | string
@@ -11979,7 +11967,6 @@ export namespace Prisma {
   export type VersionItemUncheckedCreateWithoutVersionInput = {
     id?: string
     type?: string
-    status?: string
     body: string
     startedByUserId?: string | null
     orderWithinVersion?: number
@@ -12758,9 +12745,8 @@ export namespace Prisma {
 
   export type VersionItemCreateManyStartedByUserInput = {
     id?: string
-    versionId: string
+    versionId?: string | null
     type?: string
-    status?: string
     body: string
     orderWithinVersion?: number
     createdAt?: Date | string
@@ -12845,19 +12831,17 @@ export namespace Prisma {
   export type VersionItemUpdateWithoutStartedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    version?: VersionUpdateOneRequiredWithoutVersionItemsNestedInput
+    version?: VersionUpdateOneWithoutVersionItemsNestedInput
   }
 
   export type VersionItemUncheckedUpdateWithoutStartedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    versionId?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12866,9 +12850,8 @@ export namespace Prisma {
 
   export type VersionItemUncheckedUpdateManyWithoutStartedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    versionId?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12878,7 +12861,6 @@ export namespace Prisma {
   export type VersionItemCreateManyVersionInput = {
     id?: string
     type?: string
-    status?: string
     body: string
     startedByUserId?: string | null
     orderWithinVersion?: number
@@ -12889,7 +12871,6 @@ export namespace Prisma {
   export type VersionItemUpdateWithoutVersionInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12900,7 +12881,6 @@ export namespace Prisma {
   export type VersionItemUncheckedUpdateWithoutVersionInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
@@ -12911,7 +12891,6 @@ export namespace Prisma {
   export type VersionItemUncheckedUpdateManyWithoutVersionInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
