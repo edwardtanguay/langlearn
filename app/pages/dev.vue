@@ -1,14 +1,295 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import {
+  WrenchScrewdriverIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
+  PlusIcon,
+  PencilSquareIcon,
+  TrashIcon,
+  UserGroupIcon,
+  HashtagIcon
+} from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - Developer Console',
   meta: [
-    { name: 'description', content: 'Developer console for inspecting flashcard status, rank, and scheduling.' }
+    { name: 'description', content: 'Developer console for managing versions, user roles, and flashcard flow.' }
   ]
 })
 
+const activeTab = ref<'versions' | 'flashcard-flow' | 'users'>('versions')
+
+const config = useRuntimeConfig()
+const router = useRouter()
+const showDevPage = config.public.showDevPage
+const auth = useAuth()
+const loggedIn = computed(() => auth?.loggedIn ?? false)
+
+// Role guard check
+const userRole = ref<string>('member')
+const isCheckingRole = ref(true)
+
+const fetchUserRole = async () => {
+  if (!loggedIn.value) {
+    navigateTo('/')
+    return
+  }
+  try {
+    const me = await $fetch<{ role: string }>('/api/user/me')
+    userRole.value = me.role
+    if (me.role !== 'admin') {
+      navigateTo('/')
+    }
+  } catch (err) {
+    navigateTo('/')
+  } finally {
+    isCheckingRole.value = false
+  }
+}
+
+onMounted(() => {
+  if (!showDevPage) {
+    navigateTo('/')
+  } else {
+    fetchUserRole()
+  }
+})
+
+// ==========================================
+// 1. VERSIONS TAB STATE & ACTIONS
+// ==========================================
+interface VersionItem {
+  id: string
+  versionId: string
+  type: 'FEATURE' | 'BUGFIX'
+  status: 'PROPOSED' | 'IN_PROGRESS' | 'IMPLEMENTED'
+  body: string
+  orderWithinVersion: number
+  startedByUser?: { firstName: string; lastName: string; email: string }
+}
+
+interface Version {
+  id: string
+  versionNumber: string
+  status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'
+  versionItems: VersionItem[]
+}
+
+const versions = ref<Version[]>([])
+const isLoadingVersions = ref(false)
+const expandedVersions = ref<Record<string, boolean>>({})
+
+// Version Modal
+const showVersionModal = ref(false)
+const versionForm = ref({
+  id: '',
+  versionNumber: '',
+  status: 'FUTURE' as 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'
+})
+const isEditingVersion = ref(false)
+
+// Item Modal
+const showItemModal = ref(false)
+const itemForm = ref({
+  id: '',
+  versionId: '',
+  type: 'BUGFIX' as 'FEATURE' | 'BUGFIX',
+  status: 'PROPOSED' as 'PROPOSED' | 'IN_PROGRESS' | 'IMPLEMENTED',
+  body: ''
+})
+const isEditingItem = ref(false)
+
+const loadVersions = async () => {
+  isLoadingVersions.value = true
+  try {
+    const data = await $fetch<Version[]>('/api/dev/versions')
+    versions.value = data
+    // Auto-expand in-progress and first versions
+    data.forEach((v, idx) => {
+      if (idx === 0 || v.status === 'IN_PROGRESS') {
+        expandedVersions.value[v.id] = true
+      }
+    })
+  } catch (err) {
+    console.error('Failed to load versions:', err)
+  } finally {
+    isLoadingVersions.value = false
+  }
+}
+
+const toggleVersionExpand = (versionId: string) => {
+  expandedVersions.value[versionId] = !expandedVersions.value[versionId]
+}
+
+// Version CRUD
+const openAddVersionModal = () => {
+  isEditingVersion.value = false
+  versionForm.value = { id: '', versionNumber: '', status: 'FUTURE' }
+  showVersionModal.value = true
+}
+
+const openEditVersionModal = (v: Version) => {
+  isEditingVersion.value = true
+  versionForm.value = { id: v.id, versionNumber: v.versionNumber, status: v.status }
+  showVersionModal.value = true
+}
+
+const saveVersion = async () => {
+  if (!versionForm.value.versionNumber.trim()) return
+  try {
+    if (isEditingVersion.value) {
+      await $fetch(`/api/dev/versions/${versionForm.value.id}`, {
+        method: 'PUT',
+        body: versionForm.value
+      })
+    } else {
+      await $fetch('/api/dev/versions', {
+        method: 'POST',
+        body: versionForm.value
+      })
+    }
+    showVersionModal.value = false
+    await loadVersions()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to save version')
+  }
+}
+
+const deleteVersion = async (v: Version) => {
+  if (!confirm(`Are you sure you want to delete version ${v.versionNumber}? All items in it will be deleted.`)) return
+  try {
+    await $fetch(`/api/dev/versions/${v.id}`, { method: 'DELETE' })
+    await loadVersions()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to delete version')
+  }
+}
+
+// Item CRUD
+const openAddItemModal = (versionId: string) => {
+  isEditingItem.value = false
+  itemForm.value = { id: '', versionId, type: 'BUGFIX', status: 'PROPOSED', body: '' }
+  showItemModal.value = true
+}
+
+const openEditItemModal = (item: VersionItem) => {
+  isEditingItem.value = true
+  itemForm.value = {
+    id: item.id,
+    versionId: item.versionId,
+    type: item.type,
+    status: item.status,
+    body: item.body
+  }
+  showItemModal.value = true
+}
+
+const saveItem = async () => {
+  if (!itemForm.value.body.trim()) return
+  try {
+    if (isEditingItem.value) {
+      await $fetch(`/api/dev/version-items/${itemForm.value.id}`, {
+        method: 'PUT',
+        body: itemForm.value
+      })
+    } else {
+      await $fetch('/api/dev/version-items', {
+        method: 'POST',
+        body: itemForm.value
+      })
+    }
+    showItemModal.value = false
+    await loadVersions()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to save version item')
+  }
+}
+
+const deleteItem = async (item: VersionItem) => {
+  if (!confirm('Are you sure you want to delete this item?')) return
+  try {
+    await $fetch(`/api/dev/version-items/${item.id}`, { method: 'DELETE' })
+    await loadVersions()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to delete item')
+  }
+}
+
+const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
+  try {
+    await $fetch('/api/dev/version-items/reorder', {
+      method: 'POST',
+      body: { itemId, direction }
+    })
+    await loadVersions()
+  } catch (err: any) {
+    console.error('Failed to reorder:', err)
+  }
+}
+
+// ==========================================
+// 2. USERS TAB STATE & ACTIONS
+// ==========================================
+interface UserEntry {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  role: 'admin' | 'member'
+  _count?: { flashcards: number }
+}
+
+const usersList = ref<UserEntry[]>([])
+const isLoadingUsers = ref(false)
+const showUserModal = ref(false)
+const userForm = ref<{ id: string; firstName: string; lastName: string; role: 'admin' | 'member' }>({
+  id: '',
+  firstName: '',
+  lastName: '',
+  role: 'member'
+})
+
+const loadUsers = async () => {
+  isLoadingUsers.value = true
+  try {
+    usersList.value = await $fetch<UserEntry[]>('/api/dev/users')
+  } catch (err) {
+    console.error('Failed to load users:', err)
+  } finally {
+    isLoadingUsers.value = false
+  }
+}
+
+const openEditUserModal = (u: UserEntry) => {
+  userForm.value = {
+    id: u.id,
+    firstName: u.firstName,
+    lastName: u.lastName,
+    role: u.role
+  }
+  showUserModal.value = true
+}
+
+const saveUser = async () => {
+  try {
+    await $fetch(`/api/dev/users/${userForm.value.id}`, {
+      method: 'PUT',
+      body: userForm.value
+    })
+    showUserModal.value = false
+    await loadUsers()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to update user')
+  }
+}
+
+// ==========================================
+// 3. FLASHCARD FLOW TAB STATE
+// ==========================================
 interface DevFlashcard {
   id: string
   status: string
@@ -25,21 +306,8 @@ interface DevFlashcard {
   minutesToTestAgain: number
 }
 
-const config = useRuntimeConfig()
-const router = useRouter()
-const showDevPage = config.public.showDevPage
-const auth = useAuth()
-const loggedIn = computed(() => auth?.loggedIn ?? false)
-
-// Redirect if not enabled or not logged in
-onMounted(() => {
-  if (!showDevPage || !loggedIn.value) {
-    navigateTo('/')
-  }
-})
-
 const flashcards = ref<DevFlashcard[]>([])
-const isLoading = ref(true)
+const isLoadingCards = ref(true)
 const searchQuery = ref('')
 const now = ref(Date.now())
 let intervalId: any = null
@@ -57,29 +325,16 @@ const languageColors: Record<string, string> = {
   el: '#ea580c'
 }
 
-async function loadData() {
+const loadDevCards = async () => {
   try {
-    isLoading.value = true
+    isLoadingCards.value = true
     flashcards.value = await $fetch<DevFlashcard[]>('/api/dev/flashcards')
   } catch (err) {
     console.error('Failed to load dev cards:', err)
   } finally {
-    isLoading.value = false
+    isLoadingCards.value = false
   }
 }
-
-onMounted(() => {
-  if (showDevPage) {
-    loadData()
-    intervalId = setInterval(() => {
-      now.value = Date.now()
-    }, 1000)
-  }
-})
-
-onUnmounted(() => {
-  if (intervalId) clearInterval(intervalId)
-})
 
 function formatDateTime(isoString: string | null) {
   if (!isoString) return 'Never'
@@ -130,8 +385,6 @@ function getTimeRemaining(nextTestIso: string | null, status: string, cardId: st
 
 const filteredAndSortedCards = computed(() => {
   let cards = [...flashcards.value]
-  
-  // Apply search query
   if (searchQuery.value.trim()) {
     const q = searchQuery.value.toLowerCase().trim()
     cards = cards.filter(c => 
@@ -140,15 +393,12 @@ const filteredAndSortedCards = computed(() => {
       c.status.toLowerCase().includes(q)
     )
   }
-  
-  // Sort: LEARNING first, then rank descending, then ID ascending
   return cards.sort((a, b) => {
     const aIsLearning = a.status === 'LEARNING' ? 1 : 0
     const bIsLearning = b.status === 'LEARNING' ? 1 : 0
     if (aIsLearning !== bIsLearning) {
       return bIsLearning - aIsLearning
     }
-
     if (b.rank !== a.rank) {
       return b.rank - a.rank
     }
@@ -175,6 +425,7 @@ const secondDueCardId = computed(() => {
   })
   return dueCards.length > 1 ? dueCards[1]?.id ?? null : null
 })
+
 const readyToTestCount = computed(() => {
   return flashcards.value.filter(c => {
     if (c.status !== 'LEARNING') return false
@@ -190,6 +441,27 @@ const waitingCount = computed(() => {
     return new Date(c.nextTest).getTime() > now.value
   }).length
 })
+
+// Tab Switch Observer
+watch(activeTab, (tab) => {
+  if (tab === 'versions') {
+    loadVersions()
+  } else if (tab === 'users') {
+    loadUsers()
+  } else if (tab === 'flashcard-flow') {
+    loadDevCards()
+  }
+}, { immediate: true })
+
+onMounted(() => {
+  intervalId = setInterval(() => {
+    now.value = Date.now()
+  }, 1000)
+})
+
+onUnmounted(() => {
+  if (intervalId) clearInterval(intervalId)
+})
 </script>
 
 <template>
@@ -199,152 +471,543 @@ const waitingCount = computed(() => {
       <div class="text-4xl mb-4">🖥️</div>
       <h1 class="text-xl font-bold text-white mb-2">Desktop View Required</h1>
       <p class="text-gray-400 text-sm max-w-md mx-auto">
-        The Developer testing dashboard is only available on desktop-sized viewports. Please resize your browser or use a desktop device.
+        The Developer Console is optimized for desktop-sized viewports. Please resize your browser or use a desktop device.
       </p>
     </div>
 
-    <div class="hidden md:block">
-      <div class="flex justify-between items-center mb-6">
-        <div class="flex items-start gap-2.5">
-          <span class="w-3 h-3 rounded-full bg-orange-500 animate-pulse mt-2 flex-shrink-0"></span>
-          <div>
-            <h1 class="text-2xl font-bold text-white tracking-tight leading-none">
-              State of flashcards
-            </h1>
-            <p 
-              class="text-xs text-gray-400 mt-1.5 font-mono transition-opacity duration-500 ease-out min-h-[1rem]"
-              :class="isLoading ? 'opacity-0' : 'opacity-100'"
-            >
-              {{ readyToTestCount }} to test -- {{ waitingCount }} waiting
-            </p>
-          </div>
+    <!-- Main Desktop Dev Container -->
+    <div v-if="!isCheckingRole && userRole === 'admin'" class="hidden md:block space-y-6">
+      <!-- Header -->
+      <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+        <div>
+          <h1 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+            <WrenchScrewdriverIcon class="w-6 h-6 text-amber-500" />
+            Developer Console
+          </h1>
+          <p class="text-xs text-gray-400 mt-1">Admin control panel for managing versions, feature requests, users, and study algorithms.</p>
         </div>
 
-        <div class="flex items-center gap-4">
-          <input 
-            v-model="searchQuery" 
-            type="text" 
-            placeholder="Filter by front, back, or status..."
-            class="bg-gray-900 border border-gray-800 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-gray-700 w-64 font-mono"
-          />
-          <button 
-            @click="loadData" 
-            class="bg-gray-800 hover:bg-gray-700 text-white font-semibold text-xs py-1.5 px-3 rounded font-mono transition-colors"
+        <!-- Sub-Menu Navigation Tabs -->
+        <div class="flex bg-gray-900 border border-gray-800 p-1 rounded-lg space-x-1">
+          <button
+            @click="activeTab = 'versions'"
+            class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
+            :class="activeTab === 'versions' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
           >
-            Refresh
+            <HashtagIcon class="w-4 h-4" />
+            <span>Versions</span>
+          </button>
+
+          <button
+            @click="activeTab = 'flashcard-flow'"
+            class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
+            :class="activeTab === 'flashcard-flow' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
+          >
+            <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+            <span>Flashcard Flow</span>
+          </button>
+
+          <button
+            @click="activeTab = 'users'"
+            class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
+            :class="activeTab === 'users' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
+          >
+            <UserGroupIcon class="w-4 h-4" />
+            <span>Users</span>
           </button>
         </div>
       </div>
 
-      <!-- Loading State -->
-      <div v-if="isLoading" class="text-center py-20 font-mono text-xs text-gray-400">
-        Loading dev console data...
-      </div>
+      <!-- ========================================== -->
+      <!-- TAB 1: VERSIONS & VERSION ITEMS MANAGEMENT -->
+      <!-- ========================================== -->
+      <div v-if="activeTab === 'versions'" class="space-y-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-white">App Version Roadmap</h2>
+          <button
+            @click="openAddVersionModal"
+            class="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-lg shadow-sm flex items-center space-x-1 transition-colors"
+          >
+            <PlusIcon class="w-4 h-4" />
+            <span>New Version</span>
+          </button>
+        </div>
 
-      <!-- Table View (Minimal height single-row layout) -->
-      <div v-else class="bg-gray-950/80 border border-gray-800/60 rounded-lg overflow-hidden shadow-2xl backdrop-blur">
-        <div class="max-h-[70vh] overflow-y-auto">
-          <table class="w-full text-left border-collapse table-fixed text-[11px] font-mono leading-tight">
-            <thead>
-              <tr class="border-b border-gray-800 bg-gray-900/60 text-gray-400 font-bold sticky top-0 z-10 whitespace-nowrap">
-                <th class="py-1.5 px-2 w-[18%] text-left truncate">CARD</th>
-                <th class="py-1.5 px-2 w-[8%] text-left truncate">STATUS</th>
-                <th class="py-1.5 px-2 w-[8%] text-right truncate">RANK</th>
-                <th class="py-1.5 px-2 w-[13%] text-left truncate">LAST TESTED</th>
-                <th class="py-1.5 px-2 w-[15%] text-center truncate">TESTING STATUS</th>
-                <th class="py-1.5 px-2 w-[10%] text-left truncate">PRON.</th>
-                <th class="py-1.5 px-2 w-[10%] text-left truncate">HOOK</th>
-                <th class="py-1.5 px-2 w-[10%] text-left truncate">TAGS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr 
-                v-for="(card, index) in filteredAndSortedCards" 
-                :key="card.id"
-                class="border-b border-gray-900/40 hover:bg-gray-900/60 transition-colors"
+        <div v-if="isLoadingVersions" class="text-center py-16 text-xs font-mono text-gray-400">
+          Loading version data...
+        </div>
+
+        <div v-else-if="versions.length === 0" class="text-center py-16 bg-gray-900 border border-gray-800 rounded-xl text-gray-400 text-xs">
+          No versions found. Click "New Version" to get started.
+        </div>
+
+        <div v-else class="space-y-4">
+          <div
+            v-for="ver in versions"
+            :key="ver.id"
+            class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-lg transition-all"
+          >
+            <!-- Version Header -->
+            <div
+              class="px-4 py-3 bg-gray-850 flex items-center justify-between cursor-pointer hover:bg-gray-800/80 border-b border-gray-800"
+              @click="toggleVersionExpand(ver.id)"
+            >
+              <div class="flex items-center space-x-3">
+                <component :is="expandedVersions[ver.id] ? ChevronDownIcon : ChevronRightIcon" class="w-4 h-4 text-gray-400" />
+                <span class="text-base font-bold text-white font-mono">v{{ ver.versionNumber }}</span>
+
+                <!-- Status Badge -->
+                <span
+                  class="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide border uppercase"
+                  :class="{
+                    'bg-emerald-950/60 text-emerald-400 border-emerald-800/60': ver.status === 'PUBLISHED',
+                    'bg-sky-950/60 text-sky-400 border-sky-800/60': ver.status === 'IN_PROGRESS',
+                    'bg-purple-950/60 text-purple-400 border-purple-800/60': ver.status === 'FUTURE'
+                  }"
+                >
+                  {{ ver.status.replace('_', ' ') }}
+                </span>
+
+                <span class="text-xs text-gray-400 font-mono">
+                  ({{ ver.versionItems.length }} {{ ver.versionItems.length === 1 ? 'item' : 'items' }})
+                </span>
+              </div>
+
+              <div class="flex items-center space-x-2" @click.stop>
+                <button
+                  @click="openAddItemModal(ver.id)"
+                  class="px-2.5 py-1 bg-gray-800 hover:bg-gray-700 text-amber-400 hover:text-amber-300 text-xs font-semibold rounded border border-gray-700 flex items-center space-x-1"
+                >
+                  <PlusIcon class="w-3.5 h-3.5" />
+                  <span>Add Item</span>
+                </button>
+                <button
+                  @click="openEditVersionModal(ver)"
+                  class="p-1 text-gray-400 hover:text-white hover:bg-gray-700 rounded"
+                  title="Edit Version"
+                >
+                  <PencilSquareIcon class="w-4 h-4" />
+                </button>
+                <button
+                  @click="deleteVersion(ver)"
+                  class="p-1 text-gray-400 hover:text-rose-400 hover:bg-gray-700 rounded"
+                  title="Delete Version"
+                >
+                  <TrashIcon class="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <!-- Version Items List -->
+            <div v-if="expandedVersions[ver.id]" class="p-4 bg-gray-950/50 space-y-2">
+              <div v-if="ver.versionItems.length === 0" class="text-xs text-gray-500 italic py-2 px-3">
+                No features or bug fixes listed for this version yet.
+              </div>
+
+              <div
+                v-for="(item, idx) in ver.versionItems"
+                :key="item.id"
+                class="flex items-center justify-between p-3 bg-gray-900 border border-gray-800/80 rounded-lg hover:border-gray-700 transition-colors"
               >
-                <!-- CARD (Label + Front) -->
-                <td class="py-1.5 px-2 truncate" :title="card.front + '\n' + card.back">
-                  <span 
-                    class="px-1 py-[1px] rounded text-[9px] font-bold mr-1.5"
-                    :style="{ backgroundColor: languageColors[card.backLanguage] || '#4b5563', color: '#ffffff' }"
+                <div class="flex items-center space-x-3 max-w-3xl">
+                  <!-- Type Badge -->
+                  <span
+                    class="px-2 py-0.5 rounded text-[10px] font-bold border shrink-0"
+                    :class="item.type === 'FEATURE' ? 'bg-amber-950/60 text-amber-400 border-amber-800/40' : 'bg-rose-950/60 text-rose-400 border-rose-800/40'"
                   >
-                    {{ card.backLanguage.toUpperCase() }}
+                    {{ item.type === 'FEATURE' ? '✨ FEATURE' : '🐛 BUGFIX' }}
                   </span>
-                  <span class="text-white">{{ card.front }}</span>
-                </td>
-                
-                <!-- STATUS -->
-                <td class="py-1.5 px-2 truncate">
-                  <span 
-                    class="px-1 py-[1px] rounded text-[9px] font-bold"
+
+                  <!-- Item Status -->
+                  <span
+                    class="px-2 py-0.5 rounded text-[10px] font-bold border shrink-0"
                     :class="{
-                      'bg-gray-800 text-gray-400 border border-gray-700': card.status === 'LEARNED' || card.status === 'PARKED' || card.status === 'DELETED',
-                      'bg-amber-950/40 text-amber-400 border border-amber-800/40': card.status === 'LEARNING'
+                      'bg-gray-800 text-gray-400 border-gray-700': item.status === 'PROPOSED',
+                      'bg-sky-950/60 text-sky-400 border-sky-800/40': item.status === 'IN_PROGRESS',
+                      'bg-emerald-950/60 text-emerald-400 border-emerald-800/40': item.status === 'IMPLEMENTED'
                     }"
                   >
-                    {{ card.status }}
+                    {{ item.status }}
                   </span>
-                </td>
-                
-                <!-- RANK -->
-                <td class="py-1.5 px-2 text-right text-gray-300 font-bold truncate">
-                  {{ card.rank.toFixed(5) }}
-                </td>
 
-                <!-- LAST TESTED -->
-                <td class="py-1.5 px-2 text-gray-400 truncate">
-                  {{ formatDateTime(card.lastTested) }}
-                </td>
+                  <p class="text-xs text-gray-200 font-medium leading-relaxed">{{ item.body }}</p>
+                </div>
 
-                <!-- TESTING STATUS -->
-                <td class="py-1.5 px-2 text-center truncate">
-                  <span 
-                    class="font-bold inline-block"
-                    :class="[getTimeRemaining(card.nextTest, card.status, card.id).colorClass, getTimeRemaining(card.nextTest, card.status, card.id).bgClass]"
+                <!-- Item Actions & Reordering -->
+                <div class="flex items-center space-x-1 shrink-0">
+                  <button
+                    @click="reorderItem(item.id, 'UP')"
+                    :disabled="idx === 0"
+                    class="p-1 text-gray-400 hover:text-white disabled:opacity-30 disabled:hover:text-gray-400 hover:bg-gray-800 rounded"
+                    title="Move Item Up"
                   >
-                    {{ getTimeRemaining(card.nextTest, card.status, card.id).text }}
+                    <ArrowUpIcon class="w-3.5 h-3.5" />
+                  </button>
+
+                  <button
+                    @click="reorderItem(item.id, 'DOWN')"
+                    :disabled="idx === ver.versionItems.length - 1"
+                    class="p-1 text-gray-400 hover:text-white disabled:opacity-30 disabled:hover:text-gray-400 hover:bg-gray-800 rounded"
+                    title="Move Item Down"
+                  >
+                    <ArrowDownIcon class="w-3.5 h-3.5" />
+                  </button>
+
+                  <button
+                    @click="openEditItemModal(item)"
+                    class="p-1 text-gray-400 hover:text-amber-400 hover:bg-gray-800 rounded"
+                    title="Edit Item"
+                  >
+                    <PencilSquareIcon class="w-3.5 h-3.5" />
+                  </button>
+
+                  <button
+                    @click="deleteItem(item)"
+                    class="p-1 text-gray-400 hover:text-rose-400 hover:bg-gray-800 rounded"
+                    title="Delete Item"
+                  >
+                    <TrashIcon class="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- TAB 2: FLASHCARD FLOW & TESTING DASHBOARD -->
+      <!-- ========================================== -->
+      <div v-else-if="activeTab === 'flashcard-flow'" class="space-y-6">
+        <div class="flex justify-between items-center mb-4">
+          <div class="flex items-start gap-2.5">
+            <span class="w-3 h-3 rounded-full bg-orange-500 animate-pulse mt-2 flex-shrink-0"></span>
+            <div>
+              <h2 class="text-xl font-bold text-white tracking-tight leading-none">
+                State of flashcards
+              </h2>
+              <p
+                class="text-xs text-gray-400 mt-1.5 font-mono transition-opacity duration-500 ease-out min-h-[1rem]"
+                :class="isLoadingCards ? 'opacity-0' : 'opacity-100'"
+              >
+                {{ readyToTestCount }} to test -- {{ waitingCount }} waiting
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <input
+              v-model="searchQuery"
+              type="text"
+              placeholder="Filter by front, back, or status..."
+              class="bg-gray-900 border border-gray-800 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-gray-700 w-64 font-mono"
+            />
+            <button
+              @click="loadDevCards"
+              class="bg-gray-800 hover:bg-gray-700 text-white font-semibold text-xs py-1.5 px-3 rounded font-mono transition-colors"
+            >
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <div v-if="isLoadingCards" class="text-center py-20 font-mono text-xs text-gray-400">
+          Loading dev console data...
+        </div>
+
+        <div v-else class="bg-gray-950/80 border border-gray-800/60 rounded-lg overflow-hidden shadow-2xl backdrop-blur">
+          <div class="max-h-[70vh] overflow-y-auto">
+            <table class="w-full text-left border-collapse table-fixed text-[11px] font-mono leading-tight">
+              <thead>
+                <tr class="border-b border-gray-800 bg-gray-900/60 text-gray-400 font-bold sticky top-0 z-10 whitespace-nowrap">
+                  <th class="py-1.5 px-2 w-[18%] text-left truncate">CARD</th>
+                  <th class="py-1.5 px-2 w-[8%] text-left truncate">STATUS</th>
+                  <th class="py-1.5 px-2 w-[8%] text-right truncate">RANK</th>
+                  <th class="py-1.5 px-2 w-[13%] text-left truncate">LAST TESTED</th>
+                  <th class="py-1.5 px-2 w-[15%] text-center truncate">TESTING STATUS</th>
+                  <th class="py-1.5 px-2 w-[10%] text-left truncate">PRON.</th>
+                  <th class="py-1.5 px-2 w-[10%] text-left truncate">HOOK</th>
+                  <th class="py-1.5 px-2 w-[10%] text-left truncate">TAGS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="card in filteredAndSortedCards"
+                  :key="card.id"
+                  class="border-b border-gray-900/40 hover:bg-gray-900/60 transition-colors"
+                >
+                  <td class="py-1.5 px-2 truncate" :title="card.front + '\n' + card.back">
+                    <span
+                      class="px-1 py-[1px] rounded text-[9px] font-bold mr-1.5"
+                      :style="{ backgroundColor: languageColors[card.backLanguage] || '#4b5563', color: '#ffffff' }"
+                    >
+                      {{ card.backLanguage.toUpperCase() }}
+                    </span>
+                    <span class="text-white">{{ card.front }}</span>
+                  </td>
+
+                  <td class="py-1.5 px-2 truncate">
+                    <span
+                      class="px-1 py-[1px] rounded text-[9px] font-bold"
+                      :class="{
+                        'bg-gray-800 text-gray-400 border border-gray-700': card.status === 'LEARNED' || card.status === 'PARKED' || card.status === 'DELETED',
+                        'bg-amber-950/40 text-amber-400 border border-amber-800/40': card.status === 'LEARNING'
+                      }"
+                    >
+                      {{ card.status }}
+                    </span>
+                  </td>
+
+                  <td class="py-1.5 px-2 text-right text-gray-300 font-bold truncate">
+                    {{ card.rank.toFixed(5) }}
+                  </td>
+
+                  <td class="py-1.5 px-2 text-gray-400 truncate">
+                    {{ formatDateTime(card.lastTested) }}
+                  </td>
+
+                  <td class="py-1.5 px-2 text-center truncate">
+                    <span
+                      class="font-bold inline-block"
+                      :class="[getTimeRemaining(card.nextTest, card.status, card.id).colorClass, getTimeRemaining(card.nextTest, card.status, card.id).bgClass]"
+                    >
+                      {{ getTimeRemaining(card.nextTest, card.status, card.id).text }}
+                    </span>
+                  </td>
+
+                  <td class="py-1.5 px-2 text-gray-400 truncate" :title="card.pronunciation || ''">
+                    {{ card.pronunciation || '-' }}
+                  </td>
+
+                  <td class="py-1.5 px-2 text-gray-400 truncate" :title="card.memoryHook || ''">
+                    {{ card.memoryHook || '-' }}
+                  </td>
+
+                  <td class="py-1.5 px-2">
+                    <div class="flex flex-wrap gap-1" style="max-height: 1.5em; overflow: hidden;" :title="card.tags.join(', ')">
+                      <span
+                        v-for="tag in card.tags"
+                        :key="tag"
+                        class="px-1 py-[1px] rounded bg-gray-800 text-gray-300 text-[9px]"
+                      >
+                        {{ tag }}
+                      </span>
+                      <span v-if="!card.tags || card.tags.length === 0" class="text-gray-500">-</span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr v-if="filteredAndSortedCards.length === 0">
+                  <td colspan="9" class="p-8 text-center text-gray-500">
+                    No flashcards found matching filter.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-3 bg-gray-900/40 border-t border-gray-900 text-[10px] text-gray-500 flex justify-between">
+            <span>Total cards listed: {{ filteredAndSortedCards.length }}</span>
+            <span>Sorting order: Rank descending, then ID ascending</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- TAB 3: USER MANAGEMENT & ROLE PERMISSIONS -->
+      <!-- ========================================== -->
+      <div v-else-if="activeTab === 'users'" class="space-y-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-white">Registered Users & Roles</h2>
+          <button
+            @click="loadUsers"
+            class="px-3.5 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-xs font-semibold rounded-lg border border-gray-700 transition-colors"
+          >
+            Refresh Users
+          </button>
+        </div>
+
+        <div v-if="isLoadingUsers" class="text-center py-16 text-xs font-mono text-gray-400">
+          Loading users list...
+        </div>
+
+        <div v-else class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-gray-850 text-gray-400 font-bold border-b border-gray-800">
+              <tr>
+                <th class="py-3 px-4">NAME</th>
+                <th class="py-3 px-4">EMAIL</th>
+                <th class="py-3 px-4">ROLE</th>
+                <th class="py-3 px-4 text-center">CARDS</th>
+                <th class="py-3 px-4 text-right">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/60 text-gray-300">
+              <tr v-for="u in usersList" :key="u.id" class="hover:bg-gray-800/40 transition-colors">
+                <td class="py-3 px-4 font-semibold text-white">
+                  {{ u.firstName }} {{ u.lastName }}
+                </td>
+                <td class="py-3 px-4 text-gray-400">
+                  {{ u.email }}
+                </td>
+                <td class="py-3 px-4">
+                  <span
+                    class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase border"
+                    :class="u.role === 'admin' ? 'bg-amber-950/60 text-amber-400 border-amber-800/60' : 'bg-gray-800 text-gray-400 border-gray-700'"
+                  >
+                    {{ u.role }}
                   </span>
                 </td>
-
-                <!-- PRONUNCIATION -->
-                <td class="py-1.5 px-2 text-gray-400 truncate" :title="card.pronunciation || ''">
-                  {{ card.pronunciation || '-' }}
+                <td class="py-3 px-4 text-center font-bold text-white">
+                  {{ u._count?.flashcards ?? 0 }}
                 </td>
-
-                <!-- MEMORY HOOK -->
-                <td class="py-1.5 px-2 text-gray-400 truncate" :title="card.memoryHook || ''">
-                  {{ card.memoryHook || '-' }}
-                </td>
-
-                <!-- TAGS -->
-                <td class="py-1.5 px-2">
-                  <div class="flex flex-wrap gap-1" style="max-height: 1.5em; overflow: hidden;" :title="card.tags.join(', ')">
-                    <span 
-                      v-for="tag in card.tags" 
-                      :key="tag"
-                      class="px-1 py-[1px] rounded bg-gray-800 text-gray-300 text-[9px]"
-                    >
-                      {{ tag }}
-                    </span>
-                    <span v-if="!card.tags || card.tags.length === 0" class="text-gray-500">-</span>
-                  </div>
-                </td>
-              </tr>
-              
-              <!-- Empty State -->
-              <tr v-if="filteredAndSortedCards.length === 0">
-                <td colspan="9" class="p-8 text-center text-gray-500">
-                  No flashcards found matching filter.
+                <td class="py-3 px-4 text-right">
+                  <button
+                    @click="openEditUserModal(u)"
+                    class="px-2.5 py-1 text-xs bg-gray-800 hover:bg-gray-700 text-amber-400 hover:text-amber-300 rounded border border-gray-700 transition-colors"
+                  >
+                    Edit Role
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        
-        <div class="p-3 bg-gray-900/40 border-t border-gray-900 text-[10px] text-gray-500 flex justify-between">
-          <span>Total cards listed: {{ filteredAndSortedCards.length }}</span>
-          <span>Sorting order: Rank descending, then ID ascending</span>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODALS FOR VERSIONS, ITEMS, USERS -->
+    <!-- ========================================== -->
+
+    <!-- Version Add/Edit Modal -->
+    <div v-if="showVersionModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl space-y-4">
+        <h3 class="text-lg font-bold text-white">{{ isEditingVersion ? 'Edit Version' : 'Create New Version' }}</h3>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block text-gray-400 mb-1">Version Number (e.g. 0.3.0)</label>
+            <input
+              v-model="versionForm.versionNumber"
+              type="text"
+              placeholder="0.2.0"
+              class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white font-mono focus:outline-none focus:border-amber-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-400 mb-1">Status</label>
+            <select
+              v-model="versionForm.status"
+              class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white font-mono focus:outline-none focus:border-amber-500"
+            >
+              <option value="FUTURE">FUTURE</option>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="PUBLISHED">PUBLISHED</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-2">
+          <button @click="showVersionModal = false" class="px-3 py-1.5 text-xs text-gray-400 hover:bg-gray-800 rounded">
+            Cancel
+          </button>
+          <button @click="saveVersion" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">
+            Save Version
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item Add/Edit Modal -->
+    <div v-if="showItemModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-lg shadow-2xl space-y-4">
+        <h3 class="text-lg font-bold text-white">{{ isEditingItem ? 'Edit Version Item' : 'Add Item to Version' }}</h3>
+
+        <div class="space-y-3 text-xs">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-gray-400 mb-1">Type</label>
+              <select
+                v-model="itemForm.type"
+                class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white font-mono focus:outline-none focus:border-amber-500"
+              >
+                <option value="BUGFIX">🐛 BUGFIX</option>
+                <option value="FEATURE">✨ FEATURE</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-gray-400 mb-1">Status</label>
+              <select
+                v-model="itemForm.status"
+                class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white font-mono focus:outline-none focus:border-amber-500"
+              >
+                <option value="PROPOSED">PROPOSED</option>
+                <option value="IN_PROGRESS">IN_PROGRESS</option>
+                <option value="IMPLEMENTED">IMPLEMENTED</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-400 mb-1">Description / Body</label>
+            <textarea
+              v-model="itemForm.body"
+              rows="3"
+              placeholder="Describe the feature or bug fix..."
+              class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-xs focus:outline-none focus:border-amber-500"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-2">
+          <button @click="showItemModal = false" class="px-3 py-1.5 text-xs text-gray-400 hover:bg-gray-800 rounded">
+            Cancel
+          </button>
+          <button @click="saveItem" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">
+            Save Item
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Edit Role Modal -->
+    <div v-if="showUserModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl space-y-4">
+        <h3 class="text-lg font-bold text-white">Edit User Access</h3>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block text-gray-400 mb-1">First Name</label>
+            <input v-model="userForm.firstName" type="text" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" />
+          </div>
+
+          <div>
+            <label class="block text-gray-400 mb-1">Last Name</label>
+            <input v-model="userForm.lastName" type="text" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" />
+          </div>
+
+          <div>
+            <label class="block text-gray-400 mb-1">System Role</label>
+            <select
+              v-model="userForm.role"
+              class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white font-mono focus:outline-none focus:border-amber-500"
+            >
+              <option value="member">member (Standard user - 100 phrases/day import limit)</option>
+              <option value="admin">admin (Full Dev access & unlimited imports)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-2">
+          <button @click="showUserModal = false" class="px-3 py-1.5 text-xs text-gray-400 hover:bg-gray-800 rounded">
+            Cancel
+          </button>
+          <button @click="saveUser" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">
+            Save User
+          </button>
         </div>
       </div>
     </div>

@@ -122,7 +122,28 @@ exports.Prisma.UserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   email: 'email',
+  role: 'role',
   minutesToTestAgain: 'minutesToTestAgain'
+};
+
+exports.Prisma.VersionScalarFieldEnum = {
+  id: 'id',
+  versionNumber: 'versionNumber',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VersionItemScalarFieldEnum = {
+  id: 'id',
+  versionId: 'versionId',
+  type: 'type',
+  status: 'status',
+  body: 'body',
+  startedByUserId: 'startedByUserId',
+  orderWithinVersion: 'orderWithinVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.FlashcardScalarFieldEnum = {
@@ -175,6 +196,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Version: 'Version',
+  VersionItem: 'VersionItem',
   Flashcard: 'Flashcard',
   UserFlashcardActivity: 'UserFlashcardActivity',
   Tag: 'Tag',

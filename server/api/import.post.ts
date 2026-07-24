@@ -142,8 +142,28 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // 3. Single Atomic Transaction ($transaction)
   if (cardsToCreate.length > 0) {
+    // Check daily limit for non-admin (member) users
+    if (dbUser.role !== 'admin') {
+      const startOfToday = new Date()
+      startOfToday.setUTCHours(0, 0, 0, 0)
+
+      const todayCount = await prisma.flashcard.count({
+        where: {
+          ownerId: dbUser.id,
+          createdAt: { gte: startOfToday }
+        }
+      })
+
+      if (todayCount + cardsToCreate.length > 100) {
+        const remaining = Math.max(0, 100 - todayCount)
+        throw createError({
+          statusCode: 400,
+          statusMessage: `Daily import limit reached. Non-admin users are limited to 100 phrases per day. You have already imported ${todayCount} phrases today (${remaining} remaining).`
+        })
+      }
+    }
+
     await prisma.$transaction(async (tx) => {
       await tx.flashcard.createMany({
         data: cardsToCreate

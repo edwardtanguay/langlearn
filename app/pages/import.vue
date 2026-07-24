@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { parseMetadata } from '~~/server/utils/metadata-parser'
 import { calculateOptimalRank } from '~~/server/utils/rank-config'
 
@@ -35,6 +35,22 @@ const parsedData = ref<ParsedRow[]>([])
 const isImporting = ref(false)
 const importSummary = ref<{ importedCount: number; skippedCount: number; skippedCards: SkippedCard[] } | null>(null)
 const importError = ref<string | null>(null)
+
+const usage = ref<{ todayCount: number; limit: number; isAdmin: boolean } | null>(null)
+
+const fetchUsage = async () => {
+  if (!loggedIn.value) return
+  try {
+    const data = await $fetch<{ todayCount: number; limit: number; isAdmin: boolean }>('/api/import/usage')
+    usage.value = data
+  } catch (err) {
+    console.error('Failed to fetch import usage', err)
+  }
+}
+
+onMounted(() => {
+  fetchUsage()
+})
 
 function parseCSVLine(line: string): string[] {
   const result: string[] = [];
@@ -132,6 +148,7 @@ async function handleImport() {
     if (fileInput.value) {
       fileInput.value.value = ''; // Reset file input
     }
+    await fetchUsage()
   } catch (err: any) {
     console.error('Import error:', err);
     importError.value = err.data?.statusMessage || 'An error occurred during import.';
@@ -153,7 +170,18 @@ async function handleImport() {
 
         <!-- Desktop View Import Container -->
         <div class="hidden md:block w-full max-w-4xl space-y-6">
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Import Flashcards from Google Translate</h1>
+          <div class="flex justify-between items-start">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Import Flashcards from Google Translate</h1>
+            </div>
+            <!-- Daily Allowance Banner -->
+            <div v-if="usage" class="px-4 py-2 rounded-xl text-xs font-semibold border shadow-sm shrink-0"
+                 :class="usage.isAdmin ? 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-gray-800 dark:text-amber-300 dark:border-gray-700' : 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-gray-800 dark:text-blue-300 dark:border-gray-700'">
+              <span v-if="usage.isAdmin">⭐ Daily Import Allowance: <strong>Unlimited (Admin)</strong></span>
+              <span v-else>📊 Daily Import Allowance: <strong>{{ usage.todayCount }} / {{ usage.limit }}</strong> phrases used today</span>
+            </div>
+          </div>
+
           <ul class="list-disc list-inside space-y-1.5 text-gray-600 dark:text-gray-400">
             <li>Go to <a href="https://translate.google.com" target="_blank" rel="noopener noreferrer" class="underline text-gray-900 dark:text-white hover:opacity-80">Google Translate</a></li>
             <li>click on the "Saved" star icon</li>
@@ -200,8 +228,8 @@ async function handleImport() {
           </div>
 
           <!-- Error Message -->
-          <div v-if="importError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-            <span class="font-medium">Error!</span> {{ importError }}
+          <div v-if="importError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 border border-red-200 dark:border-red-900" role="alert">
+            <span class="font-medium">Notice:</span> {{ importError }}
           </div>
 
           <!-- Data Preview Table -->

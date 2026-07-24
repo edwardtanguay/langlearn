@@ -29,6 +29,8 @@ export async function requireAuth(event: H3Event) {
     })
   }
 
+  const isAdminEmail = user.email?.toLowerCase() === 'edwardtanguay@gmail.com'
+
   if (!dbUser) {
     // If not found by ID or email, create the new user
     dbUser = await prisma.user.create({
@@ -37,9 +39,30 @@ export async function requireAuth(event: H3Event) {
         email: user.email || '',
         firstName: user.given_name || '',
         lastName: user.family_name || '',
+        role: isAdminEmail ? 'admin' : 'member'
       }
+    })
+  } else if (isAdminEmail && dbUser.role !== 'admin') {
+    dbUser = await prisma.user.update({
+      where: { id: dbUser.id },
+      data: { role: 'admin' }
     })
   }
 
+  return {
+    ...user,
+    role: dbUser.role,
+    dbId: dbUser.id
+  }
+}
+
+export async function requireAdmin(event: H3Event) {
+  const user = await requireAuth(event)
+  if (user.role !== 'admin') {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden: Admin access required'
+    })
+  }
   return user
 }
