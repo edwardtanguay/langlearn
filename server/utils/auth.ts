@@ -10,7 +10,16 @@ export async function requireAuth(event: H3Event) {
     })
   }
 
-  const user = await kinde.getUser()
+  let user: any = null
+  try {
+    user = await kinde.getUser()
+  } catch (e) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized: No authentication credential found'
+    })
+  }
+
   if (!user) {
     throw createError({
       statusCode: 401,

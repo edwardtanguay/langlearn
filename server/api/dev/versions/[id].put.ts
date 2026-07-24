@@ -14,6 +14,9 @@ export default defineEventHandler(async (event) => {
   if (body.versionNumber !== undefined) {
     dataToUpdate.versionNumber = body.versionNumber.trim()
   }
+  if (body.title !== undefined) {
+    dataToUpdate.title = body.title ? body.title.trim() : null
+  }
   if (body.status !== undefined) {
     dataToUpdate.status = body.status
   }

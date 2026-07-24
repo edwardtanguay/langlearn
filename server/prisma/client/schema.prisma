@@ -23,6 +23,7 @@ model User {
 model Version {
   id            String        @id @default(uuid())
   versionNumber String        @unique
+  title         String?
   status        String        @default("FUTURE")
   publishDate   DateTime?
   createdAt     DateTime      @default(now())

@@ -23,11 +23,25 @@ async function ensureTablesExist() {
     // Column already exists
   }
 
+  try {
+    await rawClient.execute(`ALTER TABLE "Version" ADD COLUMN "title" TEXT;`)
+  } catch (e) {
+    // Column already exists
+  }
+
+  try {
+    await rawClient.execute(`ALTER TABLE "Version" ADD COLUMN "publishDate" DATETIME;`)
+  } catch (e) {
+    // Column already exists
+  }
+
   await rawClient.execute(`
     CREATE TABLE IF NOT EXISTS "Version" (
       "id" TEXT NOT NULL PRIMARY KEY,
       "versionNumber" TEXT NOT NULL UNIQUE,
+      "title" TEXT,
       "status" TEXT NOT NULL DEFAULT 'FUTURE',
+      "publishDate" DATETIME,
       "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
@@ -84,13 +98,19 @@ async function main() {
   })
   console.log(`User ${user.email} is confirmed with role: ${user.role}`)
 
-  // Seed default versions if no versions exist
+  const now = Date.now()
+  const fiveDaysAgo = new Date(now - 5 * 24 * 60 * 60 * 1000)
+  const twoDaysAgo = new Date(now - 2 * 24 * 60 * 60 * 1000)
+
+  // Seed default versions if no versions exist or update existing ones
   const existingVersionCount = await prisma.version.count()
   if (existingVersionCount === 0) {
     await prisma.version.create({
       data: {
         versionNumber: '0.1.0',
+        title: 'Usuable MVP app',
         status: 'PUBLISHED',
+        publishDate: fiveDaysAgo,
         versionItems: {
           create: [
             {
@@ -122,19 +142,21 @@ async function main() {
     await prisma.version.create({
       data: {
         versionNumber: '0.2.0',
-        status: 'IN_PROGRESS',
+        title: 'Added version history',
+        status: 'PUBLISHED',
+        publishDate: twoDaysAgo,
         versionItems: {
           create: [
             {
               type: 'FEATURE',
-              status: 'IN_PROGRESS',
+              status: 'IMPLEMENTED',
               body: 'Versioning, feature requests, and bug-fix tracking system',
               startedByUserId: user.id,
               orderWithinVersion: 1
             },
             {
               type: 'FEATURE',
-              status: 'IN_PROGRESS',
+              status: 'IMPLEMENTED',
               body: 'User role permissions (admin vs member) and daily import rate limits',
               startedByUserId: user.id,
               orderWithinVersion: 2
@@ -144,6 +166,16 @@ async function main() {
       }
     })
     console.log('Seeded initial versions 0.1.0 and 0.2.0')
+  } else {
+    // Ensure existing versions have title and publishDate updated
+    await prisma.version.updateMany({
+      where: { versionNumber: '0.1.0' },
+      data: { title: 'Usuable MVP app', publishDate: fiveDaysAgo }
+    })
+    await prisma.version.updateMany({
+      where: { versionNumber: '0.2.0' },
+      data: { title: 'Added version history', publishDate: twoDaysAgo }
+    })
   }
 
   // Seed default tags if missing

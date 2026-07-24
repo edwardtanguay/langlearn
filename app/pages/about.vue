@@ -1,19 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import {
-  SparklesIcon,
-  WrenchScrewdriverIcon,
-  PencilSquareIcon,
-  CheckCircleIcon,
-  ClockIcon,
-  ForwardIcon,
-  BoltIcon
-} from '@heroicons/vue/24/outline'
+import { ref, computed, onMounted } from 'vue'
+import { BoltIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - About & Roadmap',
   meta: [
-    { name: 'description', content: 'LangLearn takes advantage of modern, free tools like Google Translate, AI search, to help you learn languages faster.' }
+    { name: 'description', content: 'LangLearn integrates modern, no-cost tools like Google Translate and AI search into your language learning flow to help you learn languages faster and with a self-directed, personal approach.' }
   ]
 })
 
@@ -29,6 +21,7 @@ interface VersionItem {
 interface Version {
   id: string
   versionNumber: string
+  title?: string | null
   status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'
   publishDate?: string | null
   versionItems: VersionItem[]
@@ -37,6 +30,7 @@ interface Version {
 const versions = ref<Version[]>([])
 const isLoading = ref(true)
 const isAdmin = ref(false)
+const adminEditMode = ref(false)
 
 // Edit Modals for Admin
 const showEditItemModal = ref(false)
@@ -46,8 +40,8 @@ const editingItem = ref<{ id: string; versionId: string; afterItemId: string; bo
 const isNewItem = ref(false)
 
 const showEditVersionModal = ref(false)
-const editingVersion = ref<{ id: string; versionNumber: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'; publishDate: string }>({
-  id: '', versionNumber: '', status: 'FUTURE', publishDate: ''
+const editingVersion = ref<{ id: string; versionNumber: string; title: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'; publishDate: string }>({
+  id: '', versionNumber: '', title: '', status: 'FUTURE', publishDate: ''
 })
 const isNewVersion = ref(false)
 
@@ -66,7 +60,7 @@ const loadData = async () => {
       isAdmin.value = false
     }
   } catch (err) {
-    console.error('Failed to load public versions roadmap:', err)
+    console.error('Failed to load versions history:', err)
   } finally {
     isLoading.value = false
   }
@@ -76,52 +70,122 @@ onMounted(() => {
   loadData()
 })
 
-function formatPublishDate(dateStr: string | null | undefined) {
+const displayedVersions = computed(() => {
+  const list = [...versions.value]
+  if (adminEditMode.value) {
+    list.sort((a, b) => {
+      if (a.status === 'IN_PROGRESS' && b.status !== 'IN_PROGRESS') return -1
+      if (a.status !== 'IN_PROGRESS' && b.status === 'IN_PROGRESS') return 1
+      return 0
+    })
+  }
+  return list
+})
+
+function formatPublishDate(dateStr: string | null | undefined): string {
   if (!dateStr) return ''
   const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return ''
   return d.toISOString().split('T')[0] ?? ''
+}
+
+function getRelativeDateStr(dateStr: string | null | undefined): string {
+  if (!dateStr) return ''
+  const pubDate = new Date(dateStr)
+  if (isNaN(pubDate.getTime())) return ''
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const target = new Date(pubDate)
+  target.setHours(0, 0, 0, 0)
+
+  const diffTime = today.getTime() - target.getTime()
+  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
+
+  if (diffDays === 0) return '(today)'
+  if (diffDays === 1) return '(yesterday)'
+  if (diffDays > 1) return `(${diffDays} days ago)`
+  if (diffDays < 0) return `(in ${Math.abs(diffDays)} days)`
+  return ''
 }
 
 const openAddVersion = () => {
   isNewVersion.value = true
-  editingVersion.value = { id: '', versionNumber: '', status: 'FUTURE', publishDate: '' }
+  editingVersion.value = { id: '', versionNumber: '', title: '', status: 'FUTURE', publishDate: '' }
   showEditVersionModal.value = true
 }
 
 const openEditVersion = (ver: Version) => {
   isNewVersion.value = false
   const formattedDate = formatPublishDate(ver.publishDate)
-  editingVersion.value = { id: ver.id, versionNumber: ver.versionNumber, status: ver.status, publishDate: formattedDate }
+  editingVersion.value = { id: ver.id, versionNumber: ver.versionNumber, title: ver.title || '', status: ver.status, publishDate: formattedDate }
   showEditVersionModal.value = true
 }
 
 const saveAdminVersion = async () => {
   if (!editingVersion.value.versionNumber.trim()) return
-  try {
-    if (isNewVersion.value) {
-      await $fetch('/api/dev/versions', {
+  const snapshot = JSON.parse(JSON.stringify(versions.value))
+  const targetId = editingVersion.value.id
+  const payload = { ...editingVersion.value }
+
+  if (isNewVersion.value) {
+    const tempId = 'temp-' + Date.now()
+    const newVer: Version = {
+      id: tempId,
+      versionNumber: payload.versionNumber.trim(),
+      title: payload.title.trim() || null,
+      status: payload.status,
+      publishDate: payload.publishDate || null,
+      versionItems: []
+    }
+    versions.value.unshift(newVer)
+    showEditVersionModal.value = false
+
+    try {
+      const created = await $fetch<Version>('/api/dev/versions', {
         method: 'POST',
-        body: editingVersion.value
+        body: payload
       })
-    } else {
-      await $fetch(`/api/dev/versions/${editingVersion.value.id}`, {
-        method: 'PUT',
-        body: editingVersion.value
-      })
+      const idx = versions.value.findIndex(v => v.id === tempId)
+      if (idx !== -1) versions.value[idx] = created
+    } catch (err: any) {
+      versions.value = snapshot
+      alert(err.data?.statusMessage || 'Failed to save version')
+    }
+  } else {
+    const existing = versions.value.find(v => v.id === targetId)
+    if (existing) {
+      existing.versionNumber = payload.versionNumber.trim()
+      existing.title = payload.title.trim() || null
+      existing.status = payload.status
+      existing.publishDate = payload.publishDate || null
     }
     showEditVersionModal.value = false
-    await loadData()
-  } catch (err: any) {
-    alert(err.data?.statusMessage || 'Failed to save version')
+
+    try {
+      const updated = await $fetch<Version>(`/api/dev/versions/${targetId}`, {
+        method: 'PUT',
+        body: payload
+      })
+      if (existing) {
+        Object.assign(existing, updated)
+      }
+    } catch (err: any) {
+      versions.value = snapshot
+      alert(err.data?.statusMessage || 'Failed to save version')
+    }
   }
 }
 
 const deleteVersion = async (ver: Version) => {
   if (!confirm(`Are you sure you want to delete version ${ver.versionNumber}?`)) return
+  const snapshot = JSON.parse(JSON.stringify(versions.value))
+  versions.value = versions.value.filter(v => v.id !== ver.id)
   try {
     await $fetch(`/api/dev/versions/${ver.id}`, { method: 'DELETE' })
-    await loadData()
   } catch (err: any) {
+    versions.value = snapshot
     alert(err.data?.statusMessage || 'Failed to delete version')
   }
 }
@@ -140,43 +204,100 @@ const openEditItem = (item: VersionItem) => {
 
 const saveAdminItem = async () => {
   if (!editingItem.value.body.trim()) return
-  try {
-    if (isNewItem.value) {
-      await $fetch('/api/dev/version-items', {
-        method: 'POST',
-        body: editingItem.value
-      })
-    } else {
-      await $fetch(`/api/dev/version-items/${editingItem.value.id}`, {
-        method: 'PUT',
-        body: editingItem.value
+  const snapshot = JSON.parse(JSON.stringify(versions.value))
+  const payload = { ...editingItem.value }
+
+  if (isNewItem.value) {
+    const tempId = 'temp-item-' + Date.now()
+    const verObj = versions.value.find(v => v.id === payload.versionId)
+    if (verObj) {
+      verObj.versionItems.push({
+        id: tempId,
+        versionId: payload.versionId,
+        type: payload.type,
+        status: payload.status,
+        body: payload.body.trim(),
+        orderWithinVersion: verObj.versionItems.length + 1
       })
     }
     showEditItemModal.value = false
-    await loadData()
-  } catch (err: any) {
-    alert(err.data?.statusMessage || 'Failed to save item')
+
+    try {
+      const created = await $fetch<VersionItem>('/api/dev/version-items', {
+        method: 'POST',
+        body: payload
+      })
+      if (verObj) {
+        const itemIdx = verObj.versionItems.findIndex(i => i.id === tempId)
+        if (itemIdx !== -1) verObj.versionItems[itemIdx] = created
+      }
+    } catch (err: any) {
+      versions.value = snapshot
+      alert(err.data?.statusMessage || 'Failed to save item')
+    }
+  } else {
+    for (const v of versions.value) {
+      const targetItem = v.versionItems.find(i => i.id === payload.id)
+      if (targetItem) {
+        targetItem.type = payload.type
+        targetItem.status = payload.status
+        targetItem.body = payload.body.trim()
+        break
+      }
+    }
+    showEditItemModal.value = false
+
+    try {
+      await $fetch(`/api/dev/version-items/${payload.id}`, {
+        method: 'PUT',
+        body: payload
+      })
+    } catch (err: any) {
+      versions.value = snapshot
+      alert(err.data?.statusMessage || 'Failed to save item')
+    }
   }
 }
 
 const deleteItem = async (item: VersionItem) => {
   if (!confirm('Are you sure you want to delete this item?')) return
+  const snapshot = JSON.parse(JSON.stringify(versions.value))
+  for (const v of versions.value) {
+    v.versionItems = v.versionItems.filter(i => i.id !== item.id)
+  }
   try {
     await $fetch(`/api/dev/version-items/${item.id}`, { method: 'DELETE' })
-    await loadData()
   } catch (err: any) {
+    versions.value = snapshot
     alert(err.data?.statusMessage || 'Failed to delete item')
   }
 }
 
 const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
+  const snapshot = JSON.parse(JSON.stringify(versions.value))
+  for (const v of versions.value) {
+    const idx = v.versionItems.findIndex(i => i.id === itemId)
+    if (idx !== -1) {
+      const targetIdx = direction === 'UP' ? idx - 1 : idx + 1
+      if (targetIdx >= 0 && targetIdx < v.versionItems.length) {
+        const item = v.versionItems[idx]
+        const targetItem = v.versionItems[targetIdx]
+        if (item && targetItem) {
+          v.versionItems[idx] = targetItem
+          v.versionItems[targetIdx] = item
+        }
+      }
+      break
+    }
+  }
+
   try {
     await $fetch('/api/dev/version-items/reorder', {
       method: 'POST',
       body: { itemId, direction }
     })
-    await loadData()
   } catch (err: any) {
+    versions.value = snapshot
     console.error('Failed to reorder:', err)
   }
 }
@@ -233,55 +354,60 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
       <div class="space-y-2 text-center md:text-left">
         <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">About LangLearn</h1>
         <p class="text-sm md:text-base text-gray-300 font-medium leading-relaxed">
-          LangLearn takes advantage of modern, free tools like Google Translate, AI search, to help you learn languages faster and in a more self-directed, personal approach.
+          LangLearn integrates modern, no-cost tools like Google Translate and AI search into your language learning flow to help you learn languages faster and with a self-directed, personal approach.
         </p>
       </div>
     </div>
 
-    <!-- 2. VERSIONS ROADMAP & BUG FIXES DISPLAY -->
+    <!-- 2. VERSIONS DISPLAY -->
     <div class="space-y-6">
       <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-3">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-          <span>Release History & Roadmap</span>
+          <span>Version History</span>
         </h2>
-        <div class="flex items-center space-x-3">
+        <div v-if="isAdmin" class="flex items-center space-x-3">
           <button
-            v-if="isAdmin"
+            v-if="adminEditMode"
             @click="openAddVersion"
-            class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded shadow-sm transition-colors"
+            class="px-2.5 py-1 text-xs text-gray-300 dark:text-gray-400 hover:text-white bg-gray-800 dark:bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 transition-colors"
           >
             + New Version
           </button>
-          <span v-if="isAdmin" class="text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-full border border-amber-200 dark:border-amber-900">
-            ✏️ Admin Edit Mode Active
-          </span>
+          <label class="inline-flex items-center gap-2 cursor-pointer text-xs text-gray-400 select-none">
+            <input
+              type="checkbox"
+              v-model="adminEditMode"
+              class="sr-only peer"
+            />
+            <div class="relative w-8 h-4 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-600"></div>
+            <span class="font-medium" :class="adminEditMode ? 'text-white' : 'text-gray-400'">Admin Edit</span>
+          </label>
         </div>
       </div>
 
       <div v-if="isLoading" class="text-center py-12 text-sm text-gray-500 font-mono">
-        Loading versions roadmap...
+        Loading version history...
       </div>
 
-      <div v-else-if="versions.length === 0" class="py-6 text-gray-500 text-sm">
+      <div v-else-if="displayedVersions.length === 0" class="py-6 text-gray-500 text-sm">
         No versions published yet.
       </div>
 
-      <!-- Minimal, just the facts Version List -->
+      <!-- Minimal Version List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versions" :key="ver.id" class="space-y-2">
+        <div v-for="(ver, index) in displayedVersions" :key="ver.id" class="space-y-2">
           <!-- Minimal Version Title -->
           <div class="flex items-center space-x-3 text-base">
-            <span class="font-bold font-mono text-gray-900 dark:text-white">v{{ ver.versionNumber }}</span>
-            <span v-if="ver.publishDate" class="text-xs text-gray-500 dark:text-gray-400 font-sans">
-              (Published {{ formatPublishDate(ver.publishDate) }})
+            <span class="font-bold font-mono text-gray-900 dark:text-white">
+              v{{ ver.versionNumber }}{{ ver.title ? ' ' + ver.title : '' }}{{ ver.publishDate ? ' - ' + formatPublishDate(ver.publishDate) : '' }}{{ index === 0 && ver.publishDate ? ' ' + getRelativeDateStr(ver.publishDate) : '' }}
             </span>
-            <template v-if="isAdmin">
+            <template v-if="isAdmin && adminEditMode">
               <span class="text-gray-400 text-xs">|</span>
-              <button @click="openEditVersion(ver)" class="text-xs text-amber-600 dark:text-amber-400 hover:underline">edit</button>
+              <button @click="openEditVersion(ver)" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-200 hover:underline">edit</button>
               <span class="text-gray-400 text-xs">|</span>
-              <button @click="openAddItem(ver.id)" class="text-xs text-amber-600 dark:text-amber-400 hover:underline">add item</button>
+              <button @click="openAddItem(ver.id)" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-200 hover:underline">add item</button>
               <span class="text-gray-400 text-xs">|</span>
-              <button @click="deleteVersion(ver)" class="text-xs text-rose-600 dark:text-rose-400 hover:underline">delete</button>
+              <button @click="deleteVersion(ver)" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-200 hover:underline">delete</button>
             </template>
           </div>
 
@@ -292,12 +418,12 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
               <li v-for="item in ver.versionItems.filter(i => i.type === 'FEATURE')" :key="item.id">
                 <div class="inline-flex items-center space-x-2">
                   <span>{{ item.body }}</span>
-                  <span v-if="isAdmin" class="text-gray-400 dark:text-gray-500 text-[11px]">
-                    (<button @click="reorderItem(item.id, 'UP')" class="hover:text-black dark:hover:text-white">up</button> |
-                    <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-black dark:hover:text-white">down</button> |
-                    <button @click="openEditItem(item)" class="hover:text-black dark:hover:text-white">edit</button> |
-                    <button @click="deleteItem(item)" class="hover:text-rose-500">delete</button> |
-                    <button @click="openAddItem(ver.id, item.id)" class="hover:text-amber-500">add</button>)
+                  <span v-if="isAdmin && adminEditMode" class="text-gray-400 dark:text-gray-500 text-[11px]">
+                    (<button @click="reorderItem(item.id, 'UP')" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">up</button> |
+                    <button @click="reorderItem(item.id, 'DOWN')" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">down</button> |
+                    <button @click="openEditItem(item)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">edit</button> |
+                    <button @click="deleteItem(item)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">delete</button> |
+                    <button @click="openAddItem(ver.id, item.id)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">add</button>)
                   </span>
                 </div>
               </li>
@@ -311,12 +437,12 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
               <li v-for="item in ver.versionItems.filter(i => i.type === 'BUGFIX')" :key="item.id">
                 <div class="inline-flex items-center space-x-2">
                   <span>{{ item.body }}</span>
-                  <span v-if="isAdmin" class="text-gray-400 dark:text-gray-500 text-[11px]">
-                    (<button @click="reorderItem(item.id, 'UP')" class="hover:text-black dark:hover:text-white">up</button> |
-                    <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-black dark:hover:text-white">down</button> |
-                    <button @click="openEditItem(item)" class="hover:text-black dark:hover:text-white">edit</button> |
-                    <button @click="deleteItem(item)" class="hover:text-rose-500">delete</button> |
-                    <button @click="openAddItem(ver.id, item.id)" class="hover:text-amber-500">add</button>)
+                  <span v-if="isAdmin && adminEditMode" class="text-gray-400 dark:text-gray-500 text-[11px]">
+                    (<button @click="reorderItem(item.id, 'UP')" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">up</button> |
+                    <button @click="reorderItem(item.id, 'DOWN')" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">down</button> |
+                    <button @click="openEditItem(item)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">edit</button> |
+                    <button @click="deleteItem(item)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">delete</button> |
+                    <button @click="openAddItem(ver.id, item.id)" class="text-gray-400 dark:text-gray-500 hover:text-gray-200">add</button>)
                   </span>
                 </div>
               </li>
@@ -334,6 +460,10 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Number</label>
             <input v-model="editingVersion.versionNumber" type="text" placeholder="0.3.0" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+          </div>
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Title</label>
+            <input v-model="editingVersion.title" type="text" placeholder="Added version history" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Publish Date (Optional)</label>

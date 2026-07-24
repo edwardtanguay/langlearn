@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
   const version = await prisma.version.create({
     data: {
       versionNumber: body.versionNumber.trim(),
+      title: body.title ? body.title.trim() : null,
       status: body.status || 'FUTURE',
       publishDate: body.publishDate ? new Date(body.publishDate) : null
     }
