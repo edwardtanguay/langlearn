@@ -12,11 +12,41 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const lastItem = await prisma.versionItem.findFirst({
-    where: { versionId: body.versionId },
-    orderBy: { orderWithinVersion: 'desc' }
-  })
-  const nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
+  let nextOrder = 1
+
+  if (body.afterItemId) {
+    const targetItem = await prisma.versionItem.findUnique({
+      where: { id: body.afterItemId }
+    })
+    if (targetItem) {
+      nextOrder = targetItem.orderWithinVersion + 1
+      // Shift all subsequent items in the same version up by 1
+      const itemsToShift = await prisma.versionItem.findMany({
+        where: {
+          versionId: body.versionId,
+          orderWithinVersion: { gte: nextOrder }
+        }
+      })
+      for (const item of itemsToShift) {
+        await prisma.versionItem.update({
+          where: { id: item.id },
+          data: { orderWithinVersion: item.orderWithinVersion + 1 }
+        })
+      }
+    } else {
+      const lastItem = await prisma.versionItem.findFirst({
+        where: { versionId: body.versionId },
+        orderBy: { orderWithinVersion: 'desc' }
+      })
+      nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
+    }
+  } else {
+    const lastItem = await prisma.versionItem.findFirst({
+      where: { versionId: body.versionId },
+      orderBy: { orderWithinVersion: 'desc' }
+    })
+    nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
+  }
 
   const newItem = await prisma.versionItem.create({
     data: {

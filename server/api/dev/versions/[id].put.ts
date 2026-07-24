@@ -10,12 +10,20 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'ID required' })
   }
 
+  const dataToUpdate: any = {}
+  if (body.versionNumber !== undefined) {
+    dataToUpdate.versionNumber = body.versionNumber.trim()
+  }
+  if (body.status !== undefined) {
+    dataToUpdate.status = body.status
+  }
+  if (body.publishDate !== undefined) {
+    dataToUpdate.publishDate = body.publishDate ? new Date(body.publishDate) : null
+  }
+
   const updated = await prisma.version.update({
     where: { id },
-    data: {
-      ...(body.versionNumber ? { versionNumber: body.versionNumber.trim() } : {}),
-      ...(body.status ? { status: body.status } : {})
-    }
+    data: dataToUpdate
   })
 
   return updated

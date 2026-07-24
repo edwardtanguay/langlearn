@@ -21,7 +21,7 @@ useHead({
   ]
 })
 
-const activeTab = ref<'versions' | 'flashcard-flow' | 'users'>('versions')
+const activeTab = ref<'flashcard-flow' | 'versions' | 'users'>('flashcard-flow')
 
 const isBackgroundLoading = ref(false)
 const hasLoadedVersions = ref(false)
@@ -81,19 +81,20 @@ interface Version {
   id: string
   versionNumber: string
   status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'
+  publishDate?: string | null
   versionItems: VersionItem[]
 }
 
 const versions = ref<Version[]>([])
 const isLoadingVersions = ref(false)
-const expandedVersions = ref<Record<string, boolean>>({})
 
 // Version Modal
 const showVersionModal = ref(false)
 const versionForm = ref({
   id: '',
   versionNumber: '',
-  status: 'FUTURE' as 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'
+  status: 'FUTURE' as 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE',
+  publishDate: ''
 })
 const isEditingVersion = ref(false)
 
@@ -102,6 +103,7 @@ const showItemModal = ref(false)
 const itemForm = ref({
   id: '',
   versionId: '',
+  afterItemId: '',
   type: 'BUGFIX' as 'FEATURE' | 'BUGFIX',
   status: 'PROPOSED' as 'PROPOSED' | 'IN_PROGRESS' | 'IMPLEMENTED',
   body: ''
@@ -111,41 +113,35 @@ const isEditingItem = ref(false)
 const loadVersions = async () => {
   if (!hasLoadedVersions.value) {
     isLoadingVersions.value = true
-  } else {
-    isBackgroundLoading.value = true
   }
   try {
     const data = await $fetch<Version[]>('/api/dev/versions')
     versions.value = data
-    // Auto-expand in-progress and first versions
-    data.forEach((v, idx) => {
-      if (idx === 0 || v.status === 'IN_PROGRESS') {
-        expandedVersions.value[v.id] = true
-      }
-    })
     hasLoadedVersions.value = true
   } catch (err) {
     console.error('Failed to load versions:', err)
   } finally {
     isLoadingVersions.value = false
-    isBackgroundLoading.value = false
   }
 }
 
-const toggleVersionExpand = (versionId: string) => {
-  expandedVersions.value[versionId] = !expandedVersions.value[versionId]
+function formatPublishDate(dateStr: string | null | undefined) {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  return d.toISOString().split('T')[0]
 }
 
 // Version CRUD
 const openAddVersionModal = () => {
   isEditingVersion.value = false
-  versionForm.value = { id: '', versionNumber: '', status: 'FUTURE' }
+  versionForm.value = { id: '', versionNumber: '', status: 'FUTURE', publishDate: '' }
   showVersionModal.value = true
 }
 
 const openEditVersionModal = (v: Version) => {
   isEditingVersion.value = true
-  versionForm.value = { id: v.id, versionNumber: v.versionNumber, status: v.status }
+  const formattedDate = v.publishDate ? new Date(v.publishDate).toISOString().split('T')[0] : ''
+  versionForm.value = { id: v.id, versionNumber: v.versionNumber, status: v.status, publishDate: formattedDate }
   showVersionModal.value = true
 }
 
@@ -181,9 +177,9 @@ const deleteVersion = async (v: Version) => {
 }
 
 // Item CRUD
-const openAddItemModal = (versionId: string) => {
+const openAddItemModal = (versionId: string, afterItemId?: string) => {
   isEditingItem.value = false
-  itemForm.value = { id: '', versionId, type: 'BUGFIX', status: 'PROPOSED', body: '' }
+  itemForm.value = { id: '', versionId, afterItemId: afterItemId || '', type: 'BUGFIX', status: 'PROPOSED', body: '' }
   showItemModal.value = true
 }
 
@@ -192,6 +188,7 @@ const openEditItemModal = (item: VersionItem) => {
   itemForm.value = {
     id: item.id,
     versionId: item.versionId,
+    afterItemId: '',
     type: item.type,
     status: item.status,
     body: item.body
@@ -504,45 +501,36 @@ onUnmounted(() => {
       <div class="flex justify-between items-center border-b border-gray-800 pb-4">
         <div>
           <h1 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <WrenchScrewdriverIcon class="w-6 h-6 text-amber-500" />
             Developer Console
           </h1>
           <p class="text-xs text-gray-400 mt-1">Admin control panel for managing versions, feature requests, users, and study algorithms.</p>
         </div>
 
-        <!-- Sub-Menu Navigation Tabs -->
+        <!-- Sub-Menu Navigation Tabs (No icons, Flashcard Flow default) -->
         <div class="flex items-center gap-3">
-          <div v-if="isBackgroundLoading" class="flex items-center gap-1.5 text-xs font-mono text-amber-400 bg-amber-950/40 border border-amber-800/40 px-2.5 py-1 rounded-md animate-pulse">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-spin"></span>
-            <span>Syncing...</span>
-          </div>
-
           <div class="flex bg-gray-900 border border-gray-800 p-1 rounded-lg space-x-1">
             <button
-              @click="activeTab = 'versions'"
-              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
-              :class="activeTab === 'versions' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
+              @click="activeTab = 'flashcard-flow'"
+              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all"
+              :class="activeTab === 'flashcard-flow' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
             >
-              <HashtagIcon class="w-4 h-4" />
-              <span>Versions</span>
+              Flashcard Flow
             </button>
 
             <button
-              @click="activeTab = 'flashcard-flow'"
-              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
-              :class="activeTab === 'flashcard-flow' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
+              @click="activeTab = 'versions'"
+              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all"
+              :class="activeTab === 'versions' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
             >
-              <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
-              <span>Flashcard Flow</span>
+              Versions
             </button>
 
             <button
               @click="activeTab = 'users'"
-              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center space-x-1.5"
+              class="px-4 py-1.5 text-xs font-semibold rounded-md transition-all"
               :class="activeTab === 'users' ? 'bg-amber-600 text-white shadow-sm' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
             >
-              <UserGroupIcon class="w-4 h-4" />
-              <span>Users</span>
+              Users
             </button>
           </div>
         </div>
@@ -567,139 +555,63 @@ onUnmounted(() => {
           Loading version data...
         </div>
 
-        <div v-else-if="versions.length === 0" class="text-center py-16 bg-gray-900 border border-gray-800 rounded-xl text-gray-400 text-xs">
+        <div v-else-if="versions.length === 0" class="py-8 text-gray-400 text-xs font-mono">
           No versions found. Click "New Version" to get started.
         </div>
 
-        <div v-else class="space-y-4">
-          <div
-            v-for="ver in versions"
-            :key="ver.id"
-            class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-lg transition-all"
-          >
-            <!-- Version Header -->
-            <div
-              class="px-4 py-3 bg-gray-850 flex items-center justify-between cursor-pointer hover:bg-gray-800/80 border-b border-gray-800"
-              @click="toggleVersionExpand(ver.id)"
-            >
-              <div class="flex items-center space-x-3">
-                <component :is="expandedVersions[ver.id] ? ChevronDownIcon : ChevronRightIcon" class="w-4 h-4 text-gray-400" />
-                <span class="text-base font-bold text-white font-mono">v{{ ver.versionNumber }}</span>
-
-                <!-- Status Badge -->
-                <span
-                  class="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide border uppercase"
-                  :class="{
-                    'bg-emerald-950/60 text-emerald-400 border-emerald-800/60': ver.status === 'PUBLISHED',
-                    'bg-sky-950/60 text-sky-400 border-sky-800/60': ver.status === 'IN_PROGRESS',
-                    'bg-purple-950/60 text-purple-400 border-purple-800/60': ver.status === 'FUTURE'
-                  }"
-                >
-                  {{ ver.status.replace('_', ' ') }}
-                </span>
-
-                <span class="text-xs text-gray-400 font-mono">
-                  ({{ ver.versionItems.length }} {{ ver.versionItems.length === 1 ? 'item' : 'items' }})
-                </span>
-              </div>
-
-              <div class="flex items-center space-x-2" @click.stop>
-                <button
-                  @click="openAddItemModal(ver.id)"
-                  class="px-2.5 py-1 bg-gray-800 hover:bg-gray-700 text-amber-400 hover:text-amber-300 text-xs font-semibold rounded border border-gray-700 flex items-center space-x-1"
-                >
-                  <PlusIcon class="w-3.5 h-3.5" />
-                  <span>Add Item</span>
-                </button>
-                <button
-                  @click="openEditVersionModal(ver)"
-                  class="p-1 text-gray-400 hover:text-white hover:bg-gray-700 rounded"
-                  title="Edit Version"
-                >
-                  <PencilSquareIcon class="w-4 h-4" />
-                </button>
-                <button
-                  @click="deleteVersion(ver)"
-                  class="p-1 text-gray-400 hover:text-rose-400 hover:bg-gray-700 rounded"
-                  title="Delete Version"
-                >
-                  <TrashIcon class="w-4 h-4" />
-                </button>
-              </div>
+        <!-- Minimal, just the facts Version List -->
+        <div v-else class="space-y-6 text-sm text-gray-200">
+          <div v-for="ver in versions" :key="ver.id" class="space-y-2">
+            <!-- Minimal Version Title & Actions -->
+            <div class="flex items-center space-x-3 text-base">
+              <span class="font-bold font-mono text-white">v{{ ver.versionNumber }}</span>
+              <span v-if="ver.publishDate" class="text-xs text-gray-400 font-sans">
+                (Published {{ formatPublishDate(ver.publishDate) }})
+              </span>
+              <span class="text-gray-600 text-xs">|</span>
+              <button @click="openEditVersionModal(ver)" class="text-xs text-amber-400 hover:underline">edit</button>
+              <span class="text-gray-600 text-xs">|</span>
+              <button @click="openAddItemModal(ver.id)" class="text-xs text-amber-400 hover:underline">add item</button>
+              <span class="text-gray-600 text-xs">|</span>
+              <button @click="deleteVersion(ver)" class="text-xs text-rose-400 hover:underline">delete</button>
             </div>
 
-            <!-- Version Items List -->
-            <div v-if="expandedVersions[ver.id]" class="p-4 bg-gray-950/50 space-y-2">
-              <div v-if="ver.versionItems.length === 0" class="text-xs text-gray-500 italic py-2 px-3">
-                No features or bug fixes listed for this version yet.
-              </div>
+            <!-- Features Section -->
+            <div v-if="ver.versionItems.filter(i => i.type === 'FEATURE').length > 0" class="pl-4 space-y-1">
+              <h4 class="text-xs font-semibold text-gray-400">features</h4>
+              <ul class="pl-5 list-disc space-y-1 text-xs text-gray-300">
+                <li v-for="item in ver.versionItems.filter(i => i.type === 'FEATURE')" :key="item.id">
+                  <div class="inline-flex items-center space-x-2">
+                    <span>{{ item.body }}</span>
+                    <span class="text-gray-500 text-[11px]">
+                      (<button @click="reorderItem(item.id, 'UP')" class="hover:text-white">up</button> |
+                      <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-white">down</button> |
+                      <button @click="openEditItemModal(item)" class="hover:text-white">edit</button> |
+                      <button @click="deleteItem(item)" class="hover:text-rose-400">delete</button> |
+                      <button @click="openAddItemModal(ver.id, item.id)" class="hover:text-amber-400">add</button>)
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
 
-              <div
-                v-for="(item, idx) in ver.versionItems"
-                :key="item.id"
-                class="flex items-center justify-between p-3 bg-gray-900 border border-gray-800/80 rounded-lg hover:border-gray-700 transition-colors"
-              >
-                <div class="flex items-center space-x-3 max-w-3xl">
-                  <!-- Type Badge -->
-                  <span
-                    class="px-2 py-0.5 rounded text-[10px] font-bold border shrink-0"
-                    :class="item.type === 'FEATURE' ? 'bg-amber-950/60 text-amber-400 border-amber-800/40' : 'bg-rose-950/60 text-rose-400 border-rose-800/40'"
-                  >
-                    {{ item.type === 'FEATURE' ? '✨ FEATURE' : '🐛 BUGFIX' }}
-                  </span>
-
-                  <!-- Item Status -->
-                  <span
-                    class="px-2 py-0.5 rounded text-[10px] font-bold border shrink-0"
-                    :class="{
-                      'bg-gray-800 text-gray-400 border-gray-700': item.status === 'PROPOSED',
-                      'bg-sky-950/60 text-sky-400 border-sky-800/40': item.status === 'IN_PROGRESS',
-                      'bg-emerald-950/60 text-emerald-400 border-emerald-800/40': item.status === 'IMPLEMENTED'
-                    }"
-                  >
-                    {{ item.status }}
-                  </span>
-
-                  <p class="text-xs text-gray-200 font-medium leading-relaxed">{{ item.body }}</p>
-                </div>
-
-                <!-- Item Actions & Reordering -->
-                <div class="flex items-center space-x-1 shrink-0">
-                  <button
-                    @click="reorderItem(item.id, 'UP')"
-                    :disabled="idx === 0"
-                    class="p-1 text-gray-400 hover:text-white disabled:opacity-30 disabled:hover:text-gray-400 hover:bg-gray-800 rounded"
-                    title="Move Item Up"
-                  >
-                    <ArrowUpIcon class="w-3.5 h-3.5" />
-                  </button>
-
-                  <button
-                    @click="reorderItem(item.id, 'DOWN')"
-                    :disabled="idx === ver.versionItems.length - 1"
-                    class="p-1 text-gray-400 hover:text-white disabled:opacity-30 disabled:hover:text-gray-400 hover:bg-gray-800 rounded"
-                    title="Move Item Down"
-                  >
-                    <ArrowDownIcon class="w-3.5 h-3.5" />
-                  </button>
-
-                  <button
-                    @click="openEditItemModal(item)"
-                    class="p-1 text-gray-400 hover:text-amber-400 hover:bg-gray-800 rounded"
-                    title="Edit Item"
-                  >
-                    <PencilSquareIcon class="w-3.5 h-3.5" />
-                  </button>
-
-                  <button
-                    @click="deleteItem(item)"
-                    class="p-1 text-gray-400 hover:text-rose-400 hover:bg-gray-800 rounded"
-                    title="Delete Item"
-                  >
-                    <TrashIcon class="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
+            <!-- Bug Fixes Section -->
+            <div v-if="ver.versionItems.filter(i => i.type === 'BUGFIX').length > 0" class="pl-4 space-y-1">
+              <h4 class="text-xs font-semibold text-gray-400">bug fixes</h4>
+              <ul class="pl-5 list-disc space-y-1 text-xs text-gray-300">
+                <li v-for="item in ver.versionItems.filter(i => i.type === 'BUGFIX')" :key="item.id">
+                  <div class="inline-flex items-center space-x-2">
+                    <span>{{ item.body }}</span>
+                    <span class="text-gray-500 text-[11px]">
+                      (<button @click="reorderItem(item.id, 'UP')" class="hover:text-white">up</button> |
+                      <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-white">down</button> |
+                      <button @click="openEditItemModal(item)" class="hover:text-white">edit</button> |
+                      <button @click="deleteItem(item)" class="hover:text-rose-400">delete</button> |
+                      <button @click="openAddItemModal(ver.id, item.id)" class="hover:text-amber-400">add</button>)
+                    </span>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -922,6 +834,15 @@ onUnmounted(() => {
               v-model="versionForm.versionNumber"
               type="text"
               placeholder="0.2.0"
+              class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white font-mono focus:outline-none focus:border-amber-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-400 mb-1">Publish Date (Optional)</label>
+            <input
+              v-model="versionForm.publishDate"
+              type="date"
               class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white font-mono focus:outline-none focus:border-amber-500"
             />
           </div>

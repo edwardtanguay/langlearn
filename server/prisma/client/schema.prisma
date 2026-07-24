@@ -24,6 +24,7 @@ model Version {
   id            String        @id @default(uuid())
   versionNumber String        @unique
   status        String        @default("FUTURE")
+  publishDate   DateTime?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   versionItems  VersionItem[]

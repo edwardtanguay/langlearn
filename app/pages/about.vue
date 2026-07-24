@@ -30,6 +30,7 @@ interface Version {
   id: string
   versionNumber: string
   status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'
+  publishDate?: string | null
   versionItems: VersionItem[]
 }
 
@@ -39,10 +40,16 @@ const isAdmin = ref(false)
 
 // Edit Modals for Admin
 const showEditItemModal = ref(false)
-const editingItem = ref<{ id: string; body: string; type: 'FEATURE' | 'BUGFIX'; status: 'PROPOSED' | 'IN_PROGRESS' | 'IMPLEMENTED' } | null>(null)
+const editingItem = ref<{ id: string; versionId: string; afterItemId: string; body: string; type: 'FEATURE' | 'BUGFIX'; status: 'PROPOSED' | 'IN_PROGRESS' | 'IMPLEMENTED' }>({
+  id: '', versionId: '', afterItemId: '', body: '', type: 'BUGFIX', status: 'PROPOSED'
+})
+const isNewItem = ref(false)
 
 const showEditVersionModal = ref(false)
-const editingVersion = ref<{ id: string; versionNumber: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE' } | null>(null)
+const editingVersion = ref<{ id: string; versionNumber: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE'; publishDate: string }>({
+  id: '', versionNumber: '', status: 'FUTURE', publishDate: ''
+})
+const isNewVersion = ref(false)
 
 const loadData = async () => {
   isLoading.value = true
@@ -69,41 +76,108 @@ onMounted(() => {
   loadData()
 })
 
-const openEditItem = (item: VersionItem) => {
-  editingItem.value = { id: item.id, body: item.body, type: item.type, status: item.status }
-  showEditItemModal.value = true
+function formatPublishDate(dateStr: string | null | undefined) {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  return d.toISOString().split('T')[0]
 }
 
-const saveAdminItem = async () => {
-  if (!editingItem.value) return
-  try {
-    await $fetch(`/api/dev/version-items/${editingItem.value.id}`, {
-      method: 'PUT',
-      body: editingItem.value
-    })
-    showEditItemModal.value = false
-    await loadData()
-  } catch (err: any) {
-    alert(err.data?.statusMessage || 'Failed to update item')
-  }
+const openAddVersion = () => {
+  isNewVersion.value = true
+  editingVersion.value = { id: '', versionNumber: '', status: 'FUTURE', publishDate: '' }
+  showEditVersionModal.value = true
 }
 
 const openEditVersion = (ver: Version) => {
-  editingVersion.value = { id: ver.id, versionNumber: ver.versionNumber, status: ver.status }
+  isNewVersion.value = false
+  const formattedDate = ver.publishDate ? new Date(ver.publishDate).toISOString().split('T')[0] : ''
+  editingVersion.value = { id: ver.id, versionNumber: ver.versionNumber, status: ver.status, publishDate: formattedDate }
   showEditVersionModal.value = true
 }
 
 const saveAdminVersion = async () => {
-  if (!editingVersion.value) return
+  if (!editingVersion.value.versionNumber.trim()) return
   try {
-    await $fetch(`/api/dev/versions/${editingVersion.value.id}`, {
-      method: 'PUT',
-      body: editingVersion.value
-    })
+    if (isNewVersion.value) {
+      await $fetch('/api/dev/versions', {
+        method: 'POST',
+        body: editingVersion.value
+      })
+    } else {
+      await $fetch(`/api/dev/versions/${editingVersion.value.id}`, {
+        method: 'PUT',
+        body: editingVersion.value
+      })
+    }
     showEditVersionModal.value = false
     await loadData()
   } catch (err: any) {
-    alert(err.data?.statusMessage || 'Failed to update version')
+    alert(err.data?.statusMessage || 'Failed to save version')
+  }
+}
+
+const deleteVersion = async (ver: Version) => {
+  if (!confirm(`Are you sure you want to delete version ${ver.versionNumber}?`)) return
+  try {
+    await $fetch(`/api/dev/versions/${ver.id}`, { method: 'DELETE' })
+    await loadData()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to delete version')
+  }
+}
+
+const openAddItem = (versionId: string, afterItemId?: string) => {
+  isNewItem.value = true
+  editingItem.value = { id: '', versionId, afterItemId: afterItemId || '', body: '', type: 'BUGFIX', status: 'PROPOSED' }
+  showEditItemModal.value = true
+}
+
+const openEditItem = (item: VersionItem) => {
+  isNewItem.value = false
+  editingItem.value = { id: item.id, versionId: item.versionId, afterItemId: '', body: item.body, type: item.type, status: item.status }
+  showEditItemModal.value = true
+}
+
+const saveAdminItem = async () => {
+  if (!editingItem.value.body.trim()) return
+  try {
+    if (isNewItem.value) {
+      await $fetch('/api/dev/version-items', {
+        method: 'POST',
+        body: editingItem.value
+      })
+    } else {
+      await $fetch(`/api/dev/version-items/${editingItem.value.id}`, {
+        method: 'PUT',
+        body: editingItem.value
+      })
+    }
+    showEditItemModal.value = false
+    await loadData()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to save item')
+  }
+}
+
+const deleteItem = async (item: VersionItem) => {
+  if (!confirm('Are you sure you want to delete this item?')) return
+  try {
+    await $fetch(`/api/dev/version-items/${item.id}`, { method: 'DELETE' })
+    await loadData()
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to delete item')
+  }
+}
+
+const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
+  try {
+    await $fetch('/api/dev/version-items/reorder', {
+      method: 'POST',
+      body: { itemId, direction }
+    })
+    await loadData()
+  } catch (err: any) {
+    console.error('Failed to reorder:', err)
   }
 }
 </script>
@@ -170,116 +244,83 @@ const saveAdminVersion = async () => {
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <span>Release History & Roadmap</span>
         </h2>
-        <span v-if="isAdmin" class="text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-full border border-amber-200 dark:border-amber-900">
-          ✏️ Admin Edit Mode Active
-        </span>
+        <div class="flex items-center space-x-3">
+          <button
+            v-if="isAdmin"
+            @click="openAddVersion"
+            class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded shadow-sm transition-colors"
+          >
+            + New Version
+          </button>
+          <span v-if="isAdmin" class="text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-full border border-amber-200 dark:border-amber-900">
+            ✏️ Admin Edit Mode Active
+          </span>
+        </div>
       </div>
 
       <div v-if="isLoading" class="text-center py-12 text-sm text-gray-500 font-mono">
         Loading versions roadmap...
       </div>
 
-      <div v-else-if="versions.length === 0" class="text-center py-12 text-gray-500 text-sm">
+      <div v-else-if="versions.length === 0" class="py-6 text-gray-500 text-sm">
         No versions published yet.
       </div>
 
-      <div v-else class="space-y-6">
-        <div
-          v-for="ver in versions"
-          :key="ver.id"
-          class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-sm space-y-4 transition-all"
-        >
-          <!-- Version Header -->
-          <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-3">
-            <div class="flex items-center space-x-3">
-              <!-- Version Icon based on Status -->
-              <div class="p-2 rounded-lg" :class="{
-                'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400': ver.status === 'PUBLISHED',
-                'bg-sky-50 text-sky-600 dark:bg-sky-950/50 dark:text-sky-400': ver.status === 'IN_PROGRESS',
-                'bg-purple-50 text-purple-600 dark:bg-purple-950/50 dark:text-purple-400': ver.status === 'FUTURE'
-              }">
-                <CheckCircleIcon v-if="ver.status === 'PUBLISHED'" class="w-5 h-5" />
-                <ClockIcon v-else-if="ver.status === 'IN_PROGRESS'" class="w-5 h-5 animate-spin" style="animation-duration: 4s;" />
-                <ForwardIcon v-else class="w-5 h-5" />
-              </div>
-
-              <div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white font-mono flex items-center gap-2">
-                  Version {{ ver.versionNumber }}
-                  <!-- Subtle Admin Edit Version Hook -->
-                  <button
-                    v-if="isAdmin"
-                    @click="openEditVersion(ver)"
-                    class="text-gray-400 hover:text-amber-500 transition-colors p-1"
-                    title="Admin: Edit Version"
-                  >
-                    <PencilSquareIcon class="w-4 h-4" />
-                  </button>
-                </h3>
-              </div>
-
-              <!-- Status Badge -->
-              <span
-                class="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase border"
-                :class="{
-                  'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-800': ver.status === 'PUBLISHED',
-                  'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-950/60 dark:text-sky-400 dark:border-sky-800': ver.status === 'IN_PROGRESS',
-                  'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/60 dark:text-purple-400 dark:border-purple-800': ver.status === 'FUTURE'
-                }"
-              >
-                {{ ver.status.replace('_', ' ') }}
-              </span>
-            </div>
+      <!-- Minimal, just the facts Version List -->
+      <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
+        <div v-for="ver in versions" :key="ver.id" class="space-y-2">
+          <!-- Minimal Version Title -->
+          <div class="flex items-center space-x-3 text-base">
+            <span class="font-bold font-mono text-gray-900 dark:text-white">v{{ ver.versionNumber }}</span>
+            <span v-if="ver.publishDate" class="text-xs text-gray-500 dark:text-gray-400 font-sans">
+              (Published {{ formatPublishDate(ver.publishDate) }})
+            </span>
+            <template v-if="isAdmin">
+              <span class="text-gray-400 text-xs">|</span>
+              <button @click="openEditVersion(ver)" class="text-xs text-amber-600 dark:text-amber-400 hover:underline">edit</button>
+              <span class="text-gray-400 text-xs">|</span>
+              <button @click="openAddItem(ver.id)" class="text-xs text-amber-600 dark:text-amber-400 hover:underline">add item</button>
+              <span class="text-gray-400 text-xs">|</span>
+              <button @click="deleteVersion(ver)" class="text-xs text-rose-600 dark:text-rose-400 hover:underline">delete</button>
+            </template>
           </div>
 
-          <!-- Items List -->
-          <div v-if="ver.versionItems.length > 0" class="space-y-2.5 pl-2">
-            <div
-              v-for="item in ver.versionItems"
-              :key="item.id"
-              class="flex items-start justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-850 border border-gray-100 dark:border-gray-800 group"
-            >
-              <div class="flex items-start space-x-3">
-                <!-- Feature / Bugfix Icon -->
-                <div class="mt-0.5 shrink-0">
-                  <span v-if="item.type === 'FEATURE'" class="inline-flex items-center justify-center p-1 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400 text-xs">
-                    ✨
-                  </span>
-                  <span v-else class="inline-flex items-center justify-center p-1 rounded-md bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400 text-xs">
-                    🐛
+          <!-- Features Section -->
+          <div v-if="ver.versionItems.filter(i => i.type === 'FEATURE').length > 0" class="pl-4 space-y-1">
+            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">features</h4>
+            <ul class="pl-5 list-disc space-y-1 text-xs text-gray-700 dark:text-gray-300">
+              <li v-for="item in ver.versionItems.filter(i => i.type === 'FEATURE')" :key="item.id">
+                <div class="inline-flex items-center space-x-2">
+                  <span>{{ item.body }}</span>
+                  <span v-if="isAdmin" class="text-gray-400 dark:text-gray-500 text-[11px]">
+                    (<button @click="reorderItem(item.id, 'UP')" class="hover:text-black dark:hover:text-white">up</button> |
+                    <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-black dark:hover:text-white">down</button> |
+                    <button @click="openEditItem(item)" class="hover:text-black dark:hover:text-white">edit</button> |
+                    <button @click="deleteItem(item)" class="hover:text-rose-500">delete</button> |
+                    <button @click="openAddItem(ver.id, item.id)" class="hover:text-amber-500">add</button>)
                   </span>
                 </div>
-
-                <div>
-                  <p class="text-sm font-medium text-gray-800 dark:text-gray-200 leading-snug">
-                    {{ item.body }}
-                  </p>
-                  <div class="flex items-center space-x-2 mt-1">
-                    <span class="text-[10px] font-semibold text-gray-500 uppercase">
-                      {{ item.type }}
-                    </span>
-                    <span class="text-[10px] text-gray-400">•</span>
-                    <span class="text-[10px] font-medium text-gray-500">
-                      Status: {{ item.status.replace('_', ' ') }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Subtle Admin Edit Item Hook -->
-              <button
-                v-if="isAdmin"
-                @click="openEditItem(item)"
-                class="text-gray-400 hover:text-amber-500 opacity-60 group-hover:opacity-100 transition-opacity p-1"
-                title="Admin: Edit Item"
-              >
-                <PencilSquareIcon class="w-4 h-4" />
-              </button>
-            </div>
+              </li>
+            </ul>
           </div>
 
-          <div v-else class="text-xs text-gray-400 italic pl-2">
-            No items recorded for this version yet.
+          <!-- Bug Fixes Section -->
+          <div v-if="ver.versionItems.filter(i => i.type === 'BUGFIX').length > 0" class="pl-4 space-y-1">
+            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">bug fixes</h4>
+            <ul class="pl-5 list-disc space-y-1 text-xs text-gray-700 dark:text-gray-300">
+              <li v-for="item in ver.versionItems.filter(i => i.type === 'BUGFIX')" :key="item.id">
+                <div class="inline-flex items-center space-x-2">
+                  <span>{{ item.body }}</span>
+                  <span v-if="isAdmin" class="text-gray-400 dark:text-gray-500 text-[11px]">
+                    (<button @click="reorderItem(item.id, 'UP')" class="hover:text-black dark:hover:text-white">up</button> |
+                    <button @click="reorderItem(item.id, 'DOWN')" class="hover:text-black dark:hover:text-white">down</button> |
+                    <button @click="openEditItem(item)" class="hover:text-black dark:hover:text-white">edit</button> |
+                    <button @click="deleteItem(item)" class="hover:text-rose-500">delete</button> |
+                    <button @click="openAddItem(ver.id, item.id)" class="hover:text-amber-500">add</button>)
+                  </span>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -288,18 +329,22 @@ const saveAdminVersion = async () => {
     <!-- Admin Edit Version Modal -->
     <div v-if="showEditVersionModal && editingVersion" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl space-y-4">
-        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Admin Edit: Version</h3>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewVersion ? 'Admin Create: Version' : 'Admin Edit: Version' }}</h3>
         <div class="space-y-3 text-xs">
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Number</label>
-            <input v-model="editingVersion.versionNumber" type="text" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+            <input v-model="editingVersion.versionNumber" type="text" placeholder="0.3.0" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+          </div>
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1">Publish Date (Optional)</label>
+            <input v-model="editingVersion.publishDate" type="date" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Status</label>
             <select v-model="editingVersion.status" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
-              <option value="PUBLISHED">PUBLISHED</option>
-              <option value="IN_PROGRESS">IN_PROGRESS</option>
               <option value="FUTURE">FUTURE</option>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="PUBLISHED">PUBLISHED</option>
             </select>
           </div>
         </div>
@@ -313,14 +358,14 @@ const saveAdminVersion = async () => {
     <!-- Admin Edit Item Modal -->
     <div v-if="showEditItemModal && editingItem" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-lg shadow-2xl space-y-4">
-        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Admin Edit: Roadmap Item</h3>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewItem ? 'Admin Add: Roadmap Item' : 'Admin Edit: Roadmap Item' }}</h3>
         <div class="space-y-3 text-xs">
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Type</label>
               <select v-model="editingItem.type" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
-                <option value="FEATURE">✨ FEATURE</option>
                 <option value="BUGFIX">🐛 BUGFIX</option>
+                <option value="FEATURE">✨ FEATURE</option>
               </select>
             </div>
             <div>
@@ -333,8 +378,8 @@ const saveAdminVersion = async () => {
             </div>
           </div>
           <div>
-            <label class="block text-gray-700 dark:text-gray-300 mb-1">Description</label>
-            <textarea v-model="editingItem.body" rows="3" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white"></textarea>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1">Description / Body</label>
+            <textarea v-model="editingItem.body" rows="3" placeholder="Describe the feature or bug fix..." class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white"></textarea>
           </div>
         </div>
         <div class="flex justify-end space-x-2 pt-2">

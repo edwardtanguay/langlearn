@@ -7,8 +7,8 @@
       title="Submit a feature idea or bug fix"
       aria-label="Submit feedback or feature request"
     >
-      <LightBulbIcon class="w-6 h-6 animate-pulse" />
-      <span class="text-xs font-semibold hidden sm:inline text-amber-600 dark:text-amber-400">Idea</span>
+      <LightBulbIcon class="w-5 h-5 animate-pulse" />
+      <span class="text-xs font-semibold hidden sm:inline text-amber-600 dark:text-amber-400">Have an idea?</span>
     </button>
 
     <!-- Top Drawer Overlay Form -->
@@ -24,12 +24,9 @@
         v-if="isOpen"
         class="fixed inset-x-0 top-16 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-xl p-4 md:p-6"
       >
-        <div class="max-w-3xl mx-auto">
-          <div class="flex justify-between items-center mb-3">
-            <div class="flex items-center space-x-2">
-              <LightBulbIcon class="w-5 h-5 text-amber-500" />
-              <h3 class="text-base font-semibold text-gray-900 dark:text-white">Have an Idea or Bug Fix?</h3>
-            </div>
+        <div class="max-w-3xl mx-auto relative">
+          <!-- Close Button -->
+          <div class="flex justify-end mb-2">
             <button
               @click="isOpen = false"
               class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1"
@@ -38,42 +35,39 @@
             </button>
           </div>
 
-          <form @submit.prevent="submitIdea" class="space-y-3">
-            <!-- Type Radio Buttons -->
-            <div class="flex items-center space-x-6 text-sm">
-              <label class="inline-flex items-center cursor-pointer text-gray-700 dark:text-gray-300">
-                <input
-                  type="radio"
-                  v-model="form.type"
-                  value="BUGFIX"
-                  class="w-4 h-4 text-rose-600 focus:ring-rose-500 border-gray-300"
-                />
-                <span class="ml-2 font-medium">🐛 Bug-fix</span>
-              </label>
-
-              <label class="inline-flex items-center cursor-pointer text-gray-700 dark:text-gray-300">
-                <input
-                  type="radio"
-                  v-model="form.type"
-                  value="FEATURE"
-                  class="w-4 h-4 text-amber-600 focus:ring-amber-500 border-gray-300"
-                />
-                <span class="ml-2 font-medium">✨ Feature</span>
-              </label>
+          <form @submit.prevent="submitIdea">
+            <!-- Connected Pills Selection Control (Connected to textarea below) -->
+            <div class="inline-flex rounded-t-md overflow-hidden border-t border-l border-r border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-xs font-medium">
+              <button
+                type="button"
+                @click="form.type = 'BUGFIX'"
+                :class="form.type === 'BUGFIX' ? 'bg-white dark:bg-gray-900 text-rose-600 font-bold border-b-2 border-rose-500' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+                class="px-4 py-1.5 transition-colors focus:outline-none"
+              >
+                🐛 Bug fix
+              </button>
+              <button
+                type="button"
+                @click="form.type = 'FEATURE'"
+                :class="form.type === 'FEATURE' ? 'bg-white dark:bg-gray-900 text-amber-600 font-bold border-b-2 border-amber-500' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+                class="px-4 py-1.5 transition-colors focus:outline-none"
+              >
+                ✨ Feature
+              </button>
             </div>
 
-            <!-- Body Input -->
+            <!-- Body Input (Connected directly to pills above) -->
             <div>
               <textarea
                 v-model="form.body"
-                rows="2"
+                rows="3"
                 required
                 placeholder="Type your feature request or bug fix here..."
-                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-b-md rounded-tr-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 block"
               ></textarea>
             </div>
 
-            <div class="flex justify-between items-center pt-1">
+            <div class="flex justify-between items-center pt-3">
               <span v-if="feedbackMsg" :class="feedbackError ? 'text-rose-600' : 'text-emerald-600'" class="text-xs font-medium">
                 {{ feedbackMsg }}
               </span>
