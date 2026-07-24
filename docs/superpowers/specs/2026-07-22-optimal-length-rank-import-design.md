@@ -9,7 +9,7 @@ This design introduces optimal-length default rank calculation for imported flas
 All metadata parsing and rank calculation constants are stored in `server/utils/rank-config.ts` (and shared utility) for single-point configuration:
 - `METADATA_MARKER = '//'`
 - `OPTIMAL_FRONT_LENGTH = 34`
-- `OPTIMAL_DEFAULT_RANK = 2.5`
+- `OPTIMAL_DEFAULT_RANK = 3.5`
 
 ### 2. Metadata Marker (`//`)
 - Examples of incoming metadata text:
@@ -20,7 +20,7 @@ All metadata parsing and rank calculation constants are stored in `server/utils/
 ### 3. Default Rank Calculation (Optimal Length)
 When importing flashcards from CSV:
 - If no explicit rank tag (e.g. `//4.3` or `//43`) is present in card metadata, calculate rank based on the trimmed clean front text length $n$:
-  - Formula: $\text{rank} = \max(0, \text{round}(2.5 - (0.05 \times |34 - n|), 2))$
+  - Formula: $\text{rank} = \max(0, \text{round}(3.5 - (0.05 \times |34 - n|), 2))$
 
 ### 4. CSV Import Preview Table Columns Order
 Preview table in `app/pages/import.vue` displays extracted metadata for incoming rows in the exact column order:
@@ -33,7 +33,7 @@ Define configurable constants and calculation helper:
 ```typescript
 export const METADATA_MARKER = '//';
 export const OPTIMAL_FRONT_LENGTH = 34;
-export const OPTIMAL_DEFAULT_RANK = 2.5;
+export const OPTIMAL_DEFAULT_RANK = 3.5;
 
 export function calculateOptimalRank(frontText: string): number {
   const n = frontText.trim().length;

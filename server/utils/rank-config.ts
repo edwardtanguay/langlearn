@@ -1,6 +1,6 @@
 export const METADATA_MARKER = '//';
 export const OPTIMAL_FRONT_LENGTH = 34;
-export const OPTIMAL_DEFAULT_RANK = 2.5;
+export const OPTIMAL_DEFAULT_RANK = 3.5;
 
 export function calculateOptimalRank(frontText: string): number {
   const n = frontText.trim().length;
