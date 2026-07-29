@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { BoltIcon } from '@heroicons/vue/24/outline'
 
 useHead({
@@ -67,8 +67,30 @@ const loadData = async () => {
   }
 }
 
+const nuxtApp = useNuxtApp()
+
+let removeHookListener: (() => void) | null = null
+
 onMounted(() => {
   loadData()
+
+  // Listen for newly added ideas from QuickAddIdeaDrawer
+  removeHookListener = nuxtApp.hook('idea-added' as any, (newItem: VersionItem) => {
+    if (newItem) {
+      // Optimistically insert if not already present
+      const exists = unassignedItems.value.some(i => i.id === newItem.id)
+      if (!exists) {
+        unassignedItems.value.unshift(newItem)
+      }
+    }
+    loadData()
+  })
+})
+
+onUnmounted(() => {
+  if (removeHookListener) {
+    removeHookListener()
+  }
 })
 
 const displayedVersions = computed(() => {

@@ -126,13 +126,16 @@ const submitIdea = async () => {
   feedbackError.value = false
 
   try {
-    await $fetch('/api/version-items/quick-add', {
+    const res = await $fetch<{ success: boolean; item: any }>('/api/version-items/quick-add', {
       method: 'POST',
       body: {
         type: form.value.type,
         body: form.value.body
       }
     })
+
+    const nuxtApp = useNuxtApp()
+    nuxtApp.callHook('idea-added' as any, res.item)
 
     feedbackMsg.value = 'Idea submitted successfully!'
     form.value.body = ''
