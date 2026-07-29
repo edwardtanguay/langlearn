@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { parseImportText } from '~~/server/utils/import-parser'
 import { parseMetadata } from '~~/server/utils/metadata-parser'
 import { calculateOptimalRank } from '~~/server/utils/rank-config'
 
@@ -54,12 +55,12 @@ const handleMobileImport = async () => {
   mobileImportError.value = null
 
   try {
-    await $fetch<{ id: string; userId: string; mobileImportText: string; whenImported: string }>('/api/import/mobile', {
+    await $fetch('/api/import/mobile', {
       method: 'POST',
       body: { mobileImportText: mobileInputText.value }
     })
     mobileInputText.value = ''
-    await fetchLatestMobileImport()
+    await navigateTo('/flashcard')
   } catch (err: any) {
     console.error('Failed mobile import:', err)
     mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to submit mobile import.'
@@ -67,6 +68,7 @@ const handleMobileImport = async () => {
     isSubmittingMobile.value = false
   }
 }
+
 
 const fetchLatestMobileImport = async () => {
   if (!loggedIn.value) return
@@ -136,44 +138,7 @@ function handleFileChange(event: Event) {
   reader.onload = (e) => {
     const text = e.target?.result as string;
     if (!text) return;
-
-    const lines = text.split(/\r?\n/).filter(line => line.trim().length > 0);
-    const rows: ParsedRow[] = [];
-
-    for (const line of lines) {
-      const row = parseCSVLine(line);
-      if (row.length >= 4) {
-        const rawText1 = row[2] ?? '';
-        const rawText2 = row[3] ?? '';
-
-        const meta1 = parseMetadata(rawText1);
-        const meta2 = parseMetadata(rawText2);
-
-        let frontClean = '';
-        if ((row[0] ?? '').toLowerCase() === 'english') {
-          frontClean = meta1.cleanText;
-        } else if ((row[1] ?? '').toLowerCase() === 'english') {
-          frontClean = meta2.cleanText;
-        } else {
-          frontClean = meta1.cleanText;
-        }
-
-        const rank = meta1.rank ?? meta2.rank ?? calculateOptimalRank(frontClean);
-        const pronunciation = meta1.pronunciation || meta2.pronunciation || '';
-        const memoryHook = meta1.memoryHook || meta2.memoryHook || '';
-
-        rows.push({
-          lang1: row[0] ?? '',
-          lang2: row[1] ?? '',
-          text1: rawText1,
-          text2: rawText2,
-          rank,
-          pronunciation,
-          memoryHook
-        });
-      }
-    }
-    parsedData.value = rows;
+    parsedData.value = parseImportText(text) as ParsedRow[];
   };
 
   reader.readAsText(file);

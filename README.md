@@ -13,7 +13,9 @@ The tech stack is: Nuxt 4, TypeScript, Prisma, Turso and Kinde.
 	- ./het.sh
 	- (password in Hetzner-debian-001)
 - update site
+	- cd projects/langlearn
 	- git pull
+		- (if in editor, CTRL-x)
 	- nvm install 20
 	- npm i
 	- NODE_OPTIONS="--max-old-space-size=4096" npm run build

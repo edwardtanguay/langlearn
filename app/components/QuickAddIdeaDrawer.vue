@@ -7,7 +7,7 @@
       title="Submit a feature idea or bug fix"
       aria-label="Submit feedback or feature request"
     >
-      <LightBulbIcon class="w-5 h-5 animate-pulse" />
+      <LightBulbIcon class="w-5 h-5" />
       <span class="text-xs font-semibold hidden sm:inline text-amber-600 dark:text-amber-400">Have an idea?</span>
     </button>
 
@@ -62,7 +62,7 @@
                 v-model="form.body"
                 rows="3"
                 required
-                placeholder="Type your feature request or bug fix here..."
+                :placeholder="form.type === 'BUGFIX' ? 'Type your bug fix here...' : 'Type your feature idea here...'"
                 @keydown.ctrl.enter.prevent="submitIdea"
                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-b-md rounded-tr-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 block"
               ></textarea>

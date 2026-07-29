@@ -2,12 +2,25 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon } from '@heroicons/vue/24/outline'
 
+interface CardStats {
+  readyCount: number
+  waitingCount: number
+  totalCount?: number
+  todayReviewedCount?: number
+  todayCorrectCount?: number
+  todayImportedCount?: number
+}
+
 const mobileMenuOpen = ref(false)
+const showMobileStatsBanner = ref(false)
 const navRef = ref<HTMLElement | null>(null)
 
+const cardStats = useState<CardStats | null>('flashcardStats', () => null)
+
 const handleClickOutside = (event: MouseEvent) => {
-  if (mobileMenuOpen.value && navRef.value && !navRef.value.contains(event.target as Node)) {
+  if (navRef.value && !navRef.value.contains(event.target as Node)) {
     mobileMenuOpen.value = false
+    showMobileStatsBanner.value = false
   }
 }
 
@@ -47,8 +60,21 @@ const fetchUserRole = async () => {
   }
 }
 
+const fetchNavCardStats = async () => {
+  if (!loggedIn.value) return
+  try {
+    const data = await $fetch<CardStats>('/api/flashcards/stats')
+    cardStats.value = data
+  } catch (err) {
+    console.error('Failed to fetch nav card stats', err)
+  }
+}
+
 watch(loggedIn, (val) => {
-  if (val) fetchUserRole()
+  if (val) {
+    fetchUserRole()
+    fetchNavCardStats()
+  }
 }, { immediate: true })
 
 const isAdmin = computed(() => userRole.value === 'admin')
@@ -156,6 +182,19 @@ const navItems = computed(() => {
         </div>
 
         <div class="flex items-center space-x-2 md:hidden">
+          <!-- Mobile Tested Count Button (To the left of hamburger icon) -->
+          <ClientOnly>
+            <button v-if="loggedIn"
+                    @click.stop="showMobileStatsBanner = !showMobileStatsBanner; mobileMenuOpen = false"
+                    class="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/80 rounded-lg flex items-center transition-colors cursor-pointer border border-indigo-200/80 dark:border-indigo-800/80 min-w-[36px] min-h-[32px] justify-center"
+                    title="Tested today count - tap for full stats">
+              <span v-if="cardStats !== null" class="text-base font-extrabold text-indigo-600 dark:text-indigo-400">
+                {{ cardStats.todayReviewedCount ?? 0 }}
+              </span>
+              <span v-else class="w-4 h-4 border-2 border-indigo-600 border-t-transparent dark:border-indigo-400 dark:border-t-transparent rounded-full animate-spin"></span>
+            </button>
+          </ClientOnly>
+
           <!-- Mobile Color Mode Toggle -->
           <button v-if="showColorModeToggle"
                   @click.stop="toggleColorMode"
@@ -168,7 +207,7 @@ const navItems = computed(() => {
           </button>
 
           <!-- Mobile Menu Button -->
-          <button @click.stop="mobileMenuOpen = !mobileMenuOpen"
+          <button @click.stop="mobileMenuOpen = !mobileMenuOpen; showMobileStatsBanner = false"
                   class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800"
                   aria-label="Toggle menu">
             <Bars3Icon v-if="!mobileMenuOpen"
@@ -179,6 +218,47 @@ const navItems = computed(() => {
         </div>
       </div>
     </div>
+
+    <!-- Mobile Stats Popdown Banner -->
+    <Transition enter-active-class="transition-all duration-300 ease-out"
+                enter-from-class="opacity-0 -translate-y-2"
+                enter-to-class="opacity-100 translate-y-0"
+                leave-active-class="transition-all duration-200 ease-in"
+                leave-from-class="opacity-100 translate-y-0"
+                leave-to-class="opacity-0 -translate-y-2">
+      <div v-if="showMobileStatsBanner && loggedIn"
+           class="md:hidden absolute left-0 right-0 border-t border-b border-gray-200 bg-white dark:bg-gray-900 shadow-xl z-50 dark:border-gray-800 px-4 py-3">
+        <div v-if="cardStats !== null" class="grid grid-cols-2 gap-3 text-xs">
+          <div class="flex flex-col p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-150 dark:border-gray-800">
+            <span class="text-gray-500 dark:text-gray-400 font-medium">Tested Today</span>
+            <span class="text-xl font-black text-indigo-600 dark:text-indigo-400 mt-0.5">
+              {{ cardStats.todayReviewedCount ?? 0 }}
+            </span>
+          </div>
+          <div class="flex flex-col p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-150 dark:border-gray-800">
+            <span class="text-gray-500 dark:text-gray-400 font-medium">Got Right Today</span>
+            <span class="text-xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5">
+              {{ cardStats.todayCorrectCount ?? 0 }}
+            </span>
+          </div>
+          <div class="flex flex-col p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-150 dark:border-gray-800">
+            <span class="text-gray-500 dark:text-gray-400 font-medium">Imported Today</span>
+            <span class="text-xl font-black text-amber-600 dark:text-amber-400 mt-0.5">
+              {{ cardStats.todayImportedCount ?? 0 }}
+            </span>
+          </div>
+          <div class="flex flex-col p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-150 dark:border-gray-800">
+            <span class="text-gray-500 dark:text-gray-400 font-medium">Total Cards</span>
+            <span class="text-xl font-black text-purple-600 dark:text-purple-400 mt-0.5">
+              {{ cardStats.totalCount ?? 0 }}
+            </span>
+          </div>
+        </div>
+        <div v-else class="flex justify-center items-center py-4">
+          <div class="w-6 h-6 border-2 border-indigo-600 border-t-transparent dark:border-indigo-400 dark:border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </div>
+    </Transition>
 
     <!-- Mobile Navigation -->
     <Transition enter-active-class="transition-all duration-300 ease-out"
@@ -216,3 +296,4 @@ const navItems = computed(() => {
     </Transition>
   </nav>
 </template>
+

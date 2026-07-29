@@ -48,9 +48,9 @@ defineEmits<{
       </button>
     </div>
 
-    <!-- Centered Info Text -->
-    <div v-if="stats" class="mt-3.5 text-xs text-gray-500 dark:text-gray-400 text-center font-medium">
-      Today: {{ stats.todayImportedCount ?? 0 }} {{ (stats.todayImportedCount === 1 ? 'card' : 'cards') }} imported, {{ stats.todayReviewedCount ?? 0 }} {{ (stats.todayReviewedCount === 1 ? 'card' : 'cards') }} reviewed, {{ (stats.totalCount ?? 0).toLocaleString() }} total
+    <!-- Centered Info Text (Hidden on mobile) -->
+    <div v-if="stats" class="hidden sm:block mt-3.5 text-xs text-gray-500 dark:text-gray-400 text-center font-medium">
+      Today: {{ stats.todayImportedCount ?? 0 }} {{ (stats.todayImportedCount === 1 ? 'card' : 'cards') }} imported, {{ stats.todayReviewedCount ?? 0 }} {{ (stats.todayReviewedCount === 1 ? 'card' : 'cards') }} reviewed, {{ stats.totalCount ?? 0 }} total
     </div>
   </div>
 </template>
