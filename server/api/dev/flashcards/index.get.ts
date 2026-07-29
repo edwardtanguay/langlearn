@@ -58,9 +58,18 @@ export default defineEventHandler(async (event) => {
     const learningCards = allFlashcards.filter(f => f.status === 'LEARNING')
     const otherCards = allFlashcards.filter(f => f.status !== 'LEARNING')
 
-    const newCardsPool = learningCards
-      .filter(f => !f.nextTestTime)
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+
+    const newCardsTodayPool = learningCards
+      .filter(f => !f.nextTestTime && f.createdAt.getTime() >= twentyFourHoursAgo.getTime())
       .sort((a, b) => b.rank - a.rank || a.id.localeCompare(b.id))
+
+    const newCardsOlderPool = learningCards
+      .filter(f => !f.nextTestTime && f.createdAt.getTime() < twentyFourHoursAgo.getTime())
+      .sort((a, b) => b.rank - a.rank || a.id.localeCompare(b.id))
+
+    const newCardsPool = [...newCardsTodayPool, ...newCardsOlderPool]
+
 
     const dueCardsPool = learningCards
       .filter(f => f.nextTestTime && f.nextTestTime.getTime() <= now.getTime())
