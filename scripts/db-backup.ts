@@ -55,33 +55,34 @@ async function main() {
   await backupClient.sync();
   backupClient.close();
   
-  // The .sqlite-info file is only used by LibSQL for tracking future syncs.
-  // Since this is a one-time backup, we can safely delete it so it doesn't clutter the directory.
-  const infoFile = filePath + '-info';
-  if (fs.existsSync(infoFile)) {
-    fs.unlinkSync(infoFile);
+  // Clean sidecar files (.sqlite-wal, .sqlite-shm, .sqlite-info)
+  const sidecars = [filePath + '-wal', filePath + '-shm', filePath + '-info'];
+  for (const sidecar of sidecars) {
+    if (fs.existsSync(sidecar)) {
+      try {
+        fs.unlinkSync(sidecar);
+      } catch (e) {
+        // Ignore if locked
+      }
+    }
   }
-  
-  console.log('Merging WAL files into a single standalone .sqlite file...');
-  const localDb = createClient({ url: `file:${filePath}` });
-  try {
-    await localDb.execute('PRAGMA wal_checkpoint(TRUNCATE)');
-  } catch (e) {
-    console.warn('Could not force WAL checkpoint:', e);
-  }
-  localDb.close();
-  
-  // Cleanup any orphaned .tmp files that LibSQL might leave behind if a previous run crashed
+
+  // Clean orphaned .tmp, -wal, -shm files across backup directory
   try {
     const files = fs.readdirSync(backupDir);
     for (const file of files) {
-      if (file.startsWith('.tmp')) {
-        fs.unlinkSync(path.join(backupDir, file));
+      if (file.startsWith('.tmp') || file.endsWith('-wal') || file.endsWith('-shm') || file.endsWith('-info')) {
+        try {
+          fs.unlinkSync(path.join(backupDir, file));
+        } catch (e) {
+          // Ignore locked files
+        }
       }
     }
   } catch (e) {
-    console.warn('Could not clean up .tmp files:', e);
+    console.warn('Could not clean up sidecar files:', e);
   }
+
   
   console.log('✅ Backup successful!');
 }

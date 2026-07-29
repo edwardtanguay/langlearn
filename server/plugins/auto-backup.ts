@@ -43,27 +43,28 @@ export default defineNitroPlugin((nitroApp) => {
       await backupClient.sync()
       backupClient.close()
 
-      // Clean info file
-      const infoFile = filePath + '-info'
-      if (fs.existsSync(infoFile)) {
-        fs.unlinkSync(infoFile)
+      // Clean sidecar files (.sqlite-wal, .sqlite-shm, .sqlite-info)
+      const sidecars = [filePath + '-wal', filePath + '-shm', filePath + '-info']
+      for (const sidecar of sidecars) {
+        if (fs.existsSync(sidecar)) {
+          try {
+            fs.unlinkSync(sidecar)
+          } catch (e) {
+            // Ignore if file is locked
+          }
+        }
       }
 
-      // Checkpoint WAL
-      const localDb = createClient({ url: `file:${filePath}` })
-      try {
-        await localDb.execute('PRAGMA wal_checkpoint(TRUNCATE)')
-      } catch (e) {
-        // Ignore checkpoint warning if unneeded
-      }
-      localDb.close()
-
-      // Clean orphaned .tmp files
+      // Clean orphaned .tmp, -wal, -shm files across backup directory
       try {
         const files = fs.readdirSync(backupDir)
         for (const file of files) {
-          if (file.startsWith('.tmp')) {
-            fs.unlinkSync(path.join(backupDir, file))
+          if (file.startsWith('.tmp') || file.endsWith('-wal') || file.endsWith('-shm') || file.endsWith('-info')) {
+            try {
+              fs.unlinkSync(path.join(backupDir, file))
+            } catch (e) {
+              // Ignore locked files
+            }
           }
         }
       } catch (e) {
@@ -71,6 +72,7 @@ export default defineNitroPlugin((nitroApp) => {
       }
 
       console.log(`[Auto-Backup] ✅ Startup backup successfully saved: ${filename}`)
+
     } catch (err) {
       console.error('[Auto-Backup] ❌ Startup database backup failed:', err)
     }
