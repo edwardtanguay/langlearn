@@ -251,14 +251,58 @@ const deleteItem = async (item: VersionItem) => {
 }
 
 const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
+  // Find item in unassignedItems or within versions
+  let list: VersionItem[] | null = null
+  let idx = unassignedItems.value.findIndex(i => i.id === itemId)
+  if (idx !== -1) {
+    list = unassignedItems.value
+  } else {
+    for (const v of versions.value) {
+      const i = v.versionItems.findIndex(item => item.id === itemId)
+      if (i !== -1) {
+        list = v.versionItems
+        idx = i
+        break
+      }
+    }
+  }
+
+  if (!list || idx === -1) return
+
+  const currentItem = list[idx]
+  if (!currentItem) return
+
+  const itemType = currentItem.type
+  // Filter matching type items to find relative swap neighbor
+  const typeIndices: number[] = []
+  list.forEach((item, index) => {
+    if (item.type === itemType) typeIndices.push(index)
+  })
+
+  const posInTypeGroup = typeIndices.indexOf(idx)
+  if (posInTypeGroup === -1) return
+
+  const targetPosInGroup = direction === 'UP' ? posInTypeGroup - 1 : posInTypeGroup + 1
+  if (targetPosInGroup < 0 || targetPosInGroup >= typeIndices.length) return
+
+  const targetIdx = typeIndices[targetPosInGroup]
+  if (targetIdx === undefined) return
+
+  // Optimistic in-place swap
+  const temp = list[idx]
+  if (temp && list[targetIdx]) {
+    list[idx] = list[targetIdx]
+    list[targetIdx] = temp
+  }
+
   try {
     await $fetch('/api/dev/version-items/reorder', {
       method: 'POST',
       body: { itemId, direction }
     })
-    await loadData()
   } catch (err: any) {
     console.error('Failed to reorder:', err)
+    await loadData()
   }
 }
 

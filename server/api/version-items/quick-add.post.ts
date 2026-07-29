@@ -6,8 +6,8 @@ function incrementMinorVersion(versionStr: string): string {
   if (parts.length < 3 || parts.some(isNaN)) {
     return '0.2.0'
   }
-  const major = parts[0]
-  const minor = parts[1] + 1
+  const major = parts[0] ?? 0
+  const minor = (parts[1] ?? 1) + 1
   return `${major}.${minor}.0`
 }
 
@@ -32,12 +32,14 @@ export default defineEventHandler(async (event) => {
   })
   const nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
 
+  const userId = user.dbId || user.id
+
   const newItem = await prisma.versionItem.create({
     data: {
       versionId: null,
       type,
       body: itemBody,
-      startedByUserId: user.dbId || user.id,
+      startedByUserId: userId,
       orderWithinVersion: nextOrder
     },
     include: {

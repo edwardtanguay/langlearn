@@ -41,7 +41,7 @@
               <button
                 type="button"
                 @click="form.type = 'BUGFIX'"
-                :class="form.type === 'BUGFIX' ? 'bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-bold border-b-2 border-gray-800 dark:border-gray-200' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+                :class="form.type === 'BUGFIX' ? 'bg-white dark:bg-gray-900 text-orange-500 dark:text-orange-400 font-bold border-b-2 border-orange-500 dark:border-orange-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
                 class="px-4 py-1.5 transition-colors focus:outline-none"
               >
                 Bug fix
@@ -49,7 +49,7 @@
               <button
                 type="button"
                 @click="form.type = 'FEATURE'"
-                :class="form.type === 'FEATURE' ? 'bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-bold border-b-2 border-gray-800 dark:border-gray-200' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+                :class="form.type === 'FEATURE' ? 'bg-white dark:bg-gray-900 text-orange-500 dark:text-orange-400 font-bold border-b-2 border-orange-500 dark:border-orange-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
                 class="px-4 py-1.5 transition-colors focus:outline-none"
               >
                 Feature
@@ -63,7 +63,7 @@
                 rows="3"
                 required
                 placeholder="Type your feature request or bug fix here..."
-                @keydown.enter.exact.prevent="submitIdea"
+                @keydown.ctrl.enter.prevent="submitIdea"
                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-b-md rounded-tr-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 block"
               ></textarea>
             </div>
