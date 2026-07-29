@@ -28,6 +28,23 @@ async function main() {
     fs.mkdirSync(backupDir, { recursive: true });
   }
 
+  // Pre-backup cleanup: delete any unneeded sidecar files (-wal, -shm, -info, .tmp) left behind by prior backup runs
+  try {
+    const files = fs.readdirSync(backupDir);
+    for (const file of files) {
+      if (file.startsWith('.tmp') || file.endsWith('-wal') || file.endsWith('-shm') || file.endsWith('-info')) {
+        try {
+          fs.unlinkSync(path.join(backupDir, file));
+        } catch (e) {
+          // Ignore if locked by another active process
+        }
+      }
+    }
+  } catch (e) {
+    // Ignore cleanup errors
+  }
+
+
   // Query flashcard count from remote database
   let flashcardCount = 0;
   try {
@@ -54,7 +71,24 @@ async function main() {
 
   await backupClient.sync();
   backupClient.close();
-  
+
+  // Wait 500ms for LibSQL sync client native handle release
+  await new Promise(r => setTimeout(r, 500));
+
+
+  // Open plain local connection to checkpoint WAL and convert journal mode to DELETE
+  try {
+    const localDb = createClient({ url: `file:${filePath}` });
+    await localDb.execute('PRAGMA wal_checkpoint(TRUNCATE)');
+    await localDb.execute('PRAGMA journal_mode = DELETE');
+    localDb.close();
+  } catch (e) {
+    console.warn('Could not reset journal mode:', e);
+  }
+
+  // Wait 100ms for local handle release
+  await new Promise(r => setTimeout(r, 100));
+
   // Clean sidecar files (.sqlite-wal, .sqlite-shm, .sqlite-info)
   const sidecars = [filePath + '-wal', filePath + '-shm', filePath + '-info'];
   for (const sidecar of sidecars) {
@@ -82,6 +116,7 @@ async function main() {
   } catch (e) {
     console.warn('Could not clean up sidecar files:', e);
   }
+
 
   
   console.log('✅ Backup successful!');
