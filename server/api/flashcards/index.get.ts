@@ -69,7 +69,7 @@ export default defineEventHandler(async (event) => {
 
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
 
-    // Pool 1a: Unreviewed new cards added in the last 24 hours (ranked highest first)
+    // Pool 1: Unreviewed fresh cards added in the last 24 hours (ranked highest first)
     const poolNewToday = await prisma.flashcard.findMany({
       where: {
         ...baseWhere,
@@ -84,10 +84,14 @@ export default defineEventHandler(async (event) => {
       include: commonInclude
     })
 
-    // Pool 1b: Older unreviewed new cards (if today's cards are under 30)
-    let poolNewOlder: typeof poolNewToday = []
-    if (poolNewToday.length < 30) {
-      poolNewOlder = await prisma.flashcard.findMany({
+    let poolNew: typeof poolNewToday = []
+
+    if (poolNewToday.length > 0) {
+      // If freshly added unreviewed cards exist (within 24h), ONLY serve them (up to 30)
+      poolNew = poolNewToday
+    } else {
+      // Otherwise, fallback to top-ranked older unreviewed cards
+      poolNew = await prisma.flashcard.findMany({
         where: {
           ...baseWhere,
           nextTestTime: null,
@@ -97,12 +101,11 @@ export default defineEventHandler(async (event) => {
           { rank: 'desc' },
           { id: 'asc' }
         ],
-        take: 30 - poolNewToday.length,
+        take: 30,
         include: commonInclude
       })
     }
 
-    const poolNew = [...poolNewToday, ...poolNewOlder]
 
     // Pool 2: Top-ranked due review cards (nextTestTime <= NOW)
     const poolDue = await prisma.flashcard.findMany({

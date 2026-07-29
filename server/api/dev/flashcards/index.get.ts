@@ -68,7 +68,9 @@ export default defineEventHandler(async (event) => {
       .filter(f => !f.nextTestTime && f.createdAt.getTime() < twentyFourHoursAgo.getTime())
       .sort((a, b) => b.rank - a.rank || a.id.localeCompare(b.id))
 
-    const newCardsPool = [...newCardsTodayPool, ...newCardsOlderPool]
+    const newCardsPool = newCardsTodayPool.length > 0 ? newCardsTodayPool : newCardsOlderPool
+
+
 
 
     const dueCardsPool = learningCards
