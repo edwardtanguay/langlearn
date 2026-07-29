@@ -111,8 +111,10 @@ export default defineEventHandler(async (event) => {
         tags: f.tags.map(t => t.tag.abbreviation),
         lastTested,
         nextTest,
+        createdAt: f.createdAt.toISOString(),
         minutesToTestAgain: dbUser.minutesToTestAgain
       }
+
     })
 
     return result

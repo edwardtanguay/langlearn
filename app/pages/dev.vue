@@ -141,8 +141,10 @@ interface DevFlashcard {
   tags: string[]
   lastTested: string | null
   nextTest: string | null
+  createdAt: string
   minutesToTestAgain: number
 }
+
 
 const flashcards = ref<DevFlashcard[]>([])
 const isLoadingCards = ref(true)
@@ -388,14 +390,15 @@ onUnmounted(() => {
             <table class="w-full text-left border-collapse table-fixed text-[11px] font-mono leading-tight">
               <thead>
                 <tr class="border-b border-gray-800 bg-gray-900/60 text-gray-400 font-bold sticky top-0 z-10 whitespace-nowrap">
-                  <th class="py-1.5 px-2 w-[18%] text-left truncate">CARD</th>
-                  <th class="py-1.5 px-2 w-[8%] text-left truncate">STATUS</th>
-                  <th class="py-1.5 px-2 w-[8%] text-right truncate">RANK</th>
-                  <th class="py-1.5 px-2 w-[13%] text-left truncate">LAST TESTED</th>
-                  <th class="py-1.5 px-2 w-[15%] text-center truncate">TESTING STATUS</th>
-                  <th class="py-1.5 px-2 w-[10%] text-left truncate">PRON.</th>
-                  <th class="py-1.5 px-2 w-[10%] text-left truncate">HOOK</th>
-                  <th class="py-1.5 px-2 w-[10%] text-left truncate">TAGS</th>
+                  <th class="py-1.5 px-2 w-[17%] text-left truncate">CARD</th>
+                  <th class="py-1.5 px-2 w-[7%] text-left truncate">STATUS</th>
+                  <th class="py-1.5 px-2 w-[7%] text-right truncate">RANK</th>
+                  <th class="py-1.5 px-2 w-[12%] text-left truncate">CREATED</th>
+                  <th class="py-1.5 px-2 w-[12%] text-left truncate">LAST TESTED</th>
+                  <th class="py-1.5 px-2 w-[13%] text-center truncate">TESTING STATUS</th>
+                  <th class="py-1.5 px-2 w-[8%] text-left truncate">PRON.</th>
+                  <th class="py-1.5 px-2 w-[8%] text-left truncate">HOOK</th>
+                  <th class="py-1.5 px-2 w-[9%] text-left truncate">TAGS</th>
                 </tr>
               </thead>
               <tbody>
@@ -431,8 +434,13 @@ onUnmounted(() => {
                   </td>
 
                   <td class="py-1.5 px-2 text-gray-400 truncate">
+                    {{ formatDateTime(card.createdAt) }}
+                  </td>
+
+                  <td class="py-1.5 px-2 text-gray-400 truncate">
                     {{ formatDateTime(card.lastTested) }}
                   </td>
+
 
                   <td class="py-1.5 px-2 text-center truncate">
                     <span
