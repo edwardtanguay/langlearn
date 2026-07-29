@@ -579,11 +579,20 @@ function handleGlobalKeyDown(event: KeyboardEvent) {
   }
 }
 
-const cardStats = ref<{ readyCount: number; waitingCount: number; totalCount?: number; todayReviewedCount?: number } | null>(null)
+interface CardStats {
+  readyCount: number
+  waitingCount: number
+  totalCount?: number
+  todayReviewedCount?: number
+  todayCorrectCount?: number
+  todayImportedCount?: number
+}
+
+const cardStats = useState<CardStats | null>('flashcardStats', () => null)
 
 async function fetchCardStats() {
   try {
-    cardStats.value = await $fetch<{ readyCount: number; waitingCount: number; totalCount?: number; todayReviewedCount?: number }>('/api/flashcards/stats')
+    cardStats.value = await $fetch<CardStats>('/api/flashcards/stats')
   } catch (err) {
     console.error('Failed to load card stats:', err)
   }

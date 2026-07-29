@@ -56,6 +56,14 @@ export default defineEventHandler(async (event) => {
       }
     })
 
+    const todayCorrectCount = await prisma.userFlashcardActivity.count({
+      where: {
+        userId: dbUser.id,
+        whenActedUpon: { gte: startOfDay },
+        actionTaken: 'MARKED_AS_LEARNED'
+      }
+    })
+
     const todayImportedCount = await prisma.flashcard.count({
       where: {
         ownerId: dbUser.id,
@@ -68,6 +76,7 @@ export default defineEventHandler(async (event) => {
       waitingCount,
       totalCount,
       todayReviewedCount,
+      todayCorrectCount,
       todayImportedCount
     }
   } catch (error) {
