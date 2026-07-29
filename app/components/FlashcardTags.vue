@@ -47,7 +47,7 @@ watch(isAddingTag, async (val) => {
           'text-[10px] px-2 py-1 rounded-lg border font-bold transition-all duration-150 uppercase tracking-wide',
           hasTag(tag.abbreviation)
             ? 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600'
-            : 'bg-transparent text-gray-400 dark:text-gray-600 border-gray-200 dark:border-gray-800 opacity-60 hover:opacity-100'
+            : 'bg-transparent text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 opacity-85 hover:opacity-100'
         ]"
       >{{ tag.abbreviation }}</button>
 

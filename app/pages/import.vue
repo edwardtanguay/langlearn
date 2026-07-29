@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { parseMetadata } from '~~/server/utils/metadata-parser'
+import { calculateOptimalRank } from '~~/server/utils/rank-config'
 
 useHead({
   title: 'LangLearn - Import Flashcards',
@@ -18,6 +20,9 @@ interface ParsedRow {
   lang2: string;
   text1: string;
   text2: string;
+  rank: number;
+  pronunciation: string;
+  memoryHook: string;
 }
 
 interface SkippedCard {
@@ -30,6 +35,71 @@ const parsedData = ref<ParsedRow[]>([])
 const isImporting = ref(false)
 const importSummary = ref<{ importedCount: number; skippedCount: number; skippedCards: SkippedCard[] } | null>(null)
 const importError = ref<string | null>(null)
+
+const isMobile = ref(false)
+const mobileInputText = ref('')
+const isSubmittingMobile = ref(false)
+const mobileImportResult = ref<{ id: string; userId: string; mobileImportText: string; whenImported: string } | null>(null)
+const mobileImportError = ref<string | null>(null)
+
+const checkMobile = () => {
+  if (typeof window !== 'undefined') {
+    isMobile.value = window.innerWidth < 768
+  }
+}
+
+const handleMobileImport = async () => {
+  if (!mobileInputText.value.trim() || isSubmittingMobile.value) return
+  isSubmittingMobile.value = true
+  mobileImportError.value = null
+
+  try {
+    await $fetch<{ id: string; userId: string; mobileImportText: string; whenImported: string }>('/api/import/mobile', {
+      method: 'POST',
+      body: { mobileImportText: mobileInputText.value }
+    })
+    mobileInputText.value = ''
+    await fetchLatestMobileImport()
+  } catch (err: any) {
+    console.error('Failed mobile import:', err)
+    mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to submit mobile import.'
+  } finally {
+    isSubmittingMobile.value = false
+  }
+}
+
+const fetchLatestMobileImport = async () => {
+  if (!loggedIn.value) return
+  try {
+    const data = await $fetch<{ id: string; userId: string; mobileImportText: string; whenImported: string } | null>('/api/import/mobile')
+    mobileImportResult.value = data
+  } catch (err) {
+    console.error('Failed to fetch latest mobile import', err)
+  }
+}
+
+const usage = ref<{ todayCount: number; limit: number; isAdmin: boolean } | null>(null)
+
+const fetchUsage = async () => {
+  if (!loggedIn.value) return
+  try {
+    const data = await $fetch<{ todayCount: number; limit: number; isAdmin: boolean }>('/api/import/usage')
+    usage.value = data
+  } catch (err) {
+    console.error('Failed to fetch import usage', err)
+  }
+}
+
+onMounted(() => {
+  fetchUsage()
+  fetchLatestMobileImport()
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 
 function parseCSVLine(line: string): string[] {
   const result: string[] = [];
@@ -73,11 +143,33 @@ function handleFileChange(event: Event) {
     for (const line of lines) {
       const row = parseCSVLine(line);
       if (row.length >= 4) {
+        const rawText1 = row[2] ?? '';
+        const rawText2 = row[3] ?? '';
+
+        const meta1 = parseMetadata(rawText1);
+        const meta2 = parseMetadata(rawText2);
+
+        let frontClean = '';
+        if ((row[0] ?? '').toLowerCase() === 'english') {
+          frontClean = meta1.cleanText;
+        } else if ((row[1] ?? '').toLowerCase() === 'english') {
+          frontClean = meta2.cleanText;
+        } else {
+          frontClean = meta1.cleanText;
+        }
+
+        const rank = meta1.rank ?? meta2.rank ?? calculateOptimalRank(frontClean);
+        const pronunciation = meta1.pronunciation || meta2.pronunciation || '';
+        const memoryHook = meta1.memoryHook || meta2.memoryHook || '';
+
         rows.push({
           lang1: row[0] ?? '',
           lang2: row[1] ?? '',
-          text1: row[2] ?? '',
-          text2: row[3] ?? ''
+          text1: rawText1,
+          text2: rawText2,
+          rank,
+          pronunciation,
+          memoryHook
         });
       }
     }
@@ -105,6 +197,7 @@ async function handleImport() {
     if (fileInput.value) {
       fileInput.value.value = ''; // Reset file input
     }
+    await fetchUsage()
   } catch (err: any) {
     console.error('Import error:', err);
     importError.value = err.data?.statusMessage || 'An error occurred during import.';
@@ -118,15 +211,57 @@ async function handleImport() {
   <div class="max-w-4xl mx-auto px-4 pt-0 pb-8 space-y-12 transition-all duration-300">
     <ClientOnly>
       <div v-if="loggedIn" class="mt-8 flex flex-col items-center w-full min-h-[340px] justify-start pt-2">
-        <!-- Mobile View Notice -->
-        <div class="block md:hidden w-full text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Desktop Only Feature</h2>
-          <p class="text-gray-500 dark:text-gray-400 mt-2">Import is only available in desktop mode.</p>
+        <!-- Mobile View (completely different page view) -->
+        <div v-if="isMobile" class="w-full max-w-lg space-y-6">
+          <div class="space-y-2">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mobile Import</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Paste text below to import into your account.</p>
+          </div>
+
+          <div class="space-y-4">
+            <textarea
+              v-model="mobileInputText"
+              rows="10"
+              placeholder="Paste text here..."
+              class="w-full p-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-2xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
+            ></textarea>
+
+            <button
+              @click="handleMobileImport"
+              :disabled="!mobileInputText.trim() || isSubmittingMobile"
+              class="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span v-if="isSubmittingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>Import</span>
+            </button>
+
+            <div v-if="mobileImportError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
+              {{ mobileImportError }}
+            </div>
+
+            <div v-if="mobileImportResult" class="space-y-2 pt-4 border-t border-gray-200 dark:border-gray-800">
+              <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Imported Result ({{ mobileImportResult.whenImported }})
+              </div>
+              <pre class="w-full p-4 bg-gray-100 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 rounded-2xl text-sm font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap overflow-x-auto">{{ mobileImportResult.mobileImportText }}</pre>
+            </div>
+          </div>
         </div>
 
-        <!-- Desktop View Import Container -->
-        <div class="hidden md:block w-full max-w-4xl space-y-6">
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Import Flashcards from Google Translate</h1>
+        <!-- Desktop View Container -->
+        <div v-else class="w-full max-w-4xl space-y-6">
+          <div class="flex justify-between items-start">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Import Flashcards from Google Translate</h1>
+            </div>
+            <!-- Daily Allowance Banner -->
+            <div v-if="usage" class="px-4 py-2 rounded-xl text-xs font-semibold border shadow-sm shrink-0"
+                 :class="usage.isAdmin ? 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-gray-800 dark:text-amber-300 dark:border-gray-700' : 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-gray-800 dark:text-blue-300 dark:border-gray-700'">
+              <span v-if="usage.isAdmin">⭐ Daily Import Allowance: <strong>Unlimited (Admin)</strong></span>
+              <span v-else>📊 Daily Import Allowance: <strong>{{ usage.todayCount }} / {{ usage.limit }}</strong> phrases used today</span>
+            </div>
+          </div>
+
           <ul class="list-disc list-inside space-y-1.5 text-gray-600 dark:text-gray-400">
             <li>Go to <a href="https://translate.google.com" target="_blank" rel="noopener noreferrer" class="underline text-gray-900 dark:text-white hover:opacity-80">Google Translate</a></li>
             <li>click on the "Saved" star icon</li>
@@ -173,8 +308,8 @@ async function handleImport() {
           </div>
 
           <!-- Error Message -->
-          <div v-if="importError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-            <span class="font-medium">Error!</span> {{ importError }}
+          <div v-if="importError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 border border-red-200 dark:border-red-900" role="alert">
+            <span class="font-medium">Notice:</span> {{ importError }}
           </div>
 
           <!-- Data Preview Table -->
@@ -195,9 +330,12 @@ async function handleImport() {
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 shadow-sm z-10">
                   <tr>
                     <th scope="col" class="px-6 py-3 whitespace-nowrap">Language&nbsp;1</th>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Language&nbsp;2</th>
                     <th scope="col" class="px-6 py-3 whitespace-nowrap">Text&nbsp;1</th>
+                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Language&nbsp;2</th>
                     <th scope="col" class="px-6 py-3 whitespace-nowrap">Text&nbsp;2</th>
+                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Rank</th>
+                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Pronunciation</th>
+                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Memory&nbsp;Hook</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -206,10 +344,13 @@ async function handleImport() {
                       {{ row.lang1 }}
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {{ row.lang2 }}
+                      {{ row.text1 }}
                     </td>
-                    <td class="px-6 py-4">{{ row.text1 }}</td>
+                    <td class="px-6 py-4">{{ row.lang2 }}</td>
                     <td class="px-6 py-4">{{ row.text2 }}</td>
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{ row.rank }}</td>
+                    <td class="px-6 py-4">{{ row.pronunciation }}</td>
+                    <td class="px-6 py-4">{{ row.memoryHook }}</td>
                   </tr>
                 </tbody>
               </table>

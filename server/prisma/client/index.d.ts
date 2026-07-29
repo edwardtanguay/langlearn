@@ -19,6 +19,16 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Version
+ * 
+ */
+export type Version = $Result.DefaultSelection<Prisma.$VersionPayload>
+/**
+ * Model VersionItem
+ * 
+ */
+export type VersionItem = $Result.DefaultSelection<Prisma.$VersionItemPayload>
+/**
  * Model Flashcard
  * 
  */
@@ -38,6 +48,11 @@ export type Tag = $Result.DefaultSelection<Prisma.$TagPayload>
  * 
  */
 export type FlashcardTag = $Result.DefaultSelection<Prisma.$FlashcardTagPayload>
+/**
+ * Model MobileImport
+ * 
+ */
+export type MobileImport = $Result.DefaultSelection<Prisma.$MobileImportPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -171,6 +186,26 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.version`: Exposes CRUD operations for the **Version** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Versions
+    * const versions = await prisma.version.findMany()
+    * ```
+    */
+  get version(): Prisma.VersionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.versionItem`: Exposes CRUD operations for the **VersionItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VersionItems
+    * const versionItems = await prisma.versionItem.findMany()
+    * ```
+    */
+  get versionItem(): Prisma.VersionItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.flashcard`: Exposes CRUD operations for the **Flashcard** model.
     * Example usage:
     * ```ts
@@ -209,6 +244,16 @@ export class PrismaClient<
     * ```
     */
   get flashcardTag(): Prisma.FlashcardTagDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mobileImport`: Exposes CRUD operations for the **MobileImport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MobileImports
+    * const mobileImports = await prisma.mobileImport.findMany()
+    * ```
+    */
+  get mobileImport(): Prisma.MobileImportDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -644,10 +689,13 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Version: 'Version',
+    VersionItem: 'VersionItem',
     Flashcard: 'Flashcard',
     UserFlashcardActivity: 'UserFlashcardActivity',
     Tag: 'Tag',
-    FlashcardTag: 'FlashcardTag'
+    FlashcardTag: 'FlashcardTag',
+    MobileImport: 'MobileImport'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -663,7 +711,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag"
+      modelProps: "user" | "version" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -738,6 +786,154 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Version: {
+        payload: Prisma.$VersionPayload<ExtArgs>
+        fields: Prisma.VersionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VersionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VersionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>
+          }
+          findFirst: {
+            args: Prisma.VersionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VersionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>
+          }
+          findMany: {
+            args: Prisma.VersionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>[]
+          }
+          create: {
+            args: Prisma.VersionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>
+          }
+          createMany: {
+            args: Prisma.VersionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VersionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>[]
+          }
+          delete: {
+            args: Prisma.VersionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>
+          }
+          update: {
+            args: Prisma.VersionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>
+          }
+          deleteMany: {
+            args: Prisma.VersionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VersionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VersionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>[]
+          }
+          upsert: {
+            args: Prisma.VersionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionPayload>
+          }
+          aggregate: {
+            args: Prisma.VersionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVersion>
+          }
+          groupBy: {
+            args: Prisma.VersionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VersionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VersionCountArgs<ExtArgs>
+            result: $Utils.Optional<VersionCountAggregateOutputType> | number
+          }
+        }
+      }
+      VersionItem: {
+        payload: Prisma.$VersionItemPayload<ExtArgs>
+        fields: Prisma.VersionItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VersionItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VersionItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>
+          }
+          findFirst: {
+            args: Prisma.VersionItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VersionItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>
+          }
+          findMany: {
+            args: Prisma.VersionItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>[]
+          }
+          create: {
+            args: Prisma.VersionItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>
+          }
+          createMany: {
+            args: Prisma.VersionItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VersionItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>[]
+          }
+          delete: {
+            args: Prisma.VersionItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>
+          }
+          update: {
+            args: Prisma.VersionItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.VersionItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VersionItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VersionItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>[]
+          }
+          upsert: {
+            args: Prisma.VersionItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionItemPayload>
+          }
+          aggregate: {
+            args: Prisma.VersionItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVersionItem>
+          }
+          groupBy: {
+            args: Prisma.VersionItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VersionItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VersionItemCountArgs<ExtArgs>
+            result: $Utils.Optional<VersionItemCountAggregateOutputType> | number
           }
         }
       }
@@ -1037,6 +1233,80 @@ export namespace Prisma {
           }
         }
       }
+      MobileImport: {
+        payload: Prisma.$MobileImportPayload<ExtArgs>
+        fields: Prisma.MobileImportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MobileImportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MobileImportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          findFirst: {
+            args: Prisma.MobileImportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MobileImportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          findMany: {
+            args: Prisma.MobileImportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>[]
+          }
+          create: {
+            args: Prisma.MobileImportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          createMany: {
+            args: Prisma.MobileImportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MobileImportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>[]
+          }
+          delete: {
+            args: Prisma.MobileImportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          update: {
+            args: Prisma.MobileImportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          deleteMany: {
+            args: Prisma.MobileImportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MobileImportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MobileImportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>[]
+          }
+          upsert: {
+            args: Prisma.MobileImportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          aggregate: {
+            args: Prisma.MobileImportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMobileImport>
+          }
+          groupBy: {
+            args: Prisma.MobileImportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MobileImportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MobileImportCountArgs<ExtArgs>
+            result: $Utils.Optional<MobileImportCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1146,10 +1416,13 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    version?: VersionOmit
+    versionItem?: VersionItemOmit
     flashcard?: FlashcardOmit
     userFlashcardActivity?: UserFlashcardActivityOmit
     tag?: TagOmit
     flashcardTag?: FlashcardTagOmit
+    mobileImport?: MobileImportOmit
   }
 
   /* Types for Logging */
@@ -1232,11 +1505,15 @@ export namespace Prisma {
   export type UserCountOutputType = {
     flashcards: number
     activities: number
+    versionItems: number
+    mobileImports: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | UserCountOutputTypeCountFlashcardsArgs
     activities?: boolean | UserCountOutputTypeCountActivitiesArgs
+    versionItems?: boolean | UserCountOutputTypeCountVersionItemsArgs
+    mobileImports?: boolean | UserCountOutputTypeCountMobileImportsArgs
   }
 
   // Custom InputTypes
@@ -1262,6 +1539,51 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserFlashcardActivityWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountVersionItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VersionItemWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMobileImportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileImportWhereInput
+  }
+
+
+  /**
+   * Count Type VersionCountOutputType
+   */
+
+  export type VersionCountOutputType = {
+    versionItems: number
+  }
+
+  export type VersionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versionItems?: boolean | VersionCountOutputTypeCountVersionItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * VersionCountOutputType without action
+   */
+  export type VersionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCountOutputType
+     */
+    select?: VersionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * VersionCountOutputType without action
+   */
+  export type VersionCountOutputTypeCountVersionItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VersionItemWhereInput
   }
 
 
@@ -1374,6 +1696,7 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     email: string | null
+    role: string | null
     minutesToTestAgain: number | null
   }
 
@@ -1382,6 +1705,7 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     email: string | null
+    role: string | null
     minutesToTestAgain: number | null
   }
 
@@ -1390,6 +1714,7 @@ export namespace Prisma {
     firstName: number
     lastName: number
     email: number
+    role: number
     minutesToTestAgain: number
     _all: number
   }
@@ -1408,6 +1733,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     email?: true
+    role?: true
     minutesToTestAgain?: true
   }
 
@@ -1416,6 +1742,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     email?: true
+    role?: true
     minutesToTestAgain?: true
   }
 
@@ -1424,6 +1751,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     email?: true
+    role?: true
     minutesToTestAgain?: true
     _all?: true
   }
@@ -1519,6 +1847,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     email: string
+    role: string
     minutesToTestAgain: number
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -1546,9 +1875,12 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     email?: boolean
+    role?: boolean
     minutesToTestAgain?: boolean
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
+    versionItems?: boolean | User$versionItemsArgs<ExtArgs>
+    mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1557,6 +1889,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     email?: boolean
+    role?: boolean
     minutesToTestAgain?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1565,6 +1898,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     email?: boolean
+    role?: boolean
     minutesToTestAgain?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1573,13 +1907,16 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     email?: boolean
+    role?: boolean
     minutesToTestAgain?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "minutesToTestAgain", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "minutesToTestAgain", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
+    versionItems?: boolean | User$versionItemsArgs<ExtArgs>
+    mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1590,12 +1927,15 @@ export namespace Prisma {
     objects: {
       flashcards: Prisma.$FlashcardPayload<ExtArgs>[]
       activities: Prisma.$UserFlashcardActivityPayload<ExtArgs>[]
+      versionItems: Prisma.$VersionItemPayload<ExtArgs>[]
+      mobileImports: Prisma.$MobileImportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       firstName: string
       lastName: string
       email: string
+      role: string
       minutesToTestAgain: number
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1993,6 +2333,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     flashcards<T extends User$flashcardsArgs<ExtArgs> = {}>(args?: Subset<T, User$flashcardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activities<T extends User$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    versionItems<T extends User$versionItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$versionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    mobileImports<T extends User$mobileImportsArgs<ExtArgs> = {}>(args?: Subset<T, User$mobileImportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2026,6 +2368,7 @@ export namespace Prisma {
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'String'>
     readonly minutesToTestAgain: FieldRef<"User", 'Int'>
   }
     
@@ -2466,6 +2809,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.versionItems
+   */
+  export type User$versionItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    where?: VersionItemWhereInput
+    orderBy?: VersionItemOrderByWithRelationInput | VersionItemOrderByWithRelationInput[]
+    cursor?: VersionItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VersionItemScalarFieldEnum | VersionItemScalarFieldEnum[]
+  }
+
+  /**
+   * User.mobileImports
+   */
+  export type User$mobileImportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    where?: MobileImportWhereInput
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    cursor?: MobileImportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2481,6 +2872,2285 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Version
+   */
+
+  export type AggregateVersion = {
+    _count: VersionCountAggregateOutputType | null
+    _min: VersionMinAggregateOutputType | null
+    _max: VersionMaxAggregateOutputType | null
+  }
+
+  export type VersionMinAggregateOutputType = {
+    id: string | null
+    versionNumber: string | null
+    title: string | null
+    status: string | null
+    publishDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VersionMaxAggregateOutputType = {
+    id: string | null
+    versionNumber: string | null
+    title: string | null
+    status: string | null
+    publishDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VersionCountAggregateOutputType = {
+    id: number
+    versionNumber: number
+    title: number
+    status: number
+    publishDate: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VersionMinAggregateInputType = {
+    id?: true
+    versionNumber?: true
+    title?: true
+    status?: true
+    publishDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VersionMaxAggregateInputType = {
+    id?: true
+    versionNumber?: true
+    title?: true
+    status?: true
+    publishDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VersionCountAggregateInputType = {
+    id?: true
+    versionNumber?: true
+    title?: true
+    status?: true
+    publishDate?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VersionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Version to aggregate.
+     */
+    where?: VersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Versions to fetch.
+     */
+    orderBy?: VersionOrderByWithRelationInput | VersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Versions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Versions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Versions
+    **/
+    _count?: true | VersionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VersionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VersionMaxAggregateInputType
+  }
+
+  export type GetVersionAggregateType<T extends VersionAggregateArgs> = {
+        [P in keyof T & keyof AggregateVersion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVersion[P]>
+      : GetScalarType<T[P], AggregateVersion[P]>
+  }
+
+
+
+
+  export type VersionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VersionWhereInput
+    orderBy?: VersionOrderByWithAggregationInput | VersionOrderByWithAggregationInput[]
+    by: VersionScalarFieldEnum[] | VersionScalarFieldEnum
+    having?: VersionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VersionCountAggregateInputType | true
+    _min?: VersionMinAggregateInputType
+    _max?: VersionMaxAggregateInputType
+  }
+
+  export type VersionGroupByOutputType = {
+    id: string
+    versionNumber: string
+    title: string | null
+    status: string
+    publishDate: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: VersionCountAggregateOutputType | null
+    _min: VersionMinAggregateOutputType | null
+    _max: VersionMaxAggregateOutputType | null
+  }
+
+  type GetVersionGroupByPayload<T extends VersionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VersionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VersionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VersionGroupByOutputType[P]>
+            : GetScalarType<T[P], VersionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VersionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionNumber?: boolean
+    title?: boolean
+    status?: boolean
+    publishDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    versionItems?: boolean | Version$versionItemsArgs<ExtArgs>
+    _count?: boolean | VersionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["version"]>
+
+  export type VersionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionNumber?: boolean
+    title?: boolean
+    status?: boolean
+    publishDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["version"]>
+
+  export type VersionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionNumber?: boolean
+    title?: boolean
+    status?: boolean
+    publishDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["version"]>
+
+  export type VersionSelectScalar = {
+    id?: boolean
+    versionNumber?: boolean
+    title?: boolean
+    status?: boolean
+    publishDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionNumber" | "title" | "status" | "publishDate" | "createdAt" | "updatedAt", ExtArgs["result"]["version"]>
+  export type VersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versionItems?: boolean | Version$versionItemsArgs<ExtArgs>
+    _count?: boolean | VersionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type VersionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VersionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $VersionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Version"
+    objects: {
+      versionItems: Prisma.$VersionItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      versionNumber: string
+      title: string | null
+      status: string
+      publishDate: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["version"]>
+    composites: {}
+  }
+
+  type VersionGetPayload<S extends boolean | null | undefined | VersionDefaultArgs> = $Result.GetResult<Prisma.$VersionPayload, S>
+
+  type VersionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VersionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VersionCountAggregateInputType | true
+    }
+
+  export interface VersionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Version'], meta: { name: 'Version' } }
+    /**
+     * Find zero or one Version that matches the filter.
+     * @param {VersionFindUniqueArgs} args - Arguments to find a Version
+     * @example
+     * // Get one Version
+     * const version = await prisma.version.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VersionFindUniqueArgs>(args: SelectSubset<T, VersionFindUniqueArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Version that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VersionFindUniqueOrThrowArgs} args - Arguments to find a Version
+     * @example
+     * // Get one Version
+     * const version = await prisma.version.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VersionFindUniqueOrThrowArgs>(args: SelectSubset<T, VersionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Version that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionFindFirstArgs} args - Arguments to find a Version
+     * @example
+     * // Get one Version
+     * const version = await prisma.version.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VersionFindFirstArgs>(args?: SelectSubset<T, VersionFindFirstArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Version that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionFindFirstOrThrowArgs} args - Arguments to find a Version
+     * @example
+     * // Get one Version
+     * const version = await prisma.version.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VersionFindFirstOrThrowArgs>(args?: SelectSubset<T, VersionFindFirstOrThrowArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Versions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Versions
+     * const versions = await prisma.version.findMany()
+     * 
+     * // Get first 10 Versions
+     * const versions = await prisma.version.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const versionWithIdOnly = await prisma.version.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VersionFindManyArgs>(args?: SelectSubset<T, VersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Version.
+     * @param {VersionCreateArgs} args - Arguments to create a Version.
+     * @example
+     * // Create one Version
+     * const Version = await prisma.version.create({
+     *   data: {
+     *     // ... data to create a Version
+     *   }
+     * })
+     * 
+     */
+    create<T extends VersionCreateArgs>(args: SelectSubset<T, VersionCreateArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Versions.
+     * @param {VersionCreateManyArgs} args - Arguments to create many Versions.
+     * @example
+     * // Create many Versions
+     * const version = await prisma.version.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VersionCreateManyArgs>(args?: SelectSubset<T, VersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Versions and returns the data saved in the database.
+     * @param {VersionCreateManyAndReturnArgs} args - Arguments to create many Versions.
+     * @example
+     * // Create many Versions
+     * const version = await prisma.version.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Versions and only return the `id`
+     * const versionWithIdOnly = await prisma.version.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VersionCreateManyAndReturnArgs>(args?: SelectSubset<T, VersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Version.
+     * @param {VersionDeleteArgs} args - Arguments to delete one Version.
+     * @example
+     * // Delete one Version
+     * const Version = await prisma.version.delete({
+     *   where: {
+     *     // ... filter to delete one Version
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VersionDeleteArgs>(args: SelectSubset<T, VersionDeleteArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Version.
+     * @param {VersionUpdateArgs} args - Arguments to update one Version.
+     * @example
+     * // Update one Version
+     * const version = await prisma.version.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VersionUpdateArgs>(args: SelectSubset<T, VersionUpdateArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Versions.
+     * @param {VersionDeleteManyArgs} args - Arguments to filter Versions to delete.
+     * @example
+     * // Delete a few Versions
+     * const { count } = await prisma.version.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VersionDeleteManyArgs>(args?: SelectSubset<T, VersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Versions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Versions
+     * const version = await prisma.version.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VersionUpdateManyArgs>(args: SelectSubset<T, VersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Versions and returns the data updated in the database.
+     * @param {VersionUpdateManyAndReturnArgs} args - Arguments to update many Versions.
+     * @example
+     * // Update many Versions
+     * const version = await prisma.version.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Versions and only return the `id`
+     * const versionWithIdOnly = await prisma.version.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VersionUpdateManyAndReturnArgs>(args: SelectSubset<T, VersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Version.
+     * @param {VersionUpsertArgs} args - Arguments to update or create a Version.
+     * @example
+     * // Update or create a Version
+     * const version = await prisma.version.upsert({
+     *   create: {
+     *     // ... data to create a Version
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Version we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VersionUpsertArgs>(args: SelectSubset<T, VersionUpsertArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Versions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCountArgs} args - Arguments to filter Versions to count.
+     * @example
+     * // Count the number of Versions
+     * const count = await prisma.version.count({
+     *   where: {
+     *     // ... the filter for the Versions we want to count
+     *   }
+     * })
+    **/
+    count<T extends VersionCountArgs>(
+      args?: Subset<T, VersionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VersionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Version.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VersionAggregateArgs>(args: Subset<T, VersionAggregateArgs>): Prisma.PrismaPromise<GetVersionAggregateType<T>>
+
+    /**
+     * Group by Version.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VersionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VersionGroupByArgs['orderBy'] }
+        : { orderBy?: VersionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VersionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVersionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Version model
+   */
+  readonly fields: VersionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Version.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VersionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    versionItems<T extends Version$versionItemsArgs<ExtArgs> = {}>(args?: Subset<T, Version$versionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Version model
+   */
+  interface VersionFieldRefs {
+    readonly id: FieldRef<"Version", 'String'>
+    readonly versionNumber: FieldRef<"Version", 'String'>
+    readonly title: FieldRef<"Version", 'String'>
+    readonly status: FieldRef<"Version", 'String'>
+    readonly publishDate: FieldRef<"Version", 'DateTime'>
+    readonly createdAt: FieldRef<"Version", 'DateTime'>
+    readonly updatedAt: FieldRef<"Version", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Version findUnique
+   */
+  export type VersionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * Filter, which Version to fetch.
+     */
+    where: VersionWhereUniqueInput
+  }
+
+  /**
+   * Version findUniqueOrThrow
+   */
+  export type VersionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * Filter, which Version to fetch.
+     */
+    where: VersionWhereUniqueInput
+  }
+
+  /**
+   * Version findFirst
+   */
+  export type VersionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * Filter, which Version to fetch.
+     */
+    where?: VersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Versions to fetch.
+     */
+    orderBy?: VersionOrderByWithRelationInput | VersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Versions.
+     */
+    cursor?: VersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Versions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Versions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Versions.
+     */
+    distinct?: VersionScalarFieldEnum | VersionScalarFieldEnum[]
+  }
+
+  /**
+   * Version findFirstOrThrow
+   */
+  export type VersionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * Filter, which Version to fetch.
+     */
+    where?: VersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Versions to fetch.
+     */
+    orderBy?: VersionOrderByWithRelationInput | VersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Versions.
+     */
+    cursor?: VersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Versions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Versions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Versions.
+     */
+    distinct?: VersionScalarFieldEnum | VersionScalarFieldEnum[]
+  }
+
+  /**
+   * Version findMany
+   */
+  export type VersionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * Filter, which Versions to fetch.
+     */
+    where?: VersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Versions to fetch.
+     */
+    orderBy?: VersionOrderByWithRelationInput | VersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Versions.
+     */
+    cursor?: VersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Versions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Versions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Versions.
+     */
+    distinct?: VersionScalarFieldEnum | VersionScalarFieldEnum[]
+  }
+
+  /**
+   * Version create
+   */
+  export type VersionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Version.
+     */
+    data: XOR<VersionCreateInput, VersionUncheckedCreateInput>
+  }
+
+  /**
+   * Version createMany
+   */
+  export type VersionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Versions.
+     */
+    data: VersionCreateManyInput | VersionCreateManyInput[]
+  }
+
+  /**
+   * Version createManyAndReturn
+   */
+  export type VersionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Versions.
+     */
+    data: VersionCreateManyInput | VersionCreateManyInput[]
+  }
+
+  /**
+   * Version update
+   */
+  export type VersionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Version.
+     */
+    data: XOR<VersionUpdateInput, VersionUncheckedUpdateInput>
+    /**
+     * Choose, which Version to update.
+     */
+    where: VersionWhereUniqueInput
+  }
+
+  /**
+   * Version updateMany
+   */
+  export type VersionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Versions.
+     */
+    data: XOR<VersionUpdateManyMutationInput, VersionUncheckedUpdateManyInput>
+    /**
+     * Filter which Versions to update
+     */
+    where?: VersionWhereInput
+    /**
+     * Limit how many Versions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Version updateManyAndReturn
+   */
+  export type VersionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * The data used to update Versions.
+     */
+    data: XOR<VersionUpdateManyMutationInput, VersionUncheckedUpdateManyInput>
+    /**
+     * Filter which Versions to update
+     */
+    where?: VersionWhereInput
+    /**
+     * Limit how many Versions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Version upsert
+   */
+  export type VersionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Version to update in case it exists.
+     */
+    where: VersionWhereUniqueInput
+    /**
+     * In case the Version found by the `where` argument doesn't exist, create a new Version with this data.
+     */
+    create: XOR<VersionCreateInput, VersionUncheckedCreateInput>
+    /**
+     * In case the Version was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VersionUpdateInput, VersionUncheckedUpdateInput>
+  }
+
+  /**
+   * Version delete
+   */
+  export type VersionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    /**
+     * Filter which Version to delete.
+     */
+    where: VersionWhereUniqueInput
+  }
+
+  /**
+   * Version deleteMany
+   */
+  export type VersionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Versions to delete
+     */
+    where?: VersionWhereInput
+    /**
+     * Limit how many Versions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Version.versionItems
+   */
+  export type Version$versionItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    where?: VersionItemWhereInput
+    orderBy?: VersionItemOrderByWithRelationInput | VersionItemOrderByWithRelationInput[]
+    cursor?: VersionItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VersionItemScalarFieldEnum | VersionItemScalarFieldEnum[]
+  }
+
+  /**
+   * Version without action
+   */
+  export type VersionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VersionItem
+   */
+
+  export type AggregateVersionItem = {
+    _count: VersionItemCountAggregateOutputType | null
+    _avg: VersionItemAvgAggregateOutputType | null
+    _sum: VersionItemSumAggregateOutputType | null
+    _min: VersionItemMinAggregateOutputType | null
+    _max: VersionItemMaxAggregateOutputType | null
+  }
+
+  export type VersionItemAvgAggregateOutputType = {
+    orderWithinVersion: number | null
+  }
+
+  export type VersionItemSumAggregateOutputType = {
+    orderWithinVersion: number | null
+  }
+
+  export type VersionItemMinAggregateOutputType = {
+    id: string | null
+    versionId: string | null
+    type: string | null
+    body: string | null
+    startedByUserId: string | null
+    orderWithinVersion: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VersionItemMaxAggregateOutputType = {
+    id: string | null
+    versionId: string | null
+    type: string | null
+    body: string | null
+    startedByUserId: string | null
+    orderWithinVersion: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VersionItemCountAggregateOutputType = {
+    id: number
+    versionId: number
+    type: number
+    body: number
+    startedByUserId: number
+    orderWithinVersion: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VersionItemAvgAggregateInputType = {
+    orderWithinVersion?: true
+  }
+
+  export type VersionItemSumAggregateInputType = {
+    orderWithinVersion?: true
+  }
+
+  export type VersionItemMinAggregateInputType = {
+    id?: true
+    versionId?: true
+    type?: true
+    body?: true
+    startedByUserId?: true
+    orderWithinVersion?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VersionItemMaxAggregateInputType = {
+    id?: true
+    versionId?: true
+    type?: true
+    body?: true
+    startedByUserId?: true
+    orderWithinVersion?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VersionItemCountAggregateInputType = {
+    id?: true
+    versionId?: true
+    type?: true
+    body?: true
+    startedByUserId?: true
+    orderWithinVersion?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VersionItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VersionItem to aggregate.
+     */
+    where?: VersionItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionItems to fetch.
+     */
+    orderBy?: VersionItemOrderByWithRelationInput | VersionItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VersionItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VersionItems
+    **/
+    _count?: true | VersionItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VersionItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VersionItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VersionItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VersionItemMaxAggregateInputType
+  }
+
+  export type GetVersionItemAggregateType<T extends VersionItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateVersionItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVersionItem[P]>
+      : GetScalarType<T[P], AggregateVersionItem[P]>
+  }
+
+
+
+
+  export type VersionItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VersionItemWhereInput
+    orderBy?: VersionItemOrderByWithAggregationInput | VersionItemOrderByWithAggregationInput[]
+    by: VersionItemScalarFieldEnum[] | VersionItemScalarFieldEnum
+    having?: VersionItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VersionItemCountAggregateInputType | true
+    _avg?: VersionItemAvgAggregateInputType
+    _sum?: VersionItemSumAggregateInputType
+    _min?: VersionItemMinAggregateInputType
+    _max?: VersionItemMaxAggregateInputType
+  }
+
+  export type VersionItemGroupByOutputType = {
+    id: string
+    versionId: string | null
+    type: string
+    body: string
+    startedByUserId: string | null
+    orderWithinVersion: number
+    createdAt: Date
+    updatedAt: Date
+    _count: VersionItemCountAggregateOutputType | null
+    _avg: VersionItemAvgAggregateOutputType | null
+    _sum: VersionItemSumAggregateOutputType | null
+    _min: VersionItemMinAggregateOutputType | null
+    _max: VersionItemMaxAggregateOutputType | null
+  }
+
+  type GetVersionItemGroupByPayload<T extends VersionItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VersionItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VersionItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VersionItemGroupByOutputType[P]>
+            : GetScalarType<T[P], VersionItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VersionItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionId?: boolean
+    type?: boolean
+    body?: boolean
+    startedByUserId?: boolean
+    orderWithinVersion?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
+    startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
+  }, ExtArgs["result"]["versionItem"]>
+
+  export type VersionItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionId?: boolean
+    type?: boolean
+    body?: boolean
+    startedByUserId?: boolean
+    orderWithinVersion?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
+    startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
+  }, ExtArgs["result"]["versionItem"]>
+
+  export type VersionItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionId?: boolean
+    type?: boolean
+    body?: boolean
+    startedByUserId?: boolean
+    orderWithinVersion?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
+    startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
+  }, ExtArgs["result"]["versionItem"]>
+
+  export type VersionItemSelectScalar = {
+    id?: boolean
+    versionId?: boolean
+    type?: boolean
+    body?: boolean
+    startedByUserId?: boolean
+    orderWithinVersion?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VersionItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionId" | "type" | "body" | "startedByUserId" | "orderWithinVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["versionItem"]>
+  export type VersionItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
+    startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
+  }
+  export type VersionItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
+    startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
+  }
+  export type VersionItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    version?: boolean | VersionItem$versionArgs<ExtArgs>
+    startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
+  }
+
+  export type $VersionItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VersionItem"
+    objects: {
+      version: Prisma.$VersionPayload<ExtArgs> | null
+      startedByUser: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      versionId: string | null
+      type: string
+      body: string
+      startedByUserId: string | null
+      orderWithinVersion: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["versionItem"]>
+    composites: {}
+  }
+
+  type VersionItemGetPayload<S extends boolean | null | undefined | VersionItemDefaultArgs> = $Result.GetResult<Prisma.$VersionItemPayload, S>
+
+  type VersionItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VersionItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VersionItemCountAggregateInputType | true
+    }
+
+  export interface VersionItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VersionItem'], meta: { name: 'VersionItem' } }
+    /**
+     * Find zero or one VersionItem that matches the filter.
+     * @param {VersionItemFindUniqueArgs} args - Arguments to find a VersionItem
+     * @example
+     * // Get one VersionItem
+     * const versionItem = await prisma.versionItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VersionItemFindUniqueArgs>(args: SelectSubset<T, VersionItemFindUniqueArgs<ExtArgs>>): Prisma__VersionItemClient<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VersionItem that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VersionItemFindUniqueOrThrowArgs} args - Arguments to find a VersionItem
+     * @example
+     * // Get one VersionItem
+     * const versionItem = await prisma.versionItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VersionItemFindUniqueOrThrowArgs>(args: SelectSubset<T, VersionItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VersionItemClient<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VersionItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionItemFindFirstArgs} args - Arguments to find a VersionItem
+     * @example
+     * // Get one VersionItem
+     * const versionItem = await prisma.versionItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VersionItemFindFirstArgs>(args?: SelectSubset<T, VersionItemFindFirstArgs<ExtArgs>>): Prisma__VersionItemClient<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VersionItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionItemFindFirstOrThrowArgs} args - Arguments to find a VersionItem
+     * @example
+     * // Get one VersionItem
+     * const versionItem = await prisma.versionItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VersionItemFindFirstOrThrowArgs>(args?: SelectSubset<T, VersionItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__VersionItemClient<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VersionItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VersionItems
+     * const versionItems = await prisma.versionItem.findMany()
+     * 
+     * // Get first 10 VersionItems
+     * const versionItems = await prisma.versionItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const versionItemWithIdOnly = await prisma.versionItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VersionItemFindManyArgs>(args?: SelectSubset<T, VersionItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VersionItem.
+     * @param {VersionItemCreateArgs} args - Arguments to create a VersionItem.
+     * @example
+     * // Create one VersionItem
+     * const VersionItem = await prisma.versionItem.create({
+     *   data: {
+     *     // ... data to create a VersionItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends VersionItemCreateArgs>(args: SelectSubset<T, VersionItemCreateArgs<ExtArgs>>): Prisma__VersionItemClient<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VersionItems.
+     * @param {VersionItemCreateManyArgs} args - Arguments to create many VersionItems.
+     * @example
+     * // Create many VersionItems
+     * const versionItem = await prisma.versionItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VersionItemCreateManyArgs>(args?: SelectSubset<T, VersionItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VersionItems and returns the data saved in the database.
+     * @param {VersionItemCreateManyAndReturnArgs} args - Arguments to create many VersionItems.
+     * @example
+     * // Create many VersionItems
+     * const versionItem = await prisma.versionItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VersionItems and only return the `id`
+     * const versionItemWithIdOnly = await prisma.versionItem.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VersionItemCreateManyAndReturnArgs>(args?: SelectSubset<T, VersionItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VersionItem.
+     * @param {VersionItemDeleteArgs} args - Arguments to delete one VersionItem.
+     * @example
+     * // Delete one VersionItem
+     * const VersionItem = await prisma.versionItem.delete({
+     *   where: {
+     *     // ... filter to delete one VersionItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VersionItemDeleteArgs>(args: SelectSubset<T, VersionItemDeleteArgs<ExtArgs>>): Prisma__VersionItemClient<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VersionItem.
+     * @param {VersionItemUpdateArgs} args - Arguments to update one VersionItem.
+     * @example
+     * // Update one VersionItem
+     * const versionItem = await prisma.versionItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VersionItemUpdateArgs>(args: SelectSubset<T, VersionItemUpdateArgs<ExtArgs>>): Prisma__VersionItemClient<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VersionItems.
+     * @param {VersionItemDeleteManyArgs} args - Arguments to filter VersionItems to delete.
+     * @example
+     * // Delete a few VersionItems
+     * const { count } = await prisma.versionItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VersionItemDeleteManyArgs>(args?: SelectSubset<T, VersionItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VersionItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VersionItems
+     * const versionItem = await prisma.versionItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VersionItemUpdateManyArgs>(args: SelectSubset<T, VersionItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VersionItems and returns the data updated in the database.
+     * @param {VersionItemUpdateManyAndReturnArgs} args - Arguments to update many VersionItems.
+     * @example
+     * // Update many VersionItems
+     * const versionItem = await prisma.versionItem.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VersionItems and only return the `id`
+     * const versionItemWithIdOnly = await prisma.versionItem.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VersionItemUpdateManyAndReturnArgs>(args: SelectSubset<T, VersionItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VersionItem.
+     * @param {VersionItemUpsertArgs} args - Arguments to update or create a VersionItem.
+     * @example
+     * // Update or create a VersionItem
+     * const versionItem = await prisma.versionItem.upsert({
+     *   create: {
+     *     // ... data to create a VersionItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VersionItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VersionItemUpsertArgs>(args: SelectSubset<T, VersionItemUpsertArgs<ExtArgs>>): Prisma__VersionItemClient<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VersionItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionItemCountArgs} args - Arguments to filter VersionItems to count.
+     * @example
+     * // Count the number of VersionItems
+     * const count = await prisma.versionItem.count({
+     *   where: {
+     *     // ... the filter for the VersionItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends VersionItemCountArgs>(
+      args?: Subset<T, VersionItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VersionItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VersionItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VersionItemAggregateArgs>(args: Subset<T, VersionItemAggregateArgs>): Prisma.PrismaPromise<GetVersionItemAggregateType<T>>
+
+    /**
+     * Group by VersionItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VersionItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VersionItemGroupByArgs['orderBy'] }
+        : { orderBy?: VersionItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VersionItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVersionItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VersionItem model
+   */
+  readonly fields: VersionItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VersionItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VersionItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    version<T extends VersionItem$versionArgs<ExtArgs> = {}>(args?: Subset<T, VersionItem$versionArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    startedByUser<T extends VersionItem$startedByUserArgs<ExtArgs> = {}>(args?: Subset<T, VersionItem$startedByUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VersionItem model
+   */
+  interface VersionItemFieldRefs {
+    readonly id: FieldRef<"VersionItem", 'String'>
+    readonly versionId: FieldRef<"VersionItem", 'String'>
+    readonly type: FieldRef<"VersionItem", 'String'>
+    readonly body: FieldRef<"VersionItem", 'String'>
+    readonly startedByUserId: FieldRef<"VersionItem", 'String'>
+    readonly orderWithinVersion: FieldRef<"VersionItem", 'Int'>
+    readonly createdAt: FieldRef<"VersionItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"VersionItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VersionItem findUnique
+   */
+  export type VersionItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionItem to fetch.
+     */
+    where: VersionItemWhereUniqueInput
+  }
+
+  /**
+   * VersionItem findUniqueOrThrow
+   */
+  export type VersionItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionItem to fetch.
+     */
+    where: VersionItemWhereUniqueInput
+  }
+
+  /**
+   * VersionItem findFirst
+   */
+  export type VersionItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionItem to fetch.
+     */
+    where?: VersionItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionItems to fetch.
+     */
+    orderBy?: VersionItemOrderByWithRelationInput | VersionItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VersionItems.
+     */
+    cursor?: VersionItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionItems.
+     */
+    distinct?: VersionItemScalarFieldEnum | VersionItemScalarFieldEnum[]
+  }
+
+  /**
+   * VersionItem findFirstOrThrow
+   */
+  export type VersionItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionItem to fetch.
+     */
+    where?: VersionItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionItems to fetch.
+     */
+    orderBy?: VersionItemOrderByWithRelationInput | VersionItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VersionItems.
+     */
+    cursor?: VersionItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionItems.
+     */
+    distinct?: VersionItemScalarFieldEnum | VersionItemScalarFieldEnum[]
+  }
+
+  /**
+   * VersionItem findMany
+   */
+  export type VersionItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionItems to fetch.
+     */
+    where?: VersionItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionItems to fetch.
+     */
+    orderBy?: VersionItemOrderByWithRelationInput | VersionItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VersionItems.
+     */
+    cursor?: VersionItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionItems.
+     */
+    distinct?: VersionItemScalarFieldEnum | VersionItemScalarFieldEnum[]
+  }
+
+  /**
+   * VersionItem create
+   */
+  export type VersionItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VersionItem.
+     */
+    data: XOR<VersionItemCreateInput, VersionItemUncheckedCreateInput>
+  }
+
+  /**
+   * VersionItem createMany
+   */
+  export type VersionItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VersionItems.
+     */
+    data: VersionItemCreateManyInput | VersionItemCreateManyInput[]
+  }
+
+  /**
+   * VersionItem createManyAndReturn
+   */
+  export type VersionItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * The data used to create many VersionItems.
+     */
+    data: VersionItemCreateManyInput | VersionItemCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VersionItem update
+   */
+  export type VersionItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VersionItem.
+     */
+    data: XOR<VersionItemUpdateInput, VersionItemUncheckedUpdateInput>
+    /**
+     * Choose, which VersionItem to update.
+     */
+    where: VersionItemWhereUniqueInput
+  }
+
+  /**
+   * VersionItem updateMany
+   */
+  export type VersionItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VersionItems.
+     */
+    data: XOR<VersionItemUpdateManyMutationInput, VersionItemUncheckedUpdateManyInput>
+    /**
+     * Filter which VersionItems to update
+     */
+    where?: VersionItemWhereInput
+    /**
+     * Limit how many VersionItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VersionItem updateManyAndReturn
+   */
+  export type VersionItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * The data used to update VersionItems.
+     */
+    data: XOR<VersionItemUpdateManyMutationInput, VersionItemUncheckedUpdateManyInput>
+    /**
+     * Filter which VersionItems to update
+     */
+    where?: VersionItemWhereInput
+    /**
+     * Limit how many VersionItems to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VersionItem upsert
+   */
+  export type VersionItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VersionItem to update in case it exists.
+     */
+    where: VersionItemWhereUniqueInput
+    /**
+     * In case the VersionItem found by the `where` argument doesn't exist, create a new VersionItem with this data.
+     */
+    create: XOR<VersionItemCreateInput, VersionItemUncheckedCreateInput>
+    /**
+     * In case the VersionItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VersionItemUpdateInput, VersionItemUncheckedUpdateInput>
+  }
+
+  /**
+   * VersionItem delete
+   */
+  export type VersionItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    /**
+     * Filter which VersionItem to delete.
+     */
+    where: VersionItemWhereUniqueInput
+  }
+
+  /**
+   * VersionItem deleteMany
+   */
+  export type VersionItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VersionItems to delete
+     */
+    where?: VersionItemWhereInput
+    /**
+     * Limit how many VersionItems to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VersionItem.version
+   */
+  export type VersionItem$versionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Version
+     */
+    select?: VersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Version
+     */
+    omit?: VersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionInclude<ExtArgs> | null
+    where?: VersionWhereInput
+  }
+
+  /**
+   * VersionItem.startedByUser
+   */
+  export type VersionItem$startedByUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * VersionItem without action
+   */
+  export type VersionItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
   }
 
 
@@ -6969,6 +9639,1054 @@ export namespace Prisma {
 
 
   /**
+   * Model MobileImport
+   */
+
+  export type AggregateMobileImport = {
+    _count: MobileImportCountAggregateOutputType | null
+    _min: MobileImportMinAggregateOutputType | null
+    _max: MobileImportMaxAggregateOutputType | null
+  }
+
+  export type MobileImportMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    mobileImportText: string | null
+    whenImported: Date | null
+  }
+
+  export type MobileImportMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    mobileImportText: string | null
+    whenImported: Date | null
+  }
+
+  export type MobileImportCountAggregateOutputType = {
+    id: number
+    userId: number
+    mobileImportText: number
+    whenImported: number
+    _all: number
+  }
+
+
+  export type MobileImportMinAggregateInputType = {
+    id?: true
+    userId?: true
+    mobileImportText?: true
+    whenImported?: true
+  }
+
+  export type MobileImportMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    mobileImportText?: true
+    whenImported?: true
+  }
+
+  export type MobileImportCountAggregateInputType = {
+    id?: true
+    userId?: true
+    mobileImportText?: true
+    whenImported?: true
+    _all?: true
+  }
+
+  export type MobileImportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MobileImport to aggregate.
+     */
+    where?: MobileImportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileImports to fetch.
+     */
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MobileImportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileImports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileImports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MobileImports
+    **/
+    _count?: true | MobileImportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MobileImportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MobileImportMaxAggregateInputType
+  }
+
+  export type GetMobileImportAggregateType<T extends MobileImportAggregateArgs> = {
+        [P in keyof T & keyof AggregateMobileImport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMobileImport[P]>
+      : GetScalarType<T[P], AggregateMobileImport[P]>
+  }
+
+
+
+
+  export type MobileImportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileImportWhereInput
+    orderBy?: MobileImportOrderByWithAggregationInput | MobileImportOrderByWithAggregationInput[]
+    by: MobileImportScalarFieldEnum[] | MobileImportScalarFieldEnum
+    having?: MobileImportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MobileImportCountAggregateInputType | true
+    _min?: MobileImportMinAggregateInputType
+    _max?: MobileImportMaxAggregateInputType
+  }
+
+  export type MobileImportGroupByOutputType = {
+    id: string
+    userId: string
+    mobileImportText: string
+    whenImported: Date
+    _count: MobileImportCountAggregateOutputType | null
+    _min: MobileImportMinAggregateOutputType | null
+    _max: MobileImportMaxAggregateOutputType | null
+  }
+
+  type GetMobileImportGroupByPayload<T extends MobileImportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MobileImportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MobileImportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MobileImportGroupByOutputType[P]>
+            : GetScalarType<T[P], MobileImportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MobileImportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    mobileImportText?: boolean
+    whenImported?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileImport"]>
+
+  export type MobileImportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    mobileImportText?: boolean
+    whenImported?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileImport"]>
+
+  export type MobileImportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    mobileImportText?: boolean
+    whenImported?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileImport"]>
+
+  export type MobileImportSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    mobileImportText?: boolean
+    whenImported?: boolean
+  }
+
+  export type MobileImportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "mobileImportText" | "whenImported", ExtArgs["result"]["mobileImport"]>
+  export type MobileImportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MobileImportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MobileImportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $MobileImportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MobileImport"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      mobileImportText: string
+      whenImported: Date
+    }, ExtArgs["result"]["mobileImport"]>
+    composites: {}
+  }
+
+  type MobileImportGetPayload<S extends boolean | null | undefined | MobileImportDefaultArgs> = $Result.GetResult<Prisma.$MobileImportPayload, S>
+
+  type MobileImportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MobileImportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MobileImportCountAggregateInputType | true
+    }
+
+  export interface MobileImportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MobileImport'], meta: { name: 'MobileImport' } }
+    /**
+     * Find zero or one MobileImport that matches the filter.
+     * @param {MobileImportFindUniqueArgs} args - Arguments to find a MobileImport
+     * @example
+     * // Get one MobileImport
+     * const mobileImport = await prisma.mobileImport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MobileImportFindUniqueArgs>(args: SelectSubset<T, MobileImportFindUniqueArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MobileImport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MobileImportFindUniqueOrThrowArgs} args - Arguments to find a MobileImport
+     * @example
+     * // Get one MobileImport
+     * const mobileImport = await prisma.mobileImport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MobileImportFindUniqueOrThrowArgs>(args: SelectSubset<T, MobileImportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MobileImport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportFindFirstArgs} args - Arguments to find a MobileImport
+     * @example
+     * // Get one MobileImport
+     * const mobileImport = await prisma.mobileImport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MobileImportFindFirstArgs>(args?: SelectSubset<T, MobileImportFindFirstArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MobileImport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportFindFirstOrThrowArgs} args - Arguments to find a MobileImport
+     * @example
+     * // Get one MobileImport
+     * const mobileImport = await prisma.mobileImport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MobileImportFindFirstOrThrowArgs>(args?: SelectSubset<T, MobileImportFindFirstOrThrowArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MobileImports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MobileImports
+     * const mobileImports = await prisma.mobileImport.findMany()
+     * 
+     * // Get first 10 MobileImports
+     * const mobileImports = await prisma.mobileImport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mobileImportWithIdOnly = await prisma.mobileImport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MobileImportFindManyArgs>(args?: SelectSubset<T, MobileImportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MobileImport.
+     * @param {MobileImportCreateArgs} args - Arguments to create a MobileImport.
+     * @example
+     * // Create one MobileImport
+     * const MobileImport = await prisma.mobileImport.create({
+     *   data: {
+     *     // ... data to create a MobileImport
+     *   }
+     * })
+     * 
+     */
+    create<T extends MobileImportCreateArgs>(args: SelectSubset<T, MobileImportCreateArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MobileImports.
+     * @param {MobileImportCreateManyArgs} args - Arguments to create many MobileImports.
+     * @example
+     * // Create many MobileImports
+     * const mobileImport = await prisma.mobileImport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MobileImportCreateManyArgs>(args?: SelectSubset<T, MobileImportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MobileImports and returns the data saved in the database.
+     * @param {MobileImportCreateManyAndReturnArgs} args - Arguments to create many MobileImports.
+     * @example
+     * // Create many MobileImports
+     * const mobileImport = await prisma.mobileImport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MobileImports and only return the `id`
+     * const mobileImportWithIdOnly = await prisma.mobileImport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MobileImportCreateManyAndReturnArgs>(args?: SelectSubset<T, MobileImportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MobileImport.
+     * @param {MobileImportDeleteArgs} args - Arguments to delete one MobileImport.
+     * @example
+     * // Delete one MobileImport
+     * const MobileImport = await prisma.mobileImport.delete({
+     *   where: {
+     *     // ... filter to delete one MobileImport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MobileImportDeleteArgs>(args: SelectSubset<T, MobileImportDeleteArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MobileImport.
+     * @param {MobileImportUpdateArgs} args - Arguments to update one MobileImport.
+     * @example
+     * // Update one MobileImport
+     * const mobileImport = await prisma.mobileImport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MobileImportUpdateArgs>(args: SelectSubset<T, MobileImportUpdateArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MobileImports.
+     * @param {MobileImportDeleteManyArgs} args - Arguments to filter MobileImports to delete.
+     * @example
+     * // Delete a few MobileImports
+     * const { count } = await prisma.mobileImport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MobileImportDeleteManyArgs>(args?: SelectSubset<T, MobileImportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MobileImports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MobileImports
+     * const mobileImport = await prisma.mobileImport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MobileImportUpdateManyArgs>(args: SelectSubset<T, MobileImportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MobileImports and returns the data updated in the database.
+     * @param {MobileImportUpdateManyAndReturnArgs} args - Arguments to update many MobileImports.
+     * @example
+     * // Update many MobileImports
+     * const mobileImport = await prisma.mobileImport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MobileImports and only return the `id`
+     * const mobileImportWithIdOnly = await prisma.mobileImport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MobileImportUpdateManyAndReturnArgs>(args: SelectSubset<T, MobileImportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MobileImport.
+     * @param {MobileImportUpsertArgs} args - Arguments to update or create a MobileImport.
+     * @example
+     * // Update or create a MobileImport
+     * const mobileImport = await prisma.mobileImport.upsert({
+     *   create: {
+     *     // ... data to create a MobileImport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MobileImport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MobileImportUpsertArgs>(args: SelectSubset<T, MobileImportUpsertArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MobileImports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportCountArgs} args - Arguments to filter MobileImports to count.
+     * @example
+     * // Count the number of MobileImports
+     * const count = await prisma.mobileImport.count({
+     *   where: {
+     *     // ... the filter for the MobileImports we want to count
+     *   }
+     * })
+    **/
+    count<T extends MobileImportCountArgs>(
+      args?: Subset<T, MobileImportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MobileImportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MobileImport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MobileImportAggregateArgs>(args: Subset<T, MobileImportAggregateArgs>): Prisma.PrismaPromise<GetMobileImportAggregateType<T>>
+
+    /**
+     * Group by MobileImport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MobileImportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MobileImportGroupByArgs['orderBy'] }
+        : { orderBy?: MobileImportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MobileImportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMobileImportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MobileImport model
+   */
+  readonly fields: MobileImportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MobileImport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MobileImportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MobileImport model
+   */
+  interface MobileImportFieldRefs {
+    readonly id: FieldRef<"MobileImport", 'String'>
+    readonly userId: FieldRef<"MobileImport", 'String'>
+    readonly mobileImportText: FieldRef<"MobileImport", 'String'>
+    readonly whenImported: FieldRef<"MobileImport", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MobileImport findUnique
+   */
+  export type MobileImportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImport to fetch.
+     */
+    where: MobileImportWhereUniqueInput
+  }
+
+  /**
+   * MobileImport findUniqueOrThrow
+   */
+  export type MobileImportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImport to fetch.
+     */
+    where: MobileImportWhereUniqueInput
+  }
+
+  /**
+   * MobileImport findFirst
+   */
+  export type MobileImportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImport to fetch.
+     */
+    where?: MobileImportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileImports to fetch.
+     */
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MobileImports.
+     */
+    cursor?: MobileImportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileImports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileImports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileImports.
+     */
+    distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
+  }
+
+  /**
+   * MobileImport findFirstOrThrow
+   */
+  export type MobileImportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImport to fetch.
+     */
+    where?: MobileImportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileImports to fetch.
+     */
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MobileImports.
+     */
+    cursor?: MobileImportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileImports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileImports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileImports.
+     */
+    distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
+  }
+
+  /**
+   * MobileImport findMany
+   */
+  export type MobileImportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImports to fetch.
+     */
+    where?: MobileImportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileImports to fetch.
+     */
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MobileImports.
+     */
+    cursor?: MobileImportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileImports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileImports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileImports.
+     */
+    distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
+  }
+
+  /**
+   * MobileImport create
+   */
+  export type MobileImportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MobileImport.
+     */
+    data: XOR<MobileImportCreateInput, MobileImportUncheckedCreateInput>
+  }
+
+  /**
+   * MobileImport createMany
+   */
+  export type MobileImportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MobileImports.
+     */
+    data: MobileImportCreateManyInput | MobileImportCreateManyInput[]
+  }
+
+  /**
+   * MobileImport createManyAndReturn
+   */
+  export type MobileImportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * The data used to create many MobileImports.
+     */
+    data: MobileImportCreateManyInput | MobileImportCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MobileImport update
+   */
+  export type MobileImportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MobileImport.
+     */
+    data: XOR<MobileImportUpdateInput, MobileImportUncheckedUpdateInput>
+    /**
+     * Choose, which MobileImport to update.
+     */
+    where: MobileImportWhereUniqueInput
+  }
+
+  /**
+   * MobileImport updateMany
+   */
+  export type MobileImportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MobileImports.
+     */
+    data: XOR<MobileImportUpdateManyMutationInput, MobileImportUncheckedUpdateManyInput>
+    /**
+     * Filter which MobileImports to update
+     */
+    where?: MobileImportWhereInput
+    /**
+     * Limit how many MobileImports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MobileImport updateManyAndReturn
+   */
+  export type MobileImportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * The data used to update MobileImports.
+     */
+    data: XOR<MobileImportUpdateManyMutationInput, MobileImportUncheckedUpdateManyInput>
+    /**
+     * Filter which MobileImports to update
+     */
+    where?: MobileImportWhereInput
+    /**
+     * Limit how many MobileImports to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MobileImport upsert
+   */
+  export type MobileImportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MobileImport to update in case it exists.
+     */
+    where: MobileImportWhereUniqueInput
+    /**
+     * In case the MobileImport found by the `where` argument doesn't exist, create a new MobileImport with this data.
+     */
+    create: XOR<MobileImportCreateInput, MobileImportUncheckedCreateInput>
+    /**
+     * In case the MobileImport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MobileImportUpdateInput, MobileImportUncheckedUpdateInput>
+  }
+
+  /**
+   * MobileImport delete
+   */
+  export type MobileImportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter which MobileImport to delete.
+     */
+    where: MobileImportWhereUniqueInput
+  }
+
+  /**
+   * MobileImport deleteMany
+   */
+  export type MobileImportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MobileImports to delete
+     */
+    where?: MobileImportWhereInput
+    /**
+     * Limit how many MobileImports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MobileImport without action
+   */
+  export type MobileImportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6984,10 +10702,38 @@ export namespace Prisma {
     firstName: 'firstName',
     lastName: 'lastName',
     email: 'email',
+    role: 'role',
     minutesToTestAgain: 'minutesToTestAgain'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const VersionScalarFieldEnum: {
+    id: 'id',
+    versionNumber: 'versionNumber',
+    title: 'title',
+    status: 'status',
+    publishDate: 'publishDate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VersionScalarFieldEnum = (typeof VersionScalarFieldEnum)[keyof typeof VersionScalarFieldEnum]
+
+
+  export const VersionItemScalarFieldEnum: {
+    id: 'id',
+    versionId: 'versionId',
+    type: 'type',
+    body: 'body',
+    startedByUserId: 'startedByUserId',
+    orderWithinVersion: 'orderWithinVersion',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VersionItemScalarFieldEnum = (typeof VersionItemScalarFieldEnum)[keyof typeof VersionItemScalarFieldEnum]
 
 
   export const FlashcardScalarFieldEnum: {
@@ -7037,6 +10783,16 @@ export namespace Prisma {
   };
 
   export type FlashcardTagScalarFieldEnum = (typeof FlashcardTagScalarFieldEnum)[keyof typeof FlashcardTagScalarFieldEnum]
+
+
+  export const MobileImportScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    mobileImportText: 'mobileImportText',
+    whenImported: 'whenImported'
+  };
+
+  export type MobileImportScalarFieldEnum = (typeof MobileImportScalarFieldEnum)[keyof typeof MobileImportScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -7099,9 +10855,12 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     minutesToTestAgain?: IntFilter<"User"> | number
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
+    versionItems?: VersionItemListRelationFilter
+    mobileImports?: MobileImportListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7109,9 +10868,12 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     minutesToTestAgain?: SortOrder
     flashcards?: FlashcardOrderByRelationAggregateInput
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
+    versionItems?: VersionItemOrderByRelationAggregateInput
+    mobileImports?: MobileImportOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7122,9 +10884,12 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     minutesToTestAgain?: IntFilter<"User"> | number
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
+    versionItems?: VersionItemListRelationFilter
+    mobileImports?: MobileImportListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7132,6 +10897,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     minutesToTestAgain?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -7148,7 +10914,148 @@ export namespace Prisma {
     firstName?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
+    role?: StringWithAggregatesFilter<"User"> | string
     minutesToTestAgain?: IntWithAggregatesFilter<"User"> | number
+  }
+
+  export type VersionWhereInput = {
+    AND?: VersionWhereInput | VersionWhereInput[]
+    OR?: VersionWhereInput[]
+    NOT?: VersionWhereInput | VersionWhereInput[]
+    id?: StringFilter<"Version"> | string
+    versionNumber?: StringFilter<"Version"> | string
+    title?: StringNullableFilter<"Version"> | string | null
+    status?: StringFilter<"Version"> | string
+    publishDate?: DateTimeNullableFilter<"Version"> | Date | string | null
+    createdAt?: DateTimeFilter<"Version"> | Date | string
+    updatedAt?: DateTimeFilter<"Version"> | Date | string
+    versionItems?: VersionItemListRelationFilter
+  }
+
+  export type VersionOrderByWithRelationInput = {
+    id?: SortOrder
+    versionNumber?: SortOrder
+    title?: SortOrderInput | SortOrder
+    status?: SortOrder
+    publishDate?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    versionItems?: VersionItemOrderByRelationAggregateInput
+  }
+
+  export type VersionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    versionNumber?: string
+    AND?: VersionWhereInput | VersionWhereInput[]
+    OR?: VersionWhereInput[]
+    NOT?: VersionWhereInput | VersionWhereInput[]
+    title?: StringNullableFilter<"Version"> | string | null
+    status?: StringFilter<"Version"> | string
+    publishDate?: DateTimeNullableFilter<"Version"> | Date | string | null
+    createdAt?: DateTimeFilter<"Version"> | Date | string
+    updatedAt?: DateTimeFilter<"Version"> | Date | string
+    versionItems?: VersionItemListRelationFilter
+  }, "id" | "versionNumber">
+
+  export type VersionOrderByWithAggregationInput = {
+    id?: SortOrder
+    versionNumber?: SortOrder
+    title?: SortOrderInput | SortOrder
+    status?: SortOrder
+    publishDate?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VersionCountOrderByAggregateInput
+    _max?: VersionMaxOrderByAggregateInput
+    _min?: VersionMinOrderByAggregateInput
+  }
+
+  export type VersionScalarWhereWithAggregatesInput = {
+    AND?: VersionScalarWhereWithAggregatesInput | VersionScalarWhereWithAggregatesInput[]
+    OR?: VersionScalarWhereWithAggregatesInput[]
+    NOT?: VersionScalarWhereWithAggregatesInput | VersionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Version"> | string
+    versionNumber?: StringWithAggregatesFilter<"Version"> | string
+    title?: StringNullableWithAggregatesFilter<"Version"> | string | null
+    status?: StringWithAggregatesFilter<"Version"> | string
+    publishDate?: DateTimeNullableWithAggregatesFilter<"Version"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Version"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Version"> | Date | string
+  }
+
+  export type VersionItemWhereInput = {
+    AND?: VersionItemWhereInput | VersionItemWhereInput[]
+    OR?: VersionItemWhereInput[]
+    NOT?: VersionItemWhereInput | VersionItemWhereInput[]
+    id?: StringFilter<"VersionItem"> | string
+    versionId?: StringNullableFilter<"VersionItem"> | string | null
+    type?: StringFilter<"VersionItem"> | string
+    body?: StringFilter<"VersionItem"> | string
+    startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
+    orderWithinVersion?: IntFilter<"VersionItem"> | number
+    createdAt?: DateTimeFilter<"VersionItem"> | Date | string
+    updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
+    version?: XOR<VersionNullableScalarRelationFilter, VersionWhereInput> | null
+    startedByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type VersionItemOrderByWithRelationInput = {
+    id?: SortOrder
+    versionId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    body?: SortOrder
+    startedByUserId?: SortOrderInput | SortOrder
+    orderWithinVersion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    version?: VersionOrderByWithRelationInput
+    startedByUser?: UserOrderByWithRelationInput
+  }
+
+  export type VersionItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: VersionItemWhereInput | VersionItemWhereInput[]
+    OR?: VersionItemWhereInput[]
+    NOT?: VersionItemWhereInput | VersionItemWhereInput[]
+    versionId?: StringNullableFilter<"VersionItem"> | string | null
+    type?: StringFilter<"VersionItem"> | string
+    body?: StringFilter<"VersionItem"> | string
+    startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
+    orderWithinVersion?: IntFilter<"VersionItem"> | number
+    createdAt?: DateTimeFilter<"VersionItem"> | Date | string
+    updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
+    version?: XOR<VersionNullableScalarRelationFilter, VersionWhereInput> | null
+    startedByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type VersionItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    versionId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    body?: SortOrder
+    startedByUserId?: SortOrderInput | SortOrder
+    orderWithinVersion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VersionItemCountOrderByAggregateInput
+    _avg?: VersionItemAvgOrderByAggregateInput
+    _max?: VersionItemMaxOrderByAggregateInput
+    _min?: VersionItemMinOrderByAggregateInput
+    _sum?: VersionItemSumOrderByAggregateInput
+  }
+
+  export type VersionItemScalarWhereWithAggregatesInput = {
+    AND?: VersionItemScalarWhereWithAggregatesInput | VersionItemScalarWhereWithAggregatesInput[]
+    OR?: VersionItemScalarWhereWithAggregatesInput[]
+    NOT?: VersionItemScalarWhereWithAggregatesInput | VersionItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"VersionItem"> | string
+    versionId?: StringNullableWithAggregatesFilter<"VersionItem"> | string | null
+    type?: StringWithAggregatesFilter<"VersionItem"> | string
+    body?: StringWithAggregatesFilter<"VersionItem"> | string
+    startedByUserId?: StringNullableWithAggregatesFilter<"VersionItem"> | string | null
+    orderWithinVersion?: IntWithAggregatesFilter<"VersionItem"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"VersionItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"VersionItem"> | Date | string
   }
 
   export type FlashcardWhereInput = {
@@ -7417,14 +11324,67 @@ export namespace Prisma {
     tagId?: StringWithAggregatesFilter<"FlashcardTag"> | string
   }
 
+  export type MobileImportWhereInput = {
+    AND?: MobileImportWhereInput | MobileImportWhereInput[]
+    OR?: MobileImportWhereInput[]
+    NOT?: MobileImportWhereInput | MobileImportWhereInput[]
+    id?: StringFilter<"MobileImport"> | string
+    userId?: StringFilter<"MobileImport"> | string
+    mobileImportText?: StringFilter<"MobileImport"> | string
+    whenImported?: DateTimeFilter<"MobileImport"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type MobileImportOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type MobileImportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MobileImportWhereInput | MobileImportWhereInput[]
+    OR?: MobileImportWhereInput[]
+    NOT?: MobileImportWhereInput | MobileImportWhereInput[]
+    userId?: StringFilter<"MobileImport"> | string
+    mobileImportText?: StringFilter<"MobileImport"> | string
+    whenImported?: DateTimeFilter<"MobileImport"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type MobileImportOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+    _count?: MobileImportCountOrderByAggregateInput
+    _max?: MobileImportMaxOrderByAggregateInput
+    _min?: MobileImportMinOrderByAggregateInput
+  }
+
+  export type MobileImportScalarWhereWithAggregatesInput = {
+    AND?: MobileImportScalarWhereWithAggregatesInput | MobileImportScalarWhereWithAggregatesInput[]
+    OR?: MobileImportScalarWhereWithAggregatesInput[]
+    NOT?: MobileImportScalarWhereWithAggregatesInput | MobileImportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MobileImport"> | string
+    userId?: StringWithAggregatesFilter<"MobileImport"> | string
+    mobileImportText?: StringWithAggregatesFilter<"MobileImport"> | string
+    whenImported?: DateTimeWithAggregatesFilter<"MobileImport"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
     lastName: string
     email: string
+    role?: string
     minutesToTestAgain?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7432,9 +11392,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     email: string
+    role?: string
     minutesToTestAgain?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -7442,9 +11405,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7452,9 +11418,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7462,6 +11431,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     email: string
+    role?: string
     minutesToTestAgain?: number
   }
 
@@ -7470,6 +11440,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
   }
 
@@ -7478,7 +11449,157 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type VersionCreateInput = {
+    id?: string
+    versionNumber: string
+    title?: string | null
+    status?: string
+    publishDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versionItems?: VersionItemCreateNestedManyWithoutVersionInput
+  }
+
+  export type VersionUncheckedCreateInput = {
+    id?: string
+    versionNumber: string
+    title?: string | null
+    status?: string
+    publishDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutVersionInput
+  }
+
+  export type VersionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionNumber?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versionItems?: VersionItemUpdateManyWithoutVersionNestedInput
+  }
+
+  export type VersionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionNumber?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versionItems?: VersionItemUncheckedUpdateManyWithoutVersionNestedInput
+  }
+
+  export type VersionCreateManyInput = {
+    id?: string
+    versionNumber: string
+    title?: string | null
+    status?: string
+    publishDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionNumber?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionNumber?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionItemCreateInput = {
+    id?: string
+    type?: string
+    body: string
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    version?: VersionCreateNestedOneWithoutVersionItemsInput
+    startedByUser?: UserCreateNestedOneWithoutVersionItemsInput
+  }
+
+  export type VersionItemUncheckedCreateInput = {
+    id?: string
+    versionId?: string | null
+    type?: string
+    body: string
+    startedByUserId?: string | null
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    version?: VersionUpdateOneWithoutVersionItemsNestedInput
+    startedByUser?: UserUpdateOneWithoutVersionItemsNestedInput
+  }
+
+  export type VersionItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionItemCreateManyInput = {
+    id?: string
+    versionId?: string | null
+    type?: string
+    body: string
+    startedByUserId?: string | null
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FlashcardCreateInput = {
@@ -7750,6 +11871,54 @@ export namespace Prisma {
     tagId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type MobileImportCreateInput = {
+    id?: string
+    mobileImportText: string
+    whenImported?: Date | string
+    user: UserCreateNestedOneWithoutMobileImportsInput
+  }
+
+  export type MobileImportUncheckedCreateInput = {
+    id?: string
+    userId: string
+    mobileImportText: string
+    whenImported?: Date | string
+  }
+
+  export type MobileImportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMobileImportsNestedInput
+  }
+
+  export type MobileImportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportCreateManyInput = {
+    id?: string
+    userId: string
+    mobileImportText: string
+    whenImported?: Date | string
+  }
+
+  export type MobileImportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -7787,6 +11956,18 @@ export namespace Prisma {
     none?: UserFlashcardActivityWhereInput
   }
 
+  export type VersionItemListRelationFilter = {
+    every?: VersionItemWhereInput
+    some?: VersionItemWhereInput
+    none?: VersionItemWhereInput
+  }
+
+  export type MobileImportListRelationFilter = {
+    every?: MobileImportWhereInput
+    some?: MobileImportWhereInput
+    none?: MobileImportWhereInput
+  }
+
   export type FlashcardOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -7795,11 +11976,20 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type VersionItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MobileImportOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     minutesToTestAgain?: SortOrder
   }
 
@@ -7812,6 +12002,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     minutesToTestAgain?: SortOrder
   }
 
@@ -7820,6 +12011,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     email?: SortOrder
+    role?: SortOrder
     minutesToTestAgain?: SortOrder
   }
 
@@ -7874,6 +12066,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -7885,6 +12088,137 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type VersionCountOrderByAggregateInput = {
+    id?: SortOrder
+    versionNumber?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    publishDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    versionNumber?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    publishDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionMinOrderByAggregateInput = {
+    id?: SortOrder
+    versionNumber?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    publishDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type VersionNullableScalarRelationFilter = {
+    is?: VersionWhereInput | null
+    isNot?: VersionWhereInput | null
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type VersionItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    versionId?: SortOrder
+    type?: SortOrder
+    body?: SortOrder
+    startedByUserId?: SortOrder
+    orderWithinVersion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionItemAvgOrderByAggregateInput = {
+    orderWithinVersion?: SortOrder
+  }
+
+  export type VersionItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    versionId?: SortOrder
+    type?: SortOrder
+    body?: SortOrder
+    startedByUserId?: SortOrder
+    orderWithinVersion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    versionId?: SortOrder
+    type?: SortOrder
+    body?: SortOrder
+    startedByUserId?: SortOrder
+    orderWithinVersion?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionItemSumOrderByAggregateInput = {
+    orderWithinVersion?: SortOrder
+  }
+
   export type FloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[]
@@ -7894,17 +12228,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type UserScalarRelationFilter = {
@@ -7921,11 +12244,6 @@ export namespace Prisma {
     every?: FlashcardTagWhereInput
     some?: FlashcardTagWhereInput
     none?: FlashcardTagWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type FlashcardTagOrderByRelationAggregateInput = {
@@ -7988,37 +12306,6 @@ export namespace Prisma {
     rank?: SortOrder
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[]
@@ -8033,20 +12320,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type FlashcardScalarRelationFilter = {
@@ -8127,6 +12400,27 @@ export namespace Prisma {
     tagId?: SortOrder
   }
 
+  export type MobileImportCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+  }
+
+  export type MobileImportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+  }
+
+  export type MobileImportMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+  }
+
   export type FlashcardCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -8141,6 +12435,20 @@ export namespace Prisma {
     connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
   }
 
+  export type VersionItemCreateNestedManyWithoutStartedByUserInput = {
+    create?: XOR<VersionItemCreateWithoutStartedByUserInput, VersionItemUncheckedCreateWithoutStartedByUserInput> | VersionItemCreateWithoutStartedByUserInput[] | VersionItemUncheckedCreateWithoutStartedByUserInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutStartedByUserInput | VersionItemCreateOrConnectWithoutStartedByUserInput[]
+    createMany?: VersionItemCreateManyStartedByUserInputEnvelope
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+  }
+
+  export type MobileImportCreateNestedManyWithoutUserInput = {
+    create?: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput> | MobileImportCreateWithoutUserInput[] | MobileImportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
+    createMany?: MobileImportCreateManyUserInputEnvelope
+    connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+  }
+
   export type FlashcardUncheckedCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -8153,6 +12461,20 @@ export namespace Prisma {
     connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutUserInput | UserFlashcardActivityCreateOrConnectWithoutUserInput[]
     createMany?: UserFlashcardActivityCreateManyUserInputEnvelope
     connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+  }
+
+  export type VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput = {
+    create?: XOR<VersionItemCreateWithoutStartedByUserInput, VersionItemUncheckedCreateWithoutStartedByUserInput> | VersionItemCreateWithoutStartedByUserInput[] | VersionItemUncheckedCreateWithoutStartedByUserInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutStartedByUserInput | VersionItemCreateOrConnectWithoutStartedByUserInput[]
+    createMany?: VersionItemCreateManyStartedByUserInputEnvelope
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+  }
+
+  export type MobileImportUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput> | MobileImportCreateWithoutUserInput[] | MobileImportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
+    createMany?: MobileImportCreateManyUserInputEnvelope
+    connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8195,6 +12517,34 @@ export namespace Prisma {
     deleteMany?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
   }
 
+  export type VersionItemUpdateManyWithoutStartedByUserNestedInput = {
+    create?: XOR<VersionItemCreateWithoutStartedByUserInput, VersionItemUncheckedCreateWithoutStartedByUserInput> | VersionItemCreateWithoutStartedByUserInput[] | VersionItemUncheckedCreateWithoutStartedByUserInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutStartedByUserInput | VersionItemCreateOrConnectWithoutStartedByUserInput[]
+    upsert?: VersionItemUpsertWithWhereUniqueWithoutStartedByUserInput | VersionItemUpsertWithWhereUniqueWithoutStartedByUserInput[]
+    createMany?: VersionItemCreateManyStartedByUserInputEnvelope
+    set?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    disconnect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    delete?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    update?: VersionItemUpdateWithWhereUniqueWithoutStartedByUserInput | VersionItemUpdateWithWhereUniqueWithoutStartedByUserInput[]
+    updateMany?: VersionItemUpdateManyWithWhereWithoutStartedByUserInput | VersionItemUpdateManyWithWhereWithoutStartedByUserInput[]
+    deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+  }
+
+  export type MobileImportUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput> | MobileImportCreateWithoutUserInput[] | MobileImportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
+    upsert?: MobileImportUpsertWithWhereUniqueWithoutUserInput | MobileImportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MobileImportCreateManyUserInputEnvelope
+    set?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    disconnect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    delete?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    update?: MobileImportUpdateWithWhereUniqueWithoutUserInput | MobileImportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MobileImportUpdateManyWithWhereWithoutUserInput | MobileImportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
+  }
+
   export type FlashcardUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -8221,6 +12571,120 @@ export namespace Prisma {
     update?: UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput | UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserFlashcardActivityUpdateManyWithWhereWithoutUserInput | UserFlashcardActivityUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+  }
+
+  export type VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput = {
+    create?: XOR<VersionItemCreateWithoutStartedByUserInput, VersionItemUncheckedCreateWithoutStartedByUserInput> | VersionItemCreateWithoutStartedByUserInput[] | VersionItemUncheckedCreateWithoutStartedByUserInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutStartedByUserInput | VersionItemCreateOrConnectWithoutStartedByUserInput[]
+    upsert?: VersionItemUpsertWithWhereUniqueWithoutStartedByUserInput | VersionItemUpsertWithWhereUniqueWithoutStartedByUserInput[]
+    createMany?: VersionItemCreateManyStartedByUserInputEnvelope
+    set?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    disconnect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    delete?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    update?: VersionItemUpdateWithWhereUniqueWithoutStartedByUserInput | VersionItemUpdateWithWhereUniqueWithoutStartedByUserInput[]
+    updateMany?: VersionItemUpdateManyWithWhereWithoutStartedByUserInput | VersionItemUpdateManyWithWhereWithoutStartedByUserInput[]
+    deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+  }
+
+  export type MobileImportUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput> | MobileImportCreateWithoutUserInput[] | MobileImportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
+    upsert?: MobileImportUpsertWithWhereUniqueWithoutUserInput | MobileImportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MobileImportCreateManyUserInputEnvelope
+    set?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    disconnect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    delete?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    update?: MobileImportUpdateWithWhereUniqueWithoutUserInput | MobileImportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MobileImportUpdateManyWithWhereWithoutUserInput | MobileImportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
+  }
+
+  export type VersionItemCreateNestedManyWithoutVersionInput = {
+    create?: XOR<VersionItemCreateWithoutVersionInput, VersionItemUncheckedCreateWithoutVersionInput> | VersionItemCreateWithoutVersionInput[] | VersionItemUncheckedCreateWithoutVersionInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutVersionInput | VersionItemCreateOrConnectWithoutVersionInput[]
+    createMany?: VersionItemCreateManyVersionInputEnvelope
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+  }
+
+  export type VersionItemUncheckedCreateNestedManyWithoutVersionInput = {
+    create?: XOR<VersionItemCreateWithoutVersionInput, VersionItemUncheckedCreateWithoutVersionInput> | VersionItemCreateWithoutVersionInput[] | VersionItemUncheckedCreateWithoutVersionInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutVersionInput | VersionItemCreateOrConnectWithoutVersionInput[]
+    createMany?: VersionItemCreateManyVersionInputEnvelope
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type VersionItemUpdateManyWithoutVersionNestedInput = {
+    create?: XOR<VersionItemCreateWithoutVersionInput, VersionItemUncheckedCreateWithoutVersionInput> | VersionItemCreateWithoutVersionInput[] | VersionItemUncheckedCreateWithoutVersionInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutVersionInput | VersionItemCreateOrConnectWithoutVersionInput[]
+    upsert?: VersionItemUpsertWithWhereUniqueWithoutVersionInput | VersionItemUpsertWithWhereUniqueWithoutVersionInput[]
+    createMany?: VersionItemCreateManyVersionInputEnvelope
+    set?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    disconnect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    delete?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    update?: VersionItemUpdateWithWhereUniqueWithoutVersionInput | VersionItemUpdateWithWhereUniqueWithoutVersionInput[]
+    updateMany?: VersionItemUpdateManyWithWhereWithoutVersionInput | VersionItemUpdateManyWithWhereWithoutVersionInput[]
+    deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+  }
+
+  export type VersionItemUncheckedUpdateManyWithoutVersionNestedInput = {
+    create?: XOR<VersionItemCreateWithoutVersionInput, VersionItemUncheckedCreateWithoutVersionInput> | VersionItemCreateWithoutVersionInput[] | VersionItemUncheckedCreateWithoutVersionInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutVersionInput | VersionItemCreateOrConnectWithoutVersionInput[]
+    upsert?: VersionItemUpsertWithWhereUniqueWithoutVersionInput | VersionItemUpsertWithWhereUniqueWithoutVersionInput[]
+    createMany?: VersionItemCreateManyVersionInputEnvelope
+    set?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    disconnect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    delete?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    update?: VersionItemUpdateWithWhereUniqueWithoutVersionInput | VersionItemUpdateWithWhereUniqueWithoutVersionInput[]
+    updateMany?: VersionItemUpdateManyWithWhereWithoutVersionInput | VersionItemUpdateManyWithWhereWithoutVersionInput[]
+    deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+  }
+
+  export type VersionCreateNestedOneWithoutVersionItemsInput = {
+    create?: XOR<VersionCreateWithoutVersionItemsInput, VersionUncheckedCreateWithoutVersionItemsInput>
+    connectOrCreate?: VersionCreateOrConnectWithoutVersionItemsInput
+    connect?: VersionWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutVersionItemsInput = {
+    create?: XOR<UserCreateWithoutVersionItemsInput, UserUncheckedCreateWithoutVersionItemsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVersionItemsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type VersionUpdateOneWithoutVersionItemsNestedInput = {
+    create?: XOR<VersionCreateWithoutVersionItemsInput, VersionUncheckedCreateWithoutVersionItemsInput>
+    connectOrCreate?: VersionCreateOrConnectWithoutVersionItemsInput
+    upsert?: VersionUpsertWithoutVersionItemsInput
+    disconnect?: VersionWhereInput | boolean
+    delete?: VersionWhereInput | boolean
+    connect?: VersionWhereUniqueInput
+    update?: XOR<XOR<VersionUpdateToOneWithWhereWithoutVersionItemsInput, VersionUpdateWithoutVersionItemsInput>, VersionUncheckedUpdateWithoutVersionItemsInput>
+  }
+
+  export type UserUpdateOneWithoutVersionItemsNestedInput = {
+    create?: XOR<UserCreateWithoutVersionItemsInput, UserUncheckedCreateWithoutVersionItemsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVersionItemsInput
+    upsert?: UserUpsertWithoutVersionItemsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVersionItemsInput, UserUpdateWithoutVersionItemsInput>, UserUncheckedUpdateWithoutVersionItemsInput>
   }
 
   export type UserCreateNestedOneWithoutFlashcardsInput = {
@@ -8277,24 +12741,12 @@ export namespace Prisma {
     connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type UserUpdateOneRequiredWithoutFlashcardsNestedInput = {
@@ -8497,6 +12949,20 @@ export namespace Prisma {
     update?: XOR<XOR<TagUpdateToOneWithWhereWithoutFlashcardsInput, TagUpdateWithoutFlashcardsInput>, TagUncheckedUpdateWithoutFlashcardsInput>
   }
 
+  export type UserCreateNestedOneWithoutMobileImportsInput = {
+    create?: XOR<UserCreateWithoutMobileImportsInput, UserUncheckedCreateWithoutMobileImportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMobileImportsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutMobileImportsNestedInput = {
+    create?: XOR<UserCreateWithoutMobileImportsInput, UserUncheckedCreateWithoutMobileImportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMobileImportsInput
+    upsert?: UserUpsertWithoutMobileImportsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMobileImportsInput, UserUpdateWithoutMobileImportsInput>, UserUncheckedUpdateWithoutMobileImportsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -8580,17 +13046,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -8600,6 +13055,17 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8630,6 +13096,20 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -8658,20 +13138,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | null
-    notIn?: Date[] | string[] | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type FlashcardCreateWithoutOwnerInput = {
@@ -8744,6 +13210,56 @@ export namespace Prisma {
     data: UserFlashcardActivityCreateManyUserInput | UserFlashcardActivityCreateManyUserInput[]
   }
 
+  export type VersionItemCreateWithoutStartedByUserInput = {
+    id?: string
+    type?: string
+    body: string
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    version?: VersionCreateNestedOneWithoutVersionItemsInput
+  }
+
+  export type VersionItemUncheckedCreateWithoutStartedByUserInput = {
+    id?: string
+    versionId?: string | null
+    type?: string
+    body: string
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionItemCreateOrConnectWithoutStartedByUserInput = {
+    where: VersionItemWhereUniqueInput
+    create: XOR<VersionItemCreateWithoutStartedByUserInput, VersionItemUncheckedCreateWithoutStartedByUserInput>
+  }
+
+  export type VersionItemCreateManyStartedByUserInputEnvelope = {
+    data: VersionItemCreateManyStartedByUserInput | VersionItemCreateManyStartedByUserInput[]
+  }
+
+  export type MobileImportCreateWithoutUserInput = {
+    id?: string
+    mobileImportText: string
+    whenImported?: Date | string
+  }
+
+  export type MobileImportUncheckedCreateWithoutUserInput = {
+    id?: string
+    mobileImportText: string
+    whenImported?: Date | string
+  }
+
+  export type MobileImportCreateOrConnectWithoutUserInput = {
+    where: MobileImportWhereUniqueInput
+    create: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput>
+  }
+
+  export type MobileImportCreateManyUserInputEnvelope = {
+    data: MobileImportCreateManyUserInput | MobileImportCreateManyUserInput[]
+  }
+
   export type FlashcardUpsertWithWhereUniqueWithoutOwnerInput = {
     where: FlashcardWhereUniqueInput
     update: XOR<FlashcardUpdateWithoutOwnerInput, FlashcardUncheckedUpdateWithoutOwnerInput>
@@ -8807,13 +13323,237 @@ export namespace Prisma {
     actionDetails?: StringNullableFilter<"UserFlashcardActivity"> | string | null
   }
 
+  export type VersionItemUpsertWithWhereUniqueWithoutStartedByUserInput = {
+    where: VersionItemWhereUniqueInput
+    update: XOR<VersionItemUpdateWithoutStartedByUserInput, VersionItemUncheckedUpdateWithoutStartedByUserInput>
+    create: XOR<VersionItemCreateWithoutStartedByUserInput, VersionItemUncheckedCreateWithoutStartedByUserInput>
+  }
+
+  export type VersionItemUpdateWithWhereUniqueWithoutStartedByUserInput = {
+    where: VersionItemWhereUniqueInput
+    data: XOR<VersionItemUpdateWithoutStartedByUserInput, VersionItemUncheckedUpdateWithoutStartedByUserInput>
+  }
+
+  export type VersionItemUpdateManyWithWhereWithoutStartedByUserInput = {
+    where: VersionItemScalarWhereInput
+    data: XOR<VersionItemUpdateManyMutationInput, VersionItemUncheckedUpdateManyWithoutStartedByUserInput>
+  }
+
+  export type VersionItemScalarWhereInput = {
+    AND?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+    OR?: VersionItemScalarWhereInput[]
+    NOT?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+    id?: StringFilter<"VersionItem"> | string
+    versionId?: StringNullableFilter<"VersionItem"> | string | null
+    type?: StringFilter<"VersionItem"> | string
+    body?: StringFilter<"VersionItem"> | string
+    startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
+    orderWithinVersion?: IntFilter<"VersionItem"> | number
+    createdAt?: DateTimeFilter<"VersionItem"> | Date | string
+    updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
+  }
+
+  export type MobileImportUpsertWithWhereUniqueWithoutUserInput = {
+    where: MobileImportWhereUniqueInput
+    update: XOR<MobileImportUpdateWithoutUserInput, MobileImportUncheckedUpdateWithoutUserInput>
+    create: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput>
+  }
+
+  export type MobileImportUpdateWithWhereUniqueWithoutUserInput = {
+    where: MobileImportWhereUniqueInput
+    data: XOR<MobileImportUpdateWithoutUserInput, MobileImportUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MobileImportUpdateManyWithWhereWithoutUserInput = {
+    where: MobileImportScalarWhereInput
+    data: XOR<MobileImportUpdateManyMutationInput, MobileImportUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type MobileImportScalarWhereInput = {
+    AND?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
+    OR?: MobileImportScalarWhereInput[]
+    NOT?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
+    id?: StringFilter<"MobileImport"> | string
+    userId?: StringFilter<"MobileImport"> | string
+    mobileImportText?: StringFilter<"MobileImport"> | string
+    whenImported?: DateTimeFilter<"MobileImport"> | Date | string
+  }
+
+  export type VersionItemCreateWithoutVersionInput = {
+    id?: string
+    type?: string
+    body: string
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    startedByUser?: UserCreateNestedOneWithoutVersionItemsInput
+  }
+
+  export type VersionItemUncheckedCreateWithoutVersionInput = {
+    id?: string
+    type?: string
+    body: string
+    startedByUserId?: string | null
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionItemCreateOrConnectWithoutVersionInput = {
+    where: VersionItemWhereUniqueInput
+    create: XOR<VersionItemCreateWithoutVersionInput, VersionItemUncheckedCreateWithoutVersionInput>
+  }
+
+  export type VersionItemCreateManyVersionInputEnvelope = {
+    data: VersionItemCreateManyVersionInput | VersionItemCreateManyVersionInput[]
+  }
+
+  export type VersionItemUpsertWithWhereUniqueWithoutVersionInput = {
+    where: VersionItemWhereUniqueInput
+    update: XOR<VersionItemUpdateWithoutVersionInput, VersionItemUncheckedUpdateWithoutVersionInput>
+    create: XOR<VersionItemCreateWithoutVersionInput, VersionItemUncheckedCreateWithoutVersionInput>
+  }
+
+  export type VersionItemUpdateWithWhereUniqueWithoutVersionInput = {
+    where: VersionItemWhereUniqueInput
+    data: XOR<VersionItemUpdateWithoutVersionInput, VersionItemUncheckedUpdateWithoutVersionInput>
+  }
+
+  export type VersionItemUpdateManyWithWhereWithoutVersionInput = {
+    where: VersionItemScalarWhereInput
+    data: XOR<VersionItemUpdateManyMutationInput, VersionItemUncheckedUpdateManyWithoutVersionInput>
+  }
+
+  export type VersionCreateWithoutVersionItemsInput = {
+    id?: string
+    versionNumber: string
+    title?: string | null
+    status?: string
+    publishDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionUncheckedCreateWithoutVersionItemsInput = {
+    id?: string
+    versionNumber: string
+    title?: string | null
+    status?: string
+    publishDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionCreateOrConnectWithoutVersionItemsInput = {
+    where: VersionWhereUniqueInput
+    create: XOR<VersionCreateWithoutVersionItemsInput, VersionUncheckedCreateWithoutVersionItemsInput>
+  }
+
+  export type UserCreateWithoutVersionItemsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutVersionItemsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutVersionItemsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVersionItemsInput, UserUncheckedCreateWithoutVersionItemsInput>
+  }
+
+  export type VersionUpsertWithoutVersionItemsInput = {
+    update: XOR<VersionUpdateWithoutVersionItemsInput, VersionUncheckedUpdateWithoutVersionItemsInput>
+    create: XOR<VersionCreateWithoutVersionItemsInput, VersionUncheckedCreateWithoutVersionItemsInput>
+    where?: VersionWhereInput
+  }
+
+  export type VersionUpdateToOneWithWhereWithoutVersionItemsInput = {
+    where?: VersionWhereInput
+    data: XOR<VersionUpdateWithoutVersionItemsInput, VersionUncheckedUpdateWithoutVersionItemsInput>
+  }
+
+  export type VersionUpdateWithoutVersionItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionNumber?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionUncheckedUpdateWithoutVersionItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionNumber?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutVersionItemsInput = {
+    update: XOR<UserUpdateWithoutVersionItemsInput, UserUncheckedUpdateWithoutVersionItemsInput>
+    create: XOR<UserCreateWithoutVersionItemsInput, UserUncheckedCreateWithoutVersionItemsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVersionItemsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVersionItemsInput, UserUncheckedUpdateWithoutVersionItemsInput>
+  }
+
+  export type UserUpdateWithoutVersionItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutVersionItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutFlashcardsInput = {
     id?: string
     firstName: string
     lastName: string
     email: string
+    role?: string
     minutesToTestAgain?: number
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFlashcardsInput = {
@@ -8821,8 +13561,11 @@ export namespace Prisma {
     firstName: string
     lastName: string
     email: string
+    role?: string
     minutesToTestAgain?: number
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFlashcardsInput = {
@@ -8976,8 +13719,11 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFlashcardsInput = {
@@ -8985,8 +13731,11 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutCopiesInput = {
@@ -9098,8 +13847,11 @@ export namespace Prisma {
     firstName: string
     lastName: string
     email: string
+    role?: string
     minutesToTestAgain?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -9107,8 +13859,11 @@ export namespace Prisma {
     firstName: string
     lastName: string
     email: string
+    role?: string
     minutesToTestAgain?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -9173,8 +13928,11 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -9182,8 +13940,11 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutActivitiesInput = {
@@ -9396,6 +14157,70 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type UserCreateWithoutMobileImportsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+  }
+
+  export type UserUncheckedCreateWithoutMobileImportsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+  }
+
+  export type UserCreateOrConnectWithoutMobileImportsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMobileImportsInput, UserUncheckedCreateWithoutMobileImportsInput>
+  }
+
+  export type UserUpsertWithoutMobileImportsInput = {
+    update: XOR<UserUpdateWithoutMobileImportsInput, UserUncheckedUpdateWithoutMobileImportsInput>
+    create: XOR<UserCreateWithoutMobileImportsInput, UserUncheckedCreateWithoutMobileImportsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMobileImportsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMobileImportsInput, UserUncheckedUpdateWithoutMobileImportsInput>
+  }
+
+  export type UserUpdateWithoutMobileImportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMobileImportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+  }
+
   export type FlashcardCreateManyOwnerInput = {
     id?: string
     front: string
@@ -9417,6 +14242,22 @@ export namespace Prisma {
     whenActedUpon?: Date | string
     actionTaken: string
     actionDetails?: string | null
+  }
+
+  export type VersionItemCreateManyStartedByUserInput = {
+    id?: string
+    versionId?: string | null
+    type?: string
+    body: string
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MobileImportCreateManyUserInput = {
+    id?: string
+    mobileImportText: string
+    whenImported?: Date | string
   }
 
   export type FlashcardUpdateWithoutOwnerInput = {
@@ -9492,6 +14333,94 @@ export namespace Prisma {
     whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
     actionTaken?: StringFieldUpdateOperationsInput | string
     actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VersionItemUpdateWithoutStartedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    version?: VersionUpdateOneWithoutVersionItemsNestedInput
+  }
+
+  export type VersionItemUncheckedUpdateWithoutStartedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionItemUncheckedUpdateManyWithoutStartedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionItemCreateManyVersionInput = {
+    id?: string
+    type?: string
+    body: string
+    startedByUserId?: string | null
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionItemUpdateWithoutVersionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    startedByUser?: UserUpdateOneWithoutVersionItemsNestedInput
+  }
+
+  export type VersionItemUncheckedUpdateWithoutVersionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionItemUncheckedUpdateManyWithoutVersionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FlashcardCreateManyCopiedFromInput = {

@@ -1,6 +1,6 @@
 import { prisma } from '../../../utils/prisma'
 import { requireAuth } from '../../../utils/auth'
-import { calculateNextTestTime } from '../../../utils/algorithm'
+import { buildInterleavedQueue } from '../../../utils/algorithm'
 
 export default defineEventHandler(async (event) => {
   const user = await requireAuth(event)
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Get all user flashcards directly
-    const flashcards = await prisma.flashcard.findMany({
+    const allFlashcards = await prisma.flashcard.findMany({
       where: {
         ownerId: dbUser.id
       },
@@ -52,8 +52,60 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    const now = new Date()
+
+    // Separate active learning cards into pools
+    const learningCards = allFlashcards.filter(f => f.status === 'LEARNING')
+    const otherCards = allFlashcards.filter(f => f.status !== 'LEARNING')
+
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+
+    const newCardsTodayPool = learningCards
+      .filter(f => !f.nextTestTime && f.createdAt.getTime() >= twentyFourHoursAgo.getTime())
+      .sort((a, b) => b.rank - a.rank || a.id.localeCompare(b.id))
+
+    const newCardsOlderPool = learningCards
+      .filter(f => !f.nextTestTime && f.createdAt.getTime() < twentyFourHoursAgo.getTime())
+      .sort((a, b) => b.rank - a.rank || a.id.localeCompare(b.id))
+
+    const newCardsPool = newCardsTodayPool.length > 0 ? newCardsTodayPool : newCardsOlderPool
+
+
+
+
+    const dueCardsPool = learningCards
+      .filter(f => f.nextTestTime && f.nextTestTime.getTime() <= now.getTime())
+      .sort((a, b) => b.rank - a.rank || a.id.localeCompare(b.id))
+
+    const futureCardsPool = learningCards
+      .filter(f => f.nextTestTime && f.nextTestTime.getTime() > now.getTime())
+      .sort((a, b) => a.nextTestTime!.getTime() - b.nextTestTime!.getTime() || b.rank - a.rank)
+
+    // Take top 30 new cards and top 10 due cards for interleaving
+    const topNew = newCardsPool.slice(0, 30)
+    const remNew = newCardsPool.slice(30)
+
+    const topDue = dueCardsPool.slice(0, 10)
+    const remDue = dueCardsPool.slice(10)
+
+    const interleavedActiveQueue = buildInterleavedQueue(topNew, topDue, { newRatio: 3, dueRatio: 1 })
+
+    // Combine in queue presentation order:
+    // 1. Interleaved active queue (top 30 new + top 10 due)
+    // 2. Remaining due cards
+    // 3. Remaining new cards
+    // 4. Future scheduled cards
+    // 5. Finished/Parked/Deleted cards
+    const sortedFlashcards = [
+      ...interleavedActiveQueue,
+      ...remDue,
+      ...remNew,
+      ...futureCardsPool,
+      ...otherCards.sort((a, b) => b.rank - a.rank)
+    ]
+
     // Build the payload
-    const result = flashcards.map((f) => {
+    const result = sortedFlashcards.map((f) => {
       const lastTested = latestActivityMap.get(f.id) || null
       const nextTest = f.nextTestTime?.toISOString() || null
       
@@ -70,8 +122,10 @@ export default defineEventHandler(async (event) => {
         tags: f.tags.map(t => t.tag.abbreviation),
         lastTested,
         nextTest,
+        createdAt: f.createdAt.toISOString(),
         minutesToTestAgain: dbUser.minutesToTestAgain
       }
+
     })
 
     return result
@@ -83,3 +137,4 @@ export default defineEventHandler(async (event) => {
     })
   }
 })
+

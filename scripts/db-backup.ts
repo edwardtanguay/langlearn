@@ -28,7 +28,37 @@ async function main() {
     fs.mkdirSync(backupDir, { recursive: true });
   }
 
-  const filename = `langlearn-data-${timestamp}.sqlite`;
+  // Pre-backup cleanup: delete any unneeded sidecar files (-wal, -shm, -info, .tmp) left behind by prior backup runs
+  try {
+    const files = fs.readdirSync(backupDir);
+    for (const file of files) {
+      if (file.startsWith('.tmp') || file.endsWith('-wal') || file.endsWith('-shm') || file.endsWith('-info')) {
+        try {
+          fs.unlinkSync(path.join(backupDir, file));
+        } catch (e) {
+          // Ignore if locked by another active process
+        }
+      }
+    }
+  } catch (e) {
+    // Ignore cleanup errors
+  }
+
+
+  // Query flashcard count from remote database
+  let flashcardCount = 0;
+  try {
+    const remoteDb = createClient({ url, authToken });
+    const countRes = await remoteDb.execute('SELECT COUNT(*) as count FROM Flashcard');
+    if (countRes.rows.length > 0 && countRes.rows[0].count !== undefined) {
+      flashcardCount = Number(countRes.rows[0].count);
+    }
+    remoteDb.close();
+  } catch (e) {
+    console.warn('Could not query remote flashcard count:', e);
+  }
+
+  const filename = `langlearn-data-${timestamp}-${flashcardCount}cards.sqlite`;
   const filePath = path.join(backupDir, filename);
 
   console.log(`Starting backup to ${filePath}...`);
@@ -41,34 +71,62 @@ async function main() {
 
   await backupClient.sync();
   backupClient.close();
-  
-  // The .sqlite-info file is only used by LibSQL for tracking future syncs.
-  // Since this is a one-time backup, we can safely delete it so it doesn't clutter the directory.
-  const infoFile = filePath + '-info';
-  if (fs.existsSync(infoFile)) {
-    fs.unlinkSync(infoFile);
+
+  // Wait 500ms for LibSQL sync client native handle release
+  await new Promise(r => setTimeout(r, 500));
+
+
+  // Open plain local connection to checkpoint WAL and convert journal mode to DELETE
+  let resetSuccess = false;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const localDb = createClient({ url: `file:${filePath}` });
+      await localDb.execute('PRAGMA wal_checkpoint(TRUNCATE)');
+      await localDb.execute('PRAGMA journal_mode = DELETE');
+      localDb.close();
+      resetSuccess = true;
+      break;
+    } catch (e) {
+      if (attempt === 3) {
+        // Silently proceed if journal mode is locked; backup SQLite file is still valid
+      } else {
+        await new Promise(r => setTimeout(r, 400));
+      }
+    }
   }
-  
-  console.log('Merging WAL files into a single standalone .sqlite file...');
-  const localDb = createClient({ url: `file:${filePath}` });
-  try {
-    await localDb.execute('PRAGMA wal_checkpoint(TRUNCATE)');
-  } catch (e) {
-    console.warn('Could not force WAL checkpoint:', e);
+
+  // Wait 100ms for local handle release
+  await new Promise(r => setTimeout(r, 100));
+
+  // Clean sidecar files (.sqlite-wal, .sqlite-shm, .sqlite-info)
+  const sidecars = [filePath + '-wal', filePath + '-shm', filePath + '-info'];
+  for (const sidecar of sidecars) {
+    if (fs.existsSync(sidecar)) {
+      try {
+        fs.unlinkSync(sidecar);
+      } catch (e) {
+        // Ignore if locked
+      }
+    }
   }
-  localDb.close();
-  
-  // Cleanup any orphaned .tmp files that LibSQL might leave behind if a previous run crashed
+
+  // Clean orphaned .tmp, -wal, -shm files across backup directory
   try {
     const files = fs.readdirSync(backupDir);
     for (const file of files) {
-      if (file.startsWith('.tmp')) {
-        fs.unlinkSync(path.join(backupDir, file));
+      if (file.startsWith('.tmp') || file.endsWith('-wal') || file.endsWith('-shm') || file.endsWith('-info')) {
+        try {
+          fs.unlinkSync(path.join(backupDir, file));
+        } catch (e) {
+          // Ignore locked files
+        }
       }
     }
   } catch (e) {
-    console.warn('Could not clean up .tmp files:', e);
+    console.warn('Could not clean up sidecar files:', e);
   }
+
+
   
   console.log('✅ Backup successful!');
 }

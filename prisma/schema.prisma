@@ -14,9 +14,36 @@ model User {
   firstName          String
   lastName           String
   email              String                 @unique
+  role               String                 @default("member")
   minutesToTestAgain Int                    @default(10)
   flashcards         Flashcard[]
   activities         UserFlashcardActivity[]
+  versionItems       VersionItem[]          @relation("UserVersionItems")
+  mobileImports      MobileImport[]
+}
+
+model Version {
+  id            String        @id @default(uuid())
+  versionNumber String        @unique
+  title         String?
+  status        String        @default("IN_PROGRESS")
+  publishDate   DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  versionItems  VersionItem[]
+}
+
+model VersionItem {
+  id                 String   @id @default(uuid())
+  versionId          String?
+  version            Version? @relation(fields: [versionId], references: [id], onDelete: Cascade)
+  type               String   @default("BUGFIX")
+  body               String
+  startedByUserId    String?
+  startedByUser      User?    @relation("UserVersionItems", fields: [startedByUserId], references: [id])
+  orderWithinVersion Int      @default(1)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model Flashcard {
@@ -71,5 +98,13 @@ model FlashcardTag {
   tag         Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@unique([flashcardId, tagId])
+}
+
+model MobileImport {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mobileImportText String
+  whenImported     DateTime @default(now())
 }
 

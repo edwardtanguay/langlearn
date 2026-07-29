@@ -122,7 +122,29 @@ exports.Prisma.UserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   email: 'email',
+  role: 'role',
   minutesToTestAgain: 'minutesToTestAgain'
+};
+
+exports.Prisma.VersionScalarFieldEnum = {
+  id: 'id',
+  versionNumber: 'versionNumber',
+  title: 'title',
+  status: 'status',
+  publishDate: 'publishDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VersionItemScalarFieldEnum = {
+  id: 'id',
+  versionId: 'versionId',
+  type: 'type',
+  body: 'body',
+  startedByUserId: 'startedByUserId',
+  orderWithinVersion: 'orderWithinVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.FlashcardScalarFieldEnum = {
@@ -162,6 +184,13 @@ exports.Prisma.FlashcardTagScalarFieldEnum = {
   tagId: 'tagId'
 };
 
+exports.Prisma.MobileImportScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  mobileImportText: 'mobileImportText',
+  whenImported: 'whenImported'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -175,10 +204,13 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Version: 'Version',
+  VersionItem: 'VersionItem',
   Flashcard: 'Flashcard',
   UserFlashcardActivity: 'UserFlashcardActivity',
   Tag: 'Tag',
-  FlashcardTag: 'FlashcardTag'
+  FlashcardTag: 'FlashcardTag',
+  MobileImport: 'MobileImport'
 };
 
 /**

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon } from '@heroicons/vue/24/outline'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon } from '@heroicons/vue/24/outline'
 
 const mobileMenuOpen = ref(false)
 const navRef = ref<HTMLElement | null>(null)
@@ -27,11 +27,31 @@ const toggleColorMode = () => {
 
 const config = useRuntimeConfig()
 const showColorModeToggle = config.public.showColorModeToggle
-const showDevPage = computed(() => config.public.showDevPage)
+const showDevPageConfig = computed(() => config.public.showDevPage)
 
 const auth = useAuth()
 const loggedIn = computed(() => auth?.loggedIn ?? false)
 const user = computed(() => auth?.user ?? null)
+
+const userRole = ref<string>('member')
+
+const fetchUserRole = async () => {
+  if (!loggedIn.value) return
+  try {
+    const data = await $fetch<{ role: string }>('/api/user/me')
+    if (data?.role) {
+      userRole.value = data.role
+    }
+  } catch (err) {
+    userRole.value = 'member'
+  }
+}
+
+watch(loggedIn, (val) => {
+  if (val) fetchUserRole()
+}, { immediate: true })
+
+const isAdmin = computed(() => userRole.value === 'admin')
 
 const handleLogout = () => {
   navigateTo('/api/logout', { external: true })
@@ -43,14 +63,16 @@ const isUserPage = computed(() => route.path === '/user')
 const navItems = computed(() => {
   const items = []
   if (loggedIn.value) {
-    items.push({ name: 'Flashcards', path: '/', icon: DocumentTextIcon })
+    items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
+    items.push({ name: 'Pronunciation', path: '/pronunciation', icon: SpeakerWaveIcon })
     items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
+    if (showDevPageConfig.value && isAdmin.value) {
+      items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
+    }
+    items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
   } else {
     items.push({ name: 'Home', path: '/', icon: HomeIcon })
-  }
-  items.push({ name: 'About', path: '/about', icon: DocumentTextIcon })
-  if (showDevPage.value && loggedIn.value) {
-    items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
+    items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
   }
   return items
 })
@@ -62,31 +84,38 @@ const navItems = computed(() => {
     <div class="container-custom">
       <div class="flex justify-between items-center h-16" @click="mobileMenuOpen = false">
         <!-- Logo / User Profile -->
-        <ClientOnly>
-          <NuxtLink :to="loggedIn ? '/user' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
-            <div class="flex flex-row items-center gap-2.5">
-              <template v-if="loggedIn">
-                <div class="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0">
-                  <img v-if="user?.picture" :src="user.picture" alt="Avatar" class="w-full h-full object-cover" />
-                  <span v-else class="text-sm text-white">{{ user?.given_name?.[0] || 'U' }}</span>
-                </div>
-                <span class="text-sm font-semibold text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-white transition-colors whitespace-nowrap">
-                  {{ user?.given_name }} {{ user?.family_name }}
-                </span>
-              </template>
-              <template v-else>
-                <span class="text-xl font-bold !text-black hover:!text-gray-700 transition-colors dark:!text-white dark:hover:!text-gray-300">LangLearn</span>
-              </template>
-            </div>
-          </NuxtLink>
-          <template #fallback>
-            <NuxtLink to="/" @click="mobileMenuOpen = false" class="group block">
+        <div class="flex items-center space-x-3">
+          <ClientOnly>
+            <NuxtLink :to="loggedIn ? '/user' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
               <div class="flex flex-row items-center gap-2.5">
-                <span class="text-xl font-bold !text-black hover:!text-gray-700 transition-colors dark:!text-white dark:hover:!text-gray-300">LangLearn</span>
+                <template v-if="loggedIn">
+                  <div class="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0">
+                    <img v-if="user?.picture" :src="user.picture" alt="Avatar" class="w-full h-full object-cover" />
+                    <span v-else class="text-sm text-white">{{ user?.given_name?.[0] || 'U' }}</span>
+                  </div>
+                  <span class="text-sm font-semibold text-gray-700 group-hover:text-black dark:text-gray-300 dark:group-hover:text-white transition-colors whitespace-nowrap">
+                    {{ user?.given_name }} {{ user?.family_name }}
+                  </span>
+                </template>
+                <template v-else>
+                  <span class="text-xl font-bold !text-black hover:!text-gray-700 transition-colors dark:!text-white dark:hover:!text-gray-300">LangLearn</span>
+                </template>
               </div>
             </NuxtLink>
-          </template>
-        </ClientOnly>
+            <template #fallback>
+              <NuxtLink to="/" @click="mobileMenuOpen = false" class="group block">
+                <div class="flex flex-row items-center gap-2.5">
+                  <span class="text-xl font-bold !text-black hover:!text-gray-700 transition-colors dark:!text-white dark:hover:!text-gray-300">LangLearn</span>
+                </div>
+              </NuxtLink>
+            </template>
+          </ClientOnly>
+
+          <!-- Quick-Add Idea Drawer Trigger (Visible for logged in users) -->
+          <ClientOnly>
+            <QuickAddIdeaDrawer v-if="loggedIn" />
+          </ClientOnly>
+        </div>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-8">

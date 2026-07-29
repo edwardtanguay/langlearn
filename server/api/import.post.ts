@@ -1,5 +1,8 @@
 import { prisma } from '../utils/prisma'
 import { requireAuth } from '../utils/auth'
+import { parseMetadata } from '../utils/metadata-parser'
+import { calculateOptimalRank } from '../utils/rank-config'
+import crypto from 'crypto'
 
 function mapLanguage(lang: string): string {
   const l = lang.trim().toLowerCase();
@@ -35,14 +38,39 @@ export default defineEventHandler(async (event) => {
   }
 
   const rows = body.rows;
-  let importedCount = 0;
-  let skippedCount = 0;
+
+  // 1. Single SELECT to fetch all existing non-deleted cards for O(1) duplicate checking
+  const existingCards = await prisma.flashcard.findMany({
+    where: {
+      ownerId: dbUser.id,
+      status: {
+        not: 'DELETED'
+      }
+    },
+    select: {
+      front: true,
+      back: true
+    }
+  });
+
+  const existingSet = new Set<string>();
+  for (const card of existingCards) {
+    existingSet.add(`${card.front.trim().toLowerCase()}|${card.back.trim().toLowerCase()}`);
+  }
+
+  const payloadSet = new Set<string>();
+  const cardsToCreate: any[] = [];
+  const activitiesToCreate: any[] = [];
   const skippedCards: Array<{ front: string; back: string }> = [];
 
+  // 2. In-Memory Processing & Metadata Extraction
   for (const row of rows) {
     if (!row.lang1 || !row.lang2 || !row.text1 || !row.text2) {
       continue;
     }
+
+    const meta1 = parseMetadata(row.text1);
+    const meta2 = parseMetadata(row.text2);
 
     let front = '';
     let back = '';
@@ -50,66 +78,105 @@ export default defineEventHandler(async (event) => {
     let backLanguage = '';
 
     if (row.lang1.toLowerCase() === 'english') {
-      front = row.text1;
-      back = row.text2;
+      front = meta1.cleanText;
+      back = meta2.cleanText;
       frontLanguage = 'en';
       backLanguage = mapLanguage(row.lang2);
     } else if (row.lang2.toLowerCase() === 'english') {
-      front = row.text2;
-      back = row.text1;
+      front = meta2.cleanText;
+      back = meta1.cleanText;
       frontLanguage = 'en';
       backLanguage = mapLanguage(row.lang1);
     } else {
-      front = row.text1;
-      back = row.text2;
+      front = meta1.cleanText;
+      back = meta2.cleanText;
       frontLanguage = mapLanguage(row.lang1);
       backLanguage = mapLanguage(row.lang2);
     }
 
+    if (!front || !back) {
+      continue;
+    }
+
     // Check if front and back text are identical (case-insensitive, trimmed)
     if (front.trim().toLowerCase() === back.trim().toLowerCase()) {
-      skippedCount++;
       skippedCards.push({ front, back });
       continue;
     }
 
-    // Check if non-deleted flashcard already exists for user
-    const existingFlashcard = await prisma.flashcard.findFirst({
-      where: {
-        ownerId: dbUser.id,
-        front: front,
-        back: back,
-        status: {
-          not: 'DELETED'
-        }
-      }
+    const key = `${front.trim().toLowerCase()}|${back.trim().toLowerCase()}`;
+
+    // Duplicate check against existing database cards and previously seen cards in payload
+    if (existingSet.has(key) || payloadSet.has(key)) {
+      skippedCards.push({ front, back });
+      continue;
+    }
+
+    payloadSet.add(key);
+
+    const pronunciation = meta1.pronunciation || meta2.pronunciation || null;
+    const memoryHook = meta1.memoryHook || meta2.memoryHook || null;
+    const rank = meta1.rank ?? meta2.rank ?? calculateOptimalRank(front);
+
+    const flashcardId = crypto.randomUUID();
+
+    cardsToCreate.push({
+      id: flashcardId,
+      ownerId: dbUser.id,
+      front,
+      back,
+      frontLanguage,
+      backLanguage,
+      pronunciation,
+      memoryHook,
+      status: 'LEARNING',
+      rank
     });
 
-    if (!existingFlashcard) {
-      await prisma.flashcard.create({
-        data: {
-          ownerId: dbUser.id,
-          front,
-          back,
-          frontLanguage,
-          backLanguage,
-          status: 'LEARNING',
-          rank: 2.5,
-          activities: {
-            create: {
-              userId: dbUser.id,
-              actionTaken: 'IMPORTED',
-              actionDetails: 'Imported from CSV'
-            }
-          }
-        }
-      });
-      importedCount++;
-    } else {
-      skippedCount++;
-      skippedCards.push({ front, back });
-    }
+    activitiesToCreate.push({
+      id: crypto.randomUUID(),
+      userId: dbUser.id,
+      flashcardId,
+      actionTaken: 'IMPORTED',
+      actionDetails: 'Imported from CSV'
+    });
   }
 
-  return { importedCount, skippedCount, skippedCards };
+  if (cardsToCreate.length > 0) {
+    // Check daily limit for non-admin (member) users
+    if (dbUser.role !== 'admin') {
+      const startOfToday = new Date()
+      startOfToday.setUTCHours(0, 0, 0, 0)
+
+      const todayCount = await prisma.flashcard.count({
+        where: {
+          ownerId: dbUser.id,
+          createdAt: { gte: startOfToday }
+        }
+      })
+
+      if (todayCount + cardsToCreate.length > 100) {
+        const remaining = Math.max(0, 100 - todayCount)
+        throw createError({
+          statusCode: 400,
+          statusMessage: `Daily import limit reached. Non-admin users are limited to 100 phrases per day. You have already imported ${todayCount} phrases today (${remaining} remaining).`
+        })
+      }
+    }
+
+    await prisma.$transaction(async (tx) => {
+      await tx.flashcard.createMany({
+        data: cardsToCreate
+      });
+      await tx.userFlashcardActivity.createMany({
+        data: activitiesToCreate
+      });
+    });
+  }
+
+  return {
+    importedCount: cardsToCreate.length,
+    skippedCount: skippedCards.length,
+    skippedCards
+  };
 });
