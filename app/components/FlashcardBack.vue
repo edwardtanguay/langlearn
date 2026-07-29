@@ -75,6 +75,8 @@ watch(() => props.currentCard.id, () => {
   showPronunciation.value = false
 })
 
+const stripAsterisks = (text: string) => text ? text.replace(/\*/g, '') : ''
+
 const getTextClass = (text: string) => {
   const len = text ? text.length : 0
   if (len < 30) {
@@ -102,8 +104,8 @@ const getTextClass = (text: string) => {
       <div v-if="!isEditing" key="display" class="absolute inset-0">
         <!-- Word (Centered in padded area) -->
         <div class="h-full w-full flex flex-col items-center justify-center px-6 relative z-0 -translate-y-[15px]">
-          <p :class="getTextClass(currentCard.back)">
-            {{ currentCard.back }}
+          <p :class="getTextClass(stripAsterisks(currentCard.back))">
+            {{ stripAsterisks(currentCard.back) }}
           </p>
           <!-- Pronunciation display below the word -->
           <p v-if="currentCard.pronunciation && isFlipped && !isEditing" 

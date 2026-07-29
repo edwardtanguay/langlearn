@@ -6,6 +6,7 @@ defineProps<{
     waitingCount: number
     totalCount?: number
     todayReviewedCount?: number
+    todayImportedCount?: number
   } | null
 }>()
 
@@ -49,7 +50,7 @@ defineEmits<{
 
     <!-- Centered Info Text -->
     <div v-if="stats" class="mt-3.5 text-xs text-gray-500 dark:text-gray-400 text-center font-medium">
-      🎯 {{ stats.todayReviewedCount ?? 0 }} {{ (stats.todayReviewedCount === 1 ? 'card' : 'cards') }} reviewed today <span class="text-gray-300 dark:text-gray-600 px-1.5">|</span> 📁 {{ (stats.totalCount ?? 0).toLocaleString() }} {{ (stats.totalCount === 1 ? 'card' : 'cards') }} total
+      Today: {{ stats.todayImportedCount ?? 0 }} {{ (stats.todayImportedCount === 1 ? 'card' : 'cards') }} imported, {{ stats.todayReviewedCount ?? 0 }} {{ (stats.todayReviewedCount === 1 ? 'card' : 'cards') }} reviewed, {{ (stats.totalCount ?? 0).toLocaleString() }} total
     </div>
   </div>
 </template>

@@ -61,12 +61,30 @@ const isLoading = ref(true)
 const searchQuery = ref('')
 const expandedCardIds = ref<Set<string>>(new Set())
 
+function stripAsterisks(text: string): string {
+  return text ? text.replace(/\*/g, '') : ''
+}
+
+function shuffle<T>(array: T[]): T[] {
+  const arr = [...array]
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j]!, arr[i]!]
+  }
+  return arr
+}
+
 const fetchCardsWithPronunciation = async () => {
   if (!loggedIn.value) return
   isLoading.value = true
   try {
     const data = await $fetch<Flashcard[]>('/api/flashcards?all=true')
-    cards.value = (data || []).filter(c => c.pronunciation && c.pronunciation.trim().length > 0)
+    const valid = (data || []).filter(c => 
+      c.pronunciation && 
+      c.pronunciation.trim().length > 0 &&
+      !c.tags?.some(t => t.tag.abbreviation === 'fix')
+    )
+    cards.value = shuffle(valid)
   } catch (err) {
     console.error('Failed to load cards for pronunciation:', err)
   } finally {
@@ -83,7 +101,7 @@ const filteredCards = computed(() => {
   const q = searchQuery.value.toLowerCase().trim()
   return cards.value.filter(c => 
     c.front.toLowerCase().includes(q) ||
-    c.back.toLowerCase().includes(q) ||
+    stripAsterisks(c.back).toLowerCase().includes(q) ||
     (c.pronunciation && c.pronunciation.toLowerCase().includes(q))
   )
 })
@@ -96,9 +114,32 @@ const toggleCard = (id: string) => {
   }
 }
 
+const handleFixCard = async (card: Flashcard, event: MouseEvent) => {
+  event.stopPropagation()
+  const originalCards = [...cards.value]
+  // Optimistically remove card
+  cards.value = cards.value.filter(c => c.id !== card.id)
+  expandedCardIds.value.delete(card.id)
+
+  try {
+    const existingTags = card.tags ? card.tags.map(t => t.tag.abbreviation) : []
+    if (!existingTags.includes('fix')) {
+      existingTags.push('fix')
+    }
+    await $fetch(`/api/flashcards/${card.id}/tags`, {
+      method: 'POST',
+      body: { tags: existingTags }
+    })
+  } catch (err) {
+    console.error('Failed to mark card with fix tag:', err)
+    cards.value = originalCards
+  }
+}
+
 const openTranslate = (card: Flashcard, event: MouseEvent) => {
   event.stopPropagation()
-  const url = `https://translate.google.com/?sl=${card.backLanguage || 'auto'}&tl=${card.frontLanguage || 'en'}&text=${encodeURIComponent(card.back)}&op=translate`
+  const cleanBack = stripAsterisks(card.back)
+  const url = `https://translate.google.com/?sl=${card.backLanguage || 'auto'}&tl=${card.frontLanguage || 'en'}&text=${encodeURIComponent(cleanBack)}&op=translate`
   window.open(url, '_blank')
 }
 </script>
@@ -167,7 +208,7 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
           </div>
         </div>
 
-        <!-- Line 2: Pop-in Back Text, Pronunciation & Google Translate link -->
+        <!-- Line 2: Pop-in Back Text, Pronunciation & Action Buttons -->
         <Transition name="fade-layout">
           <div 
             v-if="expandedCardIds.has(card.id)" 
@@ -182,7 +223,7 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
                   {{ card.backLanguage }}
                 </span>
                 <span class="font-medium text-gray-800 dark:text-gray-200">
-                  {{ card.back }}
+                  {{ stripAsterisks(card.back) }}
                 </span>
               </div>
 
@@ -195,14 +236,23 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
               </div>
             </div>
 
-            <!-- Google Translate button -->
-            <button 
-              @click="openTranslate(card, $event)"
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shrink-0 self-start sm:self-center cursor-pointer"
-            >
-              <SpeakerWaveIcon class="w-4 h-4 text-indigo-500" />
-              <span>Google Translate</span>
-            </button>
+            <!-- Action Buttons: Fix & Google Translate -->
+            <div class="flex items-center gap-2 shrink-0 self-start sm:self-center">
+              <button 
+                @click="handleFixCard(card, $event)"
+                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-700 dark:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 transition-colors cursor-pointer"
+                title="Add fix tag and remove card from pronunciation practice list"
+              >
+                <span>Fix</span>
+              </button>
+              <button 
+                @click="openTranslate(card, $event)"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+              >
+                <SpeakerWaveIcon class="w-4 h-4 text-indigo-500" />
+                <span>Google Translate</span>
+              </button>
+            </div>
           </div>
         </Transition>
       </div>

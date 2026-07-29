@@ -270,15 +270,34 @@ function toggleTag(tagAbbreviation: string) {
   debouncedSaveTags()
 }
 
+function stripAsterisks(text: string): string {
+  return text ? text.replace(/\*/g, '') : ''
+}
+
+function getHighlightedText(text: string): string {
+  if (!text) return ''
+  const match = text.match(/\*(.*?)\*/)
+  if (match && match[1] && match[1].trim()) {
+    return match[1].trim()
+  }
+  return stripAsterisks(text).trim()
+}
+
 function openAudio() {
   if (!currentCard.value) return
-  const url = `https://translate.google.com/?sl=${currentCard.value.backLanguage}&tl=${currentCard.value.frontLanguage}&text=${encodeURIComponent(currentCard.value.back)}&op=translate`
+  const cleanBack = stripAsterisks(currentCard.value.back)
+  const url = `https://translate.google.com/?sl=${currentCard.value.backLanguage}&tl=${currentCard.value.frontLanguage}&text=${encodeURIComponent(cleanBack)}&op=translate`
   window.open(url, '_blank')
 }
 
+const exampleTargetText = computed(() => {
+  if (!currentCard.value?.back) return ''
+  return getHighlightedText(currentCard.value.back)
+})
+
 const backWordCount = computed(() => {
-  if (!currentCard.value?.back) return 0
-  return currentCard.value.back.trim().split(/\s+/).filter(Boolean).length
+  if (!exampleTargetText.value) return 0
+  return exampleTargetText.value.split(/\s+/).filter(Boolean).length
 })
 
 const showExampleSentencesButton = computed(() => {
@@ -287,10 +306,10 @@ const showExampleSentencesButton = computed(() => {
 
 function openExampleSentences() {
   if (!currentCard.value) return
-  const backText = currentCard.value.back.trim()
+  const targetText = exampleTargetText.value
   const langCode = currentCard.value.backLanguage || currentCard.value.frontLanguage || 'fr'
   const langName = languageNames[langCode] ? languageNames[langCode].toLowerCase() : 'french'
-  const query = `create 3 ${langName} examples with "${backText}"`
+  const query = `create 3 ${langName} examples with "${targetText}"`
   const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
 }
@@ -709,7 +728,7 @@ onBeforeUnmount(() => {
                     @click.stop="openExampleSentences"
                     class="text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 dark:border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
                   >
-                    <span>3 examples with "{{ currentCard.back }}"</span>
+                    <span>3 examples with "{{ exampleTargetText }}"</span>
                     <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                   </button>
                 </div>

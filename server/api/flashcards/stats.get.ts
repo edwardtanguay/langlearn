@@ -56,11 +56,19 @@ export default defineEventHandler(async (event) => {
       }
     })
 
+    const todayImportedCount = await prisma.flashcard.count({
+      where: {
+        ownerId: dbUser.id,
+        createdAt: { gte: startOfDay }
+      }
+    })
+
     return {
       readyCount,
       waitingCount,
       totalCount,
-      todayReviewedCount
+      todayReviewedCount,
+      todayImportedCount
     }
   } catch (error) {
     console.error('Error fetching flashcard stats:', error)
