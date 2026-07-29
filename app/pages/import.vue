@@ -54,16 +54,27 @@ const handleMobileImport = async () => {
   mobileImportError.value = null
 
   try {
-    const res = await $fetch<{ id: string; userId: string; mobileImportText: string; whenImported: string }>('/api/import/mobile', {
+    await $fetch<{ id: string; userId: string; mobileImportText: string; whenImported: string }>('/api/import/mobile', {
       method: 'POST',
       body: { mobileImportText: mobileInputText.value }
     })
-    mobileImportResult.value = res
+    mobileInputText.value = ''
+    await fetchLatestMobileImport()
   } catch (err: any) {
     console.error('Failed mobile import:', err)
     mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to submit mobile import.'
   } finally {
     isSubmittingMobile.value = false
+  }
+}
+
+const fetchLatestMobileImport = async () => {
+  if (!loggedIn.value) return
+  try {
+    const data = await $fetch<{ id: string; userId: string; mobileImportText: string; whenImported: string } | null>('/api/import/mobile')
+    mobileImportResult.value = data
+  } catch (err) {
+    console.error('Failed to fetch latest mobile import', err)
   }
 }
 
@@ -81,6 +92,7 @@ const fetchUsage = async () => {
 
 onMounted(() => {
   fetchUsage()
+  fetchLatestMobileImport()
   checkMobile()
   window.addEventListener('resize', checkMobile)
 })

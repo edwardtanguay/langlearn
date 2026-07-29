@@ -24,3 +24,9 @@ Here are the colors defined for the languages:
 - Greek (`el`): `#ea580c` (orange-red)
 
 In general, don't use colors if they are not language related, e.g. don't make links blue, but rather white so that any color indicates a language.
+
+# forms
+
+- use optimitic updates for all API calls. e.g. add the new item to the list immediately
+- if something fails, revert the change
+- when clicking a button, disable it and show a loading spinner or something similar to indicate that the action is being processed. change it back when the API call returns
