@@ -184,6 +184,13 @@ exports.Prisma.FlashcardTagScalarFieldEnum = {
   tagId: 'tagId'
 };
 
+exports.Prisma.MobileImportScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  mobileImportText: 'mobileImportText',
+  whenImported: 'whenImported'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -202,7 +209,8 @@ exports.Prisma.ModelName = {
   Flashcard: 'Flashcard',
   UserFlashcardActivity: 'UserFlashcardActivity',
   Tag: 'Tag',
-  FlashcardTag: 'FlashcardTag'
+  FlashcardTag: 'FlashcardTag',
+  MobileImport: 'MobileImport'
 };
 
 /**

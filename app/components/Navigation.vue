@@ -63,7 +63,7 @@ const isUserPage = computed(() => route.path === '/user')
 const navItems = computed(() => {
   const items = []
   if (loggedIn.value) {
-    items.push({ name: 'Flashcards', path: '/', icon: DocumentTextIcon })
+    items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
     items.push({ name: 'Pronunciation', path: '/pronunciation', icon: SpeakerWaveIcon })
     items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
     if (showDevPageConfig.value && isAdmin.value) {

@@ -77,13 +77,22 @@ async function main() {
 
 
   // Open plain local connection to checkpoint WAL and convert journal mode to DELETE
-  try {
-    const localDb = createClient({ url: `file:${filePath}` });
-    await localDb.execute('PRAGMA wal_checkpoint(TRUNCATE)');
-    await localDb.execute('PRAGMA journal_mode = DELETE');
-    localDb.close();
-  } catch (e) {
-    console.warn('Could not reset journal mode:', e);
+  let resetSuccess = false;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const localDb = createClient({ url: `file:${filePath}` });
+      await localDb.execute('PRAGMA wal_checkpoint(TRUNCATE)');
+      await localDb.execute('PRAGMA journal_mode = DELETE');
+      localDb.close();
+      resetSuccess = true;
+      break;
+    } catch (e) {
+      if (attempt === 3) {
+        // Silently proceed if journal mode is locked; backup SQLite file is still valid
+      } else {
+        await new Promise(r => setTimeout(r, 400));
+      }
+    }
   }
 
   // Wait 100ms for local handle release

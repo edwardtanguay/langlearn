@@ -59,7 +59,7 @@ const languageColors: Record<string, string> = {
 const cards = ref<Flashcard[]>([])
 const isLoading = ref(true)
 const searchQuery = ref('')
-const expandedCardIds = ref<Set<string>>(new Set())
+const expandedCardId = ref<string | null>(null)
 
 function stripAsterisks(text: string): string {
   return text ? text.replace(/\*/g, '') : ''
@@ -107,33 +107,16 @@ const filteredCards = computed(() => {
 })
 
 const toggleCard = (id: string) => {
-  if (expandedCardIds.value.has(id)) {
-    expandedCardIds.value.delete(id)
+  if (expandedCardId.value === id) {
+    expandedCardId.value = null
   } else {
-    expandedCardIds.value.add(id)
+    expandedCardId.value = id
   }
 }
 
-const handleFixCard = async (card: Flashcard, event: MouseEvent) => {
+const openTestCard = (card: Flashcard, event: MouseEvent) => {
   event.stopPropagation()
-  const originalCards = [...cards.value]
-  // Optimistically remove card
-  cards.value = cards.value.filter(c => c.id !== card.id)
-  expandedCardIds.value.delete(card.id)
-
-  try {
-    const existingTags = card.tags ? card.tags.map(t => t.tag.abbreviation) : []
-    if (!existingTags.includes('fix')) {
-      existingTags.push('fix')
-    }
-    await $fetch(`/api/flashcards/${card.id}/tags`, {
-      method: 'POST',
-      body: { tags: existingTags }
-    })
-  } catch (err) {
-    console.error('Failed to mark card with fix tag:', err)
-    cards.value = originalCards
-  }
+  navigateTo(`/flashcard/${card.id}`)
 }
 
 const openTranslate = (card: Flashcard, event: MouseEvent) => {
@@ -203,47 +186,39 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
           </div>
 
           <div class="text-gray-400 shrink-0">
-            <ChevronUpIcon v-if="expandedCardIds.has(card.id)" class="w-5 h-5" />
+            <ChevronUpIcon v-if="expandedCardId === card.id" class="w-5 h-5" />
             <ChevronDownIcon v-else class="w-5 h-5" />
           </div>
         </div>
 
-        <!-- Line 2: Pop-in Back Text, Pronunciation & Action Buttons -->
+        <!-- Line 2: Pop-in Back Text (no icon), Pronunciation & Action Buttons -->
         <Transition name="fade-layout">
           <div 
-            v-if="expandedCardIds.has(card.id)" 
-            class="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm"
+            v-if="expandedCardId === card.id" 
+            class="mt-3 pt-3 px-3 py-2.5 bg-gray-50/90 dark:bg-gray-800/80 rounded-xl border-t border-gray-200 dark:border-gray-700/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm"
           >
             <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <span 
-                  class="px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider shrink-0"
-                  :style="{ backgroundColor: languageColors[card.backLanguage] || '#333388' }"
-                >
-                  {{ card.backLanguage }}
-                </span>
-                <span class="font-medium text-gray-800 dark:text-gray-200">
-                  {{ stripAsterisks(card.back) }}
-                </span>
+              <div class="font-medium text-gray-900 dark:text-white">
+                {{ stripAsterisks(card.back) }}
               </div>
 
               <!-- Pronunciation -->
               <div 
                 v-if="card.pronunciation" 
-                class="text-xs text-indigo-600 dark:text-indigo-400 font-mono pl-0.5"
+                class="text-xs text-indigo-600 dark:text-indigo-400 font-mono"
               >
                 [{{ card.pronunciation }}]
               </div>
             </div>
 
-            <!-- Action Buttons: Fix & Google Translate -->
+            <!-- Action Buttons: Test & Google Translate -->
             <div class="flex items-center gap-2 shrink-0 self-start sm:self-center">
               <button 
-                @click="handleFixCard(card, $event)"
-                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-700 dark:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 transition-colors cursor-pointer"
-                title="Add fix tag and remove card from pronunciation practice list"
+                @click="openTestCard(card, $event)"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors cursor-pointer border border-indigo-200 dark:border-indigo-800"
+                title="Test this card on Flashcard page"
               >
-                <span>Fix</span>
+                <span>Test</span>
               </button>
               <button 
                 @click="openTranslate(card, $event)"

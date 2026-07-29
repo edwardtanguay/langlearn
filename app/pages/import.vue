@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { parseMetadata } from '~~/server/utils/metadata-parser'
 import { calculateOptimalRank } from '~~/server/utils/rank-config'
 
@@ -36,6 +36,37 @@ const isImporting = ref(false)
 const importSummary = ref<{ importedCount: number; skippedCount: number; skippedCards: SkippedCard[] } | null>(null)
 const importError = ref<string | null>(null)
 
+const isMobile = ref(false)
+const mobileInputText = ref('')
+const isSubmittingMobile = ref(false)
+const mobileImportResult = ref<{ id: string; userId: string; mobileImportText: string; whenImported: string } | null>(null)
+const mobileImportError = ref<string | null>(null)
+
+const checkMobile = () => {
+  if (typeof window !== 'undefined') {
+    isMobile.value = window.innerWidth < 768
+  }
+}
+
+const handleMobileImport = async () => {
+  if (!mobileInputText.value.trim() || isSubmittingMobile.value) return
+  isSubmittingMobile.value = true
+  mobileImportError.value = null
+
+  try {
+    const res = await $fetch<{ id: string; userId: string; mobileImportText: string; whenImported: string }>('/api/import/mobile', {
+      method: 'POST',
+      body: { mobileImportText: mobileInputText.value }
+    })
+    mobileImportResult.value = res
+  } catch (err: any) {
+    console.error('Failed mobile import:', err)
+    mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to submit mobile import.'
+  } finally {
+    isSubmittingMobile.value = false
+  }
+}
+
 const usage = ref<{ todayCount: number; limit: number; isAdmin: boolean } | null>(null)
 
 const fetchUsage = async () => {
@@ -50,6 +81,12 @@ const fetchUsage = async () => {
 
 onMounted(() => {
   fetchUsage()
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile)
 })
 
 function parseCSVLine(line: string): string[] {
@@ -162,14 +199,45 @@ async function handleImport() {
   <div class="max-w-4xl mx-auto px-4 pt-0 pb-8 space-y-12 transition-all duration-300">
     <ClientOnly>
       <div v-if="loggedIn" class="mt-8 flex flex-col items-center w-full min-h-[340px] justify-start pt-2">
-        <!-- Mobile View Notice -->
-        <div class="block md:hidden w-full text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Desktop Only Feature</h2>
-          <p class="text-gray-500 dark:text-gray-400 mt-2">Import is only available in desktop mode.</p>
+        <!-- Mobile View (completely different page view) -->
+        <div v-if="isMobile" class="w-full max-w-lg space-y-6">
+          <div class="space-y-2">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mobile Import</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Paste text below to import into your account.</p>
+          </div>
+
+          <div class="space-y-4">
+            <textarea
+              v-model="mobileInputText"
+              rows="10"
+              placeholder="Paste text here..."
+              class="w-full p-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-2xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
+            ></textarea>
+
+            <button
+              @click="handleMobileImport"
+              :disabled="!mobileInputText.trim() || isSubmittingMobile"
+              class="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span v-if="isSubmittingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>Import</span>
+            </button>
+
+            <div v-if="mobileImportError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
+              {{ mobileImportError }}
+            </div>
+
+            <div v-if="mobileImportResult" class="space-y-2 pt-4 border-t border-gray-200 dark:border-gray-800">
+              <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Imported Result ({{ mobileImportResult.whenImported }})
+              </div>
+              <pre class="w-full p-4 bg-gray-100 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 rounded-2xl text-sm font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap overflow-x-auto">{{ mobileImportResult.mobileImportText }}</pre>
+            </div>
+          </div>
         </div>
 
-        <!-- Desktop View Import Container -->
-        <div class="hidden md:block w-full max-w-4xl space-y-6">
+        <!-- Desktop View Container -->
+        <div v-else class="w-full max-w-4xl space-y-6">
           <div class="flex justify-between items-start">
             <div>
               <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Import Flashcards from Google Translate</h1>

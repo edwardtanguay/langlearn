@@ -48,6 +48,11 @@ export type Tag = $Result.DefaultSelection<Prisma.$TagPayload>
  * 
  */
 export type FlashcardTag = $Result.DefaultSelection<Prisma.$FlashcardTagPayload>
+/**
+ * Model MobileImport
+ * 
+ */
+export type MobileImport = $Result.DefaultSelection<Prisma.$MobileImportPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -239,6 +244,16 @@ export class PrismaClient<
     * ```
     */
   get flashcardTag(): Prisma.FlashcardTagDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mobileImport`: Exposes CRUD operations for the **MobileImport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MobileImports
+    * const mobileImports = await prisma.mobileImport.findMany()
+    * ```
+    */
+  get mobileImport(): Prisma.MobileImportDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -679,7 +694,8 @@ export namespace Prisma {
     Flashcard: 'Flashcard',
     UserFlashcardActivity: 'UserFlashcardActivity',
     Tag: 'Tag',
-    FlashcardTag: 'FlashcardTag'
+    FlashcardTag: 'FlashcardTag',
+    MobileImport: 'MobileImport'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -695,7 +711,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "version" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag"
+      modelProps: "user" | "version" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1217,6 +1233,80 @@ export namespace Prisma {
           }
         }
       }
+      MobileImport: {
+        payload: Prisma.$MobileImportPayload<ExtArgs>
+        fields: Prisma.MobileImportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MobileImportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MobileImportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          findFirst: {
+            args: Prisma.MobileImportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MobileImportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          findMany: {
+            args: Prisma.MobileImportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>[]
+          }
+          create: {
+            args: Prisma.MobileImportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          createMany: {
+            args: Prisma.MobileImportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MobileImportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>[]
+          }
+          delete: {
+            args: Prisma.MobileImportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          update: {
+            args: Prisma.MobileImportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          deleteMany: {
+            args: Prisma.MobileImportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MobileImportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MobileImportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>[]
+          }
+          upsert: {
+            args: Prisma.MobileImportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MobileImportPayload>
+          }
+          aggregate: {
+            args: Prisma.MobileImportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMobileImport>
+          }
+          groupBy: {
+            args: Prisma.MobileImportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MobileImportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MobileImportCountArgs<ExtArgs>
+            result: $Utils.Optional<MobileImportCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1332,6 +1422,7 @@ export namespace Prisma {
     userFlashcardActivity?: UserFlashcardActivityOmit
     tag?: TagOmit
     flashcardTag?: FlashcardTagOmit
+    mobileImport?: MobileImportOmit
   }
 
   /* Types for Logging */
@@ -1415,12 +1506,14 @@ export namespace Prisma {
     flashcards: number
     activities: number
     versionItems: number
+    mobileImports: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | UserCountOutputTypeCountFlashcardsArgs
     activities?: boolean | UserCountOutputTypeCountActivitiesArgs
     versionItems?: boolean | UserCountOutputTypeCountVersionItemsArgs
+    mobileImports?: boolean | UserCountOutputTypeCountMobileImportsArgs
   }
 
   // Custom InputTypes
@@ -1453,6 +1546,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountVersionItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VersionItemWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMobileImportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileImportWhereInput
   }
 
 
@@ -1780,6 +1880,7 @@ export namespace Prisma {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
+    mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1815,6 +1916,7 @@ export namespace Prisma {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
+    mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1826,6 +1928,7 @@ export namespace Prisma {
       flashcards: Prisma.$FlashcardPayload<ExtArgs>[]
       activities: Prisma.$UserFlashcardActivityPayload<ExtArgs>[]
       versionItems: Prisma.$VersionItemPayload<ExtArgs>[]
+      mobileImports: Prisma.$MobileImportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2231,6 +2334,7 @@ export namespace Prisma {
     flashcards<T extends User$flashcardsArgs<ExtArgs> = {}>(args?: Subset<T, User$flashcardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activities<T extends User$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     versionItems<T extends User$versionItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$versionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    mobileImports<T extends User$mobileImportsArgs<ExtArgs> = {}>(args?: Subset<T, User$mobileImportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2726,6 +2830,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VersionItemScalarFieldEnum | VersionItemScalarFieldEnum[]
+  }
+
+  /**
+   * User.mobileImports
+   */
+  export type User$mobileImportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    where?: MobileImportWhereInput
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    cursor?: MobileImportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
   }
 
   /**
@@ -9511,6 +9639,1054 @@ export namespace Prisma {
 
 
   /**
+   * Model MobileImport
+   */
+
+  export type AggregateMobileImport = {
+    _count: MobileImportCountAggregateOutputType | null
+    _min: MobileImportMinAggregateOutputType | null
+    _max: MobileImportMaxAggregateOutputType | null
+  }
+
+  export type MobileImportMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    mobileImportText: string | null
+    whenImported: Date | null
+  }
+
+  export type MobileImportMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    mobileImportText: string | null
+    whenImported: Date | null
+  }
+
+  export type MobileImportCountAggregateOutputType = {
+    id: number
+    userId: number
+    mobileImportText: number
+    whenImported: number
+    _all: number
+  }
+
+
+  export type MobileImportMinAggregateInputType = {
+    id?: true
+    userId?: true
+    mobileImportText?: true
+    whenImported?: true
+  }
+
+  export type MobileImportMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    mobileImportText?: true
+    whenImported?: true
+  }
+
+  export type MobileImportCountAggregateInputType = {
+    id?: true
+    userId?: true
+    mobileImportText?: true
+    whenImported?: true
+    _all?: true
+  }
+
+  export type MobileImportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MobileImport to aggregate.
+     */
+    where?: MobileImportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileImports to fetch.
+     */
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MobileImportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileImports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileImports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MobileImports
+    **/
+    _count?: true | MobileImportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MobileImportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MobileImportMaxAggregateInputType
+  }
+
+  export type GetMobileImportAggregateType<T extends MobileImportAggregateArgs> = {
+        [P in keyof T & keyof AggregateMobileImport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMobileImport[P]>
+      : GetScalarType<T[P], AggregateMobileImport[P]>
+  }
+
+
+
+
+  export type MobileImportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MobileImportWhereInput
+    orderBy?: MobileImportOrderByWithAggregationInput | MobileImportOrderByWithAggregationInput[]
+    by: MobileImportScalarFieldEnum[] | MobileImportScalarFieldEnum
+    having?: MobileImportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MobileImportCountAggregateInputType | true
+    _min?: MobileImportMinAggregateInputType
+    _max?: MobileImportMaxAggregateInputType
+  }
+
+  export type MobileImportGroupByOutputType = {
+    id: string
+    userId: string
+    mobileImportText: string
+    whenImported: Date
+    _count: MobileImportCountAggregateOutputType | null
+    _min: MobileImportMinAggregateOutputType | null
+    _max: MobileImportMaxAggregateOutputType | null
+  }
+
+  type GetMobileImportGroupByPayload<T extends MobileImportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MobileImportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MobileImportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MobileImportGroupByOutputType[P]>
+            : GetScalarType<T[P], MobileImportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MobileImportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    mobileImportText?: boolean
+    whenImported?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileImport"]>
+
+  export type MobileImportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    mobileImportText?: boolean
+    whenImported?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileImport"]>
+
+  export type MobileImportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    mobileImportText?: boolean
+    whenImported?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mobileImport"]>
+
+  export type MobileImportSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    mobileImportText?: boolean
+    whenImported?: boolean
+  }
+
+  export type MobileImportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "mobileImportText" | "whenImported", ExtArgs["result"]["mobileImport"]>
+  export type MobileImportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MobileImportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MobileImportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $MobileImportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MobileImport"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      mobileImportText: string
+      whenImported: Date
+    }, ExtArgs["result"]["mobileImport"]>
+    composites: {}
+  }
+
+  type MobileImportGetPayload<S extends boolean | null | undefined | MobileImportDefaultArgs> = $Result.GetResult<Prisma.$MobileImportPayload, S>
+
+  type MobileImportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MobileImportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MobileImportCountAggregateInputType | true
+    }
+
+  export interface MobileImportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MobileImport'], meta: { name: 'MobileImport' } }
+    /**
+     * Find zero or one MobileImport that matches the filter.
+     * @param {MobileImportFindUniqueArgs} args - Arguments to find a MobileImport
+     * @example
+     * // Get one MobileImport
+     * const mobileImport = await prisma.mobileImport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MobileImportFindUniqueArgs>(args: SelectSubset<T, MobileImportFindUniqueArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MobileImport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MobileImportFindUniqueOrThrowArgs} args - Arguments to find a MobileImport
+     * @example
+     * // Get one MobileImport
+     * const mobileImport = await prisma.mobileImport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MobileImportFindUniqueOrThrowArgs>(args: SelectSubset<T, MobileImportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MobileImport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportFindFirstArgs} args - Arguments to find a MobileImport
+     * @example
+     * // Get one MobileImport
+     * const mobileImport = await prisma.mobileImport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MobileImportFindFirstArgs>(args?: SelectSubset<T, MobileImportFindFirstArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MobileImport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportFindFirstOrThrowArgs} args - Arguments to find a MobileImport
+     * @example
+     * // Get one MobileImport
+     * const mobileImport = await prisma.mobileImport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MobileImportFindFirstOrThrowArgs>(args?: SelectSubset<T, MobileImportFindFirstOrThrowArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MobileImports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MobileImports
+     * const mobileImports = await prisma.mobileImport.findMany()
+     * 
+     * // Get first 10 MobileImports
+     * const mobileImports = await prisma.mobileImport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mobileImportWithIdOnly = await prisma.mobileImport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MobileImportFindManyArgs>(args?: SelectSubset<T, MobileImportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MobileImport.
+     * @param {MobileImportCreateArgs} args - Arguments to create a MobileImport.
+     * @example
+     * // Create one MobileImport
+     * const MobileImport = await prisma.mobileImport.create({
+     *   data: {
+     *     // ... data to create a MobileImport
+     *   }
+     * })
+     * 
+     */
+    create<T extends MobileImportCreateArgs>(args: SelectSubset<T, MobileImportCreateArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MobileImports.
+     * @param {MobileImportCreateManyArgs} args - Arguments to create many MobileImports.
+     * @example
+     * // Create many MobileImports
+     * const mobileImport = await prisma.mobileImport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MobileImportCreateManyArgs>(args?: SelectSubset<T, MobileImportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MobileImports and returns the data saved in the database.
+     * @param {MobileImportCreateManyAndReturnArgs} args - Arguments to create many MobileImports.
+     * @example
+     * // Create many MobileImports
+     * const mobileImport = await prisma.mobileImport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MobileImports and only return the `id`
+     * const mobileImportWithIdOnly = await prisma.mobileImport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MobileImportCreateManyAndReturnArgs>(args?: SelectSubset<T, MobileImportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MobileImport.
+     * @param {MobileImportDeleteArgs} args - Arguments to delete one MobileImport.
+     * @example
+     * // Delete one MobileImport
+     * const MobileImport = await prisma.mobileImport.delete({
+     *   where: {
+     *     // ... filter to delete one MobileImport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MobileImportDeleteArgs>(args: SelectSubset<T, MobileImportDeleteArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MobileImport.
+     * @param {MobileImportUpdateArgs} args - Arguments to update one MobileImport.
+     * @example
+     * // Update one MobileImport
+     * const mobileImport = await prisma.mobileImport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MobileImportUpdateArgs>(args: SelectSubset<T, MobileImportUpdateArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MobileImports.
+     * @param {MobileImportDeleteManyArgs} args - Arguments to filter MobileImports to delete.
+     * @example
+     * // Delete a few MobileImports
+     * const { count } = await prisma.mobileImport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MobileImportDeleteManyArgs>(args?: SelectSubset<T, MobileImportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MobileImports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MobileImports
+     * const mobileImport = await prisma.mobileImport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MobileImportUpdateManyArgs>(args: SelectSubset<T, MobileImportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MobileImports and returns the data updated in the database.
+     * @param {MobileImportUpdateManyAndReturnArgs} args - Arguments to update many MobileImports.
+     * @example
+     * // Update many MobileImports
+     * const mobileImport = await prisma.mobileImport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MobileImports and only return the `id`
+     * const mobileImportWithIdOnly = await prisma.mobileImport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MobileImportUpdateManyAndReturnArgs>(args: SelectSubset<T, MobileImportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MobileImport.
+     * @param {MobileImportUpsertArgs} args - Arguments to update or create a MobileImport.
+     * @example
+     * // Update or create a MobileImport
+     * const mobileImport = await prisma.mobileImport.upsert({
+     *   create: {
+     *     // ... data to create a MobileImport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MobileImport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MobileImportUpsertArgs>(args: SelectSubset<T, MobileImportUpsertArgs<ExtArgs>>): Prisma__MobileImportClient<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MobileImports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportCountArgs} args - Arguments to filter MobileImports to count.
+     * @example
+     * // Count the number of MobileImports
+     * const count = await prisma.mobileImport.count({
+     *   where: {
+     *     // ... the filter for the MobileImports we want to count
+     *   }
+     * })
+    **/
+    count<T extends MobileImportCountArgs>(
+      args?: Subset<T, MobileImportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MobileImportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MobileImport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MobileImportAggregateArgs>(args: Subset<T, MobileImportAggregateArgs>): Prisma.PrismaPromise<GetMobileImportAggregateType<T>>
+
+    /**
+     * Group by MobileImport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MobileImportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MobileImportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MobileImportGroupByArgs['orderBy'] }
+        : { orderBy?: MobileImportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MobileImportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMobileImportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MobileImport model
+   */
+  readonly fields: MobileImportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MobileImport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MobileImportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MobileImport model
+   */
+  interface MobileImportFieldRefs {
+    readonly id: FieldRef<"MobileImport", 'String'>
+    readonly userId: FieldRef<"MobileImport", 'String'>
+    readonly mobileImportText: FieldRef<"MobileImport", 'String'>
+    readonly whenImported: FieldRef<"MobileImport", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MobileImport findUnique
+   */
+  export type MobileImportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImport to fetch.
+     */
+    where: MobileImportWhereUniqueInput
+  }
+
+  /**
+   * MobileImport findUniqueOrThrow
+   */
+  export type MobileImportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImport to fetch.
+     */
+    where: MobileImportWhereUniqueInput
+  }
+
+  /**
+   * MobileImport findFirst
+   */
+  export type MobileImportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImport to fetch.
+     */
+    where?: MobileImportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileImports to fetch.
+     */
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MobileImports.
+     */
+    cursor?: MobileImportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileImports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileImports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileImports.
+     */
+    distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
+  }
+
+  /**
+   * MobileImport findFirstOrThrow
+   */
+  export type MobileImportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImport to fetch.
+     */
+    where?: MobileImportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileImports to fetch.
+     */
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MobileImports.
+     */
+    cursor?: MobileImportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileImports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileImports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileImports.
+     */
+    distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
+  }
+
+  /**
+   * MobileImport findMany
+   */
+  export type MobileImportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter, which MobileImports to fetch.
+     */
+    where?: MobileImportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MobileImports to fetch.
+     */
+    orderBy?: MobileImportOrderByWithRelationInput | MobileImportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MobileImports.
+     */
+    cursor?: MobileImportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MobileImports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MobileImports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MobileImports.
+     */
+    distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
+  }
+
+  /**
+   * MobileImport create
+   */
+  export type MobileImportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MobileImport.
+     */
+    data: XOR<MobileImportCreateInput, MobileImportUncheckedCreateInput>
+  }
+
+  /**
+   * MobileImport createMany
+   */
+  export type MobileImportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MobileImports.
+     */
+    data: MobileImportCreateManyInput | MobileImportCreateManyInput[]
+  }
+
+  /**
+   * MobileImport createManyAndReturn
+   */
+  export type MobileImportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * The data used to create many MobileImports.
+     */
+    data: MobileImportCreateManyInput | MobileImportCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MobileImport update
+   */
+  export type MobileImportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MobileImport.
+     */
+    data: XOR<MobileImportUpdateInput, MobileImportUncheckedUpdateInput>
+    /**
+     * Choose, which MobileImport to update.
+     */
+    where: MobileImportWhereUniqueInput
+  }
+
+  /**
+   * MobileImport updateMany
+   */
+  export type MobileImportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MobileImports.
+     */
+    data: XOR<MobileImportUpdateManyMutationInput, MobileImportUncheckedUpdateManyInput>
+    /**
+     * Filter which MobileImports to update
+     */
+    where?: MobileImportWhereInput
+    /**
+     * Limit how many MobileImports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MobileImport updateManyAndReturn
+   */
+  export type MobileImportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * The data used to update MobileImports.
+     */
+    data: XOR<MobileImportUpdateManyMutationInput, MobileImportUncheckedUpdateManyInput>
+    /**
+     * Filter which MobileImports to update
+     */
+    where?: MobileImportWhereInput
+    /**
+     * Limit how many MobileImports to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MobileImport upsert
+   */
+  export type MobileImportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MobileImport to update in case it exists.
+     */
+    where: MobileImportWhereUniqueInput
+    /**
+     * In case the MobileImport found by the `where` argument doesn't exist, create a new MobileImport with this data.
+     */
+    create: XOR<MobileImportCreateInput, MobileImportUncheckedCreateInput>
+    /**
+     * In case the MobileImport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MobileImportUpdateInput, MobileImportUncheckedUpdateInput>
+  }
+
+  /**
+   * MobileImport delete
+   */
+  export type MobileImportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+    /**
+     * Filter which MobileImport to delete.
+     */
+    where: MobileImportWhereUniqueInput
+  }
+
+  /**
+   * MobileImport deleteMany
+   */
+  export type MobileImportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MobileImports to delete
+     */
+    where?: MobileImportWhereInput
+    /**
+     * Limit how many MobileImports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MobileImport without action
+   */
+  export type MobileImportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MobileImport
+     */
+    select?: MobileImportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MobileImport
+     */
+    omit?: MobileImportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MobileImportInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9609,6 +10785,16 @@ export namespace Prisma {
   export type FlashcardTagScalarFieldEnum = (typeof FlashcardTagScalarFieldEnum)[keyof typeof FlashcardTagScalarFieldEnum]
 
 
+  export const MobileImportScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    mobileImportText: 'mobileImportText',
+    whenImported: 'whenImported'
+  };
+
+  export type MobileImportScalarFieldEnum = (typeof MobileImportScalarFieldEnum)[keyof typeof MobileImportScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -9674,6 +10860,7 @@ export namespace Prisma {
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
+    mobileImports?: MobileImportListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -9686,6 +10873,7 @@ export namespace Prisma {
     flashcards?: FlashcardOrderByRelationAggregateInput
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
     versionItems?: VersionItemOrderByRelationAggregateInput
+    mobileImports?: MobileImportOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -9701,6 +10889,7 @@ export namespace Prisma {
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
+    mobileImports?: MobileImportListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -10135,6 +11324,56 @@ export namespace Prisma {
     tagId?: StringWithAggregatesFilter<"FlashcardTag"> | string
   }
 
+  export type MobileImportWhereInput = {
+    AND?: MobileImportWhereInput | MobileImportWhereInput[]
+    OR?: MobileImportWhereInput[]
+    NOT?: MobileImportWhereInput | MobileImportWhereInput[]
+    id?: StringFilter<"MobileImport"> | string
+    userId?: StringFilter<"MobileImport"> | string
+    mobileImportText?: StringFilter<"MobileImport"> | string
+    whenImported?: DateTimeFilter<"MobileImport"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type MobileImportOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type MobileImportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MobileImportWhereInput | MobileImportWhereInput[]
+    OR?: MobileImportWhereInput[]
+    NOT?: MobileImportWhereInput | MobileImportWhereInput[]
+    userId?: StringFilter<"MobileImport"> | string
+    mobileImportText?: StringFilter<"MobileImport"> | string
+    whenImported?: DateTimeFilter<"MobileImport"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type MobileImportOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+    _count?: MobileImportCountOrderByAggregateInput
+    _max?: MobileImportMaxOrderByAggregateInput
+    _min?: MobileImportMinOrderByAggregateInput
+  }
+
+  export type MobileImportScalarWhereWithAggregatesInput = {
+    AND?: MobileImportScalarWhereWithAggregatesInput | MobileImportScalarWhereWithAggregatesInput[]
+    OR?: MobileImportScalarWhereWithAggregatesInput[]
+    NOT?: MobileImportScalarWhereWithAggregatesInput | MobileImportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MobileImport"> | string
+    userId?: StringWithAggregatesFilter<"MobileImport"> | string
+    mobileImportText?: StringWithAggregatesFilter<"MobileImport"> | string
+    whenImported?: DateTimeWithAggregatesFilter<"MobileImport"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
@@ -10145,6 +11384,7 @@ export namespace Prisma {
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10157,6 +11397,7 @@ export namespace Prisma {
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -10169,6 +11410,7 @@ export namespace Prisma {
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10181,6 +11423,7 @@ export namespace Prisma {
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10628,6 +11871,54 @@ export namespace Prisma {
     tagId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type MobileImportCreateInput = {
+    id?: string
+    mobileImportText: string
+    whenImported?: Date | string
+    user: UserCreateNestedOneWithoutMobileImportsInput
+  }
+
+  export type MobileImportUncheckedCreateInput = {
+    id?: string
+    userId: string
+    mobileImportText: string
+    whenImported?: Date | string
+  }
+
+  export type MobileImportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMobileImportsNestedInput
+  }
+
+  export type MobileImportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportCreateManyInput = {
+    id?: string
+    userId: string
+    mobileImportText: string
+    whenImported?: Date | string
+  }
+
+  export type MobileImportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -10671,6 +11962,12 @@ export namespace Prisma {
     none?: VersionItemWhereInput
   }
 
+  export type MobileImportListRelationFilter = {
+    every?: MobileImportWhereInput
+    some?: MobileImportWhereInput
+    none?: MobileImportWhereInput
+  }
+
   export type FlashcardOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -10680,6 +11977,10 @@ export namespace Prisma {
   }
 
   export type VersionItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MobileImportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11099,6 +12400,27 @@ export namespace Prisma {
     tagId?: SortOrder
   }
 
+  export type MobileImportCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+  }
+
+  export type MobileImportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+  }
+
+  export type MobileImportMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    mobileImportText?: SortOrder
+    whenImported?: SortOrder
+  }
+
   export type FlashcardCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -11120,6 +12442,13 @@ export namespace Prisma {
     connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
   }
 
+  export type MobileImportCreateNestedManyWithoutUserInput = {
+    create?: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput> | MobileImportCreateWithoutUserInput[] | MobileImportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
+    createMany?: MobileImportCreateManyUserInputEnvelope
+    connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+  }
+
   export type FlashcardUncheckedCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -11139,6 +12468,13 @@ export namespace Prisma {
     connectOrCreate?: VersionItemCreateOrConnectWithoutStartedByUserInput | VersionItemCreateOrConnectWithoutStartedByUserInput[]
     createMany?: VersionItemCreateManyStartedByUserInputEnvelope
     connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+  }
+
+  export type MobileImportUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput> | MobileImportCreateWithoutUserInput[] | MobileImportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
+    createMany?: MobileImportCreateManyUserInputEnvelope
+    connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -11195,6 +12531,20 @@ export namespace Prisma {
     deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
   }
 
+  export type MobileImportUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput> | MobileImportCreateWithoutUserInput[] | MobileImportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
+    upsert?: MobileImportUpsertWithWhereUniqueWithoutUserInput | MobileImportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MobileImportCreateManyUserInputEnvelope
+    set?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    disconnect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    delete?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    update?: MobileImportUpdateWithWhereUniqueWithoutUserInput | MobileImportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MobileImportUpdateManyWithWhereWithoutUserInput | MobileImportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
+  }
+
   export type FlashcardUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -11235,6 +12585,20 @@ export namespace Prisma {
     update?: VersionItemUpdateWithWhereUniqueWithoutStartedByUserInput | VersionItemUpdateWithWhereUniqueWithoutStartedByUserInput[]
     updateMany?: VersionItemUpdateManyWithWhereWithoutStartedByUserInput | VersionItemUpdateManyWithWhereWithoutStartedByUserInput[]
     deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+  }
+
+  export type MobileImportUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput> | MobileImportCreateWithoutUserInput[] | MobileImportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
+    upsert?: MobileImportUpsertWithWhereUniqueWithoutUserInput | MobileImportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MobileImportCreateManyUserInputEnvelope
+    set?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    disconnect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    delete?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+    update?: MobileImportUpdateWithWhereUniqueWithoutUserInput | MobileImportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MobileImportUpdateManyWithWhereWithoutUserInput | MobileImportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
   }
 
   export type VersionItemCreateNestedManyWithoutVersionInput = {
@@ -11585,6 +12949,20 @@ export namespace Prisma {
     update?: XOR<XOR<TagUpdateToOneWithWhereWithoutFlashcardsInput, TagUpdateWithoutFlashcardsInput>, TagUncheckedUpdateWithoutFlashcardsInput>
   }
 
+  export type UserCreateNestedOneWithoutMobileImportsInput = {
+    create?: XOR<UserCreateWithoutMobileImportsInput, UserUncheckedCreateWithoutMobileImportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMobileImportsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutMobileImportsNestedInput = {
+    create?: XOR<UserCreateWithoutMobileImportsInput, UserUncheckedCreateWithoutMobileImportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMobileImportsInput
+    upsert?: UserUpsertWithoutMobileImportsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMobileImportsInput, UserUpdateWithoutMobileImportsInput>, UserUncheckedUpdateWithoutMobileImportsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -11861,6 +13239,27 @@ export namespace Prisma {
     data: VersionItemCreateManyStartedByUserInput | VersionItemCreateManyStartedByUserInput[]
   }
 
+  export type MobileImportCreateWithoutUserInput = {
+    id?: string
+    mobileImportText: string
+    whenImported?: Date | string
+  }
+
+  export type MobileImportUncheckedCreateWithoutUserInput = {
+    id?: string
+    mobileImportText: string
+    whenImported?: Date | string
+  }
+
+  export type MobileImportCreateOrConnectWithoutUserInput = {
+    where: MobileImportWhereUniqueInput
+    create: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput>
+  }
+
+  export type MobileImportCreateManyUserInputEnvelope = {
+    data: MobileImportCreateManyUserInput | MobileImportCreateManyUserInput[]
+  }
+
   export type FlashcardUpsertWithWhereUniqueWithoutOwnerInput = {
     where: FlashcardWhereUniqueInput
     update: XOR<FlashcardUpdateWithoutOwnerInput, FlashcardUncheckedUpdateWithoutOwnerInput>
@@ -11954,6 +13353,32 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
   }
 
+  export type MobileImportUpsertWithWhereUniqueWithoutUserInput = {
+    where: MobileImportWhereUniqueInput
+    update: XOR<MobileImportUpdateWithoutUserInput, MobileImportUncheckedUpdateWithoutUserInput>
+    create: XOR<MobileImportCreateWithoutUserInput, MobileImportUncheckedCreateWithoutUserInput>
+  }
+
+  export type MobileImportUpdateWithWhereUniqueWithoutUserInput = {
+    where: MobileImportWhereUniqueInput
+    data: XOR<MobileImportUpdateWithoutUserInput, MobileImportUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MobileImportUpdateManyWithWhereWithoutUserInput = {
+    where: MobileImportScalarWhereInput
+    data: XOR<MobileImportUpdateManyMutationInput, MobileImportUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type MobileImportScalarWhereInput = {
+    AND?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
+    OR?: MobileImportScalarWhereInput[]
+    NOT?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
+    id?: StringFilter<"MobileImport"> | string
+    userId?: StringFilter<"MobileImport"> | string
+    mobileImportText?: StringFilter<"MobileImport"> | string
+    whenImported?: DateTimeFilter<"MobileImport"> | Date | string
+  }
+
   export type VersionItemCreateWithoutVersionInput = {
     id?: string
     type?: string
@@ -12033,6 +13458,7 @@ export namespace Prisma {
     minutesToTestAgain?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVersionItemsInput = {
@@ -12044,6 +13470,7 @@ export namespace Prisma {
     minutesToTestAgain?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVersionItemsInput = {
@@ -12102,6 +13529,7 @@ export namespace Prisma {
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVersionItemsInput = {
@@ -12113,6 +13541,7 @@ export namespace Prisma {
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutFlashcardsInput = {
@@ -12124,6 +13553,7 @@ export namespace Prisma {
     minutesToTestAgain?: number
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFlashcardsInput = {
@@ -12135,6 +13565,7 @@ export namespace Prisma {
     minutesToTestAgain?: number
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFlashcardsInput = {
@@ -12292,6 +13723,7 @@ export namespace Prisma {
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFlashcardsInput = {
@@ -12303,6 +13735,7 @@ export namespace Prisma {
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutCopiesInput = {
@@ -12418,6 +13851,7 @@ export namespace Prisma {
     minutesToTestAgain?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -12429,6 +13863,7 @@ export namespace Prisma {
     minutesToTestAgain?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -12497,6 +13932,7 @@ export namespace Prisma {
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -12508,6 +13944,7 @@ export namespace Prisma {
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutActivitiesInput = {
@@ -12720,6 +14157,70 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type UserCreateWithoutMobileImportsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+  }
+
+  export type UserUncheckedCreateWithoutMobileImportsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+  }
+
+  export type UserCreateOrConnectWithoutMobileImportsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMobileImportsInput, UserUncheckedCreateWithoutMobileImportsInput>
+  }
+
+  export type UserUpsertWithoutMobileImportsInput = {
+    update: XOR<UserUpdateWithoutMobileImportsInput, UserUncheckedUpdateWithoutMobileImportsInput>
+    create: XOR<UserCreateWithoutMobileImportsInput, UserUncheckedCreateWithoutMobileImportsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMobileImportsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMobileImportsInput, UserUncheckedUpdateWithoutMobileImportsInput>
+  }
+
+  export type UserUpdateWithoutMobileImportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMobileImportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+  }
+
   export type FlashcardCreateManyOwnerInput = {
     id?: string
     front: string
@@ -12751,6 +14252,12 @@ export namespace Prisma {
     orderWithinVersion?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type MobileImportCreateManyUserInput = {
+    id?: string
+    mobileImportText: string
+    whenImported?: Date | string
   }
 
   export type FlashcardUpdateWithoutOwnerInput = {
@@ -12856,6 +14363,24 @@ export namespace Prisma {
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MobileImportUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    mobileImportText?: StringFieldUpdateOperationsInput | string
+    whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VersionItemCreateManyVersionInput = {

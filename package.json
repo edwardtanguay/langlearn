@@ -9,11 +9,13 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "prisma:reset": "tsx prisma/seed.ts",
     "gh": "git log --pretty=format:\"%ad | %h | %s\" --date=format:\"%Y-%m-%d %H:%M:%S\"",
     "backup": "bash -c 'git archive --format=zip HEAD -o \"../BACKUP/langlearn-$(date +%F-%H-%M-%S).zip\"'",
     "db-backup": "tsx scripts/db-backup.ts",
-    "db-restore": "tsx scripts/db-restore.ts"
+    "db-restore": "tsx scripts/db-restore.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "tsx scripts/db-push-turso.ts",
+    "prisma:migrate": "tsx scripts/db-push-turso.ts"
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",

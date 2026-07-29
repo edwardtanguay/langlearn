@@ -18,6 +18,7 @@ model User {
   flashcards         Flashcard[]
   activities         UserFlashcardActivity[]
   versionItems       VersionItem[]           @relation("UserVersionItems")
+  mobileImports      MobileImport[]
 }
 
 model Version {
@@ -96,4 +97,12 @@ model FlashcardTag {
   tag         Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@unique([flashcardId, tagId])
+}
+
+model MobileImport {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mobileImportText String
+  whenImported     DateTime @default(now())
 }

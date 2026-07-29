@@ -109,8 +109,6 @@ const handleLogout = () => {
 
         <!-- Danger Zone & Actions -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
-          <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Actions</h2>
-
           <!-- Logout Button -->
           <button
             @click="handleLogout"
