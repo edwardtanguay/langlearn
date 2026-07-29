@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon } from '@heroicons/vue/24/outline'
+import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon } from '@heroicons/vue/24/outline'
 
 const mobileMenuOpen = ref(false)
 const navRef = ref<HTMLElement | null>(null)
@@ -64,6 +64,7 @@ const navItems = computed(() => {
   const items = []
   if (loggedIn.value) {
     items.push({ name: 'Flashcards', path: '/', icon: DocumentTextIcon })
+    items.push({ name: 'Pronunciation', path: '/pronunciation', icon: SpeakerWaveIcon })
     items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
     if (showDevPageConfig.value && isAdmin.value) {
       items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })

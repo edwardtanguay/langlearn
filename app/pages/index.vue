@@ -276,6 +276,25 @@ function openAudio() {
   window.open(url, '_blank')
 }
 
+const backWordCount = computed(() => {
+  if (!currentCard.value?.back) return 0
+  return currentCard.value.back.trim().split(/\s+/).filter(Boolean).length
+})
+
+const showExampleSentencesButton = computed(() => {
+  return backWordCount.value >= 1 && backWordCount.value <= 4
+})
+
+function openExampleSentences() {
+  if (!currentCard.value) return
+  const backText = currentCard.value.back.trim()
+  const langCode = currentCard.value.backLanguage || currentCard.value.frontLanguage || 'fr'
+  const langName = languageNames[langCode] ? languageNames[langCode].toLowerCase() : 'french'
+  const query = `create 3 ${langName} examples with "${backText}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
+
 // Debounced rank save — silent, no activity log
 function debouncedSaveRank() {
   if (rankDebounceTimer) clearTimeout(rankDebounceTimer)
@@ -312,6 +331,9 @@ function markAction(actionTaken: string, newStatus?: string) {
       cardStats.value.readyCount--
     }
     cardStats.value.waitingCount++
+    if (cardStats.value.todayReviewedCount !== undefined) {
+      cardStats.value.todayReviewedCount++
+    }
   }
 
   cardAnimState.value = 'exiting'
@@ -535,11 +557,11 @@ function handleGlobalKeyDown(event: KeyboardEvent) {
   }
 }
 
-const cardStats = ref<{ readyCount: number; waitingCount: number } | null>(null)
+const cardStats = ref<{ readyCount: number; waitingCount: number; totalCount?: number; todayReviewedCount?: number } | null>(null)
 
 async function fetchCardStats() {
   try {
-    cardStats.value = await $fetch<{ readyCount: number; waitingCount: number }>('/api/flashcards/stats')
+    cardStats.value = await $fetch<{ readyCount: number; waitingCount: number; totalCount?: number; todayReviewedCount?: number }>('/api/flashcards/stats')
   } catch (err) {
     console.error('Failed to load card stats:', err)
   }
@@ -680,6 +702,17 @@ onBeforeUnmount(() => {
 
                 <!-- Status buttons Section -->
                 <FlashcardStatusButtons @action="markAction" />
+
+                <!-- Example Sentences Action Box (only if 1-4 words) -->
+                <div v-if="showExampleSentencesButton" class="bg-gray-50 dark:bg-gray-950 p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex flex-wrap gap-2 items-center justify-center">
+                  <button
+                    @click.stop="openExampleSentences"
+                    class="text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 dark:border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  >
+                    <span>3 examples with "{{ currentCard.back }}"</span>
+                    <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  </button>
+                </div>
 
                 <!-- Tags Section -->
                 <FlashcardTags 

@@ -108,6 +108,13 @@ const displayedVersions = computed(() => {
   return list
 })
 
+function formatSentenceCase(str: string | null | undefined): string {
+  if (!str) return ''
+  const trimmed = str.trim()
+  if (!trimmed) return ''
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1)
+}
+
 function formatPublishDate(dateStr: string | null | undefined): string {
   if (!dateStr) return ''
   const d = new Date(dateStr)
@@ -466,7 +473,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
                 <li v-for="item in unassignedItems.filter(i => i.type === 'FEATURE')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
                   <div class="flex items-start gap-2 flex-1 min-w-0">
                     <span class="shrink-0 text-gray-400 select-none">•</span>
-                    <span class="flex-1 break-words">{{ item.body }}</span>
+                    <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                   </div>
                   <span v-if="adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
                     ( 
@@ -496,7 +503,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
                 <li v-for="item in unassignedItems.filter(i => i.type === 'BUGFIX')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
                   <div class="flex items-start gap-2 flex-1 min-w-0">
                     <span class="shrink-0 text-gray-400 select-none">•</span>
-                    <span class="flex-1 break-words">{{ item.body }}</span>
+                    <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                   </div>
                   <span v-if="adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
                     ( 
@@ -554,7 +561,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
                 <li v-for="item in ver.versionItems.filter(i => i.type === 'FEATURE')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
                   <div class="flex items-start gap-2 flex-1 min-w-0">
                     <span class="shrink-0 text-gray-400 select-none">•</span>
-                    <span class="flex-1 break-words">{{ item.body }}</span>
+                    <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                   </div>
                   <span v-if="isAdmin && adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
                     ( 
@@ -584,7 +591,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
                 <li v-for="item in ver.versionItems.filter(i => i.type === 'BUGFIX')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
                   <div class="flex items-start gap-2 flex-1 min-w-0">
                     <span class="shrink-0 text-gray-400 select-none">•</span>
-                    <span class="flex-1 break-words">{{ item.body }}</span>
+                    <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                   </div>
                   <span v-if="isAdmin && adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
                     ( 

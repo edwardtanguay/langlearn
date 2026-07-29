@@ -85,7 +85,8 @@ const userForm = ref<{ id: string; firstName: string; lastName: string; role: 'a
   role: 'member'
 })
 
-const loadUsers = async () => {
+const loadUsers = async (force = false) => {
+  if (hasLoadedUsers.value && !force) return
   if (!hasLoadedUsers.value) {
     isLoadingUsers.value = true
   } else {
@@ -119,7 +120,7 @@ const saveUser = async () => {
       body: userForm.value
     })
     showUserModal.value = false
-    await loadUsers()
+    await loadUsers(true)
   } catch (err: any) {
     alert(err.data?.statusMessage || 'Failed to update user')
   }
@@ -165,7 +166,8 @@ const languageColors: Record<string, string> = {
   el: '#ea580c'
 }
 
-const loadDevCards = async () => {
+const loadDevCards = async (force = false) => {
+  if (hasLoadedCards.value && !force) return
   if (!hasLoadedCards.value) {
     isLoadingCards.value = true
   } else {

@@ -37,9 +37,30 @@ export default defineEventHandler(async (event) => {
       }
     })
 
+    const startOfDay = new Date()
+    startOfDay.setHours(0, 0, 0, 0)
+
+    const totalCount = await prisma.flashcard.count({
+      where: {
+        ownerId: dbUser.id
+      }
+    })
+
+    const todayReviewedCount = await prisma.userFlashcardActivity.count({
+      where: {
+        userId: dbUser.id,
+        whenActedUpon: { gte: startOfDay },
+        actionTaken: {
+          in: ['MARKED_AS_KEEP_TESTING', 'MARKED_AS_LEARNED', 'MARKED_AS_PARKED', 'MARKED_AS_DELETED']
+        }
+      }
+    })
+
     return {
       readyCount,
-      waitingCount
+      waitingCount,
+      totalCount,
+      todayReviewedCount
     }
   } catch (error) {
     console.error('Error fetching flashcard stats:', error)

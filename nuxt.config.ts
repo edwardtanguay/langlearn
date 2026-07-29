@@ -52,3 +52,5 @@ export default defineNuxtConfig({
 	}
 })
 
+// Pronunciation route registered
+

@@ -107,9 +107,9 @@ const getTextClass = (text: string) => {
           </p>
           <!-- Pronunciation display below the word -->
           <p v-if="currentCard.pronunciation && isFlipped && !isEditing" 
-             class="text-xs sm:text-sm text-white/30 text-center max-w-md absolute top-[calc(50%+28px)]"
+             class="text-xs sm:text-sm text-white/40 text-center max-w-md mt-4 pt-1"
              style="font-family: 'Courier New', Courier, monospace">
-            <span class="text-white/10 mr-1.5">[</span>{{ currentCard.pronunciation }}<span class="text-white/10 ml-1.5">]</span>
+            <span class="text-white/20 mr-1.5">[</span>{{ currentCard.pronunciation }}<span class="text-white/20 ml-1.5">]</span>
           </p>
         </div>
 
