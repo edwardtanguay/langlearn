@@ -237,18 +237,9 @@ const filteredAndSortedCards = computed(() => {
       c.status.toLowerCase().includes(q)
     )
   }
-  return cards.sort((a, b) => {
-    const aIsLearning = a.status === 'LEARNING' ? 1 : 0
-    const bIsLearning = b.status === 'LEARNING' ? 1 : 0
-    if (aIsLearning !== bIsLearning) {
-      return bIsLearning - aIsLearning
-    }
-    if (b.rank !== a.rank) {
-      return b.rank - a.rank
-    }
-    return a.id.localeCompare(b.id)
-  })
+  return cards
 })
+
 
 const firstDueCardId = computed(() => {
   const dueCard = filteredAndSortedCards.value.find(c => {
