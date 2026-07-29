@@ -396,7 +396,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
               v-model="adminEditMode"
               class="sr-only peer"
             />
-            <div class="relative w-8 h-4 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-600"></div>
+            <div class="relative w-8 h-4 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[16px] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-600"></div>
             <span class="font-medium" :class="adminEditMode ? 'text-white' : 'text-gray-400'">Admin Edit</span>
           </label>
         </div>
