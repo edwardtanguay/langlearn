@@ -20,9 +20,12 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Category with this title already exists' })
   }
 
+  const parsedRank = body.rank !== undefined && !isNaN(parseFloat(body.rank)) ? parseFloat(body.rank) : 2.5
+
   const newCategory = await prisma.versionCategory.create({
     data: {
       title,
+      rank: parsedRank,
     },
   })
 

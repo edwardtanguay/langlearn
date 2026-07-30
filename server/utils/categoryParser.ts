@@ -1,14 +1,31 @@
 import { prisma } from './prisma'
 
 export async function ensureDefaultCategories() {
+  // Check if old "General" category exists without 'gen' abbreviation, rename it to "Clean and assign"
+  const oldGeneral = await prisma.versionCategory.findUnique({
+    where: { title: 'General' },
+    include: { abbreviations: true }
+  })
+  if (oldGeneral) {
+    const hasGenAbbr = oldGeneral.abbreviations.some(a => a.abbreviationText.toLowerCase() === 'gen')
+    if (!hasGenAbbr) {
+      await prisma.versionCategory.update({
+        where: { id: oldGeneral.id },
+        data: { title: 'Clean and assign' }
+      })
+    }
+  }
+
   const defaultCategories = [
-    { title: 'General', abbreviations: [] },
-    { title: 'Grammar Page', abbreviations: [] },
-    { title: 'Versioning', abbreviations: [] },
-    { title: 'Idea Box', abbreviations: [] },
+    { title: 'Clean and assign', abbreviations: [], rank: 2.5 },
+    { title: 'General', abbreviations: ['gen', 'general'], rank: 2.5 },
+    { title: 'Grammar Page', abbreviations: [], rank: 2.1 },
+    { title: 'Versioning', abbreviations: [], rank: 2.5 },
+    { title: 'Idea Box', abbreviations: [], rank: 2.5 },
     {
       title: 'Flashcard Page',
       abbreviations: ['flash', 'flashard', 'flash page', 'fl'],
+      rank: 4.8,
     },
   ]
 
@@ -19,7 +36,7 @@ export async function ensureDefaultCategories() {
 
     if (!existing) {
       const created = await prisma.versionCategory.create({
-        data: { title: cat.title },
+        data: { title: cat.title, rank: cat.rank },
       })
       for (const abbr of cat.abbreviations) {
         await prisma.versionCategoryAbbreviation.create({
@@ -29,22 +46,30 @@ export async function ensureDefaultCategories() {
           },
         })
       }
-    } else if (cat.abbreviations.length > 0) {
-      // Ensure default abbreviations exist
-      for (const abbr of cat.abbreviations) {
-        const existingAbbr = await prisma.versionCategoryAbbreviation.findFirst({
-          where: {
-            versionCategoryId: existing.id,
-            abbreviationText: { equals: abbr },
-          },
+    } else {
+      // Update rank if it's default
+      if (cat.title === 'Flashcard Page' || cat.title === 'Grammar Page') {
+        await prisma.versionCategory.update({
+          where: { id: existing.id },
+          data: { rank: cat.rank }
         })
-        if (!existingAbbr) {
-          await prisma.versionCategoryAbbreviation.create({
-            data: {
+      }
+      if (cat.abbreviations.length > 0) {
+        for (const abbr of cat.abbreviations) {
+          const existingAbbr = await prisma.versionCategoryAbbreviation.findFirst({
+            where: {
               versionCategoryId: existing.id,
-              abbreviationText: abbr,
+              abbreviationText: { equals: abbr },
             },
           })
+          if (!existingAbbr) {
+            await prisma.versionCategoryAbbreviation.create({
+              data: {
+                versionCategoryId: existing.id,
+                abbreviationText: abbr,
+              },
+            })
+          }
         }
       }
     }
@@ -60,8 +85,8 @@ export async function parseAndAssignCategories() {
     },
   })
 
-  const generalCategory = categories.find((c) => c.title === 'General')
-  if (!generalCategory) return
+  const cleanAssignCategory = categories.find((c) => c.title === 'Clean and assign')
+  if (!cleanAssignCategory) return
 
   // Build a list of all abbreviations sorted by length descending so longer matches take precedence
   const abbrMap: { abbrText: string; categoryId: string }[] = []
@@ -102,7 +127,7 @@ export async function parseAndAssignCategories() {
       bodyToSave = newBody
     } else {
       if (!item.versionCategoryId) {
-        targetCategoryId = generalCategory.id
+        targetCategoryId = cleanAssignCategory.id
       }
     }
 

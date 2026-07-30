@@ -39,6 +39,17 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  if (body.rank !== undefined) {
+    const parsedRank = parseFloat(body.rank)
+    if (!isNaN(parsedRank)) {
+      const clampedRank = Math.max(0, Math.min(5, parsedRank))
+      await prisma.versionCategory.update({
+        where: { id },
+        data: { rank: clampedRank },
+      })
+    }
+  }
+
   if (Array.isArray(body.abbreviations)) {
     // Delete existing abbreviations for this category and insert new list
     await prisma.versionCategoryAbbreviation.deleteMany({

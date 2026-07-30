@@ -139,6 +139,7 @@ exports.Prisma.VersionScalarFieldEnum = {
 exports.Prisma.VersionCategoryScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  rank: 'rank',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

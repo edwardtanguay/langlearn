@@ -18,6 +18,7 @@ interface VersionCategoryAbbreviation {
 interface VersionCategory {
   id: string
   title: string
+  rank?: number
   abbreviations?: VersionCategoryAbbreviation[]
 }
 
@@ -44,6 +45,7 @@ const versions = ref<Version[]>([])
 const unassignedItems = ref<VersionItem[]>([])
 const categories = ref<VersionCategory[]>([])
 const isLoading = ref(true)
+const isSaving = ref(false)
 const isAdmin = ref(false)
 const adminEditMode = ref(false)
 const versionSaveError = ref('')
@@ -65,8 +67,8 @@ const isNewVersion = ref(false)
 // Category Edit Modal
 const showCategoryModal = ref(false)
 const isNewCategory = ref(false)
-const editingCategory = ref<{ id: string; title: string; abbreviations: string }>({
-  id: '', title: '', abbreviations: ''
+const editingCategory = ref<{ id: string; title: string; rank: number; abbreviations: string }>({
+  id: '', title: '', rank: 2.5, abbreviations: ''
 })
 
 const loadData = async () => {
@@ -158,6 +160,7 @@ const displayedVersions = computed(() => {
 interface CategoryGroup {
   categoryId: string
   categoryTitle: string
+  categoryRank: number
   items: VersionItem[]
 }
 
@@ -179,43 +182,62 @@ function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolea
     return { isAllGeneral: true, groups: [], allItems: items }
   }
 
-  const groupsMap = new Map<string, { categoryTitle: string; items: VersionItem[] }>()
+  const groupsMap = new Map<string, { categoryTitle: string; categoryRank: number; items: VersionItem[] }>()
 
   for (const item of items) {
-    const catTitle = item.versionCategory?.title || 'General'
+    const catObj = categories.value.find(c => c.id === item.versionCategoryId) || item.versionCategory
+    const catTitle = catObj?.title || 'General'
     const catId = item.versionCategoryId || generalId || 'general'
+    const catRank = catObj?.rank ?? 2.5
 
     if (!groupsMap.has(catId)) {
-      groupsMap.set(catId, { categoryTitle: catTitle, items: [] })
+      groupsMap.set(catId, { categoryTitle: catTitle, categoryRank: catRank, items: [] })
     }
     groupsMap.get(catId)!.items.push(item)
   }
 
   const resultGroups: CategoryGroup[] = []
 
-  let generalGroupKey: string | null = null
+  // 1. Clean and assign category goes first
+  let cleanAssignKey: string | null = null
   for (const [key, group] of groupsMap.entries()) {
-    if (group.categoryTitle === 'General') {
-      generalGroupKey = key
+    if (group.categoryTitle === 'Clean and assign') {
+      cleanAssignKey = key
       break
     }
   }
-
-  if (generalGroupKey) {
-    const genGroup = groupsMap.get(generalGroupKey)!
-    resultGroups.push({
-      categoryId: generalGroupKey,
-      categoryTitle: genGroup.categoryTitle,
-      items: genGroup.items
-    })
-    groupsMap.delete(generalGroupKey)
+  if (cleanAssignKey) {
+    const grp = groupsMap.get(cleanAssignKey)!
+    resultGroups.push({ categoryId: cleanAssignKey, categoryTitle: grp.categoryTitle, categoryRank: grp.categoryRank, items: grp.items })
+    groupsMap.delete(cleanAssignKey)
   }
 
-  const restSorted = Array.from(groupsMap.entries()).sort((a, b) => a[1].categoryTitle.localeCompare(b[1].categoryTitle))
+  // 2. GENERAL category goes second
+  let generalKey: string | null = null
+  for (const [key, group] of groupsMap.entries()) {
+    if (group.categoryTitle === 'General') {
+      generalKey = key
+      break
+    }
+  }
+  if (generalKey) {
+    const grp = groupsMap.get(generalKey)!
+    resultGroups.push({ categoryId: generalKey, categoryTitle: grp.categoryTitle, categoryRank: grp.categoryRank, items: grp.items })
+    groupsMap.delete(generalKey)
+  }
+
+  // 3. All other categories listed in descending rank order
+  const restSorted = Array.from(groupsMap.entries()).sort((a, b) => {
+    const rankDiff = b[1].categoryRank - a[1].categoryRank
+    if (rankDiff !== 0) return rankDiff
+    return a[1].categoryTitle.localeCompare(b[1].categoryTitle)
+  })
+
   for (const [key, group] of restSorted) {
     resultGroups.push({
       categoryId: key,
       categoryTitle: group.categoryTitle,
+      categoryRank: group.categoryRank,
       items: group.items
     })
   }
@@ -421,6 +443,14 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string)
     openAddCategory()
     return
   }
+  const oldCatId = item.versionCategoryId
+  const oldCatObj = item.versionCategory
+  const newCat = categories.value.find(c => c.id === categoryId) || null
+
+  // Optimistic update
+  item.versionCategoryId = categoryId || null
+  item.versionCategory = newCat
+
   try {
     await $fetch(`/api/dev/version-items/${item.id}`, {
       method: 'PUT',
@@ -428,6 +458,8 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string)
     })
     await loadData()
   } catch (err: any) {
+    item.versionCategoryId = oldCatId
+    item.versionCategory = oldCatObj
     alert(err.data?.statusMessage || 'Failed to update item category')
   }
 }
@@ -514,7 +546,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
 const openAddCategory = () => {
   isNewCategory.value = true
   categorySaveError.value = ''
-  editingCategory.value = { id: '', title: '', abbreviations: '' }
+  editingCategory.value = { id: '', title: '', rank: 2.5, abbreviations: '' }
   showCategoryModal.value = true
 }
 
@@ -524,7 +556,7 @@ const openEditCategory = (catId: string) => {
   isNewCategory.value = false
   categorySaveError.value = ''
   const abbrList = (cat.abbreviations || []).map(a => a.abbreviationText).join(', ')
-  editingCategory.value = { id: cat.id, title: cat.title, abbreviations: abbrList }
+  editingCategory.value = { id: cat.id, title: cat.title, rank: cat.rank ?? 2.5, abbreviations: abbrList }
   showCategoryModal.value = true
 }
 
@@ -536,16 +568,30 @@ const saveCategory = async () => {
     return
   }
 
+  const rankVal = Math.max(0, Math.min(5, Number(editingCategory.value.rank) || 2.5))
+
   const abbrArray = editingCategory.value.abbreviations
     .split(',')
     .map(s => s.trim())
     .filter(Boolean)
 
+  const snapshot = JSON.parse(JSON.stringify(categories.value))
+
+  // Optimistic update
+  if (!isNewCategory.value) {
+    const existing = categories.value.find(c => c.id === editingCategory.value.id)
+    if (existing) {
+      existing.title = title
+      existing.rank = rankVal
+    }
+  }
+
+  isSaving.value = true
   try {
     if (isNewCategory.value) {
       const created = await $fetch<VersionCategory>('/api/dev/categories', {
         method: 'POST',
-        body: { title, abbreviations: abbrArray }
+        body: { title, rank: rankVal, abbreviations: abbrArray }
       })
       if (editingItem.value) {
         editingItem.value.versionCategoryId = created.id
@@ -553,24 +599,30 @@ const saveCategory = async () => {
     } else {
       await $fetch(`/api/dev/categories/${editingCategory.value.id}`, {
         method: 'PUT',
-        body: { title, abbreviations: abbrArray }
+        body: { title, rank: rankVal, abbreviations: abbrArray }
       })
     }
     showCategoryModal.value = false
     await loadData()
   } catch (err: any) {
+    categories.value = snapshot
     categorySaveError.value = err.data?.statusMessage || err.message || 'Failed to save category'
+  } finally {
+    isSaving.value = false
   }
 }
 
 const deleteCategory = async () => {
-  if (editingCategory.value.title === 'General') {
-    alert('The General category cannot be deleted')
+  if (editingCategory.value.title === 'General' || editingCategory.value.title === 'Clean and assign') {
+    alert(`The "${editingCategory.value.title}" category cannot be deleted`)
     return
   }
-  if (!confirm(`Are you sure you want to delete category "${editingCategory.value.title}"? Assigned items will move to General.`)) {
+  if (!confirm(`Are you sure you want to delete category "${editingCategory.value.title}"? Assigned items will move to Clean and assign.`)) {
     return
   }
+  const snapshot = JSON.parse(JSON.stringify(categories.value))
+  categories.value = categories.value.filter(c => c.id !== editingCategory.value.id)
+  isSaving.value = true
   try {
     await $fetch(`/api/dev/categories/${editingCategory.value.id}`, {
       method: 'DELETE'
@@ -578,7 +630,10 @@ const deleteCategory = async () => {
     showCategoryModal.value = false
     await loadData()
   } catch (err: any) {
+    categories.value = snapshot
     categorySaveError.value = err.data?.statusMessage || 'Failed to delete category'
+  } finally {
+    isSaving.value = false
   }
 }
 </script>
@@ -712,8 +767,8 @@ const deleteCategory = async () => {
                 <ul class="space-y-1.5 text-xs text-gray-300">
                   <li v-for="item in ver.versionItems" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
                     <div class="flex items-start gap-2 flex-1 min-w-0">
-                      <span class="shrink-0 font-semibold font-mono text-[11px]" :class="item.type === 'FEATURE' ? 'text-amber-400' : 'text-rose-400'">
-                        {{ item.type === 'FEATURE' ? 'FEATURE:' : 'BUG FIX:' }}
+                      <span class="shrink-0 font-semibold font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-[#194d19] text-white font-bold' : 'bg-emerald-950/40 border border-emerald-500/30 text-[#4ade80] font-bold'">
+                        {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
                       <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                     </div>
@@ -743,7 +798,7 @@ const deleteCategory = async () => {
                           :class="isLastInList(item, ver.versionItems) ? 'text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
                         >down</button> | 
                         <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
-                        <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | 
+                        <button @click="deleteItem(item)" class="text-red-950 dark:text-red-900/80 hover:text-red-700 font-semibold cursor-pointer">delete</button> | 
                         <button @click="openAddItem(ver.id, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
                         )
                       </span>
@@ -758,8 +813,11 @@ const deleteCategory = async () => {
                   <!-- Category Header -->
                   <div class="flex items-center gap-2 border-b border-gray-700/50 pb-1">
                     <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider">
-                      {{ group.categoryTitle }}
+                      {{ group.categoryTitle === 'Clean and assign' ? 'Clean and assign' : group.categoryTitle }}
                     </h4>
+                    <span v-if="isAdmin && adminEditMode" class="text-[10px] text-gray-500 font-mono">
+                      (rank: {{ group.categoryRank }})
+                    </span>
                     <button
                       v-if="isAdmin && adminEditMode"
                       @click="openEditCategory(group.categoryId)"
@@ -774,8 +832,8 @@ const deleteCategory = async () => {
                   <ul class="space-y-1.5 text-xs text-gray-300 pl-3">
                     <li v-for="item in group.items" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
                       <div class="flex items-start gap-2 flex-1 min-w-0">
-                        <span class="shrink-0 font-semibold font-mono text-[11px]" :class="item.type === 'FEATURE' ? 'text-amber-400' : 'text-rose-400'">
-                          {{ item.type === 'FEATURE' ? 'FEATURE:' : 'BUG FIX:' }}
+                        <span class="shrink-0 font-semibold font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-[#194d19] text-white font-bold' : 'bg-emerald-950/40 border border-emerald-500/30 text-[#4ade80] font-bold'">
+                          {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
                         <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                       </div>
@@ -805,7 +863,7 @@ const deleteCategory = async () => {
                             :class="isLastInList(item, group.items) ? 'text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
                           >down</button> | 
                           <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
-                          <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | 
+                          <button @click="deleteItem(item)" class="text-red-950 dark:text-red-900/80 hover:text-red-700 font-semibold cursor-pointer">delete</button> | 
                           <button @click="openAddItem(ver.id, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
                           )
                         </span>
@@ -850,8 +908,11 @@ const deleteCategory = async () => {
             </select>
           </div>
           <div class="flex justify-end space-x-2 pt-2">
-            <button type="button" @click="showEditVersionModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
-            <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">Save</button>
+            <button type="button" @click="showEditVersionModal = false" :disabled="isSaving" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+            <button type="submit" :disabled="isSaving" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded font-semibold flex items-center gap-1.5">
+              <span v-if="isSaving" class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>Save</span>
+            </button>
           </div>
         </form>
       </div>
@@ -896,8 +957,11 @@ const deleteCategory = async () => {
             <textarea v-model="editingItem.body" @keydown.enter.exact.prevent="saveAdminItem" rows="3" placeholder="Describe the feature or bug fix..." class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white"></textarea>
           </div>
           <div class="flex justify-end space-x-2 pt-2">
-            <button type="button" @click="showEditItemModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
-            <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">Save</button>
+            <button type="button" @click="showEditItemModal = false" :disabled="isSaving" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+            <button type="submit" :disabled="isSaving" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded font-semibold flex items-center gap-1.5">
+              <span v-if="isSaving" class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>Save</span>
+            </button>
           </div>
         </form>
       </div>
@@ -925,6 +989,23 @@ const deleteCategory = async () => {
           </div>
 
           <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-medium">Category Rank (0.0 - 5.0)</label>
+            <input
+              v-model.number="editingCategory.rank"
+              @keydown.enter.exact.prevent="saveCategory"
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              placeholder="2.5"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono"
+            />
+            <p class="text-[11px] text-gray-400 mt-1">
+              Categories (except Clean and assign & General) are displayed in descending order of this rank value.
+            </p>
+          </div>
+
+          <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1 font-medium">Abbreviations (comma-separated)</label>
             <input
               v-model="editingCategory.abbreviations"
@@ -942,17 +1023,21 @@ const deleteCategory = async () => {
             <div>
               <!-- Destructive delete action styled per user rules: dark red link -->
               <button
-                v-if="!isNewCategory && editingCategory.title !== 'General'"
+                v-if="!isNewCategory && editingCategory.title !== 'General' && editingCategory.title !== 'Clean and assign'"
                 type="button"
                 @click="deleteCategory"
-                class="text-red-900 dark:text-red-900 hover:text-red-700 text-xs font-semibold cursor-pointer underline"
+                :disabled="isSaving"
+                class="text-red-950 dark:text-red-900/80 hover:text-red-700 text-xs font-semibold cursor-pointer underline disabled:opacity-40"
               >
                 delete category
               </button>
             </div>
             <div class="flex space-x-2">
-              <button type="button" @click="showCategoryModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
-              <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold">Save Category</button>
+              <button type="button" @click="showCategoryModal = false" :disabled="isSaving" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+              <button type="submit" :disabled="isSaving" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded font-semibold flex items-center gap-1.5">
+                <span v-if="isSaving" class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span>Save Category</span>
+              </button>
             </div>
           </div>
         </form>

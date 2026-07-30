@@ -4202,13 +4202,24 @@ export namespace Prisma {
 
   export type AggregateVersionCategory = {
     _count: VersionCategoryCountAggregateOutputType | null
+    _avg: VersionCategoryAvgAggregateOutputType | null
+    _sum: VersionCategorySumAggregateOutputType | null
     _min: VersionCategoryMinAggregateOutputType | null
     _max: VersionCategoryMaxAggregateOutputType | null
+  }
+
+  export type VersionCategoryAvgAggregateOutputType = {
+    rank: number | null
+  }
+
+  export type VersionCategorySumAggregateOutputType = {
+    rank: number | null
   }
 
   export type VersionCategoryMinAggregateOutputType = {
     id: string | null
     title: string | null
+    rank: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4216,6 +4227,7 @@ export namespace Prisma {
   export type VersionCategoryMaxAggregateOutputType = {
     id: string | null
     title: string | null
+    rank: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4223,15 +4235,25 @@ export namespace Prisma {
   export type VersionCategoryCountAggregateOutputType = {
     id: number
     title: number
+    rank: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
+  export type VersionCategoryAvgAggregateInputType = {
+    rank?: true
+  }
+
+  export type VersionCategorySumAggregateInputType = {
+    rank?: true
+  }
+
   export type VersionCategoryMinAggregateInputType = {
     id?: true
     title?: true
+    rank?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4239,6 +4261,7 @@ export namespace Prisma {
   export type VersionCategoryMaxAggregateInputType = {
     id?: true
     title?: true
+    rank?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4246,6 +4269,7 @@ export namespace Prisma {
   export type VersionCategoryCountAggregateInputType = {
     id?: true
     title?: true
+    rank?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4289,6 +4313,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: VersionCategoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VersionCategorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: VersionCategoryMinAggregateInputType
@@ -4319,6 +4355,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: VersionCategoryCountAggregateInputType | true
+    _avg?: VersionCategoryAvgAggregateInputType
+    _sum?: VersionCategorySumAggregateInputType
     _min?: VersionCategoryMinAggregateInputType
     _max?: VersionCategoryMaxAggregateInputType
   }
@@ -4326,9 +4364,12 @@ export namespace Prisma {
   export type VersionCategoryGroupByOutputType = {
     id: string
     title: string
+    rank: number
     createdAt: Date
     updatedAt: Date
     _count: VersionCategoryCountAggregateOutputType | null
+    _avg: VersionCategoryAvgAggregateOutputType | null
+    _sum: VersionCategorySumAggregateOutputType | null
     _min: VersionCategoryMinAggregateOutputType | null
     _max: VersionCategoryMaxAggregateOutputType | null
   }
@@ -4350,6 +4391,7 @@ export namespace Prisma {
   export type VersionCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     abbreviations?: boolean | VersionCategory$abbreviationsArgs<ExtArgs>
@@ -4360,6 +4402,7 @@ export namespace Prisma {
   export type VersionCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["versionCategory"]>
@@ -4367,6 +4410,7 @@ export namespace Prisma {
   export type VersionCategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["versionCategory"]>
@@ -4374,11 +4418,12 @@ export namespace Prisma {
   export type VersionCategorySelectScalar = {
     id?: boolean
     title?: boolean
+    rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VersionCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "createdAt" | "updatedAt", ExtArgs["result"]["versionCategory"]>
+  export type VersionCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "rank" | "createdAt" | "updatedAt", ExtArgs["result"]["versionCategory"]>
   export type VersionCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     abbreviations?: boolean | VersionCategory$abbreviationsArgs<ExtArgs>
     versionItems?: boolean | VersionCategory$versionItemsArgs<ExtArgs>
@@ -4396,6 +4441,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
+      rank: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["versionCategory"]>
@@ -4825,6 +4871,7 @@ export namespace Prisma {
   interface VersionCategoryFieldRefs {
     readonly id: FieldRef<"VersionCategory", 'String'>
     readonly title: FieldRef<"VersionCategory", 'String'>
+    readonly rank: FieldRef<"VersionCategory", 'Float'>
     readonly createdAt: FieldRef<"VersionCategory", 'DateTime'>
     readonly updatedAt: FieldRef<"VersionCategory", 'DateTime'>
   }
@@ -13136,6 +13183,7 @@ export namespace Prisma {
   export const VersionCategoryScalarFieldEnum: {
     id: 'id',
     title: 'title',
+    rank: 'rank',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -13422,6 +13470,7 @@ export namespace Prisma {
     NOT?: VersionCategoryWhereInput | VersionCategoryWhereInput[]
     id?: StringFilter<"VersionCategory"> | string
     title?: StringFilter<"VersionCategory"> | string
+    rank?: FloatFilter<"VersionCategory"> | number
     createdAt?: DateTimeFilter<"VersionCategory"> | Date | string
     updatedAt?: DateTimeFilter<"VersionCategory"> | Date | string
     abbreviations?: VersionCategoryAbbreviationListRelationFilter
@@ -13431,6 +13480,7 @@ export namespace Prisma {
   export type VersionCategoryOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
+    rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     abbreviations?: VersionCategoryAbbreviationOrderByRelationAggregateInput
@@ -13443,6 +13493,7 @@ export namespace Prisma {
     AND?: VersionCategoryWhereInput | VersionCategoryWhereInput[]
     OR?: VersionCategoryWhereInput[]
     NOT?: VersionCategoryWhereInput | VersionCategoryWhereInput[]
+    rank?: FloatFilter<"VersionCategory"> | number
     createdAt?: DateTimeFilter<"VersionCategory"> | Date | string
     updatedAt?: DateTimeFilter<"VersionCategory"> | Date | string
     abbreviations?: VersionCategoryAbbreviationListRelationFilter
@@ -13452,11 +13503,14 @@ export namespace Prisma {
   export type VersionCategoryOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
+    rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: VersionCategoryCountOrderByAggregateInput
+    _avg?: VersionCategoryAvgOrderByAggregateInput
     _max?: VersionCategoryMaxOrderByAggregateInput
     _min?: VersionCategoryMinOrderByAggregateInput
+    _sum?: VersionCategorySumOrderByAggregateInput
   }
 
   export type VersionCategoryScalarWhereWithAggregatesInput = {
@@ -13465,6 +13519,7 @@ export namespace Prisma {
     NOT?: VersionCategoryScalarWhereWithAggregatesInput | VersionCategoryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"VersionCategory"> | string
     title?: StringWithAggregatesFilter<"VersionCategory"> | string
+    rank?: FloatWithAggregatesFilter<"VersionCategory"> | number
     createdAt?: DateTimeWithAggregatesFilter<"VersionCategory"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"VersionCategory"> | Date | string
   }
@@ -14079,6 +14134,7 @@ export namespace Prisma {
   export type VersionCategoryCreateInput = {
     id?: string
     title: string
+    rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     abbreviations?: VersionCategoryAbbreviationCreateNestedManyWithoutVersionCategoryInput
@@ -14088,6 +14144,7 @@ export namespace Prisma {
   export type VersionCategoryUncheckedCreateInput = {
     id?: string
     title: string
+    rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     abbreviations?: VersionCategoryAbbreviationUncheckedCreateNestedManyWithoutVersionCategoryInput
@@ -14097,6 +14154,7 @@ export namespace Prisma {
   export type VersionCategoryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     abbreviations?: VersionCategoryAbbreviationUpdateManyWithoutVersionCategoryNestedInput
@@ -14106,6 +14164,7 @@ export namespace Prisma {
   export type VersionCategoryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     abbreviations?: VersionCategoryAbbreviationUncheckedUpdateManyWithoutVersionCategoryNestedInput
@@ -14115,6 +14174,7 @@ export namespace Prisma {
   export type VersionCategoryCreateManyInput = {
     id?: string
     title: string
+    rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14122,6 +14182,7 @@ export namespace Prisma {
   export type VersionCategoryUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14129,6 +14190,7 @@ export namespace Prisma {
   export type VersionCategoryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14835,6 +14897,17 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type VersionCategoryAbbreviationListRelationFilter = {
     every?: VersionCategoryAbbreviationWhereInput
     some?: VersionCategoryAbbreviationWhereInput
@@ -14848,13 +14921,19 @@ export namespace Prisma {
   export type VersionCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type VersionCategoryAvgOrderByAggregateInput = {
+    rank?: SortOrder
   }
 
   export type VersionCategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14862,8 +14941,29 @@ export namespace Prisma {
   export type VersionCategoryMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type VersionCategorySumOrderByAggregateInput = {
+    rank?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type VersionCategoryScalarRelationFilter = {
@@ -14954,17 +15054,6 @@ export namespace Prisma {
     orderWithinVersion?: SortOrder
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -15039,22 +15128,6 @@ export namespace Prisma {
 
   export type FlashcardSumOrderByAggregateInput = {
     rank?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type FlashcardScalarRelationFilter = {
@@ -15418,6 +15491,14 @@ export namespace Prisma {
     connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
   }
 
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type VersionCategoryAbbreviationUpdateManyWithoutVersionCategoryNestedInput = {
     create?: XOR<VersionCategoryAbbreviationCreateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput> | VersionCategoryAbbreviationCreateWithoutVersionCategoryInput[] | VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput[]
     connectOrCreate?: VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput | VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput[]
@@ -15588,14 +15669,6 @@ export namespace Prisma {
     connectOrCreate?: FlashcardTagCreateOrConnectWithoutFlashcardInput | FlashcardTagCreateOrConnectWithoutFlashcardInput[]
     createMany?: FlashcardTagCreateManyFlashcardInputEnvelope
     connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutFlashcardsNestedInput = {
@@ -16378,6 +16451,7 @@ export namespace Prisma {
   export type VersionCategoryCreateWithoutAbbreviationsInput = {
     id?: string
     title: string
+    rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     versionItems?: VersionItemCreateNestedManyWithoutVersionCategoryInput
@@ -16386,6 +16460,7 @@ export namespace Prisma {
   export type VersionCategoryUncheckedCreateWithoutAbbreviationsInput = {
     id?: string
     title: string
+    rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutVersionCategoryInput
@@ -16410,6 +16485,7 @@ export namespace Prisma {
   export type VersionCategoryUpdateWithoutAbbreviationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     versionItems?: VersionItemUpdateManyWithoutVersionCategoryNestedInput
@@ -16418,6 +16494,7 @@ export namespace Prisma {
   export type VersionCategoryUncheckedUpdateWithoutAbbreviationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     versionItems?: VersionItemUncheckedUpdateManyWithoutVersionCategoryNestedInput
@@ -16451,6 +16528,7 @@ export namespace Prisma {
   export type VersionCategoryCreateWithoutVersionItemsInput = {
     id?: string
     title: string
+    rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     abbreviations?: VersionCategoryAbbreviationCreateNestedManyWithoutVersionCategoryInput
@@ -16459,6 +16537,7 @@ export namespace Prisma {
   export type VersionCategoryUncheckedCreateWithoutVersionItemsInput = {
     id?: string
     title: string
+    rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     abbreviations?: VersionCategoryAbbreviationUncheckedCreateNestedManyWithoutVersionCategoryInput
@@ -16543,6 +16622,7 @@ export namespace Prisma {
   export type VersionCategoryUpdateWithoutVersionItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     abbreviations?: VersionCategoryAbbreviationUpdateManyWithoutVersionCategoryNestedInput
@@ -16551,6 +16631,7 @@ export namespace Prisma {
   export type VersionCategoryUncheckedUpdateWithoutVersionItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     abbreviations?: VersionCategoryAbbreviationUncheckedUpdateManyWithoutVersionCategoryNestedInput

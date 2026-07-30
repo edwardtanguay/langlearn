@@ -35,6 +35,7 @@ model Version {
 model VersionCategory {
   id            String                        @id @default(uuid())
   title         String                        @unique
+  rank          Float                         @default(2.5)
   abbreviations VersionCategoryAbbreviation[]
   versionItems  VersionItem[]
   createdAt     DateTime                      @default(now())
