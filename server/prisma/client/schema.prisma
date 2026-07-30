@@ -32,17 +32,37 @@ model Version {
   versionItems  VersionItem[]
 }
 
+model VersionCategory {
+  id            String                        @id @default(uuid())
+  title         String                        @unique
+  abbreviations VersionCategoryAbbreviation[]
+  versionItems  VersionItem[]
+  createdAt     DateTime                      @default(now())
+  updatedAt     DateTime                      @updatedAt
+}
+
+model VersionCategoryAbbreviation {
+  id                String          @id @default(uuid())
+  versionCategoryId String
+  versionCategory   VersionCategory @relation(fields: [versionCategoryId], references: [id], onDelete: Cascade)
+  abbreviationText  String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
 model VersionItem {
-  id                 String   @id @default(uuid())
+  id                 String           @id @default(uuid())
   versionId          String?
-  version            Version? @relation(fields: [versionId], references: [id], onDelete: Cascade)
-  type               String   @default("BUGFIX")
+  version            Version?         @relation(fields: [versionId], references: [id], onDelete: Cascade)
+  versionCategoryId  String?
+  versionCategory    VersionCategory? @relation(fields: [versionCategoryId], references: [id], onDelete: SetNull)
+  type               String           @default("BUGFIX")
   body               String
   startedByUserId    String?
-  startedByUser      User?    @relation("UserVersionItems", fields: [startedByUserId], references: [id])
-  orderWithinVersion Int      @default(1)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  startedByUser      User?            @relation("UserVersionItems", fields: [startedByUserId], references: [id])
+  orderWithinVersion Int              @default(1)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
 }
 
 model Flashcard {

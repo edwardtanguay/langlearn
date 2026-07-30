@@ -1,46 +1,56 @@
 import { prisma } from '../../utils/prisma'
+import { parseAndAssignCategories, ensureDefaultCategories } from '../../utils/categoryParser'
 
 export default defineEventHandler(async (event) => {
-  // Ensure PROPOSED_ITEMS 0.0.0 version exists
-  let proposedVersion = await prisma.version.findFirst({
+  // Ensure default categories exist
+  await ensureDefaultCategories()
+
+  // Ensure INCOMING 0.0.0 version exists
+  let incomingVersion = await prisma.version.findFirst({
     where: {
       OR: [
+        { status: 'INCOMING' },
         { status: 'PROPOSED_ITEMS' },
         { versionNumber: '0.0.0' }
       ]
     }
   })
 
-  if (!proposedVersion) {
-    proposedVersion = await prisma.version.create({
+  if (!incomingVersion) {
+    incomingVersion = await prisma.version.create({
       data: {
         versionNumber: '0.0.0',
-        title: 'Proposed changes',
-        status: 'PROPOSED_ITEMS',
+        title: 'Incoming changes',
+        status: 'INCOMING',
         publishDate: null
       }
     })
-  } else if (proposedVersion.status !== 'PROPOSED_ITEMS' || proposedVersion.versionNumber !== '0.0.0') {
-    proposedVersion = await prisma.version.update({
-      where: { id: proposedVersion.id },
+  } else if (incomingVersion.status !== 'INCOMING' || incomingVersion.versionNumber !== '0.0.0') {
+    incomingVersion = await prisma.version.update({
+      where: { id: incomingVersion.id },
       data: {
         versionNumber: '0.0.0',
-        status: 'PROPOSED_ITEMS'
+        title: 'Incoming changes',
+        status: 'INCOMING'
       }
     })
   }
 
-  // Assign any orphan version items to the PROPOSED_ITEMS version
+  // Assign any orphan version items to the INCOMING version
   await prisma.versionItem.updateMany({
     where: { versionId: null },
-    data: { versionId: proposedVersion.id }
+    data: { versionId: incomingVersion.id }
   })
+
+  // Run category parsing across all version items
+  await parseAndAssignCategories()
 
   const versions = await prisma.version.findMany({
     include: {
       versionItems: {
         orderBy: { orderWithinVersion: 'asc' },
         include: {
+          versionCategory: true,
           startedByUser: {
             select: { id: true, firstName: true, lastName: true, email: true }
           }
@@ -51,18 +61,27 @@ export default defineEventHandler(async (event) => {
   })
 
   const unassignedItems = await prisma.versionItem.findMany({
-    where: { versionId: proposedVersion.id },
+    where: { versionId: incomingVersion.id },
     orderBy: { orderWithinVersion: 'asc' },
     include: {
+      versionCategory: true,
       startedByUser: {
         select: { id: true, firstName: true, lastName: true, email: true }
       }
     }
   })
 
+  const categories = await prisma.versionCategory.findMany({
+    include: {
+      abbreviations: true
+    },
+    orderBy: { title: 'asc' }
+  })
+
   return {
     versions,
-    unassignedItems
+    unassignedItems,
+    categories
   }
 })
 

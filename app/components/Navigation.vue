@@ -51,11 +51,12 @@ const userRole = ref<string>('member')
 const fetchUserRole = async () => {
   if (!loggedIn.value) return
   try {
-    const data = await $fetch<{ role: string }>('/api/user/me')
+    const headers = useRequestHeaders(['cookie'])
+    const data = await $fetch<{ role: string }>('/api/user/me', { headers })
     if (data?.role) {
       userRole.value = data.role
     }
-  } catch (err) {
+  } catch (err: any) {
     userRole.value = 'member'
   }
 }
@@ -63,10 +64,13 @@ const fetchUserRole = async () => {
 const fetchNavCardStats = async () => {
   if (!loggedIn.value) return
   try {
-    const data = await $fetch<CardStats>('/api/flashcards/stats')
+    const headers = useRequestHeaders(['cookie'])
+    const data = await $fetch<CardStats>('/api/flashcards/stats', { headers })
     cardStats.value = data
-  } catch (err) {
-    console.error('Failed to fetch nav card stats', err)
+  } catch (err: any) {
+    if (err?.statusCode !== 401 && err?.status !== 401 && err?.response?.status !== 401) {
+      console.error('Failed to fetch nav card stats', err)
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 import { requireAdmin } from '../../../utils/auth'
 import { prisma } from '../../../utils/prisma'
+import { parseAndAssignCategories } from '../../../utils/categoryParser'
 
 export default defineEventHandler(async (event) => {
   const admin = await requireAdmin(event)
@@ -66,6 +67,7 @@ export default defineEventHandler(async (event) => {
   const newItem = await prisma.versionItem.create({
     data: {
       versionId: targetVersionId,
+      versionCategoryId: body.versionCategoryId || null,
       type: body.type || 'BUGFIX',
       body: body.body.trim(),
       startedByUserId: admin.dbId || admin.id,
@@ -73,5 +75,12 @@ export default defineEventHandler(async (event) => {
     }
   })
 
-  return newItem
+  await parseAndAssignCategories()
+
+  const refetched = await prisma.versionItem.findUnique({
+    where: { id: newItem.id },
+    include: { versionCategory: true, startedByUser: true }
+  })
+
+  return refetched || newItem
 })

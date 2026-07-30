@@ -592,9 +592,12 @@ const cardStats = useState<CardStats | null>('flashcardStats', () => null)
 
 async function fetchCardStats() {
   try {
-    cardStats.value = await $fetch<CardStats>('/api/flashcards/stats')
-  } catch (err) {
-    console.error('Failed to load card stats:', err)
+    const headers = useRequestHeaders(['cookie'])
+    cardStats.value = await $fetch<CardStats>('/api/flashcards/stats', { headers })
+  } catch (err: any) {
+    if (err?.statusCode !== 401 && err?.status !== 401 && err?.response?.status !== 401) {
+      console.error('Failed to load card stats:', err)
+    }
   }
 }
 

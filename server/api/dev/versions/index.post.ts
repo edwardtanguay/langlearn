@@ -13,10 +13,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const verNum = body.versionNumber.trim()
-  if (verNum === '0.0.0' || body.status === 'PROPOSED_ITEMS') {
+  if (verNum === '0.0.0' || body.status === 'INCOMING' || body.status === 'PROPOSED_ITEMS') {
     throw createError({
       statusCode: 400,
-      statusMessage: 'PROPOSED_ITEMS version 0.0.0 is reserved and system managed'
+      statusMessage: 'INCOMING version 0.0.0 is reserved and system managed'
     })
   }
 

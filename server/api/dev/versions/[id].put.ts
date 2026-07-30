@@ -14,15 +14,15 @@ export default defineEventHandler(async (event) => {
     where: { id }
   })
 
-  if (existingVersion && (existingVersion.status === 'PROPOSED_ITEMS' || existingVersion.versionNumber === '0.0.0')) {
-    throw createError({ statusCode: 400, statusMessage: 'PROPOSED_ITEMS version cannot be modified' })
+  if (existingVersion && (existingVersion.status === 'INCOMING' || existingVersion.status === 'PROPOSED_ITEMS' || existingVersion.versionNumber === '0.0.0')) {
+    throw createError({ statusCode: 400, statusMessage: 'INCOMING version cannot be modified' })
   }
 
   const dataToUpdate: any = {}
   if (body.versionNumber !== undefined) {
     const verNum = body.versionNumber.trim()
-    if (verNum === '0.0.0' || body.status === 'PROPOSED_ITEMS') {
-      throw createError({ statusCode: 400, statusMessage: 'PROPOSED_ITEMS version 0.0.0 is reserved and system managed' })
+    if (verNum === '0.0.0' || body.status === 'INCOMING' || body.status === 'PROPOSED_ITEMS') {
+      throw createError({ statusCode: 400, statusMessage: 'INCOMING version 0.0.0 is reserved and system managed' })
     }
 
     const taken = await prisma.version.findFirst({

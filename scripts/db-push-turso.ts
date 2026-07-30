@@ -40,9 +40,18 @@ async function main() {
     try {
       await client.execute(safeStmt)
     } catch (err: any) {
-      if (!err?.message?.includes('already exists')) {
+      if (!err?.message?.includes('already exists') && !err?.message?.includes('duplicate column')) {
         console.warn('Notice:', err?.message || err)
       }
+    }
+  }
+
+  // Ensure versionCategoryId column exists on VersionItem table
+  try {
+    await client.execute('ALTER TABLE VersionItem ADD COLUMN versionCategoryId TEXT REFERENCES VersionCategory(id) ON DELETE SET NULL;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
     }
   }
 

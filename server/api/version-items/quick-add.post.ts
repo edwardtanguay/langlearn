@@ -1,5 +1,6 @@
 import { requireAuth } from '../../utils/auth'
 import { prisma } from '../../utils/prisma'
+import { parseAndAssignCategories } from '../../utils/categoryParser'
 
 export default defineEventHandler(async (event) => {
   const user = await requireAuth(event)
@@ -15,30 +16,31 @@ export default defineEventHandler(async (event) => {
 
   const type = body?.type === 'FEATURE' ? 'FEATURE' : 'BUGFIX'
 
-  // Ensure PROPOSED_ITEMS 0.0.0 version exists
-  let proposedVersion = await prisma.version.findFirst({
+  // Ensure INCOMING 0.0.0 version exists
+  let incomingVersion = await prisma.version.findFirst({
     where: {
       OR: [
+        { status: 'INCOMING' },
         { status: 'PROPOSED_ITEMS' },
         { versionNumber: '0.0.0' }
       ]
     }
   })
 
-  if (!proposedVersion) {
-    proposedVersion = await prisma.version.create({
+  if (!incomingVersion) {
+    incomingVersion = await prisma.version.create({
       data: {
         versionNumber: '0.0.0',
-        title: 'Proposed changes',
-        status: 'PROPOSED_ITEMS',
+        title: 'Incoming changes',
+        status: 'INCOMING',
         publishDate: null
       }
     })
   }
 
-  // Calculate order within PROPOSED_ITEMS version items
+  // Calculate order within INCOMING version items
   const lastItem = await prisma.versionItem.findFirst({
-    where: { versionId: proposedVersion.id },
+    where: { versionId: incomingVersion.id },
     orderBy: { orderWithinVersion: 'desc' }
   })
   const nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
@@ -47,7 +49,7 @@ export default defineEventHandler(async (event) => {
 
   const newItem = await prisma.versionItem.create({
     data: {
-      versionId: proposedVersion.id,
+      versionId: incomingVersion.id,
       type,
       body: itemBody,
       startedByUserId: userId,
@@ -58,9 +60,20 @@ export default defineEventHandler(async (event) => {
     }
   })
 
+  // Run category parsing across all items
+  await parseAndAssignCategories()
+
+  const refetchedItem = await prisma.versionItem.findUnique({
+    where: { id: newItem.id },
+    include: {
+      startedByUser: true,
+      versionCategory: true
+    }
+  })
+
   return {
     success: true,
-    item: newItem
+    item: refetchedItem || newItem
   }
 })
 
