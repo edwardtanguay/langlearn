@@ -21,7 +21,7 @@ interface Version {
   id: string
   versionNumber: string
   title?: string | null
-  status: 'PUBLISHED' | 'IN_PROGRESS'
+  status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE_VERSION' | 'PROPOSED_ITEMS'
   publishDate?: string | null
   versionItems: VersionItem[]
 }
@@ -31,6 +31,7 @@ const unassignedItems = ref<VersionItem[]>([])
 const isLoading = ref(true)
 const isAdmin = ref(false)
 const adminEditMode = ref(false)
+const versionSaveError = ref('')
 
 // Edit Modals for Admin
 const showEditItemModal = ref(false)
@@ -40,7 +41,7 @@ const editingItem = ref<{ id: string; versionId: string; afterItemId: string; bo
 const isNewItem = ref(false)
 
 const showEditVersionModal = ref(false)
-const editingVersion = ref<{ id: string; versionNumber: string; title: string; status: 'PUBLISHED' | 'IN_PROGRESS'; publishDate: string }>({
+const editingVersion = ref<{ id: string; versionNumber: string; title: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE_VERSION'; publishDate: string }>({
   id: '', versionNumber: '', title: '', status: 'IN_PROGRESS', publishDate: ''
 })
 const isNewVersion = ref(false)
@@ -93,20 +94,56 @@ onUnmounted(() => {
   }
 })
 
+// Helper to compare SemVer strings in descending order
+function compareSemVerDesc(v1: string, v2: string): number {
+  const p1 = v1.split('.').map(n => parseInt(n, 10))
+  const p2 = v2.split('.').map(n => parseInt(n, 10))
+  const maxLen = Math.max(p1.length, p2.length)
+  for (let i = 0; i < maxLen; i++) {
+    const num1 = p1[i] ?? 0
+    const num2 = p2[i] ?? 0
+    if (num1 !== num2) return num2 - num1
+  }
+  return 0
+}
+
 const displayedVersions = computed(() => {
-  let list = [...versions.value]
-  if (!isAdmin.value) {
-    list = list.filter(v => v.status !== 'IN_PROGRESS')
+  if (!adminEditMode.value) {
+    // Admin mode OFF: show ONLY PUBLISHED versions with at least one item, descending by version number
+    return versions.value
+      .filter(v => v.status === 'PUBLISHED' && v.versionItems.length > 0)
+      .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
   }
-  if (adminEditMode.value) {
-    list.sort((a, b) => {
-      if (a.status === 'IN_PROGRESS' && b.status !== 'IN_PROGRESS') return -1
-      if (a.status !== 'IN_PROGRESS' && b.status === 'IN_PROGRESS') return 1
-      return 0
-    })
-  }
-  return list
+
+  // Admin mode ON:
+  // 1. FUTURE versions in descending version order
+  // 2. PROPOSED_ITEMS version (0.0.0)
+  // 3. PUBLISHED and IN_PROGRESS versions in descending version order
+  const futureVers = versions.value
+    .filter(v => v.status === 'FUTURE_VERSION')
+    .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+
+  const proposedVer = versions.value.filter(v => v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
+
+  const activeVers = versions.value
+    .filter(v => v.status === 'PUBLISHED' || v.status === 'IN_PROGRESS')
+    .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+
+  return [...futureVers, ...proposedVer, ...activeVers]
 })
+
+function calculateNextVersionNumber(): string {
+  const validVers = versions.value.filter(v => v.versionNumber !== '0.0.0' && v.status !== 'PROPOSED_ITEMS')
+  if (validVers.length === 0) return '0.1.0'
+
+  const sorted = [...validVers].sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+  const latest = sorted[0]?.versionNumber || '0.13.0'
+
+  const parts = latest.split('.').map(n => parseInt(n, 10))
+  const major = parts[0] ?? 0
+  const minor = parts[1] ?? 0
+  return `${major}.${minor + 1}.0`
+}
 
 function formatSentenceCase(str: string | null | undefined): string {
   if (!str) return ''
@@ -145,73 +182,77 @@ function getRelativeDateStr(dateStr: string | null | undefined): string {
 
 const openAddVersion = () => {
   isNewVersion.value = true
-  editingVersion.value = { id: '', versionNumber: '', title: '', status: 'IN_PROGRESS', publishDate: '' }
+  versionSaveError.value = ''
+  const todayStr = new Date().toISOString().split('T')[0] ?? ''
+  editingVersion.value = {
+    id: '',
+    versionNumber: calculateNextVersionNumber(),
+    title: '',
+    status: 'IN_PROGRESS',
+    publishDate: todayStr
+  }
   showEditVersionModal.value = true
 }
 
 const openEditVersion = (ver: Version) => {
+  if (ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') return
   isNewVersion.value = false
+  versionSaveError.value = ''
   const formattedDate = formatPublishDate(ver.publishDate)
   editingVersion.value = { id: ver.id, versionNumber: ver.versionNumber, title: ver.title || '', status: ver.status, publishDate: formattedDate }
   showEditVersionModal.value = true
 }
 
 const saveAdminVersion = async () => {
-  if (!editingVersion.value.versionNumber.trim()) return
-  const snapshot = JSON.parse(JSON.stringify(versions.value))
-  const targetId = editingVersion.value.id
-  const payload = { ...editingVersion.value }
+  versionSaveError.value = ''
+  const vNum = editingVersion.value.versionNumber.trim()
+  if (!vNum) {
+    versionSaveError.value = 'Version number is required'
+    return
+  }
 
-  if (isNewVersion.value) {
-    const tempId = 'temp-' + Date.now()
-    const newVer: Version = {
-      id: tempId,
-      versionNumber: payload.versionNumber.trim(),
-      title: payload.title.trim() || null,
-      status: payload.status,
-      publishDate: payload.publishDate || null,
-      versionItems: []
-    }
-    versions.value.unshift(newVer)
-    showEditVersionModal.value = false
+  if (vNum === '0.0.0') {
+    versionSaveError.value = 'version number already taken'
+    return
+  }
 
-    try {
+  // Client-side duplicate check
+  const duplicate = versions.value.find(v => v.versionNumber === vNum && (isNewVersion.value || v.id !== editingVersion.value.id))
+  if (duplicate) {
+    versionSaveError.value = 'version number already taken'
+    return
+  }
+
+  const payload = { ...editingVersion.value, versionNumber: vNum }
+
+  try {
+    if (isNewVersion.value) {
       const created = await $fetch<Version>('/api/dev/versions', {
         method: 'POST',
         body: payload
       })
-      const idx = versions.value.findIndex(v => v.id === tempId)
-      if (idx !== -1) versions.value[idx] = created
-    } catch (err: any) {
-      versions.value = snapshot
-      alert(err.data?.statusMessage || 'Failed to save version')
-    }
-  } else {
-    const existing = versions.value.find(v => v.id === targetId)
-    if (existing) {
-      existing.versionNumber = payload.versionNumber.trim()
-      existing.title = payload.title.trim() || null
-      existing.status = payload.status
-      existing.publishDate = payload.publishDate || null
-    }
-    showEditVersionModal.value = false
-
-    try {
-      const updated = await $fetch<Version>(`/api/dev/versions/${targetId}`, {
+      showEditVersionModal.value = false
+      await loadData()
+    } else {
+      const updated = await $fetch<Version>(`/api/dev/versions/${editingVersion.value.id}`, {
         method: 'PUT',
         body: payload
       })
-      if (existing) {
-        Object.assign(existing, updated)
-      }
-    } catch (err: any) {
-      versions.value = snapshot
-      alert(err.data?.statusMessage || 'Failed to save version')
+      showEditVersionModal.value = false
+      await loadData()
+    }
+  } catch (err: any) {
+    const errMsg = err.data?.statusMessage || err.message || 'Failed to save version'
+    if (errMsg.toLowerCase().includes('already taken')) {
+      versionSaveError.value = 'version number already taken'
+    } else {
+      versionSaveError.value = errMsg
     }
   }
 }
 
 const deleteVersion = async (ver: Version) => {
+  if (ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') return
   if (!confirm(`Are you sure you want to delete version ${ver.versionNumber}?`)) return
   const snapshot = JSON.parse(JSON.stringify(versions.value))
   versions.value = versions.value.filter(v => v.id !== ver.id)
@@ -280,7 +321,6 @@ const deleteItem = async (item: VersionItem) => {
 }
 
 const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
-  // Find item in unassignedItems or within versions
   let list: VersionItem[] | null = null
   let idx = unassignedItems.value.findIndex(i => i.id === itemId)
   if (idx !== -1) {
@@ -302,7 +342,6 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
   if (!currentItem) return
 
   const itemType = currentItem.type
-  // Filter matching type items to find relative swap neighbor
   const typeIndices: number[] = []
   list.forEach((item, index) => {
     if (item.type === itemType) typeIndices.push(index)
@@ -317,7 +356,6 @@ const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
   const targetIdx = typeIndices[targetPosInGroup]
   if (targetIdx === undefined) return
 
-  // Optimistic in-place swap
   const temp = list[idx]
   if (temp && list[targetIdx]) {
     list[idx] = list[targetIdx]
@@ -426,7 +464,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
               class="sr-only peer"
             />
             <div class="relative w-8 h-4 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[16px] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-600"></div>
-            <span class="font-medium" :class="adminEditMode ? 'text-white' : 'text-gray-400'">Admin Edit</span>
+            <span class="font-medium" :class="adminEditMode ? 'text-white' : 'text-gray-400'">Admin mode</span>
           </label>
         </div>
       </div>
@@ -435,119 +473,38 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
         Loading version history...
       </div>
 
-      <div v-else-if="displayedVersions.length === 0 && (!isAdmin || unassignedItems.length === 0)" class="py-6 text-gray-500 text-sm">
+      <div v-else-if="displayedVersions.length === 0" class="py-6 text-gray-500 text-sm">
         No versions published yet.
       </div>
 
       <!-- Version Cards List -->
       <div v-else class="space-y-8 text-sm text-gray-800 dark:text-gray-200">
         
-        <!-- Proposed Features & Bug Fixes (Admin section for unassigned items) -->
-        <div v-if="isAdmin" class="space-y-3">
-          <div class="bg-amber-950/30 dark:bg-amber-950/20 border border-amber-800/40 rounded-xl p-2.5 md:p-3.5 shadow-sm space-y-2">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
-              <div class="flex items-center space-x-2.5">
-                <span class="font-bold text-amber-400 text-base md:text-lg">
-                  Proposed features & bug fixes
-                </span>
-                <span class="text-xs font-mono text-amber-400/70">
-                  ({{ unassignedItems.length }} unassigned)
-                </span>
-              </div>
-            </div>
-            <div v-if="adminEditMode" class="text-xs text-gray-400 shrink-0 font-mono text-right pt-1">
-              ( <button @click="openAddItem(null, 'TOP')" class="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors">add item</button> )
-            </div>
-          </div>
-
-          <div v-if="unassignedItems.length === 0" class="pl-3 text-xs text-gray-500 italic">
-            No proposed features or bug fixes yet.
-          </div>
-
-          <!-- Unassigned Items List -->
-          <div v-else class="pl-2 pr-2 space-y-3">
-            <!-- Features Section -->
-            <div v-if="unassignedItems.filter(i => i.type === 'FEATURE').length > 0" class="space-y-1.5">
-              <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">features</h4>
-              <ul class="space-y-1.5 text-xs text-gray-300">
-                <li v-for="item in unassignedItems.filter(i => i.type === 'FEATURE')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
-                  <div class="flex items-start gap-2 flex-1 min-w-0">
-                    <span class="shrink-0 text-gray-400 select-none">•</span>
-                    <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
-                  </div>
-                  <span v-if="adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
-                    ( 
-                    <button 
-                      @click="!isFirstInList(item, unassignedItems.filter(i => i.type === 'FEATURE')) && reorderItem(item.id, 'UP')" 
-                      :disabled="isFirstInList(item, unassignedItems.filter(i => i.type === 'FEATURE'))" 
-                      :class="isFirstInList(item, unassignedItems.filter(i => i.type === 'FEATURE')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
-                    >up</button> | 
-                    <button 
-                      @click="!isLastInList(item, unassignedItems.filter(i => i.type === 'FEATURE')) && reorderItem(item.id, 'DOWN')" 
-                      :disabled="isLastInList(item, unassignedItems.filter(i => i.type === 'FEATURE'))" 
-                      :class="isLastInList(item, unassignedItems.filter(i => i.type === 'FEATURE')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
-                    >down</button> | 
-                    <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
-                    <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | 
-                    <button @click="openAddItem(null, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
-                    )
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Bug Fixes Section -->
-            <div v-if="unassignedItems.filter(i => i.type === 'BUGFIX').length > 0" class="space-y-1.5">
-              <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">bug fixes</h4>
-              <ul class="space-y-1.5 text-xs text-gray-300">
-                <li v-for="item in unassignedItems.filter(i => i.type === 'BUGFIX')" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
-                  <div class="flex items-start gap-2 flex-1 min-w-0">
-                    <span class="shrink-0 text-gray-400 select-none">•</span>
-                    <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
-                  </div>
-                  <span v-if="adminEditMode" class="text-gray-400 shrink-0 text-[11px] font-mono whitespace-nowrap">
-                    ( 
-                    <button 
-                      @click="!isFirstInList(item, unassignedItems.filter(i => i.type === 'BUGFIX')) && reorderItem(item.id, 'UP')" 
-                      :disabled="isFirstInList(item, unassignedItems.filter(i => i.type === 'BUGFIX'))" 
-                      :class="isFirstInList(item, unassignedItems.filter(i => i.type === 'BUGFIX')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
-                    >up</button> | 
-                    <button 
-                      @click="!isLastInList(item, unassignedItems.filter(i => i.type === 'BUGFIX')) && reorderItem(item.id, 'DOWN')" 
-                      :disabled="isLastInList(item, unassignedItems.filter(i => i.type === 'BUGFIX'))" 
-                      :class="isLastInList(item, unassignedItems.filter(i => i.type === 'BUGFIX')) ? 'text-gray-600 dark:text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
-                    >down</button> | 
-                    <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
-                    <button @click="deleteItem(item)" class="text-red-400 hover:text-red-300 cursor-pointer">delete</button> | 
-                    <button @click="openAddItem(null, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
-                    )
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Standard Version Cards -->
+        <!-- Version Cards -->
         <div v-for="ver in displayedVersions" :key="ver.id" class="space-y-3">
           <!-- Full-Width Version Panel Card -->
           <div class="bg-gray-800/40 dark:bg-gray-800/40 rounded-xl p-2.5 md:p-3.5 shadow-sm space-y-2">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
               <div class="flex items-baseline space-x-2.5">
-                <span class="font-mono font-bold text-amber-400 text-base md:text-lg">
-                  v{{ ver.versionNumber }}
+                <span v-if="ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="font-bold text-amber-400 text-base md:text-lg">
+                  {{ ver.title || 'Proposed changes' }}
                 </span>
-                <span v-if="ver.title" class="font-bold text-white text-base md:text-lg">
-                  {{ ver.title }}
-                </span>
+                <template v-else>
+                  <span class="font-mono font-bold text-amber-400 text-base md:text-lg">
+                    v{{ ver.versionNumber }}
+                  </span>
+                  <span v-if="ver.title" class="font-bold text-white text-base md:text-lg">
+                    {{ ver.title }}
+                  </span>
+                </template>
               </div>
               <div v-if="ver.publishDate" class="text-xs sm:text-sm text-gray-400 font-mono shrink-0">
                 {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
               </div>
             </div>
 
-            <!-- Right-aligned Version CRUD Actions -->
-            <div v-if="isAdmin && adminEditMode" class="text-xs text-gray-400 shrink-0 font-mono text-right pt-1">
+            <!-- Right-aligned Version CRUD Actions (Excluding PROPOSED_ITEMS) -->
+            <div v-if="isAdmin && adminEditMode && ver.status !== 'PROPOSED_ITEMS' && ver.versionNumber !== '0.0.0'" class="text-xs text-gray-400 shrink-0 font-mono text-right pt-1">
               ( <button @click="openEditVersion(ver)" class="hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-400 hover:text-red-300 cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors">add item</button> )
             </div>
           </div>
@@ -622,14 +579,19 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
     <div v-if="showEditVersionModal && editingVersion" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl space-y-4">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewVersion ? 'Admin Create: Version' : 'Admin Edit: Version' }}</h3>
+        
+        <div v-if="versionSaveError" class="p-2.5 bg-red-900/40 border border-red-700/60 rounded text-xs text-red-300 font-mono">
+          {{ versionSaveError }}
+        </div>
+
         <form @submit.prevent="saveAdminVersion" class="space-y-3 text-xs">
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Number</label>
-            <input v-model="editingVersion.versionNumber" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="0.3.0" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+            <input v-model="editingVersion.versionNumber" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="0.14.0" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Title</label>
-            <input v-model="editingVersion.title" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="Added version history" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+            <input v-model="editingVersion.title" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="Version feature description" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Publish Date (YYYY-MM-DD)</label>
@@ -640,6 +602,7 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
             <select v-model="editingVersion.status" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
               <option value="IN_PROGRESS">IN_PROGRESS</option>
               <option value="PUBLISHED">PUBLISHED</option>
+              <option value="FUTURE_VERSION">FUTURE_VERSION</option>
             </select>
           </div>
           <div class="flex justify-end space-x-2 pt-2">
@@ -666,9 +629,13 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Version</label>
               <select v-model="editingItem.versionId" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
-                <option value="none">none (Proposed)</option>
                 <option v-for="ver in versions" :key="ver.id" :value="ver.id">
-                  v{{ ver.versionNumber }} {{ ver.title ? `- ${ver.title}` : '' }}
+                  <template v-if="ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'">
+                    Proposed changes (0.0.0)
+                  </template>
+                  <template v-else>
+                    v{{ ver.versionNumber }} {{ ver.title ? `- ${ver.title}` : '' }}
+                  </template>
                 </option>
               </select>
             </div>
@@ -686,3 +653,4 @@ const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
     </div>
   </div>
 </template>
+

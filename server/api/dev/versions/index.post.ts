@@ -12,9 +12,28 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const verNum = body.versionNumber.trim()
+  if (verNum === '0.0.0' || body.status === 'PROPOSED_ITEMS') {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'PROPOSED_ITEMS version 0.0.0 is reserved and system managed'
+    })
+  }
+
+  const existing = await prisma.version.findUnique({
+    where: { versionNumber: verNum }
+  })
+
+  if (existing) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'version number already taken'
+    })
+  }
+
   const version = await prisma.version.create({
     data: {
-      versionNumber: body.versionNumber.trim(),
+      versionNumber: verNum,
       title: body.title ? body.title.trim() : null,
       status: body.status || 'IN_PROGRESS',
       publishDate: body.publishDate ? new Date(body.publishDate) : null
@@ -23,3 +42,4 @@ export default defineEventHandler(async (event) => {
 
   return version
 })
+

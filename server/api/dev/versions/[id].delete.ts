@@ -9,9 +9,18 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'ID required' })
   }
 
+  const existingVersion = await prisma.version.findUnique({
+    where: { id }
+  })
+
+  if (existingVersion && (existingVersion.status === 'PROPOSED_ITEMS' || existingVersion.versionNumber === '0.0.0')) {
+    throw createError({ statusCode: 400, statusMessage: 'PROPOSED_ITEMS version cannot be deleted' })
+  }
+
   await prisma.version.delete({
     where: { id }
   })
 
   return { success: true }
 })
+

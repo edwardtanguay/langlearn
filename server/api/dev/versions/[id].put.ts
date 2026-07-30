@@ -10,9 +10,31 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'ID required' })
   }
 
+  const existingVersion = await prisma.version.findUnique({
+    where: { id }
+  })
+
+  if (existingVersion && (existingVersion.status === 'PROPOSED_ITEMS' || existingVersion.versionNumber === '0.0.0')) {
+    throw createError({ statusCode: 400, statusMessage: 'PROPOSED_ITEMS version cannot be modified' })
+  }
+
   const dataToUpdate: any = {}
   if (body.versionNumber !== undefined) {
-    dataToUpdate.versionNumber = body.versionNumber.trim()
+    const verNum = body.versionNumber.trim()
+    if (verNum === '0.0.0' || body.status === 'PROPOSED_ITEMS') {
+      throw createError({ statusCode: 400, statusMessage: 'PROPOSED_ITEMS version 0.0.0 is reserved and system managed' })
+    }
+
+    const taken = await prisma.version.findFirst({
+      where: {
+        versionNumber: verNum,
+        NOT: { id }
+      }
+    })
+    if (taken) {
+      throw createError({ statusCode: 400, statusMessage: 'version number already taken' })
+    }
+    dataToUpdate.versionNumber = verNum
   }
   if (body.title !== undefined) {
     dataToUpdate.title = body.title ? body.title.trim() : null
@@ -31,3 +53,4 @@ export default defineEventHandler(async (event) => {
 
   return updated
 })
+

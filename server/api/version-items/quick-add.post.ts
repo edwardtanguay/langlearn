@@ -1,16 +1,6 @@
 import { requireAuth } from '../../utils/auth'
 import { prisma } from '../../utils/prisma'
 
-function incrementMinorVersion(versionStr: string): string {
-  const parts = versionStr.split('.').map(n => parseInt(n, 10))
-  if (parts.length < 3 || parts.some(isNaN)) {
-    return '0.2.0'
-  }
-  const major = parts[0] ?? 0
-  const minor = (parts[1] ?? 1) + 1
-  return `${major}.${minor}.0`
-}
-
 export default defineEventHandler(async (event) => {
   const user = await requireAuth(event)
   const body = await readBody(event)
@@ -25,9 +15,30 @@ export default defineEventHandler(async (event) => {
 
   const type = body?.type === 'FEATURE' ? 'FEATURE' : 'BUGFIX'
 
-  // Calculate order within unassigned items (versionId === null)
+  // Ensure PROPOSED_ITEMS 0.0.0 version exists
+  let proposedVersion = await prisma.version.findFirst({
+    where: {
+      OR: [
+        { status: 'PROPOSED_ITEMS' },
+        { versionNumber: '0.0.0' }
+      ]
+    }
+  })
+
+  if (!proposedVersion) {
+    proposedVersion = await prisma.version.create({
+      data: {
+        versionNumber: '0.0.0',
+        title: 'Proposed changes',
+        status: 'PROPOSED_ITEMS',
+        publishDate: null
+      }
+    })
+  }
+
+  // Calculate order within PROPOSED_ITEMS version items
   const lastItem = await prisma.versionItem.findFirst({
-    where: { versionId: null },
+    where: { versionId: proposedVersion.id },
     orderBy: { orderWithinVersion: 'desc' }
   })
   const nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
@@ -36,7 +47,7 @@ export default defineEventHandler(async (event) => {
 
   const newItem = await prisma.versionItem.create({
     data: {
-      versionId: null,
+      versionId: proposedVersion.id,
       type,
       body: itemBody,
       startedByUserId: userId,
@@ -52,3 +63,4 @@ export default defineEventHandler(async (event) => {
     item: newItem
   }
 })
+
