@@ -628,7 +628,11 @@ const saveAdminItem = async () => {
   }
 }
 
-const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string) => {
+const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string, event?: Event) => {
+  if (event?.target) {
+    (event.target as HTMLSelectElement).value = ''
+  }
+  if (!categoryId || categoryId === item.versionCategoryId) return
   if (categoryId === 'NEW_CATEGORY') {
     openAddCategory()
     return
@@ -654,9 +658,13 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string)
   }
 }
 
-const updateItemVersionDirectly = async (item: VersionItem, versionId: string) => {
+const updateItemVersionDirectly = async (item: VersionItem, versionId: string, event?: Event) => {
+  if (event?.target) {
+    (event.target as HTMLSelectElement).value = ''
+  }
   const targetVerId = (versionId === 'none' || versionId === '') ? null : versionId
   const oldVerId = item.versionId
+  if (oldVerId === targetVerId) return
 
   // Optimistic update
   item.versionId = targetVerId
@@ -911,31 +919,57 @@ async function copyIssueMarkdown(ver: Version) {
   }
 }
 
-// Item Rank Slider Handlers
-function handleRankSliderInput(item: VersionItem, valStr: string) {
-  const val = Math.max(0, Math.min(5, parseFloat(valStr) || 2.5))
-  item.rank = val
+// Item Rank Redistribution Handlers (UP / DOWN)
+async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: VersionItem[]) {
+  const currentIndex = list.findIndex(i => i.id === item.id)
+  if (currentIndex === -1) return
+
+  const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1
+  if (targetIndex < 0 || targetIndex >= list.length) return
+
+  // Swap items in the list to update relative order
+  const updatedList = [...list]
+  const temp = updatedList[currentIndex]!
+  updatedList[currentIndex] = updatedList[targetIndex]!
+  updatedList[targetIndex] = temp
+
+  // Redistribute process: renumber all ranks distributed from 0 to 5 evenly with random 5-digit decimal offsets
+  const n = updatedList.length
+  const itemsToUpdate: { id: string; rank: number }[] = []
+
+  updatedList.forEach((itm, idx) => {
+    // Rank descending: top item (idx 0) gets highest rank (~ 4.5 - 5.0), bottom gets lowest rank (~ 0.5)
+    const evenBase = n > 1 ? 5.0 - ((idx + 1) / (n + 1)) * 5.0 : 2.5
+    // Add random 5-digit decimal offset (e.g. 0.01234 to 0.09876) to make it unlikely two are the same and ensure predictable sort order
+    const randomOffset = (Math.floor(Math.random() * 90000) + 10000) / 1000000
+    const newRank = parseFloat((evenBase + randomOffset).toFixed(5))
+
+    itm.rank = newRank
+    itemsToUpdate.push({ id: itm.id, rank: newRank })
+  })
+
+  // Sort updated list in reactive state
+  const sortedUpdated = sortItemsByRankAndType(updatedList)
+
+  // Update reactive container
   if (item.versionId) {
     const ver = versions.value.find(v => v.id === item.versionId)
     if (ver) {
-      ver.versionItems = sortItemsByRankAndType(ver.versionItems)
+      ver.versionItems = sortedUpdated
     }
   } else {
-    unassignedItems.value = sortItemsByRankAndType(unassignedItems.value)
+    unassignedItems.value = sortedUpdated
   }
-}
 
-const handleRankSliderChange = async (item: VersionItem, valStr: string) => {
-  const val = Math.max(0, Math.min(5, parseFloat(valStr) || 2.5))
-  item.rank = val
+  // Persist new ranks to database via batch reorder API
   try {
-    await $fetch(`/api/dev/version-items/${item.id}`, {
-      method: 'PUT',
-      body: { rank: val }
+    await $fetch('/api/dev/version-items/reorder', {
+      method: 'POST',
+      body: { items: itemsToUpdate }
     })
-    await loadData(false)
   } catch (err: any) {
-    alert(err.data?.statusMessage || 'Failed to update item rank')
+    console.error('Failed to persist redistributed ranks:', err)
+    await loadData(false)
   }
 }
 </script>
@@ -1080,48 +1114,57 @@ const handleRankSliderChange = async (item: VersionItem, valStr: string) => {
             <!-- Case A: ALL items belong to General -> list directly without category group header -->
             <div v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral" class="space-y-1.5">
                 <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
-                  <li v-for="item in ver.versionItems" :key="item.id" class="flex items-center justify-between gap-3 py-0.5">
+                  <li v-for="(item, itemIdx) in ver.versionItems" :key="item.id" class="flex items-center justify-between gap-3 py-0.5">
                     <div class="flex items-center gap-2 flex-1 min-w-0">
                       <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
                       <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
-                      <!-- Compact rank slider (0 left - 5 right) -->
-                      <input
-                        v-if="isAdmin && adminEditMode"
-                        type="range"
-                        min="0"
-                        max="5"
-                        step="0.1"
-                        :value="item.rank ?? 2.5"
-                        @input="handleRankSliderInput(item, ($event.target as HTMLInputElement).value)"
-                        @change="handleRankSliderChange(item, ($event.target as HTMLInputElement).value)"
-                        title="Rank item (0 left - 5 right)"
-                        class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500 shrink-0 self-center"
-                      />
+                      
+                      <!-- UP / DOWN Rank Controls for Admin -->
+                      <div v-if="isAdmin && adminEditMode" class="flex items-center gap-0.5 shrink-0 border border-gray-300 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-800 p-0.5">
+                        <button
+                          @click="moveItemRank(item, 'up', ver.versionItems)"
+                          :disabled="itemIdx === 0"
+                          title="Move rank UP"
+                          class="px-1 py-0.5 text-[10px] font-bold rounded text-gray-700 dark:text-gray-200 hover:bg-amber-100 dark:hover:bg-amber-900/60 hover:text-amber-800 dark:hover:text-amber-300 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed transition-colors"
+                        >
+                          ▲
+                        </button>
+                        <button
+                          @click="moveItemRank(item, 'down', ver.versionItems)"
+                          :disabled="itemIdx === ver.versionItems.length - 1"
+                          title="Move rank DOWN"
+                          class="px-1 py-0.5 text-[10px] font-bold rounded text-gray-700 dark:text-gray-200 hover:bg-amber-100 dark:hover:bg-amber-900/60 hover:text-amber-800 dark:hover:text-amber-300 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed transition-colors"
+                        >
+                          ▼
+                        </button>
+                      </div>
                     </div>
 
                     <!-- Category, Version & Action buttons for Admin -->
                     <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
                       <!-- 1. Category dropdown -->
                       <select
-                        :value="item.versionCategoryId || ''"
-                        @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value)"
+                        value=""
+                        @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value, $event)"
                         class="px-1.5 py-0.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-[11px] text-gray-800 dark:text-gray-300 focus:outline-none cursor-pointer"
                       >
-                        <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
+                        <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">➔ move to category</option>
+                        <option v-for="cat in categories.filter(c => c.id !== item.versionCategoryId)" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
                         <option value="NEW_CATEGORY">+ Add category...</option>
                       </select>
 
                       <!-- 2. Version dropdown -->
                       <select
                         v-if="shouldShowVersionDropdown(item, ver)"
-                        :value="item.versionId || 'none'"
-                        @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
+                        value=""
+                        @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value, $event)"
                         class="px-1.5 py-0.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-[11px] text-gray-800 dark:text-gray-300 focus:outline-none cursor-pointer"
                       >
-                        <option value="none">Incoming changes</option>
-                        <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
+                        <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">➔ move to version</option>
+                        <option v-if="item.versionId" value="none">Incoming changes</option>
+                        <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0' && v.id !== item.versionId)" :key="v.id" :value="v.id">
                           v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
                         </option>
                       </select>
@@ -1181,7 +1224,7 @@ const handleRankSliderChange = async (item: VersionItem, valStr: string) => {
                       @change="moveCategoryItemsToVersion(group.categoryId, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
                       class="ml-auto px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer"
                     >
-                      <option value="" disabled selected>Move all items to version...</option>
+                      <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">➔ move all items to version</option>
                       <option value="none">Incoming changes</option>
                       <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
                         v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
@@ -1191,48 +1234,57 @@ const handleRankSliderChange = async (item: VersionItem, valStr: string) => {
 
                   <!-- Category Group Items (Indented) -->
                   <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300 pl-3">
-                    <li v-for="item in group.items" :key="item.id" class="flex items-center justify-between gap-3 py-0.5">
+                    <li v-for="(item, itemIdx) in group.items" :key="item.id" class="flex items-center justify-between gap-3 py-0.5">
                       <div class="flex items-center gap-2 flex-1 min-w-0">
                         <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
                         <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
-                        <!-- Compact rank slider (0 left - 5 right) -->
-                        <input
-                          v-if="isAdmin && adminEditMode"
-                          type="range"
-                          min="0"
-                          max="5"
-                          step="0.1"
-                          :value="item.rank ?? 2.5"
-                          @input="handleRankSliderInput(item, ($event.target as HTMLInputElement).value)"
-                          @change="handleRankSliderChange(item, ($event.target as HTMLInputElement).value)"
-                          title="Rank item (0 left - 5 right)"
-                          class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500 shrink-0 self-center"
-                        />
+                        
+                        <!-- UP / DOWN Rank Controls for Admin -->
+                        <div v-if="isAdmin && adminEditMode" class="flex items-center gap-0.5 shrink-0 border border-gray-300 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-800 p-0.5">
+                          <button
+                            @click="moveItemRank(item, 'up', group.items)"
+                            :disabled="itemIdx === 0"
+                            title="Move rank UP"
+                            class="px-1 py-0.5 text-[10px] font-bold rounded text-gray-700 dark:text-gray-200 hover:bg-amber-100 dark:hover:bg-amber-900/60 hover:text-amber-800 dark:hover:text-amber-300 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed transition-colors"
+                          >
+                            ▲
+                          </button>
+                          <button
+                            @click="moveItemRank(item, 'down', group.items)"
+                            :disabled="itemIdx === group.items.length - 1"
+                            title="Move rank DOWN"
+                            class="px-1 py-0.5 text-[10px] font-bold rounded text-gray-700 dark:text-gray-200 hover:bg-amber-100 dark:hover:bg-amber-900/60 hover:text-amber-800 dark:hover:text-amber-300 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed transition-colors"
+                          >
+                            ▼
+                          </button>
+                        </div>
                       </div>
 
                       <!-- Category, Version & Action buttons for Admin -->
                       <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
                         <!-- 1. Category dropdown -->
                         <select
-                          :value="item.versionCategoryId || ''"
-                          @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value)"
+                          value=""
+                          @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value, $event)"
                           class="px-1.5 py-0.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-[11px] text-gray-800 dark:text-gray-300 focus:outline-none cursor-pointer"
                         >
-                          <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
+                          <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">➔ move to category</option>
+                          <option v-for="cat in categories.filter(c => c.id !== item.versionCategoryId)" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
                           <option value="NEW_CATEGORY">+ Add category...</option>
                         </select>
 
                         <!-- 2. Version dropdown -->
                         <select
                           v-if="shouldShowVersionDropdown(item, ver)"
-                          :value="item.versionId || 'none'"
-                          @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
+                          value=""
+                          @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value, $event)"
                           class="px-1.5 py-0.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-[11px] text-gray-800 dark:text-gray-300 focus:outline-none cursor-pointer"
                         >
-                          <option value="none">Incoming changes</option>
-                          <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
+                          <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">➔ move to version</option>
+                          <option v-if="item.versionId" value="none">Incoming changes</option>
+                          <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0' && v.id !== item.versionId)" :key="v.id" :value="v.id">
                             v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
                           </option>
                         </select>

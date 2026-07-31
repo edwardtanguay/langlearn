@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon } from '@heroicons/vue/24/outline'
+import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon, VideoCameraIcon } from '@heroicons/vue/24/outline'
 
 interface CardStats {
   readyCount: number
@@ -95,6 +95,7 @@ const navItems = computed(() => {
   if (loggedIn.value) {
     items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
     items.push({ name: 'Pronunciation', path: '/pronunciation', icon: SpeakerWaveIcon })
+    items.push({ name: 'Videos', path: '/videos', icon: VideoCameraIcon })
     items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
     if (showDevPageConfig.value && isAdmin.value) {
       items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })

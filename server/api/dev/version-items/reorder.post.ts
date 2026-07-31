@@ -1,51 +1,31 @@
-import { requireAdmin } from '../../../utils/auth'
+import { defineEventHandler, readBody, createError } from 'h3'
 import { prisma } from '../../../utils/prisma'
+import { requireAdmin } from '../../../utils/auth'
+
+interface ReorderItem {
+  id: string
+  rank: number
+}
 
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
-  const body = await readBody(event)
-
-  const { itemId, direction } = body || {}
-  if (!itemId || (direction !== 'UP' && direction !== 'DOWN')) {
-    throw createError({ statusCode: 400, statusMessage: 'itemId and direction (UP|DOWN) are required' })
-  }
-
-  const currentItem = await prisma.versionItem.findUnique({
-    where: { id: itemId }
-  })
-  if (!currentItem) {
-    throw createError({ statusCode: 404, statusMessage: 'Item not found' })
-  }
-
-  // Get items in same version sorted by orderWithinVersion
-  const items = await prisma.versionItem.findMany({
-    where: { versionId: currentItem.versionId },
-    orderBy: { orderWithinVersion: 'asc' }
-  })
-
-  const index = items.findIndex(i => i.id === itemId)
-  if (index === -1) {
-    throw createError({ statusCode: 400, statusMessage: 'Item index error' })
-  }
-
-  const targetIndex = direction === 'UP' ? index - 1 : index + 1
-  if (targetIndex < 0 || targetIndex >= items.length) {
-    return { success: true, message: 'Already at limit' }
-  }
-
-  const targetItem = items[targetIndex]
-
-  // Swap orderWithinVersion
-  await prisma.$transaction([
-    prisma.versionItem.update({
-      where: { id: currentItem.id },
-      data: { orderWithinVersion: targetItem.orderWithinVersion }
-    }),
-    prisma.versionItem.update({
-      where: { id: targetItem.id },
-      data: { orderWithinVersion: currentItem.orderWithinVersion }
+  const body = await readBody<{ items: ReorderItem[] }>(event)
+  if (!body || !Array.isArray(body.items)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid payload. "items" array required.'
     })
-  ])
+  }
 
-  return { success: true }
+  // Batch update ranks within a transaction
+  await prisma.$transaction(
+    body.items.map((item) =>
+      prisma.versionItem.update({
+        where: { id: item.id },
+        data: { rank: item.rank }
+      })
+    )
+  )
+
+  return { success: true, count: body.items.length }
 })
