@@ -1208,7 +1208,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
           v-model="searchQuery"
           type="text"
           placeholder="Search version items"
-          class="w-full px-3 py-2 text-sm rounded-lg border transition-colors"
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-colors outline-none focus:outline-none focus:ring-0"
           :class="isSearchActive ? 'bg-gray-800 text-white border-orange-500 placeholder-orange-300/60' : 'bg-gray-50 dark:bg-gray-800/60 text-gray-900 dark:text-gray-300 border-gray-300 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500'"
         />
       </div>
