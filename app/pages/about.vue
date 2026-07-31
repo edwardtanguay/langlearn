@@ -107,8 +107,10 @@ const handleItemRankInput = (e: Event) => {
   editingItem.value.rank = parseFloat(cleaned) || 2.5
 }
 
-const loadData = async () => {
-  isLoading.value = true
+const loadData = async (showLoading = false) => {
+  if (showLoading || versions.value.length === 0) {
+    isLoading.value = true
+  }
   try {
     const data = await $fetch<{ versions: Version[]; unassignedItems: VersionItem[]; categories: VersionCategory[] }>('/api/versions/public')
     versions.value = data.versions || []
@@ -130,6 +132,18 @@ const loadData = async () => {
   }
 }
 
+function shouldShowVersionDropdown(item: VersionItem, ver: Version): boolean {
+  const isIncoming = ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0' || !item.versionId || item.versionId === 'none'
+  if (!isIncoming) return true
+
+  const catObj = item.versionCategory || categories.value.find(c => c.id === item.versionCategoryId)
+  const catTitle = catObj?.title || ''
+  if (catTitle.toLowerCase() === 'clean and assign') {
+    return false
+  }
+  return true
+}
+
 const nuxtApp = useNuxtApp()
 let removeHookListener: (() => void) | null = null
 
@@ -138,7 +152,7 @@ onMounted(() => {
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', checkMobileView)
   }
-  loadData()
+  loadData(true)
 
   // Listen for newly added ideas from QuickAddIdeaDrawer
   removeHookListener = nuxtApp.hook('idea-added' as any, (newItem: VersionItem) => {
@@ -148,7 +162,7 @@ onMounted(() => {
         unassignedItems.value.unshift(newItem)
       }
     }
-    loadData()
+    loadData(false)
   })
 })
 
@@ -417,7 +431,7 @@ const saveAdminVersion = async () => {
         body: payload
       })
     }
-    await loadData()
+    await loadData(false)
   } catch (err: any) {
     versions.value = snapshot
     alert(err.data?.statusMessage || err.message || 'Failed to save version')
@@ -431,6 +445,7 @@ const deleteVersion = async (ver: Version) => {
   versions.value = versions.value.filter(v => v.id !== ver.id)
   try {
     await $fetch(`/api/dev/versions/${ver.id}`, { method: 'DELETE' })
+    await loadData(false)
   } catch (err: any) {
     versions.value = snapshot
     alert(err.data?.statusMessage || 'Failed to delete version')
@@ -439,12 +454,13 @@ const deleteVersion = async (ver: Version) => {
 
 const openAddItem = (versionId: string | null, afterItemId?: string) => {
   isNewItem.value = true
-  const generalCat = categories.value.find(c => c.title === 'General')
+  const cleanAssignCat = categories.value.find(c => c.title.toLowerCase() === 'clean and assign')
+  const defaultCatId = cleanAssignCat?.id || categories.value[0]?.id || ''
   itemRankStr.value = '2.5'
   editingItem.value = {
     id: '',
     versionId: versionId || 'none',
-    versionCategoryId: generalCat?.id || '',
+    versionCategoryId: defaultCatId,
     afterItemId: afterItemId || '',
     body: '',
     type: 'BUGFIX',
@@ -500,6 +516,7 @@ const saveAdminItem = async () => {
       found.type = payload.type
       found.rank = payload.rank
       found.versionCategoryId = payload.versionCategoryId
+      found.versionId = payload.versionId
     } else {
       for (const v of versions.value) {
         const item = v.versionItems.find(i => i.id === payload.id)
@@ -508,8 +525,34 @@ const saveAdminItem = async () => {
           item.type = payload.type
           item.rank = payload.rank
           item.versionCategoryId = payload.versionCategoryId
+          item.versionId = payload.versionId
           break
         }
+      }
+    }
+  } else {
+    const tempId = `temp-${Date.now()}`
+    const targetCat = categories.value.find(c => c.id === payload.versionCategoryId) || null
+    const newItemObj: VersionItem = {
+      id: tempId,
+      versionId: payload.versionId,
+      versionCategoryId: payload.versionCategoryId,
+      versionCategory: targetCat,
+      type: payload.type,
+      body: payload.body,
+      rank: payload.rank,
+      orderWithinVersion: 0
+    }
+    if (!payload.versionId) {
+      const incomingVer = versions.value.find(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
+      if (incomingVer) {
+        incomingVer.versionItems.unshift(newItemObj)
+      }
+      unassignedItems.value.unshift(newItemObj)
+    } else {
+      const targetVer = versions.value.find(v => v.id === payload.versionId)
+      if (targetVer) {
+        targetVer.versionItems.unshift(newItemObj)
       }
     }
   }
@@ -528,7 +571,7 @@ const saveAdminItem = async () => {
         body: payload
       })
     }
-    await loadData()
+    await loadData(false)
   } catch (err: any) {
     versions.value = snapshotVersions
     unassignedItems.value = snapshotUnassigned
@@ -554,6 +597,7 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string)
       method: 'PUT',
       body: { versionCategoryId: categoryId || null }
     })
+    await loadData(false)
   } catch (err: any) {
     item.versionCategoryId = oldCatId
     item.versionCategory = oldCatObj
@@ -595,8 +639,9 @@ const updateItemVersionDirectly = async (item: VersionItem, versionId: string) =
       method: 'PUT',
       body: { versionId: targetVerId }
     })
+    await loadData(false)
   } catch (err: any) {
-    await loadData()
+    await loadData(false)
     alert(err.data?.statusMessage || 'Failed to update item version')
   }
 }
@@ -642,7 +687,7 @@ const moveCategoryItemsToVersion = async (categoryId: string, targetVersionId: s
       method: 'POST',
       body: { versionCategoryId: categoryId, targetVersionId: finalVerId }
     })
-    await loadData()
+    await loadData(false)
   } catch (err: any) {
     versions.value = snapshotVersions
     unassignedItems.value = snapshotUnassigned
@@ -661,8 +706,9 @@ const deleteItem = async (item: VersionItem) => {
       }
     }
     await $fetch(`/api/dev/version-items/${item.id}`, { method: 'DELETE' })
+    await loadData(false)
   } catch (err: any) {
-    await loadData()
+    await loadData(false)
     alert(err.data?.statusMessage || 'Failed to delete item')
   }
 }
@@ -733,7 +779,7 @@ const saveCategory = async () => {
         body: { title, rank: rankVal, abbreviations: abbrArray }
       })
     }
-    await loadData()
+    await loadData(false)
   } catch (err: any) {
     categories.value = snapshot
     categorySaveError.value = err.data?.statusMessage || err.message || 'Failed to save category'
@@ -755,7 +801,7 @@ const deleteCategory = async () => {
     await $fetch(`/api/dev/categories/${editingCategory.value.id}`, {
       method: 'DELETE'
     })
-    await loadData()
+    await loadData(false)
   } catch (err: any) {
     categories.value = snapshot
     categorySaveError.value = err.data?.statusMessage || 'Failed to delete category'
@@ -903,19 +949,7 @@ const deleteCategory = async () => {
 
                     <!-- Category, Version & MORE dropdowns for Admin -->
                     <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
-                      <!-- 1. Version dropdown -->
-                      <select
-                        :value="item.versionId || 'none'"
-                        @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
-                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
-                      >
-                        <option value="none">Incoming changes (0.0.0)</option>
-                        <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
-                          v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
-                        </option>
-                      </select>
-
-                      <!-- 2. Category dropdown -->
+                      <!-- 1. Category dropdown -->
                       <select
                         :value="item.versionCategoryId || ''"
                         @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value)"
@@ -925,6 +959,19 @@ const deleteCategory = async () => {
                         <option value="NEW_CATEGORY">+ Add category...</option>
                       </select>
 
+                      <!-- 2. Version dropdown -->
+                      <select
+                        v-if="shouldShowVersionDropdown(item, ver)"
+                        :value="item.versionId || 'none'"
+                        @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
+                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
+                      >
+                        <option value="none">Incoming changes</option>
+                        <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
+                          v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
+                        </option>
+                      </select>
+
                       <!-- 3. MORE dropdown -->
                       <select
                         @change="handleItemMoreAction(($event.target as HTMLSelectElement).value, item, ver.id); ($event.target as HTMLSelectElement).value = ''"
@@ -932,7 +979,7 @@ const deleteCategory = async () => {
                       >
                         <option value="" disabled selected>MORE</option>
                         <option value="edit">Edit</option>
-                        <option value="add_item">Add item</option>
+                        <option value="add_item" class="text-emerald-400 font-semibold" style="color: #34d399;">Add item</option>
                         <option value="delete" class="text-red-400 font-semibold">Delete</option>
                       </select>
                     </div>
@@ -967,7 +1014,7 @@ const deleteCategory = async () => {
                       class="ml-auto px-1.5 py-0.5 bg-gray-800/80 border border-gray-700 rounded text-[10px] text-amber-300 focus:outline-none cursor-pointer"
                     >
                       <option value="" disabled selected>Move all items to version...</option>
-                      <option value="none">Incoming changes (0.0.0)</option>
+                      <option value="none">Incoming changes</option>
                       <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
                         v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
                       </option>
@@ -989,19 +1036,7 @@ const deleteCategory = async () => {
 
                       <!-- Category, Version & MORE dropdowns for Admin -->
                       <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
-                        <!-- 1. Version dropdown -->
-                        <select
-                          :value="item.versionId || 'none'"
-                          @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
-                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
-                        >
-                          <option value="none">Incoming changes (0.0.0)</option>
-                          <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
-                            v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
-                          </option>
-                        </select>
-
-                        <!-- 2. Category dropdown -->
+                        <!-- 1. Category dropdown -->
                         <select
                           :value="item.versionCategoryId || ''"
                           @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value)"
@@ -1011,6 +1046,19 @@ const deleteCategory = async () => {
                           <option value="NEW_CATEGORY">+ Add category...</option>
                         </select>
 
+                        <!-- 2. Version dropdown -->
+                        <select
+                          v-if="shouldShowVersionDropdown(item, ver)"
+                          :value="item.versionId || 'none'"
+                          @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
+                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
+                        >
+                          <option value="none">Incoming changes</option>
+                          <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
+                            v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
+                          </option>
+                        </select>
+
                         <!-- 3. MORE dropdown -->
                         <select
                           @change="handleItemMoreAction(($event.target as HTMLSelectElement).value, item, ver.id); ($event.target as HTMLSelectElement).value = ''"
@@ -1018,7 +1066,7 @@ const deleteCategory = async () => {
                         >
                           <option value="" disabled selected>MORE</option>
                           <option value="edit">Edit</option>
-                          <option value="add_item">Add item</option>
+                          <option value="add_item" class="text-emerald-400 font-semibold" style="color: #34d399;">Add item</option>
                           <option value="delete" class="text-red-400 font-semibold">Delete</option>
                         </select>
                       </div>
@@ -1096,7 +1144,7 @@ const deleteCategory = async () => {
               <select v-model="editingItem.versionId" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
                 <option v-for="ver in versions" :key="ver.id" :value="ver.id">
                   <template v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'">
-                    Incoming changes (0.0.0)
+                    Incoming changes
                   </template>
                   <template v-else>
                     v{{ ver.versionNumber }} {{ ver.title ? `- ${ver.title}` : '' }}
