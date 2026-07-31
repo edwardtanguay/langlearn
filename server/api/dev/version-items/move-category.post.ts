@@ -5,17 +5,21 @@ export default defineEventHandler(async (event) => {
   await requireAdmin(event)
   const body = await readBody(event)
 
-  const { versionCategoryId, targetVersionId } = body
+  const { versionCategoryId, sourceVersionId, targetVersionId } = body
 
   if (!versionCategoryId) {
     throw createError({ statusCode: 400, statusMessage: 'versionCategoryId is required' })
   }
 
-  const finalVersionId = (targetVersionId === 'none' || targetVersionId === null || targetVersionId === '') ? null : targetVersionId
+  const finalSourceVersionId = (sourceVersionId === 'none' || sourceVersionId === null || sourceVersionId === '') ? null : sourceVersionId
+  const finalTargetVersionId = (targetVersionId === 'none' || targetVersionId === null || targetVersionId === '') ? null : targetVersionId
 
   await prisma.versionItem.updateMany({
-    where: { versionCategoryId },
-    data: { versionId: finalVersionId }
+    where: {
+      versionCategoryId,
+      versionId: finalSourceVersionId
+    },
+    data: { versionId: finalTargetVersionId }
   })
 
   return { success: true }

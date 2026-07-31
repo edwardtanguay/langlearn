@@ -718,35 +718,61 @@ const handleItemMoreAction = (action: string, item: VersionItem, verId: string |
   }
 }
 
-const moveCategoryItemsToVersion = async (categoryId: string, targetVersionId: string) => {
+const moveCategoryItemsToVersion = async (categoryId: string, sourceVersionId: string | null, targetVersionId: string) => {
   if (!targetVersionId) return
-  const finalVerId = (targetVersionId === 'none' || targetVersionId === '') ? null : targetVersionId
+  const finalTargetVerId = (targetVersionId === 'none' || targetVersionId === '') ? null : targetVersionId
+  const finalSourceVerId = (sourceVersionId === 'none' || sourceVersionId === '') ? null : sourceVersionId
+
+  if (finalSourceVerId === finalTargetVerId) return
 
   const snapshotVersions = JSON.parse(JSON.stringify(versions.value))
   const snapshotUnassigned = JSON.parse(JSON.stringify(unassignedItems.value))
 
-  // Collect all items matching this category
+  // Collect matching items only from the specific source version
   const matchingItems: VersionItem[] = []
-  versions.value.forEach(v => {
-    v.versionItems.forEach(i => {
+  if (finalSourceVerId === null) {
+    unassignedItems.value.forEach(i => {
       if (i.versionCategoryId === categoryId) matchingItems.push(i)
     })
-  })
-  unassignedItems.value.forEach(i => {
-    if (i.versionCategoryId === categoryId) matchingItems.push(i)
-  })
+  } else {
+    const srcVer = versions.value.find(v => v.id === finalSourceVerId)
+    if (srcVer) {
+      srcVer.versionItems.forEach(i => {
+        if (i.versionCategoryId === categoryId) matchingItems.push(i)
+      })
+    }
+  }
 
   if (matchingItems.length === 0) return
 
-  // Optimistically move all matching items to target version
+  // Optimistically move matching items to target version
   matchingItems.forEach(item => {
-    item.versionId = finalVerId
+    item.versionId = finalTargetVerId
   })
+
+  // Re-group reactive arrays
+  if (finalSourceVerId === null) {
+    unassignedItems.value = unassignedItems.value.filter(i => i.versionCategoryId !== categoryId)
+  } else {
+    const srcVer = versions.value.find(v => v.id === finalSourceVerId)
+    if (srcVer) {
+      srcVer.versionItems = srcVer.versionItems.filter(i => i.versionCategoryId !== categoryId)
+    }
+  }
+
+  if (finalTargetVerId === null) {
+    unassignedItems.value = [...unassignedItems.value, ...matchingItems]
+  } else {
+    const tgtVer = versions.value.find(v => v.id === finalTargetVerId)
+    if (tgtVer) {
+      tgtVer.versionItems = [...tgtVer.versionItems, ...matchingItems]
+    }
+  }
 
   try {
     await $fetch('/api/dev/version-items/move-category', {
       method: 'POST',
-      body: { versionCategoryId: categoryId, targetVersionId: finalVerId }
+      body: { versionCategoryId: categoryId, sourceVersionId: finalSourceVerId, targetVersionId: finalTargetVerId }
     })
     await loadData(false)
   } catch (err: any) {
@@ -931,20 +957,18 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
   const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1
   if (targetIndex < 0 || targetIndex >= list.length) return
 
-  // Swap items in the list to update relative order
-  const updatedList = [...list]
-  const temp = updatedList[currentIndex]!
-  updatedList[currentIndex] = updatedList[targetIndex]!
-  updatedList[targetIndex] = temp
+  // Swap items in the list to update relative order within group
+  const updatedGroupList = [...list]
+  const temp = updatedGroupList[currentIndex]!
+  updatedGroupList[currentIndex] = updatedGroupList[targetIndex]!
+  updatedGroupList[targetIndex] = temp
 
-  // Redistribute process: renumber all ranks distributed from 0 to 5 evenly with random 5-digit decimal offsets
-  const n = updatedList.length
+  // Redistribute process: renumber ranks for items in this category group evenly
+  const n = updatedGroupList.length
   const itemsToUpdate: { id: string; rank: number }[] = []
 
-  updatedList.forEach((itm, idx) => {
-    // Rank descending: top item (idx 0) gets highest rank (~ 4.5 - 5.0), bottom gets lowest rank (~ 0.5)
+  updatedGroupList.forEach((itm, idx) => {
     const evenBase = n > 1 ? 5.0 - ((idx + 1) / (n + 1)) * 5.0 : 2.5
-    // Add random 5-digit decimal offset (e.g. 0.01234 to 0.09876) to make it unlikely two are the same and ensure predictable sort order
     const randomOffset = (Math.floor(Math.random() * 90000) + 10000) / 1000000
     const newRank = parseFloat((evenBase + randomOffset).toFixed(5))
 
@@ -952,17 +976,14 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
     itemsToUpdate.push({ id: itm.id, rank: newRank })
   })
 
-  // Sort updated list in reactive state
-  const sortedUpdated = sortItemsByRankAndType(updatedList)
-
-  // Update reactive container
+  // Update item rank in the master versionItems or unassignedItems array without destroying other categories
   if (item.versionId) {
     const ver = versions.value.find(v => v.id === item.versionId)
     if (ver) {
-      ver.versionItems = sortedUpdated
+      ver.versionItems = [...ver.versionItems]
     }
   } else {
-    unassignedItems.value = sortedUpdated
+    unassignedItems.value = [...unassignedItems.value]
   }
 
   // Persist new ranks to database via batch reorder API
@@ -1226,7 +1247,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                     <!-- Category Move All to Version dropdown -->
                     <select
                       v-if="isAdmin && adminEditMode"
-                      @change="moveCategoryItemsToVersion(group.categoryId, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
+                      @change="moveCategoryItemsToVersion(group.categoryId, (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? null : ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
                       class="ml-auto px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[270px] truncate"
                     >
                       <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">move this category and its items to new version</option>

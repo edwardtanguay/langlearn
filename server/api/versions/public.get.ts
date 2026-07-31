@@ -42,9 +42,6 @@ export default defineEventHandler(async (event) => {
     data: { versionId: incomingVersion.id }
   })
 
-  // Run category parsing across all version items
-  await parseAndAssignCategories()
-
   const versions = await prisma.version.findMany({
     include: {
       versionItems: {
