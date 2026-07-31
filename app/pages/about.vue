@@ -1125,7 +1125,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
             <!-- Description for INCOMING changes section -->
             <p v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed italic pt-1">
-              These are ideas for new features or bug-fixes which come from website users or developers. They are in raw form, need to be edited, categorized, and assigned to versions.
+              These are ideas for new features or bug-fixes which come from website users and developers. 
             </p>
 
             <!-- Right-aligned Version CRUD Actions (Excluding INCOMING) -->
