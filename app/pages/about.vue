@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { BoltIcon, PencilSquareIcon } from '@heroicons/vue/24/outline'
 
 useHead({
@@ -29,6 +29,7 @@ interface VersionItem {
   versionCategory?: VersionCategory | null
   type: 'FEATURE' | 'BUGFIX'
   body: string
+  rank?: number
   orderWithinVersion: number
 }
 
@@ -53,9 +54,10 @@ const categorySaveError = ref('')
 
 // Edit Modals for Admin
 const showEditItemModal = ref(false)
-const editingItem = ref<{ id: string; versionId: string; versionCategoryId: string; afterItemId: string; body: string; type: 'FEATURE' | 'BUGFIX' }>({
-  id: '', versionId: 'none', versionCategoryId: '', afterItemId: '', body: '', type: 'BUGFIX'
+const editingItem = ref<{ id: string; versionId: string; versionCategoryId: string; afterItemId: string; body: string; type: 'FEATURE' | 'BUGFIX'; rank: number }>({
+  id: '', versionId: 'none', versionCategoryId: '', afterItemId: '', body: '', type: 'BUGFIX', rank: 2.5
 })
+const itemRankStr = ref('2.5')
 const isNewItem = ref(false)
 
 const showEditVersionModal = ref(false)
@@ -72,12 +74,37 @@ const editingCategory = ref<{ id: string; title: string; rank: number; abbreviat
 })
 const categoryRankStr = ref('2.5')
 
+const focusFirstModalInput = () => {
+  nextTick(() => {
+    if (typeof document !== 'undefined') {
+      const firstInput = document.querySelector('.fixed.inset-0 input:not([type="hidden"]), .fixed.inset-0 textarea, .fixed.inset-0 select') as HTMLElement | null
+      if (firstInput) {
+        firstInput.focus()
+      }
+    }
+  })
+}
+
+const checkMobileView = () => {
+  if (typeof window !== 'undefined' && window.innerWidth < 768) {
+    adminEditMode.value = false
+  }
+}
+
 const handleRankInput = (e: Event) => {
   const input = e.target as HTMLInputElement
   const cleaned = input.value.replace(/,/g, '')
   categoryRankStr.value = cleaned
   input.value = cleaned
   editingCategory.value.rank = parseFloat(cleaned) || 0
+}
+
+const handleItemRankInput = (e: Event) => {
+  const input = e.target as HTMLInputElement
+  const cleaned = input.value.replace(/,/g, '')
+  itemRankStr.value = cleaned
+  input.value = cleaned
+  editingItem.value.rank = parseFloat(cleaned) || 2.5
 }
 
 const loadData = async () => {
@@ -104,10 +131,13 @@ const loadData = async () => {
 }
 
 const nuxtApp = useNuxtApp()
-
 let removeHookListener: (() => void) | null = null
 
 onMounted(() => {
+  checkMobileView()
+  if (typeof window !== 'undefined') {
+    window.addEventListener('resize', checkMobileView)
+  }
   loadData()
 
   // Listen for newly added ideas from QuickAddIdeaDrawer
@@ -123,6 +153,9 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', checkMobileView)
+  }
   if (removeHookListener) {
     removeHookListener()
   }
@@ -173,10 +206,15 @@ interface CategoryGroup {
   items: VersionItem[]
 }
 
-function sortFeaturesBeforeBugfixes(items: VersionItem[]): VersionItem[] {
-  const features = items.filter(i => i.type === 'FEATURE')
-  const bugfixes = items.filter(i => i.type === 'BUGFIX')
-  return [...features, ...bugfixes]
+function sortItemsByRankAndType(items: VersionItem[]): VersionItem[] {
+  return [...items].sort((a, b) => {
+    const rankA = a.rank ?? 2.5
+    const rankB = b.rank ?? 2.5
+    if (rankB !== rankA) return rankB - rankA
+    if (a.type === 'FEATURE' && b.type === 'BUGFIX') return -1
+    if (a.type === 'BUGFIX' && b.type === 'FEATURE') return 1
+    return 0
+  })
 }
 
 function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolean; groups: CategoryGroup[]; allItems: VersionItem[] } {
@@ -194,7 +232,7 @@ function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolea
   })
 
   if (isAllGeneral) {
-    return { isAllGeneral: true, groups: [], allItems: sortFeaturesBeforeBugfixes(items) }
+    return { isAllGeneral: true, groups: [], allItems: sortItemsByRankAndType(items) }
   }
 
   const groupsMap = new Map<string, { categoryTitle: string; categoryRank: number; items: VersionItem[] }>()
@@ -223,7 +261,7 @@ function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolea
   }
   if (cleanAssignKey) {
     const grp = groupsMap.get(cleanAssignKey)!
-    resultGroups.push({ categoryId: cleanAssignKey, categoryTitle: grp.categoryTitle, categoryRank: grp.categoryRank, items: sortFeaturesBeforeBugfixes(grp.items) })
+    resultGroups.push({ categoryId: cleanAssignKey, categoryTitle: grp.categoryTitle, categoryRank: grp.categoryRank, items: sortItemsByRankAndType(grp.items) })
     groupsMap.delete(cleanAssignKey)
   }
 
@@ -237,7 +275,7 @@ function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolea
   }
   if (generalKey) {
     const grp = groupsMap.get(generalKey)!
-    resultGroups.push({ categoryId: generalKey, categoryTitle: grp.categoryTitle, categoryRank: grp.categoryRank, items: sortFeaturesBeforeBugfixes(grp.items) })
+    resultGroups.push({ categoryId: generalKey, categoryTitle: grp.categoryTitle, categoryRank: grp.categoryRank, items: sortItemsByRankAndType(grp.items) })
     groupsMap.delete(generalKey)
   }
 
@@ -253,11 +291,11 @@ function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolea
       categoryId: key,
       categoryTitle: group.categoryTitle,
       categoryRank: group.categoryRank,
-      items: sortFeaturesBeforeBugfixes(group.items)
+      items: sortItemsByRankAndType(group.items)
     })
   }
 
-  return { isAllGeneral: false, groups: resultGroups, allItems: sortFeaturesBeforeBugfixes(items) }
+  return { isAllGeneral: false, groups: resultGroups, allItems: sortItemsByRankAndType(items) }
 }
 
 function calculateNextVersionNumber(): string {
@@ -320,6 +358,7 @@ const openAddVersion = () => {
     publishDate: todayStr
   }
   showEditVersionModal.value = true
+  focusFirstModalInput()
 }
 
 const openEditVersion = (ver: Version) => {
@@ -329,6 +368,7 @@ const openEditVersion = (ver: Version) => {
   const formattedDate = formatPublishDate(ver.publishDate)
   editingVersion.value = { id: ver.id, versionNumber: ver.versionNumber, title: ver.title || '', status: ver.status as any, publishDate: formattedDate }
   showEditVersionModal.value = true
+  focusFirstModalInput()
 }
 
 const saveAdminVersion = async () => {
@@ -351,33 +391,36 @@ const saveAdminVersion = async () => {
   }
 
   const payload = { ...editingVersion.value, versionNumber: vNum }
+  const snapshot = JSON.parse(JSON.stringify(versions.value))
 
-  isSaving.value = true
+  // Optimistic update & immediate smooth close
+  if (!isNewVersion.value) {
+    const existing = versions.value.find(v => v.id === editingVersion.value.id)
+    if (existing) {
+      existing.versionNumber = payload.versionNumber
+      existing.title = payload.title
+      existing.status = payload.status
+      existing.publishDate = payload.publishDate
+    }
+  }
+  showEditVersionModal.value = false
+
   try {
     if (isNewVersion.value) {
       await $fetch<Version>('/api/dev/versions', {
         method: 'POST',
         body: payload
       })
-      showEditVersionModal.value = false
-      await loadData()
     } else {
       await $fetch<Version>(`/api/dev/versions/${editingVersion.value.id}`, {
         method: 'PUT',
         body: payload
       })
-      showEditVersionModal.value = false
-      await loadData()
     }
+    await loadData()
   } catch (err: any) {
-    const errMsg = err.data?.statusMessage || err.message || 'Failed to save version'
-    if (errMsg.toLowerCase().includes('already taken')) {
-      versionSaveError.value = 'version number already taken'
-    } else {
-      versionSaveError.value = errMsg
-    }
-  } finally {
-    isSaving.value = false
+    versions.value = snapshot
+    alert(err.data?.statusMessage || err.message || 'Failed to save version')
   }
 }
 
@@ -397,28 +440,35 @@ const deleteVersion = async (ver: Version) => {
 const openAddItem = (versionId: string | null, afterItemId?: string) => {
   isNewItem.value = true
   const generalCat = categories.value.find(c => c.title === 'General')
+  itemRankStr.value = '2.5'
   editingItem.value = {
     id: '',
     versionId: versionId || 'none',
     versionCategoryId: generalCat?.id || '',
     afterItemId: afterItemId || '',
     body: '',
-    type: 'BUGFIX'
+    type: 'BUGFIX',
+    rank: 2.5
   }
   showEditItemModal.value = true
+  focusFirstModalInput()
 }
 
 const openEditItem = (item: VersionItem) => {
   isNewItem.value = false
+  const rankVal = item.rank ?? 2.5
+  itemRankStr.value = rankVal.toString()
   editingItem.value = {
     id: item.id,
     versionId: item.versionId || 'none',
     versionCategoryId: item.versionCategoryId || '',
     afterItemId: '',
     body: item.body,
-    type: item.type
+    type: item.type,
+    rank: rankVal
   }
   showEditItemModal.value = true
+  focusFirstModalInput()
 }
 
 const handleItemCategoryChange = (event: Event) => {
@@ -430,15 +480,43 @@ const handleItemCategoryChange = (event: Event) => {
 
 const saveAdminItem = async () => {
   if (!editingItem.value.body.trim()) return
-  isSaving.value = true
+  const targetRank = Math.max(0, Math.min(5, parseFloat(itemRankStr.value) || 2.5))
+  editingItem.value.rank = targetRank
+
+  const payload = {
+    ...editingItem.value,
+    versionId: editingItem.value.versionId === 'none' ? null : editingItem.value.versionId,
+    versionCategoryId: editingItem.value.versionCategoryId || null
+  }
+
+  const snapshotVersions = JSON.parse(JSON.stringify(versions.value))
+  const snapshotUnassigned = JSON.parse(JSON.stringify(unassignedItems.value))
+
+  // Optimistic update & immediate smooth close
+  if (!isNewItem.value) {
+    let found = unassignedItems.value.find(i => i.id === payload.id)
+    if (found) {
+      found.body = payload.body
+      found.type = payload.type
+      found.rank = payload.rank
+      found.versionCategoryId = payload.versionCategoryId
+    } else {
+      for (const v of versions.value) {
+        const item = v.versionItems.find(i => i.id === payload.id)
+        if (item) {
+          item.body = payload.body
+          item.type = payload.type
+          item.rank = payload.rank
+          item.versionCategoryId = payload.versionCategoryId
+          break
+        }
+      }
+    }
+  }
+
+  showEditItemModal.value = false
 
   try {
-    const payload = {
-      ...editingItem.value,
-      versionId: editingItem.value.versionId === 'none' ? null : editingItem.value.versionId,
-      versionCategoryId: editingItem.value.versionCategoryId || null
-    }
-
     if (isNewItem.value) {
       await $fetch<VersionItem>('/api/dev/version-items', {
         method: 'POST',
@@ -450,12 +528,11 @@ const saveAdminItem = async () => {
         body: payload
       })
     }
-    showEditItemModal.value = false
     await loadData()
   } catch (err: any) {
+    versions.value = snapshotVersions
+    unassignedItems.value = snapshotUnassigned
     alert(err.data?.statusMessage || 'Failed to save item')
-  } finally {
-    isSaving.value = false
   }
 }
 
@@ -484,6 +561,95 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string)
   }
 }
 
+const updateItemVersionDirectly = async (item: VersionItem, versionId: string) => {
+  const targetVerId = (versionId === 'none' || versionId === '') ? null : versionId
+  const oldVerId = item.versionId
+
+  // Optimistic update
+  item.versionId = targetVerId
+
+  // Move item between version containers in reactive state
+  if (oldVerId !== targetVerId) {
+    // Remove from old location
+    if (oldVerId === null) {
+      unassignedItems.value = unassignedItems.value.filter(i => i.id !== item.id)
+    } else {
+      const oldVer = versions.value.find(v => v.id === oldVerId)
+      if (oldVer) {
+        oldVer.versionItems = oldVer.versionItems.filter(i => i.id !== item.id)
+      }
+    }
+    // Add to new location
+    if (targetVerId === null) {
+      unassignedItems.value.push(item)
+    } else {
+      const targetVer = versions.value.find(v => v.id === targetVerId)
+      if (targetVer) {
+        targetVer.versionItems.push(item)
+      }
+    }
+  }
+
+  try {
+    await $fetch(`/api/dev/version-items/${item.id}`, {
+      method: 'PUT',
+      body: { versionId: targetVerId }
+    })
+  } catch (err: any) {
+    await loadData()
+    alert(err.data?.statusMessage || 'Failed to update item version')
+  }
+}
+
+const handleItemMoreAction = (action: string, item: VersionItem, verId: string | null) => {
+  if (!action) return
+  if (action === 'edit') {
+    openEditItem(item)
+  } else if (action === 'add_item') {
+    openAddItem(verId, item.id)
+  } else if (action === 'delete') {
+    deleteItem(item)
+  }
+}
+
+const moveCategoryItemsToVersion = async (categoryId: string, targetVersionId: string) => {
+  if (!targetVersionId) return
+  const finalVerId = (targetVersionId === 'none' || targetVersionId === '') ? null : targetVersionId
+
+  const snapshotVersions = JSON.parse(JSON.stringify(versions.value))
+  const snapshotUnassigned = JSON.parse(JSON.stringify(unassignedItems.value))
+
+  // Collect all items matching this category
+  const matchingItems: VersionItem[] = []
+  versions.value.forEach(v => {
+    v.versionItems.forEach(i => {
+      if (i.versionCategoryId === categoryId) matchingItems.push(i)
+    })
+  })
+  unassignedItems.value.forEach(i => {
+    if (i.versionCategoryId === categoryId) matchingItems.push(i)
+  })
+
+  if (matchingItems.length === 0) return
+
+  // Optimistically move all matching items to target version
+  matchingItems.forEach(item => {
+    item.versionId = finalVerId
+  })
+
+  try {
+    await $fetch('/api/dev/version-items/move-category', {
+      method: 'POST',
+      body: { versionCategoryId: categoryId, targetVersionId: finalVerId }
+    })
+    await loadData()
+  } catch (err: any) {
+    versions.value = snapshotVersions
+    unassignedItems.value = snapshotUnassigned
+    alert(err.data?.statusMessage || 'Failed to move category items to version')
+  }
+}
+
 const deleteItem = async (item: VersionItem) => {
   if (!confirm('Are you sure you want to delete this item?')) return
   try {
@@ -501,67 +667,6 @@ const deleteItem = async (item: VersionItem) => {
   }
 }
 
-const reorderItem = async (itemId: string, direction: 'UP' | 'DOWN') => {
-  let list: VersionItem[] | null = null
-  let idx = unassignedItems.value.findIndex(i => i.id === itemId)
-  if (idx !== -1) {
-    list = unassignedItems.value
-  } else {
-    for (const v of versions.value) {
-      const i = v.versionItems.findIndex(item => item.id === itemId)
-      if (i !== -1) {
-        list = v.versionItems
-        idx = i
-        break
-      }
-    }
-  }
-
-  if (!list || idx === -1) return
-
-  const currentItem = list[idx]
-  if (!currentItem) return
-
-  const itemType = currentItem.type
-  const typeIndices: number[] = []
-  list.forEach((item, index) => {
-    if (item.type === itemType) typeIndices.push(index)
-  })
-
-  const posInTypeGroup = typeIndices.indexOf(idx)
-  if (posInTypeGroup === -1) return
-
-  const targetPosInGroup = direction === 'UP' ? posInTypeGroup - 1 : posInTypeGroup + 1
-  if (targetPosInGroup < 0 || targetPosInGroup >= typeIndices.length) return
-
-  const targetIdx = typeIndices[targetPosInGroup]
-  if (targetIdx === undefined) return
-
-  const temp = list[idx]
-  if (temp && list[targetIdx]) {
-    list[idx] = list[targetIdx]
-    list[targetIdx] = temp
-  }
-
-  try {
-    await $fetch('/api/dev/version-items/reorder', {
-      method: 'POST',
-      body: { itemId, direction }
-    })
-  } catch (err: any) {
-    console.error('Failed to reorder:', err)
-    await loadData()
-  }
-}
-
-const isFirstInList = (item: VersionItem, list: VersionItem[]): boolean => {
-  return list.length > 0 && list[0]?.id === item.id
-}
-
-const isLastInList = (item: VersionItem, list: VersionItem[]): boolean => {
-  return list.length > 0 && list[list.length - 1]?.id === item.id
-}
-
 // Category Management Functions
 const openAddCategory = () => {
   isNewCategory.value = true
@@ -569,6 +674,7 @@ const openAddCategory = () => {
   categoryRankStr.value = '2.5'
   editingCategory.value = { id: '', title: '', rank: 2.5, abbreviations: '' }
   showCategoryModal.value = true
+  focusFirstModalInput()
 }
 
 const openEditCategory = (catId: string) => {
@@ -581,6 +687,7 @@ const openEditCategory = (catId: string) => {
   const abbrList = (cat.abbreviations || []).map(a => a.abbreviationText).join(', ')
   editingCategory.value = { id: cat.id, title: cat.title, rank: rankVal, abbreviations: abbrList }
   showCategoryModal.value = true
+  focusFirstModalInput()
 }
 
 const saveCategory = async () => {
@@ -600,7 +707,7 @@ const saveCategory = async () => {
 
   const snapshot = JSON.parse(JSON.stringify(categories.value))
 
-  // Optimistic update
+  // Optimistic update & immediate smooth close
   if (!isNewCategory.value) {
     const existing = categories.value.find(c => c.id === editingCategory.value.id)
     if (existing) {
@@ -609,7 +716,8 @@ const saveCategory = async () => {
     }
   }
 
-  isSaving.value = true
+  showCategoryModal.value = false
+
   try {
     if (isNewCategory.value) {
       const created = await $fetch<VersionCategory>('/api/dev/categories', {
@@ -625,13 +733,10 @@ const saveCategory = async () => {
         body: { title, rank: rankVal, abbreviations: abbrArray }
       })
     }
-    showCategoryModal.value = false
     await loadData()
   } catch (err: any) {
     categories.value = snapshot
     categorySaveError.value = err.data?.statusMessage || err.message || 'Failed to save category'
-  } finally {
-    isSaving.value = false
   }
 }
 
@@ -645,18 +750,15 @@ const deleteCategory = async () => {
   }
   const snapshot = JSON.parse(JSON.stringify(categories.value))
   categories.value = categories.value.filter(c => c.id !== editingCategory.value.id)
-  isSaving.value = true
+  showCategoryModal.value = false
   try {
     await $fetch(`/api/dev/categories/${editingCategory.value.id}`, {
       method: 'DELETE'
     })
-    showCategoryModal.value = false
     await loadData()
   } catch (err: any) {
     categories.value = snapshot
     categorySaveError.value = err.data?.statusMessage || 'Failed to delete category'
-  } finally {
-    isSaving.value = false
   }
 }
 </script>
@@ -767,7 +869,7 @@ const deleteCategory = async () => {
                   </span>
                 </template>
               </div>
-              <div v-if="ver.publishDate" class="text-xs sm:text-sm text-gray-400 font-mono shrink-0">
+              <div v-if="ver.publishDate" class="text-xs sm:text-sm text-gray-200 font-mono shrink-0">
                 {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
               </div>
             </div>
@@ -779,7 +881,7 @@ const deleteCategory = async () => {
 
             <!-- Right-aligned Version CRUD Actions (Excluding INCOMING) -->
             <div v-if="isAdmin && adminEditMode && ver.status !== 'INCOMING' && ver.status !== 'PROPOSED_ITEMS' && ver.versionNumber !== '0.0.0'" class="text-xs text-gray-400 shrink-0 font-mono text-right pt-1">
-              ( <button @click="openEditVersion(ver)" class="hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-400 hover:text-red-300 cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors">add item</button> )
+              ( <button @click="openEditVersion(ver)" class="hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-500 hover:text-red-400 font-medium cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors">add item</button> )
             </div>
           </div>
 
@@ -794,37 +896,45 @@ const deleteCategory = async () => {
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
                       <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
+                      <span v-if="isAdmin && adminEditMode" class="text-[10px] text-gray-400 font-mono shrink-0">
+                        (rank: {{ item.rank ?? 2.5 }})
+                      </span>
                     </div>
 
-                    <!-- Category dropdown & Edit buttons for Admin -->
-                    <div class="flex items-center gap-2 shrink-0">
+                    <!-- Category, Version & MORE dropdowns for Admin -->
+                    <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
+                      <!-- 1. Version dropdown -->
                       <select
-                        v-if="isAdmin && adminEditMode"
+                        :value="item.versionId || 'none'"
+                        @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
+                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
+                      >
+                        <option value="none">Incoming changes (0.0.0)</option>
+                        <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
+                          v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
+                        </option>
+                      </select>
+
+                      <!-- 2. Category dropdown -->
+                      <select
                         :value="item.versionCategoryId || ''"
                         @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value)"
-                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none"
+                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
                       >
                         <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
                         <option value="NEW_CATEGORY">+ Add category...</option>
                       </select>
 
-                      <span v-if="isAdmin && adminEditMode" class="text-gray-400 text-[11px] font-mono whitespace-nowrap">
-                        ( 
-                        <button 
-                          @click="!isFirstInList(item, ver.versionItems) && reorderItem(item.id, 'UP')" 
-                          :disabled="isFirstInList(item, ver.versionItems)" 
-                          :class="isFirstInList(item, ver.versionItems) ? 'text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
-                        >up</button> | 
-                        <button 
-                          @click="!isLastInList(item, ver.versionItems) && reorderItem(item.id, 'DOWN')" 
-                          :disabled="isLastInList(item, ver.versionItems)" 
-                          :class="isLastInList(item, ver.versionItems) ? 'text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
-                        >down</button> | 
-                        <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
-                        <button @click="deleteItem(item)" class="text-red-950 dark:text-red-900/80 hover:text-red-700 font-semibold cursor-pointer">delete</button> | 
-                        <button @click="openAddItem(ver.id, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
-                        )
-                      </span>
+                      <!-- 3. MORE dropdown -->
+                      <select
+                        @change="handleItemMoreAction(($event.target as HTMLSelectElement).value, item, ver.id); ($event.target as HTMLSelectElement).value = ''"
+                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer font-medium"
+                      >
+                        <option value="" disabled selected>MORE</option>
+                        <option value="edit">Edit</option>
+                        <option value="add_item">Add item</option>
+                        <option value="delete" class="text-red-400 font-semibold">Delete</option>
+                      </select>
                     </div>
                   </li>
                 </ul>
@@ -849,6 +959,19 @@ const deleteCategory = async () => {
                     >
                       <PencilSquareIcon class="w-3.5 h-3.5" />
                     </button>
+
+                    <!-- Category Move All to Version dropdown -->
+                    <select
+                      v-if="isAdmin && adminEditMode"
+                      @change="moveCategoryItemsToVersion(group.categoryId, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
+                      class="ml-auto px-1.5 py-0.5 bg-gray-800/80 border border-gray-700 rounded text-[10px] text-amber-300 focus:outline-none cursor-pointer"
+                    >
+                      <option value="" disabled selected>Move all items to version...</option>
+                      <option value="none">Incoming changes (0.0.0)</option>
+                      <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
+                        v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
+                      </option>
+                    </select>
                   </div>
 
                   <!-- Category Group Items (Indented) -->
@@ -859,37 +982,45 @@ const deleteCategory = async () => {
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
                         <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
+                        <span v-if="isAdmin && adminEditMode" class="text-[10px] text-gray-400 font-mono shrink-0">
+                          (rank: {{ item.rank ?? 2.5 }})
+                        </span>
                       </div>
 
-                      <!-- Category selector & Edit controls for Admin -->
-                      <div class="flex items-center gap-2 shrink-0">
+                      <!-- Category, Version & MORE dropdowns for Admin -->
+                      <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
+                        <!-- 1. Version dropdown -->
                         <select
-                          v-if="isAdmin && adminEditMode"
+                          :value="item.versionId || 'none'"
+                          @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
+                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
+                        >
+                          <option value="none">Incoming changes (0.0.0)</option>
+                          <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
+                            v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}
+                          </option>
+                        </select>
+
+                        <!-- 2. Category dropdown -->
+                        <select
                           :value="item.versionCategoryId || ''"
                           @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value)"
-                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none"
+                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
                         >
                           <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
                           <option value="NEW_CATEGORY">+ Add category...</option>
                         </select>
 
-                        <span v-if="isAdmin && adminEditMode" class="text-gray-400 text-[11px] font-mono whitespace-nowrap">
-                          ( 
-                          <button 
-                            @click="!isFirstInList(item, group.items) && reorderItem(item.id, 'UP')" 
-                            :disabled="isFirstInList(item, group.items)" 
-                            :class="isFirstInList(item, group.items) ? 'text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
-                          >up</button> | 
-                          <button 
-                            @click="!isLastInList(item, group.items) && reorderItem(item.id, 'DOWN')" 
-                            :disabled="isLastInList(item, group.items)" 
-                            :class="isLastInList(item, group.items) ? 'text-gray-600 opacity-40 cursor-not-allowed' : 'hover:text-white cursor-pointer'"
-                          >down</button> | 
-                          <button @click="openEditItem(item)" class="hover:text-white cursor-pointer">edit</button> | 
-                          <button @click="deleteItem(item)" class="text-red-950 dark:text-red-900/80 hover:text-red-700 font-semibold cursor-pointer">delete</button> | 
-                          <button @click="openAddItem(ver.id, item.id)" class="text-emerald-400 hover:text-emerald-300 cursor-pointer">add item</button> 
-                          )
-                        </span>
+                        <!-- 3. MORE dropdown -->
+                        <select
+                          @change="handleItemMoreAction(($event.target as HTMLSelectElement).value, item, ver.id); ($event.target as HTMLSelectElement).value = ''"
+                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer font-medium"
+                        >
+                          <option value="" disabled selected>MORE</option>
+                          <option value="edit">Edit</option>
+                          <option value="add_item">Add item</option>
+                          <option value="delete" class="text-red-400 font-semibold">Delete</option>
+                        </select>
                       </div>
                     </li>
                   </ul>
@@ -912,28 +1043,27 @@ const deleteCategory = async () => {
         <form @submit.prevent="saveAdminVersion" class="space-y-3 text-xs">
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Number</label>
-            <input v-model="editingVersion.versionNumber" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="0.14.0" :disabled="isSaving" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50" />
+            <input v-model="editingVersion.versionNumber" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="0.14.0" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Title</label>
-            <input v-model="editingVersion.title" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="Version feature description" :disabled="isSaving" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50" />
+            <input v-model="editingVersion.title" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="Version feature description" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Publish Date (YYYY-MM-DD)</label>
-            <input v-model="editingVersion.publishDate" @keydown.enter.exact.prevent="saveAdminVersion" type="date" :disabled="isSaving" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50" />
+            <input v-model="editingVersion.publishDate" @keydown.enter.exact.prevent="saveAdminVersion" type="date" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Status</label>
-            <select v-model="editingVersion.status" :disabled="isSaving" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50">
+            <select v-model="editingVersion.status" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
               <option value="IN_PROGRESS">IN_PROGRESS</option>
               <option value="PUBLISHED">PUBLISHED</option>
               <option value="FUTURE_VERSION">FUTURE_VERSION</option>
             </select>
           </div>
           <div class="flex justify-end space-x-2 pt-2">
-            <button type="button" @click="showEditVersionModal = false" :disabled="isSaving" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded disabled:opacity-50">Cancel</button>
-            <button type="submit" :disabled="isSaving" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded font-semibold flex items-center gap-1.5">
-              <span v-if="isSaving" class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            <button type="button" @click="showEditVersionModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+            <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold flex items-center gap-1.5">
               <span>Save</span>
             </button>
           </div>
@@ -946,24 +1076,24 @@ const deleteCategory = async () => {
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-lg shadow-2xl space-y-4">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewItem ? 'Admin Add: Roadmap Item' : 'Admin Edit: Roadmap Item' }}</h3>
         <form @submit.prevent="saveAdminItem" class="space-y-3 text-xs">
-          <div class="grid grid-cols-3 gap-3">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Type</label>
-              <select v-model="editingItem.type" :disabled="isSaving" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50">
+              <select v-model="editingItem.type" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
                 <option value="BUGFIX">🐛 BUGFIX</option>
                 <option value="FEATURE">✨ FEATURE</option>
               </select>
             </div>
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Category</label>
-              <select v-model="editingItem.versionCategoryId" @change="handleItemCategoryChange" :disabled="isSaving" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50">
+              <select v-model="editingItem.versionCategoryId" @change="handleItemCategoryChange" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
                 <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
                 <option value="NEW_CATEGORY">+ Add category...</option>
               </select>
             </div>
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Version</label>
-              <select v-model="editingItem.versionId" :disabled="isSaving" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50">
+              <select v-model="editingItem.versionId" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
                 <option v-for="ver in versions" :key="ver.id" :value="ver.id">
                   <template v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'">
                     Incoming changes (0.0.0)
@@ -974,15 +1104,26 @@ const deleteCategory = async () => {
                 </option>
               </select>
             </div>
+            <div>
+              <label class="block text-gray-700 dark:text-gray-300 mb-1">Rank (0.0 - 5.0)</label>
+              <input
+                v-model="itemRankStr"
+                @input="handleItemRankInput"
+                @keydown.enter.exact.prevent="saveAdminItem"
+                type="text"
+                inputmode="decimal"
+                placeholder="2.5"
+                class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono"
+              />
+            </div>
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Description / Body</label>
-            <textarea v-model="editingItem.body" @keydown.enter.exact.prevent="saveAdminItem" rows="3" placeholder="Describe the feature or bug fix..." :disabled="isSaving" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white disabled:opacity-50"></textarea>
+            <textarea v-model="editingItem.body" @keydown.enter.exact.prevent="saveAdminItem" rows="3" placeholder="Describe the feature or bug fix..." class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white"></textarea>
           </div>
           <div class="flex justify-end space-x-2 pt-2">
-            <button type="button" @click="showEditItemModal = false" :disabled="isSaving" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded disabled:opacity-50">Cancel</button>
-            <button type="submit" :disabled="isSaving" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded font-semibold flex items-center gap-1.5">
-              <span v-if="isSaving" class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            <button type="button" @click="showEditItemModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+            <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold flex items-center gap-1.5">
               <span>Save</span>
             </button>
           </div>
@@ -1007,8 +1148,7 @@ const deleteCategory = async () => {
               @keydown.enter.exact.prevent="saveCategory"
               type="text"
               placeholder="e.g. Flashcard Page"
-              :disabled="isSaving"
-              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono"
             />
           </div>
 
@@ -1021,8 +1161,7 @@ const deleteCategory = async () => {
               type="text"
               inputmode="decimal"
               placeholder="2.5"
-              :disabled="isSaving"
-              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono"
             />
             <p class="text-[11px] text-gray-400 mt-1">
               Categories (except Clean and assign & General) are displayed in descending order of this rank value.
@@ -1036,8 +1175,7 @@ const deleteCategory = async () => {
               @keydown.enter.exact.prevent="saveCategory"
               type="text"
               placeholder="e.g. flash, flashard, fl"
-              :disabled="isSaving"
-              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono disabled:opacity-50"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono"
             />
             <p class="text-[11px] text-gray-400 mt-1">
               Items starting with any of these prefixes followed by a colon (e.g. <code>flash:</code>) will be smart-assigned to this category.
@@ -1051,16 +1189,14 @@ const deleteCategory = async () => {
                 v-if="!isNewCategory && editingCategory.title !== 'General' && editingCategory.title !== 'Clean and assign'"
                 type="button"
                 @click="deleteCategory"
-                :disabled="isSaving"
-                class="text-red-950 dark:text-red-900/80 hover:text-red-700 text-xs font-semibold cursor-pointer underline disabled:opacity-40"
+                class="text-red-600 dark:text-red-400 hover:text-red-500 text-xs font-medium cursor-pointer underline"
               >
                 delete category
               </button>
             </div>
             <div class="flex space-x-2">
-              <button type="button" @click="showCategoryModal = false" :disabled="isSaving" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded disabled:opacity-50">Cancel</button>
-              <button type="submit" :disabled="isSaving" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded font-semibold flex items-center gap-1.5">
-                <span v-if="isSaving" class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <button type="button" @click="showCategoryModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+              <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold flex items-center gap-1.5">
                 <span>Save Category</span>
               </button>
             </div>

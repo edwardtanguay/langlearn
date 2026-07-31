@@ -59,6 +59,7 @@ model VersionItem {
   versionCategory    VersionCategory? @relation(fields: [versionCategoryId], references: [id], onDelete: SetNull)
   type               String           @default("BUGFIX")
   body               String
+  rank               Float            @default(2.5)
   startedByUserId    String?
   startedByUser      User?            @relation("UserVersionItems", fields: [startedByUserId], references: [id])
   orderWithinVersion Int              @default(1)

@@ -64,12 +64,16 @@ export default defineEventHandler(async (event) => {
     nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
   }
 
+  const rankVal = typeof body.rank === 'number' ? body.rank : parseFloat(body.rank)
+  const finalRank = isNaN(rankVal) ? 2.5 : rankVal
+
   const newItem = await prisma.versionItem.create({
     data: {
       versionId: targetVersionId,
       versionCategoryId: body.versionCategoryId || null,
       type: body.type || 'BUGFIX',
       body: body.body.trim(),
+      rank: finalRank,
       startedByUserId: admin.dbId || admin.id,
       orderWithinVersion: nextOrder
     }

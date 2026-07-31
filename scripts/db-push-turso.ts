@@ -64,6 +64,15 @@ async function main() {
     }
   }
 
+  // Ensure rank column exists on VersionItem table
+  try {
+    await client.execute('ALTER TABLE VersionItem ADD COLUMN rank REAL DEFAULT 2.5;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
   client.close()
 }
