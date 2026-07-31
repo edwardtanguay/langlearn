@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon } from '@heroicons/vue/24/outline'
+import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon } from '@heroicons/vue/24/outline'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'
 
 useHead({
@@ -861,6 +861,83 @@ const deleteCategory = async () => {
     categorySaveError.value = err.data?.statusMessage || 'Failed to delete category'
   }
 }
+
+// Issue Markdown Copy Generator
+const copiedVersionId = ref<string | null>(null)
+let copiedTimeout: ReturnType<typeof setTimeout> | null = null
+
+function generateIssueMarkdown(ver: Version): string {
+  const titlePart = ver.title ? `v${ver.versionNumber} - ${ver.title}` : `v${ver.versionNumber}`
+  let md = `# ${titlePart}\n\n`
+  md += `All todos in this issue are expressed in the past tense as if they have already been accomplished. The goal is to implement each bug-fix and feature to the extent that their text is 100% true of the app.\n\n`
+
+  const grouped = getGroupedItemsForVersion(ver.versionItems)
+  if (grouped.isAllGeneral) {
+    if (grouped.allItems.length > 0) {
+      md += `## General\n`
+      for (const item of grouped.allItems) {
+        const prefix = item.type === 'FEATURE' ? 'FEATURE' : 'BUG-FIX'
+        md += `- ${prefix}: ${formatSentenceCase(item.body)}\n`
+      }
+      md += `\n`
+    }
+  } else {
+    for (const group of grouped.groups) {
+      md += `## ${group.categoryTitle}\n`
+      for (const item of group.items) {
+        const prefix = item.type === 'FEATURE' ? 'FEATURE' : 'BUG-FIX'
+        md += `- ${prefix}: ${formatSentenceCase(item.body)}\n`
+      }
+      md += `\n`
+    }
+  }
+
+  return md.trim()
+}
+
+async function copyIssueMarkdown(ver: Version) {
+  const md = generateIssueMarkdown(ver)
+  try {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      await navigator.clipboard.writeText(md)
+    }
+    copiedVersionId.value = ver.id
+    if (copiedTimeout) clearTimeout(copiedTimeout)
+    copiedTimeout = setTimeout(() => {
+      copiedVersionId.value = null
+    }, 2500)
+  } catch (err) {
+    console.error('Failed to copy to clipboard', err)
+  }
+}
+
+// Item Rank Slider Handlers
+function handleRankSliderInput(item: VersionItem, valStr: string) {
+  const val = Math.max(0, Math.min(5, parseFloat(valStr) || 2.5))
+  item.rank = val
+  if (item.versionId) {
+    const ver = versions.value.find(v => v.id === item.versionId)
+    if (ver) {
+      ver.versionItems = sortItemsByRankAndType(ver.versionItems)
+    }
+  } else {
+    unassignedItems.value = sortItemsByRankAndType(unassignedItems.value)
+  }
+}
+
+const handleRankSliderChange = async (item: VersionItem, valStr: string) => {
+  const val = Math.max(0, Math.min(5, parseFloat(valStr) || 2.5))
+  item.rank = val
+  try {
+    await $fetch(`/api/dev/version-items/${item.id}`, {
+      method: 'PUT',
+      body: { rank: val }
+    })
+    await loadData(false)
+  } catch (err: any) {
+    alert(err.data?.statusMessage || 'Failed to update item rank')
+  }
+}
 </script>
 
 <template>
@@ -951,63 +1028,86 @@ const deleteCategory = async () => {
       </div>
 
       <!-- Version Cards List -->
-      <div v-else class="space-y-8 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in displayedVersions" :key="ver.id" class="space-y-3">
-          <!-- Full-Width Version Panel Card -->
-          <div class="bg-gray-800/40 dark:bg-gray-800/40 rounded-xl p-2.5 md:p-3.5 shadow-sm space-y-2">
+      <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
+        <div v-for="ver in displayedVersions" :key="ver.id" class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/80 rounded-xl overflow-hidden shadow-md">
+          <!-- Full-Width Version Panel Card Header -->
+          <div class="bg-gray-100 dark:bg-gray-900/50 p-3 md:p-3.5 border-b border-gray-200 dark:border-gray-700/80 space-y-2">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
-              <div class="flex items-baseline space-x-2.5">
-                <span v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="font-bold text-amber-400 text-base md:text-lg">
+              <div class="flex items-center space-x-2.5 flex-wrap gap-y-1">
+                <span v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="font-bold text-amber-600 dark:text-amber-400 text-base md:text-lg">
                   Incoming changes
                 </span>
                 <template v-else>
-                  <span class="font-mono font-bold text-amber-400 text-base md:text-lg">
+                  <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-base md:text-lg">
                     v{{ ver.versionNumber }}
                   </span>
-                  <span v-if="ver.title" class="font-bold text-white text-base md:text-lg">
+                  <span v-if="ver.title" class="font-bold text-gray-900 dark:text-white text-base md:text-lg">
                     {{ ver.title }}
                   </span>
                 </template>
+
+                <!-- Create issue markdown button for IN_PROGRESS versions in Admin mode -->
+                <div v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="inline-flex items-center ml-2">
+                  <button
+                    @click="copyIssueMarkdown(ver)"
+                    title="Copy issue markdown to clipboard"
+                    class="px-2 py-0.5 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
+                  >
+                    <CheckIcon v-if="copiedVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <DocumentTextIcon v-else class="w-3.5 h-3.5" />
+                    <span>{{ copiedVersionId === ver.id ? 'Copied to clipboard!' : 'Create issue markdown' }}</span>
+                  </button>
+                </div>
               </div>
-              <div v-if="ver.publishDate" class="text-xs sm:text-sm text-gray-200 font-mono shrink-0">
+              <div v-if="ver.publishDate" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono shrink-0">
                 {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
               </div>
             </div>
 
             <!-- Description for INCOMING changes section -->
-            <p v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="text-xs text-gray-300 leading-relaxed italic pt-1">
+            <p v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed italic pt-1">
               These are ideas for new features or bug-fixes which come from website users or developers. They are in raw form, need to be edited, categorized, and assigned to versions.
             </p>
 
             <!-- Right-aligned Version CRUD Actions (Excluding INCOMING) -->
-            <div v-if="isAdmin && adminEditMode && ver.status !== 'INCOMING' && ver.status !== 'PROPOSED_ITEMS' && ver.versionNumber !== '0.0.0'" class="text-xs text-gray-400 shrink-0 font-mono text-right pt-1">
-              ( <button @click="openEditVersion(ver)" class="hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-500 hover:text-red-400 font-medium cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-400 hover:text-emerald-300 cursor-pointer transition-colors">add item</button> )
+            <div v-if="isAdmin && adminEditMode && ver.status !== 'INCOMING' && ver.status !== 'PROPOSED_ITEMS' && ver.versionNumber !== '0.0.0'" class="text-xs text-gray-500 dark:text-gray-400 shrink-0 font-mono text-right pt-1">
+              ( <button @click="openEditVersion(ver)" class="hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-600 dark:text-red-400 hover:text-red-500 font-medium cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 cursor-pointer transition-colors">add item</button> )
             </div>
           </div>
 
           <!-- Version Items Display with Smart Category Grouping -->
-          <div class="pl-2 pr-2 space-y-4">
+          <div class="p-3 md:p-4 space-y-4 bg-white dark:bg-gray-800/40">
             <!-- Case A: ALL items belong to General -> list directly without category group header -->
             <div v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral" class="space-y-1.5">
-                <ul class="space-y-1.5 text-xs text-gray-300">
-                  <li v-for="item in ver.versionItems" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
-                    <div class="flex items-start gap-2 flex-1 min-w-0">
-                      <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-900/80 border border-emerald-700/60 text-emerald-100 font-normal shadow-sm' : 'bg-emerald-950/30 border border-emerald-500/30 text-[#4ade80] font-normal'">
+                <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
+                  <li v-for="item in ver.versionItems" :key="item.id" class="flex items-center justify-between gap-3 py-0.5">
+                    <div class="flex items-center gap-2 flex-1 min-w-0">
+                      <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
                       <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
-                      <span v-if="isAdmin && adminEditMode" class="text-[10px] text-gray-400 font-mono shrink-0">
-                        (rank: {{ item.rank ?? 2.5 }})
-                      </span>
+                      <!-- Compact rank slider (0 left - 5 right) -->
+                      <input
+                        v-if="isAdmin && adminEditMode"
+                        type="range"
+                        min="0"
+                        max="5"
+                        step="0.1"
+                        :value="item.rank ?? 2.5"
+                        @input="handleRankSliderInput(item, ($event.target as HTMLInputElement).value)"
+                        @change="handleRankSliderChange(item, ($event.target as HTMLInputElement).value)"
+                        title="Rank item (0 left - 5 right)"
+                        class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500 shrink-0 self-center"
+                      />
                     </div>
 
-                    <!-- Category, Version & MORE dropdowns for Admin -->
+                    <!-- Category, Version & Action buttons for Admin -->
                     <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
                       <!-- 1. Category dropdown -->
                       <select
                         :value="item.versionCategoryId || ''"
                         @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value)"
-                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
+                        class="px-1.5 py-0.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-[11px] text-gray-800 dark:text-gray-300 focus:outline-none cursor-pointer"
                       >
                         <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
                         <option value="NEW_CATEGORY">+ Add category...</option>
@@ -1018,7 +1118,7 @@ const deleteCategory = async () => {
                         v-if="shouldShowVersionDropdown(item, ver)"
                         :value="item.versionId || 'none'"
                         @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
-                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
+                        class="px-1.5 py-0.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-[11px] text-gray-800 dark:text-gray-300 focus:outline-none cursor-pointer"
                       >
                         <option value="none">Incoming changes</option>
                         <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
@@ -1026,28 +1126,28 @@ const deleteCategory = async () => {
                         </option>
                       </select>
 
-                      <!-- 3. Action Icons: Edit (white), Add (green), Delete (red) -->
+                      <!-- 3. Action Icons: Edit (gray), Add (green), Delete (dark red) -->
                       <div class="flex items-center gap-1 ml-1 shrink-0">
                         <button
                           @click="openEditItem(item)"
                           title="Edit item"
-                          class="p-1 text-gray-300 hover:text-white rounded hover:bg-gray-700/60 transition-colors cursor-pointer"
+                          class="p-0.5 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
                         >
-                          <PencilIcon class="w-3.5 h-3.5" />
+                          <PencilIcon class="w-4 h-4 stroke-[2.5]" />
                         </button>
                         <button
                           @click="openAddItem(ver.id, item.id)"
                           title="Add item"
-                          class="p-0.5 bg-emerald-950/60 border border-emerald-700/60 hover:bg-emerald-900/80 text-[#34d399] hover:text-emerald-300 rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
+                          class="p-0.5 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/60 hover:bg-emerald-200 dark:hover:bg-emerald-900/80 text-emerald-700 dark:text-[#34d399] hover:text-emerald-900 dark:hover:text-emerald-300 rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
                         >
                           <PlusIcon class="w-4 h-4 stroke-[2.5]" />
                         </button>
                         <button
                           @click="deleteItem(item)"
                           title="Delete item"
-                          class="p-1 text-red-600 hover:text-red-500 transition-colors cursor-pointer"
+                          class="p-0.5 bg-red-100 dark:bg-red-950/60 border border-red-300 dark:border-red-800/60 hover:bg-red-200 dark:hover:bg-red-900/80 text-red-700 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
                         >
-                          <TrashIcon class="w-3.5 h-3.5" />
+                          <TrashIcon class="w-4 h-4 stroke-[2.5]" />
                         </button>
                       </div>
                     </div>
@@ -1059,18 +1159,18 @@ const deleteCategory = async () => {
               <div v-else class="space-y-4">
                 <div v-for="group in getGroupedItemsForVersion(ver.versionItems).groups" :key="group.categoryId" class="space-y-2">
                   <!-- Category Header -->
-                  <div class="flex items-center gap-2 border-b border-gray-700/50 pb-1">
-                    <h4 class="text-xs font-bold uppercase tracking-wider" :class="group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? 'italic' : ''" :style="{ color: group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? '#ef4444' : '#fbbf24' }">
+                  <div class="flex items-center gap-2 border-b border-gray-200 dark:border-gray-700/50 pb-1">
+                    <h4 class="text-xs font-bold uppercase tracking-wider" :class="group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? 'italic' : ''" :style="{ color: group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? '#ef4444' : '#d97706' }">
                       {{ group.categoryTitle }}
                     </h4>
-                    <span v-if="isAdmin && adminEditMode && group.categoryTitle !== 'Clean and assign' && group.categoryTitle !== 'General'" class="text-[10px] text-gray-500 font-mono">
+                    <span v-if="isAdmin && adminEditMode && group.categoryTitle !== 'Clean and assign' && group.categoryTitle !== 'General'" class="text-[10px] text-gray-500 dark:text-gray-400 font-mono">
                       (rank: {{ group.categoryRank }})
                     </span>
                     <button
                       v-if="isAdmin && adminEditMode"
                       @click="openEditCategory(group.categoryId)"
                       title="Edit category"
-                      class="text-gray-400 hover:text-white transition-colors"
+                      class="text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors"
                     >
                       <PencilSquareIcon class="w-3.5 h-3.5" />
                     </button>
@@ -1079,7 +1179,7 @@ const deleteCategory = async () => {
                     <select
                       v-if="isAdmin && adminEditMode"
                       @change="moveCategoryItemsToVersion(group.categoryId, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
-                      class="ml-auto px-1.5 py-0.5 bg-gray-800/80 border border-gray-700 rounded text-[10px] text-amber-300 focus:outline-none cursor-pointer"
+                      class="ml-auto px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer"
                     >
                       <option value="" disabled selected>Move all items to version...</option>
                       <option value="none">Incoming changes</option>
@@ -1090,25 +1190,35 @@ const deleteCategory = async () => {
                   </div>
 
                   <!-- Category Group Items (Indented) -->
-                  <ul class="space-y-1.5 text-xs text-gray-300 pl-3">
-                    <li v-for="item in group.items" :key="item.id" class="flex items-start justify-between gap-4 py-0.5">
-                      <div class="flex items-start gap-2 flex-1 min-w-0">
-                        <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-900/80 border border-emerald-700/60 text-emerald-100 font-normal shadow-sm' : 'bg-emerald-950/30 border border-emerald-500/30 text-[#4ade80] font-normal'">
+                  <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300 pl-3">
+                    <li v-for="item in group.items" :key="item.id" class="flex items-center justify-between gap-3 py-0.5">
+                      <div class="flex items-center gap-2 flex-1 min-w-0">
+                        <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
                         <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
-                        <span v-if="isAdmin && adminEditMode" class="text-[10px] text-gray-400 font-mono shrink-0">
-                          (rank: {{ item.rank ?? 2.5 }})
-                        </span>
+                        <!-- Compact rank slider (0 left - 5 right) -->
+                        <input
+                          v-if="isAdmin && adminEditMode"
+                          type="range"
+                          min="0"
+                          max="5"
+                          step="0.1"
+                          :value="item.rank ?? 2.5"
+                          @input="handleRankSliderInput(item, ($event.target as HTMLInputElement).value)"
+                          @change="handleRankSliderChange(item, ($event.target as HTMLInputElement).value)"
+                          title="Rank item (0 left - 5 right)"
+                          class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500 shrink-0 self-center"
+                        />
                       </div>
 
-                      <!-- Category, Version & MORE dropdowns for Admin -->
+                      <!-- Category, Version & Action buttons for Admin -->
                       <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
                         <!-- 1. Category dropdown -->
                         <select
                           :value="item.versionCategoryId || ''"
                           @change="updateItemCategoryDirectly(item, ($event.target as HTMLSelectElement).value)"
-                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
+                          class="px-1.5 py-0.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-[11px] text-gray-800 dark:text-gray-300 focus:outline-none cursor-pointer"
                         >
                           <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.title }}</option>
                           <option value="NEW_CATEGORY">+ Add category...</option>
@@ -1119,7 +1229,7 @@ const deleteCategory = async () => {
                           v-if="shouldShowVersionDropdown(item, ver)"
                           :value="item.versionId || 'none'"
                           @change="updateItemVersionDirectly(item, ($event.target as HTMLSelectElement).value)"
-                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer"
+                          class="px-1.5 py-0.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-[11px] text-gray-800 dark:text-gray-300 focus:outline-none cursor-pointer"
                         >
                           <option value="none">Incoming changes</option>
                           <option v-for="v in versions.filter(v => v.versionNumber !== '0.0.0')" :key="v.id" :value="v.id">
@@ -1127,28 +1237,28 @@ const deleteCategory = async () => {
                           </option>
                         </select>
 
-                        <!-- 3. Action Icons: Edit (white), Add (green), Delete (red) -->
+                        <!-- 3. Action Icons: Edit (gray), Add (green), Delete (dark red) -->
                         <div class="flex items-center gap-1 ml-1 shrink-0">
                           <button
                             @click="openEditItem(item)"
                             title="Edit item"
-                            class="p-1 text-gray-300 hover:text-white rounded hover:bg-gray-700/60 transition-colors cursor-pointer"
+                            class="p-0.5 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
                           >
-                            <PencilIcon class="w-3.5 h-3.5" />
+                            <PencilIcon class="w-4 h-4 stroke-[2.5]" />
                           </button>
                           <button
                             @click="openAddItem(ver.id, item.id)"
                             title="Add item"
-                            class="p-0.5 bg-emerald-950/60 border border-emerald-700/60 hover:bg-emerald-900/80 text-[#34d399] hover:text-emerald-300 rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
+                            class="p-0.5 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/60 hover:bg-emerald-200 dark:hover:bg-emerald-900/80 text-emerald-700 dark:text-[#34d399] hover:text-emerald-900 dark:hover:text-emerald-300 rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
                           >
                             <PlusIcon class="w-4 h-4 stroke-[2.5]" />
                           </button>
                           <button
                             @click="deleteItem(item)"
                             title="Delete item"
-                            class="p-1 text-red-600 hover:text-red-500 transition-colors cursor-pointer"
+                            class="p-0.5 bg-red-100 dark:bg-red-950/60 border border-red-300 dark:border-red-800/60 hover:bg-red-200 dark:hover:bg-red-900/80 text-red-700 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
                           >
-                            <TrashIcon class="w-3.5 h-3.5" />
+                            <TrashIcon class="w-4 h-4 stroke-[2.5]" />
                           </button>
                         </div>
                       </div>
