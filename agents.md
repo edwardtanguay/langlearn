@@ -31,3 +31,4 @@ In general, don't use colors if they are not language related, e.g. don't make l
 - if something fails, revert the change
 - when clicking a button, disable it and show a loading spinner or something similar to indicate that the action is being processed. change it back when the API call returns
 - when clicking a save button on a form, disable all fields, buttons
+- when making a change, whatever was optimistically updated, show a spinner next to it until the API call returns
