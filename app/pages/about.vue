@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { BoltIcon, PencilSquareIcon } from '@heroicons/vue/24/outline'
+import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon } from '@heroicons/vue/24/outline'
+import { PlusCircleIcon } from '@heroicons/vue/24/solid'
 
 useHead({
   title: 'LangLearn - About & Roadmap',
@@ -510,24 +511,51 @@ const saveAdminItem = async () => {
 
   // Optimistic update & immediate smooth close
   if (!isNewItem.value) {
-    let found = unassignedItems.value.find(i => i.id === payload.id)
+    const targetCat = categories.value.find(c => c.id === payload.versionCategoryId) || null
+
+    let found: VersionItem | undefined = undefined
+    let parentVer: Version | undefined = undefined
+
+    for (const v of versions.value) {
+      const idx = v.versionItems.findIndex(i => i.id === payload.id)
+      if (idx !== -1) {
+        found = v.versionItems[idx]
+        parentVer = v
+        break
+      }
+    }
+    if (!found) {
+      found = unassignedItems.value.find(i => i.id === payload.id)
+    }
+
     if (found) {
       found.body = payload.body
       found.type = payload.type
       found.rank = payload.rank
       found.versionCategoryId = payload.versionCategoryId
-      found.versionId = payload.versionId
-    } else {
-      for (const v of versions.value) {
-        const item = v.versionItems.find(i => i.id === payload.id)
-        if (item) {
-          item.body = payload.body
-          item.type = payload.type
-          item.rank = payload.rank
-          item.versionCategoryId = payload.versionCategoryId
-          item.versionId = payload.versionId
-          break
+      found.versionCategory = targetCat
+
+      // Move item container if version changed
+      if (found.versionId !== payload.versionId) {
+        // Remove from old location
+        if (parentVer) {
+          parentVer.versionItems = parentVer.versionItems.filter(i => i.id !== payload.id)
+        } else {
+          unassignedItems.value = unassignedItems.value.filter(i => i.id !== payload.id)
         }
+        found.versionId = payload.versionId
+        // Add to new location
+        if (payload.versionId === null) {
+          unassignedItems.value.push(found)
+        } else {
+          const targetVer = versions.value.find(v => v.id === payload.versionId)
+          if (targetVer) {
+            targetVer.versionItems = [...targetVer.versionItems, found]
+          }
+        }
+      } else if (parentVer) {
+        // Force Vue reactivity trigger for getGroupedItemsForVersion
+        parentVer.versionItems = [...parentVer.versionItems]
       }
     }
   } else {
@@ -561,17 +589,38 @@ const saveAdminItem = async () => {
 
   try {
     if (isNewItem.value) {
-      await $fetch<VersionItem>('/api/dev/version-items', {
+      const created = await $fetch<VersionItem>('/api/dev/version-items', {
         method: 'POST',
         body: payload
       })
+      if (created?.id) {
+        if (!payload.versionId) {
+          const item = unassignedItems.value.find(i => i.body === payload.body)
+          if (item) item.id = created.id
+        } else {
+          const targetVer = versions.value.find(v => v.id === payload.versionId)
+          const item = targetVer?.versionItems.find(i => i.body === payload.body)
+          if (item) item.id = created.id
+        }
+      }
     } else {
-      await $fetch(`/api/dev/version-items/${payload.id}`, {
+      const updated = await $fetch<VersionItem>(`/api/dev/version-items/${payload.id}`, {
         method: 'PUT',
         body: payload
       })
+      if (updated) {
+        for (const v of versions.value) {
+          const item = v.versionItems.find(i => i.id === payload.id)
+          if (item) {
+            item.body = updated.body
+            item.versionCategoryId = updated.versionCategoryId
+            item.versionCategory = updated.versionCategory || categories.value.find(c => c.id === updated.versionCategoryId) || null
+            v.versionItems = [...v.versionItems]
+            break
+          }
+        }
+      }
     }
-    await loadData(false)
   } catch (err: any) {
     versions.value = snapshotVersions
     unassignedItems.value = snapshotUnassigned
@@ -697,18 +746,23 @@ const moveCategoryItemsToVersion = async (categoryId: string, targetVersionId: s
 
 const deleteItem = async (item: VersionItem) => {
   if (!confirm('Are you sure you want to delete this item?')) return
-  try {
-    if (item.versionId === null) {
-      unassignedItems.value = unassignedItems.value.filter(i => i.id !== item.id)
-    } else {
-      for (const v of versions.value) {
-        v.versionItems = v.versionItems.filter(i => i.id !== item.id)
-      }
+  const snapshotVersions = JSON.parse(JSON.stringify(versions.value))
+  const snapshotUnassigned = JSON.parse(JSON.stringify(unassignedItems.value))
+
+  // Optimistic update
+  if (item.versionId === null) {
+    unassignedItems.value = unassignedItems.value.filter(i => i.id !== item.id)
+  } else {
+    for (const v of versions.value) {
+      v.versionItems = v.versionItems.filter(i => i.id !== item.id)
     }
+  }
+
+  try {
     await $fetch(`/api/dev/version-items/${item.id}`, { method: 'DELETE' })
-    await loadData(false)
   } catch (err: any) {
-    await loadData(false)
+    versions.value = snapshotVersions
+    unassignedItems.value = snapshotUnassigned
     alert(err.data?.statusMessage || 'Failed to delete item')
   }
 }
@@ -972,16 +1026,30 @@ const deleteCategory = async () => {
                         </option>
                       </select>
 
-                      <!-- 3. MORE dropdown -->
-                      <select
-                        @change="handleItemMoreAction(($event.target as HTMLSelectElement).value, item, ver.id); ($event.target as HTMLSelectElement).value = ''"
-                        class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer font-medium"
-                      >
-                        <option value="" disabled selected>MORE</option>
-                        <option value="edit">Edit</option>
-                        <option value="add_item" class="text-emerald-400 font-semibold" style="color: #34d399;">Add item</option>
-                        <option value="delete" class="text-red-400 font-semibold">Delete</option>
-                      </select>
+                      <!-- 3. Action Icons: Edit (white), Add (green), Delete (red) -->
+                      <div class="flex items-center gap-1 ml-1 shrink-0">
+                        <button
+                          @click="openEditItem(item)"
+                          title="Edit item"
+                          class="p-1 text-gray-300 hover:text-white rounded hover:bg-gray-700/60 transition-colors cursor-pointer"
+                        >
+                          <PencilIcon class="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          @click="openAddItem(ver.id, item.id)"
+                          title="Add item"
+                          class="p-0.5 bg-emerald-950/60 border border-emerald-700/60 hover:bg-emerald-900/80 text-[#34d399] hover:text-emerald-300 rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
+                        >
+                          <PlusIcon class="w-4 h-4 stroke-[2.5]" />
+                        </button>
+                        <button
+                          @click="deleteItem(item)"
+                          title="Delete item"
+                          class="p-1 text-red-600 hover:text-red-500 transition-colors cursor-pointer"
+                        >
+                          <TrashIcon class="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   </li>
                 </ul>
@@ -992,8 +1060,8 @@ const deleteCategory = async () => {
                 <div v-for="group in getGroupedItemsForVersion(ver.versionItems).groups" :key="group.categoryId" class="space-y-2">
                   <!-- Category Header -->
                   <div class="flex items-center gap-2 border-b border-gray-700/50 pb-1">
-                    <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider">
-                      {{ group.categoryTitle === 'Clean and assign' ? 'Clean and assign' : group.categoryTitle }}
+                    <h4 class="text-xs font-bold uppercase tracking-wider" :class="group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? 'italic' : ''" :style="{ color: group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? '#ef4444' : '#fbbf24' }">
+                      {{ group.categoryTitle }}
                     </h4>
                     <span v-if="isAdmin && adminEditMode && group.categoryTitle !== 'Clean and assign' && group.categoryTitle !== 'General'" class="text-[10px] text-gray-500 font-mono">
                       (rank: {{ group.categoryRank }})
@@ -1059,16 +1127,30 @@ const deleteCategory = async () => {
                           </option>
                         </select>
 
-                        <!-- 3. MORE dropdown -->
-                        <select
-                          @change="handleItemMoreAction(($event.target as HTMLSelectElement).value, item, ver.id); ($event.target as HTMLSelectElement).value = ''"
-                          class="px-1.5 py-0.5 bg-gray-800 border border-gray-700 rounded text-[11px] text-gray-300 focus:outline-none cursor-pointer font-medium"
-                        >
-                          <option value="" disabled selected>MORE</option>
-                          <option value="edit">Edit</option>
-                          <option value="add_item" class="text-emerald-400 font-semibold" style="color: #34d399;">Add item</option>
-                          <option value="delete" class="text-red-400 font-semibold">Delete</option>
-                        </select>
+                        <!-- 3. Action Icons: Edit (white), Add (green), Delete (red) -->
+                        <div class="flex items-center gap-1 ml-1 shrink-0">
+                          <button
+                            @click="openEditItem(item)"
+                            title="Edit item"
+                            class="p-1 text-gray-300 hover:text-white rounded hover:bg-gray-700/60 transition-colors cursor-pointer"
+                          >
+                            <PencilIcon class="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            @click="openAddItem(ver.id, item.id)"
+                            title="Add item"
+                            class="p-0.5 bg-emerald-950/60 border border-emerald-700/60 hover:bg-emerald-900/80 text-[#34d399] hover:text-emerald-300 rounded shadow-sm transition-colors cursor-pointer flex items-center justify-center"
+                          >
+                            <PlusIcon class="w-4 h-4 stroke-[2.5]" />
+                          </button>
+                          <button
+                            @click="deleteItem(item)"
+                            title="Delete item"
+                            class="p-1 text-red-600 hover:text-red-500 transition-colors cursor-pointer"
+                          >
+                            <TrashIcon class="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
                     </li>
                   </ul>
