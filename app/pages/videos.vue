@@ -64,18 +64,18 @@ function playVideo(youtubeId: string) {
 
     <!-- Video Categories -->
     <div v-for="category in categories" :key="category.id" class="space-y-4">
-      <!-- Category Header (Vertically Centered) -->
-      <div class="flex items-center gap-3 border-b border-gray-200 dark:border-gray-800 pb-3">
+      <!-- Category Header (Top Aligned) -->
+      <div class="flex items-start gap-3 border-b border-gray-200 dark:border-gray-800 pb-3">
         <span
-          class="px-2.5 py-1 rounded text-xs font-bold text-white shadow-sm uppercase tracking-wider flex items-center justify-center"
+          class="px-2.5 py-0.5 rounded text-xs font-bold text-white shadow-sm uppercase tracking-wider flex items-center justify-center shrink-0"
           :style="{ backgroundColor: category.color }"
         >
           {{ category.code }}
         </span>
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white tracking-tight flex items-center">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white tracking-tight leading-none -mt-[3px]">
           {{ category.title }}
         </h2>
-        <span class="text-xs text-gray-500 dark:text-gray-400 font-medium flex items-center">
+        <span class="text-xs text-gray-500 dark:text-gray-400 font-medium leading-none mt-[3px]">
           ({{ category.videos.length }} {{ category.videos.length === 1 ? 'video' : 'videos' }})
         </span>
       </div>

@@ -1072,8 +1072,8 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
           <div class="bg-gray-100 dark:bg-gray-900/50 p-3 md:p-3.5 border-b border-gray-200 dark:border-gray-700/80 space-y-2">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
               <div class="flex items-center space-x-2.5 flex-wrap gap-y-1">
-                <span v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="font-bold text-amber-600 dark:text-amber-400 text-base md:text-lg">
-                  Incoming changes
+                <span v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="font-bold italic text-red-500 dark:text-red-400 text-base md:text-lg">
+                  INCOMING CHANGES (clean, group, reassign to other versions)
                 </span>
                 <template v-else>
                   <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-base md:text-lg">
@@ -1119,7 +1119,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             <div v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral" class="space-y-1.5">
                 <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
                   <li v-for="(item, itemIdx) in ver.versionItems" :key="item.id" class="flex items-start justify-between gap-3 py-0.5">
-                    <div class="flex items-center gap-2 flex-1 min-w-0">
+                    <div class="flex items-start gap-2 flex-1 min-w-0">
                       <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
@@ -1147,7 +1147,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                     </div>
 
                     <!-- Category, Version & Action buttons for Admin -->
-                    <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
+                    <div v-if="isAdmin && adminEditMode" class="flex items-start gap-1.5 shrink-0">
                       <!-- 1. Category dropdown -->
                       <select
                         value=""
@@ -1240,7 +1240,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   <!-- Category Group Items (Indented) -->
                   <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300 pl-3">
                     <li v-for="(item, itemIdx) in group.items" :key="item.id" class="flex items-start justify-between gap-3 py-0.5">
-                      <div class="flex items-center gap-2 flex-1 min-w-0">
+                      <div class="flex items-start gap-2 flex-1 min-w-0">
                         <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
@@ -1268,7 +1268,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                       </div>
 
                       <!-- Category, Version & Action buttons for Admin -->
-                      <div v-if="isAdmin && adminEditMode" class="flex items-center gap-1.5 shrink-0">
+                      <div v-if="isAdmin && adminEditMode" class="flex items-start gap-1.5 shrink-0">
                         <!-- 1. Category dropdown -->
                         <select
                           value=""
