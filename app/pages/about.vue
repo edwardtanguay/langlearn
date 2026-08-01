@@ -1254,8 +1254,8 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   </span>
                 </template>
 
-                <!-- Create issue markdown button for IN_PROGRESS, FUTURE_VERSION, and INCOMING versions in Admin mode -->
-                <div v-if="isAdmin && adminEditMode && (ver.status === 'IN_PROGRESS' || ver.status === 'FUTURE_VERSION' || ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0')" class="inline-flex items-center ml-2">
+                <!-- Create issue markdown button for IN_PROGRESS versions in Admin mode -->
+                <div v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="inline-flex items-center ml-2">
                   <button
                     @click="copyIssueMarkdown(ver)"
                     title="Copy issue markdown to clipboard"
@@ -1267,7 +1267,10 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   </button>
                 </div>
               </div>
-              <div v-if="ver.publishDate && ver.status !== 'FUTURE_VERSION'" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono font-bold shrink-0">
+              <div v-if="ver.status === 'FUTURE_VERSION'" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-mono font-bold shrink-0 uppercase tracking-wider">
+                FUTURE VERSION
+              </div>
+              <div v-else-if="ver.publishDate" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono font-bold shrink-0">
                 {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
               </div>
             </div>
