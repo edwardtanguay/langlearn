@@ -1048,18 +1048,16 @@ function generateIssueMarkdown(ver: Version): string {
       md += `## General\n\n`
       for (const item of grouped.allItems) {
         const prefix = item.type === 'FEATURE' ? 'FEATURE' : 'BUG-FIX'
-        md += `- ${prefix}: ${formatSentenceCase(item.body)}\n`
+        md += `- ${prefix}: ${formatSentenceCase(item.body)}\n\n`
       }
-      md += `\n`
     }
   } else {
     for (const group of grouped.groups) {
       md += `## ${group.categoryTitle}\n\n`
       for (const item of group.items) {
         const prefix = item.type === 'FEATURE' ? 'FEATURE' : 'BUG-FIX'
-        md += `- ${prefix}: ${formatSentenceCase(item.body)}\n`
+        md += `- ${prefix}: ${formatSentenceCase(item.body)}\n\n`
       }
-      md += `\n`
     }
   }
 
