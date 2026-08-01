@@ -1279,24 +1279,24 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             </div>
 
             <!-- Description for INCOMING changes section -->
-            <p v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed italic pt-1">
+            <p v-if="ver.versionNumber === '0.0.0'" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed italic pt-1">
               These are raw ideas for new features or bug-fixes which come from website users and developers. They need to be examined, verified, written in the past tense, then assigned a category and a version. 
             </p>
 
             <!-- Right-aligned Version CRUD Actions (Excluding INCOMING) -->
-            <div v-if="isAdmin && adminEditMode && ver.status !== 'INCOMING' && ver.status !== 'PROPOSED_ITEMS' && ver.versionNumber !== '0.0.0'" class="flex items-center justify-end gap-2 text-xs text-gray-500 dark:text-gray-400 shrink-0 font-mono pt-1">
+            <div v-if="isAdmin && adminEditMode && ver.versionNumber !== '0.0.0'" class="flex items-center justify-end gap-2 text-xs text-gray-500 dark:text-gray-400 shrink-0 font-mono pt-1">
               <span>( <button @click="openEditVersion(ver)" class="hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-600 dark:text-red-400 hover:text-red-500 font-medium cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 cursor-pointer transition-colors">add item</button> )</span>
 
               <!-- Move all general items dropdown inline -->
               <select
                 v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral && ver.versionItems.length > 0"
-                @change="moveAllVersionItemsToVersion((ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? null : ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
+                @change="moveAllVersionItemsToVersion(ver.versionNumber === '0.0.0' ? null : ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
                 class="px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[220px] truncate"
               >
                 <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">move all items to version</option>
                 <option v-if="ver.id" value="none">Incoming changes</option>
                 <option v-for="v in getVersionsForDropdown(ver.id)" :key="v.id" :value="v.id">
-                  <template v-if="v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0'">Incoming changes</template>
+                  <template v-if="v.versionNumber === '0.0.0'">Incoming changes</template>
                   <template v-else-if="v.status === 'FUTURE_VERSION'">{{ v.title || 'Future Version' }}</template>
                   <template v-else>v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}</template>
                 </option>
