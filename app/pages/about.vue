@@ -789,61 +789,60 @@ const handleItemMoreAction = (action: string, item: VersionItem, verId: string |
   }
 }
 
+const findVersionInState = (versionId: string | null) => {
+  if (!versionId || versionId === 'none' || versionId === '' || versionId === '0.0.0') {
+    return versions.value.find(v => v.versionNumber === '0.0.0' || v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS')
+  }
+  return versions.value.find(v => v.id === versionId)
+}
+
 const moveCategoryItemsToVersion = async (categoryId: string, sourceVersionId: string | null, targetVersionId: string) => {
   if (!targetVersionId) return
   const finalTargetVerId = (targetVersionId === 'none' || targetVersionId === '') ? null : targetVersionId
   const finalSourceVerId = (sourceVersionId === 'none' || sourceVersionId === '') ? null : sourceVersionId
 
-  if (finalSourceVerId === finalTargetVerId) return
+  const srcVer = findVersionInState(finalSourceVerId)
+  const tgtVer = findVersionInState(finalTargetVerId)
+
+  if (srcVer && tgtVer && srcVer.id === tgtVer.id) return
 
   const snapshotVersions = JSON.parse(JSON.stringify(versions.value))
   const snapshotUnassigned = JSON.parse(JSON.stringify(unassignedItems.value))
 
-  // Collect matching items only from the specific source version
-  const matchingItems: VersionItem[] = []
-  if (finalSourceVerId === null) {
-    unassignedItems.value.forEach(i => {
-      if (i.versionCategoryId === categoryId) matchingItems.push(i)
-    })
+  // Collect matching items from source version
+  let matchingItems: VersionItem[] = []
+  if (srcVer) {
+    matchingItems = srcVer.versionItems.filter(i => i.versionCategoryId === categoryId)
   } else {
-    const srcVer = versions.value.find(v => v.id === finalSourceVerId)
-    if (srcVer) {
-      srcVer.versionItems.forEach(i => {
-        if (i.versionCategoryId === categoryId) matchingItems.push(i)
-      })
-    }
+    matchingItems = unassignedItems.value.filter(i => i.versionCategoryId === categoryId)
   }
 
   if (matchingItems.length === 0) return
 
+  const targetVerIdToAssign = tgtVer?.id || null
+
   // Optimistically move matching items to target version
   matchingItems.forEach(item => {
-    item.versionId = finalTargetVerId
+    item.versionId = targetVerIdToAssign
   })
 
-  // Re-group reactive arrays
-  if (finalSourceVerId === null) {
-    unassignedItems.value = unassignedItems.value.filter(i => i.versionCategoryId !== categoryId)
-  } else {
-    const srcVer = versions.value.find(v => v.id === finalSourceVerId)
-    if (srcVer) {
-      srcVer.versionItems = srcVer.versionItems.filter(i => i.versionCategoryId !== categoryId)
-    }
+  // Remove matching items from source version
+  if (srcVer) {
+    srcVer.versionItems = srcVer.versionItems.filter(i => i.versionCategoryId !== categoryId)
   }
+  unassignedItems.value = unassignedItems.value.filter(i => i.versionCategoryId !== categoryId)
 
-  if (finalTargetVerId === null) {
-    unassignedItems.value = [...unassignedItems.value, ...matchingItems]
+  // Add matching items to target version
+  if (tgtVer) {
+    tgtVer.versionItems = [...tgtVer.versionItems, ...matchingItems]
   } else {
-    const tgtVer = versions.value.find(v => v.id === finalTargetVerId)
-    if (tgtVer) {
-      tgtVer.versionItems = [...tgtVer.versionItems, ...matchingItems]
-    }
+    unassignedItems.value = [...unassignedItems.value, ...matchingItems]
   }
 
   try {
     await $fetch('/api/dev/version-items/move-category', {
       method: 'POST',
-      body: { versionCategoryId: categoryId, sourceVersionId: finalSourceVerId, targetVersionId: finalTargetVerId }
+      body: { versionCategoryId: categoryId, sourceVersionId: srcVer?.id || finalSourceVerId, targetVersionId: tgtVer?.id || finalTargetVerId }
     })
   } catch (err: any) {
     versions.value = snapshotVersions
@@ -857,45 +856,42 @@ const moveAllVersionItemsToVersion = async (sourceVersionId: string | null, targ
   const finalTargetVerId = (targetVersionId === 'none' || targetVersionId === '') ? null : targetVersionId
   const finalSourceVerId = (sourceVersionId === 'none' || sourceVersionId === '') ? null : sourceVersionId
 
-  if (finalSourceVerId === finalTargetVerId) return
+  const srcVer = findVersionInState(finalSourceVerId)
+  const tgtVer = findVersionInState(finalTargetVerId)
+
+  if (srcVer && tgtVer && srcVer.id === tgtVer.id) return
 
   const snapshotVersions = JSON.parse(JSON.stringify(versions.value))
   const snapshotUnassigned = JSON.parse(JSON.stringify(unassignedItems.value))
 
   // Collect all items from source version
   let matchingItems: VersionItem[] = []
-  if (finalSourceVerId === null) {
-    matchingItems = [...unassignedItems.value]
+  if (srcVer) {
+    matchingItems = [...srcVer.versionItems]
   } else {
-    const srcVer = versions.value.find(v => v.id === finalSourceVerId)
-    if (srcVer) {
-      matchingItems = [...srcVer.versionItems]
-    }
+    matchingItems = [...unassignedItems.value]
   }
 
   if (matchingItems.length === 0) return
 
+  const targetVerIdToAssign = tgtVer?.id || null
+
   // Optimistically move all items to target version
   matchingItems.forEach(item => {
-    item.versionId = finalTargetVerId
+    item.versionId = targetVerIdToAssign
   })
 
-  if (finalSourceVerId === null) {
-    unassignedItems.value = []
-  } else {
-    const srcVer = versions.value.find(v => v.id === finalSourceVerId)
-    if (srcVer) {
-      srcVer.versionItems = []
-    }
+  // Clear source version items
+  if (srcVer) {
+    srcVer.versionItems = []
   }
+  unassignedItems.value = []
 
-  if (finalTargetVerId === null) {
-    unassignedItems.value = [...unassignedItems.value, ...matchingItems]
+  // Add items to target version
+  if (tgtVer) {
+    tgtVer.versionItems = [...tgtVer.versionItems, ...matchingItems]
   } else {
-    const tgtVer = versions.value.find(v => v.id === finalTargetVerId)
-    if (tgtVer) {
-      tgtVer.versionItems = [...tgtVer.versionItems, ...matchingItems]
-    }
+    unassignedItems.value = [...matchingItems]
   }
 
   try {
@@ -906,7 +902,7 @@ const moveAllVersionItemsToVersion = async (sourceVersionId: string | null, targ
   } catch (err: any) {
     versions.value = snapshotVersions
     unassignedItems.value = snapshotUnassigned
-    alert(err.data?.statusMessage || 'Failed to move all items to version')
+    alert(err.data?.statusMessage || 'Failed to move version items')
   }
 }
 
@@ -1290,7 +1286,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
               <!-- Move all general items dropdown inline -->
               <select
                 v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral && ver.versionItems.length > 0"
-                @change="moveAllVersionItemsToVersion(ver.versionNumber === '0.0.0' ? null : ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
+                @change="moveAllVersionItemsToVersion(ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
                 class="px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[220px] truncate"
               >
                 <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">move all items to version</option>
@@ -1419,7 +1415,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                     <!-- Category Move All to Version dropdown -->
                     <select
                       v-if="isAdmin && adminEditMode"
-                      @change="moveCategoryItemsToVersion(group.categoryId, (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? null : ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
+                      @change="moveCategoryItemsToVersion(group.categoryId, ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
                       class="ml-auto px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[270px] truncate"
                     >
                       <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">move this category and its items to new version</option>

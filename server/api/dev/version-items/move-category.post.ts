@@ -11,16 +11,42 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'versionCategoryId is required' })
   }
 
-  const finalSourceVersionId = (sourceVersionId === 'none' || sourceVersionId === null || sourceVersionId === '') ? null : sourceVersionId
-  const finalTargetVersionId = (targetVersionId === 'none' || targetVersionId === null || targetVersionId === '') ? null : targetVersionId
+  const isIncoming = (id: any) => !id || id === 'none' || id === '' || id === '0.0.0'
+
+  let incomingVerId: string | null = null
+  const getIncomingVerId = async () => {
+    if (incomingVerId) return incomingVerId
+    const incomingVer = await prisma.version.findFirst({
+      where: {
+        OR: [
+          { status: 'INCOMING' },
+          { status: 'PROPOSED_ITEMS' },
+          { versionNumber: '0.0.0' }
+        ]
+      }
+    })
+    incomingVerId = incomingVer?.id || null
+    return incomingVerId
+  }
+
+  const isSourceIncoming = isIncoming(sourceVersionId)
+  const isTargetIncoming = isIncoming(targetVersionId)
+
+  const resolvedSourceId = isSourceIncoming ? await getIncomingVerId() : sourceVersionId
+  const resolvedTargetId = isTargetIncoming ? await getIncomingVerId() : targetVersionId
+
+  const sourceWhereClause: any = isSourceIncoming
+    ? { OR: [{ versionId: resolvedSourceId }, { versionId: null }] }
+    : { versionId: resolvedSourceId }
 
   await prisma.versionItem.updateMany({
     where: {
       versionCategoryId,
-      versionId: finalSourceVersionId
+      ...sourceWhereClause
     },
-    data: { versionId: finalTargetVersionId }
+    data: { versionId: resolvedTargetId }
   })
 
   return { success: true }
 })
+
