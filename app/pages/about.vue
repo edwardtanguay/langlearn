@@ -63,7 +63,7 @@ const itemRankStr = ref('2.5')
 const isNewItem = ref(false)
 
 const showEditVersionModal = ref(false)
-const editingVersion = ref<{ id: string; versionNumber: string; title: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE_VERSION'; publishDate: string }>({
+const editingVersion = ref<{ id: string; versionNumber: string; title: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE_VERSION' | 'INCOMING' | 'PROPOSED_ITEMS'; publishDate: string }>({
   id: '', versionNumber: '', title: '', status: 'IN_PROGRESS', publishDate: ''
 })
 const isNewVersion = ref(false)
