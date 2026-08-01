@@ -142,14 +142,6 @@ const loadData = async (showLoading = false) => {
 }
 
 function shouldShowVersionDropdown(item: VersionItem, ver: Version): boolean {
-  const isIncoming = ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0' || !item.versionId || item.versionId === 'none'
-  if (!isIncoming) return true
-
-  const catObj = item.versionCategory || categories.value.find(c => c.id === item.versionCategoryId)
-  const catTitle = catObj?.title || ''
-  if (catTitle.toLowerCase() === 'clean and assign') {
-    return false
-  }
   return true
 }
 
@@ -1277,7 +1269,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
             <!-- Description for INCOMING changes section -->
             <p v-if="ver.versionNumber === '0.0.0'" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed italic pt-1">
-              These are raw ideas for new features or bug-fixes which come from website users and developers. They need to be examined, verified, written in the past tense, then assigned a category and a version. 
+              These are raw ideas for new features and bug-fixes which come from website users and developers. They need to be examined, verified, written in the past tense, then assigned a category and a version. 
             </p>
 
             <!-- Right-aligned Version CRUD Actions (Excluding INCOMING) -->
