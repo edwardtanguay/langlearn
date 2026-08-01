@@ -378,7 +378,14 @@ function formatSentenceCase(str: string | null | undefined): string {
   if (!str) return ''
   const trimmed = str.trim()
   if (!trimmed) return ''
-  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1)
+  let result = trimmed.charAt(0).toUpperCase() + trimmed.slice(1)
+  if (trimmed.length > 30) {
+    const lastChar = result.slice(-1)
+    if (lastChar !== '.' && lastChar !== '!' && lastChar !== '?') {
+      result += '.'
+    }
+  }
+  return result
 }
 
 function formatPublishDate(dateStr: string | null | undefined): string {
