@@ -76,9 +76,16 @@ const editingCategory = ref<{ id: string; title: string; rank: number; abbreviat
 })
 const categoryRankStr = ref('2.5')
 
-const focusFirstModalInput = () => {
+const focusFirstModalInput = (focusTextarea = false) => {
   nextTick(() => {
     if (typeof document !== 'undefined') {
+      if (focusTextarea) {
+        const textarea = document.querySelector('.fixed.inset-0 textarea') as HTMLElement | null
+        if (textarea) {
+          textarea.focus()
+          return
+        }
+      }
       const firstInput = document.querySelector('.fixed.inset-0 input:not([type="hidden"]), .fixed.inset-0 textarea, .fixed.inset-0 select') as HTMLElement | null
       if (firstInput) {
         firstInput.focus()
@@ -526,7 +533,7 @@ const openAddItem = (versionId: string | null, afterItemId?: string, sourceItem?
     }
   }
   showEditItemModal.value = true
-  focusFirstModalInput()
+  focusFirstModalInput(true)
 }
 
 const openEditItem = (item: VersionItem) => {
@@ -831,7 +838,6 @@ const moveCategoryItemsToVersion = async (categoryId: string, sourceVersionId: s
       method: 'POST',
       body: { versionCategoryId: categoryId, sourceVersionId: finalSourceVerId, targetVersionId: finalTargetVerId }
     })
-    await loadData(false)
   } catch (err: any) {
     versions.value = snapshotVersions
     unassignedItems.value = snapshotUnassigned
@@ -1267,19 +1273,18 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
             <!-- Description for INCOMING changes section -->
             <p v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed italic pt-1">
-              These are ideas for new features or bug-fixes which come from website users and developers. 
+              These are raw ideas for new features or bug-fixes which come from website users and developers. They need to be examined, verified, written in the past tense, then assigned a category and a version. 
             </p>
 
             <!-- Right-aligned Version CRUD Actions (Excluding INCOMING) -->
-            <div v-if="isAdmin && adminEditMode && ver.status !== 'INCOMING' && ver.status !== 'PROPOSED_ITEMS' && ver.versionNumber !== '0.0.0'" class="text-xs text-gray-500 dark:text-gray-400 shrink-0 font-mono text-right pt-1">
-              ( <button @click="openEditVersion(ver)" class="hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-600 dark:text-red-400 hover:text-red-500 font-medium cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 cursor-pointer transition-colors">add item</button> )
-            </div>
+            <div v-if="isAdmin && adminEditMode && ver.status !== 'INCOMING' && ver.status !== 'PROPOSED_ITEMS' && ver.versionNumber !== '0.0.0'" class="flex items-center justify-end gap-2 text-xs text-gray-500 dark:text-gray-400 shrink-0 font-mono pt-1">
+              <span>( <button @click="openEditVersion(ver)" class="hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-600 dark:text-red-400 hover:text-red-500 font-medium cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 cursor-pointer transition-colors">add item</button> )</span>
 
-            <!-- Move all general items dropdown (for all-general versions in admin mode) -->
-            <div v-if="isAdmin && adminEditMode && getGroupedItemsForVersion(ver.versionItems).isAllGeneral && ver.versionItems.length > 0" class="pt-1">
+              <!-- Move all general items dropdown inline -->
               <select
+                v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral && ver.versionItems.length > 0"
                 @change="moveAllVersionItemsToVersion((ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? null : ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
-                class="px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[270px] truncate"
+                class="px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[220px] truncate"
               >
                 <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">move all items to version</option>
                 <option v-if="ver.id" value="none">Incoming changes</option>
