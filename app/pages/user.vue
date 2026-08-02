@@ -27,6 +27,41 @@ const { data: flashcards, refresh: refreshFlashcards } = useFetch('/api/flashcar
 
 const flashcardCount = computed(() => flashcards.value ? flashcards.value.length : 0)
 
+// Fetch user profile data
+const { data: meData, refresh: refreshMe } = await useFetch<{ dailyTakeGoal: number }>('/api/user/me')
+const dailyTakeGoalInput = ref(meData.value?.dailyTakeGoal ?? 100)
+const isSavingGoal = ref(false)
+const goalSaveSuccess = ref(false)
+
+watch(() => meData.value?.dailyTakeGoal, (newVal) => {
+  if (newVal !== undefined) dailyTakeGoalInput.value = newVal
+})
+
+const handleSaveGoal = async () => {
+  if (isSavingGoal.value) return
+  const prevValue = meData.value?.dailyTakeGoal ?? 100
+  const newValue = Math.max(1, Number(dailyTakeGoalInput.value) || 100)
+  
+  // Optimistic update
+  if (meData.value) meData.value.dailyTakeGoal = newValue
+  isSavingGoal.value = true
+  goalSaveSuccess.value = false
+
+  try {
+    await $fetch('/api/user/profile', {
+      method: 'POST',
+      body: { dailyTakeGoal: newValue }
+    })
+    goalSaveSuccess.value = true
+    setTimeout(() => { goalSaveSuccess.value = false }, 2500)
+  } catch (e) {
+    if (meData.value) meData.value.dailyTakeGoal = prevValue
+    dailyTakeGoalInput.value = prevValue
+  } finally {
+    isSavingGoal.value = false
+  }
+}
+
 // Confirmation modal state
 const showConfirmModal = ref(false)
 const isDeleting = ref(false)
@@ -91,6 +126,32 @@ const handleLogout = () => {
             </p>
           </div>
         </div>
+
+        <!-- Daily Goal Setting Form -->
+        <form @submit.prevent="handleSaveGoal" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+          <label class="block text-sm font-semibold text-gray-900 dark:text-white">
+            Daily Take Goal
+          </label>
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              v-model.number="dailyTakeGoalInput"
+              :disabled="isSavingGoal"
+              min="1"
+              max="10000"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+            />
+            <button
+              type="submit"
+              :disabled="isSavingGoal"
+              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl text-sm transition-all disabled:opacity-50 flex items-center shrink-0 gap-1.5"
+            >
+              <span v-if="isSavingGoal" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>{{ isSavingGoal ? 'Saving...' : 'Save' }}</span>
+            </button>
+          </div>
+          <p v-if="goalSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Goal saved!</p>
+        </form>
 
         <!-- Account Stats & Details -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-4">

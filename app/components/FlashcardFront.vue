@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 interface Tag {
   id: string
@@ -30,6 +30,7 @@ const props = defineProps<{
 
 const showMemoryHook = ref(false)
 let memoryHookTimeout: ReturnType<typeof setTimeout> | null = null
+const isFlickering = ref(false)
 
 function toggleMemoryHook() {
   if (memoryHookTimeout) clearTimeout(memoryHookTimeout)
@@ -38,19 +39,40 @@ function toggleMemoryHook() {
   if (showMemoryHook.value) {
     memoryHookTimeout = setTimeout(() => {
       showMemoryHook.value = false
-    }, 2000)
+    }, 4000)
   }
 }
 
-watch(() => props.currentCard.id, () => {
+watch(() => props.currentCard.id, (newId, oldId) => {
   showMemoryHook.value = false
   if (memoryHookTimeout) clearTimeout(memoryHookTimeout)
 })
 
-watch(() => props.isFlipped, () => {
-  showMemoryHook.value = false
-  if (memoryHookTimeout) clearTimeout(memoryHookTimeout)
+// Trigger visual cue flicker when language changes between cards
+watch(() => props.currentCard.backLanguage, (newLang, oldLang) => {
+  if (oldLang && newLang !== oldLang) {
+    isFlickering.value = true
+    setTimeout(() => {
+      isFlickering.value = false
+    }, 600)
+  }
+}, { immediate: true })
+
+const isFrenchCard = computed(() => {
+  const lang = (props.currentCard.backLanguage || props.currentCard.frontLanguage || '').toLowerCase()
+  return lang === 'fr'
 })
+
+const hasVous = computed(() => {
+  const front = props.currentCard.front || ''
+  return /\bvous\b/i.test(front)
+})
+
+function openVousToTuSearch() {
+  const query = `convert "vous" to "tu" for the following French phrase: "${props.currentCard.front}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
 
 const getTextClass = (text: string) => {
   const len = text ? text.length : 0
@@ -70,7 +92,9 @@ const getTextClass = (text: string) => {
   <div class="absolute inset-0 h-full w-full rounded-3xl backface-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-950 text-gray-850 dark:text-gray-100 overflow-hidden border border-gray-200 dark:border-gray-800 shadow-xl preserve-3d">
     <!-- Language badge (Absolute) -->
     <div class="absolute bottom-3 left-0 z-10 pointer-events-none backface-hidden">
-      <div class="text-[10px] font-bold tracking-wider uppercase pl-4 pr-24 h-[32px] flex items-center !text-white pointer-events-auto"
+      <div 
+        class="text-[10px] font-bold tracking-wider uppercase pl-4 pr-24 h-[32px] flex items-center !text-white pointer-events-auto transition-transform"
+        :class="{ 'animate-lang-flicker': isFlickering }"
         :style="{ 
           background: `linear-gradient(45deg, ${languageColors[currentCard.backLanguage] || '#4f46e5'} 20%, transparent 85%)`,
           backgroundImage: `
@@ -84,28 +108,41 @@ const getTextClass = (text: string) => {
         {{ languageNames[currentCard.backLanguage] || currentCard.backLanguage }}
       </div>
     </div>
+
+    <!-- Convert vous to tu Button for French Cards containing "vous" -->
+    <button
+      v-if="isFrenchCard && hasVous && !isFlipped && !isEditing"
+      @click.stop="openVousToTuSearch"
+      class="absolute top-3.5 right-4 z-20 px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 cursor-pointer shadow-xs"
+      title="Search Google on converting vous to tu for this phrase"
+    >
+      <span>convert vous to tu</span>
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+      </svg>
+    </button>
     
     <!-- Word (Centered in padded area) -->
     <div class="h-full w-full flex flex-col items-center justify-center px-6 relative z-0 -translate-y-[15px]">
       <p :class="getTextClass(currentCard.front)">
         {{ currentCard.front }}
       </p>
-      <!-- Memory Hook below front text -->
+      <!-- Memory Hook below front text with pulsating effect -->
       <Transition name="fade-mnemonic">
-        <p v-if="showMemoryHook && currentCard.memoryHook && !isFlipped && !isEditing" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2 text-center max-w-md italic absolute top-[calc(50%+37px)] sm:top-[calc(50%+46px)]">
+        <p v-if="showMemoryHook && currentCard.memoryHook && !isFlipped && !isEditing" class="text-xs sm:text-sm text-amber-600 dark:text-amber-400 mt-2 text-center max-w-md italic absolute top-[calc(50%+37px)] sm:top-[calc(50%+46px)] animate-pulsate font-medium">
           "{{ currentCard.memoryHook }}"
         </p>
       </Transition>
     </div>
 
-    <!-- Memory Link/Hook text button in the lower-right -->
+    <!-- Memory Link/Hook text button in the lower-right with pulsating visual cue -->
     <button
       v-if="currentCard.memoryHook && !isFlipped && !isEditing"
       @click.stop="toggleMemoryHook"
       class="absolute bottom-3 right-4 flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg backface-hidden"
       :class="showMemoryHook 
-        ? 'text-gray-700 dark:text-gray-300' 
-        : 'text-gray-450 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'"
+        ? 'text-amber-600 dark:text-amber-400 font-extrabold' 
+        : 'text-amber-500 dark:text-amber-400 animate-pulsate hover:text-amber-700 dark:hover:text-amber-200'"
       :title="showMemoryHook ? 'Hide Memory Hook' : 'Show Memory Hook'"
     >
       <span>memory link</span>
@@ -125,5 +162,26 @@ const getTextClass = (text: string) => {
 .fade-mnemonic-leave-to {
   opacity: 0;
   transform: translateY(4px);
+}
+
+@keyframes langFlickerKeyframe {
+  0% { opacity: 1; transform: scale(1); }
+  25% { opacity: 0.2; transform: scale(1.15); filter: brightness(1.8); }
+  50% { opacity: 1; transform: scale(0.95); }
+  75% { opacity: 0.3; transform: scale(1.08); filter: brightness(1.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-lang-flicker {
+  animation: langFlickerKeyframe 0.6s ease-in-out;
+}
+
+@keyframes pulsateKeyframe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.03); }
+}
+
+.animate-pulsate {
+  animation: pulsateKeyframe 1.8s infinite ease-in-out;
 }
 </style>

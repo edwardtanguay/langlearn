@@ -252,10 +252,12 @@ const currentCard = computed<Flashcard | null>(() => {
   return testQueue.value[currentQueueIndex.value] ?? null
 })
 
-// Dynamically update route URL permalink whenever card changes
+// Dynamically update route URL permalink seamlessly without page blinking
 watch(currentCard, (card) => {
-  if (card && card.id) {
-    router.replace(`/flashcard/${card.id}`)
+  if (card && card.id && route.params.id !== card.id) {
+    if (typeof window !== 'undefined' && window.history) {
+      window.history.replaceState(null, '', `/flashcard/${card.id}`)
+    }
   }
 }, { immediate: true })
 

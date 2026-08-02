@@ -1907,10 +1907,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     minutesToTestAgain: number | null
+    dailyTakeGoal: number | null
   }
 
   export type UserSumAggregateOutputType = {
     minutesToTestAgain: number | null
+    dailyTakeGoal: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1920,6 +1922,7 @@ export namespace Prisma {
     email: string | null
     role: string | null
     minutesToTestAgain: number | null
+    dailyTakeGoal: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1929,6 +1932,7 @@ export namespace Prisma {
     email: string | null
     role: string | null
     minutesToTestAgain: number | null
+    dailyTakeGoal: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1938,16 +1942,19 @@ export namespace Prisma {
     email: number
     role: number
     minutesToTestAgain: number
+    dailyTakeGoal: number
     _all: number
   }
 
 
   export type UserAvgAggregateInputType = {
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
   }
 
   export type UserSumAggregateInputType = {
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1957,6 +1964,7 @@ export namespace Prisma {
     email?: true
     role?: true
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1966,6 +1974,7 @@ export namespace Prisma {
     email?: true
     role?: true
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1975,6 +1984,7 @@ export namespace Prisma {
     email?: true
     role?: true
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
     _all?: true
   }
 
@@ -2071,6 +2081,7 @@ export namespace Prisma {
     email: string
     role: string
     minutesToTestAgain: number
+    dailyTakeGoal: number
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -2099,6 +2110,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     minutesToTestAgain?: boolean
+    dailyTakeGoal?: boolean
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
@@ -2113,6 +2125,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     minutesToTestAgain?: boolean
+    dailyTakeGoal?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2122,6 +2135,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     minutesToTestAgain?: boolean
+    dailyTakeGoal?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2131,9 +2145,10 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     minutesToTestAgain?: boolean
+    dailyTakeGoal?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "minutesToTestAgain", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "minutesToTestAgain" | "dailyTakeGoal", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
@@ -2159,6 +2174,7 @@ export namespace Prisma {
       email: string
       role: string
       minutesToTestAgain: number
+      dailyTakeGoal: number
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2592,6 +2608,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
     readonly minutesToTestAgain: FieldRef<"User", 'Int'>
+    readonly dailyTakeGoal: FieldRef<"User", 'Int'>
   }
     
 
@@ -13178,7 +13195,8 @@ export namespace Prisma {
     lastName: 'lastName',
     email: 'email',
     role: 'role',
-    minutesToTestAgain: 'minutesToTestAgain'
+    minutesToTestAgain: 'minutesToTestAgain',
+    dailyTakeGoal: 'dailyTakeGoal'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -13356,6 +13374,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     minutesToTestAgain?: IntFilter<"User"> | number
+    dailyTakeGoal?: IntFilter<"User"> | number
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
@@ -13369,6 +13388,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
     flashcards?: FlashcardOrderByRelationAggregateInput
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
     versionItems?: VersionItemOrderByRelationAggregateInput
@@ -13385,6 +13405,7 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     minutesToTestAgain?: IntFilter<"User"> | number
+    dailyTakeGoal?: IntFilter<"User"> | number
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
@@ -13398,6 +13419,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -13415,6 +13437,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     role?: StringWithAggregatesFilter<"User"> | string
     minutesToTestAgain?: IntWithAggregatesFilter<"User"> | number
+    dailyTakeGoal?: IntWithAggregatesFilter<"User"> | number
   }
 
   export type VersionWhereInput = {
@@ -14008,6 +14031,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
@@ -14021,6 +14045,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
@@ -14034,6 +14059,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
@@ -14047,6 +14073,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
@@ -14060,6 +14087,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
   }
 
   export type UserUpdateManyMutationInput = {
@@ -14069,6 +14097,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -14078,6 +14107,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
   }
 
   export type VersionCreateInput = {
@@ -14750,10 +14780,12 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -14763,6 +14795,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -14772,10 +14805,12 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -16597,6 +16632,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -16609,6 +16645,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -16697,6 +16734,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -16709,6 +16747,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -16721,6 +16760,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -16733,6 +16773,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -16891,6 +16932,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -16903,6 +16945,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -17019,6 +17062,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -17031,6 +17075,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -17100,6 +17145,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -17112,6 +17158,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -17334,6 +17381,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
@@ -17346,6 +17394,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
@@ -17374,6 +17423,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
@@ -17386,6 +17436,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput

@@ -16,6 +16,7 @@ model User {
   email              String                 @unique
   role               String                 @default("member")
   minutesToTestAgain Int                    @default(10)
+  dailyTakeGoal      Int                    @default(100)
   flashcards         Flashcard[]
   activities         UserFlashcardActivity[]
   versionItems       VersionItem[]          @relation("UserVersionItems")

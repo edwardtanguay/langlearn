@@ -107,11 +107,11 @@ const getTextClass = (text: string) => {
           <p :class="getTextClass(stripAsterisks(currentCard.back))">
             {{ stripAsterisks(currentCard.back) }}
           </p>
-          <!-- Pronunciation display below the word -->
+          <!-- Pronunciation display below the word (brighter & pulsating visual cue) -->
           <p v-if="currentCard.pronunciation && isFlipped && !isEditing" 
-             class="text-xs sm:text-sm text-white/40 text-center max-w-md mt-4 pt-1"
+             class="text-xs sm:text-sm text-slate-100 font-semibold drop-shadow-xs text-center max-w-md mt-4 pt-1 animate-pulsate tracking-wide"
              style="font-family: 'Courier New', Courier, monospace">
-            <span class="text-white/20 mr-1.5">[</span>{{ currentCard.pronunciation }}<span class="text-white/20 ml-1.5">]</span>
+            <span class="text-white/60 mr-1.5">[</span>{{ currentCard.pronunciation }}<span class="text-white/60 ml-1.5">]</span>
           </p>
         </div>
 
@@ -203,5 +203,13 @@ const getTextClass = (text: string) => {
 }
 .animate-fade-in {
   animation: fadeIn 0.2s ease-out forwards;
+}
+
+@keyframes pulsateKeyframe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.04); }
+}
+.animate-pulsate {
+  animation: pulsateKeyframe 1.8s infinite ease-in-out;
 }
 </style>

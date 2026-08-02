@@ -123,7 +123,8 @@ exports.Prisma.UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   role: 'role',
-  minutesToTestAgain: 'minutesToTestAgain'
+  minutesToTestAgain: 'minutesToTestAgain',
+  dailyTakeGoal: 'dailyTakeGoal'
 };
 
 exports.Prisma.VersionScalarFieldEnum = {

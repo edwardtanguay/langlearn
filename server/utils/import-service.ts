@@ -81,6 +81,13 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
       continue
     }
 
+    // Clean front text: remove "my friend," prefix and asterisks
+    front = front.replace(/^my friend,\s*/i, '').replace(/\*/g, '').trim()
+
+    if (!front || !back) {
+      continue
+    }
+
     if (front.trim().toLowerCase() === back.trim().toLowerCase()) {
       skippedCards.push({ front, back })
       continue

@@ -242,16 +242,18 @@ const sortedCategoriesForDropdown = computed(() => {
   ]
 })
 
-// Sorted versions for dropdowns: mirrors displayedVersions order (FUTURE → INCOMING → PUBLISHED/IN_PROGRESS)
+const recentlyEditedItemId = ref<string | null>(null)
+
+// Sorted versions for dropdowns: (FUTURE → INCOMING → IN_PROGRESS), excludes PUBLISHED versions
 function getVersionsForDropdown(excludeId?: string | null): Version[] {
   const futureVers = versions.value
     .filter(v => v.status === 'FUTURE_VERSION')
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
   const incomingVer = versions.value.filter(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
-  const activeVers = versions.value
-    .filter(v => v.status === 'PUBLISHED' || v.status === 'IN_PROGRESS')
+  const inProgressVers = versions.value
+    .filter(v => v.status === 'IN_PROGRESS')
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
-  return [...futureVers, ...incomingVer, ...activeVers].filter(v => v.versionNumber !== '0.0.0' && v.id !== excludeId)
+  return [...futureVers, ...incomingVer, ...inProgressVers].filter(v => v.versionNumber !== '0.0.0' && v.id !== excludeId)
 }
 
 interface CategoryGroup {
@@ -650,6 +652,11 @@ const saveAdminItem = async () => {
   }
 
   showEditItemModal.value = false
+  const targetId = payload.id
+  if (targetId) {
+    recentlyEditedItemId.value = targetId
+    setTimeout(() => { recentlyEditedItemId.value = null }, 1800)
+  }
 
   try {
     if (isNewItem.value) {
@@ -658,6 +665,8 @@ const saveAdminItem = async () => {
         body: payload
       })
       if (created?.id) {
+        recentlyEditedItemId.value = created.id
+        setTimeout(() => { recentlyEditedItemId.value = null }, 1800)
         if (!payload.versionId) {
           const item = unassignedItems.value.find(i => i.body === payload.body)
           if (item) item.id = created.id
@@ -1230,7 +1239,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
               <div class="flex items-center space-x-2.5 flex-wrap gap-y-1">
                 <span v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="font-bold italic text-red-500 dark:text-red-400 text-base md:text-lg">
-                  INCOMING CHANGES (clean, group, reassign to other versions)
+                  INCOMING IDEAS (clean, group, reassign to other versions)
                 </span>
                 <template v-else-if="ver.status === 'FUTURE_VERSION'">
                   <span class="font-bold text-gray-900 dark:text-white text-base md:text-lg">
@@ -1295,10 +1304,13 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
           <!-- Version Items Display with Smart Category Grouping -->
           <div class="p-3 md:p-4 space-y-4 bg-white dark:bg-gray-800/40">
+            <div v-if="(ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') && ver.versionItems.length === 0" class="text-sm font-medium text-gray-500 dark:text-gray-400 italic py-4 text-center border border-dashed border-gray-300 dark:border-gray-700 rounded-lg">
+              All current ideas have been processed. Waiting for new ideas.
+            </div>
             <!-- Case A: ALL items belong to General -> list directly without category group header -->
-            <div v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral" class="space-y-1.5">
+            <div v-else-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral" class="space-y-1.5">
                 <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
-                  <li v-for="(item, itemIdx) in ver.versionItems" :key="item.id" class="flex items-start justify-between gap-3 py-0.5">
+                  <li v-for="(item, itemIdx) in ver.versionItems" :key="item.id" class="flex items-start justify-between gap-3 py-0.5 rounded transition-all" :class="{ 'animate-subtle-bounce border-l-4 border-amber-500 pl-2': recentlyEditedItemId === item.id }">
                     <div class="flex items-start gap-2 flex-1 min-w-0">
                       <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
@@ -1423,7 +1435,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
                   <!-- Category Group Items (Indented) -->
                   <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300 pl-3">
-                    <li v-for="(item, itemIdx) in group.items" :key="item.id" class="flex items-start justify-between gap-3 py-0.5">
+                    <li v-for="(item, itemIdx) in group.items" :key="item.id" class="flex items-start justify-between gap-3 py-0.5 rounded transition-all" :class="{ 'animate-subtle-bounce border-l-4 border-amber-500 pl-2': recentlyEditedItemId === item.id }">
                       <div class="flex items-start gap-2 flex-1 min-w-0">
                         <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
@@ -1693,5 +1705,18 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes subtleBounce {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+.animate-subtle-bounce {
+  animation: subtleBounce 0.6s ease-in-out;
+}
+</style>
 
 
