@@ -244,6 +244,18 @@ const sortedCategoriesForDropdown = computed(() => {
 
 const recentlyEditedItemId = ref<string | null>(null)
 
+function getVersionColorClass(status: string | undefined): string {
+  if (!status) return ''
+  if (status === 'FUTURE_VERSION') {
+    return 'bg-zinc-800 text-zinc-100 dark:bg-zinc-800 dark:text-zinc-100 font-semibold'
+  } else if (status === 'INCOMING' || status === 'PROPOSED_ITEMS' || status === '0.0.0') {
+    return 'bg-red-900 text-red-100 dark:bg-red-950 dark:text-red-100 font-semibold'
+  } else if (status === 'IN_PROGRESS') {
+    return 'bg-amber-600 text-yellow-100 dark:bg-yellow-600 dark:text-yellow-100 font-semibold'
+  }
+  return ''
+}
+
 // Sorted versions for dropdowns: (FUTURE → INCOMING → IN_PROGRESS), excludes PUBLISHED versions
 function getVersionsForDropdown(excludeId?: string | null): Version[] {
   const futureVers = versions.value
@@ -253,7 +265,7 @@ function getVersionsForDropdown(excludeId?: string | null): Version[] {
   const inProgressVers = versions.value
     .filter(v => v.status === 'IN_PROGRESS')
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
-  return [...futureVers, ...incomingVer, ...inProgressVers].filter(v => v.versionNumber !== '0.0.0' && v.id !== excludeId)
+  return [...futureVers, ...incomingVer, ...inProgressVers].filter(v => v.id !== excludeId)
 }
 
 interface CategoryGroup {
@@ -1292,9 +1304,14 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                 class="px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[220px] truncate"
               >
                 <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">move all items to version</option>
-                <option v-if="ver.id" value="none">Incoming changes</option>
-                <option v-for="v in getVersionsForDropdown(ver.id)" :key="v.id" :value="v.id">
-                  <template v-if="v.versionNumber === '0.0.0'">Incoming changes</template>
+                <option v-if="ver.id" value="none" class="bg-red-900 text-red-100 font-semibold">Incoming Ideas</option>
+                <option
+                  v-for="v in getVersionsForDropdown(ver.id)"
+                  :key="v.id"
+                  :value="v.id"
+                  :class="getVersionColorClass(v.status)"
+                >
+                  <template v-if="v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0'">Incoming Ideas</template>
                   <template v-else-if="v.status === 'FUTURE_VERSION'">{{ v.title || 'Future Version' }}</template>
                   <template v-else>v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}</template>
                 </option>
@@ -1360,9 +1377,14 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                       >
                         <option value="" disabled selected class="font-serif italic text-gray-400 dark:text-gray-500">➔ version</option>
                         <option value="NEW_VERSION" class="font-serif italic text-gray-500 dark:text-gray-400">➔ move to new version</option>
-                        <option v-if="item.versionId" value="none">Incoming changes</option>
-                        <option v-for="v in getVersionsForDropdown(item.versionId)" :key="v.id" :value="v.id">
-                          <template v-if="v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0'">Incoming changes</template>
+                        <option v-if="item.versionId" value="none" class="bg-red-900 text-red-100 font-semibold">Incoming Ideas</option>
+                        <option
+                          v-for="v in getVersionsForDropdown(item.versionId)"
+                          :key="v.id"
+                          :value="v.id"
+                          :class="getVersionColorClass(v.status)"
+                        >
+                          <template v-if="v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0'">Incoming Ideas</template>
                           <template v-else-if="v.status === 'FUTURE_VERSION'">{{ v.title || 'Future Version' }}</template>
                           <template v-else>v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}</template>
                         </option>
@@ -1485,9 +1507,14 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                         >
                           <option value="" disabled selected class="font-serif italic text-gray-400 dark:text-gray-500">➔ version</option>
                           <option value="NEW_VERSION" class="font-serif italic text-gray-500 dark:text-gray-400">➔ move to new version</option>
-                          <option v-if="item.versionId" value="none">Incoming changes</option>
-                          <option v-for="v in getVersionsForDropdown(item.versionId)" :key="v.id" :value="v.id">
-                            <template v-if="v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0'">Incoming changes</template>
+                          <option v-if="item.versionId" value="none" class="bg-red-900 text-red-100 font-semibold">Incoming Ideas</option>
+                          <option
+                            v-for="v in getVersionsForDropdown(item.versionId)"
+                            :key="v.id"
+                            :value="v.id"
+                            :class="getVersionColorClass(v.status)"
+                          >
+                            <template v-if="v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0'">Incoming Ideas</template>
                             <template v-else-if="v.status === 'FUTURE_VERSION'">{{ v.title || 'Future Version' }}</template>
                             <template v-else>v{{ v.versionNumber }} {{ v.title ? `- ${v.title}` : '' }}</template>
                           </option>
@@ -1590,9 +1617,15 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Version</label>
               <select v-model="editingItem.versionId" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
-                <option v-for="v in displayedVersions" :key="v.id" :value="v.id">
+                <option value="none" class="bg-red-900 text-red-100 font-semibold">Incoming Ideas</option>
+                <option
+                  v-for="v in getVersionsForDropdown(editingItem.versionId)"
+                  :key="v.id"
+                  :value="v.id"
+                  :class="getVersionColorClass(v.status)"
+                >
                   <template v-if="v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0'">
-                    Incoming changes
+                    Incoming Ideas
                   </template>
                   <template v-else-if="v.status === 'FUTURE_VERSION'">
                     {{ v.title || 'Future Version' }}
