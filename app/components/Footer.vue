@@ -56,9 +56,8 @@ const isNewVersion = computed(() => {
         </svg>
       </div>
 
-      <!-- 3. Dash separator & See Edward's other projects -->
+      <!-- 3. See Edward's other projects -->
       <div class="flex items-center gap-1.5">
-        <span class="text-gray-400 dark:text-gray-600 font-mono">-</span>
         <span>See Edward's <a href="https://tanguay.info" target="_blank" rel="noopener noreferrer" class="hover:text-gray-900 dark:hover:text-white transition-colors underline">other projects</a>.</span>
       </div>
     </div>
