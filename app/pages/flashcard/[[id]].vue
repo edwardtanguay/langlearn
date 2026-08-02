@@ -118,11 +118,20 @@ async function fetchTestQueue() {
   try {
     const cardIdFromRoute = route.params.id as string | undefined
 
+    const queueUrl = activeFilterTag.value 
+      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}`
+      : `/api/flashcards?limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}`
+
     if (cardIdFromRoute) {
       try {
-        const specificCard = await $fetch<Flashcard>(`/api/flashcards/${cardIdFromRoute}`)
+        const [specificCard, restQueue] = await Promise.all([
+          $fetch<Flashcard>(`/api/flashcards/${cardIdFromRoute}`),
+          $fetch<Flashcard[]>(queueUrl),
+          minDelay
+        ])
         if (specificCard && specificCard.id) {
-          testQueue.value = [specificCard]
+          const otherCards = (restQueue || []).filter(c => c.id !== specificCard.id)
+          testQueue.value = [specificCard, ...otherCards]
           currentQueueIndex.value = 0
           isFlipped.value = false
           sliderValue.value = specificCard.rank
@@ -133,11 +142,8 @@ async function fetchTestQueue() {
       }
     }
 
-    const url = activeFilterTag.value 
-      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10`
-      : '/api/flashcards?limit=10'
     const [results] = await Promise.all([
-      $fetch<Flashcard[]>(url),
+      $fetch<Flashcard[]>(queueUrl),
       minDelay
     ])
     testQueue.value = results
@@ -254,8 +260,10 @@ const currentCard = computed<Flashcard | null>(() => {
 
 // Dynamically update route URL permalink seamlessly without page blinking
 watch(currentCard, (card) => {
-  if (card && card.id && route.params.id !== card.id) {
-    if (typeof window !== 'undefined' && window.history) {
+  if (card && card.id) {
+    const routeId = useRoute().params.id as string | undefined
+    // Only overwrite browser location if the route didn't explicitly request a different specific card permalink
+    if (!routeId && typeof window !== 'undefined' && window.history) {
       window.history.replaceState(null, '', `/flashcard/${card.id}`)
     }
   }
@@ -602,6 +610,12 @@ async function fetchCardStats() {
     }
   }
 }
+
+watch(() => route.params.id, (newId) => {
+  if (newId) {
+    fetchTestQueue()
+  }
+})
 
 onMounted(async () => {
   window.addEventListener('keydown', handleGlobalKeyDown)
