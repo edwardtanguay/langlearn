@@ -200,34 +200,30 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
         @click="cycleToggleState(card.id)"
         class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-4 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-600 transition-all duration-150 shadow-xs select-none space-y-2"
       >
-        <!-- Line 1: Target language badge (e.g. FR instead of EN) & Card Front text / Permalink Link -->
-        <div class="flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3 min-w-0 flex-1">
-            <!-- Show BACK language initials (e.g. FR) on card front badge -->
-            <span 
-              class="px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider shrink-0"
-              :style="{ backgroundColor: languageColors[card.backLanguage] || '#333388' }"
-            >
-              {{ card.backLanguage?.toUpperCase() || 'FR' }}
-            </span>
-            <!-- Card Front / Title Link -->
-            <NuxtLink
-              :to="`/flashcard/${card.id}`"
-              @click.stop
-              class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 truncate flex items-center gap-1.5 transition-colors"
-              title="Click to view and edit card permalink"
-            >
-              <span>{{ card.front }}</span>
-              <ArrowTopRightOnSquareIcon class="w-4 h-4 text-gray-400 hover:text-indigo-500 inline-block shrink-0" />
-            </NuxtLink>
-          </div>
+        <!-- Line 1: Target language badge (FR), wrapped title text, and far-right up-arrow permalink icon -->
+        <div class="flex items-start justify-between gap-3">
+          <!-- Show BACK language initials (e.g. FR) on card front badge -->
+          <span 
+            class="px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider shrink-0 mt-0.5"
+            :style="{ backgroundColor: languageColors[card.backLanguage] || '#333388' }"
+          >
+            {{ card.backLanguage?.toUpperCase() || 'FR' }}
+          </span>
 
-          <!-- Step Indicator -->
-          <div class="text-xs font-mono font-medium text-indigo-600 dark:text-indigo-400 shrink-0 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800">
-            <span v-if="getCardToggleState(card.id) === 0">1. English</span>
-            <span v-else-if="getCardToggleState(card.id) === 1">2. Target Text</span>
-            <span v-else>3. Pronunciation</span>
-          </div>
+          <!-- Card Front / Title text with wrapping -->
+          <span class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white flex-1 break-words">
+            {{ card.front }}
+          </span>
+
+          <!-- Permalink Icon at far right -->
+          <NuxtLink
+            :to="`/flashcard/${card.id}`"
+            @click.stop
+            class="text-gray-400 hover:text-indigo-500 transition-colors shrink-0 self-start p-0.5"
+            title="Click to view and edit card permalink"
+          >
+            <ArrowTopRightOnSquareIcon class="w-5 h-5" />
+          </NuxtLink>
         </div>
 
         <!-- 3-Way Toggle State 1: Show Target Language Text -->
