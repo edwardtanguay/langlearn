@@ -102,7 +102,7 @@ const getTextClass = (text: string) => {
             repeating-linear-gradient(45deg, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 2px, transparent 2px, transparent 6px)
           `,
           backgroundBlendMode: 'overlay',
-          webkitMaskImage: 'linear-gradient(45deg, black 20%, transparent 80%)',
+          WebkitMaskImage: 'linear-gradient(45deg, black 20%, transparent 80%)',
           maskImage: 'linear-gradient(45deg, black 20%, transparent 80%)'
         }">
         {{ languageNames[currentCard.backLanguage] || currentCard.backLanguage }}
