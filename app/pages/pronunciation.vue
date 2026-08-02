@@ -160,8 +160,8 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
     </div>
 
     <!-- Helpful Resources Section -->
-    <div class="bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800 rounded-2xl p-4 space-y-2">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Helpful Resources</h2>
+    <div class="bg-[#111827] dark:bg-[#0d1117] border border-gray-300 dark:border-gray-800 rounded-2xl p-4 space-y-2">
+      <h2 class="text-[11px] text-gray-500 dark:text-gray-400 opacity-50 [font-variant:small-caps] tracking-widest font-semibold">Helpful Resources</h2>
       <ul class="list-disc list-inside text-sm space-y-1">
         <li class="flex items-center gap-2 flex-wrap text-gray-800 dark:text-gray-200">
           <span 
