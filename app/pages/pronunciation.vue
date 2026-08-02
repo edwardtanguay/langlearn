@@ -106,10 +106,20 @@ const filteredCards = computed(() => {
   )
 })
 
-// Cycle interaction: (0: English) -> (1: Target Language) -> (2: Pronunciation) -> (0: English)
-const cycleToggleState = (id: string) => {
+// Toggle Level 1: If level 2 or 3 are visible (> 0), collapse to 0; otherwise expand to show level 2 (1)
+const toggleLevel1 = (id: string) => {
   const current = toggleStateMap.value[id] ?? 0
-  const next = (current + 1) % 3
+  const next = current > 0 ? 0 : 1
+  toggleStateMap.value = {
+    ...toggleStateMap.value,
+    [id]: next
+  }
+}
+
+// Toggle Level 2: If level 3 is visible (=== 2), collapse back to level 2 (1); otherwise reveal level 3 (2)
+const toggleLevel2 = (id: string) => {
+  const current = toggleStateMap.value[id] ?? 0
+  const next = current === 2 ? 1 : 2
   toggleStateMap.value = {
     ...toggleStateMap.value,
     [id]: next
@@ -197,11 +207,13 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
       <div 
         v-for="card in filteredCards" 
         :key="card.id"
-        @click="cycleToggleState(card.id)"
         class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-4 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-600 transition-all duration-150 shadow-xs select-none space-y-2"
       >
-        <!-- Line 1: Target language badge (FR), wrapped title text, and far-right up-arrow permalink icon -->
-        <div class="flex items-start justify-between gap-3">
+        <!-- Level 1 (Front/English): Clicking here shows/hides levels 2 & 3 -->
+        <div 
+          @click="toggleLevel1(card.id)"
+          class="flex items-start justify-between gap-3 cursor-pointer"
+        >
           <!-- Show BACK language initials (e.g. FR) on card front badge -->
           <span 
             class="px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider shrink-0 mt-0.5"
@@ -226,50 +238,35 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
           </NuxtLink>
         </div>
 
-        <!-- 3-Way Toggle State 1: Show Target Language Text -->
-        <Transition name="fade-layout">
-          <div 
-            v-if="getCardToggleState(card.id) >= 1" 
-            class="pt-2 px-3 py-2 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700/80 flex items-center justify-between text-sm"
-          >
-            <span class="font-semibold text-gray-900 dark:text-white">
-              {{ stripAsterisks(card.back) }}
-            </span>
+        <!-- Level 2: Target Language Text. Clicking here shows/hides level 3 -->
+        <div 
+          v-if="getCardToggleState(card.id) >= 1" 
+          @click="toggleLevel2(card.id)"
+          class="pt-2 px-3 py-2 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700/80 text-sm font-semibold text-gray-900 dark:text-white cursor-pointer"
+        >
+          {{ stripAsterisks(card.back) }}
+        </div>
 
-            <div class="flex items-center gap-2 shrink-0">
-              <button 
-                @click="openTranslate(card, $event)"
-                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-              >
-                <SpeakerWaveIcon class="w-3.5 h-3.5 text-indigo-500" />
-                <span>Audio</span>
-              </button>
-            </div>
-          </div>
-        </Transition>
-
-        <!-- 3-Way Toggle State 2: Show Pronunciation Text -->
-        <Transition name="fade-layout">
-          <div 
-            v-if="getCardToggleState(card.id) === 2 && card.pronunciation" 
-            class="px-3 py-2 bg-indigo-50/90 dark:bg-indigo-950/60 rounded-xl border border-indigo-200 dark:border-indigo-800/80 text-xs sm:text-sm text-indigo-700 dark:text-indigo-300 font-mono font-semibold animate-pulse tracking-wide"
-          >
+        <!-- Level 3: Pronunciation & Audio button. NON-TOGGLING (click.stop) -->
+        <div 
+          v-if="getCardToggleState(card.id) === 2 && card.pronunciation" 
+          @click.stop
+          class="px-3 py-2 bg-indigo-50/90 dark:bg-indigo-950/60 rounded-xl border border-indigo-200 dark:border-indigo-800/80 text-xs sm:text-sm text-indigo-700 dark:text-indigo-300 font-mono font-semibold tracking-wide flex items-center justify-between cursor-default"
+        >
+          <div>
             <span class="text-indigo-400 mr-1.5">[</span>{{ card.pronunciation }}<span class="text-indigo-400 ml-1.5">]</span>
           </div>
-        </Transition>
+
+          <!-- Audio Button on Level 3 -->
+          <button 
+            @click="openTranslate(card, $event)"
+            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-pointer shrink-0"
+          >
+            <SpeakerWaveIcon class="w-3.5 h-3.5 text-indigo-500" />
+            <span>Audio</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.fade-layout-enter-active,
-.fade-layout-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.fade-layout-enter-from,
-.fade-layout-leave-to {
-  opacity: 0;
-  transform: translateY(-4px);
-}
-</style>
