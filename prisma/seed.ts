@@ -24,6 +24,12 @@ async function ensureTablesExist() {
   }
 
   try {
+    await rawClient.execute(`ALTER TABLE "User" ADD COLUMN "dailyTakeGoal" INTEGER NOT NULL DEFAULT 100;`)
+  } catch (e) {
+    // Column already exists
+  }
+
+  try {
     await rawClient.execute(`ALTER TABLE "Version" ADD COLUMN "title" TEXT;`)
   } catch (e) {
     // Column already exists
