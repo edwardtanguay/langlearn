@@ -247,11 +247,11 @@ const recentlyEditedItemId = ref<string | null>(null)
 function getVersionColorClass(status: string | undefined): string {
   if (!status) return ''
   if (status === 'FUTURE_VERSION') {
-    return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+    return 'bg-black/80 text-white font-semibold'
   } else if (status === 'INCOMING' || status === 'PROPOSED_ITEMS' || status === '0.0.0') {
-    return 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300 font-semibold'
+    return 'bg-red-900/80 text-white font-semibold'
   } else if (status === 'IN_PROGRESS') {
-    return 'bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 font-semibold'
+    return 'bg-amber-600/80 text-white font-semibold'
   }
   return ''
 }
