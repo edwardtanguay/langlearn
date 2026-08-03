@@ -1,15 +1,6 @@
 import { requireAuth } from '../../utils/auth'
 import { prisma } from '../../utils/prisma'
-
-function incrementMinorVersion(versionStr: string): string {
-  const parts = versionStr.split('.').map(n => parseInt(n, 10))
-  if (parts.length < 3 || parts.some(isNaN)) {
-    return '0.2.0'
-  }
-  const major = parts[0] ?? 0
-  const minor = (parts[1] ?? 1) + 1
-  return `${major}.${minor}.0`
-}
+import { parseAndAssignCategories } from '../../utils/categoryParser'
 
 export default defineEventHandler(async (event) => {
   const user = await requireAuth(event)
@@ -25,9 +16,31 @@ export default defineEventHandler(async (event) => {
 
   const type = body?.type === 'FEATURE' ? 'FEATURE' : 'BUGFIX'
 
-  // Calculate order within unassigned items (versionId === null)
+  // Ensure INCOMING 0.0.0 version exists
+  let incomingVersion = await prisma.version.findFirst({
+    where: {
+      OR: [
+        { status: 'INCOMING' },
+        { status: 'PROPOSED_ITEMS' },
+        { versionNumber: '0.0.0' }
+      ]
+    }
+  })
+
+  if (!incomingVersion) {
+    incomingVersion = await prisma.version.create({
+      data: {
+        versionNumber: '0.0.0',
+        title: 'Incoming changes',
+        status: 'INCOMING',
+        publishDate: null
+      }
+    })
+  }
+
+  // Calculate order within INCOMING version items
   const lastItem = await prisma.versionItem.findFirst({
-    where: { versionId: null },
+    where: { versionId: incomingVersion.id },
     orderBy: { orderWithinVersion: 'desc' }
   })
   const nextOrder = (lastItem?.orderWithinVersion ?? 0) + 1
@@ -36,7 +49,7 @@ export default defineEventHandler(async (event) => {
 
   const newItem = await prisma.versionItem.create({
     data: {
-      versionId: null,
+      versionId: incomingVersion.id,
       type,
       body: itemBody,
       startedByUserId: userId,
@@ -47,8 +60,20 @@ export default defineEventHandler(async (event) => {
     }
   })
 
+  // Run category parsing across all items
+  await parseAndAssignCategories()
+
+  const refetchedItem = await prisma.versionItem.findUnique({
+    where: { id: newItem.id },
+    include: {
+      startedByUser: true,
+      versionCategory: true
+    }
+  })
+
   return {
     success: true,
-    item: newItem
+    item: refetchedItem || newItem
   }
 })
+

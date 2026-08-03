@@ -203,13 +203,6 @@ async function handleImport() {
             <div v-if="mobileImportError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
               {{ mobileImportError }}
             </div>
-
-            <div v-if="mobileImportResult" class="space-y-2 pt-4 border-t border-gray-200 dark:border-gray-800">
-              <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                Imported Result ({{ mobileImportResult.whenImported }})
-              </div>
-              <pre class="w-full p-4 bg-gray-100 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 rounded-2xl text-sm font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap overflow-x-auto">{{ mobileImportResult.mobileImportText }}</pre>
-            </div>
           </div>
         </div>
 

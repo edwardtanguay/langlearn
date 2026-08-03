@@ -123,7 +123,8 @@ exports.Prisma.UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   role: 'role',
-  minutesToTestAgain: 'minutesToTestAgain'
+  minutesToTestAgain: 'minutesToTestAgain',
+  dailyTakeGoal: 'dailyTakeGoal'
 };
 
 exports.Prisma.VersionScalarFieldEnum = {
@@ -136,11 +137,29 @@ exports.Prisma.VersionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.VersionCategoryScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  rank: 'rank',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VersionCategoryAbbreviationScalarFieldEnum = {
+  id: 'id',
+  versionCategoryId: 'versionCategoryId',
+  abbreviationText: 'abbreviationText',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.VersionItemScalarFieldEnum = {
   id: 'id',
   versionId: 'versionId',
+  versionCategoryId: 'versionCategoryId',
   type: 'type',
   body: 'body',
+  rank: 'rank',
   startedByUserId: 'startedByUserId',
   orderWithinVersion: 'orderWithinVersion',
   createdAt: 'createdAt',
@@ -205,6 +224,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   Version: 'Version',
+  VersionCategory: 'VersionCategory',
+  VersionCategoryAbbreviation: 'VersionCategoryAbbreviation',
   VersionItem: 'VersionItem',
   Flashcard: 'Flashcard',
   UserFlashcardActivity: 'UserFlashcardActivity',

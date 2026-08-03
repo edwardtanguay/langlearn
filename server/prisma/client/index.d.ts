@@ -24,6 +24,16 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Version = $Result.DefaultSelection<Prisma.$VersionPayload>
 /**
+ * Model VersionCategory
+ * 
+ */
+export type VersionCategory = $Result.DefaultSelection<Prisma.$VersionCategoryPayload>
+/**
+ * Model VersionCategoryAbbreviation
+ * 
+ */
+export type VersionCategoryAbbreviation = $Result.DefaultSelection<Prisma.$VersionCategoryAbbreviationPayload>
+/**
  * Model VersionItem
  * 
  */
@@ -194,6 +204,26 @@ export class PrismaClient<
     * ```
     */
   get version(): Prisma.VersionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.versionCategory`: Exposes CRUD operations for the **VersionCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VersionCategories
+    * const versionCategories = await prisma.versionCategory.findMany()
+    * ```
+    */
+  get versionCategory(): Prisma.VersionCategoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.versionCategoryAbbreviation`: Exposes CRUD operations for the **VersionCategoryAbbreviation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VersionCategoryAbbreviations
+    * const versionCategoryAbbreviations = await prisma.versionCategoryAbbreviation.findMany()
+    * ```
+    */
+  get versionCategoryAbbreviation(): Prisma.VersionCategoryAbbreviationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.versionItem`: Exposes CRUD operations for the **VersionItem** model.
@@ -690,6 +720,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Version: 'Version',
+    VersionCategory: 'VersionCategory',
+    VersionCategoryAbbreviation: 'VersionCategoryAbbreviation',
     VersionItem: 'VersionItem',
     Flashcard: 'Flashcard',
     UserFlashcardActivity: 'UserFlashcardActivity',
@@ -711,7 +743,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "version" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport"
+      modelProps: "user" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -860,6 +892,154 @@ export namespace Prisma {
           count: {
             args: Prisma.VersionCountArgs<ExtArgs>
             result: $Utils.Optional<VersionCountAggregateOutputType> | number
+          }
+        }
+      }
+      VersionCategory: {
+        payload: Prisma.$VersionCategoryPayload<ExtArgs>
+        fields: Prisma.VersionCategoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VersionCategoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VersionCategoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>
+          }
+          findFirst: {
+            args: Prisma.VersionCategoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VersionCategoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>
+          }
+          findMany: {
+            args: Prisma.VersionCategoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>[]
+          }
+          create: {
+            args: Prisma.VersionCategoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>
+          }
+          createMany: {
+            args: Prisma.VersionCategoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VersionCategoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>[]
+          }
+          delete: {
+            args: Prisma.VersionCategoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>
+          }
+          update: {
+            args: Prisma.VersionCategoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.VersionCategoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VersionCategoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VersionCategoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.VersionCategoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryPayload>
+          }
+          aggregate: {
+            args: Prisma.VersionCategoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVersionCategory>
+          }
+          groupBy: {
+            args: Prisma.VersionCategoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VersionCategoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VersionCategoryCountArgs<ExtArgs>
+            result: $Utils.Optional<VersionCategoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      VersionCategoryAbbreviation: {
+        payload: Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>
+        fields: Prisma.VersionCategoryAbbreviationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VersionCategoryAbbreviationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VersionCategoryAbbreviationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>
+          }
+          findFirst: {
+            args: Prisma.VersionCategoryAbbreviationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VersionCategoryAbbreviationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>
+          }
+          findMany: {
+            args: Prisma.VersionCategoryAbbreviationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>[]
+          }
+          create: {
+            args: Prisma.VersionCategoryAbbreviationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>
+          }
+          createMany: {
+            args: Prisma.VersionCategoryAbbreviationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VersionCategoryAbbreviationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>[]
+          }
+          delete: {
+            args: Prisma.VersionCategoryAbbreviationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>
+          }
+          update: {
+            args: Prisma.VersionCategoryAbbreviationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>
+          }
+          deleteMany: {
+            args: Prisma.VersionCategoryAbbreviationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VersionCategoryAbbreviationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VersionCategoryAbbreviationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>[]
+          }
+          upsert: {
+            args: Prisma.VersionCategoryAbbreviationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VersionCategoryAbbreviationPayload>
+          }
+          aggregate: {
+            args: Prisma.VersionCategoryAbbreviationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVersionCategoryAbbreviation>
+          }
+          groupBy: {
+            args: Prisma.VersionCategoryAbbreviationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VersionCategoryAbbreviationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VersionCategoryAbbreviationCountArgs<ExtArgs>
+            result: $Utils.Optional<VersionCategoryAbbreviationCountAggregateOutputType> | number
           }
         }
       }
@@ -1417,6 +1597,8 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     version?: VersionOmit
+    versionCategory?: VersionCategoryOmit
+    versionCategoryAbbreviation?: VersionCategoryAbbreviationOmit
     versionItem?: VersionItemOmit
     flashcard?: FlashcardOmit
     userFlashcardActivity?: UserFlashcardActivityOmit
@@ -1588,6 +1770,46 @@ export namespace Prisma {
 
 
   /**
+   * Count Type VersionCategoryCountOutputType
+   */
+
+  export type VersionCategoryCountOutputType = {
+    abbreviations: number
+    versionItems: number
+  }
+
+  export type VersionCategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    abbreviations?: boolean | VersionCategoryCountOutputTypeCountAbbreviationsArgs
+    versionItems?: boolean | VersionCategoryCountOutputTypeCountVersionItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * VersionCategoryCountOutputType without action
+   */
+  export type VersionCategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryCountOutputType
+     */
+    select?: VersionCategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * VersionCategoryCountOutputType without action
+   */
+  export type VersionCategoryCountOutputTypeCountAbbreviationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VersionCategoryAbbreviationWhereInput
+  }
+
+  /**
+   * VersionCategoryCountOutputType without action
+   */
+  export type VersionCategoryCountOutputTypeCountVersionItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VersionItemWhereInput
+  }
+
+
+  /**
    * Count Type FlashcardCountOutputType
    */
 
@@ -1685,10 +1907,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     minutesToTestAgain: number | null
+    dailyTakeGoal: number | null
   }
 
   export type UserSumAggregateOutputType = {
     minutesToTestAgain: number | null
+    dailyTakeGoal: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1698,6 +1922,7 @@ export namespace Prisma {
     email: string | null
     role: string | null
     minutesToTestAgain: number | null
+    dailyTakeGoal: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1707,6 +1932,7 @@ export namespace Prisma {
     email: string | null
     role: string | null
     minutesToTestAgain: number | null
+    dailyTakeGoal: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1716,16 +1942,19 @@ export namespace Prisma {
     email: number
     role: number
     minutesToTestAgain: number
+    dailyTakeGoal: number
     _all: number
   }
 
 
   export type UserAvgAggregateInputType = {
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
   }
 
   export type UserSumAggregateInputType = {
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1735,6 +1964,7 @@ export namespace Prisma {
     email?: true
     role?: true
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1744,6 +1974,7 @@ export namespace Prisma {
     email?: true
     role?: true
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1753,6 +1984,7 @@ export namespace Prisma {
     email?: true
     role?: true
     minutesToTestAgain?: true
+    dailyTakeGoal?: true
     _all?: true
   }
 
@@ -1849,6 +2081,7 @@ export namespace Prisma {
     email: string
     role: string
     minutesToTestAgain: number
+    dailyTakeGoal: number
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1877,6 +2110,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     minutesToTestAgain?: boolean
+    dailyTakeGoal?: boolean
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
@@ -1891,6 +2125,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     minutesToTestAgain?: boolean
+    dailyTakeGoal?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1900,6 +2135,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     minutesToTestAgain?: boolean
+    dailyTakeGoal?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1909,9 +2145,10 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     minutesToTestAgain?: boolean
+    dailyTakeGoal?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "minutesToTestAgain", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "minutesToTestAgain" | "dailyTakeGoal", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
@@ -1937,6 +2174,7 @@ export namespace Prisma {
       email: string
       role: string
       minutesToTestAgain: number
+      dailyTakeGoal: number
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2370,6 +2608,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
     readonly minutesToTestAgain: FieldRef<"User", 'Int'>
+    readonly dailyTakeGoal: FieldRef<"User", 'Int'>
   }
     
 
@@ -3975,6 +4214,2202 @@ export namespace Prisma {
 
 
   /**
+   * Model VersionCategory
+   */
+
+  export type AggregateVersionCategory = {
+    _count: VersionCategoryCountAggregateOutputType | null
+    _avg: VersionCategoryAvgAggregateOutputType | null
+    _sum: VersionCategorySumAggregateOutputType | null
+    _min: VersionCategoryMinAggregateOutputType | null
+    _max: VersionCategoryMaxAggregateOutputType | null
+  }
+
+  export type VersionCategoryAvgAggregateOutputType = {
+    rank: number | null
+  }
+
+  export type VersionCategorySumAggregateOutputType = {
+    rank: number | null
+  }
+
+  export type VersionCategoryMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    rank: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VersionCategoryMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    rank: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VersionCategoryCountAggregateOutputType = {
+    id: number
+    title: number
+    rank: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VersionCategoryAvgAggregateInputType = {
+    rank?: true
+  }
+
+  export type VersionCategorySumAggregateInputType = {
+    rank?: true
+  }
+
+  export type VersionCategoryMinAggregateInputType = {
+    id?: true
+    title?: true
+    rank?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VersionCategoryMaxAggregateInputType = {
+    id?: true
+    title?: true
+    rank?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VersionCategoryCountAggregateInputType = {
+    id?: true
+    title?: true
+    rank?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VersionCategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VersionCategory to aggregate.
+     */
+    where?: VersionCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionCategories to fetch.
+     */
+    orderBy?: VersionCategoryOrderByWithRelationInput | VersionCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VersionCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VersionCategories
+    **/
+    _count?: true | VersionCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VersionCategoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VersionCategorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VersionCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VersionCategoryMaxAggregateInputType
+  }
+
+  export type GetVersionCategoryAggregateType<T extends VersionCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateVersionCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVersionCategory[P]>
+      : GetScalarType<T[P], AggregateVersionCategory[P]>
+  }
+
+
+
+
+  export type VersionCategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VersionCategoryWhereInput
+    orderBy?: VersionCategoryOrderByWithAggregationInput | VersionCategoryOrderByWithAggregationInput[]
+    by: VersionCategoryScalarFieldEnum[] | VersionCategoryScalarFieldEnum
+    having?: VersionCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VersionCategoryCountAggregateInputType | true
+    _avg?: VersionCategoryAvgAggregateInputType
+    _sum?: VersionCategorySumAggregateInputType
+    _min?: VersionCategoryMinAggregateInputType
+    _max?: VersionCategoryMaxAggregateInputType
+  }
+
+  export type VersionCategoryGroupByOutputType = {
+    id: string
+    title: string
+    rank: number
+    createdAt: Date
+    updatedAt: Date
+    _count: VersionCategoryCountAggregateOutputType | null
+    _avg: VersionCategoryAvgAggregateOutputType | null
+    _sum: VersionCategorySumAggregateOutputType | null
+    _min: VersionCategoryMinAggregateOutputType | null
+    _max: VersionCategoryMaxAggregateOutputType | null
+  }
+
+  type GetVersionCategoryGroupByPayload<T extends VersionCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VersionCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VersionCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VersionCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], VersionCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VersionCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    rank?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    abbreviations?: boolean | VersionCategory$abbreviationsArgs<ExtArgs>
+    versionItems?: boolean | VersionCategory$versionItemsArgs<ExtArgs>
+    _count?: boolean | VersionCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["versionCategory"]>
+
+  export type VersionCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    rank?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["versionCategory"]>
+
+  export type VersionCategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    rank?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["versionCategory"]>
+
+  export type VersionCategorySelectScalar = {
+    id?: boolean
+    title?: boolean
+    rank?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VersionCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "rank" | "createdAt" | "updatedAt", ExtArgs["result"]["versionCategory"]>
+  export type VersionCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    abbreviations?: boolean | VersionCategory$abbreviationsArgs<ExtArgs>
+    versionItems?: boolean | VersionCategory$versionItemsArgs<ExtArgs>
+    _count?: boolean | VersionCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type VersionCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VersionCategoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $VersionCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VersionCategory"
+    objects: {
+      abbreviations: Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>[]
+      versionItems: Prisma.$VersionItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      rank: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["versionCategory"]>
+    composites: {}
+  }
+
+  type VersionCategoryGetPayload<S extends boolean | null | undefined | VersionCategoryDefaultArgs> = $Result.GetResult<Prisma.$VersionCategoryPayload, S>
+
+  type VersionCategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VersionCategoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VersionCategoryCountAggregateInputType | true
+    }
+
+  export interface VersionCategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VersionCategory'], meta: { name: 'VersionCategory' } }
+    /**
+     * Find zero or one VersionCategory that matches the filter.
+     * @param {VersionCategoryFindUniqueArgs} args - Arguments to find a VersionCategory
+     * @example
+     * // Get one VersionCategory
+     * const versionCategory = await prisma.versionCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VersionCategoryFindUniqueArgs>(args: SelectSubset<T, VersionCategoryFindUniqueArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VersionCategory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VersionCategoryFindUniqueOrThrowArgs} args - Arguments to find a VersionCategory
+     * @example
+     * // Get one VersionCategory
+     * const versionCategory = await prisma.versionCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VersionCategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, VersionCategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VersionCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryFindFirstArgs} args - Arguments to find a VersionCategory
+     * @example
+     * // Get one VersionCategory
+     * const versionCategory = await prisma.versionCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VersionCategoryFindFirstArgs>(args?: SelectSubset<T, VersionCategoryFindFirstArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VersionCategory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryFindFirstOrThrowArgs} args - Arguments to find a VersionCategory
+     * @example
+     * // Get one VersionCategory
+     * const versionCategory = await prisma.versionCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VersionCategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, VersionCategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VersionCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VersionCategories
+     * const versionCategories = await prisma.versionCategory.findMany()
+     * 
+     * // Get first 10 VersionCategories
+     * const versionCategories = await prisma.versionCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const versionCategoryWithIdOnly = await prisma.versionCategory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VersionCategoryFindManyArgs>(args?: SelectSubset<T, VersionCategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VersionCategory.
+     * @param {VersionCategoryCreateArgs} args - Arguments to create a VersionCategory.
+     * @example
+     * // Create one VersionCategory
+     * const VersionCategory = await prisma.versionCategory.create({
+     *   data: {
+     *     // ... data to create a VersionCategory
+     *   }
+     * })
+     * 
+     */
+    create<T extends VersionCategoryCreateArgs>(args: SelectSubset<T, VersionCategoryCreateArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VersionCategories.
+     * @param {VersionCategoryCreateManyArgs} args - Arguments to create many VersionCategories.
+     * @example
+     * // Create many VersionCategories
+     * const versionCategory = await prisma.versionCategory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VersionCategoryCreateManyArgs>(args?: SelectSubset<T, VersionCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VersionCategories and returns the data saved in the database.
+     * @param {VersionCategoryCreateManyAndReturnArgs} args - Arguments to create many VersionCategories.
+     * @example
+     * // Create many VersionCategories
+     * const versionCategory = await prisma.versionCategory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VersionCategories and only return the `id`
+     * const versionCategoryWithIdOnly = await prisma.versionCategory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VersionCategoryCreateManyAndReturnArgs>(args?: SelectSubset<T, VersionCategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VersionCategory.
+     * @param {VersionCategoryDeleteArgs} args - Arguments to delete one VersionCategory.
+     * @example
+     * // Delete one VersionCategory
+     * const VersionCategory = await prisma.versionCategory.delete({
+     *   where: {
+     *     // ... filter to delete one VersionCategory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VersionCategoryDeleteArgs>(args: SelectSubset<T, VersionCategoryDeleteArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VersionCategory.
+     * @param {VersionCategoryUpdateArgs} args - Arguments to update one VersionCategory.
+     * @example
+     * // Update one VersionCategory
+     * const versionCategory = await prisma.versionCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VersionCategoryUpdateArgs>(args: SelectSubset<T, VersionCategoryUpdateArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VersionCategories.
+     * @param {VersionCategoryDeleteManyArgs} args - Arguments to filter VersionCategories to delete.
+     * @example
+     * // Delete a few VersionCategories
+     * const { count } = await prisma.versionCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VersionCategoryDeleteManyArgs>(args?: SelectSubset<T, VersionCategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VersionCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VersionCategories
+     * const versionCategory = await prisma.versionCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VersionCategoryUpdateManyArgs>(args: SelectSubset<T, VersionCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VersionCategories and returns the data updated in the database.
+     * @param {VersionCategoryUpdateManyAndReturnArgs} args - Arguments to update many VersionCategories.
+     * @example
+     * // Update many VersionCategories
+     * const versionCategory = await prisma.versionCategory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VersionCategories and only return the `id`
+     * const versionCategoryWithIdOnly = await prisma.versionCategory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VersionCategoryUpdateManyAndReturnArgs>(args: SelectSubset<T, VersionCategoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VersionCategory.
+     * @param {VersionCategoryUpsertArgs} args - Arguments to update or create a VersionCategory.
+     * @example
+     * // Update or create a VersionCategory
+     * const versionCategory = await prisma.versionCategory.upsert({
+     *   create: {
+     *     // ... data to create a VersionCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VersionCategory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VersionCategoryUpsertArgs>(args: SelectSubset<T, VersionCategoryUpsertArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VersionCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryCountArgs} args - Arguments to filter VersionCategories to count.
+     * @example
+     * // Count the number of VersionCategories
+     * const count = await prisma.versionCategory.count({
+     *   where: {
+     *     // ... the filter for the VersionCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends VersionCategoryCountArgs>(
+      args?: Subset<T, VersionCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VersionCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VersionCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VersionCategoryAggregateArgs>(args: Subset<T, VersionCategoryAggregateArgs>): Prisma.PrismaPromise<GetVersionCategoryAggregateType<T>>
+
+    /**
+     * Group by VersionCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VersionCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VersionCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: VersionCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VersionCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVersionCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VersionCategory model
+   */
+  readonly fields: VersionCategoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VersionCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VersionCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    abbreviations<T extends VersionCategory$abbreviationsArgs<ExtArgs> = {}>(args?: Subset<T, VersionCategory$abbreviationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    versionItems<T extends VersionCategory$versionItemsArgs<ExtArgs> = {}>(args?: Subset<T, VersionCategory$versionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VersionCategory model
+   */
+  interface VersionCategoryFieldRefs {
+    readonly id: FieldRef<"VersionCategory", 'String'>
+    readonly title: FieldRef<"VersionCategory", 'String'>
+    readonly rank: FieldRef<"VersionCategory", 'Float'>
+    readonly createdAt: FieldRef<"VersionCategory", 'DateTime'>
+    readonly updatedAt: FieldRef<"VersionCategory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VersionCategory findUnique
+   */
+  export type VersionCategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategory to fetch.
+     */
+    where: VersionCategoryWhereUniqueInput
+  }
+
+  /**
+   * VersionCategory findUniqueOrThrow
+   */
+  export type VersionCategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategory to fetch.
+     */
+    where: VersionCategoryWhereUniqueInput
+  }
+
+  /**
+   * VersionCategory findFirst
+   */
+  export type VersionCategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategory to fetch.
+     */
+    where?: VersionCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionCategories to fetch.
+     */
+    orderBy?: VersionCategoryOrderByWithRelationInput | VersionCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VersionCategories.
+     */
+    cursor?: VersionCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionCategories.
+     */
+    distinct?: VersionCategoryScalarFieldEnum | VersionCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * VersionCategory findFirstOrThrow
+   */
+  export type VersionCategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategory to fetch.
+     */
+    where?: VersionCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionCategories to fetch.
+     */
+    orderBy?: VersionCategoryOrderByWithRelationInput | VersionCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VersionCategories.
+     */
+    cursor?: VersionCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionCategories.
+     */
+    distinct?: VersionCategoryScalarFieldEnum | VersionCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * VersionCategory findMany
+   */
+  export type VersionCategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategories to fetch.
+     */
+    where?: VersionCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionCategories to fetch.
+     */
+    orderBy?: VersionCategoryOrderByWithRelationInput | VersionCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VersionCategories.
+     */
+    cursor?: VersionCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionCategories.
+     */
+    distinct?: VersionCategoryScalarFieldEnum | VersionCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * VersionCategory create
+   */
+  export type VersionCategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VersionCategory.
+     */
+    data: XOR<VersionCategoryCreateInput, VersionCategoryUncheckedCreateInput>
+  }
+
+  /**
+   * VersionCategory createMany
+   */
+  export type VersionCategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VersionCategories.
+     */
+    data: VersionCategoryCreateManyInput | VersionCategoryCreateManyInput[]
+  }
+
+  /**
+   * VersionCategory createManyAndReturn
+   */
+  export type VersionCategoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many VersionCategories.
+     */
+    data: VersionCategoryCreateManyInput | VersionCategoryCreateManyInput[]
+  }
+
+  /**
+   * VersionCategory update
+   */
+  export type VersionCategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VersionCategory.
+     */
+    data: XOR<VersionCategoryUpdateInput, VersionCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which VersionCategory to update.
+     */
+    where: VersionCategoryWhereUniqueInput
+  }
+
+  /**
+   * VersionCategory updateMany
+   */
+  export type VersionCategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VersionCategories.
+     */
+    data: XOR<VersionCategoryUpdateManyMutationInput, VersionCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which VersionCategories to update
+     */
+    where?: VersionCategoryWhereInput
+    /**
+     * Limit how many VersionCategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VersionCategory updateManyAndReturn
+   */
+  export type VersionCategoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * The data used to update VersionCategories.
+     */
+    data: XOR<VersionCategoryUpdateManyMutationInput, VersionCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which VersionCategories to update
+     */
+    where?: VersionCategoryWhereInput
+    /**
+     * Limit how many VersionCategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VersionCategory upsert
+   */
+  export type VersionCategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VersionCategory to update in case it exists.
+     */
+    where: VersionCategoryWhereUniqueInput
+    /**
+     * In case the VersionCategory found by the `where` argument doesn't exist, create a new VersionCategory with this data.
+     */
+    create: XOR<VersionCategoryCreateInput, VersionCategoryUncheckedCreateInput>
+    /**
+     * In case the VersionCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VersionCategoryUpdateInput, VersionCategoryUncheckedUpdateInput>
+  }
+
+  /**
+   * VersionCategory delete
+   */
+  export type VersionCategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    /**
+     * Filter which VersionCategory to delete.
+     */
+    where: VersionCategoryWhereUniqueInput
+  }
+
+  /**
+   * VersionCategory deleteMany
+   */
+  export type VersionCategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VersionCategories to delete
+     */
+    where?: VersionCategoryWhereInput
+    /**
+     * Limit how many VersionCategories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VersionCategory.abbreviations
+   */
+  export type VersionCategory$abbreviationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    where?: VersionCategoryAbbreviationWhereInput
+    orderBy?: VersionCategoryAbbreviationOrderByWithRelationInput | VersionCategoryAbbreviationOrderByWithRelationInput[]
+    cursor?: VersionCategoryAbbreviationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VersionCategoryAbbreviationScalarFieldEnum | VersionCategoryAbbreviationScalarFieldEnum[]
+  }
+
+  /**
+   * VersionCategory.versionItems
+   */
+  export type VersionCategory$versionItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionItem
+     */
+    select?: VersionItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionItem
+     */
+    omit?: VersionItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionItemInclude<ExtArgs> | null
+    where?: VersionItemWhereInput
+    orderBy?: VersionItemOrderByWithRelationInput | VersionItemOrderByWithRelationInput[]
+    cursor?: VersionItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VersionItemScalarFieldEnum | VersionItemScalarFieldEnum[]
+  }
+
+  /**
+   * VersionCategory without action
+   */
+  export type VersionCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VersionCategoryAbbreviation
+   */
+
+  export type AggregateVersionCategoryAbbreviation = {
+    _count: VersionCategoryAbbreviationCountAggregateOutputType | null
+    _min: VersionCategoryAbbreviationMinAggregateOutputType | null
+    _max: VersionCategoryAbbreviationMaxAggregateOutputType | null
+  }
+
+  export type VersionCategoryAbbreviationMinAggregateOutputType = {
+    id: string | null
+    versionCategoryId: string | null
+    abbreviationText: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VersionCategoryAbbreviationMaxAggregateOutputType = {
+    id: string | null
+    versionCategoryId: string | null
+    abbreviationText: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VersionCategoryAbbreviationCountAggregateOutputType = {
+    id: number
+    versionCategoryId: number
+    abbreviationText: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VersionCategoryAbbreviationMinAggregateInputType = {
+    id?: true
+    versionCategoryId?: true
+    abbreviationText?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VersionCategoryAbbreviationMaxAggregateInputType = {
+    id?: true
+    versionCategoryId?: true
+    abbreviationText?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VersionCategoryAbbreviationCountAggregateInputType = {
+    id?: true
+    versionCategoryId?: true
+    abbreviationText?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VersionCategoryAbbreviationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VersionCategoryAbbreviation to aggregate.
+     */
+    where?: VersionCategoryAbbreviationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionCategoryAbbreviations to fetch.
+     */
+    orderBy?: VersionCategoryAbbreviationOrderByWithRelationInput | VersionCategoryAbbreviationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VersionCategoryAbbreviationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionCategoryAbbreviations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionCategoryAbbreviations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VersionCategoryAbbreviations
+    **/
+    _count?: true | VersionCategoryAbbreviationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VersionCategoryAbbreviationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VersionCategoryAbbreviationMaxAggregateInputType
+  }
+
+  export type GetVersionCategoryAbbreviationAggregateType<T extends VersionCategoryAbbreviationAggregateArgs> = {
+        [P in keyof T & keyof AggregateVersionCategoryAbbreviation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVersionCategoryAbbreviation[P]>
+      : GetScalarType<T[P], AggregateVersionCategoryAbbreviation[P]>
+  }
+
+
+
+
+  export type VersionCategoryAbbreviationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VersionCategoryAbbreviationWhereInput
+    orderBy?: VersionCategoryAbbreviationOrderByWithAggregationInput | VersionCategoryAbbreviationOrderByWithAggregationInput[]
+    by: VersionCategoryAbbreviationScalarFieldEnum[] | VersionCategoryAbbreviationScalarFieldEnum
+    having?: VersionCategoryAbbreviationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VersionCategoryAbbreviationCountAggregateInputType | true
+    _min?: VersionCategoryAbbreviationMinAggregateInputType
+    _max?: VersionCategoryAbbreviationMaxAggregateInputType
+  }
+
+  export type VersionCategoryAbbreviationGroupByOutputType = {
+    id: string
+    versionCategoryId: string
+    abbreviationText: string
+    createdAt: Date
+    updatedAt: Date
+    _count: VersionCategoryAbbreviationCountAggregateOutputType | null
+    _min: VersionCategoryAbbreviationMinAggregateOutputType | null
+    _max: VersionCategoryAbbreviationMaxAggregateOutputType | null
+  }
+
+  type GetVersionCategoryAbbreviationGroupByPayload<T extends VersionCategoryAbbreviationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VersionCategoryAbbreviationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VersionCategoryAbbreviationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VersionCategoryAbbreviationGroupByOutputType[P]>
+            : GetScalarType<T[P], VersionCategoryAbbreviationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VersionCategoryAbbreviationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionCategoryId?: boolean
+    abbreviationText?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    versionCategory?: boolean | VersionCategoryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["versionCategoryAbbreviation"]>
+
+  export type VersionCategoryAbbreviationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionCategoryId?: boolean
+    abbreviationText?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    versionCategory?: boolean | VersionCategoryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["versionCategoryAbbreviation"]>
+
+  export type VersionCategoryAbbreviationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    versionCategoryId?: boolean
+    abbreviationText?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    versionCategory?: boolean | VersionCategoryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["versionCategoryAbbreviation"]>
+
+  export type VersionCategoryAbbreviationSelectScalar = {
+    id?: boolean
+    versionCategoryId?: boolean
+    abbreviationText?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VersionCategoryAbbreviationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionCategoryId" | "abbreviationText" | "createdAt" | "updatedAt", ExtArgs["result"]["versionCategoryAbbreviation"]>
+  export type VersionCategoryAbbreviationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versionCategory?: boolean | VersionCategoryDefaultArgs<ExtArgs>
+  }
+  export type VersionCategoryAbbreviationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versionCategory?: boolean | VersionCategoryDefaultArgs<ExtArgs>
+  }
+  export type VersionCategoryAbbreviationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versionCategory?: boolean | VersionCategoryDefaultArgs<ExtArgs>
+  }
+
+  export type $VersionCategoryAbbreviationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VersionCategoryAbbreviation"
+    objects: {
+      versionCategory: Prisma.$VersionCategoryPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      versionCategoryId: string
+      abbreviationText: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["versionCategoryAbbreviation"]>
+    composites: {}
+  }
+
+  type VersionCategoryAbbreviationGetPayload<S extends boolean | null | undefined | VersionCategoryAbbreviationDefaultArgs> = $Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload, S>
+
+  type VersionCategoryAbbreviationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VersionCategoryAbbreviationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VersionCategoryAbbreviationCountAggregateInputType | true
+    }
+
+  export interface VersionCategoryAbbreviationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VersionCategoryAbbreviation'], meta: { name: 'VersionCategoryAbbreviation' } }
+    /**
+     * Find zero or one VersionCategoryAbbreviation that matches the filter.
+     * @param {VersionCategoryAbbreviationFindUniqueArgs} args - Arguments to find a VersionCategoryAbbreviation
+     * @example
+     * // Get one VersionCategoryAbbreviation
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VersionCategoryAbbreviationFindUniqueArgs>(args: SelectSubset<T, VersionCategoryAbbreviationFindUniqueArgs<ExtArgs>>): Prisma__VersionCategoryAbbreviationClient<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VersionCategoryAbbreviation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VersionCategoryAbbreviationFindUniqueOrThrowArgs} args - Arguments to find a VersionCategoryAbbreviation
+     * @example
+     * // Get one VersionCategoryAbbreviation
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VersionCategoryAbbreviationFindUniqueOrThrowArgs>(args: SelectSubset<T, VersionCategoryAbbreviationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VersionCategoryAbbreviationClient<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VersionCategoryAbbreviation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryAbbreviationFindFirstArgs} args - Arguments to find a VersionCategoryAbbreviation
+     * @example
+     * // Get one VersionCategoryAbbreviation
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VersionCategoryAbbreviationFindFirstArgs>(args?: SelectSubset<T, VersionCategoryAbbreviationFindFirstArgs<ExtArgs>>): Prisma__VersionCategoryAbbreviationClient<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VersionCategoryAbbreviation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryAbbreviationFindFirstOrThrowArgs} args - Arguments to find a VersionCategoryAbbreviation
+     * @example
+     * // Get one VersionCategoryAbbreviation
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VersionCategoryAbbreviationFindFirstOrThrowArgs>(args?: SelectSubset<T, VersionCategoryAbbreviationFindFirstOrThrowArgs<ExtArgs>>): Prisma__VersionCategoryAbbreviationClient<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VersionCategoryAbbreviations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryAbbreviationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VersionCategoryAbbreviations
+     * const versionCategoryAbbreviations = await prisma.versionCategoryAbbreviation.findMany()
+     * 
+     * // Get first 10 VersionCategoryAbbreviations
+     * const versionCategoryAbbreviations = await prisma.versionCategoryAbbreviation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const versionCategoryAbbreviationWithIdOnly = await prisma.versionCategoryAbbreviation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VersionCategoryAbbreviationFindManyArgs>(args?: SelectSubset<T, VersionCategoryAbbreviationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VersionCategoryAbbreviation.
+     * @param {VersionCategoryAbbreviationCreateArgs} args - Arguments to create a VersionCategoryAbbreviation.
+     * @example
+     * // Create one VersionCategoryAbbreviation
+     * const VersionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.create({
+     *   data: {
+     *     // ... data to create a VersionCategoryAbbreviation
+     *   }
+     * })
+     * 
+     */
+    create<T extends VersionCategoryAbbreviationCreateArgs>(args: SelectSubset<T, VersionCategoryAbbreviationCreateArgs<ExtArgs>>): Prisma__VersionCategoryAbbreviationClient<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VersionCategoryAbbreviations.
+     * @param {VersionCategoryAbbreviationCreateManyArgs} args - Arguments to create many VersionCategoryAbbreviations.
+     * @example
+     * // Create many VersionCategoryAbbreviations
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VersionCategoryAbbreviationCreateManyArgs>(args?: SelectSubset<T, VersionCategoryAbbreviationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VersionCategoryAbbreviations and returns the data saved in the database.
+     * @param {VersionCategoryAbbreviationCreateManyAndReturnArgs} args - Arguments to create many VersionCategoryAbbreviations.
+     * @example
+     * // Create many VersionCategoryAbbreviations
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VersionCategoryAbbreviations and only return the `id`
+     * const versionCategoryAbbreviationWithIdOnly = await prisma.versionCategoryAbbreviation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VersionCategoryAbbreviationCreateManyAndReturnArgs>(args?: SelectSubset<T, VersionCategoryAbbreviationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VersionCategoryAbbreviation.
+     * @param {VersionCategoryAbbreviationDeleteArgs} args - Arguments to delete one VersionCategoryAbbreviation.
+     * @example
+     * // Delete one VersionCategoryAbbreviation
+     * const VersionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.delete({
+     *   where: {
+     *     // ... filter to delete one VersionCategoryAbbreviation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VersionCategoryAbbreviationDeleteArgs>(args: SelectSubset<T, VersionCategoryAbbreviationDeleteArgs<ExtArgs>>): Prisma__VersionCategoryAbbreviationClient<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VersionCategoryAbbreviation.
+     * @param {VersionCategoryAbbreviationUpdateArgs} args - Arguments to update one VersionCategoryAbbreviation.
+     * @example
+     * // Update one VersionCategoryAbbreviation
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VersionCategoryAbbreviationUpdateArgs>(args: SelectSubset<T, VersionCategoryAbbreviationUpdateArgs<ExtArgs>>): Prisma__VersionCategoryAbbreviationClient<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VersionCategoryAbbreviations.
+     * @param {VersionCategoryAbbreviationDeleteManyArgs} args - Arguments to filter VersionCategoryAbbreviations to delete.
+     * @example
+     * // Delete a few VersionCategoryAbbreviations
+     * const { count } = await prisma.versionCategoryAbbreviation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VersionCategoryAbbreviationDeleteManyArgs>(args?: SelectSubset<T, VersionCategoryAbbreviationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VersionCategoryAbbreviations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryAbbreviationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VersionCategoryAbbreviations
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VersionCategoryAbbreviationUpdateManyArgs>(args: SelectSubset<T, VersionCategoryAbbreviationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VersionCategoryAbbreviations and returns the data updated in the database.
+     * @param {VersionCategoryAbbreviationUpdateManyAndReturnArgs} args - Arguments to update many VersionCategoryAbbreviations.
+     * @example
+     * // Update many VersionCategoryAbbreviations
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VersionCategoryAbbreviations and only return the `id`
+     * const versionCategoryAbbreviationWithIdOnly = await prisma.versionCategoryAbbreviation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VersionCategoryAbbreviationUpdateManyAndReturnArgs>(args: SelectSubset<T, VersionCategoryAbbreviationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VersionCategoryAbbreviation.
+     * @param {VersionCategoryAbbreviationUpsertArgs} args - Arguments to update or create a VersionCategoryAbbreviation.
+     * @example
+     * // Update or create a VersionCategoryAbbreviation
+     * const versionCategoryAbbreviation = await prisma.versionCategoryAbbreviation.upsert({
+     *   create: {
+     *     // ... data to create a VersionCategoryAbbreviation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VersionCategoryAbbreviation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VersionCategoryAbbreviationUpsertArgs>(args: SelectSubset<T, VersionCategoryAbbreviationUpsertArgs<ExtArgs>>): Prisma__VersionCategoryAbbreviationClient<$Result.GetResult<Prisma.$VersionCategoryAbbreviationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VersionCategoryAbbreviations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryAbbreviationCountArgs} args - Arguments to filter VersionCategoryAbbreviations to count.
+     * @example
+     * // Count the number of VersionCategoryAbbreviations
+     * const count = await prisma.versionCategoryAbbreviation.count({
+     *   where: {
+     *     // ... the filter for the VersionCategoryAbbreviations we want to count
+     *   }
+     * })
+    **/
+    count<T extends VersionCategoryAbbreviationCountArgs>(
+      args?: Subset<T, VersionCategoryAbbreviationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VersionCategoryAbbreviationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VersionCategoryAbbreviation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryAbbreviationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VersionCategoryAbbreviationAggregateArgs>(args: Subset<T, VersionCategoryAbbreviationAggregateArgs>): Prisma.PrismaPromise<GetVersionCategoryAbbreviationAggregateType<T>>
+
+    /**
+     * Group by VersionCategoryAbbreviation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VersionCategoryAbbreviationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VersionCategoryAbbreviationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VersionCategoryAbbreviationGroupByArgs['orderBy'] }
+        : { orderBy?: VersionCategoryAbbreviationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VersionCategoryAbbreviationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVersionCategoryAbbreviationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VersionCategoryAbbreviation model
+   */
+  readonly fields: VersionCategoryAbbreviationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VersionCategoryAbbreviation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VersionCategoryAbbreviationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    versionCategory<T extends VersionCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VersionCategoryDefaultArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VersionCategoryAbbreviation model
+   */
+  interface VersionCategoryAbbreviationFieldRefs {
+    readonly id: FieldRef<"VersionCategoryAbbreviation", 'String'>
+    readonly versionCategoryId: FieldRef<"VersionCategoryAbbreviation", 'String'>
+    readonly abbreviationText: FieldRef<"VersionCategoryAbbreviation", 'String'>
+    readonly createdAt: FieldRef<"VersionCategoryAbbreviation", 'DateTime'>
+    readonly updatedAt: FieldRef<"VersionCategoryAbbreviation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VersionCategoryAbbreviation findUnique
+   */
+  export type VersionCategoryAbbreviationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategoryAbbreviation to fetch.
+     */
+    where: VersionCategoryAbbreviationWhereUniqueInput
+  }
+
+  /**
+   * VersionCategoryAbbreviation findUniqueOrThrow
+   */
+  export type VersionCategoryAbbreviationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategoryAbbreviation to fetch.
+     */
+    where: VersionCategoryAbbreviationWhereUniqueInput
+  }
+
+  /**
+   * VersionCategoryAbbreviation findFirst
+   */
+  export type VersionCategoryAbbreviationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategoryAbbreviation to fetch.
+     */
+    where?: VersionCategoryAbbreviationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionCategoryAbbreviations to fetch.
+     */
+    orderBy?: VersionCategoryAbbreviationOrderByWithRelationInput | VersionCategoryAbbreviationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VersionCategoryAbbreviations.
+     */
+    cursor?: VersionCategoryAbbreviationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionCategoryAbbreviations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionCategoryAbbreviations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionCategoryAbbreviations.
+     */
+    distinct?: VersionCategoryAbbreviationScalarFieldEnum | VersionCategoryAbbreviationScalarFieldEnum[]
+  }
+
+  /**
+   * VersionCategoryAbbreviation findFirstOrThrow
+   */
+  export type VersionCategoryAbbreviationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategoryAbbreviation to fetch.
+     */
+    where?: VersionCategoryAbbreviationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionCategoryAbbreviations to fetch.
+     */
+    orderBy?: VersionCategoryAbbreviationOrderByWithRelationInput | VersionCategoryAbbreviationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VersionCategoryAbbreviations.
+     */
+    cursor?: VersionCategoryAbbreviationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionCategoryAbbreviations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionCategoryAbbreviations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionCategoryAbbreviations.
+     */
+    distinct?: VersionCategoryAbbreviationScalarFieldEnum | VersionCategoryAbbreviationScalarFieldEnum[]
+  }
+
+  /**
+   * VersionCategoryAbbreviation findMany
+   */
+  export type VersionCategoryAbbreviationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * Filter, which VersionCategoryAbbreviations to fetch.
+     */
+    where?: VersionCategoryAbbreviationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VersionCategoryAbbreviations to fetch.
+     */
+    orderBy?: VersionCategoryAbbreviationOrderByWithRelationInput | VersionCategoryAbbreviationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VersionCategoryAbbreviations.
+     */
+    cursor?: VersionCategoryAbbreviationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VersionCategoryAbbreviations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VersionCategoryAbbreviations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VersionCategoryAbbreviations.
+     */
+    distinct?: VersionCategoryAbbreviationScalarFieldEnum | VersionCategoryAbbreviationScalarFieldEnum[]
+  }
+
+  /**
+   * VersionCategoryAbbreviation create
+   */
+  export type VersionCategoryAbbreviationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VersionCategoryAbbreviation.
+     */
+    data: XOR<VersionCategoryAbbreviationCreateInput, VersionCategoryAbbreviationUncheckedCreateInput>
+  }
+
+  /**
+   * VersionCategoryAbbreviation createMany
+   */
+  export type VersionCategoryAbbreviationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VersionCategoryAbbreviations.
+     */
+    data: VersionCategoryAbbreviationCreateManyInput | VersionCategoryAbbreviationCreateManyInput[]
+  }
+
+  /**
+   * VersionCategoryAbbreviation createManyAndReturn
+   */
+  export type VersionCategoryAbbreviationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * The data used to create many VersionCategoryAbbreviations.
+     */
+    data: VersionCategoryAbbreviationCreateManyInput | VersionCategoryAbbreviationCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VersionCategoryAbbreviation update
+   */
+  export type VersionCategoryAbbreviationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VersionCategoryAbbreviation.
+     */
+    data: XOR<VersionCategoryAbbreviationUpdateInput, VersionCategoryAbbreviationUncheckedUpdateInput>
+    /**
+     * Choose, which VersionCategoryAbbreviation to update.
+     */
+    where: VersionCategoryAbbreviationWhereUniqueInput
+  }
+
+  /**
+   * VersionCategoryAbbreviation updateMany
+   */
+  export type VersionCategoryAbbreviationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VersionCategoryAbbreviations.
+     */
+    data: XOR<VersionCategoryAbbreviationUpdateManyMutationInput, VersionCategoryAbbreviationUncheckedUpdateManyInput>
+    /**
+     * Filter which VersionCategoryAbbreviations to update
+     */
+    where?: VersionCategoryAbbreviationWhereInput
+    /**
+     * Limit how many VersionCategoryAbbreviations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VersionCategoryAbbreviation updateManyAndReturn
+   */
+  export type VersionCategoryAbbreviationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * The data used to update VersionCategoryAbbreviations.
+     */
+    data: XOR<VersionCategoryAbbreviationUpdateManyMutationInput, VersionCategoryAbbreviationUncheckedUpdateManyInput>
+    /**
+     * Filter which VersionCategoryAbbreviations to update
+     */
+    where?: VersionCategoryAbbreviationWhereInput
+    /**
+     * Limit how many VersionCategoryAbbreviations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VersionCategoryAbbreviation upsert
+   */
+  export type VersionCategoryAbbreviationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VersionCategoryAbbreviation to update in case it exists.
+     */
+    where: VersionCategoryAbbreviationWhereUniqueInput
+    /**
+     * In case the VersionCategoryAbbreviation found by the `where` argument doesn't exist, create a new VersionCategoryAbbreviation with this data.
+     */
+    create: XOR<VersionCategoryAbbreviationCreateInput, VersionCategoryAbbreviationUncheckedCreateInput>
+    /**
+     * In case the VersionCategoryAbbreviation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VersionCategoryAbbreviationUpdateInput, VersionCategoryAbbreviationUncheckedUpdateInput>
+  }
+
+  /**
+   * VersionCategoryAbbreviation delete
+   */
+  export type VersionCategoryAbbreviationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+    /**
+     * Filter which VersionCategoryAbbreviation to delete.
+     */
+    where: VersionCategoryAbbreviationWhereUniqueInput
+  }
+
+  /**
+   * VersionCategoryAbbreviation deleteMany
+   */
+  export type VersionCategoryAbbreviationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VersionCategoryAbbreviations to delete
+     */
+    where?: VersionCategoryAbbreviationWhereInput
+    /**
+     * Limit how many VersionCategoryAbbreviations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VersionCategoryAbbreviation without action
+   */
+  export type VersionCategoryAbbreviationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategoryAbbreviation
+     */
+    select?: VersionCategoryAbbreviationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategoryAbbreviation
+     */
+    omit?: VersionCategoryAbbreviationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryAbbreviationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model VersionItem
    */
 
@@ -3987,18 +6422,22 @@ export namespace Prisma {
   }
 
   export type VersionItemAvgAggregateOutputType = {
+    rank: number | null
     orderWithinVersion: number | null
   }
 
   export type VersionItemSumAggregateOutputType = {
+    rank: number | null
     orderWithinVersion: number | null
   }
 
   export type VersionItemMinAggregateOutputType = {
     id: string | null
     versionId: string | null
+    versionCategoryId: string | null
     type: string | null
     body: string | null
+    rank: number | null
     startedByUserId: string | null
     orderWithinVersion: number | null
     createdAt: Date | null
@@ -4008,8 +6447,10 @@ export namespace Prisma {
   export type VersionItemMaxAggregateOutputType = {
     id: string | null
     versionId: string | null
+    versionCategoryId: string | null
     type: string | null
     body: string | null
+    rank: number | null
     startedByUserId: string | null
     orderWithinVersion: number | null
     createdAt: Date | null
@@ -4019,8 +6460,10 @@ export namespace Prisma {
   export type VersionItemCountAggregateOutputType = {
     id: number
     versionId: number
+    versionCategoryId: number
     type: number
     body: number
+    rank: number
     startedByUserId: number
     orderWithinVersion: number
     createdAt: number
@@ -4030,18 +6473,22 @@ export namespace Prisma {
 
 
   export type VersionItemAvgAggregateInputType = {
+    rank?: true
     orderWithinVersion?: true
   }
 
   export type VersionItemSumAggregateInputType = {
+    rank?: true
     orderWithinVersion?: true
   }
 
   export type VersionItemMinAggregateInputType = {
     id?: true
     versionId?: true
+    versionCategoryId?: true
     type?: true
     body?: true
+    rank?: true
     startedByUserId?: true
     orderWithinVersion?: true
     createdAt?: true
@@ -4051,8 +6498,10 @@ export namespace Prisma {
   export type VersionItemMaxAggregateInputType = {
     id?: true
     versionId?: true
+    versionCategoryId?: true
     type?: true
     body?: true
+    rank?: true
     startedByUserId?: true
     orderWithinVersion?: true
     createdAt?: true
@@ -4062,8 +6511,10 @@ export namespace Prisma {
   export type VersionItemCountAggregateInputType = {
     id?: true
     versionId?: true
+    versionCategoryId?: true
     type?: true
     body?: true
+    rank?: true
     startedByUserId?: true
     orderWithinVersion?: true
     createdAt?: true
@@ -4160,8 +6611,10 @@ export namespace Prisma {
   export type VersionItemGroupByOutputType = {
     id: string
     versionId: string | null
+    versionCategoryId: string | null
     type: string
     body: string
+    rank: number
     startedByUserId: string | null
     orderWithinVersion: number
     createdAt: Date
@@ -4190,64 +6643,78 @@ export namespace Prisma {
   export type VersionItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     versionId?: boolean
+    versionCategoryId?: boolean
     type?: boolean
     body?: boolean
+    rank?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     version?: boolean | VersionItem$versionArgs<ExtArgs>
+    versionCategory?: boolean | VersionItem$versionCategoryArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["versionItem"]>
 
   export type VersionItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     versionId?: boolean
+    versionCategoryId?: boolean
     type?: boolean
     body?: boolean
+    rank?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     version?: boolean | VersionItem$versionArgs<ExtArgs>
+    versionCategory?: boolean | VersionItem$versionCategoryArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["versionItem"]>
 
   export type VersionItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     versionId?: boolean
+    versionCategoryId?: boolean
     type?: boolean
     body?: boolean
+    rank?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     version?: boolean | VersionItem$versionArgs<ExtArgs>
+    versionCategory?: boolean | VersionItem$versionCategoryArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["versionItem"]>
 
   export type VersionItemSelectScalar = {
     id?: boolean
     versionId?: boolean
+    versionCategoryId?: boolean
     type?: boolean
     body?: boolean
+    rank?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VersionItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionId" | "type" | "body" | "startedByUserId" | "orderWithinVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["versionItem"]>
+  export type VersionItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionId" | "versionCategoryId" | "type" | "body" | "rank" | "startedByUserId" | "orderWithinVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["versionItem"]>
   export type VersionItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     version?: boolean | VersionItem$versionArgs<ExtArgs>
+    versionCategory?: boolean | VersionItem$versionCategoryArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }
   export type VersionItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     version?: boolean | VersionItem$versionArgs<ExtArgs>
+    versionCategory?: boolean | VersionItem$versionCategoryArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }
   export type VersionItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     version?: boolean | VersionItem$versionArgs<ExtArgs>
+    versionCategory?: boolean | VersionItem$versionCategoryArgs<ExtArgs>
     startedByUser?: boolean | VersionItem$startedByUserArgs<ExtArgs>
   }
 
@@ -4255,13 +6722,16 @@ export namespace Prisma {
     name: "VersionItem"
     objects: {
       version: Prisma.$VersionPayload<ExtArgs> | null
+      versionCategory: Prisma.$VersionCategoryPayload<ExtArgs> | null
       startedByUser: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       versionId: string | null
+      versionCategoryId: string | null
       type: string
       body: string
+      rank: number
       startedByUserId: string | null
       orderWithinVersion: number
       createdAt: Date
@@ -4661,6 +7131,7 @@ export namespace Prisma {
   export interface Prisma__VersionItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     version<T extends VersionItem$versionArgs<ExtArgs> = {}>(args?: Subset<T, VersionItem$versionArgs<ExtArgs>>): Prisma__VersionClient<$Result.GetResult<Prisma.$VersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    versionCategory<T extends VersionItem$versionCategoryArgs<ExtArgs> = {}>(args?: Subset<T, VersionItem$versionCategoryArgs<ExtArgs>>): Prisma__VersionCategoryClient<$Result.GetResult<Prisma.$VersionCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     startedByUser<T extends VersionItem$startedByUserArgs<ExtArgs> = {}>(args?: Subset<T, VersionItem$startedByUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4693,8 +7164,10 @@ export namespace Prisma {
   interface VersionItemFieldRefs {
     readonly id: FieldRef<"VersionItem", 'String'>
     readonly versionId: FieldRef<"VersionItem", 'String'>
+    readonly versionCategoryId: FieldRef<"VersionItem", 'String'>
     readonly type: FieldRef<"VersionItem", 'String'>
     readonly body: FieldRef<"VersionItem", 'String'>
+    readonly rank: FieldRef<"VersionItem", 'Float'>
     readonly startedByUserId: FieldRef<"VersionItem", 'String'>
     readonly orderWithinVersion: FieldRef<"VersionItem", 'Int'>
     readonly createdAt: FieldRef<"VersionItem", 'DateTime'>
@@ -5114,6 +7587,25 @@ export namespace Prisma {
      */
     include?: VersionInclude<ExtArgs> | null
     where?: VersionWhereInput
+  }
+
+  /**
+   * VersionItem.versionCategory
+   */
+  export type VersionItem$versionCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VersionCategory
+     */
+    select?: VersionCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VersionCategory
+     */
+    omit?: VersionCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VersionCategoryInclude<ExtArgs> | null
+    where?: VersionCategoryWhereInput
   }
 
   /**
@@ -10703,7 +13195,8 @@ export namespace Prisma {
     lastName: 'lastName',
     email: 'email',
     role: 'role',
-    minutesToTestAgain: 'minutesToTestAgain'
+    minutesToTestAgain: 'minutesToTestAgain',
+    dailyTakeGoal: 'dailyTakeGoal'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -10722,11 +13215,35 @@ export namespace Prisma {
   export type VersionScalarFieldEnum = (typeof VersionScalarFieldEnum)[keyof typeof VersionScalarFieldEnum]
 
 
+  export const VersionCategoryScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    rank: 'rank',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VersionCategoryScalarFieldEnum = (typeof VersionCategoryScalarFieldEnum)[keyof typeof VersionCategoryScalarFieldEnum]
+
+
+  export const VersionCategoryAbbreviationScalarFieldEnum: {
+    id: 'id',
+    versionCategoryId: 'versionCategoryId',
+    abbreviationText: 'abbreviationText',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VersionCategoryAbbreviationScalarFieldEnum = (typeof VersionCategoryAbbreviationScalarFieldEnum)[keyof typeof VersionCategoryAbbreviationScalarFieldEnum]
+
+
   export const VersionItemScalarFieldEnum: {
     id: 'id',
     versionId: 'versionId',
+    versionCategoryId: 'versionCategoryId',
     type: 'type',
     body: 'body',
+    rank: 'rank',
     startedByUserId: 'startedByUserId',
     orderWithinVersion: 'orderWithinVersion',
     createdAt: 'createdAt',
@@ -10857,6 +13374,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     minutesToTestAgain?: IntFilter<"User"> | number
+    dailyTakeGoal?: IntFilter<"User"> | number
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
@@ -10870,6 +13388,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
     flashcards?: FlashcardOrderByRelationAggregateInput
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
     versionItems?: VersionItemOrderByRelationAggregateInput
@@ -10886,6 +13405,7 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     minutesToTestAgain?: IntFilter<"User"> | number
+    dailyTakeGoal?: IntFilter<"User"> | number
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
@@ -10899,6 +13419,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -10916,6 +13437,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     role?: StringWithAggregatesFilter<"User"> | string
     minutesToTestAgain?: IntWithAggregatesFilter<"User"> | number
+    dailyTakeGoal?: IntWithAggregatesFilter<"User"> | number
   }
 
   export type VersionWhereInput = {
@@ -10983,32 +13505,153 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Version"> | Date | string
   }
 
+  export type VersionCategoryWhereInput = {
+    AND?: VersionCategoryWhereInput | VersionCategoryWhereInput[]
+    OR?: VersionCategoryWhereInput[]
+    NOT?: VersionCategoryWhereInput | VersionCategoryWhereInput[]
+    id?: StringFilter<"VersionCategory"> | string
+    title?: StringFilter<"VersionCategory"> | string
+    rank?: FloatFilter<"VersionCategory"> | number
+    createdAt?: DateTimeFilter<"VersionCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"VersionCategory"> | Date | string
+    abbreviations?: VersionCategoryAbbreviationListRelationFilter
+    versionItems?: VersionItemListRelationFilter
+  }
+
+  export type VersionCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    rank?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    abbreviations?: VersionCategoryAbbreviationOrderByRelationAggregateInput
+    versionItems?: VersionItemOrderByRelationAggregateInput
+  }
+
+  export type VersionCategoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    title?: string
+    AND?: VersionCategoryWhereInput | VersionCategoryWhereInput[]
+    OR?: VersionCategoryWhereInput[]
+    NOT?: VersionCategoryWhereInput | VersionCategoryWhereInput[]
+    rank?: FloatFilter<"VersionCategory"> | number
+    createdAt?: DateTimeFilter<"VersionCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"VersionCategory"> | Date | string
+    abbreviations?: VersionCategoryAbbreviationListRelationFilter
+    versionItems?: VersionItemListRelationFilter
+  }, "id" | "title">
+
+  export type VersionCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    rank?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VersionCategoryCountOrderByAggregateInput
+    _avg?: VersionCategoryAvgOrderByAggregateInput
+    _max?: VersionCategoryMaxOrderByAggregateInput
+    _min?: VersionCategoryMinOrderByAggregateInput
+    _sum?: VersionCategorySumOrderByAggregateInput
+  }
+
+  export type VersionCategoryScalarWhereWithAggregatesInput = {
+    AND?: VersionCategoryScalarWhereWithAggregatesInput | VersionCategoryScalarWhereWithAggregatesInput[]
+    OR?: VersionCategoryScalarWhereWithAggregatesInput[]
+    NOT?: VersionCategoryScalarWhereWithAggregatesInput | VersionCategoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"VersionCategory"> | string
+    title?: StringWithAggregatesFilter<"VersionCategory"> | string
+    rank?: FloatWithAggregatesFilter<"VersionCategory"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"VersionCategory"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"VersionCategory"> | Date | string
+  }
+
+  export type VersionCategoryAbbreviationWhereInput = {
+    AND?: VersionCategoryAbbreviationWhereInput | VersionCategoryAbbreviationWhereInput[]
+    OR?: VersionCategoryAbbreviationWhereInput[]
+    NOT?: VersionCategoryAbbreviationWhereInput | VersionCategoryAbbreviationWhereInput[]
+    id?: StringFilter<"VersionCategoryAbbreviation"> | string
+    versionCategoryId?: StringFilter<"VersionCategoryAbbreviation"> | string
+    abbreviationText?: StringFilter<"VersionCategoryAbbreviation"> | string
+    createdAt?: DateTimeFilter<"VersionCategoryAbbreviation"> | Date | string
+    updatedAt?: DateTimeFilter<"VersionCategoryAbbreviation"> | Date | string
+    versionCategory?: XOR<VersionCategoryScalarRelationFilter, VersionCategoryWhereInput>
+  }
+
+  export type VersionCategoryAbbreviationOrderByWithRelationInput = {
+    id?: SortOrder
+    versionCategoryId?: SortOrder
+    abbreviationText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    versionCategory?: VersionCategoryOrderByWithRelationInput
+  }
+
+  export type VersionCategoryAbbreviationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: VersionCategoryAbbreviationWhereInput | VersionCategoryAbbreviationWhereInput[]
+    OR?: VersionCategoryAbbreviationWhereInput[]
+    NOT?: VersionCategoryAbbreviationWhereInput | VersionCategoryAbbreviationWhereInput[]
+    versionCategoryId?: StringFilter<"VersionCategoryAbbreviation"> | string
+    abbreviationText?: StringFilter<"VersionCategoryAbbreviation"> | string
+    createdAt?: DateTimeFilter<"VersionCategoryAbbreviation"> | Date | string
+    updatedAt?: DateTimeFilter<"VersionCategoryAbbreviation"> | Date | string
+    versionCategory?: XOR<VersionCategoryScalarRelationFilter, VersionCategoryWhereInput>
+  }, "id">
+
+  export type VersionCategoryAbbreviationOrderByWithAggregationInput = {
+    id?: SortOrder
+    versionCategoryId?: SortOrder
+    abbreviationText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VersionCategoryAbbreviationCountOrderByAggregateInput
+    _max?: VersionCategoryAbbreviationMaxOrderByAggregateInput
+    _min?: VersionCategoryAbbreviationMinOrderByAggregateInput
+  }
+
+  export type VersionCategoryAbbreviationScalarWhereWithAggregatesInput = {
+    AND?: VersionCategoryAbbreviationScalarWhereWithAggregatesInput | VersionCategoryAbbreviationScalarWhereWithAggregatesInput[]
+    OR?: VersionCategoryAbbreviationScalarWhereWithAggregatesInput[]
+    NOT?: VersionCategoryAbbreviationScalarWhereWithAggregatesInput | VersionCategoryAbbreviationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"VersionCategoryAbbreviation"> | string
+    versionCategoryId?: StringWithAggregatesFilter<"VersionCategoryAbbreviation"> | string
+    abbreviationText?: StringWithAggregatesFilter<"VersionCategoryAbbreviation"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"VersionCategoryAbbreviation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"VersionCategoryAbbreviation"> | Date | string
+  }
+
   export type VersionItemWhereInput = {
     AND?: VersionItemWhereInput | VersionItemWhereInput[]
     OR?: VersionItemWhereInput[]
     NOT?: VersionItemWhereInput | VersionItemWhereInput[]
     id?: StringFilter<"VersionItem"> | string
     versionId?: StringNullableFilter<"VersionItem"> | string | null
+    versionCategoryId?: StringNullableFilter<"VersionItem"> | string | null
     type?: StringFilter<"VersionItem"> | string
     body?: StringFilter<"VersionItem"> | string
+    rank?: FloatFilter<"VersionItem"> | number
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
     createdAt?: DateTimeFilter<"VersionItem"> | Date | string
     updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
     version?: XOR<VersionNullableScalarRelationFilter, VersionWhereInput> | null
+    versionCategory?: XOR<VersionCategoryNullableScalarRelationFilter, VersionCategoryWhereInput> | null
     startedByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type VersionItemOrderByWithRelationInput = {
     id?: SortOrder
     versionId?: SortOrderInput | SortOrder
+    versionCategoryId?: SortOrderInput | SortOrder
     type?: SortOrder
     body?: SortOrder
+    rank?: SortOrder
     startedByUserId?: SortOrderInput | SortOrder
     orderWithinVersion?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     version?: VersionOrderByWithRelationInput
+    versionCategory?: VersionCategoryOrderByWithRelationInput
     startedByUser?: UserOrderByWithRelationInput
   }
 
@@ -11018,21 +13661,26 @@ export namespace Prisma {
     OR?: VersionItemWhereInput[]
     NOT?: VersionItemWhereInput | VersionItemWhereInput[]
     versionId?: StringNullableFilter<"VersionItem"> | string | null
+    versionCategoryId?: StringNullableFilter<"VersionItem"> | string | null
     type?: StringFilter<"VersionItem"> | string
     body?: StringFilter<"VersionItem"> | string
+    rank?: FloatFilter<"VersionItem"> | number
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
     createdAt?: DateTimeFilter<"VersionItem"> | Date | string
     updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
     version?: XOR<VersionNullableScalarRelationFilter, VersionWhereInput> | null
+    versionCategory?: XOR<VersionCategoryNullableScalarRelationFilter, VersionCategoryWhereInput> | null
     startedByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type VersionItemOrderByWithAggregationInput = {
     id?: SortOrder
     versionId?: SortOrderInput | SortOrder
+    versionCategoryId?: SortOrderInput | SortOrder
     type?: SortOrder
     body?: SortOrder
+    rank?: SortOrder
     startedByUserId?: SortOrderInput | SortOrder
     orderWithinVersion?: SortOrder
     createdAt?: SortOrder
@@ -11050,8 +13698,10 @@ export namespace Prisma {
     NOT?: VersionItemScalarWhereWithAggregatesInput | VersionItemScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"VersionItem"> | string
     versionId?: StringNullableWithAggregatesFilter<"VersionItem"> | string | null
+    versionCategoryId?: StringNullableWithAggregatesFilter<"VersionItem"> | string | null
     type?: StringWithAggregatesFilter<"VersionItem"> | string
     body?: StringWithAggregatesFilter<"VersionItem"> | string
+    rank?: FloatWithAggregatesFilter<"VersionItem"> | number
     startedByUserId?: StringNullableWithAggregatesFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntWithAggregatesFilter<"VersionItem"> | number
     createdAt?: DateTimeWithAggregatesFilter<"VersionItem"> | Date | string
@@ -11381,6 +14031,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
@@ -11394,6 +14045,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
@@ -11407,6 +14059,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
@@ -11420,6 +14073,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
@@ -11433,6 +14087,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
   }
 
   export type UserUpdateManyMutationInput = {
@@ -11442,6 +14097,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -11451,6 +14107,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
   }
 
   export type VersionCreateInput = {
@@ -11527,22 +14184,145 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type VersionCategoryCreateInput = {
+    id?: string
+    title: string
+    rank?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    abbreviations?: VersionCategoryAbbreviationCreateNestedManyWithoutVersionCategoryInput
+    versionItems?: VersionItemCreateNestedManyWithoutVersionCategoryInput
+  }
+
+  export type VersionCategoryUncheckedCreateInput = {
+    id?: string
+    title: string
+    rank?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    abbreviations?: VersionCategoryAbbreviationUncheckedCreateNestedManyWithoutVersionCategoryInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutVersionCategoryInput
+  }
+
+  export type VersionCategoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    abbreviations?: VersionCategoryAbbreviationUpdateManyWithoutVersionCategoryNestedInput
+    versionItems?: VersionItemUpdateManyWithoutVersionCategoryNestedInput
+  }
+
+  export type VersionCategoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    abbreviations?: VersionCategoryAbbreviationUncheckedUpdateManyWithoutVersionCategoryNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutVersionCategoryNestedInput
+  }
+
+  export type VersionCategoryCreateManyInput = {
+    id?: string
+    title: string
+    rank?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionCategoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionCategoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionCategoryAbbreviationCreateInput = {
+    id?: string
+    abbreviationText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versionCategory: VersionCategoryCreateNestedOneWithoutAbbreviationsInput
+  }
+
+  export type VersionCategoryAbbreviationUncheckedCreateInput = {
+    id?: string
+    versionCategoryId: string
+    abbreviationText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionCategoryAbbreviationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviationText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versionCategory?: VersionCategoryUpdateOneRequiredWithoutAbbreviationsNestedInput
+  }
+
+  export type VersionCategoryAbbreviationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionCategoryId?: StringFieldUpdateOperationsInput | string
+    abbreviationText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionCategoryAbbreviationCreateManyInput = {
+    id?: string
+    versionCategoryId: string
+    abbreviationText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionCategoryAbbreviationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviationText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionCategoryAbbreviationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionCategoryId?: StringFieldUpdateOperationsInput | string
+    abbreviationText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type VersionItemCreateInput = {
     id?: string
     type?: string
     body: string
+    rank?: number
     orderWithinVersion?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     version?: VersionCreateNestedOneWithoutVersionItemsInput
+    versionCategory?: VersionCategoryCreateNestedOneWithoutVersionItemsInput
     startedByUser?: UserCreateNestedOneWithoutVersionItemsInput
   }
 
   export type VersionItemUncheckedCreateInput = {
     id?: string
     versionId?: string | null
+    versionCategoryId?: string | null
     type?: string
     body: string
+    rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
     createdAt?: Date | string
@@ -11553,18 +14333,22 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     version?: VersionUpdateOneWithoutVersionItemsNestedInput
+    versionCategory?: VersionCategoryUpdateOneWithoutVersionItemsNestedInput
     startedByUser?: UserUpdateOneWithoutVersionItemsNestedInput
   }
 
   export type VersionItemUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    versionCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11574,8 +14358,10 @@ export namespace Prisma {
   export type VersionItemCreateManyInput = {
     id?: string
     versionId?: string | null
+    versionCategoryId?: string | null
     type?: string
     body: string
+    rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
     createdAt?: Date | string
@@ -11586,6 +14372,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11594,8 +14381,10 @@ export namespace Prisma {
   export type VersionItemUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    versionCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11991,10 +14780,12 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -12004,6 +14795,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -12013,10 +14805,12 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     minutesToTestAgain?: SortOrder
+    dailyTakeGoal?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -12168,9 +14962,112 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type VersionCategoryAbbreviationListRelationFilter = {
+    every?: VersionCategoryAbbreviationWhereInput
+    some?: VersionCategoryAbbreviationWhereInput
+    none?: VersionCategoryAbbreviationWhereInput
+  }
+
+  export type VersionCategoryAbbreviationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VersionCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    rank?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionCategoryAvgOrderByAggregateInput = {
+    rank?: SortOrder
+  }
+
+  export type VersionCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    rank?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    rank?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionCategorySumOrderByAggregateInput = {
+    rank?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type VersionCategoryScalarRelationFilter = {
+    is?: VersionCategoryWhereInput
+    isNot?: VersionCategoryWhereInput
+  }
+
+  export type VersionCategoryAbbreviationCountOrderByAggregateInput = {
+    id?: SortOrder
+    versionCategoryId?: SortOrder
+    abbreviationText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionCategoryAbbreviationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    versionCategoryId?: SortOrder
+    abbreviationText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VersionCategoryAbbreviationMinOrderByAggregateInput = {
+    id?: SortOrder
+    versionCategoryId?: SortOrder
+    abbreviationText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type VersionNullableScalarRelationFilter = {
     is?: VersionWhereInput | null
     isNot?: VersionWhereInput | null
+  }
+
+  export type VersionCategoryNullableScalarRelationFilter = {
+    is?: VersionCategoryWhereInput | null
+    isNot?: VersionCategoryWhereInput | null
   }
 
   export type UserNullableScalarRelationFilter = {
@@ -12181,8 +15078,10 @@ export namespace Prisma {
   export type VersionItemCountOrderByAggregateInput = {
     id?: SortOrder
     versionId?: SortOrder
+    versionCategoryId?: SortOrder
     type?: SortOrder
     body?: SortOrder
+    rank?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
     createdAt?: SortOrder
@@ -12190,14 +15089,17 @@ export namespace Prisma {
   }
 
   export type VersionItemAvgOrderByAggregateInput = {
+    rank?: SortOrder
     orderWithinVersion?: SortOrder
   }
 
   export type VersionItemMaxOrderByAggregateInput = {
     id?: SortOrder
     versionId?: SortOrder
+    versionCategoryId?: SortOrder
     type?: SortOrder
     body?: SortOrder
+    rank?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
     createdAt?: SortOrder
@@ -12207,8 +15109,10 @@ export namespace Prisma {
   export type VersionItemMinOrderByAggregateInput = {
     id?: SortOrder
     versionId?: SortOrder
+    versionCategoryId?: SortOrder
     type?: SortOrder
     body?: SortOrder
+    rank?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
     createdAt?: SortOrder
@@ -12216,18 +15120,8 @@ export namespace Prisma {
   }
 
   export type VersionItemSumOrderByAggregateInput = {
+    rank?: SortOrder
     orderWithinVersion?: SortOrder
-  }
-
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type UserScalarRelationFilter = {
@@ -12304,22 +15198,6 @@ export namespace Prisma {
 
   export type FlashcardSumOrderByAggregateInput = {
     rank?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type FlashcardScalarRelationFilter = {
@@ -12655,10 +15533,122 @@ export namespace Prisma {
     deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
   }
 
+  export type VersionCategoryAbbreviationCreateNestedManyWithoutVersionCategoryInput = {
+    create?: XOR<VersionCategoryAbbreviationCreateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput> | VersionCategoryAbbreviationCreateWithoutVersionCategoryInput[] | VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput[]
+    connectOrCreate?: VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput | VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput[]
+    createMany?: VersionCategoryAbbreviationCreateManyVersionCategoryInputEnvelope
+    connect?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+  }
+
+  export type VersionItemCreateNestedManyWithoutVersionCategoryInput = {
+    create?: XOR<VersionItemCreateWithoutVersionCategoryInput, VersionItemUncheckedCreateWithoutVersionCategoryInput> | VersionItemCreateWithoutVersionCategoryInput[] | VersionItemUncheckedCreateWithoutVersionCategoryInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutVersionCategoryInput | VersionItemCreateOrConnectWithoutVersionCategoryInput[]
+    createMany?: VersionItemCreateManyVersionCategoryInputEnvelope
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+  }
+
+  export type VersionCategoryAbbreviationUncheckedCreateNestedManyWithoutVersionCategoryInput = {
+    create?: XOR<VersionCategoryAbbreviationCreateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput> | VersionCategoryAbbreviationCreateWithoutVersionCategoryInput[] | VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput[]
+    connectOrCreate?: VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput | VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput[]
+    createMany?: VersionCategoryAbbreviationCreateManyVersionCategoryInputEnvelope
+    connect?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+  }
+
+  export type VersionItemUncheckedCreateNestedManyWithoutVersionCategoryInput = {
+    create?: XOR<VersionItemCreateWithoutVersionCategoryInput, VersionItemUncheckedCreateWithoutVersionCategoryInput> | VersionItemCreateWithoutVersionCategoryInput[] | VersionItemUncheckedCreateWithoutVersionCategoryInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutVersionCategoryInput | VersionItemCreateOrConnectWithoutVersionCategoryInput[]
+    createMany?: VersionItemCreateManyVersionCategoryInputEnvelope
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type VersionCategoryAbbreviationUpdateManyWithoutVersionCategoryNestedInput = {
+    create?: XOR<VersionCategoryAbbreviationCreateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput> | VersionCategoryAbbreviationCreateWithoutVersionCategoryInput[] | VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput[]
+    connectOrCreate?: VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput | VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput[]
+    upsert?: VersionCategoryAbbreviationUpsertWithWhereUniqueWithoutVersionCategoryInput | VersionCategoryAbbreviationUpsertWithWhereUniqueWithoutVersionCategoryInput[]
+    createMany?: VersionCategoryAbbreviationCreateManyVersionCategoryInputEnvelope
+    set?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+    disconnect?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+    delete?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+    connect?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+    update?: VersionCategoryAbbreviationUpdateWithWhereUniqueWithoutVersionCategoryInput | VersionCategoryAbbreviationUpdateWithWhereUniqueWithoutVersionCategoryInput[]
+    updateMany?: VersionCategoryAbbreviationUpdateManyWithWhereWithoutVersionCategoryInput | VersionCategoryAbbreviationUpdateManyWithWhereWithoutVersionCategoryInput[]
+    deleteMany?: VersionCategoryAbbreviationScalarWhereInput | VersionCategoryAbbreviationScalarWhereInput[]
+  }
+
+  export type VersionItemUpdateManyWithoutVersionCategoryNestedInput = {
+    create?: XOR<VersionItemCreateWithoutVersionCategoryInput, VersionItemUncheckedCreateWithoutVersionCategoryInput> | VersionItemCreateWithoutVersionCategoryInput[] | VersionItemUncheckedCreateWithoutVersionCategoryInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutVersionCategoryInput | VersionItemCreateOrConnectWithoutVersionCategoryInput[]
+    upsert?: VersionItemUpsertWithWhereUniqueWithoutVersionCategoryInput | VersionItemUpsertWithWhereUniqueWithoutVersionCategoryInput[]
+    createMany?: VersionItemCreateManyVersionCategoryInputEnvelope
+    set?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    disconnect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    delete?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    update?: VersionItemUpdateWithWhereUniqueWithoutVersionCategoryInput | VersionItemUpdateWithWhereUniqueWithoutVersionCategoryInput[]
+    updateMany?: VersionItemUpdateManyWithWhereWithoutVersionCategoryInput | VersionItemUpdateManyWithWhereWithoutVersionCategoryInput[]
+    deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+  }
+
+  export type VersionCategoryAbbreviationUncheckedUpdateManyWithoutVersionCategoryNestedInput = {
+    create?: XOR<VersionCategoryAbbreviationCreateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput> | VersionCategoryAbbreviationCreateWithoutVersionCategoryInput[] | VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput[]
+    connectOrCreate?: VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput | VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput[]
+    upsert?: VersionCategoryAbbreviationUpsertWithWhereUniqueWithoutVersionCategoryInput | VersionCategoryAbbreviationUpsertWithWhereUniqueWithoutVersionCategoryInput[]
+    createMany?: VersionCategoryAbbreviationCreateManyVersionCategoryInputEnvelope
+    set?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+    disconnect?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+    delete?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+    connect?: VersionCategoryAbbreviationWhereUniqueInput | VersionCategoryAbbreviationWhereUniqueInput[]
+    update?: VersionCategoryAbbreviationUpdateWithWhereUniqueWithoutVersionCategoryInput | VersionCategoryAbbreviationUpdateWithWhereUniqueWithoutVersionCategoryInput[]
+    updateMany?: VersionCategoryAbbreviationUpdateManyWithWhereWithoutVersionCategoryInput | VersionCategoryAbbreviationUpdateManyWithWhereWithoutVersionCategoryInput[]
+    deleteMany?: VersionCategoryAbbreviationScalarWhereInput | VersionCategoryAbbreviationScalarWhereInput[]
+  }
+
+  export type VersionItemUncheckedUpdateManyWithoutVersionCategoryNestedInput = {
+    create?: XOR<VersionItemCreateWithoutVersionCategoryInput, VersionItemUncheckedCreateWithoutVersionCategoryInput> | VersionItemCreateWithoutVersionCategoryInput[] | VersionItemUncheckedCreateWithoutVersionCategoryInput[]
+    connectOrCreate?: VersionItemCreateOrConnectWithoutVersionCategoryInput | VersionItemCreateOrConnectWithoutVersionCategoryInput[]
+    upsert?: VersionItemUpsertWithWhereUniqueWithoutVersionCategoryInput | VersionItemUpsertWithWhereUniqueWithoutVersionCategoryInput[]
+    createMany?: VersionItemCreateManyVersionCategoryInputEnvelope
+    set?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    disconnect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    delete?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    connect?: VersionItemWhereUniqueInput | VersionItemWhereUniqueInput[]
+    update?: VersionItemUpdateWithWhereUniqueWithoutVersionCategoryInput | VersionItemUpdateWithWhereUniqueWithoutVersionCategoryInput[]
+    updateMany?: VersionItemUpdateManyWithWhereWithoutVersionCategoryInput | VersionItemUpdateManyWithWhereWithoutVersionCategoryInput[]
+    deleteMany?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
+  }
+
+  export type VersionCategoryCreateNestedOneWithoutAbbreviationsInput = {
+    create?: XOR<VersionCategoryCreateWithoutAbbreviationsInput, VersionCategoryUncheckedCreateWithoutAbbreviationsInput>
+    connectOrCreate?: VersionCategoryCreateOrConnectWithoutAbbreviationsInput
+    connect?: VersionCategoryWhereUniqueInput
+  }
+
+  export type VersionCategoryUpdateOneRequiredWithoutAbbreviationsNestedInput = {
+    create?: XOR<VersionCategoryCreateWithoutAbbreviationsInput, VersionCategoryUncheckedCreateWithoutAbbreviationsInput>
+    connectOrCreate?: VersionCategoryCreateOrConnectWithoutAbbreviationsInput
+    upsert?: VersionCategoryUpsertWithoutAbbreviationsInput
+    connect?: VersionCategoryWhereUniqueInput
+    update?: XOR<XOR<VersionCategoryUpdateToOneWithWhereWithoutAbbreviationsInput, VersionCategoryUpdateWithoutAbbreviationsInput>, VersionCategoryUncheckedUpdateWithoutAbbreviationsInput>
+  }
+
   export type VersionCreateNestedOneWithoutVersionItemsInput = {
     create?: XOR<VersionCreateWithoutVersionItemsInput, VersionUncheckedCreateWithoutVersionItemsInput>
     connectOrCreate?: VersionCreateOrConnectWithoutVersionItemsInput
     connect?: VersionWhereUniqueInput
+  }
+
+  export type VersionCategoryCreateNestedOneWithoutVersionItemsInput = {
+    create?: XOR<VersionCategoryCreateWithoutVersionItemsInput, VersionCategoryUncheckedCreateWithoutVersionItemsInput>
+    connectOrCreate?: VersionCategoryCreateOrConnectWithoutVersionItemsInput
+    connect?: VersionCategoryWhereUniqueInput
   }
 
   export type UserCreateNestedOneWithoutVersionItemsInput = {
@@ -12675,6 +15665,16 @@ export namespace Prisma {
     delete?: VersionWhereInput | boolean
     connect?: VersionWhereUniqueInput
     update?: XOR<XOR<VersionUpdateToOneWithWhereWithoutVersionItemsInput, VersionUpdateWithoutVersionItemsInput>, VersionUncheckedUpdateWithoutVersionItemsInput>
+  }
+
+  export type VersionCategoryUpdateOneWithoutVersionItemsNestedInput = {
+    create?: XOR<VersionCategoryCreateWithoutVersionItemsInput, VersionCategoryUncheckedCreateWithoutVersionItemsInput>
+    connectOrCreate?: VersionCategoryCreateOrConnectWithoutVersionItemsInput
+    upsert?: VersionCategoryUpsertWithoutVersionItemsInput
+    disconnect?: VersionCategoryWhereInput | boolean
+    delete?: VersionCategoryWhereInput | boolean
+    connect?: VersionCategoryWhereUniqueInput
+    update?: XOR<XOR<VersionCategoryUpdateToOneWithWhereWithoutVersionItemsInput, VersionCategoryUpdateWithoutVersionItemsInput>, VersionCategoryUncheckedUpdateWithoutVersionItemsInput>
   }
 
   export type UserUpdateOneWithoutVersionItemsNestedInput = {
@@ -12739,14 +15739,6 @@ export namespace Prisma {
     connectOrCreate?: FlashcardTagCreateOrConnectWithoutFlashcardInput | FlashcardTagCreateOrConnectWithoutFlashcardInput[]
     createMany?: FlashcardTagCreateManyFlashcardInputEnvelope
     connect?: FlashcardTagWhereUniqueInput | FlashcardTagWhereUniqueInput[]
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutFlashcardsNestedInput = {
@@ -13214,17 +16206,21 @@ export namespace Prisma {
     id?: string
     type?: string
     body: string
+    rank?: number
     orderWithinVersion?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     version?: VersionCreateNestedOneWithoutVersionItemsInput
+    versionCategory?: VersionCategoryCreateNestedOneWithoutVersionItemsInput
   }
 
   export type VersionItemUncheckedCreateWithoutStartedByUserInput = {
     id?: string
     versionId?: string | null
+    versionCategoryId?: string | null
     type?: string
     body: string
+    rank?: number
     orderWithinVersion?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13345,8 +16341,10 @@ export namespace Prisma {
     NOT?: VersionItemScalarWhereInput | VersionItemScalarWhereInput[]
     id?: StringFilter<"VersionItem"> | string
     versionId?: StringNullableFilter<"VersionItem"> | string | null
+    versionCategoryId?: StringNullableFilter<"VersionItem"> | string | null
     type?: StringFilter<"VersionItem"> | string
     body?: StringFilter<"VersionItem"> | string
+    rank?: FloatFilter<"VersionItem"> | number
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
     createdAt?: DateTimeFilter<"VersionItem"> | Date | string
@@ -13383,16 +16381,20 @@ export namespace Prisma {
     id?: string
     type?: string
     body: string
+    rank?: number
     orderWithinVersion?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    versionCategory?: VersionCategoryCreateNestedOneWithoutVersionItemsInput
     startedByUser?: UserCreateNestedOneWithoutVersionItemsInput
   }
 
   export type VersionItemUncheckedCreateWithoutVersionInput = {
     id?: string
+    versionCategoryId?: string | null
     type?: string
     body: string
+    rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
     createdAt?: Date | string
@@ -13424,6 +16426,157 @@ export namespace Prisma {
     data: XOR<VersionItemUpdateManyMutationInput, VersionItemUncheckedUpdateManyWithoutVersionInput>
   }
 
+  export type VersionCategoryAbbreviationCreateWithoutVersionCategoryInput = {
+    id?: string
+    abbreviationText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput = {
+    id?: string
+    abbreviationText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionCategoryAbbreviationCreateOrConnectWithoutVersionCategoryInput = {
+    where: VersionCategoryAbbreviationWhereUniqueInput
+    create: XOR<VersionCategoryAbbreviationCreateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput>
+  }
+
+  export type VersionCategoryAbbreviationCreateManyVersionCategoryInputEnvelope = {
+    data: VersionCategoryAbbreviationCreateManyVersionCategoryInput | VersionCategoryAbbreviationCreateManyVersionCategoryInput[]
+  }
+
+  export type VersionItemCreateWithoutVersionCategoryInput = {
+    id?: string
+    type?: string
+    body: string
+    rank?: number
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    version?: VersionCreateNestedOneWithoutVersionItemsInput
+    startedByUser?: UserCreateNestedOneWithoutVersionItemsInput
+  }
+
+  export type VersionItemUncheckedCreateWithoutVersionCategoryInput = {
+    id?: string
+    versionId?: string | null
+    type?: string
+    body: string
+    rank?: number
+    startedByUserId?: string | null
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionItemCreateOrConnectWithoutVersionCategoryInput = {
+    where: VersionItemWhereUniqueInput
+    create: XOR<VersionItemCreateWithoutVersionCategoryInput, VersionItemUncheckedCreateWithoutVersionCategoryInput>
+  }
+
+  export type VersionItemCreateManyVersionCategoryInputEnvelope = {
+    data: VersionItemCreateManyVersionCategoryInput | VersionItemCreateManyVersionCategoryInput[]
+  }
+
+  export type VersionCategoryAbbreviationUpsertWithWhereUniqueWithoutVersionCategoryInput = {
+    where: VersionCategoryAbbreviationWhereUniqueInput
+    update: XOR<VersionCategoryAbbreviationUpdateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedUpdateWithoutVersionCategoryInput>
+    create: XOR<VersionCategoryAbbreviationCreateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedCreateWithoutVersionCategoryInput>
+  }
+
+  export type VersionCategoryAbbreviationUpdateWithWhereUniqueWithoutVersionCategoryInput = {
+    where: VersionCategoryAbbreviationWhereUniqueInput
+    data: XOR<VersionCategoryAbbreviationUpdateWithoutVersionCategoryInput, VersionCategoryAbbreviationUncheckedUpdateWithoutVersionCategoryInput>
+  }
+
+  export type VersionCategoryAbbreviationUpdateManyWithWhereWithoutVersionCategoryInput = {
+    where: VersionCategoryAbbreviationScalarWhereInput
+    data: XOR<VersionCategoryAbbreviationUpdateManyMutationInput, VersionCategoryAbbreviationUncheckedUpdateManyWithoutVersionCategoryInput>
+  }
+
+  export type VersionCategoryAbbreviationScalarWhereInput = {
+    AND?: VersionCategoryAbbreviationScalarWhereInput | VersionCategoryAbbreviationScalarWhereInput[]
+    OR?: VersionCategoryAbbreviationScalarWhereInput[]
+    NOT?: VersionCategoryAbbreviationScalarWhereInput | VersionCategoryAbbreviationScalarWhereInput[]
+    id?: StringFilter<"VersionCategoryAbbreviation"> | string
+    versionCategoryId?: StringFilter<"VersionCategoryAbbreviation"> | string
+    abbreviationText?: StringFilter<"VersionCategoryAbbreviation"> | string
+    createdAt?: DateTimeFilter<"VersionCategoryAbbreviation"> | Date | string
+    updatedAt?: DateTimeFilter<"VersionCategoryAbbreviation"> | Date | string
+  }
+
+  export type VersionItemUpsertWithWhereUniqueWithoutVersionCategoryInput = {
+    where: VersionItemWhereUniqueInput
+    update: XOR<VersionItemUpdateWithoutVersionCategoryInput, VersionItemUncheckedUpdateWithoutVersionCategoryInput>
+    create: XOR<VersionItemCreateWithoutVersionCategoryInput, VersionItemUncheckedCreateWithoutVersionCategoryInput>
+  }
+
+  export type VersionItemUpdateWithWhereUniqueWithoutVersionCategoryInput = {
+    where: VersionItemWhereUniqueInput
+    data: XOR<VersionItemUpdateWithoutVersionCategoryInput, VersionItemUncheckedUpdateWithoutVersionCategoryInput>
+  }
+
+  export type VersionItemUpdateManyWithWhereWithoutVersionCategoryInput = {
+    where: VersionItemScalarWhereInput
+    data: XOR<VersionItemUpdateManyMutationInput, VersionItemUncheckedUpdateManyWithoutVersionCategoryInput>
+  }
+
+  export type VersionCategoryCreateWithoutAbbreviationsInput = {
+    id?: string
+    title: string
+    rank?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versionItems?: VersionItemCreateNestedManyWithoutVersionCategoryInput
+  }
+
+  export type VersionCategoryUncheckedCreateWithoutAbbreviationsInput = {
+    id?: string
+    title: string
+    rank?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutVersionCategoryInput
+  }
+
+  export type VersionCategoryCreateOrConnectWithoutAbbreviationsInput = {
+    where: VersionCategoryWhereUniqueInput
+    create: XOR<VersionCategoryCreateWithoutAbbreviationsInput, VersionCategoryUncheckedCreateWithoutAbbreviationsInput>
+  }
+
+  export type VersionCategoryUpsertWithoutAbbreviationsInput = {
+    update: XOR<VersionCategoryUpdateWithoutAbbreviationsInput, VersionCategoryUncheckedUpdateWithoutAbbreviationsInput>
+    create: XOR<VersionCategoryCreateWithoutAbbreviationsInput, VersionCategoryUncheckedCreateWithoutAbbreviationsInput>
+    where?: VersionCategoryWhereInput
+  }
+
+  export type VersionCategoryUpdateToOneWithWhereWithoutAbbreviationsInput = {
+    where?: VersionCategoryWhereInput
+    data: XOR<VersionCategoryUpdateWithoutAbbreviationsInput, VersionCategoryUncheckedUpdateWithoutAbbreviationsInput>
+  }
+
+  export type VersionCategoryUpdateWithoutAbbreviationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versionItems?: VersionItemUpdateManyWithoutVersionCategoryNestedInput
+  }
+
+  export type VersionCategoryUncheckedUpdateWithoutAbbreviationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versionItems?: VersionItemUncheckedUpdateManyWithoutVersionCategoryNestedInput
+  }
+
   export type VersionCreateWithoutVersionItemsInput = {
     id?: string
     versionNumber: string
@@ -13449,6 +16602,29 @@ export namespace Prisma {
     create: XOR<VersionCreateWithoutVersionItemsInput, VersionUncheckedCreateWithoutVersionItemsInput>
   }
 
+  export type VersionCategoryCreateWithoutVersionItemsInput = {
+    id?: string
+    title: string
+    rank?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    abbreviations?: VersionCategoryAbbreviationCreateNestedManyWithoutVersionCategoryInput
+  }
+
+  export type VersionCategoryUncheckedCreateWithoutVersionItemsInput = {
+    id?: string
+    title: string
+    rank?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    abbreviations?: VersionCategoryAbbreviationUncheckedCreateNestedManyWithoutVersionCategoryInput
+  }
+
+  export type VersionCategoryCreateOrConnectWithoutVersionItemsInput = {
+    where: VersionCategoryWhereUniqueInput
+    create: XOR<VersionCategoryCreateWithoutVersionItemsInput, VersionCategoryUncheckedCreateWithoutVersionItemsInput>
+  }
+
   export type UserCreateWithoutVersionItemsInput = {
     id?: string
     firstName: string
@@ -13456,6 +16632,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -13468,6 +16645,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -13509,6 +16687,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type VersionCategoryUpsertWithoutVersionItemsInput = {
+    update: XOR<VersionCategoryUpdateWithoutVersionItemsInput, VersionCategoryUncheckedUpdateWithoutVersionItemsInput>
+    create: XOR<VersionCategoryCreateWithoutVersionItemsInput, VersionCategoryUncheckedCreateWithoutVersionItemsInput>
+    where?: VersionCategoryWhereInput
+  }
+
+  export type VersionCategoryUpdateToOneWithWhereWithoutVersionItemsInput = {
+    where?: VersionCategoryWhereInput
+    data: XOR<VersionCategoryUpdateWithoutVersionItemsInput, VersionCategoryUncheckedUpdateWithoutVersionItemsInput>
+  }
+
+  export type VersionCategoryUpdateWithoutVersionItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    abbreviations?: VersionCategoryAbbreviationUpdateManyWithoutVersionCategoryNestedInput
+  }
+
+  export type VersionCategoryUncheckedUpdateWithoutVersionItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    abbreviations?: VersionCategoryAbbreviationUncheckedUpdateManyWithoutVersionCategoryNestedInput
+  }
+
   export type UserUpsertWithoutVersionItemsInput = {
     update: XOR<UserUpdateWithoutVersionItemsInput, UserUncheckedUpdateWithoutVersionItemsInput>
     create: XOR<UserCreateWithoutVersionItemsInput, UserUncheckedCreateWithoutVersionItemsInput>
@@ -13527,6 +16734,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -13539,6 +16747,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -13551,6 +16760,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -13563,6 +16773,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -13721,6 +16932,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -13733,6 +16945,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -13849,6 +17062,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -13861,6 +17075,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -13930,6 +17145,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -13942,6 +17158,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -14164,6 +17381,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
@@ -14176,6 +17394,7 @@ export namespace Prisma {
     email: string
     role?: string
     minutesToTestAgain?: number
+    dailyTakeGoal?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
@@ -14204,6 +17423,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
@@ -14216,6 +17436,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
@@ -14247,8 +17468,10 @@ export namespace Prisma {
   export type VersionItemCreateManyStartedByUserInput = {
     id?: string
     versionId?: string | null
+    versionCategoryId?: string | null
     type?: string
     body: string
+    rank?: number
     orderWithinVersion?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14339,17 +17562,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     version?: VersionUpdateOneWithoutVersionItemsNestedInput
+    versionCategory?: VersionCategoryUpdateOneWithoutVersionItemsNestedInput
   }
 
   export type VersionItemUncheckedUpdateWithoutStartedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    versionCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14358,8 +17585,10 @@ export namespace Prisma {
   export type VersionItemUncheckedUpdateManyWithoutStartedByUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    versionCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14385,8 +17614,10 @@ export namespace Prisma {
 
   export type VersionItemCreateManyVersionInput = {
     id?: string
+    versionCategoryId?: string | null
     type?: string
     body: string
+    rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
     createdAt?: Date | string
@@ -14397,16 +17628,20 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versionCategory?: VersionCategoryUpdateOneWithoutVersionItemsNestedInput
     startedByUser?: UserUpdateOneWithoutVersionItemsNestedInput
   }
 
   export type VersionItemUncheckedUpdateWithoutVersionInput = {
     id?: StringFieldUpdateOperationsInput | string
+    versionCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14415,8 +17650,86 @@ export namespace Prisma {
 
   export type VersionItemUncheckedUpdateManyWithoutVersionInput = {
     id?: StringFieldUpdateOperationsInput | string
+    versionCategoryId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionCategoryAbbreviationCreateManyVersionCategoryInput = {
+    id?: string
+    abbreviationText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionItemCreateManyVersionCategoryInput = {
+    id?: string
+    versionId?: string | null
+    type?: string
+    body: string
+    rank?: number
+    startedByUserId?: string | null
+    orderWithinVersion?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VersionCategoryAbbreviationUpdateWithoutVersionCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviationText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionCategoryAbbreviationUncheckedUpdateWithoutVersionCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviationText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionCategoryAbbreviationUncheckedUpdateManyWithoutVersionCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    abbreviationText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionItemUpdateWithoutVersionCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    version?: VersionUpdateOneWithoutVersionItemsNestedInput
+    startedByUser?: UserUpdateOneWithoutVersionItemsNestedInput
+  }
+
+  export type VersionItemUncheckedUpdateWithoutVersionCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VersionItemUncheckedUpdateManyWithoutVersionCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    versionId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

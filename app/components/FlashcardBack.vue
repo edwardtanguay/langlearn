@@ -77,6 +77,19 @@ watch(() => props.currentCard.id, () => {
 
 const stripAsterisks = (text: string) => text ? text.replace(/\*/g, '') : ''
 
+const renderBackTextWithHighlights = (text: string) => {
+  if (!text) return ''
+  // Escape html characters to prevent XSS
+  const escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+  // Replace *text* with styled span containing dashed border bottom and light background tint
+  return escaped.replace(/\*(.*?)\*/g, '<span class="border-b border-dashed border-white/60 bg-white/10 px-1 rounded-sm">$1</span>')
+}
+
 const getTextClass = (text: string) => {
   const len = text ? text.length : 0
   if (len < 30) {
@@ -104,14 +117,15 @@ const getTextClass = (text: string) => {
       <div v-if="!isEditing" key="display" class="absolute inset-0">
         <!-- Word (Centered in padded area) -->
         <div class="h-full w-full flex flex-col items-center justify-center px-6 relative z-0 -translate-y-[15px]">
-          <p :class="getTextClass(stripAsterisks(currentCard.back))">
-            {{ stripAsterisks(currentCard.back) }}
-          </p>
-          <!-- Pronunciation display below the word -->
+          <p 
+            :class="getTextClass(stripAsterisks(currentCard.back))"
+            v-html="renderBackTextWithHighlights(currentCard.back)"
+          ></p>
+          <!-- Pronunciation display below the word (brighter & pulsating visual cue) -->
           <p v-if="currentCard.pronunciation && isFlipped && !isEditing" 
-             class="text-xs sm:text-sm text-white/40 text-center max-w-md mt-4 pt-1"
+             class="text-xs sm:text-sm text-slate-100 font-semibold drop-shadow-xs text-center max-w-md mt-4 pt-1 animate-pulsate tracking-wide"
              style="font-family: 'Courier New', Courier, monospace">
-            <span class="text-white/20 mr-1.5">[</span>{{ currentCard.pronunciation }}<span class="text-white/20 ml-1.5">]</span>
+            <span class="text-white/60 mr-1.5">[</span>{{ currentCard.pronunciation }}<span class="text-white/60 ml-1.5">]</span>
           </p>
         </div>
 
@@ -203,5 +217,13 @@ const getTextClass = (text: string) => {
 }
 .animate-fade-in {
   animation: fadeIn 0.2s ease-out forwards;
+}
+
+@keyframes pulsateKeyframe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.04); }
+}
+.animate-pulsate {
+  animation: pulsateKeyframe 1.8s infinite ease-in-out;
 }
 </style>

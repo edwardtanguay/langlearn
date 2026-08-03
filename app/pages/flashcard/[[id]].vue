@@ -118,11 +118,20 @@ async function fetchTestQueue() {
   try {
     const cardIdFromRoute = route.params.id as string | undefined
 
+    const queueUrl = activeFilterTag.value 
+      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}`
+      : `/api/flashcards?limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}`
+
     if (cardIdFromRoute) {
       try {
-        const specificCard = await $fetch<Flashcard>(`/api/flashcards/${cardIdFromRoute}`)
+        const [specificCard, restQueue] = await Promise.all([
+          $fetch<Flashcard>(`/api/flashcards/${cardIdFromRoute}`),
+          $fetch<Flashcard[]>(queueUrl),
+          minDelay
+        ])
         if (specificCard && specificCard.id) {
-          testQueue.value = [specificCard]
+          const otherCards = (restQueue || []).filter(c => c.id !== specificCard.id)
+          testQueue.value = [specificCard, ...otherCards]
           currentQueueIndex.value = 0
           isFlipped.value = false
           sliderValue.value = specificCard.rank
@@ -133,11 +142,8 @@ async function fetchTestQueue() {
       }
     }
 
-    const url = activeFilterTag.value 
-      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10`
-      : '/api/flashcards?limit=10'
     const [results] = await Promise.all([
-      $fetch<Flashcard[]>(url),
+      $fetch<Flashcard[]>(queueUrl),
       minDelay
     ])
     testQueue.value = results
@@ -252,10 +258,14 @@ const currentCard = computed<Flashcard | null>(() => {
   return testQueue.value[currentQueueIndex.value] ?? null
 })
 
-// Dynamically update route URL permalink whenever card changes
+// Dynamically update route URL permalink seamlessly without page blinking
 watch(currentCard, (card) => {
   if (card && card.id) {
-    router.replace(`/flashcard/${card.id}`)
+    const routeId = useRoute().params.id as string | undefined
+    // Only overwrite browser location if the route didn't explicitly request a different specific card permalink
+    if (!routeId && typeof window !== 'undefined' && window.history) {
+      window.history.replaceState(null, '', `/flashcard/${card.id}`)
+    }
   }
 }, { immediate: true })
 
@@ -321,12 +331,27 @@ const showExampleSentencesButton = computed(() => {
   return backWordCount.value >= 1 && backWordCount.value <= 4
 })
 
+const isFrenchCardWithVous = computed(() => {
+  if (!currentCard.value) return false
+  const lang = (currentCard.value.backLanguage || currentCard.value.frontLanguage || '').toLowerCase()
+  const back = currentCard.value.back || ''
+  return lang === 'fr' && /\bvous\b/i.test(back)
+})
+
 function openExampleSentences() {
   if (!currentCard.value) return
   const targetText = exampleTargetText.value
   const langCode = currentCard.value.backLanguage || currentCard.value.frontLanguage || 'fr'
   const langName = languageNames[langCode] ? languageNames[langCode].toLowerCase() : 'french'
   const query = `create 3 ${langName} examples with "${targetText}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
+
+function openVousToTuSearch() {
+  if (!currentCard.value) return
+  const cleanBack = stripAsterisks(currentCard.value.back)
+  const query = `convert "vous" to "tu" for the following French phrase: "${cleanBack}"`
   const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
 }
@@ -592,11 +617,20 @@ const cardStats = useState<CardStats | null>('flashcardStats', () => null)
 
 async function fetchCardStats() {
   try {
-    cardStats.value = await $fetch<CardStats>('/api/flashcards/stats')
-  } catch (err) {
-    console.error('Failed to load card stats:', err)
+    const headers = useRequestHeaders(['cookie'])
+    cardStats.value = await $fetch<CardStats>('/api/flashcards/stats', { headers })
+  } catch (err: any) {
+    if (err?.statusCode !== 401 && err?.status !== 401 && err?.response?.status !== 401) {
+      console.error('Failed to load card stats:', err)
+    }
   }
 }
+
+watch(() => route.params.id, (newId) => {
+  if (newId) {
+    fetchTestQueue()
+  }
+})
 
 onMounted(async () => {
   window.addEventListener('keydown', handleGlobalKeyDown)
@@ -734,13 +768,24 @@ onBeforeUnmount(() => {
                 <!-- Status buttons Section -->
                 <FlashcardStatusButtons @action="markAction" />
 
-                <!-- Example Sentences Action Box (only if 1-4 words) -->
-                <div v-if="showExampleSentencesButton" class="bg-gray-50 dark:bg-gray-950 p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex flex-wrap gap-2 items-center justify-center">
+                <!-- Action Buttons Box (3 examples with & convert vous to tu) -->
+                <div v-if="showExampleSentencesButton || isFrenchCardWithVous" class="bg-gray-50 dark:bg-gray-950 p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex flex-wrap gap-2 items-center justify-center">
                   <button
+                    v-if="showExampleSentencesButton"
                     @click.stop="openExampleSentences"
                     class="text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 dark:border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
                   >
                     <span>3 examples with "{{ exampleTargetText }}"</span>
+                    <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  </button>
+
+                  <button
+                    v-if="isFrenchCardWithVous"
+                    @click.stop="openVousToTuSearch"
+                    class="text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 dark:border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    title="Search Google on converting vous to tu for this phrase"
+                  >
+                    <span>convert vous to tu</span>
                     <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                   </button>
                 </div>

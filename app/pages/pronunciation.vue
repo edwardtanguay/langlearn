@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { SpeakerWaveIcon, ChevronDownIcon, ChevronUpIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
+import { SpeakerWaveIcon, ChevronDownIcon, ChevronUpIcon, MagnifyingGlassIcon, ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - Pronunciation Practice',
@@ -27,6 +27,8 @@ interface Flashcard {
   backLanguage: string
   pronunciation?: string | null
   status: string
+  updatedAt?: string
+  createdAt?: string
   tags?: { tag: Tag }[]
 }
 
@@ -59,19 +61,12 @@ const languageColors: Record<string, string> = {
 const cards = ref<Flashcard[]>([])
 const isLoading = ref(true)
 const searchQuery = ref('')
-const expandedCardId = ref<string | null>(null)
+
+// Three-way toggle state dictionary: 0 = English (front), 1 = Target Language (back), 2 = Pronunciation
+const toggleStateMap = ref<Record<string, number>>({})
 
 function stripAsterisks(text: string): string {
   return text ? text.replace(/\*/g, '') : ''
-}
-
-function shuffle<T>(array: T[]): T[] {
-  const arr = [...array]
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j]!, arr[i]!]
-  }
-  return arr
 }
 
 const fetchCardsWithPronunciation = async () => {
@@ -84,7 +79,12 @@ const fetchCardsWithPronunciation = async () => {
       c.pronunciation.trim().length > 0 &&
       !c.tags?.some(t => t.tag.abbreviation === 'fix')
     )
-    cards.value = shuffle(valid)
+    // Order "last touched first" (updatedAt desc)
+    cards.value = valid.sort((a, b) => {
+      const timeA = new Date(a.updatedAt || a.createdAt || 0).getTime()
+      const timeB = new Date(b.updatedAt || b.createdAt || 0).getTime()
+      return timeB - timeA
+    })
   } catch (err) {
     console.error('Failed to load cards for pronunciation:', err)
   } finally {
@@ -106,12 +106,28 @@ const filteredCards = computed(() => {
   )
 })
 
-const toggleCard = (id: string) => {
-  if (expandedCardId.value === id) {
-    expandedCardId.value = null
-  } else {
-    expandedCardId.value = id
+// Toggle Level 1: If level 2 or 3 are visible (> 0), collapse to 0; otherwise expand to show level 2 (1)
+const toggleLevel1 = (id: string) => {
+  const current = toggleStateMap.value[id] ?? 0
+  const next = current > 0 ? 0 : 1
+  toggleStateMap.value = {
+    ...toggleStateMap.value,
+    [id]: next
   }
+}
+
+// Toggle Level 2: If level 3 is visible (=== 2), collapse back to level 2 (1); otherwise reveal level 3 (2)
+const toggleLevel2 = (id: string) => {
+  const current = toggleStateMap.value[id] ?? 0
+  const next = current === 2 ? 1 : 2
+  toggleStateMap.value = {
+    ...toggleStateMap.value,
+    [id]: next
+  }
+}
+
+const getCardToggleState = (id: string): number => {
+  return toggleStateMap.value[id] ?? 0
 }
 
 const openTestCard = (card: Flashcard, event: MouseEvent) => {
@@ -123,6 +139,13 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
   event.stopPropagation()
   const cleanBack = stripAsterisks(card.back)
   const url = `https://translate.google.com/?sl=${card.backLanguage || 'auto'}&tl=${card.frontLanguage || 'en'}&text=${encodeURIComponent(cleanBack)}&op=translate`
+  window.open(url, '_blank')
+}
+
+const openVousToTuSearchForCard = (card: Flashcard) => {
+  const cleanBack = stripAsterisks(card.back)
+  const query = `convert "vous" to "tu" for the following French phrase: "${cleanBack}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
 }
 </script>
@@ -137,7 +160,7 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
           <span>Pronunciation</span>
         </h1>
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Simple toggle practice for cards with phonetic pronunciations.
+          3-way toggle practice for cards with phonetic pronunciations.
         </p>
       </div>
 
@@ -153,6 +176,29 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
       </div>
     </div>
 
+    <!-- Helpful Resources Section -->
+    <div class="bg-[#111827] dark:bg-[#0d1117] border border-gray-300 dark:border-gray-800 rounded-2xl p-4 space-y-2">
+      <h2 class="text-[11px] text-gray-500 dark:text-gray-400 opacity-50 [font-variant:small-caps] tracking-widest font-semibold">Helpful Resources</h2>
+      <ul class="list-disc list-inside text-sm space-y-1">
+        <li class="flex items-center gap-2 flex-wrap text-gray-800 dark:text-gray-200">
+          <span 
+            class="px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider bg-[#333388]"
+          >
+            FR
+          </span>
+          <a 
+            href="https://www.youtube.com/watch?v=Bmxdtrv4uQM" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="font-semibold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 underline transition-colors"
+          >
+            conseils pour améliorer la prononciation du français
+          </a>
+          <span class="text-xs text-gray-500 dark:text-gray-400"> — 30 minutes avec des conseils sur les liaisons, etc.</span>
+        </li>
+      </ul>
+    </div>
+
     <!-- Loading State -->
     <div v-if="isLoading" class="text-center py-12 text-sm text-gray-500 font-mono">
       Loading pronunciation cards…
@@ -163,73 +209,86 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
       No cards found with pronunciation.
     </div>
 
-    <!-- Cards List -->
+    <!-- Cards List with Three-Way Toggle -->
     <div v-else class="space-y-3">
       <div 
         v-for="card in filteredCards" 
         :key="card.id"
-        @click="toggleCard(card.id)"
-        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-4 cursor-pointer hover:border-gray-300 dark:hover:border-gray-700 transition-all duration-150 shadow-xs select-none"
+        class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-4 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-600 transition-all duration-150 shadow-xs select-none space-y-2"
       >
-        <!-- Line 1: Front text & language badge -->
-        <div class="flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3 min-w-0 flex-1">
-            <span 
-              class="px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider shrink-0"
-              :style="{ backgroundColor: languageColors[card.frontLanguage] || '#4f46e5' }"
-            >
-              {{ card.frontLanguage }}
-            </span>
-            <span class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white truncate">
-              {{ card.front }}
-            </span>
+        <!-- Level 1 (Front/English): Clicking here shows/hides levels 2 & 3 -->
+        <div 
+          @click="toggleLevel1(card.id)"
+          class="flex items-start justify-between gap-3 cursor-pointer"
+        >
+          <!-- Show BACK language initials (e.g. FR) on card front badge -->
+          <span 
+            class="px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider shrink-0 mt-0.5"
+            :style="{ backgroundColor: languageColors[card.backLanguage] || '#333388' }"
+          >
+            {{ card.backLanguage?.toUpperCase() || 'FR' }}
+          </span>
+
+          <!-- Card Front / Title text with wrapping -->
+          <span class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white flex-1 break-words">
+            {{ card.front }}
+          </span>
+
+          <!-- Permalink Icon at far right -->
+          <NuxtLink
+            :to="`/flashcard/${card.id}`"
+            @click.stop
+            class="text-gray-400 hover:text-indigo-500 transition-colors shrink-0 self-start p-0.5"
+            title="Click to view and edit card permalink"
+          >
+            <ArrowTopRightOnSquareIcon class="w-5 h-5" />
+          </NuxtLink>
+        </div>
+
+        <!-- Level 2: Target Language Text. Clicking here shows/hides level 3 -->
+        <div 
+          v-if="getCardToggleState(card.id) >= 1" 
+          @click="toggleLevel2(card.id)"
+          class="pt-2 px-3 py-2 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700/80 text-sm font-semibold text-gray-900 dark:text-white cursor-pointer flex flex-col gap-2"
+        >
+          <div>
+            {{ stripAsterisks(card.back) }}
           </div>
 
-          <div class="text-gray-400 shrink-0">
-            <ChevronUpIcon v-if="expandedCardId === card.id" class="w-5 h-5" />
-            <ChevronDownIcon v-else class="w-5 h-5" />
+          <!-- Convert vous to tu Button on Level 2 if French card contains "vous" in back text -->
+          <div v-if="card.backLanguage === 'fr' && /\bvous\b/i.test(card.back)" class="pt-1">
+            <button
+              @click.stop="openVousToTuSearchForCard(card)"
+              class="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all inline-flex items-center gap-1 cursor-pointer shadow-xs"
+              title="Search Google on converting vous to tu for this phrase"
+            >
+              <span>convert vous to tu</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </button>
           </div>
         </div>
 
-        <!-- Line 2: Pop-in Back Text (no icon), Pronunciation & Action Buttons -->
-        <Transition name="fade-layout">
-          <div 
-            v-if="expandedCardId === card.id" 
-            class="mt-3 pt-3 px-3 py-2.5 bg-gray-50/90 dark:bg-gray-800/80 rounded-xl border-t border-gray-200 dark:border-gray-700/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm"
-          >
-            <div class="space-y-1">
-              <div class="font-medium text-gray-900 dark:text-white">
-                {{ stripAsterisks(card.back) }}
-              </div>
-
-              <!-- Pronunciation -->
-              <div 
-                v-if="card.pronunciation" 
-                class="text-xs text-indigo-600 dark:text-indigo-400 font-mono"
-              >
-                [{{ card.pronunciation }}]
-              </div>
-            </div>
-
-            <!-- Action Buttons: Test & Google Translate -->
-            <div class="flex items-center gap-2 shrink-0 self-start sm:self-center">
-              <button 
-                @click="openTestCard(card, $event)"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors cursor-pointer border border-indigo-200 dark:border-indigo-800"
-                title="Test this card on Flashcard page"
-              >
-                <span>Test</span>
-              </button>
-              <button 
-                @click="openTranslate(card, $event)"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
-              >
-                <SpeakerWaveIcon class="w-4 h-4 text-indigo-500" />
-                <span>Google Translate</span>
-              </button>
-            </div>
+        <!-- Level 3: Pronunciation & Audio button. NON-TOGGLING (click.stop) -->
+        <div 
+          v-if="getCardToggleState(card.id) === 2 && card.pronunciation" 
+          @click.stop
+          class="px-3 py-2 bg-indigo-50/90 dark:bg-indigo-950/60 rounded-xl border border-indigo-200 dark:border-indigo-800/80 text-xs sm:text-sm text-indigo-700 dark:text-indigo-300 font-mono font-semibold tracking-wide flex items-center justify-between cursor-default"
+        >
+          <div>
+            <span class="text-indigo-400 mr-1.5">[</span>{{ card.pronunciation }}<span class="text-indigo-400 ml-1.5">]</span>
           </div>
-        </Transition>
+
+          <!-- Audio Button on Level 3 -->
+          <button 
+            @click="openTranslate(card, $event)"
+            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-pointer shrink-0"
+          >
+            <SpeakerWaveIcon class="w-3.5 h-3.5 text-indigo-500" />
+            <span>Audio</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
