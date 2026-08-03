@@ -141,6 +141,13 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
   const url = `https://translate.google.com/?sl=${card.backLanguage || 'auto'}&tl=${card.frontLanguage || 'en'}&text=${encodeURIComponent(cleanBack)}&op=translate`
   window.open(url, '_blank')
 }
+
+const openVousToTuSearchForCard = (card: Flashcard) => {
+  const cleanBack = stripAsterisks(card.back)
+  const query = `convert "vous" to "tu" for the following French phrase: "${cleanBack}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
 </script>
 
 <template>
@@ -242,9 +249,25 @@ const openTranslate = (card: Flashcard, event: MouseEvent) => {
         <div 
           v-if="getCardToggleState(card.id) >= 1" 
           @click="toggleLevel2(card.id)"
-          class="pt-2 px-3 py-2 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700/80 text-sm font-semibold text-gray-900 dark:text-white cursor-pointer"
+          class="pt-2 px-3 py-2 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700/80 text-sm font-semibold text-gray-900 dark:text-white cursor-pointer flex flex-col gap-2"
         >
-          {{ stripAsterisks(card.back) }}
+          <div>
+            {{ stripAsterisks(card.back) }}
+          </div>
+
+          <!-- Convert vous to tu Button on Level 2 if French card contains "vous" in back text -->
+          <div v-if="card.backLanguage === 'fr' && /\bvous\b/i.test(card.back)" class="pt-1">
+            <button
+              @click.stop="openVousToTuSearchForCard(card)"
+              class="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all inline-flex items-center gap-1 cursor-pointer shadow-xs"
+              title="Search Google on converting vous to tu for this phrase"
+            >
+              <span>convert vous to tu</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <!-- Level 3: Pronunciation & Audio button. NON-TOGGLING (click.stop) -->

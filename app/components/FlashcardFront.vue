@@ -64,12 +64,12 @@ const isFrenchCard = computed(() => {
 })
 
 const hasVous = computed(() => {
-  const front = props.currentCard.front || ''
-  return /\bvous\b/i.test(front)
+  const back = props.currentCard.back || ''
+  return /\bvous\b/i.test(back)
 })
 
 function openVousToTuSearch() {
-  const query = `convert "vous" to "tu" for the following French phrase: "${props.currentCard.front}"`
+  const query = `convert "vous" to "tu" for the following French phrase: "${props.currentCard.back}"`
   const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
 }
@@ -109,19 +109,6 @@ const getTextClass = (text: string) => {
       </div>
     </div>
 
-    <!-- Convert vous to tu Button for French Cards containing "vous" -->
-    <button
-      v-if="isFrenchCard && hasVous && !isFlipped && !isEditing"
-      @click.stop="openVousToTuSearch"
-      class="absolute top-3.5 right-4 z-20 px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 cursor-pointer shadow-xs"
-      title="Search Google on converting vous to tu for this phrase"
-    >
-      <span>convert vous to tu</span>
-      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-      </svg>
-    </button>
-    
     <!-- Word (Centered in padded area) -->
     <div class="h-full w-full flex flex-col items-center justify-center px-6 relative z-0 -translate-y-[15px]">
       <p :class="getTextClass(currentCard.front)">
