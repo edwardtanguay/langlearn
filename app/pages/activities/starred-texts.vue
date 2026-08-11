@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { ArrowPathIcon, PencilSquareIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - Starred Texts Activity',
@@ -37,6 +38,7 @@ const currentBatch = ref<ActivityItem[]>([])
 const availablePool = ref<string[]>([])
 const draggedAnswer = ref<string | null>(null)
 const isFinished = ref(false)
+const activeFrontCardId = ref<string | null>(null)
 
 function extractStarredText(text: string): { display: string; answer: string } | null {
   if (!text) return null
@@ -45,6 +47,14 @@ function extractStarredText(text: string): { display: string; answer: string } |
   const answer = match[1].trim()
   const display = text.replace(/\*(.*?)\*/, '_______')
   return { display, answer }
+}
+
+function toggleShowFront(cardId: string) {
+  if (activeFrontCardId.value === cardId) {
+    activeFrontCardId.value = null
+  } else {
+    activeFrontCardId.value = cardId
+  }
 }
 
 async function loadStarredCards() {
@@ -64,9 +74,26 @@ async function loadStarredCards() {
 function generateNewRound() {
   if (allStarredCards.value.length === 0) return
   isFinished.value = false
-  
-  // Pick 4 random cards (or all if < 4)
-  const shuffled = [...allStarredCards.value].sort(() => 0.5 - Math.random())
+  activeFrontCardId.value = null
+
+  // Group all valid cards by back language
+  const cardsByLanguage: Record<string, Flashcard[]> = {}
+  for (const card of allStarredCards.value) {
+    const lang = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
+    if (!cardsByLanguage[lang]) cardsByLanguage[lang] = []
+    cardsByLanguage[lang].push(card)
+  }
+
+  // Find all languages that have at least 1 card
+  const availableLangs = Object.keys(cardsByLanguage).filter(l => cardsByLanguage[l].length > 0)
+  if (availableLangs.length === 0) return
+
+  // Pick a random language group
+  const randomLang = availableLangs[Math.floor(Math.random() * availableLangs.length)]
+  const langCards = cardsByLanguage[randomLang]
+
+  // Pick 4 random cards from this language (or all if < 4)
+  const shuffled = [...langCards].sort(() => 0.5 - Math.random())
   const picked = shuffled.slice(0, 4)
 
   const items: ActivityItem[] = []
@@ -186,58 +213,86 @@ onMounted(() => {
           :key="item.id"
           @dragover.prevent
           @drop="onDropOnItem(idx)"
-          class="p-5 rounded-2xl bg-white dark:bg-[#182030] border transition-all duration-200 shadow-sm space-y-3"
+          class="p-5 rounded-2xl bg-white dark:bg-[#182030] border transition-all duration-200 shadow-sm space-y-3 min-h-[110px] flex flex-col justify-between"
           :class="[
             item.currentPlacedAnswer 
               ? (item.currentPlacedAnswer === item.answerText ? 'border-emerald-500/60 bg-emerald-500/5' : 'border-amber-500/60 bg-amber-500/5') 
               : 'border-gray-300 dark:border-gray-700/80'
           ]"
         >
-          <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            English: {{ item.fullFront }}
+          <!-- Card Header with Toggle Icon & Edit Permalink Icon -->
+          <div class="flex items-center justify-between gap-2 border-b border-gray-100 dark:border-gray-800/60 pb-2">
+            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              Phrase {{ idx + 1 }}
+            </span>
+            <div class="flex items-center gap-2">
+              <!-- Toggle front text icon button -->
+              <button
+                @click="toggleShowFront(item.id)"
+                title="Toggle show Front text"
+                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                :class="{ 'text-amber-500 dark:text-amber-400': activeFrontCardId === item.id }"
+              >
+                <ArrowPathIcon class="w-4 h-4" />
+              </button>
+
+              <!-- Edit card permalink icon button -->
+              <NuxtLink
+                :to="`/flashcard/${item.id}?fromActivity=true`"
+                title="Edit flashcard permalink"
+                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+              >
+                <PencilSquareIcon class="w-4 h-4" />
+              </NuxtLink>
+            </div>
           </div>
 
-          <div class="text-base font-medium text-gray-900 dark:text-white flex flex-wrap items-center gap-1.5 leading-relaxed">
-            <span>{{ item.displayBack.split('_______')[0] }}</span>
-
-            <!-- Drop target pill -->
-            <button
-              v-if="item.currentPlacedAnswer"
-              @click="removePlacedAnswer(idx)"
-              class="px-2.5 py-1 rounded-lg text-xs font-bold transition-transform cursor-pointer flex items-center gap-1 shadow-xs"
-              :class="item.currentPlacedAnswer === item.answerText 
-                ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
-                : 'bg-red-600 text-white hover:bg-red-700'"
-              title="Click to remove"
-            >
-              <span>{{ item.currentPlacedAnswer }}</span>
-              <span class="text-[10px] opacity-75">✕</span>
-            </button>
-
-            <div
-              v-else
-              class="inline-block min-w-[90px] h-7 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-950/60 flex items-center justify-center text-xs text-gray-400 font-mono px-2"
-            >
-              drop here
+          <!-- Card Content Body (Toggled Front vs Back Fill-in-the-blank) -->
+          <div class="flex-1 flex items-center">
+            <!-- Front text mode -->
+            <div v-if="activeFrontCardId === item.id" class="text-base font-semibold text-amber-600 dark:text-amber-400 leading-relaxed italic">
+              {{ item.fullFront }}
             </div>
 
-            <span>{{ item.displayBack.split('_______')[1] }}</span>
+            <!-- Back text fill-in-the-blank mode -->
+            <div v-else class="text-base font-medium text-gray-900 dark:text-white flex flex-wrap items-center gap-1.5 leading-relaxed">
+              <span>{{ item.displayBack.split('_______')[0] }}</span>
+
+              <!-- Drop target slot / placed answer pill -->
+              <button
+                v-if="item.currentPlacedAnswer"
+                @click="removePlacedAnswer(idx)"
+                class="px-2.5 py-0.5 rounded-lg text-xs font-bold transition-transform cursor-pointer flex items-center gap-1 shadow-xs h-7"
+                :class="item.currentPlacedAnswer === item.answerText 
+                  ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
+                  : 'bg-red-600 text-white hover:bg-red-700'"
+                title="Click to remove"
+              >
+                <span>{{ item.currentPlacedAnswer }}</span>
+                <span class="text-[10px] opacity-75">✕</span>
+              </button>
+
+              <div
+                v-else
+                class="inline-block min-w-[70px] h-7 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-950/60"
+              ></div>
+
+              <span>{{ item.displayBack.split('_______')[1] }}</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Available Pool of Starred Answers -->
       <div class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800 space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500">Available Starred Words (Drag or click to assign):</h3>
-
         <div class="flex flex-wrap gap-2.5 min-h-[42px] items-center">
           <button
-            v-for="(ans, idx) in availablePool"
-            :key="idx"
+            v-for="(ans, poolIdx) in availablePool"
+            :key="poolIdx"
             draggable="true"
             @dragstart="onDragStart(ans)"
             @click="selectAnswerForFirstEmpty(ans)"
-            class="px-3.5 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/40 text-sm font-semibold transition-all cursor-grab active:cursor-grabbing shadow-xs"
+            class="px-3.5 py-1 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/40 text-sm font-semibold transition-all cursor-grab active:cursor-grabbing shadow-xs h-7 flex items-center justify-center"
           >
             {{ ans }}
           </button>

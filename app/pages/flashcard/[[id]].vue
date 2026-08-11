@@ -708,8 +708,17 @@ onBeforeUnmount(() => {
           
           <div class="w-full max-w-lg space-y-4">
             
+            <NuxtLink 
+              v-if="route.query.fromActivity && !isLoadingQueue && !isInitialLoading" 
+              to="/activities/starred-texts"
+              class="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 hover:underline mb-1 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              <span>Back to Starred Texts activity</span>
+            </NuxtLink>
+
             <button 
-              v-if="searchQuery && !isLoadingQueue && !isInitialLoading && currentCard" 
+              v-else-if="searchQuery && !isLoadingQueue && !isInitialLoading && currentCard" 
               @click="isSearching = true" 
               class="flex items-center gap-1 text-sm font-semibold text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-200 hover:underline mb-1 transition-colors"
             >
