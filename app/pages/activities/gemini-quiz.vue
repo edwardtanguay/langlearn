@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 useHead({
   title: 'LangLearn - Gemini Quiz Prompts',
@@ -23,6 +23,20 @@ const prompts = ref<ChatbotPromptItem[]>([])
 const isLoading = ref(true)
 const isAdmin = ref(false)
 const copiedPromptId = ref<string | null>(null)
+const activeCrudPromptId = ref<string | null>(null)
+
+function toggleCrudToolbar(id: string, event: Event) {
+  event.stopPropagation()
+  if (activeCrudPromptId.value === id) {
+    activeCrudPromptId.value = null
+  } else {
+    activeCrudPromptId.value = id
+  }
+}
+
+function closeCrudToolbar() {
+  activeCrudPromptId.value = null
+}
 
 // Language maps
 const languageNames: Record<string, string> = {
@@ -85,6 +99,11 @@ async function loadData() {
 
 onMounted(() => {
   loadData()
+  window.addEventListener('click', closeCrudToolbar)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('click', closeCrudToolbar)
 })
 
 // Grouped prompts by language
@@ -334,9 +353,9 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <!-- Grouped Prompts by Language -->
     <div v-else class="space-y-10">
       <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
-        <!-- Language Group Header: Word with thick full-width underline directly under text -->
-        <div class="border-b-4 w-full" :style="{ borderColor: group.color }">
-          <h2 class="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight pb-0 leading-tight">
+        <!-- Language Group Header: Word with thick full-width underline directly under text with no space -->
+        <div class="border-b-4 w-full border-t-0 pt-0 pb-0" :style="{ borderColor: group.color }">
+          <h2 class="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight p-0 m-0 leading-none">
             {{ group.name }} Quiz Prompts
           </h2>
         </div>
@@ -355,18 +374,21 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
             <div class="space-y-3 flex-1 flex flex-col">
               <!-- Prompt Card Header Container -->
               <div class="relative min-h-[36px] flex items-center">
-                <!-- Card Title extending 100% width with pill background -->
+                <!-- Card Title extending 100% width with pill background (Click to reveal CRUD bar if admin) -->
                 <h3
-                  class="w-full text-center text-sm font-extrabold tracking-wide text-white py-1.5 px-4 rounded-full shadow-xs truncate"
+                  @click="isAdmin ? toggleCrudToolbar(p.id, $event) : null"
+                  class="w-full text-center text-sm font-extrabold tracking-wide text-white py-1.5 px-4 rounded-full shadow-xs truncate select-none"
+                  :class="{ 'cursor-pointer hover:brightness-110': isAdmin }"
                   :style="{ backgroundColor: group.color }"
                 >
                   {{ p.title }}
                 </h3>
 
-                <!-- Desktop Admin CRUD Tools (Covers up title on card hover without breaking header layout) -->
+                <!-- Desktop Admin CRUD Tools (Displayed only on click on prompt title) -->
                 <div
-                  v-if="isAdmin"
-                  class="absolute inset-0 flex items-center justify-center gap-1 bg-gray-900/95 backdrop-blur px-3 py-1 rounded-full text-xs shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200 z-10"
+                  v-if="isAdmin && activeCrudPromptId === p.id"
+                  @click.stop
+                  class="absolute inset-0 flex items-center justify-center gap-1 bg-gray-900/95 backdrop-blur px-3 py-1 rounded-full text-xs shadow-md transition-all duration-200 z-10"
                 >
                   <!-- Add New Prompt in this language -->
                   <button
@@ -438,13 +460,12 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               </p>
             </div>
 
-            <!-- Action Button: Copy and Paste (Lighter version of language color background) -->
+            <!-- Action Button: Copy and Paste (White text, lighter version of language color background) -->
             <button
               @click="handleCopyAndPaste(p.prompt, p.id)"
-              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-2 hover:opacity-90 active:scale-[0.99]"
+              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold text-white transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-2 hover:opacity-90 active:scale-[0.99]"
               :style="{
                 borderColor: copiedPromptId === p.id ? '#059669' : group.color,
-                color: copiedPromptId === p.id ? '#059669' : group.color,
                 backgroundColor: copiedPromptId === p.id ? '#0596691a' : (group.color + '26')
               }"
             >
