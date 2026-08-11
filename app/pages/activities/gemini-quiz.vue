@@ -104,12 +104,14 @@ const groupedPrompts = computed(() => {
     groups[lang]?.sort((a, b) => a.rank - b.rank)
   }
 
-  return Object.keys(groups).map(lang => ({
-    code: lang,
-    name: languageNames[lang] || lang.toUpperCase(),
-    color: languageColors[lang] || '#333388',
-    items: groups[lang] ?? []
-  }))
+  return Object.keys(groups)
+    .map(lang => ({
+      code: lang,
+      name: languageNames[lang] || lang.toUpperCase(),
+      color: languageColors[lang] || '#333388',
+      items: groups[lang] ?? []
+    }))
+    .sort((a, b) => b.items.length - a.items.length)
 })
 
 // Action: Copy text to clipboard & open Gemini AI in new tab
@@ -346,7 +348,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
           class="px-4 py-2.5 rounded-lg text-white font-extrabold text-lg tracking-wide shadow-xs flex items-center justify-between"
           :style="{ backgroundColor: group.color }"
         >
-          <h2>{{ group.name }} Prompts</h2>
+          <h2>{{ group.name }} Quiz Prompts</h2>
         </div>
 
         <!-- Prompts Grid -->
@@ -354,61 +356,67 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
           <div
             v-for="(p, idx) in group.items"
             :key="p.id"
-            class="group p-5 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 transition-all duration-200"
+            class="group p-4 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 transition-all duration-200"
             :style="{
               borderColor: group.color + '66',
-              backgroundColor: group.color + '26'
+              backgroundColor: group.color + '1a'
             }"
           >
-            <div>
-              <div class="flex items-start justify-between gap-2 mb-2 min-h-[32px]">
-                <h3 class="text-base font-bold text-gray-900 dark:text-white leading-snug">
+            <div class="space-y-3">
+              <!-- Prompt Card Header: Displayed across full card in language color pill/bar -->
+              <div
+                class="px-3.5 py-2.5 rounded-lg flex items-center justify-between gap-3 text-white shadow-sm transition-all"
+                :style="{ backgroundColor: group.color }"
+              >
+                <h3 class="text-base font-extrabold leading-snug tracking-wide whitespace-nowrap overflow-hidden text-ellipsis flex-1 min-w-0">
                   {{ p.title }}
                 </h3>
 
-                <!-- Desktop Admin CRUD Tools (visible on panel hover) -->
+                <!-- Desktop Admin CRUD Tools -->
                 <div
                   v-if="isAdmin"
-                  class="hidden md:flex opacity-0 group-hover:opacity-100 transition-opacity duration-150 items-center gap-1 shrink-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-800 text-xs shadow-xs"
+                  class="flex items-center gap-1 shrink-0 bg-black/25 backdrop-blur px-2 py-1 rounded-md text-xs shadow-xs"
                 >
                   <!-- Add New Prompt in this language -->
                   <button
                     @click="openAddModal(group.code)"
                     title="Add Prompt"
-                    class="p-1 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer"
+                    class="p-1 text-white/80 hover:text-white cursor-pointer transition-colors"
                   >
                     <UIcon name="lucide:plus" class="w-4 h-4" />
                   </button>
 
-                  <span class="text-gray-300 dark:text-gray-700 mx-0.5">|</span>
+                  <template v-if="group.items.length > 1">
+                    <span class="text-white/30 mx-0.5">|</span>
 
-                  <!-- Reorder Up -->
-                  <button
-                    @click="movePrompt(group.items, idx, 'up')"
-                    :disabled="idx === 0"
-                    title="Move Up"
-                    class="p-1 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white disabled:opacity-20 cursor-pointer"
-                  >
-                    <UIcon name="lucide:arrow-up" class="w-4 h-4 stroke-[2.5]" />
-                  </button>
+                    <!-- Reorder Up -->
+                    <button
+                      @click="movePrompt(group.items, idx, 'up')"
+                      :disabled="idx === 0"
+                      title="Move Up"
+                      class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
+                    >
+                      <UIcon name="lucide:arrow-up" class="w-4 h-4 stroke-[2.5]" />
+                    </button>
 
-                  <!-- Reorder Down -->
-                  <button
-                    @click="movePrompt(group.items, idx, 'down')"
-                    :disabled="idx === group.items.length - 1"
-                    title="Move Down"
-                    class="p-1 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white disabled:opacity-20 cursor-pointer"
-                  >
-                    <UIcon name="lucide:arrow-down" class="w-4 h-4 stroke-[2.5]" />
-                  </button>
+                    <!-- Reorder Down -->
+                    <button
+                      @click="movePrompt(group.items, idx, 'down')"
+                      :disabled="idx === group.items.length - 1"
+                      title="Move Down"
+                      class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
+                    >
+                      <UIcon name="lucide:arrow-down" class="w-4 h-4 stroke-[2.5]" />
+                    </button>
+                  </template>
 
-                  <span class="text-gray-300 dark:text-gray-700 mx-0.5">|</span>
+                  <span class="text-white/30 mx-0.5">|</span>
 
                   <!-- Edit -->
                   <button
                     @click="openEditModal(p)"
                     title="Edit Prompt"
-                    class="p-1 text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 cursor-pointer"
+                    class="p-1 text-amber-300 hover:text-amber-200 cursor-pointer transition-colors"
                   >
                     <UIcon name="lucide:pencil" class="w-4 h-4" />
                   </button>
@@ -417,16 +425,16 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                   <button
                     @click="openCopyModal(p)"
                     title="Duplicate Prompt"
-                    class="p-1 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 cursor-pointer"
+                    class="p-1 text-blue-300 hover:text-blue-200 cursor-pointer transition-colors"
                   >
                     <UIcon name="lucide:copy" class="w-4 h-4" />
                   </button>
 
-                  <!-- Delete (Dark Red Link) -->
+                  <!-- Delete (Lighter Red Link for high visibility) -->
                   <button
                     @click="confirmDelete(p)"
                     title="Delete Prompt"
-                    class="p-1 text-red-900 dark:text-red-700 hover:text-red-950 dark:hover:text-red-500 cursor-pointer opacity-40 hover:opacity-100 transition-opacity"
+                    class="p-1 text-red-300 hover:text-red-100 cursor-pointer transition-colors"
                   >
                     <UIcon name="lucide:trash-2" class="w-4 h-4" />
                   </button>
@@ -438,10 +446,10 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               </p>
             </div>
 
-            <!-- Action Button: Copy and Paste (Language colored) -->
+            <!-- Action Button: Copy and Paste (Language colored with upper-right arrow) -->
             <button
               @click="handleCopyAndPaste(p.prompt, p.id)"
-              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer text-white shadow-xs hover:brightness-110 active:scale-[0.99]"
+              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer text-white shadow-xs hover:brightness-110 active:scale-[0.99]"
               :style="{ backgroundColor: copiedPromptId === p.id ? '#059669' : group.color }"
             >
               <template v-if="copiedPromptId === p.id">
@@ -451,6 +459,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               <template v-else>
                 <UIcon name="lucide:copy-check" class="w-4 h-4" />
                 <span>Copy and Paste</span>
+                <UIcon name="lucide:arrow-up-right" class="w-4 h-4 stroke-[2.5]" />
               </template>
             </button>
           </div>
