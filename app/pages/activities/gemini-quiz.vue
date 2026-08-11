@@ -377,9 +377,12 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                 <!-- Card Title extending 100% width with pill background (Click to reveal CRUD bar if admin) -->
                 <h3
                   @click="isAdmin ? toggleCrudToolbar(p.id, $event) : null"
-                  class="w-full text-center text-sm font-extrabold tracking-wide text-white py-1.5 px-4 rounded-full shadow-xs truncate select-none"
+                  class="w-full text-center text-base font-black tracking-wide text-white py-2 px-5 rounded-full shadow-xs truncate select-none"
                   :class="{ 'cursor-pointer hover:brightness-110': isAdmin }"
-                  :style="{ backgroundColor: group.color }"
+                  :style="{
+                    backgroundColor: group.color,
+                    textShadow: '0 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.9)'
+                  }"
                 >
                   {{ p.title }}
                 </h3>
