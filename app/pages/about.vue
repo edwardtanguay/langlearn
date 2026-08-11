@@ -1101,7 +1101,7 @@ function generateIssueMarkdown(ver: Version): string {
     titlePart = ver.title ? `v${ver.versionNumber} - ${ver.title}` : `v${ver.versionNumber}`
   }
   let md = `# ${titlePart}\n\n`
-  md += `All todos in this issue are expressed in the past tense as if they have already been accomplished. The goal is to implement each bug-fix and feature to the extent that their text is 100% true of the app.\n\n`
+  md += `All todos in this issue are expressed in the past tense as if they have already been accomplished. The goal is to implement each bug-fix and feature to the extent that their text is 100% true of the app. You MUST implement each of these, do not skip any of them.\n\n`
 
   const grouped = getGroupedItemsForVersion(ver.versionItems)
   if (grouped.isAllGeneral) {
