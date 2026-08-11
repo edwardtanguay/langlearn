@@ -69,7 +69,7 @@ async function copyPrompt(text: string, index: number) {
       <div
         v-for="(p, idx) in prompts"
         :key="idx"
-        class="p-5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-xs flex flex-col justify-between space-y-4"
+        class="p-5 rounded-xl bg-white dark:bg-[#182030] border border-gray-300 dark:border-gray-700/80 shadow-xs flex flex-col justify-between space-y-4"
       >
         <div>
           <h2 class="text-base font-bold text-gray-900 dark:text-white mb-2">

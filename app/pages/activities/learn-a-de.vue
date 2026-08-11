@@ -150,7 +150,7 @@ onMounted(() => {
             v-for="card in aCards"
             :key="card.id"
             @click="toggleReveal(card.id)"
-            class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 shadow-xs cursor-pointer transition-all space-y-2 relative group"
+            class="p-4 rounded-xl bg-white dark:bg-[#182030] border border-gray-300 dark:border-gray-700/80 hover:border-blue-500/50 shadow-xs cursor-pointer transition-all space-y-2 relative group"
           >
             <div class="flex items-start justify-between gap-2">
               <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">English</span>
@@ -195,7 +195,7 @@ onMounted(() => {
             v-for="card in deCards"
             :key="card.id"
             @click="toggleReveal(card.id)"
-            class="p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-amber-500/50 shadow-xs cursor-pointer transition-all space-y-2 relative group"
+            class="p-4 rounded-xl bg-white dark:bg-[#182030] border border-gray-300 dark:border-gray-700/80 hover:border-amber-500/50 shadow-xs cursor-pointer transition-all space-y-2 relative group"
           >
             <div class="flex items-start justify-between gap-2">
               <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">English</span>

@@ -11,7 +11,7 @@ const activities = [
     title: 'Gemini Quiz',
     path: '/activities/gemini-quiz',
     description: 'Prompts to copy and paste into Gemini AI to generate custom quizzes for specific vocabulary, grammar patterns, and CEFR levels.',
-    badge: 'AI Prompts',
+    badge: 'Interactive Quiz',
     badgeColor: 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/30'
   },
   {
@@ -43,7 +43,7 @@ const activities = [
         v-for="act in activities"
         :key="act.path"
         :to="act.path"
-        class="block p-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all duration-200 group flex flex-col justify-between"
+        class="block p-6 rounded-2xl bg-white dark:bg-[#182030] border border-gray-300 dark:border-gray-700/80 shadow-sm hover:shadow-md hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all duration-200 group flex flex-col justify-between"
       >
         <div>
           <h2 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-tight">

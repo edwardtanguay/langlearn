@@ -186,11 +186,11 @@ onMounted(() => {
           :key="item.id"
           @dragover.prevent
           @drop="onDropOnItem(idx)"
-          class="p-5 rounded-2xl bg-white dark:bg-gray-900 border transition-all duration-200 shadow-sm space-y-3"
+          class="p-5 rounded-2xl bg-white dark:bg-[#182030] border transition-all duration-200 shadow-sm space-y-3"
           :class="[
             item.currentPlacedAnswer 
               ? (item.currentPlacedAnswer === item.answerText ? 'border-emerald-500/60 bg-emerald-500/5' : 'border-amber-500/60 bg-amber-500/5') 
-              : 'border-gray-200 dark:border-gray-800'
+              : 'border-gray-300 dark:border-gray-700/80'
           ]"
         >
           <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
