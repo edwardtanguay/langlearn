@@ -179,13 +179,14 @@ function generateNewRound() {
   }
 
   // Find all languages that have at least 1 card
-  const availableLangs = Object.keys(cardsByLanguage).filter(l => cardsByLanguage[l].length > 0)
+  const availableLangs = Object.keys(cardsByLanguage).filter(l => (cardsByLanguage[l]?.length ?? 0) > 0)
   if (availableLangs.length === 0) return
 
   // Pick a random language group
   const randomLang = availableLangs[Math.floor(Math.random() * availableLangs.length)]
+  if (!randomLang) return
   currentLanguageCode.value = randomLang
-  const langCards = cardsByLanguage[randomLang]
+  const langCards = cardsByLanguage[randomLang] ?? []
 
   // Shuffle and pick up to 6 cards ensuring unique answer words
   const shuffled = [...langCards].sort(() => 0.5 - Math.random())
