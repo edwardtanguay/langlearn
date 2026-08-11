@@ -109,9 +109,17 @@ export function parseImportText(text: string): ParsedRow[] {
   return rows
 }
 
+function stripMonAmiPrefix(input: string): string {
+  if (!input) return ''
+  return input.replace(/^Mon ami,?\s*/i, '').trim()
+}
+
 function buildParsedRow(lang1: string, lang2: string, text1: string, text2: string): ParsedRow {
-  const meta1 = parseMetadata(text1)
-  const meta2 = parseMetadata(text2)
+  const cleanText1 = stripMonAmiPrefix(text1)
+  const cleanText2 = stripMonAmiPrefix(text2)
+
+  const meta1 = parseMetadata(cleanText1)
+  const meta2 = parseMetadata(cleanText2)
 
   let frontClean = ''
   if (lang1.toLowerCase() === 'english') {
@@ -129,8 +137,8 @@ function buildParsedRow(lang1: string, lang2: string, text1: string, text2: stri
   return {
     lang1,
     lang2,
-    text1,
-    text2,
+    text1: cleanText1,
+    text2: cleanText2,
     rank,
     pronunciation,
     memoryHook

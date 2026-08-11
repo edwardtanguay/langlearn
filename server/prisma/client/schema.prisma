@@ -64,6 +64,7 @@ model VersionItem {
   startedByUserId    String?
   startedByUser      User?            @relation("UserVersionItems", fields: [startedByUserId], references: [id])
   orderWithinVersion Int              @default(1)
+  isTested           Boolean          @default(false)
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
 }
@@ -80,10 +81,11 @@ model Flashcard {
   createdAt     DateTime @default(now())
 
   // Study progress state merged directly into the card
-  status       String    @default("LEARNING")
-  rank         Float     @default(2.5)
-  memoryHook   String?
-  nextTestTime DateTime?
+  status             String    @default("LEARNING")
+  rank               Float     @default(2.5)
+  memoryHook         String?
+  nextTestTime       DateTime?
+  timesShownDragDrop Int       @default(0)
 
   // Self-referencing relation to track copied cards
   copiedFromId String?
@@ -128,4 +130,15 @@ model MobileImport {
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   mobileImportText String
   whenImported     DateTime @default(now())
+}
+
+model ChatbotPrompt {
+  id        String   @id @default(uuid())
+  category  String   @default("geminiQuizPrompts")
+  language  String
+  title     String
+  prompt    String
+  rank      Float    @default(2.5)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

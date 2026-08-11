@@ -75,23 +75,30 @@ watch(() => props.currentCard.id, () => {
   showPronunciation.value = false
 })
 
-const stripAsterisks = (text: string) => text ? text.replace(/\*/g, '') : ''
+const stripFormatting = (text: string) => text ? text.replace(/[\*<>]/g, '') : ''
+const stripAsterisks = stripFormatting
 
 const renderBackTextWithHighlights = (text: string) => {
   if (!text) return ''
-  // Escape html characters to prevent XSS
-  const escaped = text
+  // 1. Process <verb> tag before HTML escaping
+  let result = text.replace(/<([^>]+)>/g, '___VERB_START___$1___VERB_END___')
+  // 2. Escape HTML characters
+  result = result
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
-  // Replace *text* with styled span containing dashed border bottom and light background tint
-  return escaped.replace(/\*(.*?)\*/g, '<span class="border-b border-dashed border-white/60 bg-white/10 px-1 rounded-sm">$1</span>')
+  // 3. Render <verb> as solid underline with amber background tint
+  result = result.replace(/___VERB_START___(.*?)___VERB_END___/g, '<span class="border-b-2 border-amber-400 bg-amber-500/20 px-1 rounded-sm">$1</span>')
+  // 4. Render *text* with dashed underline
+  result = result.replace(/\*(.*?)\*/g, '<span class="border-b border-dashed border-white/60 bg-white/10 px-1 rounded-sm">$1</span>')
+  return result
 }
 
 const getTextClass = (text: string) => {
-  const len = text ? text.length : 0
+  const clean = stripFormatting(text)
+  const len = clean ? clean.length : 0
   if (len < 30) {
     return 'text-2xl sm:text-3xl text-center leading-tight max-w-md'
   } else if (len < 60) {
@@ -106,8 +113,9 @@ const getTextClass = (text: string) => {
 
 <template>
   <div 
-    class="absolute inset-0 rounded-3xl text-white overflow-hidden backface-hidden border border-white/10 dark:border-white/5 shadow-xl preserve-3d"
+    class="absolute inset-0 rounded-3xl text-white overflow-hidden backface-hidden border-4 shadow-xl preserve-3d"
     :style="{
+      borderColor: languageColors[currentCard.backLanguage] || '#333388',
       backgroundColor: `color-mix(in srgb, ${languageColors[currentCard.backLanguage] || '#4f46e5'} 25%, #111827)`
     }"
   >

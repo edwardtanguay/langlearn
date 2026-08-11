@@ -32,6 +32,7 @@ interface VersionItem {
   body: string
   rank?: number
   orderWithinVersion: number
+  isTested?: boolean
 }
 
 interface Version {
@@ -263,12 +264,21 @@ interface DropdownVersionOption {
 }
 
 // Ordered: move to new version -> FUTURE -> INCOMING (once) -> IN_PROGRESS, excludes PUBLISHED
-function getVersionsForDropdownOptions(currentVersionId?: string | null): DropdownVersionOption[] {
+function getVersionsForDropdownOptions(includeAllOrVersionId: boolean | string | null = true, currentVersionIdParam?: string | null): DropdownVersionOption[] {
+  let includeAll = true
+  let currentVersionId: string | null | undefined = currentVersionIdParam
+
+  if (typeof includeAllOrVersionId === 'boolean') {
+    includeAll = includeAllOrVersionId
+  } else {
+    currentVersionId = includeAllOrVersionId
+  }
+
   const options: DropdownVersionOption[] = []
 
   // 1. All FUTURE versions
   const futureVers = versions.value
-    .filter(v => v.status === 'FUTURE_VERSION' && v.id !== currentVersionId)
+    .filter(v => v.status === 'FUTURE_VERSION' && (includeAll || v.id !== currentVersionId))
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
 
   for (const f of futureVers) {
@@ -283,7 +293,7 @@ function getVersionsForDropdownOptions(currentVersionId?: string | null): Dropdo
   const incomingVer = versions.value.find(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
   const incomingId = incomingVer?.id || 'none'
 
-  if (currentVersionId !== null && currentVersionId !== 'none' && currentVersionId !== incomingId) {
+  if (includeAll || (currentVersionId !== null && currentVersionId !== 'none' && currentVersionId !== incomingId)) {
     options.push({
       id: 'none',
       label: 'Incoming Ideas',
@@ -293,7 +303,7 @@ function getVersionsForDropdownOptions(currentVersionId?: string | null): Dropdo
 
   // 3. All IN_PROGRESS versions
   const inProgressVers = versions.value
-    .filter(v => v.status === 'IN_PROGRESS' && v.id !== currentVersionId)
+    .filter(v => v.status === 'IN_PROGRESS' && (includeAll || v.id !== currentVersionId))
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
 
   for (const p of inProgressVers) {
@@ -506,6 +516,15 @@ const saveAdminVersion = async () => {
   }
 
   const payload = { ...editingVersion.value, versionNumber: vNum }
+
+  if (payload.status === 'PUBLISHED' && !isNewVersion.value) {
+    const existing = versions.value.find(v => v.id === editingVersion.value.id)
+    if (existing && existing.versionItems.some(item => !item.isTested)) {
+      versionSaveError.value = 'Cannot publish version until all items are tested.'
+      return
+    }
+  }
+
   const snapshot = JSON.parse(JSON.stringify(versions.value))
 
   // Optimistic update & immediate smooth close
@@ -563,7 +582,7 @@ const openAddItem = (versionId: string | null, afterItemId?: string, sourceItem?
     itemRankStr.value = newRank.toString()
     editingItem.value = {
       id: '',
-      versionId: sourceItem.versionId || versionId || 'none',
+      versionId: versionId || sourceItem.versionId || 'none',
       versionCategoryId: sourceItem.versionCategoryId || '',
       afterItemId: afterItemId || '',
       body: '',
@@ -779,6 +798,22 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string,
     item.versionCategoryId = oldCatId
     item.versionCategory = oldCatObj
     alert(err.data?.statusMessage || 'Failed to update item category')
+  }
+}
+
+const toggleItemTestedDirectly = async (item: VersionItem) => {
+  const oldTested = Boolean(item.isTested)
+  const newTested = !oldTested
+  item.isTested = newTested
+
+  try {
+    await $fetch(`/api/dev/version-items/${item.id}`, {
+      method: 'PUT',
+      body: { isTested: newTested }
+    })
+  } catch (err: any) {
+    item.isTested = oldTested
+    alert(err.data?.statusMessage || 'Failed to update tested status')
   }
 }
 
@@ -1092,7 +1127,7 @@ function generateIssueMarkdown(ver: Version): string {
     titlePart = ver.title ? `v${ver.versionNumber} - ${ver.title}` : `v${ver.versionNumber}`
   }
   let md = `# ${titlePart}\n\n`
-  md += `All todos in this issue are expressed in the past tense as if they have already been accomplished. The goal is to implement each bug-fix and feature to the extent that their text is 100% true of the app.\n\n`
+  md += `All todos in this issue are expressed in the past tense as if they have already been accomplished. The goal is to implement each bug-fix and feature to the extent that their text is 100% true of the app. You MUST implement each of these, do not skip any of them.\n\n`
 
   const grouped = getGroupedItemsForVersion(ver.versionItems)
   if (grouped.isAllGeneral) {
@@ -1283,7 +1318,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
         <div v-for="ver in versionsForDisplay" :key="ver.id" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md" :class="[
-          isSearchActive ? 'border-2 border-orange-500' : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? 'border-2 border-dashed border-red-500 dark:border-red-600' : 'border border-gray-200 dark:border-gray-700/80'
+          isSearchActive ? 'border-2 border-orange-500' : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? 'border-2 border-dashed border-red-500 dark:border-red-600' : ver.status === 'IN_PROGRESS' ? 'border-2 border-dashed border-amber-500 dark:border-amber-600' : 'border border-gray-200 dark:border-gray-700/80'
         ]">
           <!-- Full-Width Version Panel Card Header -->
           <div class="bg-gray-100 dark:bg-gray-900/50 p-3 md:p-3.5 border-b border-gray-200 dark:border-gray-700/80 space-y-2">
@@ -1319,7 +1354,10 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   </button>
                 </div>
               </div>
-              <div v-if="ver.status === 'FUTURE_VERSION'" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-mono font-bold shrink-0 uppercase tracking-wider">
+              <div v-if="ver.status === 'IN_PROGRESS'" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono font-bold shrink-0 uppercase tracking-wider">
+                IN PROGRESS
+              </div>
+              <div v-else-if="ver.status === 'FUTURE_VERSION'" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-mono font-bold shrink-0 uppercase tracking-wider">
                 FUTURE VERSION
               </div>
               <div v-else-if="ver.publishDate" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono font-bold shrink-0">
@@ -1369,6 +1407,16 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                       <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
+                      <!-- Tested checkbox for IN_PROGRESS versions in Admin mode -->
+                      <label v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="shrink-0 flex items-center gap-1 text-[11px] font-medium cursor-pointer select-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        <input
+                          type="checkbox"
+                          :checked="Boolean(item.isTested)"
+                          @change="toggleItemTestedDirectly(item)"
+                          class="rounded border-gray-300 dark:border-gray-700 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                        />
+                        <span>Tested</span>
+                      </label>
                       <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                       
                       <!-- UP / DOWN Rank Controls for Admin -->
@@ -1498,6 +1546,16 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                         <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
+                        <!-- Tested checkbox for IN_PROGRESS versions in Admin mode -->
+                        <label v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="shrink-0 flex items-center gap-1 text-[11px] font-medium cursor-pointer select-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                          <input
+                            type="checkbox"
+                            :checked="Boolean(item.isTested)"
+                            @change="toggleItemTestedDirectly(item)"
+                            class="rounded border-gray-300 dark:border-gray-700 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                          />
+                          <span>Tested</span>
+                        </label>
                         <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                         
                         <!-- UP / DOWN Rank Controls for Admin -->

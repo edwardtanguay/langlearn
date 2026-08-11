@@ -40,6 +40,20 @@ export default defineEventHandler(async (event) => {
     dataToUpdate.title = body.title ? body.title.trim() : null
   }
   if (body.status !== undefined) {
+    if (body.status === 'PUBLISHED') {
+      const untestedItemsCount = await prisma.versionItem.count({
+        where: {
+          versionId: id,
+          isTested: false
+        }
+      })
+      if (untestedItemsCount > 0) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'Cannot set version status to PUBLISHED until all items in this version are tested.'
+        })
+      }
+    }
     dataToUpdate.status = body.status
   }
   if (body.publishDate !== undefined) {

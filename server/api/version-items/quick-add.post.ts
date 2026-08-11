@@ -47,11 +47,14 @@ export default defineEventHandler(async (event) => {
 
   const userId = user.dbId || user.id
 
+  const itemRank = typeof body?.rank === 'number' ? body.rank : 2.5
+
   const newItem = await prisma.versionItem.create({
     data: {
       versionId: incomingVersion.id,
       type,
       body: itemBody,
+      rank: itemRank,
       startedByUserId: userId,
       orderWithinVersion: nextOrder
     },

@@ -162,6 +162,7 @@ exports.Prisma.VersionItemScalarFieldEnum = {
   rank: 'rank',
   startedByUserId: 'startedByUserId',
   orderWithinVersion: 'orderWithinVersion',
+  isTested: 'isTested',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -179,6 +180,7 @@ exports.Prisma.FlashcardScalarFieldEnum = {
   rank: 'rank',
   memoryHook: 'memoryHook',
   nextTestTime: 'nextTestTime',
+  timesShownDragDrop: 'timesShownDragDrop',
   copiedFromId: 'copiedFromId'
 };
 
@@ -210,6 +212,17 @@ exports.Prisma.MobileImportScalarFieldEnum = {
   whenImported: 'whenImported'
 };
 
+exports.Prisma.ChatbotPromptScalarFieldEnum = {
+  id: 'id',
+  category: 'category',
+  language: 'language',
+  title: 'title',
+  prompt: 'prompt',
+  rank: 'rank',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -231,7 +244,8 @@ exports.Prisma.ModelName = {
   UserFlashcardActivity: 'UserFlashcardActivity',
   Tag: 'Tag',
   FlashcardTag: 'FlashcardTag',
-  MobileImport: 'MobileImport'
+  MobileImport: 'MobileImport',
+  ChatbotPrompt: 'ChatbotPrompt'
 };
 
 /**

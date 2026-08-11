@@ -74,8 +74,23 @@ function openVousToTuSearch() {
   window.open(url, '_blank')
 }
 
+const stripFormatting = (text: string) => {
+  if (!text) return ''
+  return text.replace(/[\*<>]/g, '')
+}
+
+const renderFrontTextWithHighlights = (text: string) => {
+  if (!text) return ''
+  // Replace <verb> with solid underline & amber tint
+  let result = text.replace(/<([^>]+)>/g, '<span class="border-b-2 border-amber-400 dark:border-amber-400 bg-amber-500/20 dark:bg-amber-500/25 px-1 rounded-sm">$1</span>')
+  // Replace *text* with dashed underline
+  result = result.replace(/\*(.*?)\*/g, '<span class="border-b border-dashed border-gray-400 dark:border-white/60 bg-gray-200/40 dark:bg-white/10 px-1 rounded-sm">$1</span>')
+  return result
+}
+
 const getTextClass = (text: string) => {
-  const len = text ? text.length : 0
+  const clean = stripFormatting(text)
+  const len = clean ? clean.length : 0
   if (len < 30) {
     return 'text-2xl sm:text-3xl text-center leading-tight max-w-md'
   } else if (len < 60) {
@@ -89,11 +104,14 @@ const getTextClass = (text: string) => {
 </script>
 
 <template>
-  <div class="absolute inset-0 h-full w-full rounded-3xl backface-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-950 text-gray-850 dark:text-gray-100 overflow-hidden border border-gray-200 dark:border-gray-800 shadow-xl preserve-3d">
+  <div 
+    class="absolute inset-0 h-full w-full rounded-3xl backface-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-950 text-gray-850 dark:text-gray-100 overflow-hidden border-4 shadow-xl preserve-3d"
+    :style="{ borderColor: languageColors[currentCard.backLanguage] || '#333388' }"
+  >
     <!-- Language badge (Absolute) -->
     <div class="absolute bottom-3 left-0 z-10 pointer-events-none backface-hidden">
       <div 
-        class="text-[10px] font-bold tracking-wider uppercase pl-4 pr-24 h-[32px] flex items-center !text-white pointer-events-auto transition-transform"
+        class="text-[12px] font-black tracking-wider uppercase pl-4 pr-24 h-[32px] flex items-center !text-white pointer-events-auto transition-transform"
         :class="{ 'animate-lang-flicker': isFlickering }"
         :style="{ 
           background: `linear-gradient(45deg, ${languageColors[currentCard.backLanguage] || '#4f46e5'} 20%, transparent 85%)`,
@@ -105,15 +123,18 @@ const getTextClass = (text: string) => {
           WebkitMaskImage: 'linear-gradient(45deg, black 20%, transparent 80%)',
           maskImage: 'linear-gradient(45deg, black 20%, transparent 80%)'
         }">
-        {{ languageNames[currentCard.backLanguage] || currentCard.backLanguage }}
+        <span style="text-shadow: 0 1px 1px rgba(0, 0, 0, 0.85);">
+          {{ languageNames[currentCard.backLanguage] || currentCard.backLanguage }}
+        </span>
       </div>
     </div>
 
     <!-- Word (Centered in padded area) -->
     <div class="h-full w-full flex flex-col items-center justify-center px-6 relative z-0 -translate-y-[15px]">
-      <p :class="getTextClass(currentCard.front)">
-        {{ currentCard.front }}
-      </p>
+      <p 
+        :class="getTextClass(currentCard.front)"
+        v-html="renderFrontTextWithHighlights(currentCard.front)"
+      ></p>
       <!-- Memory Hook below front text with pulsating effect -->
       <Transition name="fade-mnemonic">
         <p v-if="showMemoryHook && currentCard.memoryHook && !isFlipped && !isEditing" class="text-xs sm:text-sm text-amber-600 dark:text-amber-400 mt-2 text-center max-w-md italic absolute top-[calc(50%+37px)] sm:top-[calc(50%+46px)] animate-pulsate font-medium">

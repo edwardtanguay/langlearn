@@ -35,7 +35,7 @@ defineEmits<{
   (e: 'select-card', card: Flashcard): void
 }>()
 
-const stripAsterisks = (text: string) => text ? text.replace(/\*/g, '') : ''
+const stripFormatting = (text: string) => text ? text.replace(/[\*<>]/g, '') : ''
 </script>
 
 <template>
@@ -67,8 +67,8 @@ const stripAsterisks = (text: string) => text ? text.replace(/\*/g, '') : ''
           }"
         >
           <div class="space-y-1 text-sm md:text-base">
-            <div class="font-normal italic text-white/50">{{ card.front }}</div>
-            <div class="font-medium text-white">{{ stripAsterisks(card.back) }}</div>
+            <div class="font-normal italic text-white/50">{{ stripFormatting(card.front) }}</div>
+            <div class="font-medium text-white">{{ stripFormatting(card.back) }}</div>
           </div>
         </div>
       </transition-group>
