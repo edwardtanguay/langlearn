@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { PencilSquareIcon, SparklesIcon } from '@heroicons/vue/24/outline'
 
 useHead({
-  title: 'LangLearn - Drag/Drop Words',
+  title: 'LangLearn - Drag/Drop Highlighted Words',
   meta: [
     { name: 'description', content: 'Interactive drag-and-drop word practice activity.' }
   ]
@@ -74,6 +74,22 @@ const isMobile = ref(false)
 // Touch drag state
 const touchActiveWord = ref<string | null>(null)
 const touchGhostPos = ref<{ x: number; y: number } | null>(null)
+const dragOverCardIdx = ref<number | null>(null)
+
+function onDragEnterCard(e: DragEvent, idx: number) {
+  e.preventDefault()
+  dragOverCardIdx.value = idx
+}
+
+function onDragLeaveCard(e: DragEvent, idx: number) {
+  const currentTarget = e.currentTarget as HTMLElement
+  const relatedTarget = e.relatedTarget as HTMLElement | null
+  if (!currentTarget || !relatedTarget || !currentTarget.contains(relatedTarget)) {
+    if (dragOverCardIdx.value === idx) {
+      dragOverCardIdx.value = null
+    }
+  }
+}
 
 const checkScreenSize = () => {
   if (typeof window !== 'undefined') {
@@ -150,6 +166,8 @@ function generateNewRound() {
   if (allStarredCards.value.length === 0) return
   isFinished.value = false
   activeFrontCardId.value = null
+  dragOverCardIdx.value = null
+  draggedAnswer.value = null
   isWordsRevealed.value = !isMobile.value // Auto reveal on desktop, require toggle on mobile
 
   // Group all valid cards by back language
@@ -211,7 +229,13 @@ function onDragStart(answer: string) {
   draggedAnswer.value = answer
 }
 
+function onDragEnd() {
+  draggedAnswer.value = null
+  dragOverCardIdx.value = null
+}
+
 function onDropOnItem(itemIndex: number) {
+  dragOverCardIdx.value = null
   if (!draggedAnswer.value) return
   const item = currentBatch.value[itemIndex]
   if (!item) return
@@ -248,9 +272,21 @@ function onTouchMove(e: TouchEvent) {
   if (!touch) return
   if (e.cancelable) e.preventDefault()
   touchGhostPos.value = { x: touch.clientX, y: touch.clientY }
+
+  const targetElement = document.elementFromPoint(touch.clientX, touch.clientY)
+  const dropCard = targetElement?.closest('[data-drop-idx]') as HTMLElement | null
+  if (dropCard) {
+    const idxAttr = dropCard.getAttribute('data-drop-idx')
+    if (idxAttr !== null) {
+      dragOverCardIdx.value = parseInt(idxAttr, 10)
+      return
+    }
+  }
+  dragOverCardIdx.value = null
 }
 
 function onTouchEnd() {
+  dragOverCardIdx.value = null
   if (!touchActiveWord.value || !touchGhostPos.value) {
     touchActiveWord.value = null
     touchGhostPos.value = null
@@ -275,6 +311,7 @@ function onTouchEnd() {
 }
 
 function onTouchCancel() {
+  dragOverCardIdx.value = null
   touchActiveWord.value = null
   touchGhostPos.value = null
 }
@@ -318,7 +355,7 @@ onMounted(() => {
     </div>
 
     <div>
-      <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Drag/Drop Words</h1>
+      <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Drag/Drop Highlighted Words</h1>
       <!-- Desktop instruction text only -->
       <p class="hidden md:block text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
         Drag and drop the correct starred answers into each blank space below to complete the phrases.
@@ -342,6 +379,8 @@ onMounted(() => {
           :key="item.id"
           :data-drop-idx="idx"
           @dragover.prevent
+          @dragenter="onDragEnterCard($event, idx)"
+          @dragleave="onDragLeaveCard($event, idx)"
           @drop="onDropOnItem(idx)"
           @click="handleCardClick($event, item.id)"
           class="p-3 md:p-5 rounded-xl md:rounded-2xl border transition-all duration-200 shadow-sm flex flex-col justify-between cursor-pointer select-none"
@@ -351,9 +390,14 @@ onMounted(() => {
               : 'bg-white dark:bg-[#182030]'
           ]"
           :style="{
-            borderColor: item.currentPlacedAnswer 
-              ? (item.currentPlacedAnswer === item.answerText ? currentLanguageColor : `color-mix(in srgb, ${currentLanguageColor} 40%, transparent)`)
-              : `color-mix(in srgb, ${currentLanguageColor} 40%, #4b5563)`
+            backgroundColor: activeFrontCardId === item.id 
+              ? undefined 
+              : (dragOverCardIdx === idx ? `color-mix(in srgb, ${currentLanguageColor} 20%, transparent)` : undefined),
+            borderColor: dragOverCardIdx === idx 
+              ? currentLanguageColor 
+              : (item.currentPlacedAnswer 
+                  ? (item.currentPlacedAnswer === item.answerText ? currentLanguageColor : `color-mix(in srgb, ${currentLanguageColor} 40%, transparent)`)
+                  : `color-mix(in srgb, ${currentLanguageColor} 40%, #4b5563)`)
           }"
         >
           <!-- Desktop-only Header with Phrase label & action icons -->
@@ -451,8 +495,9 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- Word Pool Container (Shown at the BOTTOM) -->
+      <!-- Word Pool Container (Shown at the BOTTOM when not finished) -->
       <div 
+        v-if="!isFinished"
         class="p-3 md:p-6 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800 space-y-2 md:space-y-3"
       >
         <!-- Mobile Reveal Toggle Button (if words not yet revealed on mobile) -->
@@ -472,6 +517,7 @@ onMounted(() => {
             :key="poolIdx"
             draggable="true"
             @dragstart="onDragStart(ans)"
+            @dragend="onDragEnd"
             @touchstart="onTouchStart($event, ans)"
             @touchmove="onTouchMove($event)"
             @touchend="onTouchEnd"
@@ -485,9 +531,6 @@ onMounted(() => {
           >
             {{ ans }}
           </button>
-          <p v-if="availablePool.length === 0 && !isFinished" class="text-xs text-gray-400 italic">
-            All words placed! Check your answers.
-          </p>
         </div>
       </div>
 
@@ -506,13 +549,8 @@ onMounted(() => {
         {{ touchActiveWord }}
       </div>
 
-      <!-- Success & Next Button Banner -->
-      <div v-if="isFinished" class="py-3 md:p-6 rounded-xl md:rounded-2xl md:bg-emerald-500/10 md:border md:border-emerald-500/30 text-center space-y-2 md:space-y-4 shadow-none md:shadow-md flex flex-col items-center justify-center">
-        <div class="hidden md:flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-lg">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <span>Excellent! All words placed correctly.</span>
-        </div>
-
+      <!-- Centered Next Group Button (Shown when round is finished) -->
+      <div v-if="isFinished" class="flex justify-center pt-2">
         <button
           @click="generateNewRound"
           class="px-8 py-2.5 rounded-xl text-white font-bold text-sm md:text-base shadow-lg transition-transform hover:scale-105 cursor-pointer"
@@ -528,11 +566,11 @@ onMounted(() => {
 <style scoped>
 @keyframes popSpin {
   0% {
-    transform: scale(0.5) rotate(-45deg);
+    transform: scale(0.2) rotate(-360deg);
     opacity: 0;
   }
   60% {
-    transform: scale(1.25) rotate(15deg);
+    transform: scale(1.35) rotate(25deg);
     opacity: 1;
   }
   100% {
@@ -542,6 +580,6 @@ onMounted(() => {
 }
 
 .animate-pop-spin {
-  animation: popSpin 0.45s ease-out forwards;
+  animation: popSpin 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 </style>
