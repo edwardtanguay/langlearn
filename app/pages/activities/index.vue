@@ -45,12 +45,12 @@ const activities = [
         :to="act.path"
         class="block p-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all duration-200 group flex flex-col justify-between"
       >
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-              {{ act.title }}
-            </h2>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider" :class="act.badgeColor">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-tight">
+            {{ act.title }}
+          </h2>
+          <div class="-mt-4 mb-6">
+            <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider" :class="act.badgeColor">
               {{ act.badge }}
             </span>
           </div>
