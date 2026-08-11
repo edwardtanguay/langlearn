@@ -15,7 +15,7 @@ const activities = [
     badgeColor: 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/30'
   },
   {
-    title: 'Starred Texts',
+    title: 'Drag/Drop Words',
     path: '/activities/starred-texts',
     description: 'Practice fill-in-the-blank activities using your flashcards with starred text (*target phrase*). Drag & drop to test recall.',
     badge: 'Interactive',
