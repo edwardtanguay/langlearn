@@ -312,15 +312,6 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
       <NuxtLink to="/activities" class="text-sm font-semibold text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
         ← Back to Activities
       </NuxtLink>
-
-      <!-- Desktop Admin Add Button -->
-      <button
-        v-if="isAdmin"
-        @click="openAddModal('fr')"
-        class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-sm transition-all"
-      >
-        <span>+ Add New Prompt</span>
-      </button>
     </div>
 
     <div>
@@ -343,12 +334,11 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <!-- Grouped Prompts by Language -->
     <div v-else class="space-y-10">
       <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
-        <!-- Language Group Header: Thick bar with language color -->
-        <div
-          class="px-4 py-2.5 rounded-lg text-white font-extrabold text-lg tracking-wide shadow-xs flex items-center justify-between"
-          :style="{ backgroundColor: group.color }"
-        >
-          <h2>{{ group.name }} Quiz Prompts</h2>
+        <!-- Language Group Header: Word with thick full-width underline in language color -->
+        <div class="pb-2 border-b-4 w-full" :style="{ borderColor: group.color }">
+          <h2 class="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            {{ group.name }} Quiz Prompts
+          </h2>
         </div>
 
         <!-- Prompts Grid -->
@@ -362,20 +352,17 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               backgroundColor: group.color + '1a'
             }"
           >
-            <div class="space-y-3">
-              <!-- Prompt Card Header: Displayed across full card in language color pill/bar -->
-              <div
-                class="px-3.5 py-2.5 rounded-lg flex items-center justify-between gap-3 text-white shadow-sm transition-all"
-                :style="{ backgroundColor: group.color }"
-              >
-                <h3 class="text-base font-extrabold leading-snug tracking-wide whitespace-nowrap overflow-hidden text-ellipsis flex-1 min-w-0">
+            <div class="space-y-3 flex-1 flex flex-col">
+              <!-- Prompt Card Header: Title prominent, CRUD toolbar on card hover -->
+              <div class="flex items-center justify-between gap-3 min-h-[36px]">
+                <h3 class="text-lg font-black leading-snug tracking-tight text-gray-900 dark:text-white flex-1 min-w-0">
                   {{ p.title }}
                 </h3>
 
-                <!-- Desktop Admin CRUD Tools -->
+                <!-- Desktop Admin CRUD Tools (Visible only on card hover) -->
                 <div
                   v-if="isAdmin"
-                  class="flex items-center gap-1 shrink-0 bg-black/25 backdrop-blur px-2 py-1 rounded-md text-xs shadow-xs"
+                  class="flex items-center gap-1 shrink-0 bg-black/75 backdrop-blur px-2 py-1 rounded-md text-xs shadow-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 >
                   <!-- Add New Prompt in this language -->
                   <button
@@ -436,21 +423,26 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                     title="Delete Prompt"
                     class="p-1 text-red-300 hover:text-red-100 cursor-pointer transition-colors"
                   >
-                    <UIcon name="lucide:trash-2" class="w-4 h-4" />
+                    <UIcon name="lucide:trash-2" class="w-4 h-4 text-red-400" />
                   </button>
                 </div>
               </div>
 
-              <p class="text-xs text-gray-700 dark:text-gray-300 font-mono bg-white/70 dark:bg-gray-950/80 p-3 rounded-lg border border-gray-200/60 dark:border-gray-800/80 leading-relaxed">
+              <!-- Black prompt area extended down to fill space -->
+              <p class="text-xs text-gray-700 dark:text-gray-300 font-mono bg-white/70 dark:bg-gray-950/80 p-3 rounded-lg border border-gray-200/60 dark:border-gray-800/80 leading-relaxed flex-1 flex items-start">
                 "{{ p.prompt }}"
               </p>
             </div>
 
-            <!-- Action Button: Copy and Paste (Language colored with upper-right arrow) -->
+            <!-- Action Button: Copy and Paste (Ghost neon language color style) -->
             <button
               @click="handleCopyAndPaste(p.prompt, p.id)"
-              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer text-white shadow-xs hover:brightness-110 active:scale-[0.99]"
-              :style="{ backgroundColor: copiedPromptId === p.id ? '#059669' : group.color }"
+              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-2 hover:bg-white/10 active:scale-[0.99]"
+              :style="{
+                borderColor: copiedPromptId === p.id ? '#059669' : group.color,
+                color: copiedPromptId === p.id ? '#059669' : group.color,
+                backgroundColor: copiedPromptId === p.id ? '#0596691a' : 'transparent'
+              }"
             >
               <template v-if="copiedPromptId === p.id">
                 <UIcon name="lucide:check" class="w-4 h-4" />
