@@ -317,7 +317,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <div>
       <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Gemini Quiz Prompts</h1>
       <p class="text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">
-        Click any prompt's <strong class="text-purple-600 dark:text-purple-400">Copy and Paste</strong> button below to copy the prompt to your clipboard and automatically open <span class="whitespace-nowrap font-medium">Gemini&nbsp;AI</span> in a new tab where you can paste it to generate an interactive quiz.
+        Click any prompt's <strong class="text-white font-semibold">Copy and Paste</strong> button below to copy the prompt to your clipboard and automatically open <span class="whitespace-nowrap font-medium text-white">Gemini&nbsp;AI</span> in a new tab where you can paste it to generate an interactive quiz.
       </p>
     </div>
 
@@ -334,9 +334,9 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <!-- Grouped Prompts by Language -->
     <div v-else class="space-y-10">
       <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
-        <!-- Language Group Header: Word with thick full-width underline in language color -->
-        <div class="pb-2 border-b-4 w-full" :style="{ borderColor: group.color }">
-          <h2 class="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+        <!-- Language Group Header: Word with thick full-width underline directly under text -->
+        <div class="border-b-4 w-full" :style="{ borderColor: group.color }">
+          <h2 class="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight pb-0 leading-tight">
             {{ group.name }} Quiz Prompts
           </h2>
         </div>
@@ -346,23 +346,27 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
           <div
             v-for="(p, idx) in group.items"
             :key="p.id"
-            class="group p-4 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 transition-all duration-200"
+            class="group relative p-4 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 transition-all duration-200"
             :style="{
               borderColor: group.color + '66',
               backgroundColor: group.color + '1a'
             }"
           >
             <div class="space-y-3 flex-1 flex flex-col">
-              <!-- Prompt Card Header: Title prominent, CRUD toolbar on card hover -->
-              <div class="flex items-center justify-between gap-3 min-h-[36px]">
-                <h3 class="text-lg font-black leading-snug tracking-tight text-gray-900 dark:text-white flex-1 min-w-0">
+              <!-- Prompt Card Header Container -->
+              <div class="relative min-h-[36px] flex items-center">
+                <!-- Card Title extending 100% width with pill background -->
+                <h3
+                  class="w-full text-center text-sm font-extrabold tracking-wide text-white py-1.5 px-4 rounded-full shadow-xs truncate"
+                  :style="{ backgroundColor: group.color }"
+                >
                   {{ p.title }}
                 </h3>
 
-                <!-- Desktop Admin CRUD Tools (Visible only on card hover) -->
+                <!-- Desktop Admin CRUD Tools (Covers up title on card hover without breaking header layout) -->
                 <div
                   v-if="isAdmin"
-                  class="flex items-center gap-1 shrink-0 bg-black/75 backdrop-blur px-2 py-1 rounded-md text-xs shadow-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  class="absolute inset-0 flex items-center justify-center gap-1 bg-gray-900/95 backdrop-blur px-3 py-1 rounded-full text-xs shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200 z-10"
                 >
                   <!-- Add New Prompt in this language -->
                   <button
@@ -417,13 +421,13 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                     <UIcon name="lucide:copy" class="w-4 h-4" />
                   </button>
 
-                  <!-- Delete (Lighter Red Link for high visibility) -->
+                  <!-- Delete (Dark red link, hard to click, requests confirmation) -->
                   <button
                     @click="confirmDelete(p)"
                     title="Delete Prompt"
-                    class="p-1 text-red-300 hover:text-red-100 cursor-pointer transition-colors"
+                    class="p-1 text-red-900/80 hover:text-red-700 cursor-pointer transition-colors text-xs font-semibold underline decoration-red-950"
                   >
-                    <UIcon name="lucide:trash-2" class="w-4 h-4 text-red-400" />
+                    <UIcon name="lucide:trash-2" class="w-4 h-4 text-red-900" />
                   </button>
                 </div>
               </div>
@@ -434,14 +438,14 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               </p>
             </div>
 
-            <!-- Action Button: Copy and Paste (Ghost neon language color style) -->
+            <!-- Action Button: Copy and Paste (Lighter version of language color background) -->
             <button
               @click="handleCopyAndPaste(p.prompt, p.id)"
-              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-2 hover:bg-white/10 active:scale-[0.99]"
+              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-2 hover:opacity-90 active:scale-[0.99]"
               :style="{
                 borderColor: copiedPromptId === p.id ? '#059669' : group.color,
                 color: copiedPromptId === p.id ? '#059669' : group.color,
-                backgroundColor: copiedPromptId === p.id ? '#0596691a' : 'transparent'
+                backgroundColor: copiedPromptId === p.id ? '#0596691a' : (group.color + '26')
               }"
             >
               <template v-if="copiedPromptId === p.id">
