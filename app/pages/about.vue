@@ -263,7 +263,16 @@ interface DropdownVersionOption {
 }
 
 // Ordered: move to new version -> FUTURE -> INCOMING (once) -> IN_PROGRESS, excludes PUBLISHED
-function getVersionsForDropdownOptions(includeAll: boolean = true, currentVersionId?: string | null): DropdownVersionOption[] {
+function getVersionsForDropdownOptions(includeAllOrVersionId: boolean | string | null = true, currentVersionIdParam?: string | null): DropdownVersionOption[] {
+  let includeAll = true
+  let currentVersionId: string | null | undefined = currentVersionIdParam
+
+  if (typeof includeAllOrVersionId === 'boolean') {
+    includeAll = includeAllOrVersionId
+  } else {
+    currentVersionId = includeAllOrVersionId
+  }
+
   const options: DropdownVersionOption[] = []
 
   // 1. All FUTURE versions
