@@ -277,9 +277,135 @@ onMounted(() => {
 
     <div v-else class="flex flex-col space-y-4 md:space-y-8">
       
-      <!-- Word Pool Container / One-time Reveal Toggle on Mobile -->
+      <!-- Phrases Cards Grid (Shown FIRST on mobile & desktop) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+        <div
+          v-for="(item, idx) in currentBatch"
+          :key="item.id"
+          @dragover.prevent
+          @drop="onDropOnItem(idx)"
+          class="p-3 md:p-5 rounded-xl md:rounded-2xl bg-white dark:bg-[#182030] border transition-all duration-200 shadow-sm flex flex-col justify-between"
+          :style="{
+            borderColor: item.currentPlacedAnswer 
+              ? (item.currentPlacedAnswer === item.answerText ? currentLanguageColor : `color-mix(in srgb, ${currentLanguageColor} 40%, transparent)`)
+              : `color-mix(in srgb, ${currentLanguageColor} 40%, #4b5563)`,
+            backgroundColor: item.currentPlacedAnswer 
+              ? (item.currentPlacedAnswer === item.answerText ? `color-mix(in srgb, ${currentLanguageColor} 12%, transparent)` : 'transparent')
+              : undefined
+          }"
+        >
+          <!-- Desktop Header with Phrase label & icons -->
+          <div class="hidden md:flex items-center justify-between gap-2 border-b border-gray-100 dark:border-gray-800/60 pb-2 mb-3">
+            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              Phrase {{ idx + 1 }}
+            </span>
+            <div class="flex items-center gap-2">
+              <!-- 3 examples icon button (Shown ONLY when correctly dropped) -->
+              <button
+                v-if="item.currentPlacedAnswer === item.answerText"
+                @click="openThreeExamples(item.answerText)"
+                title="Get 3 examples of this word"
+                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer animate-pop-spin"
+              >
+                <SparklesIcon class="w-4 h-4 text-amber-500" />
+              </button>
+              <!-- Toggle front text -->
+              <button
+                @click="toggleShowFront(item.id)"
+                title="Toggle show Front text"
+                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                :class="{ 'text-amber-500 dark:text-amber-400': activeFrontCardId === item.id }"
+              >
+                <ArrowPathIcon class="w-4 h-4" />
+              </button>
+              <!-- Edit permalink -->
+              <NuxtLink
+                :to="`/flashcard/${item.id}?fromActivity=true`"
+                title="Edit flashcard permalink"
+                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+              >
+                <PencilSquareIcon class="w-4 h-4" />
+              </NuxtLink>
+            </div>
+          </div>
+
+          <!-- Card Content Body (Mobile compact inline layout vs Desktop card body) -->
+          <div class="flex-1 flex items-center justify-between gap-2">
+            
+            <!-- Toggled Front text mode (High-contrast text matching back text) -->
+            <div v-if="activeFrontCardId === item.id" class="text-sm md:text-base font-semibold text-gray-900 dark:text-white leading-relaxed italic">
+              {{ item.fullFront }}
+            </div>
+
+            <!-- Back text fill-in-the-blank mode -->
+            <div v-else class="text-sm md:text-base font-medium text-gray-900 dark:text-white flex flex-wrap items-center gap-1 md:gap-1.5 leading-relaxed flex-1">
+              <span>{{ item.displayBack.split('_______')[0] }}</span>
+
+              <!-- Drop target slot / placed answer pill -->
+              <button
+                v-if="item.currentPlacedAnswer"
+                @click="removePlacedAnswer(idx)"
+                class="px-2.5 py-1 rounded-lg text-sm font-semibold transition-transform cursor-pointer flex items-center gap-1 shadow-xs h-8 border"
+                :style="{
+                  backgroundColor: item.currentPlacedAnswer === item.answerText 
+                    ? currentLanguageColor 
+                    : 'transparent',
+                  color: item.currentPlacedAnswer === item.answerText 
+                    ? '#ffffff' 
+                    : currentLanguageColor,
+                  borderColor: currentLanguageColor,
+                  borderStyle: item.currentPlacedAnswer === item.answerText ? 'solid' : 'dashed'
+                }"
+                title="Click to remove"
+              >
+                <span>{{ item.currentPlacedAnswer }}</span>
+                <span class="text-xs opacity-80">{{ item.currentPlacedAnswer === item.answerText ? '✓' : '✕' }}</span>
+              </button>
+
+              <div
+                v-else
+                class="inline-block min-w-[60px] md:min-w-[75px] h-8 border-2 border-dashed border-gray-400 dark:border-gray-500 rounded-lg bg-gray-100/80 dark:bg-gray-950/80 transition-colors shadow-inner"
+              ></div>
+
+              <span>{{ item.displayBack.split('_______')[1] }}</span>
+            </div>
+
+            <!-- Mobile inline action buttons right after phrase -->
+            <div class="flex md:hidden items-center gap-1 shrink-0 ml-1">
+              <!-- 3 examples icon button (Shown ONLY when correctly dropped) -->
+              <button
+                v-if="item.currentPlacedAnswer === item.answerText"
+                @click="openThreeExamples(item.answerText)"
+                title="Get 3 examples of this word"
+                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer animate-pop-spin"
+              >
+                <SparklesIcon class="w-3.5 h-3.5 text-amber-500" />
+              </button>
+              <!-- Toggle front text -->
+              <button
+                @click="toggleShowFront(item.id)"
+                title="Toggle show Front text"
+                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                :class="{ 'text-amber-500 dark:text-amber-400': activeFrontCardId === item.id }"
+              >
+                <ArrowPathIcon class="w-3.5 h-3.5" />
+              </button>
+              <!-- Edit permalink -->
+              <NuxtLink
+                :to="`/flashcard/${item.id}?fromActivity=true`"
+                title="Edit flashcard permalink"
+                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+              >
+                <PencilSquareIcon class="w-3.5 h-3.5" />
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Word Pool Container (Shown at the BOTTOM on both mobile & desktop) -->
       <div 
-        class="order-first md:order-last p-3 md:p-6 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800 space-y-2 md:space-y-3"
+        class="p-3 md:p-6 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800 space-y-2 md:space-y-3"
       >
         <!-- Mobile Reveal Toggle Button (if words not yet revealed on mobile) -->
         <button
@@ -311,131 +437,6 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- Phrases Cards Grid (Shown SECOND on mobile, FIRST on desktop) -->
-      <div class="order-last md:order-first grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-        <div
-          v-for="(item, idx) in currentBatch"
-          :key="item.id"
-          @dragover.prevent
-          @drop="onDropOnItem(idx)"
-          class="p-3 md:p-5 rounded-xl md:rounded-2xl bg-white dark:bg-[#182030] border transition-all duration-200 shadow-sm flex flex-col justify-between"
-          :style="{
-            borderColor: item.currentPlacedAnswer 
-              ? (item.currentPlacedAnswer === item.answerText ? currentLanguageColor : `color-mix(in srgb, ${currentLanguageColor} 40%, transparent)`)
-              : `color-mix(in srgb, ${currentLanguageColor} 40%, #4b5563)`,
-            backgroundColor: item.currentPlacedAnswer 
-              ? (item.currentPlacedAnswer === item.answerText ? `color-mix(in srgb, ${currentLanguageColor} 12%, transparent)` : 'transparent')
-              : undefined
-          }"
-        >
-          <!-- Desktop Header with Phrase label & icons -->
-          <div class="hidden md:flex items-center justify-between gap-2 border-b border-gray-100 dark:border-gray-800/60 pb-2 mb-3">
-            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-              Phrase {{ idx + 1 }}
-            </span>
-            <div class="flex items-center gap-2">
-              <!-- 3 examples icon button -->
-              <button
-                @click="openThreeExamples(item.answerText)"
-                title="Get 3 examples of this word"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-              >
-                <SparklesIcon class="w-4 h-4 text-amber-500" />
-              </button>
-              <!-- Toggle front text -->
-              <button
-                @click="toggleShowFront(item.id)"
-                title="Toggle show Front text"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-                :class="{ 'text-amber-500 dark:text-amber-400': activeFrontCardId === item.id }"
-              >
-                <ArrowPathIcon class="w-4 h-4" />
-              </button>
-              <!-- Edit permalink -->
-              <NuxtLink
-                :to="`/flashcard/${item.id}?fromActivity=true`"
-                title="Edit flashcard permalink"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-              >
-                <PencilSquareIcon class="w-4 h-4" />
-              </NuxtLink>
-            </div>
-          </div>
-
-          <!-- Card Content Body (Mobile compact inline layout vs Desktop card body) -->
-          <div class="flex-1 flex items-center justify-between gap-2">
-            
-            <!-- Toggled Front text mode -->
-            <div v-if="activeFrontCardId === item.id" class="text-sm md:text-base font-semibold leading-relaxed italic" :style="{ color: currentLanguageColor }">
-              {{ item.fullFront }}
-            </div>
-
-            <!-- Back text fill-in-the-blank mode -->
-            <div v-else class="text-sm md:text-base font-medium text-gray-900 dark:text-white flex flex-wrap items-center gap-1 md:gap-1.5 leading-relaxed flex-1">
-              <span>{{ item.displayBack.split('_______')[0] }}</span>
-
-              <!-- Drop target slot / placed answer pill -->
-              <button
-                v-if="item.currentPlacedAnswer"
-                @click="removePlacedAnswer(idx)"
-                class="px-2.5 py-1 rounded-lg text-sm font-semibold transition-transform cursor-pointer flex items-center gap-1 shadow-xs h-8 border"
-                :style="{
-                  backgroundColor: item.currentPlacedAnswer === item.answerText 
-                    ? currentLanguageColor 
-                    : 'transparent',
-                  color: item.currentPlacedAnswer === item.answerText 
-                    ? '#ffffff' 
-                    : currentLanguageColor,
-                  borderColor: currentLanguageColor,
-                  borderStyle: item.currentPlacedAnswer === item.answerText ? 'solid' : 'dashed'
-                }"
-                title="Click to remove"
-              >
-                <span>{{ item.currentPlacedAnswer }}</span>
-                <span class="text-xs opacity-80">{{ item.currentPlacedAnswer === item.answerText ? '✓' : '✕' }}</span>
-              </button>
-
-              <div
-                v-else
-                class="inline-block min-w-[60px] md:min-w-[70px] h-8 border-2 border-dashed rounded-lg bg-gray-50 dark:bg-gray-950/60"
-                :style="{ borderColor: `color-mix(in srgb, ${currentLanguageColor} 40%, transparent)` }"
-              ></div>
-
-              <span>{{ item.displayBack.split('_______')[1] }}</span>
-            </div>
-
-            <!-- Mobile inline action buttons right after phrase -->
-            <div class="flex md:hidden items-center gap-1 shrink-0 ml-1">
-              <!-- 3 examples icon button -->
-              <button
-                @click="openThreeExamples(item.answerText)"
-                title="Get 3 examples of this word"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-              >
-                <SparklesIcon class="w-3.5 h-3.5 text-amber-500" />
-              </button>
-              <!-- Toggle front text -->
-              <button
-                @click="toggleShowFront(item.id)"
-                title="Toggle show Front text"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-                :class="{ 'text-amber-500 dark:text-amber-400': activeFrontCardId === item.id }"
-              >
-                <ArrowPathIcon class="w-3.5 h-3.5" />
-              </button>
-              <!-- Edit permalink -->
-              <NuxtLink
-                :to="`/flashcard/${item.id}?fromActivity=true`"
-                title="Edit flashcard permalink"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-              >
-                <PencilSquareIcon class="w-3.5 h-3.5" />
-              </NuxtLink>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Success & Next Button Banner (Mobile: Centered Next Group floating button, Desktop: full banner) -->
       <div v-if="isFinished" class="py-3 md:p-6 rounded-xl md:rounded-2xl md:bg-emerald-500/10 md:border md:border-emerald-500/30 text-center space-y-2 md:space-y-4 shadow-none md:shadow-md flex flex-col items-center justify-center">
         <div class="hidden md:flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-lg">
@@ -454,3 +455,24 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes popSpin {
+  0% {
+    transform: scale(0.5) rotate(-45deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.25) rotate(15deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-pop-spin {
+  animation: popSpin 0.45s ease-out forwards;
+}
+</style>
