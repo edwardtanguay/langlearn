@@ -517,8 +517,7 @@ onMounted(() => {
 
               <div
                 v-else
-                class="drop-target inline-block min-w-[50px] h-[1.3em] mx-0.5 border-2 border-dashed rounded bg-gray-100/80 dark:bg-gray-950/80 transition-colors shadow-inner align-middle"
-                :style="{ borderColor: currentLanguageColor }"
+                class="drop-target inline-block min-w-[60px] h-[1.3em] mx-1 rounded bg-gray-400/20 dark:bg-gray-400/15 border border-gray-400/30 dark:border-gray-500/30 transition-colors shadow-xs align-middle"
               ></div>
 
               <span>{{ item.displayBack.split('_______')[1] }}</span>
