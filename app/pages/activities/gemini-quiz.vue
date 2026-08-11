@@ -54,7 +54,7 @@ const languageNames: Record<string, string> = {
 
 const languageColors: Record<string, string> = {
   fr: '#333388',
-  es: '#be185d',
+  es: '#b91c1c',
   it: '#194d19',
   nl: '#d97706',
   pl: '#b8b8b8',
