@@ -8,72 +8,46 @@ const adapter = new PrismaLibSql({
 })
 const prisma = new PrismaClient({ adapter })
 
-const newPrompts = [
-  // Spanish
+const additionalPrompts = [
+  // B1 Spanish
   {
     language: 'es',
-    title: 'ser vs. estar',
-    prompt: 'Create an interactive quiz on the subject of distinguishing between ser and estar in various contexts and sentence structures. Make the content of the quiz, including the instructions, entirely in Spanish.',
+    title: 'B1 topics',
+    prompt: 'Create an interactive quiz on the subject of B1 level vocabulary and reading comprehension covering everyday topics and intermediate grammar. Make the content of the quiz, including the instructions, entirely in Spanish.',
+    rank: 0
+  },
+
+  // Italian Prompts (4 total, including B1 topics)
+  {
+    language: 'it',
+    title: 'B1 topics',
+    prompt: 'Create an interactive quiz on the subject of B1 level vocabulary and reading comprehension covering everyday topics and intermediate grammar. Make the content of the quiz, including the instructions, entirely in Italian.',
     rank: 1
   },
   {
-    language: 'es',
-    title: 'subjuntivo vs. indicativo',
-    prompt: 'Create an interactive quiz on the subject of choosing between the subjunctive (presente de subjuntivo) and indicative moods in subclauses. Make the content of the quiz, including the instructions, entirely in Spanish.',
+    language: 'it',
+    title: 'passato prossimo vs. imperfetto',
+    prompt: 'Create an interactive quiz on the subject of contrasting passato prossimo and imperfetto tenses in narrative contexts. Make the content of the quiz, including the instructions, entirely in Italian.',
     rank: 2
   },
   {
-    language: 'es',
-    title: 'por vs. para',
-    prompt: 'Create an interactive quiz on the subject of correct usage of prepositions por and para with practice exercises. Make the content of the quiz, including the instructions, entirely in Spanish.',
-    rank: 3
-  },
-
-  // German
-  {
-    language: 'de',
-    title: 'Wechselpräpositionen',
-    prompt: 'Create an interactive quiz on the subject of two-way prepositions (Wechselpräpositionen) and deciding between Dativ and Akkusativ depending on motion vs. location. Make the content of the quiz, including the instructions, entirely in German.',
-    rank: 2
-  },
-  {
-    language: 'de',
-    title: 'Konjunktiv II',
-    prompt: 'Create an interactive quiz on the subject of Konjunktiv II for hypothetical situations, wishes, and polite requests. Make the content of the quiz, including the instructions, entirely in German.',
+    language: 'it',
+    title: 'congiuntivo presente',
+    prompt: 'Create an interactive quiz on the subject of present subjunctive (congiuntivo presente) usage after verbs of opinion, emotion, and doubt. Make the content of the quiz, including the instructions, entirely in Italian.',
     rank: 3
   },
   {
-    language: 'de',
-    title: 'Adjektivdeklination',
-    prompt: 'Create an interactive quiz on the subject of adjective endings after definite, indefinite, and zero articles across all four cases. Make the content of the quiz, including the instructions, entirely in German.',
-    rank: 4
-  },
-
-  // Dutch
-  {
-    language: 'nl',
-    title: 'er & prepositional adverbs',
-    prompt: 'Create an interactive quiz on the subject of using the word "er" with prepositions and in existential sentences (er is/er zijn). Make the content of the quiz, including the instructions, entirely in Dutch.',
-    rank: 2
-  },
-  {
-    language: 'nl',
-    title: 'de vs. het and adjectival -e',
-    prompt: 'Create an interactive quiz on the subject of article selection (de vs. het) and the rules for adding -e to adjectives. Make the content of the quiz, including the instructions, entirely in Dutch.',
-    rank: 3
-  },
-  {
-    language: 'nl',
-    title: 'word order & inversion',
-    prompt: 'Create an interactive quiz on the subject of Dutch main clause and subclause word order, inversion, and verb placement at the end of subclauses. Make the content of the quiz, including the instructions, entirely in Dutch.',
+    language: 'it',
+    title: 'ci and ne pronominal particles',
+    prompt: 'Create an interactive quiz on the subject of using pronominal particles "ci" and "ne" in everyday Italian sentences. Make the content of the quiz, including the instructions, entirely in Italian.',
     rank: 4
   }
 ]
 
-async function seedGrammarPrompts() {
-  console.log('Seeding difficult grammar topics for Spanish, German, and Dutch...')
+async function seedAdditionalPrompts() {
+  console.log('Seeding B1 Spanish and 4 Italian prompts into the database...')
 
-  for (const item of newPrompts) {
+  for (const item of additionalPrompts) {
     const created = await prisma.chatbotPrompt.create({
       data: {
         category: 'geminiQuizPrompts',
@@ -83,13 +57,13 @@ async function seedGrammarPrompts() {
         rank: item.rank
       }
     })
-    console.log(`Created [${created.language}] ${created.title} (ID: ${created.id})`)
+    console.log(`Created [${created.language}] "${created.title}" (ID: ${created.id})`)
   }
 
-  console.log('Database seeding completed successfully!')
+  console.log('Database seeding of Spanish B1 and Italian prompts completed successfully!')
 }
 
-seedGrammarPrompts()
+seedAdditionalPrompts()
   .catch((err) => {
     console.error('Seeding failed:', err)
     process.exit(1)
