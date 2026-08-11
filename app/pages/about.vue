@@ -263,12 +263,12 @@ interface DropdownVersionOption {
 }
 
 // Ordered: move to new version -> FUTURE -> INCOMING (once) -> IN_PROGRESS, excludes PUBLISHED
-function getVersionsForDropdownOptions(currentVersionId?: string | null): DropdownVersionOption[] {
+function getVersionsForDropdownOptions(includeAll: boolean = true, currentVersionId?: string | null): DropdownVersionOption[] {
   const options: DropdownVersionOption[] = []
 
   // 1. All FUTURE versions
   const futureVers = versions.value
-    .filter(v => v.status === 'FUTURE_VERSION' && v.id !== currentVersionId)
+    .filter(v => v.status === 'FUTURE_VERSION' && (includeAll || v.id !== currentVersionId))
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
 
   for (const f of futureVers) {
@@ -283,7 +283,7 @@ function getVersionsForDropdownOptions(currentVersionId?: string | null): Dropdo
   const incomingVer = versions.value.find(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
   const incomingId = incomingVer?.id || 'none'
 
-  if (currentVersionId !== null && currentVersionId !== 'none' && currentVersionId !== incomingId) {
+  if (includeAll || (currentVersionId !== null && currentVersionId !== 'none' && currentVersionId !== incomingId)) {
     options.push({
       id: 'none',
       label: 'Incoming Ideas',
@@ -293,7 +293,7 @@ function getVersionsForDropdownOptions(currentVersionId?: string | null): Dropdo
 
   // 3. All IN_PROGRESS versions
   const inProgressVers = versions.value
-    .filter(v => v.status === 'IN_PROGRESS' && v.id !== currentVersionId)
+    .filter(v => v.status === 'IN_PROGRESS' && (includeAll || v.id !== currentVersionId))
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
 
   for (const p of inProgressVers) {
@@ -563,7 +563,7 @@ const openAddItem = (versionId: string | null, afterItemId?: string, sourceItem?
     itemRankStr.value = newRank.toString()
     editingItem.value = {
       id: '',
-      versionId: sourceItem.versionId || versionId || 'none',
+      versionId: versionId || sourceItem.versionId || 'none',
       versionCategoryId: sourceItem.versionCategoryId || '',
       afterItemId: afterItemId || '',
       body: '',
