@@ -497,7 +497,7 @@ onMounted(() => {
               <button
                 v-if="item.currentPlacedAnswer"
                 @click.stop="removePlacedAnswer(idx)"
-                class="drop-target inline-flex items-center gap-1 px-1 py-0.5 mx-0.5 rounded text-sm md:text-base font-semibold transition-transform cursor-pointer border align-baseline leading-normal shadow-xs"
+                class="drop-target inline-flex items-center justify-center gap-1 px-1.5 py-0 mx-0.5 rounded text-sm md:text-base font-semibold transition-transform cursor-pointer border align-middle leading-none shadow-xs h-[1.35em]"
                 :style="{
                   backgroundColor: item.currentPlacedAnswer === item.answerText 
                     ? currentLanguageColor 
@@ -512,7 +512,7 @@ onMounted(() => {
                 }"
                 title="Click to remove"
               >
-                <span>{{ item.currentPlacedAnswer }}</span>
+                <span class="leading-none flex items-center justify-center -translate-y-0.5">{{ item.currentPlacedAnswer }}</span>
               </button>
 
               <div
@@ -583,14 +583,14 @@ onMounted(() => {
             @touchmove="onTouchMove($event)"
             @touchend="onTouchEnd"
             @touchcancel="onTouchCancel"
-            class="px-1 py-0.5 rounded text-sm md:text-base font-semibold transition-all cursor-grab active:cursor-grabbing shadow-xs flex items-center justify-center border select-none touch-none"
+            class="px-2.5 py-1 rounded text-sm md:text-base font-semibold transition-all cursor-grab active:cursor-grabbing shadow-xs inline-flex items-center justify-center leading-none border select-none touch-none"
             :style="{
               backgroundColor: currentLanguageColor,
               color: '#ffffff',
               borderColor: currentLanguageColor
             }"
           >
-            {{ ans }}
+            <span class="leading-none flex items-center justify-center -translate-y-0.5">{{ ans }}</span>
           </button>
         </div>
       </div>
