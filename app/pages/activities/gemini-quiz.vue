@@ -354,8 +354,8 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <div v-else class="space-y-10">
       <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
         <!-- Language Group Header: Word with thick full-width underline directly under text with ZERO space -->
-        <div class="border-b-4 w-full border-t-0 pt-0 pb-0 flex flex-col items-start" :style="{ borderColor: group.color }">
-          <div class="text-2xl text-gray-900 dark:text-white tracking-tight p-0 m-0 leading-none inline-block translate-y-[2px]">
+        <div class="border-b-2 w-full border-t-0 pt-0 pb-0 flex flex-col items-start" :style="{ borderColor: group.color }">
+          <div class="text-2xl text-gray-900 dark:text-white tracking-tight p-0 mb-2 leading-none inline-block translate-y-[2px]">
             {{ group.name }}
           </div>
         </div>
@@ -384,11 +384,11 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                   {{ p.title }}
                 </h3>
 
-                <!-- Desktop Admin CRUD Tools (Displayed on title click; click bar area closes it; light white border) -->
+                <!-- Desktop Admin CRUD Tools (Displayed on title click; click bar area closes it; solid black bg, no border) -->
                 <div
                   v-if="isAdmin && activeCrudPromptId === p.id"
                   @click="toggleCrudToolbar(p.id, $event)"
-                  class="absolute inset-0 flex items-center justify-center gap-1 bg-gray-900/95 backdrop-blur px-3 py-1 rounded-full text-xs shadow-md border border-white/20 transition-all duration-200 z-10 cursor-pointer"
+                  class="absolute inset-0 flex items-center justify-center gap-1 bg-black px-3 py-1 rounded-full text-xs shadow-md transition-all duration-200 z-10 cursor-pointer"
                 >
                   <!-- Add New Prompt in this language -->
                   <button
@@ -400,7 +400,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                   </button>
 
                   <template v-if="group.items.length > 1">
-                    <span class="text-white/30 mx-0.5">|</span>
+                    <span class="h-3 w-px bg-white/15 mx-1 self-center -translate-y-[1px]"></span>
 
                     <!-- Reorder Up -->
                     <button
@@ -423,7 +423,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                     </button>
                   </template>
 
-                  <span class="text-white/30 mx-0.5">|</span>
+                  <span class="h-3 w-px bg-white/15 mx-1 self-center -translate-y-[1px]"></span>
 
                   <!-- Edit -->
                   <button
