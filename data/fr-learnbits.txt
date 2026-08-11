@@ -458,3 +458,6 @@
 						- IPER: fais, faisons, faites
 						- PRPA: faisant
 
+- sound-alikes
+	- quelles que soient les circonstances
+		- quelque soit
