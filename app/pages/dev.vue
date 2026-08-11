@@ -157,9 +157,9 @@ const languageColors: Record<string, string> = {
   fr: '#333388',
   es: '#be185d',
   it: '#194d19',
-  nl: '#d97706',
+  nl: '#facc15',
   pl: '#b8b8b8',
-  de: '#7e4402',
+  de: '#3d1e03',
   ru: '#3f3f46',
   is: '#06b6d4',
   da: '#7e22ce',
@@ -407,7 +407,8 @@ onUnmounted(() => {
                 <tr
                   v-for="card in filteredAndSortedCards"
                   :key="card.id"
-                  class="border-b border-gray-900/40 hover:bg-gray-900/60 transition-colors"
+                  @click="navigateTo('/flashcard/' + card.id)"
+                  class="border-b border-gray-900/40 hover:bg-gray-900/60 transition-colors cursor-pointer"
                 >
                   <td class="py-1.5 px-2 truncate" :title="card.front + '\n' + card.back">
                     <span

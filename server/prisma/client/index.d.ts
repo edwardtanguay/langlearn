@@ -6440,6 +6440,7 @@ export namespace Prisma {
     rank: number | null
     startedByUserId: string | null
     orderWithinVersion: number | null
+    isTested: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6453,6 +6454,7 @@ export namespace Prisma {
     rank: number | null
     startedByUserId: string | null
     orderWithinVersion: number | null
+    isTested: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6466,6 +6468,7 @@ export namespace Prisma {
     rank: number
     startedByUserId: number
     orderWithinVersion: number
+    isTested: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6491,6 +6494,7 @@ export namespace Prisma {
     rank?: true
     startedByUserId?: true
     orderWithinVersion?: true
+    isTested?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6504,6 +6508,7 @@ export namespace Prisma {
     rank?: true
     startedByUserId?: true
     orderWithinVersion?: true
+    isTested?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6517,6 +6522,7 @@ export namespace Prisma {
     rank?: true
     startedByUserId?: true
     orderWithinVersion?: true
+    isTested?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6617,6 +6623,7 @@ export namespace Prisma {
     rank: number
     startedByUserId: string | null
     orderWithinVersion: number
+    isTested: boolean
     createdAt: Date
     updatedAt: Date
     _count: VersionItemCountAggregateOutputType | null
@@ -6649,6 +6656,7 @@ export namespace Prisma {
     rank?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
+    isTested?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     version?: boolean | VersionItem$versionArgs<ExtArgs>
@@ -6665,6 +6673,7 @@ export namespace Prisma {
     rank?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
+    isTested?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     version?: boolean | VersionItem$versionArgs<ExtArgs>
@@ -6681,6 +6690,7 @@ export namespace Prisma {
     rank?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
+    isTested?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     version?: boolean | VersionItem$versionArgs<ExtArgs>
@@ -6697,11 +6707,12 @@ export namespace Prisma {
     rank?: boolean
     startedByUserId?: boolean
     orderWithinVersion?: boolean
+    isTested?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VersionItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionId" | "versionCategoryId" | "type" | "body" | "rank" | "startedByUserId" | "orderWithinVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["versionItem"]>
+  export type VersionItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionId" | "versionCategoryId" | "type" | "body" | "rank" | "startedByUserId" | "orderWithinVersion" | "isTested" | "createdAt" | "updatedAt", ExtArgs["result"]["versionItem"]>
   export type VersionItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     version?: boolean | VersionItem$versionArgs<ExtArgs>
     versionCategory?: boolean | VersionItem$versionCategoryArgs<ExtArgs>
@@ -6734,6 +6745,7 @@ export namespace Prisma {
       rank: number
       startedByUserId: string | null
       orderWithinVersion: number
+      isTested: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["versionItem"]>
@@ -7170,6 +7182,7 @@ export namespace Prisma {
     readonly rank: FieldRef<"VersionItem", 'Float'>
     readonly startedByUserId: FieldRef<"VersionItem", 'String'>
     readonly orderWithinVersion: FieldRef<"VersionItem", 'Int'>
+    readonly isTested: FieldRef<"VersionItem", 'Boolean'>
     readonly createdAt: FieldRef<"VersionItem", 'DateTime'>
     readonly updatedAt: FieldRef<"VersionItem", 'DateTime'>
   }
@@ -13246,6 +13259,7 @@ export namespace Prisma {
     rank: 'rank',
     startedByUserId: 'startedByUserId',
     orderWithinVersion: 'orderWithinVersion',
+    isTested: 'isTested',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -13358,6 +13372,13 @@ export namespace Prisma {
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
   /**
    * Deep Input Types
@@ -13632,6 +13653,7 @@ export namespace Prisma {
     rank?: FloatFilter<"VersionItem"> | number
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
+    isTested?: BoolFilter<"VersionItem"> | boolean
     createdAt?: DateTimeFilter<"VersionItem"> | Date | string
     updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
     version?: XOR<VersionNullableScalarRelationFilter, VersionWhereInput> | null
@@ -13648,6 +13670,7 @@ export namespace Prisma {
     rank?: SortOrder
     startedByUserId?: SortOrderInput | SortOrder
     orderWithinVersion?: SortOrder
+    isTested?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     version?: VersionOrderByWithRelationInput
@@ -13667,6 +13690,7 @@ export namespace Prisma {
     rank?: FloatFilter<"VersionItem"> | number
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
+    isTested?: BoolFilter<"VersionItem"> | boolean
     createdAt?: DateTimeFilter<"VersionItem"> | Date | string
     updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
     version?: XOR<VersionNullableScalarRelationFilter, VersionWhereInput> | null
@@ -13683,6 +13707,7 @@ export namespace Prisma {
     rank?: SortOrder
     startedByUserId?: SortOrderInput | SortOrder
     orderWithinVersion?: SortOrder
+    isTested?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: VersionItemCountOrderByAggregateInput
@@ -13704,6 +13729,7 @@ export namespace Prisma {
     rank?: FloatWithAggregatesFilter<"VersionItem"> | number
     startedByUserId?: StringNullableWithAggregatesFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntWithAggregatesFilter<"VersionItem"> | number
+    isTested?: BoolWithAggregatesFilter<"VersionItem"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"VersionItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"VersionItem"> | Date | string
   }
@@ -14309,6 +14335,7 @@ export namespace Prisma {
     body: string
     rank?: number
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     version?: VersionCreateNestedOneWithoutVersionItemsInput
@@ -14325,6 +14352,7 @@ export namespace Prisma {
     rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14335,6 +14363,7 @@ export namespace Prisma {
     body?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     version?: VersionUpdateOneWithoutVersionItemsNestedInput
@@ -14351,6 +14380,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14364,6 +14394,7 @@ export namespace Prisma {
     rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14374,6 +14405,7 @@ export namespace Prisma {
     body?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14387,6 +14419,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15060,6 +15093,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type VersionNullableScalarRelationFilter = {
     is?: VersionWhereInput | null
     isNot?: VersionWhereInput | null
@@ -15084,6 +15122,7 @@ export namespace Prisma {
     rank?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
+    isTested?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15102,6 +15141,7 @@ export namespace Prisma {
     rank?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
+    isTested?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15115,6 +15155,7 @@ export namespace Prisma {
     rank?: SortOrder
     startedByUserId?: SortOrder
     orderWithinVersion?: SortOrder
+    isTested?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15122,6 +15163,14 @@ export namespace Prisma {
   export type VersionItemSumOrderByAggregateInput = {
     rank?: SortOrder
     orderWithinVersion?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -15657,6 +15706,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type VersionUpdateOneWithoutVersionItemsNestedInput = {
     create?: XOR<VersionCreateWithoutVersionItemsInput, VersionUncheckedCreateWithoutVersionItemsInput>
     connectOrCreate?: VersionCreateOrConnectWithoutVersionItemsInput
@@ -16132,6 +16185,19 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type FlashcardCreateWithoutOwnerInput = {
     id?: string
     front: string
@@ -16208,6 +16274,7 @@ export namespace Prisma {
     body: string
     rank?: number
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     version?: VersionCreateNestedOneWithoutVersionItemsInput
@@ -16222,6 +16289,7 @@ export namespace Prisma {
     body: string
     rank?: number
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16347,6 +16415,7 @@ export namespace Prisma {
     rank?: FloatFilter<"VersionItem"> | number
     startedByUserId?: StringNullableFilter<"VersionItem"> | string | null
     orderWithinVersion?: IntFilter<"VersionItem"> | number
+    isTested?: BoolFilter<"VersionItem"> | boolean
     createdAt?: DateTimeFilter<"VersionItem"> | Date | string
     updatedAt?: DateTimeFilter<"VersionItem"> | Date | string
   }
@@ -16383,6 +16452,7 @@ export namespace Prisma {
     body: string
     rank?: number
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     versionCategory?: VersionCategoryCreateNestedOneWithoutVersionItemsInput
@@ -16397,6 +16467,7 @@ export namespace Prisma {
     rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16455,6 +16526,7 @@ export namespace Prisma {
     body: string
     rank?: number
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     version?: VersionCreateNestedOneWithoutVersionItemsInput
@@ -16469,6 +16541,7 @@ export namespace Prisma {
     rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17473,6 +17546,7 @@ export namespace Prisma {
     body: string
     rank?: number
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17564,6 +17638,7 @@ export namespace Prisma {
     body?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     version?: VersionUpdateOneWithoutVersionItemsNestedInput
@@ -17578,6 +17653,7 @@ export namespace Prisma {
     body?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17590,6 +17666,7 @@ export namespace Prisma {
     body?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17620,6 +17697,7 @@ export namespace Prisma {
     rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17630,6 +17708,7 @@ export namespace Prisma {
     body?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     versionCategory?: VersionCategoryUpdateOneWithoutVersionItemsNestedInput
@@ -17644,6 +17723,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17656,6 +17736,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17675,6 +17756,7 @@ export namespace Prisma {
     rank?: number
     startedByUserId?: string | null
     orderWithinVersion?: number
+    isTested?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17706,6 +17788,7 @@ export namespace Prisma {
     body?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     version?: VersionUpdateOneWithoutVersionItemsNestedInput
@@ -17720,6 +17803,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17732,6 +17816,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     startedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     orderWithinVersion?: IntFieldUpdateOperationsInput | number
+    isTested?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

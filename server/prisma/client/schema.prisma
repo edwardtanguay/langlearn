@@ -64,6 +64,7 @@ model VersionItem {
   startedByUserId    String?
   startedByUser      User?            @relation("UserVersionItems", fields: [startedByUserId], references: [id])
   orderWithinVersion Int              @default(1)
+  isTested           Boolean          @default(false)
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
 }

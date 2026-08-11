@@ -73,6 +73,15 @@ async function main() {
     }
   }
 
+  // Ensure isTested column exists on VersionItem table
+  try {
+    await client.execute('ALTER TABLE VersionItem ADD COLUMN isTested INTEGER DEFAULT 0;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
   client.close()
 }

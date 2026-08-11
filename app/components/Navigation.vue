@@ -125,6 +125,7 @@ const navItems = computed(() => {
   const items = []
   if (loggedIn.value) {
     items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
+    items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
     items.push({ name: 'Pronunciation', path: '/pronunciation', icon: SpeakerWaveIcon })
     items.push({ name: 'Videos', path: '/videos', icon: VideoCameraIcon })
     items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })

@@ -32,6 +32,7 @@ interface VersionItem {
   body: string
   rank?: number
   orderWithinVersion: number
+  isTested?: boolean
 }
 
 interface Version {
@@ -515,6 +516,15 @@ const saveAdminVersion = async () => {
   }
 
   const payload = { ...editingVersion.value, versionNumber: vNum }
+
+  if (payload.status === 'PUBLISHED' && !isNewVersion.value) {
+    const existing = versions.value.find(v => v.id === editingVersion.value.id)
+    if (existing && existing.versionItems.some(item => !item.isTested)) {
+      versionSaveError.value = 'Cannot publish version until all items are tested.'
+      return
+    }
+  }
+
   const snapshot = JSON.parse(JSON.stringify(versions.value))
 
   // Optimistic update & immediate smooth close
@@ -788,6 +798,22 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string,
     item.versionCategoryId = oldCatId
     item.versionCategory = oldCatObj
     alert(err.data?.statusMessage || 'Failed to update item category')
+  }
+}
+
+const toggleItemTestedDirectly = async (item: VersionItem) => {
+  const oldTested = Boolean(item.isTested)
+  const newTested = !oldTested
+  item.isTested = newTested
+
+  try {
+    await $fetch(`/api/dev/version-items/${item.id}`, {
+      method: 'PUT',
+      body: { isTested: newTested }
+    })
+  } catch (err: any) {
+    item.isTested = oldTested
+    alert(err.data?.statusMessage || 'Failed to update tested status')
   }
 }
 
@@ -1381,6 +1407,16 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                       <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
+                      <!-- Tested checkbox for IN_PROGRESS versions in Admin mode -->
+                      <label v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="shrink-0 flex items-center gap-1 text-[11px] font-medium cursor-pointer select-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        <input
+                          type="checkbox"
+                          :checked="Boolean(item.isTested)"
+                          @change="toggleItemTestedDirectly(item)"
+                          class="rounded border-gray-300 dark:border-gray-700 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                        />
+                        <span>Tested</span>
+                      </label>
                       <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                       
                       <!-- UP / DOWN Rank Controls for Admin -->
@@ -1510,6 +1546,16 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                         <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
+                        <!-- Tested checkbox for IN_PROGRESS versions in Admin mode -->
+                        <label v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="shrink-0 flex items-center gap-1 text-[11px] font-medium cursor-pointer select-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                          <input
+                            type="checkbox"
+                            :checked="Boolean(item.isTested)"
+                            @change="toggleItemTestedDirectly(item)"
+                            class="rounded border-gray-300 dark:border-gray-700 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                          />
+                          <span>Tested</span>
+                        </label>
                         <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
                         
                         <!-- UP / DOWN Rank Controls for Admin -->

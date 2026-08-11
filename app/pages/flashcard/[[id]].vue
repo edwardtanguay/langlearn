@@ -73,9 +73,9 @@ const languageColors: Record<string, string> = {
   fr: '#333388',
   es: '#be185d',
   it: '#194d19',
-  nl: '#d97706',
+  nl: '#facc15',
   pl: '#b8b8b8',
-  de: '#7e4402',
+  de: '#3d1e03',
   ru: '#3f3f46',
   is: '#06b6d4',
   da: '#7e22ce',
@@ -119,8 +119,8 @@ async function fetchTestQueue() {
     const cardIdFromRoute = route.params.id as string | undefined
 
     const queueUrl = activeFilterTag.value 
-      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}`
-      : `/api/flashcards?limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}`
+      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}&all=true`
+      : `/api/flashcards?limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}&all=true`
 
     if (cardIdFromRoute) {
       try {
@@ -322,13 +322,18 @@ const exampleTargetText = computed(() => {
   return getHighlightedText(currentCard.value.back)
 })
 
+const frontWordCount = computed(() => {
+  if (!currentCard.value?.front) return 0
+  return stripAsterisks(currentCard.value.front).trim().split(/\s+/).filter(Boolean).length
+})
+
 const backWordCount = computed(() => {
   if (!exampleTargetText.value) return 0
   return exampleTargetText.value.split(/\s+/).filter(Boolean).length
 })
 
 const showExampleSentencesButton = computed(() => {
-  return backWordCount.value >= 1 && backWordCount.value <= 4
+  return (backWordCount.value >= 1 && backWordCount.value <= 2) || (frontWordCount.value >= 1 && frontWordCount.value <= 2)
 })
 
 const isFrenchCardWithVous = computed(() => {
@@ -337,6 +342,35 @@ const isFrenchCardWithVous = computed(() => {
   const back = currentCard.value.back || ''
   return lang === 'fr' && /\bvous\b/i.test(back)
 })
+
+const verbMatch = computed(() => {
+  if (!currentCard.value?.back) return null
+  const match = currentCard.value.back.match(/<([^>]+)>/)
+  if (!match || !match[1]?.trim()) return null
+  return match[1].trim()
+})
+
+const cardLanguageCode = computed(() => {
+  if (!currentCard.value) return 'fr'
+  return (currentCard.value.backLanguage || currentCard.value.frontLanguage || 'fr').toLowerCase()
+})
+
+function openLawlessFrench(verb: string) {
+  const url = `https://www.lawlessfrench.com/verb-conjugations/${encodeURIComponent(verb.toLowerCase())}`
+  window.open(url, '_blank')
+}
+
+function openReversoConjugator(verb: string) {
+  const url = `https://conjugator.reverso.net/conjugation-french-verb-${encodeURIComponent(verb.toLowerCase())}.html`
+  window.open(url, '_blank')
+}
+
+function openGenericVerbConjugation(verb: string) {
+  const langName = languageNames[cardLanguageCode.value] || cardLanguageCode.value
+  const query = `conjugate the ${langName} verb "${verb}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
 
 function openExampleSentences() {
   if (!currentCard.value) return
@@ -768,8 +802,8 @@ onBeforeUnmount(() => {
                 <!-- Status buttons Section -->
                 <FlashcardStatusButtons @action="markAction" />
 
-                <!-- Action Buttons Box (3 examples with & convert vous to tu) -->
-                <div v-if="showExampleSentencesButton || isFrenchCardWithVous" class="bg-gray-50 dark:bg-gray-950 p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex flex-wrap gap-2 items-center justify-center">
+                <!-- Action Buttons Box (3 examples, convert vous to tu & verb conjugation) -->
+                <div v-if="showExampleSentencesButton || isFrenchCardWithVous || verbMatch" class="bg-gray-50 dark:bg-gray-950 p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex flex-wrap gap-2 items-center justify-center">
                   <button
                     v-if="showExampleSentencesButton"
                     @click.stop="openExampleSentences"
@@ -788,6 +822,38 @@ onBeforeUnmount(() => {
                     <span>convert vous to tu</span>
                     <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                   </button>
+
+                  <!-- French Verb Conjugation Buttons -->
+                  <template v-if="verbMatch && cardLanguageCode === 'fr'">
+                    <button
+                      @click.stop="openLawlessFrench(verbMatch)"
+                      class="text-xs px-3 py-1.5 rounded-lg border border-blue-500/40 dark:border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-blue-800 dark:text-blue-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                      title="Lawless French Conjugation"
+                    >
+                      <img src="https://www.lawlessfrench.com/favicon.ico" class="w-4 h-4 rounded-xs" alt="Lawless French" />
+                      <span>Lawless: {{ verbMatch }}</span>
+                    </button>
+
+                    <button
+                      @click.stop="openReversoConjugator(verbMatch)"
+                      class="text-xs px-3 py-1.5 rounded-lg border border-indigo-500/40 dark:border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-800 dark:text-indigo-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                      title="Reverso Conjugator"
+                    >
+                      <img src="https://www.google.com/s2/favicons?domain=reverso.net&sz=32" class="w-4 h-4 rounded-xs" alt="Reverso" />
+                      <span>Reverso: {{ verbMatch }}</span>
+                    </button>
+                  </template>
+
+                  <!-- Other Languages Verb Conjugation Button -->
+                  <template v-else-if="verbMatch">
+                    <button
+                      @click.stop="openGenericVerbConjugation(verbMatch)"
+                      class="text-xs px-3 py-1.5 rounded-lg border border-emerald-500/40 dark:border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    >
+                      <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                      <span>conjugate {{ verbMatch }}</span>
+                    </button>
+                  </template>
                 </div>
 
                 <!-- Tags Section -->

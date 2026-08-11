@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
   if (body.body !== undefined) dataToUpdate.body = body.body.trim()
   if (body.type !== undefined) dataToUpdate.type = body.type
   if (body.versionId !== undefined) dataToUpdate.versionId = targetVersionId
+  if (body.isTested !== undefined) dataToUpdate.isTested = Boolean(body.isTested)
   if (body.rank !== undefined) {
     const rankVal = typeof body.rank === 'number' ? body.rank : parseFloat(body.rank)
     if (!isNaN(rankVal)) {

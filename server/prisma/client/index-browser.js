@@ -162,6 +162,7 @@ exports.Prisma.VersionItemScalarFieldEnum = {
   rank: 'rank',
   startedByUserId: 'startedByUserId',
   orderWithinVersion: 'orderWithinVersion',
+  isTested: 'isTested',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
