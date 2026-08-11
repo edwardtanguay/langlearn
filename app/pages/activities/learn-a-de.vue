@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 useHead({
   title: 'LangLearn - Learn à/de',
@@ -25,46 +25,18 @@ interface Flashcard {
 const isLoading = ref(true)
 const aCards = ref<Flashcard[]>([])
 const deCards = ref<Flashcard[]>([])
-const untaggedCards = ref<Flashcard[]>([])
 const revealedCardIds = ref<Record<string, boolean>>({})
-const isAdmin = ref(false)
-const isTaggingId = ref<Record<string, boolean>>({})
-
-function isSingleWordOrPhraseWithADe(text: string): boolean {
-  if (!text) return false
-  const clean = text.replace(/\*/g, '').trim()
-  const words = clean.split(/\s+/).filter(Boolean)
-  // Check if single word OR phrase containing à or de
-  return words.length === 1 || /\b(à|de|d')\b/i.test(clean)
-}
-
-function hasTagAbbrev(card: Flashcard, tagAbbrev: string): boolean {
-  return (card.tags || []).some(t => t.tag.abbreviation.toLowerCase() === tagAbbrev.toLowerCase())
-}
 
 async function loadData() {
   isLoading.value = true
   try {
-    const [aRes, deRes, allCards, me] = await Promise.all([
+    const [aRes, deRes] = await Promise.all([
       $fetch<Flashcard[]>('/api/flashcards?tag=à&limit=100'),
-      $fetch<Flashcard[]>('/api/flashcards?tag=de&limit=100'),
-      $fetch<Flashcard[]>('/api/flashcards/search?q='),
-      $fetch<{ role: string }>('/api/user/me').catch(() => ({ role: 'member' }))
+      $fetch<Flashcard[]>('/api/flashcards?tag=de&limit=100')
     ])
 
-    isAdmin.value = me?.role === 'admin'
     aCards.value = aRes || []
     deCards.value = deRes || []
-
-    // Filter untagged single words / phrases containing à or de
-    if (allCards) {
-      untaggedCards.value = allCards.filter(c => {
-        const hasA = hasTagAbbrev(c, 'à') || hasTagAbbrev(c, 'a')
-        const hasDe = hasTagAbbrev(c, 'de')
-        if (hasA || hasDe) return false
-        return isSingleWordOrPhraseWithADe(c.back)
-      })
-    }
   } catch (err) {
     console.error('Failed to load learn à/de cards:', err)
   } finally {
@@ -76,36 +48,9 @@ function toggleReveal(id: string) {
   revealedCardIds.value[id] = !revealedCardIds.value[id]
 }
 
-async function addTagToCard(card: Flashcard, tagAbbrev: string) {
-  isTaggingId.value[card.id] = true
-  try {
-    const currentTags = (card.tags || []).map(t => t.tag.abbreviation)
-    if (!currentTags.includes(tagAbbrev)) {
-      const newTags = [...currentTags, tagAbbrev]
-      await $fetch(`/api/flashcards/${card.id}`, {
-        method: 'PATCH',
-        body: { tags: newTags }
-      })
-    }
-    // Remove from untagged list
-    untaggedCards.value = untaggedCards.value.filter(c => c.id !== card.id)
-    // Reload cards list
-    const [aRes, deRes] = await Promise.all([
-      $fetch<Flashcard[]>('/api/flashcards?tag=à&limit=100'),
-      $fetch<Flashcard[]>('/api/flashcards?tag=de&limit=100')
-    ])
-    aCards.value = aRes || []
-    deCards.value = deRes || []
-  } catch (err) {
-    console.error(`Failed to add tag "${tagAbbrev}" to card:`, err)
-  } finally {
-    isTaggingId.value[card.id] = false
-  }
-}
-
 function renderHighlights(text: string): string {
   if (!text) return ''
-  return text.replace(/\*(.*?)\*/g, '<span class="underline decoration-amber-500 font-bold">$1</span>')
+  return text.replace(/\*(.*?)\*/g, '$1')
 }
 
 onMounted(() => {
@@ -155,7 +100,7 @@ onMounted(() => {
             <div class="flex items-start justify-between gap-2">
               <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">English</span>
               <NuxtLink
-                :to="'/flashcard/' + card.id"
+                :to="'/flashcard/' + card.id + '?fromActivity=learn-a-de'"
                 @click.stop
                 class="text-gray-400 hover:text-blue-500 transition-colors p-1"
                 title="Edit Flashcard"
@@ -200,7 +145,7 @@ onMounted(() => {
             <div class="flex items-start justify-between gap-2">
               <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">English</span>
               <NuxtLink
-                :to="'/flashcard/' + card.id"
+                :to="'/flashcard/' + card.id + '?fromActivity=learn-a-de'"
                 @click.stop
                 class="text-gray-400 hover:text-amber-500 transition-colors p-1"
                 title="Edit Flashcard"
@@ -219,52 +164,6 @@ onMounted(() => {
                 <p class="text-sm font-semibold text-amber-600 dark:text-amber-300" v-html="renderHighlights(card.back)"></p>
               </div>
             </Transition>
-          </div>
-        </div>
-      </div>
-
-      <!-- Admin Untagged Preposition Candidates Console -->
-      <div v-if="isAdmin" class="mt-12 p-6 rounded-2xl bg-gray-950 text-gray-300 border border-gray-800 space-y-4 font-mono shadow-2xl">
-        <div class="flex items-center justify-between border-b border-gray-800 pb-3">
-          <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-            <span>⚙ Admin Tagging Console</span>
-            <span class="text-[10px] text-gray-500 font-normal">({{ untaggedCards.length }} untagged candidate cards)</span>
-          </h3>
-        </div>
-
-        <p class="text-xs text-gray-400">
-          The following cards contain à/de prepositions or are single words but are not yet tagged with "à" or "de":
-        </p>
-
-        <div v-if="untaggedCards.length === 0" class="text-xs text-gray-500 italic py-2">
-          All candidate phrases and words have been tagged!
-        </div>
-
-        <div class="max-h-72 overflow-y-auto space-y-2 pr-2">
-          <div
-            v-for="card in untaggedCards"
-            :key="card.id"
-            class="p-3 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-between gap-4 text-xs"
-          >
-            <div class="truncate flex-1">
-              <span class="text-white font-bold mr-2">{{ card.front }}</span>
-              <span class="text-gray-400">→ {{ card.back }}</span>
-            </div>
-
-            <div class="flex items-center gap-2 shrink-0">
-              <button
-                @click="addTagToCard(card, 'à')"
-                class="px-2.5 py-1 rounded bg-blue-900/60 hover:bg-blue-800 text-blue-300 border border-blue-700 font-bold text-[10px] cursor-pointer transition-colors"
-              >
-                + à
-              </button>
-              <button
-                @click="addTagToCard(card, 'de')"
-                class="px-2.5 py-1 rounded bg-amber-900/60 hover:bg-amber-800 text-amber-300 border border-amber-700 font-bold text-[10px] cursor-pointer transition-colors"
-              >
-                + de
-              </button>
-            </div>
           </div>
         </div>
       </div>
