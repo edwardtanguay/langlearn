@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { ArrowPathIcon, PencilSquareIcon, SparklesIcon } from '@heroicons/vue/24/outline'
+import { PencilSquareIcon, SparklesIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - Drag/Drop Words',
@@ -45,7 +45,7 @@ const languageColors: Record<string, string> = {
   el: '#ea580c'
 }
 
-// Bright, readable pill styles for each language (ensures high contrast in dark and light modes)
+// Bright, readable pill styles for each language
 const languagePillStyles: Record<string, { bg: string; color: string; border: string }> = {
   fr: { bg: 'bg-indigo-600 dark:bg-indigo-600', color: 'text-white dark:text-white', border: 'border-indigo-400' },
   es: { bg: 'bg-pink-700 dark:bg-pink-700', color: 'text-white dark:text-white', border: 'border-pink-400' },
@@ -70,6 +70,10 @@ const currentLanguageCode = ref<string>('fr')
 const isWordsRevealed = ref(false)
 
 const isMobile = ref(false)
+
+// Touch drag state
+const touchActiveWord = ref<string | null>(null)
+const touchGhostPos = ref<{ x: number; y: number } | null>(null)
 
 const checkScreenSize = () => {
   if (typeof window !== 'undefined') {
@@ -100,6 +104,14 @@ function toggleShowFront(cardId: string) {
   } else {
     activeFrontCardId.value = cardId
   }
+}
+
+function handleCardClick(event: MouseEvent, cardId: string) {
+  const target = event.target as HTMLElement
+  if (target.closest('button, a, input, select, textarea, .drop-target')) {
+    return
+  }
+  toggleShowFront(cardId)
 }
 
 function openThreeExamples(word: string) {
@@ -157,9 +169,22 @@ function generateNewRound() {
   currentLanguageCode.value = randomLang
   const langCards = cardsByLanguage[randomLang]
 
-  // Pick 6 cards on all screen sizes
+  // Shuffle and pick up to 6 cards ensuring unique answer words
   const shuffled = [...langCards].sort(() => 0.5 - Math.random())
-  const picked = shuffled.slice(0, 6)
+  const picked: Flashcard[] = []
+  const usedAnswers = new Set<string>()
+
+  for (const card of shuffled) {
+    const parsed = extractStarredText(card.back)
+    if (parsed) {
+      const normalizedAns = parsed.answer.trim().toLowerCase()
+      if (!usedAnswers.has(normalizedAns)) {
+        usedAnswers.add(normalizedAns)
+        picked.push(card)
+        if (picked.length === 6) break
+      }
+    }
+  }
 
   const items: ActivityItem[] = []
   const answers: string[] = []
@@ -209,16 +234,49 @@ function onDropOnItem(itemIndex: number) {
   checkCompletion()
 }
 
-function selectAnswerForFirstEmpty(answer: string) {
-  const emptyItem = currentBatch.value.find(i => i.currentPlacedAnswer === null)
-  if (!emptyItem) return
-  
-  emptyItem.currentPlacedAnswer = answer
-  const idx = availablePool.value.indexOf(answer)
-  if (idx !== -1) {
-    availablePool.value.splice(idx, 1)
+// Touch drag-and-drop handlers for mobile devices
+function onTouchStart(e: TouchEvent, answer: string) {
+  const touch = e.touches[0]
+  if (!touch) return
+  touchActiveWord.value = answer
+  touchGhostPos.value = { x: touch.clientX, y: touch.clientY }
+}
+
+function onTouchMove(e: TouchEvent) {
+  if (!touchActiveWord.value) return
+  const touch = e.touches[0]
+  if (!touch) return
+  if (e.cancelable) e.preventDefault()
+  touchGhostPos.value = { x: touch.clientX, y: touch.clientY }
+}
+
+function onTouchEnd() {
+  if (!touchActiveWord.value || !touchGhostPos.value) {
+    touchActiveWord.value = null
+    touchGhostPos.value = null
+    return
   }
-  checkCompletion()
+
+  const { x, y } = touchGhostPos.value
+  const targetElement = document.elementFromPoint(x, y)
+  const dropCard = targetElement?.closest('[data-drop-idx]') as HTMLElement | null
+
+  if (dropCard) {
+    const idxAttr = dropCard.getAttribute('data-drop-idx')
+    if (idxAttr !== null) {
+      const idx = parseInt(idxAttr, 10)
+      draggedAnswer.value = touchActiveWord.value
+      onDropOnItem(idx)
+    }
+  }
+
+  touchActiveWord.value = null
+  touchGhostPos.value = null
+}
+
+function onTouchCancel() {
+  touchActiveWord.value = null
+  touchGhostPos.value = null
 }
 
 function removePlacedAnswer(itemIndex: number) {
@@ -263,7 +321,7 @@ onMounted(() => {
       <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Drag/Drop Words</h1>
       <!-- Desktop instruction text only -->
       <p class="hidden md:block text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
-        Drag and drop (or click) the correct starred answers into each blank space below to complete the phrases.
+        Drag and drop the correct starred answers into each blank space below to complete the phrases.
       </p>
     </div>
 
@@ -277,24 +335,28 @@ onMounted(() => {
 
     <div v-else class="flex flex-col space-y-4 md:space-y-8">
       
-      <!-- Phrases Cards Grid (Shown FIRST on mobile & desktop) -->
+      <!-- Phrases Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
         <div
           v-for="(item, idx) in currentBatch"
           :key="item.id"
+          :data-drop-idx="idx"
           @dragover.prevent
           @drop="onDropOnItem(idx)"
-          class="p-3 md:p-5 rounded-xl md:rounded-2xl bg-white dark:bg-[#182030] border transition-all duration-200 shadow-sm flex flex-col justify-between"
+          @click="handleCardClick($event, item.id)"
+          class="p-3 md:p-5 rounded-xl md:rounded-2xl border transition-all duration-200 shadow-sm flex flex-col justify-between cursor-pointer select-none"
+          :class="[
+            activeFrontCardId === item.id 
+              ? 'bg-slate-100 dark:bg-[#26334d]' 
+              : 'bg-white dark:bg-[#182030]'
+          ]"
           :style="{
             borderColor: item.currentPlacedAnswer 
               ? (item.currentPlacedAnswer === item.answerText ? currentLanguageColor : `color-mix(in srgb, ${currentLanguageColor} 40%, transparent)`)
-              : `color-mix(in srgb, ${currentLanguageColor} 40%, #4b5563)`,
-            backgroundColor: item.currentPlacedAnswer 
-              ? (item.currentPlacedAnswer === item.answerText ? `color-mix(in srgb, ${currentLanguageColor} 12%, transparent)` : 'transparent')
-              : undefined
+              : `color-mix(in srgb, ${currentLanguageColor} 40%, #4b5563)`
           }"
         >
-          <!-- Desktop Header with Phrase label & icons -->
+          <!-- Desktop-only Header with Phrase label & action icons -->
           <div class="hidden md:flex items-center justify-between gap-2 border-b border-gray-100 dark:border-gray-800/60 pb-2 mb-3">
             <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
               Phrase {{ idx + 1 }}
@@ -303,24 +365,16 @@ onMounted(() => {
               <!-- 3 examples icon button (Shown ONLY when correctly dropped) -->
               <button
                 v-if="item.currentPlacedAnswer === item.answerText"
-                @click="openThreeExamples(item.answerText)"
+                @click.stop="openThreeExamples(item.answerText)"
                 title="Get 3 examples of this word"
                 class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer animate-pop-spin"
               >
                 <SparklesIcon class="w-4 h-4 text-amber-500" />
               </button>
-              <!-- Toggle front text -->
-              <button
-                @click="toggleShowFront(item.id)"
-                title="Toggle show Front text"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-                :class="{ 'text-amber-500 dark:text-amber-400': activeFrontCardId === item.id }"
-              >
-                <ArrowPathIcon class="w-4 h-4" />
-              </button>
               <!-- Edit permalink -->
               <NuxtLink
                 :to="`/flashcard/${item.id}?fromActivity=true`"
+                @click.stop
                 title="Edit flashcard permalink"
                 class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
               >
@@ -329,81 +383,72 @@ onMounted(() => {
             </div>
           </div>
 
-          <!-- Card Content Body (Mobile compact inline layout vs Desktop card body) -->
+          <!-- Card Content Body (Compact single-line horizontal alignment on mobile) -->
           <div class="flex-1 flex items-center justify-between gap-2">
             
-            <!-- Toggled Front text mode (High-contrast text matching back text) -->
-            <div v-if="activeFrontCardId === item.id" class="text-sm md:text-base font-semibold text-gray-900 dark:text-white leading-relaxed italic">
+            <!-- Toggled Front text mode -->
+            <div v-if="activeFrontCardId === item.id" class="text-sm md:text-base font-semibold text-gray-900 dark:text-white leading-relaxed italic py-0.5">
               {{ item.fullFront }}
             </div>
 
             <!-- Back text fill-in-the-blank mode -->
-            <div v-else class="text-sm md:text-base font-medium text-gray-900 dark:text-white flex flex-wrap items-center gap-1 md:gap-1.5 leading-relaxed flex-1">
+            <div v-else class="text-sm md:text-base font-medium text-gray-900 dark:text-white flex flex-wrap items-center gap-1.5 leading-relaxed flex-1">
               <span>{{ item.displayBack.split('_______')[0] }}</span>
 
               <!-- Drop target slot / placed answer pill -->
               <button
                 v-if="item.currentPlacedAnswer"
-                @click="removePlacedAnswer(idx)"
-                class="px-2.5 py-1 rounded-lg text-sm font-semibold transition-transform cursor-pointer flex items-center gap-1 shadow-xs h-8 border"
+                @click.stop="removePlacedAnswer(idx)"
+                class="drop-target px-2 py-0.5 rounded-md text-sm font-semibold transition-transform cursor-pointer inline-flex items-center gap-1 shadow-xs h-7 border align-middle leading-none"
                 :style="{
                   backgroundColor: item.currentPlacedAnswer === item.answerText 
                     ? currentLanguageColor 
-                    : 'transparent',
-                  color: item.currentPlacedAnswer === item.answerText 
-                    ? '#ffffff' 
-                    : currentLanguageColor,
+                    : 'rgba(15, 23, 42, 0.75)',
+                  color: '#ffffff',
                   borderColor: currentLanguageColor,
                   borderStyle: item.currentPlacedAnswer === item.answerText ? 'solid' : 'dashed'
                 }"
                 title="Click to remove"
               >
                 <span>{{ item.currentPlacedAnswer }}</span>
-                <span class="text-xs opacity-80">{{ item.currentPlacedAnswer === item.answerText ? '✓' : '✕' }}</span>
+                <span v-if="item.currentPlacedAnswer !== item.answerText" class="text-xs font-bold opacity-90">✕</span>
               </button>
 
               <div
                 v-else
-                class="inline-block min-w-[60px] md:min-w-[75px] h-8 border-2 border-dashed border-gray-400 dark:border-gray-500 rounded-lg bg-gray-100/80 dark:bg-gray-950/80 transition-colors shadow-inner"
+                class="drop-target inline-block min-w-[60px] md:min-w-[75px] h-7 border-2 border-dashed rounded-lg bg-gray-100/80 dark:bg-gray-950/80 transition-colors shadow-inner align-middle"
+                :style="{ borderColor: currentLanguageColor }"
               ></div>
 
               <span>{{ item.displayBack.split('_______')[1] }}</span>
             </div>
 
-            <!-- Mobile inline action buttons right after phrase -->
+            <!-- Mobile inline action icons horizontally aligned on the right -->
             <div class="flex md:hidden items-center gap-1 shrink-0 ml-1">
               <!-- 3 examples icon button (Shown ONLY when correctly dropped) -->
               <button
                 v-if="item.currentPlacedAnswer === item.answerText"
-                @click="openThreeExamples(item.answerText)"
+                @click.stop="openThreeExamples(item.answerText)"
                 title="Get 3 examples of this word"
                 class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer animate-pop-spin"
               >
-                <SparklesIcon class="w-3.5 h-3.5 text-amber-500" />
-              </button>
-              <!-- Toggle front text -->
-              <button
-                @click="toggleShowFront(item.id)"
-                title="Toggle show Front text"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-                :class="{ 'text-amber-500 dark:text-amber-400': activeFrontCardId === item.id }"
-              >
-                <ArrowPathIcon class="w-3.5 h-3.5" />
+                <SparklesIcon class="w-4 h-4 text-amber-500" />
               </button>
               <!-- Edit permalink -->
               <NuxtLink
                 :to="`/flashcard/${item.id}?fromActivity=true`"
+                @click.stop
                 title="Edit flashcard permalink"
                 class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
               >
-                <PencilSquareIcon class="w-3.5 h-3.5" />
+                <PencilSquareIcon class="w-4 h-4" />
               </NuxtLink>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Word Pool Container (Shown at the BOTTOM on both mobile & desktop) -->
+      <!-- Word Pool Container (Shown at the BOTTOM) -->
       <div 
         class="p-3 md:p-6 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800 space-y-2 md:space-y-3"
       >
@@ -414,19 +459,21 @@ onMounted(() => {
           class="w-full py-3 px-4 rounded-xl text-sm font-bold text-white shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2 border border-white/20"
           :style="{ backgroundColor: currentLanguageColor }"
         >
-          <SparklesIcon class="w-4 h-4" />
           <span>Click to reveal the words to drag</span>
         </button>
 
         <!-- Revealed Word Pool -->
-        <div v-else class="flex flex-wrap gap-2 md:gap-2.5 min-h-[36px] md:min-h-[42px] items-center">
+        <div v-else class="flex flex-wrap gap-2 md:gap-2.5 min-h-[36px] md:min-h-[42px] items-center justify-center">
           <button
             v-for="(ans, poolIdx) in availablePool"
             :key="poolIdx"
             draggable="true"
             @dragstart="onDragStart(ans)"
-            @click="selectAnswerForFirstEmpty(ans)"
-            class="px-3 md:px-4 py-1.5 rounded-lg md:rounded-xl text-sm font-semibold transition-all cursor-grab active:cursor-grabbing shadow-sm h-8 md:h-9 flex items-center justify-center border"
+            @touchstart="onTouchStart($event, ans)"
+            @touchmove="onTouchMove($event)"
+            @touchend="onTouchEnd"
+            @touchcancel="onTouchCancel"
+            class="px-3 md:px-4 py-1.5 rounded-lg md:rounded-xl text-sm font-semibold transition-all cursor-grab active:cursor-grabbing shadow-sm h-8 md:h-9 flex items-center justify-center border select-none touch-none"
             :class="[currentPillStyle.bg, currentPillStyle.color, currentPillStyle.border]"
           >
             {{ ans }}
@@ -437,7 +484,20 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- Success & Next Button Banner (Mobile: Centered Next Group floating button, Desktop: full banner) -->
+      <!-- Floating Touch Ghost Pill for Mobile Dragging -->
+      <div
+        v-if="touchActiveWord && touchGhostPos"
+        class="fixed z-50 pointer-events-none px-3 py-1.5 rounded-lg text-sm font-semibold shadow-xl border transform -translate-x-1/2 -translate-y-1/2"
+        :class="[currentPillStyle.bg, currentPillStyle.color, currentPillStyle.border]"
+        :style="{
+          left: `${touchGhostPos.x}px`,
+          top: `${touchGhostPos.y}px`
+        }"
+      >
+        {{ touchActiveWord }}
+      </div>
+
+      <!-- Success & Next Button Banner -->
       <div v-if="isFinished" class="py-3 md:p-6 rounded-xl md:rounded-2xl md:bg-emerald-500/10 md:border md:border-emerald-500/30 text-center space-y-2 md:space-y-4 shadow-none md:shadow-md flex flex-col items-center justify-center">
         <div class="hidden md:flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-lg">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
