@@ -43,7 +43,7 @@ const activities = [
         v-for="act in activities"
         :key="act.path"
         :to="act.path"
-        class="block p-6 rounded-2xl bg-white dark:bg-[#182030] border border-gray-300 dark:border-gray-700/80 shadow-sm hover:shadow-md hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all duration-200 group flex flex-col justify-between"
+        class="p-6 rounded-2xl bg-white dark:bg-[#182030] border border-gray-300 dark:border-gray-700/80 shadow-sm hover:shadow-md hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all duration-200 group flex flex-col justify-between"
       >
         <div>
           <h2 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-tight">
