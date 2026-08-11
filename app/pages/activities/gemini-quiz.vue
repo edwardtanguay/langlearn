@@ -58,7 +58,7 @@ const languageColors: Record<string, string> = {
   it: '#194d19',
   nl: '#d97706',
   pl: '#b8b8b8',
-  de: '#7e4402',
+  de: '#582f0e',
   ru: '#3f3f46',
   is: '#06b6d4',
   da: '#7e22ce',
@@ -463,10 +463,10 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               </p>
             </div>
 
-            <!-- Action Button: Copy and Paste (White text, lighter version of language color background) -->
+            <!-- Action Button: Copy and Paste (Hover response: scale up, brightness, shadow, arrow nudge) -->
             <button
               @click="handleCopyAndPaste(p.prompt, p.id)"
-              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold text-white transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-2 hover:opacity-90 active:scale-[0.99]"
+              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold text-white transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-2 hover:scale-[1.015] hover:brightness-125 hover:shadow-md active:scale-[0.98]"
               :style="{
                 borderColor: copiedPromptId === p.id ? '#059669' : group.color,
                 backgroundColor: copiedPromptId === p.id ? '#0596691a' : (group.color + '26')
@@ -479,7 +479,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               <template v-else>
                 <UIcon name="lucide:copy-check" class="w-4 h-4" />
                 <span>Copy and Paste</span>
-                <UIcon name="lucide:arrow-up-right" class="w-4 h-4 stroke-[2.5]" />
+                <UIcon name="lucide:arrow-up-right" class="w-4 h-4 stroke-[2.5] transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
               </template>
             </button>
           </div>
