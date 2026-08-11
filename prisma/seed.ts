@@ -68,6 +68,19 @@ async function ensureTablesExist() {
       FOREIGN KEY ("startedByUserId") REFERENCES "User" ("id") ON DELETE SET NULL
     );
   `)
+
+  await rawClient.execute(`
+    CREATE TABLE IF NOT EXISTS "ChatbotPrompt" (
+      "id" TEXT NOT NULL PRIMARY KEY,
+      "category" TEXT NOT NULL DEFAULT 'geminiQuizPrompts',
+      "language" TEXT NOT NULL,
+      "title" TEXT NOT NULL,
+      "prompt" TEXT NOT NULL,
+      "rank" REAL NOT NULL DEFAULT 2.5,
+      "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+  `)
 }
 
 async function main() {
@@ -218,7 +231,67 @@ async function main() {
     }
   }
 
-  console.log(`Setup complete. Total flashcards in DB: ${flashcardCount}`)
+  const chatbotPromptCount = await prisma.chatbotPrompt.count()
+  if (chatbotPromptCount === 0) {
+    const initialPrompts = [
+      {
+        category: 'geminiQuizPrompts',
+        language: 'fr',
+        title: 'verb "to sit"',
+        prompt: 'Create a quiz in French that tests the user on the word "to sit" in various conjugations and contexts.',
+        rank: 1.0
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'fr',
+        title: 'tout, tous, toute, toutes',
+        prompt: 'Create a French grammar quiz testing the distinctions and usage of tout, tous, toute, and toutes with practice sentences.',
+        rank: 2.0
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'fr',
+        title: 'phrases that use à or de',
+        prompt: 'Create a French quiz focusing on choosing between the prepositions "à" and "de" in common verb and adjective structures.',
+        rank: 3.0
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'fr',
+        title: 'B1 topics',
+        prompt: 'Create a French vocabulary and reading comprehension quiz tailored for B1 level learners covering everyday topics and intermediate grammar.',
+        rank: 4.0
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'fr',
+        title: 'passé composé vs passé simple',
+        prompt: 'Create a French grammar quiz contrasting passé composé and passé simple usage in contextual sentences.',
+        rank: 5.0
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'de',
+        title: 'German B1 topics',
+        prompt: 'Create a German vocabulary and grammar quiz tailored for B1 level learners covering everyday conversation, modal verbs, and subclauses.',
+        rank: 1.0
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'nl',
+        title: 'Dutch B1 topics',
+        prompt: 'Create a Dutch vocabulary and grammar quiz tailored for B1 level learners covering common expressions, word order, and intermediate sentence structure.',
+        rank: 1.0
+      }
+    ]
+
+    for (const item of initialPrompts) {
+      await prisma.chatbotPrompt.create({ data: item })
+    }
+    console.log('Seeded 7 initial ChatbotPrompts (French, German, Dutch)')
+  }
+
+  console.log(`Setup complete. Total flashcards in DB: ${flashcardCount}, ChatbotPrompts in DB: ${await prisma.chatbotPrompt.count()}`)
 }
 
 main()

@@ -133,3 +133,15 @@ model MobileImport {
   whenImported     DateTime @default(now())
 }
 
+model ChatbotPrompt {
+  id        String   @id @default(uuid())
+  category  String   @default("geminiQuizPrompts")
+  language  String
+  title     String
+  prompt    String
+  rank      Float    @default(2.5)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+

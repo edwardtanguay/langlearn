@@ -8,9 +8,9 @@ useHead({
 
 const activities = [
   {
-    title: 'Gemini Quiz',
+    title: 'Gemini Quiz Prompts',
     path: '/activities/gemini-quiz',
-    description: 'Prompts to copy and paste into Gemini AI to generate custom quizzes for specific vocabulary, grammar patterns, and CEFR levels.',
+    description: 'Prompts to copy and paste into Gemini\u00A0AI to generate custom quizzes for specific vocabulary, grammar patterns, and CEFR levels.',
     badge: 'Interactive Quiz',
     badgeColor: 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/30'
   },

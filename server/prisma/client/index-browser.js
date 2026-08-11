@@ -212,6 +212,17 @@ exports.Prisma.MobileImportScalarFieldEnum = {
   whenImported: 'whenImported'
 };
 
+exports.Prisma.ChatbotPromptScalarFieldEnum = {
+  id: 'id',
+  category: 'category',
+  language: 'language',
+  title: 'title',
+  prompt: 'prompt',
+  rank: 'rank',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -233,7 +244,8 @@ exports.Prisma.ModelName = {
   UserFlashcardActivity: 'UserFlashcardActivity',
   Tag: 'Tag',
   FlashcardTag: 'FlashcardTag',
-  MobileImport: 'MobileImport'
+  MobileImport: 'MobileImport',
+  ChatbotPrompt: 'ChatbotPrompt'
 };
 
 /**
