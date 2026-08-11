@@ -353,9 +353,9 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <!-- Grouped Prompts by Language -->
     <div v-else class="space-y-10">
       <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
-        <!-- Language Group Header: Word with thick full-width underline directly under text with no space -->
-        <div class="border-b-4 w-full border-t-0 pt-0 pb-0" :style="{ borderColor: group.color }">
-          <div class="text-2xl text-gray-900 dark:text-white tracking-tight p-0 mb-2 leading-none">
+        <!-- Language Group Header: Word with thick full-width underline directly under text with ZERO space -->
+        <div class="border-b-4 w-full border-t-0 pt-0 pb-0 flex flex-col items-start" :style="{ borderColor: group.color }">
+          <div class="text-2xl text-gray-900 dark:text-white tracking-tight p-0 m-0 leading-none inline-block translate-y-[2px]">
             {{ group.name }}
           </div>
         </div>
@@ -384,15 +384,15 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                   {{ p.title }}
                 </h3>
 
-                <!-- Desktop Admin CRUD Tools (Displayed only on click on prompt title) -->
+                <!-- Desktop Admin CRUD Tools (Displayed on title click; click bar area closes it; light white border) -->
                 <div
                   v-if="isAdmin && activeCrudPromptId === p.id"
-                  @click.stop
-                  class="absolute inset-0 flex items-center justify-center gap-1 bg-gray-900/95 backdrop-blur px-3 py-1 rounded-full text-xs shadow-md transition-all duration-200 z-10"
+                  @click="toggleCrudToolbar(p.id, $event)"
+                  class="absolute inset-0 flex items-center justify-center gap-1 bg-gray-900/95 backdrop-blur px-3 py-1 rounded-full text-xs shadow-md border border-white/20 transition-all duration-200 z-10 cursor-pointer"
                 >
                   <!-- Add New Prompt in this language -->
                   <button
-                    @click="openAddModal(group.code)"
+                    @click.stop="openAddModal(group.code)"
                     title="Add Prompt"
                     class="p-1 text-white/80 hover:text-white cursor-pointer transition-colors"
                   >
@@ -404,7 +404,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
 
                     <!-- Reorder Up -->
                     <button
-                      @click="movePrompt(group.items, idx, 'up')"
+                      @click.stop="movePrompt(group.items, idx, 'up')"
                       :disabled="idx === 0"
                       title="Move Up"
                       class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
@@ -414,7 +414,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
 
                     <!-- Reorder Down -->
                     <button
-                      @click="movePrompt(group.items, idx, 'down')"
+                      @click.stop="movePrompt(group.items, idx, 'down')"
                       :disabled="idx === group.items.length - 1"
                       title="Move Down"
                       class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
@@ -427,7 +427,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
 
                   <!-- Edit -->
                   <button
-                    @click="openEditModal(p)"
+                    @click.stop="openEditModal(p)"
                     title="Edit Prompt"
                     class="p-1 text-amber-300 hover:text-amber-200 cursor-pointer transition-colors"
                   >
@@ -436,7 +436,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
 
                   <!-- Copy -->
                   <button
-                    @click="openCopyModal(p)"
+                    @click.stop="openCopyModal(p)"
                     title="Duplicate Prompt"
                     class="p-1 text-blue-300 hover:text-blue-200 cursor-pointer transition-colors"
                   >
@@ -445,7 +445,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
 
                   <!-- Delete (Dark red link, hard to click, requests confirmation) -->
                   <button
-                    @click="confirmDelete(p)"
+                    @click.stop="confirmDelete(p)"
                     title="Delete Prompt"
                     class="p-1 text-red-900/80 hover:text-red-700 cursor-pointer transition-colors text-xs font-semibold underline decoration-red-950"
                   >
