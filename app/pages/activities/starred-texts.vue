@@ -367,9 +367,9 @@ onMounted(() => {
                 v-if="item.currentPlacedAnswer === item.answerText"
                 @click.stop="openThreeExamples(item.answerText)"
                 title="Get 3 examples of this word"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer animate-pop-spin"
+                class="p-1 rounded text-gray-400 hover:opacity-80 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer animate-pop-spin"
               >
-                <SparklesIcon class="w-4 h-4 text-amber-500" />
+                <SparklesIcon class="w-4 h-4 text-emerald-400" />
               </button>
               <!-- Edit permalink -->
               <NuxtLink
@@ -392,31 +392,34 @@ onMounted(() => {
             </div>
 
             <!-- Back text fill-in-the-blank mode -->
-            <div v-else class="text-sm md:text-base font-medium text-gray-900 dark:text-white flex flex-wrap items-center gap-1.5 leading-relaxed flex-1">
+            <div v-else class="text-sm md:text-base font-medium text-gray-900 dark:text-white leading-relaxed flex-1">
               <span>{{ item.displayBack.split('_______')[0] }}</span>
 
               <!-- Drop target slot / placed answer pill -->
               <button
                 v-if="item.currentPlacedAnswer"
                 @click.stop="removePlacedAnswer(idx)"
-                class="drop-target px-2 py-0.5 rounded-md text-sm font-semibold transition-transform cursor-pointer inline-flex items-center gap-1 shadow-xs h-7 border align-middle leading-none"
+                class="drop-target inline-flex items-center gap-1 px-1 py-0.5 mx-0.5 rounded text-sm md:text-base font-semibold transition-transform cursor-pointer border align-baseline leading-normal shadow-xs"
                 :style="{
                   backgroundColor: item.currentPlacedAnswer === item.answerText 
                     ? currentLanguageColor 
-                    : 'rgba(15, 23, 42, 0.75)',
-                  color: '#ffffff',
-                  borderColor: currentLanguageColor,
+                    : '#9ca3af',
+                  color: item.currentPlacedAnswer === item.answerText 
+                    ? '#ffffff' 
+                    : '#000000',
+                  borderColor: item.currentPlacedAnswer === item.answerText 
+                    ? currentLanguageColor 
+                    : '#6b7280',
                   borderStyle: item.currentPlacedAnswer === item.answerText ? 'solid' : 'dashed'
                 }"
                 title="Click to remove"
               >
                 <span>{{ item.currentPlacedAnswer }}</span>
-                <span v-if="item.currentPlacedAnswer !== item.answerText" class="text-xs font-bold opacity-90">✕</span>
               </button>
 
               <div
                 v-else
-                class="drop-target inline-block min-w-[60px] md:min-w-[75px] h-7 border-2 border-dashed rounded-lg bg-gray-100/80 dark:bg-gray-950/80 transition-colors shadow-inner align-middle"
+                class="drop-target inline-block min-w-[50px] h-[1.3em] mx-0.5 border-2 border-dashed rounded bg-gray-100/80 dark:bg-gray-950/80 transition-colors shadow-inner align-middle"
                 :style="{ borderColor: currentLanguageColor }"
               ></div>
 
@@ -430,9 +433,9 @@ onMounted(() => {
                 v-if="item.currentPlacedAnswer === item.answerText"
                 @click.stop="openThreeExamples(item.answerText)"
                 title="Get 3 examples of this word"
-                class="p-1 rounded text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer animate-pop-spin"
+                class="p-1 rounded text-gray-400 hover:opacity-80 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer animate-pop-spin"
               >
-                <SparklesIcon class="w-4 h-4 text-amber-500" />
+                <SparklesIcon class="w-4 h-4 text-emerald-400" />
               </button>
               <!-- Edit permalink -->
               <NuxtLink
@@ -473,8 +476,12 @@ onMounted(() => {
             @touchmove="onTouchMove($event)"
             @touchend="onTouchEnd"
             @touchcancel="onTouchCancel"
-            class="px-3 md:px-4 py-1.5 rounded-lg md:rounded-xl text-sm font-semibold transition-all cursor-grab active:cursor-grabbing shadow-sm h-8 md:h-9 flex items-center justify-center border select-none touch-none"
-            :class="[currentPillStyle.bg, currentPillStyle.color, currentPillStyle.border]"
+            class="px-1 py-0.5 rounded text-sm md:text-base font-semibold transition-all cursor-grab active:cursor-grabbing shadow-xs flex items-center justify-center border select-none touch-none"
+            :style="{
+              backgroundColor: currentLanguageColor,
+              color: '#ffffff',
+              borderColor: currentLanguageColor
+            }"
           >
             {{ ans }}
           </button>
@@ -487,11 +494,13 @@ onMounted(() => {
       <!-- Floating Touch Ghost Pill for Mobile Dragging -->
       <div
         v-if="touchActiveWord && touchGhostPos"
-        class="fixed z-50 pointer-events-none px-3 py-1.5 rounded-lg text-sm font-semibold shadow-xl border transform -translate-x-1/2 -translate-y-1/2"
-        :class="[currentPillStyle.bg, currentPillStyle.color, currentPillStyle.border]"
+        class="fixed z-50 pointer-events-none px-1 py-0.5 rounded text-sm md:text-base font-semibold shadow-xl border transform -translate-x-1/2 -translate-y-1/2"
         :style="{
           left: `${touchGhostPos.x}px`,
-          top: `${touchGhostPos.y}px`
+          top: `${touchGhostPos.y}px`,
+          backgroundColor: currentLanguageColor,
+          color: '#ffffff',
+          borderColor: currentLanguageColor
         }"
       >
         {{ touchActiveWord }}
