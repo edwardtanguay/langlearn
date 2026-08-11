@@ -456,7 +456,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
 
               <!-- Black prompt area extended down to fill space -->
               <p class="text-xs text-gray-700 dark:text-gray-300 font-mono bg-white/70 dark:bg-gray-950/80 p-3 rounded-lg border border-gray-200/60 dark:border-gray-800/80 leading-relaxed flex-1 flex items-start">
-                "{{ p.prompt }}"
+                {{ p.prompt }}
               </p>
             </div>
 
