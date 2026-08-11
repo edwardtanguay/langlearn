@@ -355,9 +355,9 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
       <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
         <!-- Language Group Header: Word with thick full-width underline directly under text with no space -->
         <div class="border-b-4 w-full border-t-0 pt-0 pb-0" :style="{ borderColor: group.color }">
-          <h2 class="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight p-0 m-0 leading-none">
-            {{ group.name }} Quiz Prompts
-          </h2>
+          <div class="text-2xl text-gray-900 dark:text-white tracking-tight p-0 mb-2 leading-none">
+            {{ group.name }}
+          </div>
         </div>
 
         <!-- Prompts Grid -->
