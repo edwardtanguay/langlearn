@@ -81,10 +81,11 @@ model Flashcard {
   createdAt     DateTime @default(now())
 
   // Study progress state merged directly into the card
-  status       String    @default("LEARNING")
-  rank         Float     @default(2.5)
-  memoryHook   String?
-  nextTestTime DateTime?
+  status             String    @default("LEARNING")
+  rank               Float     @default(2.5)
+  memoryHook         String?
+  nextTestTime       DateTime?
+  timesShownDragDrop Int       @default(0)
 
   // Self-referencing relation to track copied cards
   copiedFromId String?

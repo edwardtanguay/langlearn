@@ -86,6 +86,7 @@ model Flashcard {
   rank          Float                  @default(2.5)
   memoryHook    String?
   nextTestTime  DateTime?
+  timesShownDragDrop Int                   @default(0)
   
   // Self-referencing relation to track copied cards
   copiedFromId  String?

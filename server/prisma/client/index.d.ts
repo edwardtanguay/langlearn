@@ -7673,10 +7673,12 @@ export namespace Prisma {
 
   export type FlashcardAvgAggregateOutputType = {
     rank: number | null
+    timesShownDragDrop: number | null
   }
 
   export type FlashcardSumAggregateOutputType = {
     rank: number | null
+    timesShownDragDrop: number | null
   }
 
   export type FlashcardMinAggregateOutputType = {
@@ -7692,6 +7694,7 @@ export namespace Prisma {
     rank: number | null
     memoryHook: string | null
     nextTestTime: Date | null
+    timesShownDragDrop: number | null
     copiedFromId: string | null
   }
 
@@ -7708,6 +7711,7 @@ export namespace Prisma {
     rank: number | null
     memoryHook: string | null
     nextTestTime: Date | null
+    timesShownDragDrop: number | null
     copiedFromId: string | null
   }
 
@@ -7724,6 +7728,7 @@ export namespace Prisma {
     rank: number
     memoryHook: number
     nextTestTime: number
+    timesShownDragDrop: number
     copiedFromId: number
     _all: number
   }
@@ -7731,10 +7736,12 @@ export namespace Prisma {
 
   export type FlashcardAvgAggregateInputType = {
     rank?: true
+    timesShownDragDrop?: true
   }
 
   export type FlashcardSumAggregateInputType = {
     rank?: true
+    timesShownDragDrop?: true
   }
 
   export type FlashcardMinAggregateInputType = {
@@ -7750,6 +7757,7 @@ export namespace Prisma {
     rank?: true
     memoryHook?: true
     nextTestTime?: true
+    timesShownDragDrop?: true
     copiedFromId?: true
   }
 
@@ -7766,6 +7774,7 @@ export namespace Prisma {
     rank?: true
     memoryHook?: true
     nextTestTime?: true
+    timesShownDragDrop?: true
     copiedFromId?: true
   }
 
@@ -7782,6 +7791,7 @@ export namespace Prisma {
     rank?: true
     memoryHook?: true
     nextTestTime?: true
+    timesShownDragDrop?: true
     copiedFromId?: true
     _all?: true
   }
@@ -7885,6 +7895,7 @@ export namespace Prisma {
     rank: number
     memoryHook: string | null
     nextTestTime: Date | null
+    timesShownDragDrop: number
     copiedFromId: string | null
     _count: FlashcardCountAggregateOutputType | null
     _avg: FlashcardAvgAggregateOutputType | null
@@ -7920,6 +7931,7 @@ export namespace Prisma {
     rank?: boolean
     memoryHook?: boolean
     nextTestTime?: boolean
+    timesShownDragDrop?: boolean
     copiedFromId?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
     copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
@@ -7942,6 +7954,7 @@ export namespace Prisma {
     rank?: boolean
     memoryHook?: boolean
     nextTestTime?: boolean
+    timesShownDragDrop?: boolean
     copiedFromId?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
     copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
@@ -7960,6 +7973,7 @@ export namespace Prisma {
     rank?: boolean
     memoryHook?: boolean
     nextTestTime?: boolean
+    timesShownDragDrop?: boolean
     copiedFromId?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
     copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
@@ -7978,10 +7992,11 @@ export namespace Prisma {
     rank?: boolean
     memoryHook?: boolean
     nextTestTime?: boolean
+    timesShownDragDrop?: boolean
     copiedFromId?: boolean
   }
 
-  export type FlashcardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerId" | "front" | "back" | "frontLanguage" | "backLanguage" | "pronunciation" | "createdAt" | "status" | "rank" | "memoryHook" | "nextTestTime" | "copiedFromId", ExtArgs["result"]["flashcard"]>
+  export type FlashcardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerId" | "front" | "back" | "frontLanguage" | "backLanguage" | "pronunciation" | "createdAt" | "status" | "rank" | "memoryHook" | "nextTestTime" | "timesShownDragDrop" | "copiedFromId", ExtArgs["result"]["flashcard"]>
   export type FlashcardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | UserDefaultArgs<ExtArgs>
     copiedFrom?: boolean | Flashcard$copiedFromArgs<ExtArgs>
@@ -8021,6 +8036,7 @@ export namespace Prisma {
       rank: number
       memoryHook: string | null
       nextTestTime: Date | null
+      timesShownDragDrop: number
       copiedFromId: string | null
     }, ExtArgs["result"]["flashcard"]>
     composites: {}
@@ -8462,6 +8478,7 @@ export namespace Prisma {
     readonly rank: FieldRef<"Flashcard", 'Float'>
     readonly memoryHook: FieldRef<"Flashcard", 'String'>
     readonly nextTestTime: FieldRef<"Flashcard", 'DateTime'>
+    readonly timesShownDragDrop: FieldRef<"Flashcard", 'Int'>
     readonly copiedFromId: FieldRef<"Flashcard", 'String'>
   }
     
@@ -13280,6 +13297,7 @@ export namespace Prisma {
     rank: 'rank',
     memoryHook: 'memoryHook',
     nextTestTime: 'nextTestTime',
+    timesShownDragDrop: 'timesShownDragDrop',
     copiedFromId: 'copiedFromId'
   };
 
@@ -13750,6 +13768,7 @@ export namespace Prisma {
     rank?: FloatFilter<"Flashcard"> | number
     memoryHook?: StringNullableFilter<"Flashcard"> | string | null
     nextTestTime?: DateTimeNullableFilter<"Flashcard"> | Date | string | null
+    timesShownDragDrop?: IntFilter<"Flashcard"> | number
     copiedFromId?: StringNullableFilter<"Flashcard"> | string | null
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     copiedFrom?: XOR<FlashcardNullableScalarRelationFilter, FlashcardWhereInput> | null
@@ -13771,6 +13790,7 @@ export namespace Prisma {
     rank?: SortOrder
     memoryHook?: SortOrderInput | SortOrder
     nextTestTime?: SortOrderInput | SortOrder
+    timesShownDragDrop?: SortOrder
     copiedFromId?: SortOrderInput | SortOrder
     owner?: UserOrderByWithRelationInput
     copiedFrom?: FlashcardOrderByWithRelationInput
@@ -13795,6 +13815,7 @@ export namespace Prisma {
     rank?: FloatFilter<"Flashcard"> | number
     memoryHook?: StringNullableFilter<"Flashcard"> | string | null
     nextTestTime?: DateTimeNullableFilter<"Flashcard"> | Date | string | null
+    timesShownDragDrop?: IntFilter<"Flashcard"> | number
     copiedFromId?: StringNullableFilter<"Flashcard"> | string | null
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     copiedFrom?: XOR<FlashcardNullableScalarRelationFilter, FlashcardWhereInput> | null
@@ -13816,6 +13837,7 @@ export namespace Prisma {
     rank?: SortOrder
     memoryHook?: SortOrderInput | SortOrder
     nextTestTime?: SortOrderInput | SortOrder
+    timesShownDragDrop?: SortOrder
     copiedFromId?: SortOrderInput | SortOrder
     _count?: FlashcardCountOrderByAggregateInput
     _avg?: FlashcardAvgOrderByAggregateInput
@@ -13840,6 +13862,7 @@ export namespace Prisma {
     rank?: FloatWithAggregatesFilter<"Flashcard"> | number
     memoryHook?: StringNullableWithAggregatesFilter<"Flashcard"> | string | null
     nextTestTime?: DateTimeNullableWithAggregatesFilter<"Flashcard"> | Date | string | null
+    timesShownDragDrop?: IntWithAggregatesFilter<"Flashcard"> | number
     copiedFromId?: StringNullableWithAggregatesFilter<"Flashcard"> | string | null
   }
 
@@ -14436,6 +14459,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     owner: UserCreateNestedOneWithoutFlashcardsInput
     copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
     copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
@@ -14456,6 +14480,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copiedFromId?: string | null
     copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
@@ -14474,6 +14499,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
     copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
     copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
@@ -14494,6 +14520,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
     copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
@@ -14513,6 +14540,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copiedFromId?: string | null
   }
 
@@ -14528,6 +14556,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
   }
 
   export type FlashcardUncheckedUpdateManyInput = {
@@ -14543,6 +14572,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -15206,11 +15236,13 @@ export namespace Prisma {
     rank?: SortOrder
     memoryHook?: SortOrder
     nextTestTime?: SortOrder
+    timesShownDragDrop?: SortOrder
     copiedFromId?: SortOrder
   }
 
   export type FlashcardAvgOrderByAggregateInput = {
     rank?: SortOrder
+    timesShownDragDrop?: SortOrder
   }
 
   export type FlashcardMaxOrderByAggregateInput = {
@@ -15226,6 +15258,7 @@ export namespace Prisma {
     rank?: SortOrder
     memoryHook?: SortOrder
     nextTestTime?: SortOrder
+    timesShownDragDrop?: SortOrder
     copiedFromId?: SortOrder
   }
 
@@ -15242,11 +15275,13 @@ export namespace Prisma {
     rank?: SortOrder
     memoryHook?: SortOrder
     nextTestTime?: SortOrder
+    timesShownDragDrop?: SortOrder
     copiedFromId?: SortOrder
   }
 
   export type FlashcardSumOrderByAggregateInput = {
     rank?: SortOrder
+    timesShownDragDrop?: SortOrder
   }
 
   export type FlashcardScalarRelationFilter = {
@@ -16210,6 +16245,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
     copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutFlashcardInput
@@ -16228,6 +16264,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copiedFromId?: string | null
     copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
@@ -16356,6 +16393,7 @@ export namespace Prisma {
     rank?: FloatFilter<"Flashcard"> | number
     memoryHook?: StringNullableFilter<"Flashcard"> | string | null
     nextTestTime?: DateTimeNullableFilter<"Flashcard"> | Date | string | null
+    timesShownDragDrop?: IntFilter<"Flashcard"> | number
     copiedFromId?: StringNullableFilter<"Flashcard"> | string | null
   }
 
@@ -16869,6 +16907,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     owner: UserCreateNestedOneWithoutFlashcardsInput
     copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutFlashcardInput
@@ -16888,6 +16927,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copiedFromId?: string | null
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
     tags?: FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput
@@ -16910,6 +16950,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     owner: UserCreateNestedOneWithoutFlashcardsInput
     copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutFlashcardInput
@@ -16929,6 +16970,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
     tags?: FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput
@@ -17047,6 +17089,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
     copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput
@@ -17066,6 +17109,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
     tags?: FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput
@@ -17171,6 +17215,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     owner: UserCreateNestedOneWithoutFlashcardsInput
     copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
     copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
@@ -17190,6 +17235,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copiedFromId?: string | null
     copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
     tags?: FlashcardTagUncheckedCreateNestedManyWithoutFlashcardInput
@@ -17260,6 +17306,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
     copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
     copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
@@ -17279,6 +17326,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
     copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
     tags?: FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput
@@ -17331,6 +17379,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     owner: UserCreateNestedOneWithoutFlashcardsInput
     copiedFrom?: FlashcardCreateNestedOneWithoutCopiesInput
     copies?: FlashcardCreateNestedManyWithoutCopiedFromInput
@@ -17350,6 +17399,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copiedFromId?: string | null
     copies?: FlashcardUncheckedCreateNestedManyWithoutCopiedFromInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutFlashcardInput
@@ -17400,6 +17450,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
     copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
     copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
@@ -17419,6 +17470,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
     copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
@@ -17527,6 +17579,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
     copiedFromId?: string | null
   }
 
@@ -17569,6 +17622,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copiedFrom?: FlashcardUpdateOneWithoutCopiesNestedInput
     copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput
@@ -17587,6 +17641,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
     copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
@@ -17605,6 +17660,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copiedFromId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -17834,6 +17890,7 @@ export namespace Prisma {
     rank?: number
     memoryHook?: string | null
     nextTestTime?: Date | string | null
+    timesShownDragDrop?: number
   }
 
   export type UserFlashcardActivityCreateManyFlashcardInput = {
@@ -17861,6 +17918,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     owner?: UserUpdateOneRequiredWithoutFlashcardsNestedInput
     copies?: FlashcardUpdateManyWithoutCopiedFromNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutFlashcardNestedInput
@@ -17880,6 +17938,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
     copies?: FlashcardUncheckedUpdateManyWithoutCopiedFromNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutFlashcardNestedInput
     tags?: FlashcardTagUncheckedUpdateManyWithoutFlashcardNestedInput
@@ -17898,6 +17957,7 @@ export namespace Prisma {
     rank?: FloatFieldUpdateOperationsInput | number
     memoryHook?: NullableStringFieldUpdateOperationsInput | string | null
     nextTestTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timesShownDragDrop?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserFlashcardActivityUpdateWithoutFlashcardInput = {

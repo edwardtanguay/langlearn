@@ -20,6 +20,7 @@ interface Flashcard {
   back: string
   frontLanguage: string
   backLanguage: string
+  timesShownDragDrop?: number
   tags: { tag: Tag }[]
 }
 
@@ -30,6 +31,7 @@ interface ActivityItem {
   displayBack: string
   answerText: string
   currentPlacedAnswer: string | null
+  timesShownDragDrop: number
 }
 
 const languageColors: Record<string, string> = {
@@ -60,6 +62,7 @@ const languagePillStyles: Record<string, { bg: string; color: string; border: st
 }
 
 const isLoading = ref(true)
+const isAdmin = ref(false)
 const allStarredCards = ref<Flashcard[]>([])
 const currentBatch = ref<ActivityItem[]>([])
 const availablePool = ref<string[]>([])
@@ -103,6 +106,19 @@ const currentLanguageColor = computed(() => {
 
 const currentPillStyle = computed(() => {
   return languagePillStyles[currentLanguageCode.value] || { bg: 'bg-indigo-600', color: 'text-white', border: 'border-indigo-400' }
+})
+
+const languageCardCountsSummary = computed(() => {
+  if (allStarredCards.value.length === 0) return ''
+  const counts: Record<string, number> = {}
+  for (const card of allStarredCards.value) {
+    const lang = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
+    counts[lang] = (counts[lang] || 0) + 1
+  }
+  const parts = Object.entries(counts)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([lang, count]) => `${lang.toUpperCase()}: ${count}`)
+  return parts.join(', ')
 })
 
 function extractStarredText(text: string): { display: string; answer: string } | null {
@@ -151,7 +167,11 @@ function openThreeExamples(word: string) {
 async function loadStarredCards() {
   isLoading.value = true
   try {
-    const cards = await $fetch<Flashcard[]>('/api/flashcards/search?q=*')
+    const [cards, me] = await Promise.all([
+      $fetch<Flashcard[]>('/api/flashcards/search?q=*'),
+      $fetch<{ role: string }>('/api/user/me').catch(() => ({ role: 'member' }))
+    ])
+    isAdmin.value = me?.role === 'admin'
     const validCards = cards.filter(c => extractStarredText(c.back) !== null)
     allStarredCards.value = validCards
     generateNewRound()
@@ -182,18 +202,33 @@ function generateNewRound() {
   const availableLangs = Object.keys(cardsByLanguage).filter(l => (cardsByLanguage[l]?.length ?? 0) > 0)
   if (availableLangs.length === 0) return
 
-  // Pick a random language group
-  const randomLang = availableLangs[Math.floor(Math.random() * availableLangs.length)]
-  if (!randomLang) return
-  currentLanguageCode.value = randomLang
-  const langCards = cardsByLanguage[randomLang] ?? []
+  // Sort overall valid cards by timesShownDragDrop ascending (randomize ties)
+  const sortedAll = [...allStarredCards.value].sort((a, b) => {
+    const countA = a.timesShownDragDrop ?? 0
+    const countB = b.timesShownDragDrop ?? 0
+    if (countA !== countB) return countA - countB
+    return 0.5 - Math.random()
+  })
 
-  // Shuffle and pick up to 6 cards ensuring unique answer words
-  const shuffled = [...langCards].sort(() => 0.5 - Math.random())
+  // Pick language of card with lowest view count
+  const topCandidate = sortedAll[0]
+  const targetLang = (topCandidate?.backLanguage || topCandidate?.frontLanguage || availableLangs[0] || 'fr').toLowerCase()
+  currentLanguageCode.value = targetLang
+
+  const langCards = cardsByLanguage[targetLang] ?? []
+
+  // Sort language cards by least seen first (with random tie-breaker)
+  const sortedLangCards = [...langCards].sort((a, b) => {
+    const countA = a.timesShownDragDrop ?? 0
+    const countB = b.timesShownDragDrop ?? 0
+    if (countA !== countB) return countA - countB
+    return 0.5 - Math.random()
+  })
+
   const picked: Flashcard[] = []
   const usedAnswers = new Set<string>()
 
-  for (const card of shuffled) {
+  for (const card of sortedLangCards) {
     const parsed = extractStarredText(card.back)
     if (parsed) {
       const normalizedAns = parsed.answer.trim().toLowerCase()
@@ -203,6 +238,20 @@ function generateNewRound() {
         if (picked.length === 6) break
       }
     }
+  }
+
+  // Increment counters for picked cards optimistically & on backend
+  const pickedIds = picked.map(c => c.id)
+  if (pickedIds.length > 0) {
+    picked.forEach(c => {
+      c.timesShownDragDrop = (c.timesShownDragDrop ?? 0) + 1
+    })
+    $fetch('/api/flashcards/increment-drag-drop', {
+      method: 'POST',
+      body: { cardIds: pickedIds }
+    }).catch(err => {
+      console.error('Failed to increment timesShownDragDrop:', err)
+    })
   }
 
   const items: ActivityItem[] = []
@@ -216,7 +265,8 @@ function generateNewRound() {
       fullBack: card.back,
       displayBack: parsed.display,
       answerText: parsed.answer,
-      currentPlacedAnswer: null
+      currentPlacedAnswer: null,
+      timesShownDragDrop: card.timesShownDragDrop ?? 1
     })
     answers.push(parsed.answer)
   })
@@ -361,6 +411,9 @@ onMounted(() => {
       <p class="hidden md:block text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
         Drag and drop the correct starred answers into each blank space below to complete the phrases.
       </p>
+      <div v-if="isAdmin && languageCardCountsSummary" class="hidden md:block text-xs font-mono text-gray-400 dark:text-gray-500 mt-1">
+        Available cards: {{ languageCardCountsSummary }}.
+      </div>
     </div>
 
     <div v-if="isLoading" class="text-center py-12 text-sm text-gray-500 font-mono">
@@ -384,7 +437,7 @@ onMounted(() => {
           @dragleave="onDragLeaveCard($event, idx)"
           @drop="onDropOnItem(idx)"
           @click="handleCardClick($event, item.id)"
-          class="p-3 md:p-5 rounded-xl md:rounded-2xl border transition-all duration-200 shadow-sm flex flex-col justify-between cursor-pointer select-none"
+          class="relative p-3 md:p-5 rounded-xl md:rounded-2xl border transition-all duration-200 shadow-sm flex flex-col justify-between cursor-pointer select-none"
           :class="[
             activeFrontCardId === item.id 
               ? 'bg-slate-100 dark:bg-[#26334d]' 
@@ -492,6 +545,14 @@ onMounted(() => {
                 <PencilSquareIcon class="w-4 h-4" />
               </NuxtLink>
             </div>
+          </div>
+
+          <!-- Admin Desktop Views Badge -->
+          <div
+            v-if="isAdmin"
+            class="hidden md:inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-mono leading-none bg-white dark:bg-[#182030] text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-gray-700/80 shadow-xs pointer-events-none absolute -bottom-2.5 -right-2 z-10"
+          >
+            views: {{ item.timesShownDragDrop }}
           </div>
         </div>
       </div>

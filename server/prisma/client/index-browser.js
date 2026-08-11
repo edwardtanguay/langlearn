@@ -180,6 +180,7 @@ exports.Prisma.FlashcardScalarFieldEnum = {
   rank: 'rank',
   memoryHook: 'memoryHook',
   nextTestTime: 'nextTestTime',
+  timesShownDragDrop: 'timesShownDragDrop',
   copiedFromId: 'copiedFromId'
 };
 
