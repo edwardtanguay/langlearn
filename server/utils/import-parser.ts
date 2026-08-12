@@ -9,6 +9,7 @@ export interface ParsedRow {
   rank?: number
   pronunciation?: string
   memoryHook?: string
+  tags?: string[]
 }
 
 function parseCSVOrTSVLine(line: string): string[] {
@@ -133,6 +134,8 @@ function buildParsedRow(lang1: string, lang2: string, text1: string, text2: stri
   const rank = meta1.rank ?? meta2.rank ?? calculateOptimalRank(frontClean)
   const pronunciation = meta1.pronunciation || meta2.pronunciation || ''
   const memoryHook = meta1.memoryHook || meta2.memoryHook || ''
+  const tagsSet = new Set<string>([...(meta1.tags || []), ...(meta2.tags || [])])
+  const tags = Array.from(tagsSet)
 
   return {
     lang1,
@@ -141,6 +144,7 @@ function buildParsedRow(lang1: string, lang2: string, text1: string, text2: stri
     text2: cleanText2,
     rank,
     pronunciation,
-    memoryHook
+    memoryHook,
+    ...(tags.length > 0 ? { tags } : {})
   }
 }

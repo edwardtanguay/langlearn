@@ -100,7 +100,11 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
       continue
     }
 
-    payloadSet.add(key)
+    const rowTags = Array.from(new Set([
+      ...(row.tags || []),
+      ...(meta1.tags || []),
+      ...(meta2.tags || [])
+    ]))
 
     const pronunciation = row.pronunciation || meta1.pronunciation || meta2.pronunciation || null
     const memoryHook = row.memoryHook || meta1.memoryHook || meta2.memoryHook || null
@@ -118,7 +122,8 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
       pronunciation,
       memoryHook,
       status: 'LEARNING',
-      rank
+      rank,
+      tagsToAttach: rowTags
     })
 
     activitiesToCreate.push({
@@ -148,10 +153,58 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
       }
     }
 
+    // Collect all unique tag abbreviations across all cards to create
+    const allTagAbbrevs = new Set<string>()
+    for (const card of cardsToCreate) {
+      for (const t of card.tagsToAttach) {
+        allTagAbbrevs.add(t)
+      }
+    }
+
     await prisma.$transaction(async (tx) => {
-      await tx.flashcard.createMany({
-        data: cardsToCreate
+      // 1. Ensure all tags exist in Tag table
+      const tagMap = new Map<string, string>() // abbreviation -> tagId
+      if (allTagAbbrevs.size > 0) {
+        const existingTags = await tx.tag.findMany({
+          where: { abbreviation: { in: Array.from(allTagAbbrevs) } }
+        })
+        for (const tag of existingTags) {
+          tagMap.set(tag.abbreviation, tag.id)
+        }
+
+        const missingAbbrevs = Array.from(allTagAbbrevs).filter(abbrev => !tagMap.has(abbrev))
+        for (const abbrev of missingAbbrevs) {
+          const newTag = await tx.tag.create({
+            data: { abbreviation: abbrev }
+          })
+          tagMap.set(abbrev, newTag.id)
+        }
+      }
+
+      // 2. Prepare FlashcardTag items
+      const flashcardTagsToCreate: Array<{ id: string; flashcardId: string; tagId: string }> = []
+      const cardDataToCreate = cardsToCreate.map(({ tagsToAttach, ...cardData }) => {
+        for (const abbrev of tagsToAttach) {
+          const tagId = tagMap.get(abbrev)
+          if (tagId) {
+            flashcardTagsToCreate.push({
+              id: crypto.randomUUID(),
+              flashcardId: cardData.id,
+              tagId
+            })
+          }
+        }
+        return cardData
       })
+
+      await tx.flashcard.createMany({
+        data: cardDataToCreate
+      })
+      if (flashcardTagsToCreate.length > 0) {
+        await tx.flashcardTag.createMany({
+          data: flashcardTagsToCreate
+        })
+      }
       await tx.userFlashcardActivity.createMany({
         data: activitiesToCreate
       })

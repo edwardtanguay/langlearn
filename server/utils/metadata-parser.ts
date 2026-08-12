@@ -5,6 +5,7 @@ export interface ParsedMetadataResult {
   pronunciation?: string;
   memoryHook?: string;
   rank?: number;
+  tags?: string[];
 }
 
 export function parseMetadata(text: string): ParsedMetadataResult {
@@ -15,6 +16,7 @@ export function parseMetadata(text: string): ParsedMetadataResult {
   let pronunciation: string | undefined;
   let memoryHook: string | undefined;
   let rank: number | undefined;
+  const tags: string[] = [];
 
   const textLen = text.length;
   const markerLen = METADATA_MARKER.length;
@@ -57,7 +59,7 @@ export function parseMetadata(text: string): ParsedMetadataResult {
       return;
     }
 
-    // 2. Category tags: category letter + "." + body (e.g. "p.SUR-seel", "m.the sky")
+    // 2. Category tags: category letter + "." + body (e.g. "p.SUR-seel", "m.the sky", "c.de")
     const dotIndex = chunk.indexOf('.');
     if (dotIndex > 0) {
       const category = chunk.substring(0, dotIndex).toLowerCase();
@@ -67,6 +69,14 @@ export function parseMetadata(text: string): ParsedMetadataResult {
         pronunciation = body;
       } else if (category === 'm') {
         memoryHook = body;
+      } else if (category === 't') {
+        let tagVal = body.toLowerCase();
+        if (tagVal === 'a') {
+          tagVal = 'à';
+        }
+        if (tagVal && !tags.includes(tagVal)) {
+          tags.push(tagVal);
+        }
       }
     }
   }
@@ -78,6 +88,7 @@ export function parseMetadata(text: string): ParsedMetadataResult {
   if (pronunciation) result.pronunciation = pronunciation;
   if (memoryHook) result.memoryHook = memoryHook;
   if (rank !== undefined && !isNaN(rank)) result.rank = rank;
+  if (tags.length > 0) result.tags = tags;
 
   return result;
 }
