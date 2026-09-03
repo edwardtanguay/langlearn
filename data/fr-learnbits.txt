@@ -1,3 +1,56 @@
+- speaking notes
+	- staccato
+	- no ums, ahs
+
+- pronuncation
+	- vidéos
+		- [8 explications pour parler français plus clairement](https://www.youtube.com/watch?v=fDuVy_EjU7o&list=PLwi9oOWamlU74WffiMmE75GXX928tUDKJ)
+	- mots qui se terminent par -er = "AY"
+		- parler, premier, danger, le dernier moment
+		- mais les exceptions: hier, la mer, le fer
+	- les lettres "e"
+		- e = [uh]
+		- é,-er = [ay]
+		- è/ê = [eh]
+	- les lettres "a"
+		- toujour [AH]
+			- Paris = PAH-ree
+			- "La tata de Clara a quatre chats"
+	- "i" et "u" sont très similaire
+	- les consonnes finales
+		- en général, on ne prononce pas les consonnes finales
+		- les exceptions sont les mots qui se terminent par: CRFL (so be CaReFuL)
+			- avec, un sac (mais: estomac [MAH])
+			- un chef, un oeuf
+			- la mer, le fer, finir, choisir (mais -er es toujour [AY])
+			- le miel, le sel (mais: un outil et gentil [TEE])
+		- note : "but" [bü] (sans "t" aussi quand Google Translate prononce le lettre "t")
+		- exception : tous, plus
+			- [TOOS], ils sont tous venus me voir
+				- exception: il travaille tous les jours
+			- [PLOOS]
+				- Il a plus de temps. [PLOOS]
+				- Il n'a plus de temps. [PLOO]
+					- Il est plus professionnel que moi
+	- "s"
+		- régionalisme [EES-mah]
+	- sons qui disparaissent
+		- samedi = [samdi]
+		- je sais = [shay]
+		- je suis = [shwee]
+		- tu as vu ce film? = [tah vü]
+		- je ne sais pas = [je sais pas] = [shay pah]	
+		- je ne suis pas dispo = [shwee pah]	
+		- cinéma = ciné
+		- association = asso
+		- restaurant = restau
+	- vocabulaire informal
+		- une voiture = une caisse
+		- une maison = une baraque
+		- une femme = une meuf, une nana
+	- le verlan
+		- j'ai maté une série, j'ai rien pigé à l'histoire
+		- ce mec là-bas, il est chelou
 - background listening
 	- Parle Français Channel
 		- https://www.youtube.com/@parlefrancaischannel/videos
@@ -48,6 +101,21 @@
 		- groups
 			- https://enseigner.tv5monde.com/fiches-pedagogiques-fle/la-grande-explication
 - Cours VHS
+	- Überblick
+		- Schlüssel
+			- ,, = eingeschrieben, warten ob stattfindet
+			- )) = muss noch einschreiben
+		- MONTAG
+			- ,,offen 07:00-08:30 Französisch B1/B2: Segrestin, Adèle (La Rochelle, jung, unbeschwert), 14.09.-07.12.
+				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=791220
+			- ,,ausgelichen 18:00-19:30 Französisch B2 Conversation & littèrature & grammaire: Christine Belakhdar (69, intellectual, academic, Algeria, présentation), 14.09.-30.11.
+				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=799049
+		- DIENSTAG
+			- ,,offen 16:00-17:30 Konversation A2/B1: Alexandre Schuck (Grenoble, Regensburg, USA, art, pronunciation), 08.09.-01.12.
+				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=792968
+			- ,,offen 18:30-20:00 Französisch B1/B2 Cours de conversation Online: Edwige Bernanoce (Grenoble, Potsdam, Theaterwissenschaften, Sprachdidaktik), 08.09-13.10.
+				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=797913	
+	
 	- MONDAY
 		- ,, SIGNED-UP 7:00 Französisch B1/B2
 			- **** [monday mornings, fun, light, young teacher]
@@ -58,7 +126,7 @@
 			- Segrestin, Adèle
 				- La Rochelle
 				- https://www.linkedin.com/in/adele-segrestin/?locale=en	
-		- )) CHOOSE-BETWEEN(+intense, dedicated, photo, only B2) 18:00-19:30: Französisch B2 Conversation & littèrature & grammaire
+		- )) YES **** RANK4.9 CHOOSE-BETWEEN(+intense, dedicated, photo, only B2) 18:00-19:30: Französisch B2 Conversation & littèrature & grammaire
 				- ***[very intellectual, older academic professor type, lived in Algeria, give presentations]
 				- Mo, 14.09.-30.11., 18:00 - 19:30
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=799049
@@ -66,7 +134,7 @@
 					- https://www.google.com/imgres?q=Belakhdar%2C%20Christine&imgurl=https%3A%2F%2Fsujetverlag.de%2Fwp-content%2Fuploads%2F2022%2F06%2FChristine_BelakdharSW2-scaled-e1655969327496.jpg&imgrefurl=https%3A%2F%2Fsujetverlag.de%2Fautoren%2Fuebersetzer%2Fbio-christine-belakhdar%2F%3Flang%3Den&docid=Ch0ZEiCD2FTq2M&tbnid=nT-zw2wJ4_mgDM&vet=12ahUKEwj71_CouLuVAxVYRvEDHUuyB7UQnPAOegQIOxAA..i&w=1849&h=1849&hcb=2&ved=2ahUKEwj71_CouLuVAxVYRvEDHUuyB7UQnPAOegQIOxAA
 					- Christine Belakhdar, geboren 1957, lebte nach dem Romanistik-Studium elf Jahre in Algerien. Seit 1994 ist sie wieder in Berlin und arbeitet zusammen mit ihrem Mann als Literaturübersetzerin und Kulturvermittlerin. 2007 gründete sie den deutsch-algerischen Kulturverein Yedd – deutsch-algerische Kultur e. V..
 				- Vous etes déjà en mesure de préparer une présentation sur un sujet de votre choix.
-		- )) CHOOSE-BETWEEN(- no photo, -C1) 19:15 Online: Französisch B2/C1 - Lundi langue et société
+		- )) RANK4.1 CHOOSE-BETWEEN(- no photo, -C1) 19:15 Online: Französisch B2/C1 - Lundi langue et société
 			- ** [older French woman, 10 yeras in Berlin, studied Cergy-Pontoise (Paris) and Montpellier]
 			- Mo, 21.09.-30.11., 19:15 - 20:45
 			- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=791083
@@ -461,3 +529,9 @@
 - sound-alikes
 	- quelles que soient les circonstances
 		- quelque soit
+- nouns
+	- das Panel, die Panels
+	- der Gürtel, die Gürtel
+	
+- word order
+	- https://elon.io/grammar/french/syntax/word-order-svo
