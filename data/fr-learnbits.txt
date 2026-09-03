@@ -106,14 +106,14 @@
 			- ,, = eingeschrieben, warten ob stattfindet
 			- )) = muss noch einschreiben
 		- MONTAG
-			- ,,offen 07:00-08:30 Französisch B1/B2: Segrestin, Adèle (La Rochelle, jung, unbeschwert), 14.09.-07.12.
+			- ,,offen [CW408-372H] 07:00-08:30 Französisch B1/B2: Segrestin, Adèle (La Rochelle, jung, unbeschwert), 14.09.-07.12.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=791220
-			- ,,ausgelichen 18:00-19:30 Französisch B2 Conversation & littèrature & grammaire: Christine Belakhdar (69, intellectual, academic, Algeria, présentation), 14.09.-30.11.
+			- ,,ausgelichen [FK4.F421] 18:00-19:30 Französisch B2 Conversation & littèrature & grammaire: Christine Belakhdar (69, intellectual, academic, Algeria, présentation), 14.09.-30.11.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=799049
 		- DIENSTAG
-			- ,,offen 16:00-17:30 Konversation A2/B1: Alexandre Schuck (Grenoble, Regensburg, USA, art, pronunciation), 08.09.-01.12.
+			- ,,offen [MH4.08-180-H] 16:00-17:30 Konversation A2/B1: Alexandre Schuck (Grenoble, Regensburg, USA, art, pronunciation), 08.09.-01.12.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=792968
-			- ,,offen 18:30-20:00 Französisch B1/B2 Cours de conversation Online: Edwige Bernanoce (Grenoble, Potsdam, Theaterwissenschaften, Sprachdidaktik), 08.09-13.10.
+			- ,,offen [TS440.076H-W] 18:30-20:00 Französisch B1/B2 Cours de conversation Online: Edwige Bernanoce (Grenoble, Potsdam, Theaterwissenschaften, Sprachdidaktik), 08.09-13.10.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=797913	
 	
 	- MONDAY
