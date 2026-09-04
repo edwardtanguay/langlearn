@@ -41,6 +41,7 @@ interface Flashcard {
   status: string
   rank: number
   memoryHook: string | null
+  nextTestTime?: string | Date | null
   tags: FlashcardTag[]
 }
 
@@ -88,7 +89,7 @@ const lastCompletedBatchCardIds = ref<string[]>([])
 let activeBatchRequestId = 0
 
 const strategyOptions = [
-  { id: 'last_imported', label: 'Imported but not yet tested' },
+  { id: 'last_imported', label: 'Newly imported cards' },
   { id: 'most_important', label: 'Most important' },
   { id: 'review_learned', label: 'Review learned' },
   { id: 'phrases_a_de', label: 'Phrases with à/de' }
@@ -97,7 +98,7 @@ const strategyOptions = [
 const currentStrategyExplainer = computed(() => {
   switch (selectedStrategy.value) {
     case 'last_imported':
-      return "Testing the newest cards you imported that haven't been tested yet."
+      return "Testing newly imported cards that haven't been tested yet."
     case 'most_important':
       return "Practicing your highest-ranked unlearned flashcards."
     case 'review_learned':
@@ -107,6 +108,39 @@ const currentStrategyExplainer = computed(() => {
     default:
       return "Practicing your flashcards in focused batches."
   }
+})
+
+const isLanguageDropdownOpen = ref(false)
+const languageDropdownRef = ref<HTMLElement | null>(null)
+
+function toggleLanguageDropdown() {
+  if (isLoadingLanguages.value) return
+  isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value
+}
+
+function selectLanguageOption(code: string) {
+  selectedLanguage.value = code
+  isLanguageDropdownOpen.value = false
+  onLanguageChange()
+}
+
+function handleClickOutsideLanguage(e: MouseEvent) {
+  if (languageDropdownRef.value && !languageDropdownRef.value.contains(e.target as Node)) {
+    isLanguageDropdownOpen.value = false
+  }
+}
+
+const selectedLanguageLabel = computed(() => {
+  if (selectedLanguage.value === 'all') {
+    const countStr = totalAvailableMatching.value < userGroupSize.value
+      ? `${totalAvailableMatching.value} of ${userGroupSize.value} cards`
+      : `${totalAvailableMatching.value}`
+    return `All languages (${countStr})`
+  }
+  const item = availableLanguages.value.find(l => l.code === selectedLanguage.value)
+  if (!item) return 'All languages'
+  const countStr = item.isPartial ? `${item.count} of ${userGroupSize.value} cards` : `${item.count}`
+  return `${item.name} (${countStr})`
 })
 
 const languageNames: Record<string, string> = {
@@ -229,7 +263,18 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
           minDelay
         ])
         if (thisReqId !== activeBatchRequestId) return
-        if (specificCard && specificCard.id) {
+
+        // Always clean the address bar to /flashcard so future reloads pull the active batch cleanly
+        if (typeof window !== 'undefined' && window.history) {
+          window.history.replaceState(null, '', '/flashcard')
+        }
+
+        // Only pin specificCard if it matches the active strategy (e.g. if newly imported, must be untested)
+        const isEligibleForStrategy = specificCard && (
+          selectedStrategy.value !== 'last_imported' || (specificCard.status === 'LEARNING' && !specificCard.nextTestTime)
+        )
+
+        if (isEligibleForStrategy && specificCard.id) {
           const otherCards = (restQueue || []).filter(c => c.id !== specificCard.id)
           testQueue.value = [specificCard, ...otherCards]
           batchSlots.value = testQueue.value.map((c, i) => ({
@@ -410,16 +455,7 @@ const currentCard = computed<Flashcard | null>(() => {
   return testQueue.value[currentQueueIndex.value] ?? null
 })
 
-// Dynamically update route URL permalink seamlessly without page blinking
-watch(currentCard, (card) => {
-  if (card && card.id) {
-    const routeId = useRoute().params.id as string | undefined
-    // Only overwrite browser location if the route didn't explicitly request a different specific card permalink
-    if (!routeId && typeof window !== 'undefined' && window.history) {
-      window.history.replaceState(null, '', `/flashcard/${card.id}`)
-    }
-  }
-}, { immediate: true })
+
 
 // Remove Tag
 function removeTag(tagAbbrev: string) {
@@ -887,6 +923,7 @@ watch(() => route.params.id, (newId) => {
 
 onMounted(async () => {
   window.addEventListener('keydown', handleGlobalKeyDown)
+  document.addEventListener('click', handleClickOutsideLanguage)
   if (loggedIn.value) {
     try {
       const reqId = ++activeBatchRequestId
@@ -908,6 +945,7 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleGlobalKeyDown)
+  document.removeEventListener('click', handleClickOutsideLanguage)
   if (autoAdvanceTimer) {
     clearInterval(autoAdvanceTimer)
     autoAdvanceTimer = null
@@ -955,33 +993,79 @@ onBeforeUnmount(() => {
             <div class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs space-y-2">
               <div class="flex flex-col sm:flex-row gap-2.5">
                 <!-- Language Filter Dropdown -->
-                <div class="flex-1">
+                <div class="flex-1" ref="languageDropdownRef">
                   <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">
                     Language
                   </label>
                   <div class="relative">
-                    <select
-                      v-model="selectedLanguage"
-                      @change="onLanguageChange"
-                      class="w-full appearance-none pl-3 pr-8 py-2 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                    <button
+                      type="button"
+                      @click="toggleLanguageDropdown"
+                      :disabled="isLoadingLanguages"
+                      class="w-full flex items-center justify-between pl-3 pr-2.5 py-2 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer text-left transition-all"
                     >
-                      <option value="all">
-                        {{ isLoadingLanguages ? 'All languages (...)' : `All languages (${totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching})` }}
-                      </option>
-                      <option
+                      <!-- When loading, show All languages with subtle slow-spinning spinner -->
+                      <div v-if="isLoadingLanguages" class="flex items-center gap-2 min-w-0">
+                        <span class="truncate">All languages</span>
+                        <svg
+                          class="animate-spin w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0"
+                          style="animation-duration: 2.2s;"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                      </div>
+                      <!-- When loaded, show selected language label -->
+                      <span v-else class="truncate">
+                        {{ selectedLanguageLabel }}
+                      </span>
+
+                      <!-- Right chevron arrow -->
+                      <div class="text-gray-400 shrink-0 ml-1">
+                        <svg
+                          class="h-3.5 w-3.5 transition-transform duration-200"
+                          :class="{ 'rotate-180': isLanguageDropdownOpen }"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </button>
+
+                    <!-- Custom Dropdown Menu -->
+                    <div
+                      v-if="isLanguageDropdownOpen"
+                      class="absolute left-0 right-0 top-full mt-1.5 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/80 rounded-xl shadow-xl py-1 max-h-60 overflow-y-auto text-xs [color-scheme:light] dark:[color-scheme:dark]"
+                    >
+                      <button
+                        type="button"
+                        @click="selectLanguageOption('all')"
+                        class="w-full text-left px-3 py-2 flex items-center justify-between transition-colors cursor-pointer"
+                        :class="selectedLanguage === 'all' ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                      >
+                        <span>All languages</span>
+                        <span class="text-gray-400 dark:text-gray-400 font-normal">
+                          {{ totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching }}
+                        </span>
+                      </button>
+                      <button
                         v-for="lang in availableLanguages"
                         :key="lang.code"
-                        :value="lang.code"
+                        type="button"
+                        @click="selectLanguageOption(lang.code)"
+                        class="w-full text-left px-3 py-2 flex items-center justify-between transition-colors cursor-pointer"
+                        :class="selectedLanguage === lang.code ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
                       >
-                        {{ lang.name }} ({{ isLoadingLanguages ? '...' : (lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count) }})
-                      </option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-gray-400">
-                      <svg v-if="isLoadingLanguages" class="animate-spin h-3.5 w-3.5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                      </svg>
-                      <svg v-else class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        <span>{{ lang.name }}</span>
+                        <span class="text-gray-400 dark:text-gray-400 font-normal">
+                          {{ lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count }}
+                        </span>
+                      </button>
                     </div>
                   </div>
                 </div>
