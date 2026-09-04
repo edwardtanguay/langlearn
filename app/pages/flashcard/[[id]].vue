@@ -110,11 +110,17 @@ const currentStrategyExplainer = computed(() => {
   }
 })
 
+const showMobileControls = ref(false)
+
 const isLanguageDropdownOpen = ref(false)
 const languageDropdownRef = ref<HTMLElement | null>(null)
 
+const isStrategyDropdownOpen = ref(false)
+const strategyDropdownRef = ref<HTMLElement | null>(null)
+
 function toggleLanguageDropdown() {
   if (isLoadingLanguages.value) return
+  isStrategyDropdownOpen.value = false
   isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value
 }
 
@@ -124,9 +130,29 @@ function selectLanguageOption(code: string) {
   onLanguageChange()
 }
 
-function handleClickOutsideLanguage(e: MouseEvent) {
-  if (languageDropdownRef.value && !languageDropdownRef.value.contains(e.target as Node)) {
+function toggleStrategyDropdown() {
+  isLanguageDropdownOpen.value = false
+  isStrategyDropdownOpen.value = !isStrategyDropdownOpen.value
+}
+
+function selectStrategyOption(strategyId: StrategyId) {
+  selectedStrategy.value = strategyId
+  isStrategyDropdownOpen.value = false
+  onStrategyChange()
+}
+
+const selectedStrategyLabel = computed(() => {
+  const item = strategyOptions.find(opt => opt.id === selectedStrategy.value)
+  return item ? item.label : 'Newly imported untested'
+})
+
+function handleClickOutsideDropdowns(e: MouseEvent) {
+  const target = e.target as Node
+  if (languageDropdownRef.value && !languageDropdownRef.value.contains(target)) {
     isLanguageDropdownOpen.value = false
+  }
+  if (strategyDropdownRef.value && !strategyDropdownRef.value.contains(target)) {
+    isStrategyDropdownOpen.value = false
   }
 }
 
@@ -923,7 +949,7 @@ watch(() => route.params.id, (newId) => {
 
 onMounted(async () => {
   window.addEventListener('keydown', handleGlobalKeyDown)
-  document.addEventListener('click', handleClickOutsideLanguage)
+  document.addEventListener('click', handleClickOutsideDropdowns)
   if (loggedIn.value) {
     try {
       const reqId = ++activeBatchRequestId
@@ -945,7 +971,7 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleGlobalKeyDown)
-  document.removeEventListener('click', handleClickOutsideLanguage)
+  document.removeEventListener('click', handleClickOutsideDropdowns)
   if (autoAdvanceTimer) {
     clearInterval(autoAdvanceTimer)
     autoAdvanceTimer = null
@@ -962,9 +988,30 @@ onBeforeUnmount(() => {
       <div 
         v-if="loggedIn"
       >
-        
+        <!-- Mobile Toggle Link for Search & Controls -->
+        <div class="sm:hidden flex justify-center pt-0 pb-1">
+          <button
+            type="button"
+            @click="showMobileControls = !showMobileControls"
+            class="inline-flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors py-1 cursor-pointer"
+          >
+            <span>{{ showMobileControls ? 'Hide search & controls' : 'Show search & controls' }}</span>
+            <svg
+              class="w-3.5 h-3.5 transition-transform duration-200"
+              :class="{ 'rotate-180': showMobileControls }"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </div>
+
         <!-- Center-aligned Search Box -->
-        <SearchBox v-model="searchQuery" :stats="cardStats" @search="handleSearch" />
+        <div :class="showMobileControls ? 'block' : 'hidden sm:block'">
+          <SearchBox v-model="searchQuery" :stats="cardStats" @search="handleSearch" />
+        </div>
 
         <!-- Active Practice Area -->
         <div v-if="!isSearching" class="mt-4 flex flex-col items-center w-full min-h-[340px] justify-start pt-0">
@@ -990,7 +1037,10 @@ onBeforeUnmount(() => {
             </button>
 
             <!-- Batch Controls: Strategy & Language Selector -->
-            <div class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs space-y-2">
+            <div 
+              class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs space-y-2"
+              :class="showMobileControls ? 'block' : 'hidden sm:block'"
+            >
               <div class="flex flex-col sm:flex-row gap-2.5">
                 <!-- Language Filter Dropdown -->
                 <div class="flex-1" ref="languageDropdownRef">
@@ -1070,35 +1120,58 @@ onBeforeUnmount(() => {
                   </div>
                 </div>
 
-                <!-- Strategy Dropdown -->
-                <div class="flex-1">
+                <!-- Strategy / Mode Dropdown -->
+                <div class="flex-1" ref="strategyDropdownRef">
                   <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">
                     Mode
                   </label>
                   <div class="relative">
-                    <select
-                      v-model="selectedStrategy"
-                      @change="onStrategyChange"
-                      class="w-full appearance-none pl-3 pr-8 py-2 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-semibold text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                    <button
+                      type="button"
+                      @click="toggleStrategyDropdown"
+                      class="w-full flex items-center justify-between pl-3 pr-2.5 py-2 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer text-left transition-all"
                     >
-                      <option
+                      <span class="truncate">
+                        {{ selectedStrategyLabel }}
+                      </span>
+
+                      <!-- Right chevron arrow -->
+                      <div class="text-gray-400 shrink-0 ml-1">
+                        <svg
+                          class="h-3.5 w-3.5 transition-transform duration-200"
+                          :class="{ 'rotate-180': isStrategyDropdownOpen }"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </button>
+
+                    <!-- Custom Dropdown Menu -->
+                    <div
+                      v-if="isStrategyDropdownOpen"
+                      class="absolute left-0 right-0 top-full mt-1.5 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/80 rounded-xl shadow-xl py-1 max-h-60 overflow-y-auto text-xs [color-scheme:light] dark:[color-scheme:dark]"
+                    >
+                      <button
                         v-for="opt in strategyOptions"
                         :key="opt.id"
-                        :value="opt.id"
+                        type="button"
+                        @click="selectStrategyOption(opt.id)"
+                        class="w-full text-left px-3 py-2 flex items-center justify-between transition-colors cursor-pointer"
+                        :class="selectedStrategy === opt.id ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
                       >
-                        {{ opt.label }}
-                      </option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-gray-400">
-                      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        <span>{{ opt.label }}</span>
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
 
               <!-- Subtle Explainer -->
-              <div class="flex items-center gap-1.5 pt-0.5 text-[11px] text-gray-500 dark:text-gray-400">
-                <svg class="w-3.5 h-3.5 text-indigo-500/80 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <div class="flex items-start gap-1.5 pt-0.5 text-[11px] text-gray-500 dark:text-gray-400">
+                <svg class="w-3.5 h-3.5 text-indigo-500/80 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span>{{ currentStrategyExplainer }}</span>
               </div>
             </div>
