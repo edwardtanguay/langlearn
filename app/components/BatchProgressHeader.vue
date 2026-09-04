@@ -94,7 +94,15 @@ const percent = computed(() => {
           </svg>
 
           <!-- Parked State -->
-          <span v-else-if="slot.status === 'parked'" class="text-[11px] leading-none text-amber-600 dark:text-amber-400">⏸</span>
+          <svg
+            v-else-if="slot.status === 'parked'"
+            class="w-3 h-3 text-amber-600 dark:text-amber-400"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <rect x="6" y="5" width="4" height="14" rx="1.5" />
+            <rect x="14" y="5" width="4" height="14" rx="1.5" />
+          </svg>
 
           <!-- Deleted State -->
           <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-rose-600 dark:text-rose-400">✕</span>

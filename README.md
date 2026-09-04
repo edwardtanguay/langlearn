@@ -72,6 +72,10 @@ NUXT_SITE_URL="https://langlearn.tanguay.eu"
 NUXT_PUBLIC_BYPASS_AUTH=false
 ```
 
+## Mobile testing
+
+- browser at 378 x 915
+
 ## Publish a new version at Hetzner
 
 - merge version into main
