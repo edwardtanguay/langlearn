@@ -104,10 +104,15 @@ const percent = computed(() => {
             {{ slot.unsuccessfulCount }}
           </span>
 
-          <!-- Untested State: Subtle slot number -->
-          <span v-else class="text-[10px] font-normal text-gray-400 dark:text-gray-500 leading-none">
-            {{ slot.slotIndex + 1 }}
-          </span>
+          <!-- Untested State: Crisp 4-point SVG sparkle -->
+          <svg
+            v-else
+            class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 2c0 5.523 4.477 10 10 10-5.523 0-10 4.477-10 10 0-5.523-4.477-10-10-10 5.523 0 10-4.477 10-10z" />
+          </svg>
         </div>
 
         <!-- Upward Arrow Pointer underneath active pill -->
