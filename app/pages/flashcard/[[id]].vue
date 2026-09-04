@@ -286,7 +286,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
 
 function triggerBatchCompletion() {
   isBatchComplete.value = true
-  autoAdvanceCountdown.value = 4
+  autoAdvanceCountdown.value = 10
   if (autoAdvanceTimer) clearInterval(autoAdvanceTimer)
   autoAdvanceTimer = setInterval(() => {
     if (autoAdvanceCountdown.value > 1) {

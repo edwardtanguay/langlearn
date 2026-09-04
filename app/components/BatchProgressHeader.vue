@@ -104,14 +104,18 @@ const percent = computed(() => {
             {{ slot.unsuccessfulCount }}
           </span>
 
-          <!-- Untested State: Crisp 4-point SVG sparkle -->
+          <!-- Untested State: Delicate 5-point outline star -->
           <svg
             v-else
             class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500"
             viewBox="0 0 24 24"
-            fill="currentColor"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <path d="M12 2c0 5.523 4.477 10 10 10-5.523 0-10 4.477-10 10 0-5.523-4.477-10-10-10 5.523 0 10-4.477 10-10z" />
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
           </svg>
         </div>
 
