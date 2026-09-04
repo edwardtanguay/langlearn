@@ -65,10 +65,17 @@ interface BatchSlot {
   status: 'untested' | 'testing' | 'learned' | 'parked' | 'deleted'
 }
 
+interface BatchLanguageItem {
+  code: string
+  name: string
+  count: number
+  isPartial?: boolean
+}
+
 const batchSlots = ref<BatchSlot[]>([])
 const selectedStrategy = ref<StrategyId>('last_imported')
 const selectedLanguage = ref<string>('all')
-const availableLanguages = ref<{ code: string; name: string; count: number }[]>([])
+const availableLanguages = ref<BatchLanguageItem[]>([])
 const userGroupSize = ref(10)
 const totalAvailableMatching = ref(0)
 const learnedInBatchCount = ref(0)
@@ -161,7 +168,7 @@ async function fetchBatchLanguages(reqId?: number) {
   const thisReqId = reqId ?? activeBatchRequestId
   try {
     const res = await $fetch<{
-      languages: { code: string; name: string; count: number }[]
+      languages: BatchLanguageItem[]
       threshold: number
       totalAvailable: number
     }>(`/api/flashcards/batch-languages?strategy=${selectedStrategy.value}`)
@@ -828,7 +835,8 @@ async function fetchCardStats() {
 
 watch(() => route.params.id, (newId) => {
   if (newId) {
-    fetchBatch()
+    const reqId = ++activeBatchRequestId
+    fetchBatch(false, false, reqId)
   }
 })
 
@@ -836,11 +844,12 @@ onMounted(async () => {
   window.addEventListener('keydown', handleGlobalKeyDown)
   if (loggedIn.value) {
     try {
+      const reqId = ++activeBatchRequestId
       await Promise.all([
         fetchTags(),
         fetchCardStats(),
-        fetchBatchLanguages(),
-        fetchBatch()
+        fetchBatchLanguages(reqId),
+        fetchBatch(false, false, reqId)
       ])
     } catch (err) {
       console.error('Failed to initialize page data:', err)
@@ -911,13 +920,15 @@ onBeforeUnmount(() => {
                       @change="onLanguageChange"
                       class="w-full appearance-none pl-3 pr-8 py-2 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
                     >
-                      <option value="all">All languages ({{ totalAvailableMatching }})</option>
+                      <option value="all">
+                        All languages ({{ totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching }})
+                      </option>
                       <option
                         v-for="lang in availableLanguages"
                         :key="lang.code"
                         :value="lang.code"
                       >
-                        {{ lang.name }} ({{ lang.count }})
+                        {{ lang.name }} ({{ lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count }})
                       </option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-gray-400">

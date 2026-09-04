@@ -71,13 +71,14 @@ export default defineEventHandler(async (event) => {
     const totalAvailable = groups.reduce((acc, curr) => acc + curr._count.id, 0)
 
     const eligibleLanguages = groups
-      .filter((g) => g.backLanguage && g._count.id >= threshold)
+      .filter((g) => g.backLanguage && g._count.id > 0)
       .map((g) => {
         const code = g.backLanguage.toLowerCase()
         return {
           code,
           name: LANGUAGE_NAMES[code] || g.backLanguage.toUpperCase(),
-          count: g._count.id
+          count: g._count.id,
+          isPartial: g._count.id < threshold
         }
       })
       .sort((a, b) => b.count - a.count)

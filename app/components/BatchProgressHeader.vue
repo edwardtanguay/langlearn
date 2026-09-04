@@ -64,43 +64,43 @@ const percent = computed(() => {
           class="w-full h-8 rounded-lg flex items-center justify-center font-bold text-xs transition-all duration-200 select-none cursor-default"
           :class="[
             slot.id === activeCardId && !isBatchComplete
-              ? 'ring-2 ring-indigo-500 dark:ring-indigo-400 shadow-md scale-105 z-10'
+              ? 'ring-2 ring-indigo-600 dark:ring-indigo-400 ring-offset-2 dark:ring-offset-gray-900 shadow-md scale-105 z-10'
               : 'border',
             slot.status === 'learned'
-              ? 'bg-emerald-500 dark:bg-emerald-600 text-white border-emerald-500 dark:border-emerald-600 shadow-xs'
+              ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800 shadow-xs'
               : slot.status === 'parked'
-                ? 'bg-gray-100 dark:bg-gray-800/80 text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-700 opacity-60'
+                ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-800'
                 : slot.status === 'deleted'
-                  ? 'bg-gray-200 dark:bg-gray-850 text-red-500 dark:text-red-400 border-red-200/50 dark:border-red-900/40 opacity-50'
+                  ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border-rose-300 dark:border-rose-800'
                   : slot.unsuccessfulCount > 0
-                    ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-800/80 font-mono'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border-indigo-300 dark:border-indigo-800 font-mono'
                     : 'bg-gray-50/80 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 border-dashed border-gray-300 dark:border-gray-700'
           ]"
           :title="`Card ${slot.slotIndex + 1}: ${
             slot.status === 'learned' 
               ? 'Learned' 
               : slot.status === 'parked' 
-                ? 'Parked (disabled)' 
+                ? 'Parked' 
                 : slot.status === 'deleted' 
                   ? 'Deleted' 
                   : slot.unsuccessfulCount > 0 
-                    ? `Tested ${slot.unsuccessfulCount} time${slot.unsuccessfulCount > 1 ? 's' : ''} (take again)` 
+                    ? `Tested ${slot.unsuccessfulCount} time${slot.unsuccessfulCount > 1 ? 's' : ''} (keep testing)` 
                     : 'Not yet tested'
           }`"
         >
           <!-- Learned State: Bold checkmark -->
-          <svg v-if="slot.status === 'learned'" class="w-4 h-4 text-white stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg v-if="slot.status === 'learned'" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
 
           <!-- Parked State -->
-          <span v-else-if="slot.status === 'parked'" class="text-[11px] leading-none text-gray-400 dark:text-gray-500">⏸</span>
+          <span v-else-if="slot.status === 'parked'" class="text-[11px] leading-none text-amber-600 dark:text-amber-400">⏸</span>
 
           <!-- Deleted State -->
-          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-red-500 dark:text-red-400">✕</span>
+          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-rose-600 dark:text-rose-400">✕</span>
 
-          <!-- Unsuccessful fail count (warning orange) -->
-          <span v-else-if="slot.unsuccessfulCount > 0" class="text-xs font-mono font-bold leading-none text-amber-700 dark:text-amber-400">
+          <!-- Unsuccessful fail count (blue / keep testing) -->
+          <span v-else-if="slot.unsuccessfulCount > 0" class="text-xs font-mono font-bold leading-none text-indigo-600 dark:text-indigo-400">
             {{ slot.unsuccessfulCount }}
           </span>
 
