@@ -899,7 +899,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- Active Flashcard Frame -->
-                <div v-else-if="!isLoadingQueue && currentCard" key="card" class="absolute inset-0 z-10 card-perspective">
+                <div v-else-if="currentCard" key="card" class="absolute inset-0 z-10 card-perspective">
                   <div :class="[cardAnimState === 'exiting' ? 'card-exit' : cardAnimState === 'entering' ? 'card-enter' : '']" class="h-full w-full preserve-3d">
 
                     <!-- Flashcard -->
@@ -945,7 +945,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- Batch Complete Overlay -->
-                <div v-if="isBatchComplete" key="complete" class="absolute inset-0 z-15 flex flex-col items-center justify-center text-center p-6 bg-white dark:bg-gray-900 rounded-3xl border border-emerald-100 dark:border-emerald-900/40 shadow-xl space-y-3.5">
+                <div v-else-if="isBatchComplete" key="complete" class="absolute inset-0 z-15 flex flex-col items-center justify-center text-center p-6 bg-white dark:bg-gray-900 rounded-3xl border border-emerald-100 dark:border-emerald-900/40 shadow-xl space-y-3.5">
                   <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl shadow-inner">
                     🎉
                   </div>
@@ -970,7 +970,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- Practice Session Completed -->
-                <div v-else-if="!isLoadingQueue" key="empty" class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40 space-y-2">
+                <div v-else key="empty" class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40 space-y-2">
                   <span class="text-base font-medium text-gray-600 dark:text-gray-400">no cards to test</span>
                   <div>
                     <NuxtLink to="/import" class="text-sm underline text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors">
