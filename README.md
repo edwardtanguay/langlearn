@@ -77,9 +77,8 @@ NUXT_PUBLIC_BYPASS_AUTH=false
 - merge version into main
     - in version branch
     - `git switch main`
-    - `git merge <version-v000>`
-- push main to GitHub
-    - `git push` 
+    - `git merge <version-v000> --squash`
+        - rename e.g. "Version 0.5.0: Grouped Flashcard Testing"
 - ssh into Hetzner machine
 	- C:\edward\projects\ssharea
 	- open hyper
