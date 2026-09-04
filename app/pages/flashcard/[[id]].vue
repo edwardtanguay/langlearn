@@ -571,6 +571,8 @@ function markAction(actionTaken: string, newStatus?: string) {
   const cardId = currentCard.value.id
 
   const slot = batchSlots.value.find(s => s.id === cardId)
+  const isFirstActionOnCard = slot ? (slot.status === 'untested' && slot.unsuccessfulCount === 0) : true
+
   if (slot) {
     if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
       slot.unsuccessfulCount++
@@ -584,7 +586,21 @@ function markAction(actionTaken: string, newStatus?: string) {
     }
   }
 
-  if (['MARKED_AS_LEARNED', 'MARKED_AS_PARKED', 'MARKED_AS_DELETED'].includes(actionTaken)) {
+  let shouldDecrement = false
+  if (selectedStrategy.value === 'last_imported') {
+    // In "Imported but not yet tested", a card leaves the untested pool on its very first interaction
+    // (whether Keep Testing, Learned, Parked, or Deleted)
+    if (isFirstActionOnCard) {
+      shouldDecrement = true
+    }
+  } else {
+    // In other strategies, only Learned, Parked, or Deleted permanently remove it from the active pool
+    if (['MARKED_AS_LEARNED', 'MARKED_AS_PARKED', 'MARKED_AS_DELETED'].includes(actionTaken)) {
+      shouldDecrement = true
+    }
+  }
+
+  if (shouldDecrement) {
     if (totalAvailableMatching.value > 0) {
       totalAvailableMatching.value--
     }
