@@ -69,22 +69,22 @@ const percent = computed(() => {
             slot.status === 'learned'
               ? 'bg-emerald-500 dark:bg-emerald-600 text-white border-emerald-500 dark:border-emerald-600 shadow-xs'
               : slot.status === 'parked'
-                ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-800'
+                ? 'bg-gray-100 dark:bg-gray-800/80 text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-700 opacity-60'
                 : slot.status === 'deleted'
-                  ? 'bg-rose-100/60 dark:bg-rose-950/40 text-rose-500 dark:text-rose-400 border-rose-200 dark:border-rose-900'
+                  ? 'bg-gray-200 dark:bg-gray-850 text-red-500 dark:text-red-400 border-red-200/50 dark:border-red-900/40 opacity-50'
                   : slot.unsuccessfulCount > 0
-                    ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-300 dark:border-rose-800 font-mono'
+                    ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-800/80 font-mono'
                     : 'bg-gray-50/80 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 border-dashed border-gray-300 dark:border-gray-700'
           ]"
           :title="`Card ${slot.slotIndex + 1}: ${
             slot.status === 'learned' 
               ? 'Learned' 
               : slot.status === 'parked' 
-                ? 'Parked' 
+                ? 'Parked (disabled)' 
                 : slot.status === 'deleted' 
                   ? 'Deleted' 
                   : slot.unsuccessfulCount > 0 
-                    ? `Tested ${slot.unsuccessfulCount} time${slot.unsuccessfulCount > 1 ? 's' : ''} unsuccessfully` 
+                    ? `Tested ${slot.unsuccessfulCount} time${slot.unsuccessfulCount > 1 ? 's' : ''} (take again)` 
                     : 'Not yet tested'
           }`"
         >
@@ -94,13 +94,13 @@ const percent = computed(() => {
           </svg>
 
           <!-- Parked State -->
-          <span v-else-if="slot.status === 'parked'" class="text-[11px] leading-none">⏸</span>
+          <span v-else-if="slot.status === 'parked'" class="text-[11px] leading-none text-gray-400 dark:text-gray-500">⏸</span>
 
           <!-- Deleted State -->
-          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none">✕</span>
+          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-red-500 dark:text-red-400">✕</span>
 
-          <!-- Unsuccessful fail count -->
-          <span v-else-if="slot.unsuccessfulCount > 0" class="text-xs font-mono font-bold leading-none">
+          <!-- Unsuccessful fail count (warning orange) -->
+          <span v-else-if="slot.unsuccessfulCount > 0" class="text-xs font-mono font-bold leading-none text-amber-700 dark:text-amber-400">
             {{ slot.unsuccessfulCount }}
           </span>
 
