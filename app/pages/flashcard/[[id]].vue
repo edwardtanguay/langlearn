@@ -45,7 +45,6 @@ interface Flashcard {
 }
 
 // State
-const activeFilterTag = ref<string | null>(null)
 const searchQuery = ref('')
 const isSearching = ref(false)
 const testQueue = ref<Flashcard[]>([])
@@ -670,19 +669,6 @@ function debouncedSaveTags() {
       console.error('Failed to save tags:', err)
     }
   }, 500)
-}
-
-function setFilter(tag: string | null) {
-  activeFilterTag.value = tag
-  fetchTestQueue()
-}
-
-function handleTagClick(tagAbbreviation: string) {
-  if (activeFilterTag.value === tagAbbreviation) {
-    setFilter(null)
-  } else {
-    setFilter(tagAbbreviation)
-  }
 }
 
 async function handleSelectCard(card: Flashcard) {
