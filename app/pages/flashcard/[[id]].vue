@@ -58,7 +58,7 @@ const isInitialLoading = useState('isInitialLoading', () => true)
 // Batch Testing State & Strategies
 type StrategyId = 'most_important' | 'last_imported' | 'review_learned' | 'phrases_a_de'
 
-const selectedStrategy = ref<StrategyId>('most_important')
+const selectedStrategy = ref<StrategyId>('last_imported')
 const selectedLanguage = ref<string>('all')
 const availableLanguages = ref<{ code: string; name: string; count: number }[]>([])
 const userGroupSize = ref(10)
@@ -69,10 +69,11 @@ const isBatchComplete = ref(false)
 const autoAdvanceCountdown = ref(0)
 let autoAdvanceTimer: ReturnType<typeof setInterval> | null = null
 const lastCompletedBatchCardIds = ref<string[]>([])
+let activeBatchRequestId = 0
 
 const strategyOptions = [
-  { id: 'most_important', label: 'Most important' },
   { id: 'last_imported', label: 'Last imported' },
+  { id: 'most_important', label: 'Most important' },
   { id: 'review_learned', label: 'Review learned' },
   { id: 'phrases_a_de', label: 'Phrases with à/de' }
 ] as const
@@ -148,13 +149,16 @@ async function fetchTags() {
 }
 
 // Fetch available languages that have >= userGroupSize cards for the active strategy
-async function fetchBatchLanguages() {
+async function fetchBatchLanguages(reqId?: number) {
+  const thisReqId = reqId ?? activeBatchRequestId
   try {
     const res = await $fetch<{
       languages: { code: string; name: string; count: number }[]
       threshold: number
       totalAvailable: number
     }>(`/api/flashcards/batch-languages?strategy=${selectedStrategy.value}`)
+
+    if (thisReqId !== activeBatchRequestId) return
 
     availableLanguages.value = res.languages || []
     if (res.threshold) userGroupSize.value = res.threshold
@@ -163,14 +167,18 @@ async function fetchBatchLanguages() {
     // If current selected language is not in available languages and not 'all', fallback to 'all'
     if (selectedLanguage.value !== 'all' && !availableLanguages.value.some(l => l.code === selectedLanguage.value)) {
       selectedLanguage.value = 'all'
+      fetchBatch(false, true, thisReqId)
     }
   } catch (err) {
-    console.error('Failed to load batch languages:', err)
+    if (thisReqId === activeBatchRequestId) {
+      console.error('Failed to load batch languages:', err)
+    }
   }
 }
 
 // Fetch active batch of flashcards
-async function fetchBatch(excludePrevious: boolean = false) {
+async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boolean = false, reqId?: number) {
+  const thisReqId = reqId ?? ++activeBatchRequestId
   isLoadingQueue.value = true
   isBatchComplete.value = false
   if (autoAdvanceTimer) {
@@ -179,9 +187,9 @@ async function fetchBatch(excludePrevious: boolean = false) {
   }
   autoAdvanceCountdown.value = 0
 
-  const minDelay = new Promise(resolve => setTimeout(resolve, 350))
+  const minDelay = new Promise(resolve => setTimeout(resolve, 150))
   try {
-    const cardIdFromRoute = route.params.id as string | undefined
+    const cardIdFromRoute = !ignoreRouteId ? (route.params.id as string | undefined) : undefined
 
     const excludeParam = excludePrevious && lastCompletedBatchCardIds.value.length > 0
       ? `&excludeIds=${encodeURIComponent(lastCompletedBatchCardIds.value.join(','))}`
@@ -199,6 +207,7 @@ async function fetchBatch(excludePrevious: boolean = false) {
           $fetch<Flashcard[]>(batchUrl),
           minDelay
         ])
+        if (thisReqId !== activeBatchRequestId) return
         if (specificCard && specificCard.id) {
           const otherCards = (restQueue || []).filter(c => c.id !== specificCard.id)
           testQueue.value = [specificCard, ...otherCards]
@@ -219,6 +228,8 @@ async function fetchBatch(excludePrevious: boolean = false) {
       minDelay
     ])
 
+    if (thisReqId !== activeBatchRequestId) return
+
     testQueue.value = results || []
     currentQueueIndex.value = 0
     isFlipped.value = false
@@ -229,9 +240,13 @@ async function fetchBatch(excludePrevious: boolean = false) {
       sliderValue.value = testQueue.value[0].rank
     }
   } catch (err) {
-    console.error('Failed to load flashcard batch:', err)
+    if (thisReqId === activeBatchRequestId) {
+      console.error('Failed to load flashcard batch:', err)
+    }
   } finally {
-    isLoadingQueue.value = false
+    if (thisReqId === activeBatchRequestId) {
+      isLoadingQueue.value = false
+    }
   }
 }
 
@@ -258,12 +273,33 @@ function startNextBatch() {
 }
 
 async function onStrategyChange() {
-  await fetchBatchLanguages()
-  await fetchBatch(false)
+  const reqId = ++activeBatchRequestId
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  learnedInBatchCount.value = 0
+
+  // Disregard previous URL permalink so new mode cleanly starts from top card
+  if (typeof window !== 'undefined' && window.history) {
+    window.history.replaceState(null, '', '/flashcard')
+  }
+
+  await Promise.all([
+    fetchBatchLanguages(reqId),
+    fetchBatch(false, true, reqId)
+  ])
 }
 
 async function onLanguageChange() {
-  await fetchBatch(false)
+  const reqId = ++activeBatchRequestId
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  learnedInBatchCount.value = 0
+
+  if (typeof window !== 'undefined' && window.history) {
+    window.history.replaceState(null, '', '/flashcard')
+  }
+
+  await fetchBatch(false, true, reqId)
 }
 
 // Run search
@@ -754,9 +790,9 @@ onMounted(async () => {
       await Promise.all([
         fetchTags(),
         fetchCardStats(),
-        fetchBatchLanguages()
+        fetchBatchLanguages(),
+        fetchBatch()
       ])
-      await fetchBatch()
     } catch (err) {
       console.error('Failed to initialize page data:', err)
     } finally {

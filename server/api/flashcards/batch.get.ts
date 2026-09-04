@@ -4,7 +4,7 @@ import { requireAuth } from '../../utils/auth'
 export default defineEventHandler(async (event) => {
   const user = await requireAuth(event)
   const query = getQuery(event)
-  const strategy = (query.strategy as string) || 'most_important'
+  const strategy = (query.strategy as string) || 'last_imported'
   const language = (query.language as string) || ''
   const excludeIdsParam = (query.excludeIds as string) || ''
 

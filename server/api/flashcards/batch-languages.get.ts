@@ -18,7 +18,7 @@ const LANGUAGE_NAMES: Record<string, string> = {
 export default defineEventHandler(async (event) => {
   const user = await requireAuth(event)
   const query = getQuery(event)
-  const strategy = (query.strategy as string) || 'most_important'
+  const strategy = (query.strategy as string) || 'last_imported'
 
   try {
     const dbUser = await prisma.user.findUnique({
