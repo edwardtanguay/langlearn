@@ -76,6 +76,7 @@ const batchSlots = ref<BatchSlot[]>([])
 const selectedStrategy = ref<StrategyId>('last_imported')
 const selectedLanguage = ref<string>('all')
 const availableLanguages = ref<BatchLanguageItem[]>([])
+const isLoadingLanguages = ref(true)
 const userGroupSize = ref(10)
 const totalAvailableMatching = ref(0)
 const learnedInBatchCount = ref(0)
@@ -87,7 +88,7 @@ const lastCompletedBatchCardIds = ref<string[]>([])
 let activeBatchRequestId = 0
 
 const strategyOptions = [
-  { id: 'last_imported', label: 'Last imported' },
+  { id: 'last_imported', label: 'Imported but not yet tested' },
   { id: 'most_important', label: 'Most important' },
   { id: 'review_learned', label: 'Review learned' },
   { id: 'phrases_a_de', label: 'Phrases with à/de' }
@@ -166,6 +167,7 @@ async function fetchTags() {
 // Fetch available languages that have >= userGroupSize cards for the active strategy
 async function fetchBatchLanguages(reqId?: number) {
   const thisReqId = reqId ?? activeBatchRequestId
+  isLoadingLanguages.value = true
   try {
     const res = await $fetch<{
       languages: BatchLanguageItem[]
@@ -187,6 +189,10 @@ async function fetchBatchLanguages(reqId?: number) {
   } catch (err) {
     if (thisReqId === activeBatchRequestId) {
       console.error('Failed to load batch languages:', err)
+    }
+  } finally {
+    if (thisReqId === activeBatchRequestId) {
+      isLoadingLanguages.value = false
     }
   }
 }
@@ -578,6 +584,18 @@ function markAction(actionTaken: string, newStatus?: string) {
     }
   }
 
+  if (['MARKED_AS_LEARNED', 'MARKED_AS_PARKED', 'MARKED_AS_DELETED'].includes(actionTaken)) {
+    if (totalAvailableMatching.value > 0) {
+      totalAvailableMatching.value--
+    }
+    const cardLang = (currentCard.value.backLanguage || currentCard.value.frontLanguage || '').toLowerCase()
+    const langItem = availableLanguages.value.find(l => l.code === cardLang)
+    if (langItem && langItem.count > 0) {
+      langItem.count--
+      langItem.isPartial = langItem.count < userGroupSize.value
+    }
+  }
+
   if (cardStats.value) {
     if (cardStats.value.readyCount > 0) {
       cardStats.value.readyCount--
@@ -632,6 +650,17 @@ function markAction(actionTaken: string, newStatus?: string) {
     body: { actionTaken, ...(newStatus ? { status: newStatus } : {}) }
   }).then(() => {
     fetchCardStats()
+    // Silent sync of batch language counts
+    $fetch<{
+      languages: BatchLanguageItem[]
+      threshold: number
+      totalAvailable: number
+    }>(`/api/flashcards/batch-languages?strategy=${selectedStrategy.value}`).then((res) => {
+      if (res && !isLoadingLanguages.value) {
+        availableLanguages.value = res.languages || []
+        totalAvailableMatching.value = res.totalAvailable || 0
+      }
+    }).catch(() => {})
   }).catch((err) => {
     console.error('Failed to record action:', err)
   })
@@ -921,18 +950,22 @@ onBeforeUnmount(() => {
                       class="w-full appearance-none pl-3 pr-8 py-2 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
                     >
                       <option value="all">
-                        All languages ({{ totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching }})
+                        {{ isLoadingLanguages ? 'All languages (...)' : `All languages (${totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching})` }}
                       </option>
                       <option
                         v-for="lang in availableLanguages"
                         :key="lang.code"
                         :value="lang.code"
                       >
-                        {{ lang.name }} ({{ lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count }})
+                        {{ lang.name }} ({{ isLoadingLanguages ? '...' : (lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count) }})
                       </option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-gray-400">
-                      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                      <svg v-if="isLoadingLanguages" class="animate-spin h-3.5 w-3.5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                      </svg>
+                      <svg v-else class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                     </div>
                   </div>
                 </div>
