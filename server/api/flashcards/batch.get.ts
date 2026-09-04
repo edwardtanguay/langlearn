@@ -9,9 +9,11 @@ export default defineEventHandler(async (event) => {
   const excludeIdsParam = (query.excludeIds as string) || ''
 
   try {
-    const dbUser = await prisma.user.findUnique({
+    const dbUser = (await prisma.user.findUnique({
+      where: { id: user.dbId || user.id }
+    })) || (user.email ? await prisma.user.findUnique({
       where: { email: user.email }
-    })
+    }) : null)
 
     if (!dbUser) {
       throw createError({

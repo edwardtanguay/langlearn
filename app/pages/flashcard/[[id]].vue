@@ -206,7 +206,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
       ? `&language=${encodeURIComponent(selectedLanguage.value)}`
       : ''
 
-    const batchUrl = `/api/flashcards/batch?strategy=${selectedStrategy.value}${langParam}&limit=${userGroupSize.value}${excludeParam}`
+    const batchUrl = `/api/flashcards/batch?strategy=${selectedStrategy.value}${langParam}${excludeParam}`
 
     if (cardIdFromRoute) {
       try {
@@ -230,6 +230,9 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
           learnedInBatchCount.value = 0
           totalInBatch.value = testQueue.value.length
           sliderValue.value = specificCard.rank
+          if (testQueue.value.length > 0 && userGroupSize.value === 10) {
+            userGroupSize.value = testQueue.value.length
+          }
           return
         }
       } catch (e) {
@@ -255,6 +258,10 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
     isFlipped.value = false
     learnedInBatchCount.value = 0
     totalInBatch.value = results ? results.length : 0
+
+    if (results && results.length > 0 && userGroupSize.value === 10) {
+      userGroupSize.value = results.length
+    }
 
     if (testQueue.value[0]) {
       sliderValue.value = testQueue.value[0].rank
