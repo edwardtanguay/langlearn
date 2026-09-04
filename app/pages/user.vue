@@ -28,13 +28,21 @@ const { data: flashcards, refresh: refreshFlashcards } = useFetch('/api/flashcar
 const flashcardCount = computed(() => flashcards.value ? flashcards.value.length : 0)
 
 // Fetch user profile data
-const { data: meData, refresh: refreshMe } = await useFetch<{ dailyTakeGoal: number }>('/api/user/me')
+const { data: meData, refresh: refreshMe } = await useFetch<{ dailyTakeGoal: number, testingGroupSize: number }>('/api/user/me')
 const dailyTakeGoalInput = ref(meData.value?.dailyTakeGoal ?? 100)
 const isSavingGoal = ref(false)
 const goalSaveSuccess = ref(false)
 
+const testingGroupSizeInput = ref(meData.value?.testingGroupSize ?? 10)
+const isSavingGroupSize = ref(false)
+const groupSizeSaveSuccess = ref(false)
+
 watch(() => meData.value?.dailyTakeGoal, (newVal) => {
   if (newVal !== undefined) dailyTakeGoalInput.value = newVal
+})
+
+watch(() => meData.value?.testingGroupSize, (newVal) => {
+  if (newVal !== undefined) testingGroupSizeInput.value = newVal
 })
 
 const handleSaveGoal = async () => {
@@ -59,6 +67,31 @@ const handleSaveGoal = async () => {
     dailyTakeGoalInput.value = prevValue
   } finally {
     isSavingGoal.value = false
+  }
+}
+
+const handleSaveGroupSize = async () => {
+  if (isSavingGroupSize.value) return
+  const prevValue = meData.value?.testingGroupSize ?? 10
+  const newValue = Math.max(1, Math.min(50, Number(testingGroupSizeInput.value) || 10))
+
+  // Optimistic update
+  if (meData.value) meData.value.testingGroupSize = newValue
+  isSavingGroupSize.value = true
+  groupSizeSaveSuccess.value = false
+
+  try {
+    await $fetch('/api/user/profile', {
+      method: 'POST',
+      body: { testingGroupSize: newValue }
+    })
+    groupSizeSaveSuccess.value = true
+    setTimeout(() => { groupSizeSaveSuccess.value = false }, 2500)
+  } catch (e) {
+    if (meData.value) meData.value.testingGroupSize = prevValue
+    testingGroupSizeInput.value = prevValue
+  } finally {
+    isSavingGroupSize.value = false
   }
 }
 
@@ -151,6 +184,37 @@ const handleLogout = () => {
             </button>
           </div>
           <p v-if="goalSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Goal saved!</p>
+        </form>
+
+        <!-- Testing Group Size Setting Form -->
+        <form @submit.prevent="handleSaveGroupSize" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+          <div>
+            <label class="block text-sm font-semibold text-gray-900 dark:text-white">
+              Testing Group Size
+            </label>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
+              Choose how many flashcards you test in a single batch. LangLearn will cycle through this group until you mark all of them as learned, before loading the next batch.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              v-model.number="testingGroupSizeInput"
+              :disabled="isSavingGroupSize"
+              min="1"
+              max="50"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+            />
+            <button
+              type="submit"
+              :disabled="isSavingGroupSize"
+              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl text-sm transition-all disabled:opacity-50 flex items-center shrink-0 gap-1.5 cursor-pointer"
+            >
+              <span v-if="isSavingGroupSize" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>{{ isSavingGroupSize ? 'Saving...' : 'Save' }}</span>
+            </button>
+          </div>
+          <p v-if="groupSizeSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Testing group size saved!</p>
         </form>
 
         <!-- Account Stats & Details -->

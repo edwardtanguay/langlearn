@@ -1999,11 +1999,13 @@ export namespace Prisma {
   export type UserAvgAggregateOutputType = {
     minutesToTestAgain: number | null
     dailyTakeGoal: number | null
+    testingGroupSize: number | null
   }
 
   export type UserSumAggregateOutputType = {
     minutesToTestAgain: number | null
     dailyTakeGoal: number | null
+    testingGroupSize: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -2014,6 +2016,7 @@ export namespace Prisma {
     role: string | null
     minutesToTestAgain: number | null
     dailyTakeGoal: number | null
+    testingGroupSize: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2024,6 +2027,7 @@ export namespace Prisma {
     role: string | null
     minutesToTestAgain: number | null
     dailyTakeGoal: number | null
+    testingGroupSize: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2034,6 +2038,7 @@ export namespace Prisma {
     role: number
     minutesToTestAgain: number
     dailyTakeGoal: number
+    testingGroupSize: number
     _all: number
   }
 
@@ -2041,11 +2046,13 @@ export namespace Prisma {
   export type UserAvgAggregateInputType = {
     minutesToTestAgain?: true
     dailyTakeGoal?: true
+    testingGroupSize?: true
   }
 
   export type UserSumAggregateInputType = {
     minutesToTestAgain?: true
     dailyTakeGoal?: true
+    testingGroupSize?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -2056,6 +2063,7 @@ export namespace Prisma {
     role?: true
     minutesToTestAgain?: true
     dailyTakeGoal?: true
+    testingGroupSize?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2066,6 +2074,7 @@ export namespace Prisma {
     role?: true
     minutesToTestAgain?: true
     dailyTakeGoal?: true
+    testingGroupSize?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2076,6 +2085,7 @@ export namespace Prisma {
     role?: true
     minutesToTestAgain?: true
     dailyTakeGoal?: true
+    testingGroupSize?: true
     _all?: true
   }
 
@@ -2173,6 +2183,7 @@ export namespace Prisma {
     role: string
     minutesToTestAgain: number
     dailyTakeGoal: number
+    testingGroupSize: number
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -2202,6 +2213,7 @@ export namespace Prisma {
     role?: boolean
     minutesToTestAgain?: boolean
     dailyTakeGoal?: boolean
+    testingGroupSize?: boolean
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
@@ -2217,6 +2229,7 @@ export namespace Prisma {
     role?: boolean
     minutesToTestAgain?: boolean
     dailyTakeGoal?: boolean
+    testingGroupSize?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2227,6 +2240,7 @@ export namespace Prisma {
     role?: boolean
     minutesToTestAgain?: boolean
     dailyTakeGoal?: boolean
+    testingGroupSize?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2237,9 +2251,10 @@ export namespace Prisma {
     role?: boolean
     minutesToTestAgain?: boolean
     dailyTakeGoal?: boolean
+    testingGroupSize?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "minutesToTestAgain" | "dailyTakeGoal", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "minutesToTestAgain" | "dailyTakeGoal" | "testingGroupSize", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
@@ -2266,6 +2281,7 @@ export namespace Prisma {
       role: string
       minutesToTestAgain: number
       dailyTakeGoal: number
+      testingGroupSize: number
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2700,6 +2716,7 @@ export namespace Prisma {
     readonly role: FieldRef<"User", 'String'>
     readonly minutesToTestAgain: FieldRef<"User", 'Int'>
     readonly dailyTakeGoal: FieldRef<"User", 'Int'>
+    readonly testingGroupSize: FieldRef<"User", 'Int'>
   }
     
 
@@ -14388,7 +14405,8 @@ export namespace Prisma {
     email: 'email',
     role: 'role',
     minutesToTestAgain: 'minutesToTestAgain',
-    dailyTakeGoal: 'dailyTakeGoal'
+    dailyTakeGoal: 'dailyTakeGoal',
+    testingGroupSize: 'testingGroupSize'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -14590,6 +14608,7 @@ export namespace Prisma {
     role?: StringFilter<"User"> | string
     minutesToTestAgain?: IntFilter<"User"> | number
     dailyTakeGoal?: IntFilter<"User"> | number
+    testingGroupSize?: IntFilter<"User"> | number
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
@@ -14604,6 +14623,7 @@ export namespace Prisma {
     role?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
+    testingGroupSize?: SortOrder
     flashcards?: FlashcardOrderByRelationAggregateInput
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
     versionItems?: VersionItemOrderByRelationAggregateInput
@@ -14621,6 +14641,7 @@ export namespace Prisma {
     role?: StringFilter<"User"> | string
     minutesToTestAgain?: IntFilter<"User"> | number
     dailyTakeGoal?: IntFilter<"User"> | number
+    testingGroupSize?: IntFilter<"User"> | number
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
@@ -14635,6 +14656,7 @@ export namespace Prisma {
     role?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
+    testingGroupSize?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -14653,6 +14675,7 @@ export namespace Prisma {
     role?: StringWithAggregatesFilter<"User"> | string
     minutesToTestAgain?: IntWithAggregatesFilter<"User"> | number
     dailyTakeGoal?: IntWithAggregatesFilter<"User"> | number
+    testingGroupSize?: IntWithAggregatesFilter<"User"> | number
   }
 
   export type VersionWhereInput = {
@@ -15326,6 +15349,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
@@ -15340,6 +15364,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
@@ -15354,6 +15379,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
@@ -15368,6 +15394,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
@@ -15382,6 +15409,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
   }
 
   export type UserUpdateManyMutationInput = {
@@ -15392,6 +15420,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -15402,6 +15431,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
   }
 
   export type VersionCreateInput = {
@@ -16166,11 +16196,13 @@ export namespace Prisma {
     role?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
+    testingGroupSize?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
+    testingGroupSize?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -16181,6 +16213,7 @@ export namespace Prisma {
     role?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
+    testingGroupSize?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -16191,11 +16224,13 @@ export namespace Prisma {
     role?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
+    testingGroupSize?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
+    testingGroupSize?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -18107,6 +18142,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -18120,6 +18156,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -18209,6 +18246,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -18222,6 +18260,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -18235,6 +18274,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -18248,6 +18288,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -18411,6 +18452,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -18424,6 +18466,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -18543,6 +18586,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
@@ -18556,6 +18600,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
@@ -18628,6 +18673,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
@@ -18641,6 +18687,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
@@ -18870,6 +18917,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
@@ -18883,6 +18931,7 @@ export namespace Prisma {
     role?: string
     minutesToTestAgain?: number
     dailyTakeGoal?: number
+    testingGroupSize?: number
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
@@ -18912,6 +18961,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
@@ -18925,6 +18975,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput

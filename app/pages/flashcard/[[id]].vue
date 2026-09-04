@@ -41,11 +41,11 @@ interface Flashcard {
   status: string
   rank: number
   memoryHook: string | null
+  nextTestTime?: string | Date | null
   tags: FlashcardTag[]
 }
 
 // State
-const activeFilterTag = ref<string | null>(null)
 const searchQuery = ref('')
 const isSearching = ref(false)
 const testQueue = ref<Flashcard[]>([])
@@ -55,6 +55,93 @@ const allTags = ref<Tag[]>([])
 const isLoadingQueue = ref(true)
 const isSearchPending = ref(false)
 const isInitialLoading = useState('isInitialLoading', () => true)
+
+// Batch Testing State & Strategies
+type StrategyId = 'most_important' | 'last_imported' | 'review_learned' | 'phrases_a_de'
+
+interface BatchSlot {
+  id: string
+  slotIndex: number
+  unsuccessfulCount: number
+  status: 'untested' | 'testing' | 'learned' | 'parked' | 'deleted'
+}
+
+interface BatchLanguageItem {
+  code: string
+  name: string
+  count: number
+  isPartial?: boolean
+}
+
+const batchSlots = ref<BatchSlot[]>([])
+const selectedStrategy = ref<StrategyId>('last_imported')
+const selectedLanguage = ref<string>('all')
+const availableLanguages = ref<BatchLanguageItem[]>([])
+const isLoadingLanguages = ref(true)
+const userGroupSize = ref(10)
+const totalAvailableMatching = ref(0)
+const learnedInBatchCount = ref(0)
+const totalInBatch = ref(10)
+const isBatchComplete = ref(false)
+const autoAdvanceCountdown = ref(0)
+let autoAdvanceTimer: ReturnType<typeof setInterval> | null = null
+const lastCompletedBatchCardIds = ref<string[]>([])
+let activeBatchRequestId = 0
+
+const strategyOptions = [
+  { id: 'last_imported', label: 'Newly imported untested' },
+  { id: 'most_important', label: 'Most important unlearned' },
+  { id: 'review_learned', label: 'Most important learned' },
+  { id: 'phrases_a_de', label: 'Phrases with à/de' }
+] as const
+
+const currentStrategyExplainer = computed(() => {
+  switch (selectedStrategy.value) {
+    case 'last_imported':
+      return "Testing newly imported cards that haven't been tested yet."
+    case 'most_important':
+      return "Practicing your highest-ranked unlearned flashcards."
+    case 'review_learned':
+      return "Refreshing flashcards you previously marked as learned."
+    case 'phrases_a_de':
+      return "Targeted practice on phrases containing prepositions à and de."
+    default:
+      return "Practicing your flashcards in focused batches."
+  }
+})
+
+const isLanguageDropdownOpen = ref(false)
+const languageDropdownRef = ref<HTMLElement | null>(null)
+
+function toggleLanguageDropdown() {
+  if (isLoadingLanguages.value) return
+  isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value
+}
+
+function selectLanguageOption(code: string) {
+  selectedLanguage.value = code
+  isLanguageDropdownOpen.value = false
+  onLanguageChange()
+}
+
+function handleClickOutsideLanguage(e: MouseEvent) {
+  if (languageDropdownRef.value && !languageDropdownRef.value.contains(e.target as Node)) {
+    isLanguageDropdownOpen.value = false
+  }
+}
+
+const selectedLanguageLabel = computed(() => {
+  if (selectedLanguage.value === 'all') {
+    const countStr = totalAvailableMatching.value < userGroupSize.value
+      ? `${totalAvailableMatching.value} of ${userGroupSize.value} cards`
+      : `${totalAvailableMatching.value}`
+    return `All languages (${countStr})`
+  }
+  const item = availableLanguages.value.find(l => l.code === selectedLanguage.value)
+  if (!item) return 'All languages'
+  const countStr = item.isPartial ? `${item.count} of ${userGroupSize.value} cards` : `${item.count}`
+  return `${item.name} (${countStr})`
+})
 
 const languageNames: Record<string, string> = {
   fr: 'FRENCH',
@@ -111,30 +198,99 @@ async function fetchTags() {
   }
 }
 
-// Fetch active test queue
-async function fetchTestQueue() {
-  isLoadingQueue.value = true
-  const minDelay = new Promise(resolve => setTimeout(resolve, 600))
+// Fetch available languages that have >= userGroupSize cards for the active strategy
+async function fetchBatchLanguages(reqId?: number) {
+  const thisReqId = reqId ?? activeBatchRequestId
+  isLoadingLanguages.value = true
   try {
-    const cardIdFromRoute = route.params.id as string | undefined
+    const res = await $fetch<{
+      languages: BatchLanguageItem[]
+      threshold: number
+      totalAvailable: number
+    }>(`/api/flashcards/batch-languages?strategy=${selectedStrategy.value}`)
 
-    const queueUrl = activeFilterTag.value 
-      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}&all=true`
-      : `/api/flashcards?limit=10${cardIdFromRoute ? `&excludeId=${cardIdFromRoute}` : ''}&all=true`
+    if (thisReqId !== activeBatchRequestId) return
+
+    availableLanguages.value = res.languages || []
+    if (res.threshold) userGroupSize.value = res.threshold
+    totalAvailableMatching.value = res.totalAvailable || 0
+
+    // If current selected language is not in available languages and not 'all', fallback to 'all'
+    if (selectedLanguage.value !== 'all' && !availableLanguages.value.some(l => l.code === selectedLanguage.value)) {
+      selectedLanguage.value = 'all'
+      fetchBatch(false, true, thisReqId)
+    }
+  } catch (err) {
+    if (thisReqId === activeBatchRequestId) {
+      console.error('Failed to load batch languages:', err)
+    }
+  } finally {
+    if (thisReqId === activeBatchRequestId) {
+      isLoadingLanguages.value = false
+    }
+  }
+}
+
+// Fetch active batch of flashcards
+async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boolean = false, reqId?: number) {
+  const thisReqId = reqId ?? ++activeBatchRequestId
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  if (autoAdvanceTimer) {
+    clearInterval(autoAdvanceTimer)
+    autoAdvanceTimer = null
+  }
+  autoAdvanceCountdown.value = 0
+
+  const minDelay = new Promise(resolve => setTimeout(resolve, 150))
+  try {
+    const cardIdFromRoute = !ignoreRouteId ? (route.params.id as string | undefined) : undefined
+
+    const excludeParam = excludePrevious && lastCompletedBatchCardIds.value.length > 0
+      ? `&excludeIds=${encodeURIComponent(lastCompletedBatchCardIds.value.join(','))}`
+      : ''
+    const langParam = selectedLanguage.value && selectedLanguage.value !== 'all'
+      ? `&language=${encodeURIComponent(selectedLanguage.value)}`
+      : ''
+
+    const batchUrl = `/api/flashcards/batch?strategy=${selectedStrategy.value}${langParam}${excludeParam}`
 
     if (cardIdFromRoute) {
       try {
         const [specificCard, restQueue] = await Promise.all([
           $fetch<Flashcard>(`/api/flashcards/${cardIdFromRoute}`),
-          $fetch<Flashcard[]>(queueUrl),
+          $fetch<Flashcard[]>(batchUrl),
           minDelay
         ])
-        if (specificCard && specificCard.id) {
+        if (thisReqId !== activeBatchRequestId) return
+
+        // Always clean the address bar to /flashcard so future reloads pull the active batch cleanly
+        if (typeof window !== 'undefined' && window.history) {
+          window.history.replaceState(null, '', '/flashcard')
+        }
+
+        // Only pin specificCard if it matches the active strategy (e.g. if newly imported, must be untested)
+        const isEligibleForStrategy = specificCard && (
+          selectedStrategy.value !== 'last_imported' || (specificCard.status === 'LEARNING' && !specificCard.nextTestTime)
+        )
+
+        if (isEligibleForStrategy && specificCard.id) {
           const otherCards = (restQueue || []).filter(c => c.id !== specificCard.id)
           testQueue.value = [specificCard, ...otherCards]
+          batchSlots.value = testQueue.value.map((c, i) => ({
+            id: c.id,
+            slotIndex: i,
+            unsuccessfulCount: 0,
+            status: 'untested'
+          }))
           currentQueueIndex.value = 0
           isFlipped.value = false
+          learnedInBatchCount.value = 0
+          totalInBatch.value = testQueue.value.length
           sliderValue.value = specificCard.rank
+          if (testQueue.value.length > 0 && userGroupSize.value === 10) {
+            userGroupSize.value = testQueue.value.length
+          }
           return
         }
       } catch (e) {
@@ -143,54 +299,95 @@ async function fetchTestQueue() {
     }
 
     const [results] = await Promise.all([
-      $fetch<Flashcard[]>(queueUrl),
+      $fetch<Flashcard[]>(batchUrl),
       minDelay
     ])
-    testQueue.value = results
+
+    if (thisReqId !== activeBatchRequestId) return
+
+    testQueue.value = results || []
+    batchSlots.value = (results || []).map((c, i) => ({
+      id: c.id,
+      slotIndex: i,
+      unsuccessfulCount: 0,
+      status: 'untested'
+    }))
     currentQueueIndex.value = 0
     isFlipped.value = false
-    if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
+    learnedInBatchCount.value = 0
+    totalInBatch.value = results ? results.length : 0
+
+    if (results && results.length > 0 && userGroupSize.value === 10) {
+      userGroupSize.value = results.length
+    }
+
+    if (testQueue.value[0]) {
+      sliderValue.value = testQueue.value[0].rank
+    }
   } catch (err) {
-    console.error('Failed to load active flashcards:', err)
+    if (thisReqId === activeBatchRequestId) {
+      console.error('Failed to load flashcard batch:', err)
+    }
   } finally {
-    isLoadingQueue.value = false
+    if (thisReqId === activeBatchRequestId) {
+      isLoadingQueue.value = false
+    }
   }
 }
 
-// Silently fetch next cards to replace the queue without showing loaders
-async function fetchNextCardsSilently() {
-  try {
-    const url = activeFilterTag.value 
-      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10`
-      : '/api/flashcards?limit=10'
-    const results = await $fetch<Flashcard[]>(url)
-    testQueue.value = results
-    currentQueueIndex.value = 0
-    isFlipped.value = false
-    if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
-  } catch (err) {
-    console.error('Failed to silently fetch next cards:', err)
-  }
+function triggerBatchCompletion() {
+  isBatchComplete.value = true
+  autoAdvanceCountdown.value = 10
+  if (autoAdvanceTimer) clearInterval(autoAdvanceTimer)
+  autoAdvanceTimer = setInterval(() => {
+    if (autoAdvanceCountdown.value > 1) {
+      autoAdvanceCountdown.value--
+    } else {
+      startNextBatch()
+    }
+  }, 1000)
 }
 
-// Prefetch next cards when the current card is flipped
-async function prefetchNextCards() {
-  if (!currentCard.value) return
-  try {
-    const url = activeFilterTag.value 
-      ? `/api/flashcards?tag=${encodeURIComponent(activeFilterTag.value)}&limit=10&excludeId=${currentCard.value.id}`
-      : `/api/flashcards?limit=10&excludeId=${currentCard.value.id}`
-    nextPrefetchedCards.value = await $fetch<Flashcard[]>(url)
-  } catch (err) {
-    console.error('Failed to prefetch next cards:', err)
+function startNextBatch() {
+  if (autoAdvanceTimer) {
+    clearInterval(autoAdvanceTimer)
+    autoAdvanceTimer = null
   }
+  autoAdvanceCountdown.value = 0
+  fetchBatch(true)
 }
 
-watch(isFlipped, (newVal) => {
-  if (newVal) {
-    prefetchNextCards()
+async function onStrategyChange() {
+  const reqId = ++activeBatchRequestId
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  learnedInBatchCount.value = 0
+  batchSlots.value = []
+
+  // Disregard previous URL permalink so new mode cleanly starts from top card
+  if (typeof window !== 'undefined' && window.history) {
+    window.history.replaceState(null, '', '/flashcard')
   }
-})
+
+  await Promise.all([
+    fetchBatchLanguages(reqId),
+    fetchBatch(false, true, reqId)
+  ])
+}
+
+async function onLanguageChange() {
+  const reqId = ++activeBatchRequestId
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  learnedInBatchCount.value = 0
+  batchSlots.value = []
+
+  if (typeof window !== 'undefined' && window.history) {
+    window.history.replaceState(null, '', '/flashcard')
+  }
+
+  await fetchBatch(false, true, reqId)
+}
 
 // Run search
 function handleSearch() {
@@ -258,16 +455,7 @@ const currentCard = computed<Flashcard | null>(() => {
   return testQueue.value[currentQueueIndex.value] ?? null
 })
 
-// Dynamically update route URL permalink seamlessly without page blinking
-watch(currentCard, (card) => {
-  if (card && card.id) {
-    const routeId = useRoute().params.id as string | undefined
-    // Only overwrite browser location if the route didn't explicitly request a different specific card permalink
-    if (!routeId && typeof window !== 'undefined' && window.history) {
-      window.history.replaceState(null, '', `/flashcard/${card.id}`)
-    }
-  }
-}, { immediate: true })
+
 
 // Remove Tag
 function removeTag(tagAbbrev: string) {
@@ -413,10 +601,52 @@ function debouncedSaveRank() {
   }, 700)
 }
 
-// Card action — logs activity, optionally changes status, then slides card out
+// Card action — logs activity, updates batch rotation, slides card out
 function markAction(actionTaken: string, newStatus?: string) {
   if (!currentCard.value) return
   const cardId = currentCard.value.id
+
+  const slot = batchSlots.value.find(s => s.id === cardId)
+  const isFirstActionOnCard = slot ? (slot.status === 'untested' && slot.unsuccessfulCount === 0) : true
+
+  if (slot) {
+    if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
+      slot.unsuccessfulCount++
+      slot.status = 'testing'
+    } else if (actionTaken === 'MARKED_AS_LEARNED') {
+      slot.status = 'learned'
+    } else if (actionTaken === 'MARKED_AS_PARKED') {
+      slot.status = 'parked'
+    } else if (actionTaken === 'MARKED_AS_DELETED') {
+      slot.status = 'deleted'
+    }
+  }
+
+  let shouldDecrement = false
+  if (selectedStrategy.value === 'last_imported') {
+    // In "Imported but not yet tested", a card leaves the untested pool on its very first interaction
+    // (whether Keep Testing, Learned, Parked, or Deleted)
+    if (isFirstActionOnCard) {
+      shouldDecrement = true
+    }
+  } else {
+    // In other strategies, only Learned, Parked, or Deleted permanently remove it from the active pool
+    if (['MARKED_AS_LEARNED', 'MARKED_AS_PARKED', 'MARKED_AS_DELETED'].includes(actionTaken)) {
+      shouldDecrement = true
+    }
+  }
+
+  if (shouldDecrement) {
+    if (totalAvailableMatching.value > 0) {
+      totalAvailableMatching.value--
+    }
+    const cardLang = (currentCard.value.backLanguage || currentCard.value.frontLanguage || '').toLowerCase()
+    const langItem = availableLanguages.value.find(l => l.code === cardLang)
+    if (langItem && langItem.count > 0) {
+      langItem.count--
+      langItem.isPartial = langItem.count < userGroupSize.value
+    }
+  }
 
   if (cardStats.value) {
     if (cardStats.value.readyCount > 0) {
@@ -426,34 +656,65 @@ function markAction(actionTaken: string, newStatus?: string) {
     if (cardStats.value.todayReviewedCount !== undefined) {
       cardStats.value.todayReviewedCount++
     }
+    if (actionTaken === 'MARKED_AS_LEARNED' && cardStats.value.todayCorrectCount !== undefined) {
+      cardStats.value.todayCorrectCount++
+    }
   }
 
   cardAnimState.value = 'exiting'
-  
-  const transitionToNext = async () => {
-    if (nextPrefetchedCards.value.length > 0) {
-      testQueue.value = nextPrefetchedCards.value
+
+  setTimeout(() => {
+    if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
+      // Keep in batch: push current card to the back of the unlearned queue
+      const [cardToRotate] = testQueue.value.splice(currentQueueIndex.value, 1)
+      if (cardToRotate) {
+        testQueue.value.push(cardToRotate)
+      }
       currentQueueIndex.value = 0
       isFlipped.value = false
       if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
-      nextPrefetchedCards.value = []
-    } else {
-      await fetchNextCardsSilently()
-    }
-    cardAnimState.value = 'entering'
-    setTimeout(() => { cardAnimState.value = 'idle' }, 380)
-  }
 
-  transitionToNext()
-  
+      cardAnimState.value = 'entering'
+      setTimeout(() => { cardAnimState.value = 'idle' }, 380)
+    } else {
+      // Learned, Parked, or Deleted: remove card from active batch
+      const [removedCard] = testQueue.value.splice(currentQueueIndex.value, 1)
+      if (removedCard) {
+        lastCompletedBatchCardIds.value.push(removedCard.id)
+      }
+      learnedInBatchCount.value++
+      isFlipped.value = false
+
+      if (testQueue.value.length > 0) {
+        currentQueueIndex.value = 0
+        if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
+        cardAnimState.value = 'entering'
+        setTimeout(() => { cardAnimState.value = 'idle' }, 380)
+      } else {
+        cardAnimState.value = 'idle'
+        triggerBatchCompletion()
+      }
+    }
+  }, 140)
+
   $fetch(`/api/flashcards/${cardId}/action`, {
     method: 'POST',
     body: { actionTaken, ...(newStatus ? { status: newStatus } : {}) }
   }).then(() => {
     fetchCardStats()
+    // Silent sync of batch language counts
+    $fetch<{
+      languages: BatchLanguageItem[]
+      threshold: number
+      totalAvailable: number
+    }>(`/api/flashcards/batch-languages?strategy=${selectedStrategy.value}`).then((res) => {
+      if (res && !isLoadingLanguages.value) {
+        availableLanguages.value = res.languages || []
+        totalAvailableMatching.value = res.totalAvailable || 0
+      }
+    }).catch(() => {})
   }).catch((err) => {
     console.error('Failed to record action:', err)
-    alert("Erreur: L'enregistrement a échoué. Veuillez réessayer.")
   })
 }
 
@@ -577,19 +838,6 @@ function debouncedSaveTags() {
   }, 500)
 }
 
-function setFilter(tag: string | null) {
-  activeFilterTag.value = tag
-  fetchTestQueue()
-}
-
-function handleTagClick(tagAbbreviation: string) {
-  if (activeFilterTag.value === tagAbbreviation) {
-    setFilter(null)
-  } else {
-    setFilter(tagAbbreviation)
-  }
-}
-
 async function handleSelectCard(card: Flashcard) {
   try {
     const copyResult = await $fetch<Flashcard>(`/api/flashcards/${card.id}/copy`, {
@@ -597,6 +845,12 @@ async function handleSelectCard(card: Flashcard) {
     })
     
     testQueue.value = [copyResult, ...testQueue.value.filter(c => c.id !== copyResult.id)]
+    if (!batchSlots.value.some(s => s.id === copyResult.id)) {
+      batchSlots.value = [
+        { id: copyResult.id, slotIndex: 0, unsuccessfulCount: 0, status: 'untested' as const },
+        ...batchSlots.value
+      ].map((s, idx) => ({ ...s, slotIndex: idx }))
+    }
     currentQueueIndex.value = 0
     isFlipped.value = false
     sliderValue.value = copyResult.rank
@@ -662,18 +916,22 @@ async function fetchCardStats() {
 
 watch(() => route.params.id, (newId) => {
   if (newId) {
-    fetchTestQueue()
+    const reqId = ++activeBatchRequestId
+    fetchBatch(false, false, reqId)
   }
 })
 
 onMounted(async () => {
   window.addEventListener('keydown', handleGlobalKeyDown)
+  document.addEventListener('click', handleClickOutsideLanguage)
   if (loggedIn.value) {
     try {
+      const reqId = ++activeBatchRequestId
       await Promise.all([
         fetchTags(),
-        fetchTestQueue(),
-        fetchCardStats()
+        fetchCardStats(),
+        fetchBatchLanguages(reqId),
+        fetchBatch(false, false, reqId)
       ])
     } catch (err) {
       console.error('Failed to initialize page data:', err)
@@ -687,6 +945,11 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleGlobalKeyDown)
+  document.removeEventListener('click', handleClickOutsideLanguage)
+  if (autoAdvanceTimer) {
+    clearInterval(autoAdvanceTimer)
+    autoAdvanceTimer = null
+  }
 })
 </script>
 
@@ -726,6 +989,128 @@ onBeforeUnmount(() => {
               Back to search results
             </button>
 
+            <!-- Batch Controls: Strategy & Language Selector -->
+            <div class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs space-y-2">
+              <div class="flex flex-col sm:flex-row gap-2.5">
+                <!-- Language Filter Dropdown -->
+                <div class="flex-1" ref="languageDropdownRef">
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+                    Language
+                  </label>
+                  <div class="relative">
+                    <button
+                      type="button"
+                      @click="toggleLanguageDropdown"
+                      :disabled="isLoadingLanguages"
+                      class="w-full flex items-center justify-between pl-3 pr-2.5 py-2 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer text-left transition-all"
+                    >
+                      <!-- When loading, show All languages with subtle slow-spinning spinner -->
+                      <div v-if="isLoadingLanguages" class="flex items-center gap-2 min-w-0">
+                        <span class="truncate">All languages</span>
+                        <svg
+                          class="animate-spin w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0"
+                          style="animation-duration: 2.2s;"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                      </div>
+                      <!-- When loaded, show selected language label -->
+                      <span v-else class="truncate">
+                        {{ selectedLanguageLabel }}
+                      </span>
+
+                      <!-- Right chevron arrow -->
+                      <div class="text-gray-400 shrink-0 ml-1">
+                        <svg
+                          class="h-3.5 w-3.5 transition-transform duration-200"
+                          :class="{ 'rotate-180': isLanguageDropdownOpen }"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </button>
+
+                    <!-- Custom Dropdown Menu -->
+                    <div
+                      v-if="isLanguageDropdownOpen"
+                      class="absolute left-0 right-0 top-full mt-1.5 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/80 rounded-xl shadow-xl py-1 max-h-60 overflow-y-auto text-xs [color-scheme:light] dark:[color-scheme:dark]"
+                    >
+                      <button
+                        type="button"
+                        @click="selectLanguageOption('all')"
+                        class="w-full text-left px-3 py-2 flex items-center justify-between transition-colors cursor-pointer"
+                        :class="selectedLanguage === 'all' ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                      >
+                        <span>All languages</span>
+                        <span class="text-gray-400 dark:text-gray-400 font-normal">
+                          {{ totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching }}
+                        </span>
+                      </button>
+                      <button
+                        v-for="lang in availableLanguages"
+                        :key="lang.code"
+                        type="button"
+                        @click="selectLanguageOption(lang.code)"
+                        class="w-full text-left px-3 py-2 flex items-center justify-between transition-colors cursor-pointer"
+                        :class="selectedLanguage === lang.code ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                      >
+                        <span>{{ lang.name }}</span>
+                        <span class="text-gray-400 dark:text-gray-400 font-normal">
+                          {{ lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count }}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Strategy Dropdown -->
+                <div class="flex-1">
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+                    Mode
+                  </label>
+                  <div class="relative">
+                    <select
+                      v-model="selectedStrategy"
+                      @change="onStrategyChange"
+                      class="w-full appearance-none pl-3 pr-8 py-2 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-semibold text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                    >
+                      <option
+                        v-for="opt in strategyOptions"
+                        :key="opt.id"
+                        :value="opt.id"
+                      >
+                        {{ opt.label }}
+                      </option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-gray-400">
+                      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subtle Explainer -->
+              <div class="flex items-center gap-1.5 pt-0.5 text-[11px] text-gray-500 dark:text-gray-400">
+                <svg class="w-3.5 h-3.5 text-indigo-500/80 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>{{ currentStrategyExplainer }}</span>
+              </div>
+            </div>
+
+            <!-- Batch Progress Header -->
+            <BatchProgressHeader
+              v-if="batchSlots.length > 0"
+              :slots="batchSlots"
+              :active-card-id="currentCard?.id"
+              :is-batch-complete="isBatchComplete"
+            />
+
             <!-- Relative card wrapper of fixed height that crossfades loading state and card -->
             <div class="relative w-full h-[256px]">
               <Transition name="fade-layout">
@@ -743,7 +1128,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- Active Flashcard Frame -->
-                <div v-else-if="!isLoadingQueue && currentCard" key="card" class="absolute inset-0 z-10 card-perspective">
+                <div v-else-if="currentCard" key="card" class="absolute inset-0 z-10 card-perspective">
                   <div :class="[cardAnimState === 'exiting' ? 'card-exit' : cardAnimState === 'entering' ? 'card-enter' : '']" class="h-full w-full preserve-3d">
 
                     <!-- Flashcard -->
@@ -788,8 +1173,33 @@ onBeforeUnmount(() => {
                   </div>
                 </div>
 
+                <!-- Batch Complete Overlay -->
+                <div v-else-if="isBatchComplete" key="complete" class="absolute inset-0 z-15 flex flex-col items-center justify-center text-center p-6 bg-white dark:bg-gray-900 rounded-3xl border border-emerald-100 dark:border-emerald-900/40 shadow-xl space-y-3.5">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl shadow-inner">
+                    🎉
+                  </div>
+                  <div class="space-y-1">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Batch Complete!</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 max-w-xs">
+                      You've learned all {{ totalInBatch }} cards in this batch.
+                    </p>
+                  </div>
+                  <div class="pt-1">
+                    <button
+                      @click="startNextBatch"
+                      class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                    >
+                      <span>Start Next {{ userGroupSize }} Cards</span>
+                      <span v-if="autoAdvanceCountdown > 0" class="text-[10px] bg-emerald-700/80 px-1.5 py-0.5 rounded-full font-mono">
+                        {{ autoAdvanceCountdown }}s
+                      </span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </button>
+                  </div>
+                </div>
+
                 <!-- Practice Session Completed -->
-                <div v-else-if="!isLoadingQueue" key="empty" class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40 space-y-2">
+                <div v-else key="empty" class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40 space-y-2">
                   <span class="text-base font-medium text-gray-600 dark:text-gray-400">no cards to test</span>
                   <div>
                     <NuxtLink to="/import" class="text-sm underline text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors">

@@ -91,6 +91,15 @@ async function main() {
     }
   }
 
+  // Ensure testingGroupSize column exists on User table
+  try {
+    await client.execute('ALTER TABLE User ADD COLUMN testingGroupSize INTEGER DEFAULT 10;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
   client.close()
 }
