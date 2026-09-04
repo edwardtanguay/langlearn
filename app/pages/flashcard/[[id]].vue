@@ -89,9 +89,9 @@ const lastCompletedBatchCardIds = ref<string[]>([])
 let activeBatchRequestId = 0
 
 const strategyOptions = [
-  { id: 'last_imported', label: 'Newly imported cards' },
-  { id: 'most_important', label: 'Most important' },
-  { id: 'review_learned', label: 'Review learned' },
+  { id: 'last_imported', label: 'Newly imported untested' },
+  { id: 'most_important', label: 'Most important unlearned' },
+  { id: 'review_learned', label: 'Most important learned' },
   { id: 'phrases_a_de', label: 'Phrases with à/de' }
 ] as const
 
