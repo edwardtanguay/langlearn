@@ -74,7 +74,12 @@ NUXT_PUBLIC_BYPASS_AUTH=false
 
 ## Publish a new version at Hetzner
 
+- merge version into main
+    - in version branch
+    - `git switch main`
+    - `git merge <version-v000>`
 - push main to GitHub
+    - `git push` 
 - ssh into Hetzner machine
 	- C:\edward\projects\ssharea
 	- open hyper
