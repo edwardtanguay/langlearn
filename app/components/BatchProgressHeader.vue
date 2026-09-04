@@ -1,58 +1,128 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+export interface BatchSlot {
+  id: string
+  slotIndex: number
+  unsuccessfulCount: number
+  status: 'untested' | 'testing' | 'learned' | 'parked' | 'deleted'
+}
+
 const props = defineProps<{
-  learnedCount: number
-  totalInBatch: number
+  slots: BatchSlot[]
+  activeCardId?: string | null
   isBatchComplete?: boolean
 }>()
 
+const totalCount = computed(() => props.slots.length)
+const testedCount = computed(() => props.slots.filter(s => s.status !== 'untested').length)
+const learnedCount = computed(() => props.slots.filter(s => s.status === 'learned').length)
+
 const percent = computed(() => {
-  if (!props.totalInBatch || props.totalInBatch <= 0) return 0
-  return Math.min(100, Math.round((props.learnedCount / props.totalInBatch) * 100))
+  if (totalCount.value <= 0) return 0
+  return Math.min(100, Math.round((learnedCount.value / totalCount.value) * 100))
 })
 </script>
 
 <template>
   <div class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs transition-all">
-    <div class="flex items-center justify-between mb-2">
-      <div class="flex items-center gap-2">
-        <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Batch Progress</span>
+    <!-- Header Summary Row -->
+    <div class="flex items-center justify-between mb-2.5">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Batch</span>
+        
+        <!-- Tested Badge -->
+        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+          Tested: {{ testedCount }} / {{ totalCount }}
+        </span>
+
+        <!-- Learned Badge -->
         <span
-          class="text-xs font-semibold px-2 py-0.5 rounded-full"
-          :class="isBatchComplete ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400' : 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300'"
+          class="text-xs font-semibold px-2 py-0.5 rounded-full transition-colors"
+          :class="isBatchComplete 
+            ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400' 
+            : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300'"
         >
-          {{ learnedCount }} / {{ totalInBatch }} Learned
+          Learned: {{ learnedCount }} / {{ totalCount }}
         </span>
       </div>
-      <div class="text-xs font-medium text-gray-400 dark:text-gray-500">
+
+      <div class="text-xs font-bold text-gray-400 dark:text-gray-500 font-mono">
         {{ percent }}%
       </div>
     </div>
 
-    <!-- Individual dots for batch size up to 20 -->
-    <div v-if="totalInBatch <= 20 && totalInBatch > 0" class="flex items-center gap-1.5 w-full">
+    <!-- Capsule Pills Row -->
+    <div v-if="slots.length > 0" class="flex items-start gap-1 sm:gap-1.5 w-full">
       <div
-        v-for="index in totalInBatch"
-        :key="index"
-        class="h-2 flex-1 rounded-full transition-all duration-300"
-        :class="[
-          index <= learnedCount
-            ? 'bg-emerald-500 dark:bg-emerald-400 shadow-xs'
-            : (index === learnedCount + 1 && !isBatchComplete)
-              ? 'bg-indigo-400 dark:bg-indigo-500 ring-2 ring-indigo-200 dark:ring-indigo-900/60'
-              : 'bg-gray-200 dark:bg-gray-800'
-        ]"
-        :title="`Card ${index} ${index <= learnedCount ? '(Learned)' : ''}`"
-      />
-    </div>
+        v-for="slot in slots"
+        :key="slot.id"
+        class="flex-1 min-w-0 flex flex-col items-center"
+      >
+        <!-- The Pill Capsule -->
+        <div
+          class="w-full h-8 rounded-lg flex items-center justify-center font-bold text-xs transition-all duration-200 select-none cursor-default"
+          :class="[
+            slot.id === activeCardId && !isBatchComplete
+              ? 'ring-2 ring-indigo-500 dark:ring-indigo-400 shadow-md scale-105 z-10'
+              : 'border',
+            slot.status === 'learned'
+              ? 'bg-emerald-500 dark:bg-emerald-600 text-white border-emerald-500 dark:border-emerald-600 shadow-xs'
+              : slot.status === 'parked'
+                ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-800'
+                : slot.status === 'deleted'
+                  ? 'bg-rose-100/60 dark:bg-rose-950/40 text-rose-500 dark:text-rose-400 border-rose-200 dark:border-rose-900'
+                  : slot.unsuccessfulCount > 0
+                    ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-300 dark:border-rose-800 font-mono'
+                    : 'bg-gray-50/80 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 border-dashed border-gray-300 dark:border-gray-700'
+          ]"
+          :title="`Card ${slot.slotIndex + 1}: ${
+            slot.status === 'learned' 
+              ? 'Learned' 
+              : slot.status === 'parked' 
+                ? 'Parked' 
+                : slot.status === 'deleted' 
+                  ? 'Deleted' 
+                  : slot.unsuccessfulCount > 0 
+                    ? `Tested ${slot.unsuccessfulCount} time${slot.unsuccessfulCount > 1 ? 's' : ''} unsuccessfully` 
+                    : 'Not yet tested'
+          }`"
+        >
+          <!-- Learned State: Bold checkmark -->
+          <svg v-if="slot.status === 'learned'" class="w-4 h-4 text-white stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
 
-    <!-- Progress bar fallback for large batch sizes -->
-    <div v-else-if="totalInBatch > 0" class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2 overflow-hidden">
-      <div
-        class="bg-emerald-500 h-2 rounded-full transition-all duration-300"
-        :style="{ width: `${percent}%` }"
-      />
+          <!-- Parked State -->
+          <span v-else-if="slot.status === 'parked'" class="text-[11px] leading-none">⏸</span>
+
+          <!-- Deleted State -->
+          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none">✕</span>
+
+          <!-- Unsuccessful fail count -->
+          <span v-else-if="slot.unsuccessfulCount > 0" class="text-xs font-mono font-bold leading-none">
+            {{ slot.unsuccessfulCount }}
+          </span>
+
+          <!-- Untested State: Subtle slot number -->
+          <span v-else class="text-[10px] font-normal text-gray-400 dark:text-gray-500 leading-none">
+            {{ slot.slotIndex + 1 }}
+          </span>
+        </div>
+
+        <!-- Upward Arrow Pointer underneath active pill -->
+        <div class="h-3.5 flex items-center justify-center mt-1">
+          <svg
+            v-if="slot.id === activeCardId && !isBatchComplete"
+            class="w-3 h-3 text-indigo-600 dark:text-indigo-400 animate-pulse drop-shadow-xs"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 4l-8 8h5v8h6v-8h5z" />
+          </svg>
+          <div v-else class="w-3 h-3 invisible" />
+        </div>
+      </div>
     </div>
   </div>
 </template>

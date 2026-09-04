@@ -58,6 +58,14 @@ const isInitialLoading = useState('isInitialLoading', () => true)
 // Batch Testing State & Strategies
 type StrategyId = 'most_important' | 'last_imported' | 'review_learned' | 'phrases_a_de'
 
+interface BatchSlot {
+  id: string
+  slotIndex: number
+  unsuccessfulCount: number
+  status: 'untested' | 'testing' | 'learned' | 'parked' | 'deleted'
+}
+
+const batchSlots = ref<BatchSlot[]>([])
 const selectedStrategy = ref<StrategyId>('last_imported')
 const selectedLanguage = ref<string>('all')
 const availableLanguages = ref<{ code: string; name: string; count: number }[]>([])
@@ -211,6 +219,12 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
         if (specificCard && specificCard.id) {
           const otherCards = (restQueue || []).filter(c => c.id !== specificCard.id)
           testQueue.value = [specificCard, ...otherCards]
+          batchSlots.value = testQueue.value.map((c, i) => ({
+            id: c.id,
+            slotIndex: i,
+            unsuccessfulCount: 0,
+            status: 'untested'
+          }))
           currentQueueIndex.value = 0
           isFlipped.value = false
           learnedInBatchCount.value = 0
@@ -231,6 +245,12 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
     if (thisReqId !== activeBatchRequestId) return
 
     testQueue.value = results || []
+    batchSlots.value = (results || []).map((c, i) => ({
+      id: c.id,
+      slotIndex: i,
+      unsuccessfulCount: 0,
+      status: 'untested'
+    }))
     currentQueueIndex.value = 0
     isFlipped.value = false
     learnedInBatchCount.value = 0
@@ -277,6 +297,7 @@ async function onStrategyChange() {
   isLoadingQueue.value = true
   isBatchComplete.value = false
   learnedInBatchCount.value = 0
+  batchSlots.value = []
 
   // Disregard previous URL permalink so new mode cleanly starts from top card
   if (typeof window !== 'undefined' && window.history) {
@@ -294,6 +315,7 @@ async function onLanguageChange() {
   isLoadingQueue.value = true
   isBatchComplete.value = false
   learnedInBatchCount.value = 0
+  batchSlots.value = []
 
   if (typeof window !== 'undefined' && window.history) {
     window.history.replaceState(null, '', '/flashcard')
@@ -528,6 +550,20 @@ function markAction(actionTaken: string, newStatus?: string) {
   if (!currentCard.value) return
   const cardId = currentCard.value.id
 
+  const slot = batchSlots.value.find(s => s.id === cardId)
+  if (slot) {
+    if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
+      slot.unsuccessfulCount++
+      slot.status = 'testing'
+    } else if (actionTaken === 'MARKED_AS_LEARNED') {
+      slot.status = 'learned'
+    } else if (actionTaken === 'MARKED_AS_PARKED') {
+      slot.status = 'parked'
+    } else if (actionTaken === 'MARKED_AS_DELETED') {
+      slot.status = 'deleted'
+    }
+  }
+
   if (cardStats.value) {
     if (cardStats.value.readyCount > 0) {
       cardStats.value.readyCount--
@@ -714,6 +750,12 @@ async function handleSelectCard(card: Flashcard) {
     })
     
     testQueue.value = [copyResult, ...testQueue.value.filter(c => c.id !== copyResult.id)]
+    if (!batchSlots.value.some(s => s.id === copyResult.id)) {
+      batchSlots.value = [
+        { id: copyResult.id, slotIndex: 0, unsuccessfulCount: 0, status: 'untested' as const },
+        ...batchSlots.value
+      ].map((s, idx) => ({ ...s, slotIndex: idx }))
+    }
     currentQueueIndex.value = 0
     isFlipped.value = false
     sliderValue.value = copyResult.rank
@@ -912,9 +954,9 @@ onBeforeUnmount(() => {
 
             <!-- Batch Progress Header -->
             <BatchProgressHeader
-              v-if="totalInBatch > 0"
-              :learned-count="learnedInBatchCount"
-              :total-in-batch="totalInBatch"
+              v-if="batchSlots.length > 0"
+              :slots="batchSlots"
+              :active-card-id="currentCard?.id"
               :is-batch-complete="isBatchComplete"
             />
 
