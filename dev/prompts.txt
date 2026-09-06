@@ -7,6 +7,7 @@
 - the language to create the presentations in is: French
 - the lingustic level write the text in is: A2
 - your audience is addressed with: vous (not tu)
+- English is the source language, French is the target language
 
 ## Technical specs
 
@@ -21,21 +22,31 @@
 		- "hike-preparation-002.html"
 		- "hike-preparation-003.html"
 - the main text should be just text to read, but a nice font, easy to read, not too small
+- theme is a warm, paper background, but a dark background, easy on the eyes
+- the vocabularly cards shouldn't be cards that flip over, but simply e.g. show known language, if user clicks it, it the target language appears below it
+	- it can be a box or panel, but after clicking the source language, both source and target should be showing so they can be compared
+	- list all "cards" at once so they can all be seen, more than one can be open at once
+- make the grammar cloze exercises turn green as soon as the user types the correct answer, not "verify" button is needed
+	- there is a hint button for each questions that adds another letter of the correct answer each time it is clicked until it is green
 
 ## Content
 
 ### Vocabulary Section
-	- 10 flashcards of the most difficult vocabulary words that is used in the main text
-	- show English on front, test French on back
+	- 20 flashcards of the vocabulary words that is used in the main text
+	- mark ten as difficult, and ten as easy
 
 ### Grammar Section
-	- 10 flashcards of grammar topics that are used in the main text
-	- 10 cloze questions testing grammar topis used in the main text
+	- 20 cloze questions testing grammar topis used in the main text
+	- mark 10 as difficult and 10 as easy
 
 ### Presentation Text
 	- a text that can be read as a presentation in 10 minutes
 	- a wide range of appropriate vocabulary about the topic
 	- a well-structured format, e.g. informative, argumentative, etc.
+	- the only headers should be "Texte de la Présentation" and then any sub-headers in the text, e.g. "Introduction : Trois cercles de vie"
+	- no need to list any information like "[0:00 - 1:30] • Introduction générale"
+	- no charts or tables, just text like a university essay typed on a typewriter
+	- for all difficult vocabulary words or phrases, make them clickable and the English is toggled in and out on click
 
 
 	
