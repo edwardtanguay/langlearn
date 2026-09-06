@@ -28,22 +28,30 @@
 	- main presentation text must be left-aligned (not full-justified)
 - layout and structure:
 	- single continuous page with all sections displayed sequentially (no tabs) in this order:
-		1. "Cartes de Vocabulaire (20)"
-		2. "Exercices de Grammaire (20)"
+		1. "Cartes de Vocabulaire"
+		2. "Exercices de Grammaire"
 		3. "Texte de la Présentation"
 - vocabulary flashcards:
-	- 20 cards based on words from the text
+	- title is just "Cartes de Vocabulaire", nothing else (no counts, no controls)
+	- 10 cards based on words from the text
 	- display order is randomized
-	- cards shouldn't flip over: show English prompt on top, clicking reveals French translation underneath along with an example sentence in French and its English translation so both are visible simultaneously for comparison (do not use brackets "[]")
+	- do not number the cards (e.g. do not display "#1")
+	- do not write helper instructions like "Cliquez pour afficher la traduction et l'exemple"
+	- cards shouldn't flip over: show the TARGET language phrase on top (e.g. "la bureaucratie"); clicking reveals the TARGET language explanation underneath along with a TARGET language example sentence (completely monolingual in the target language; do not use brackets "[]")
+	- accordion behavior: clicking a card toggles it open and closes any other open card (only one card open at a time)
 	- allow the user to select and copy text inside the opened card without the card closing again
-	- multiple cards can be open at once
-	- include "Tout révéler" (Reveal All) and "Tout masquer" (Hide All) controls
+	- no "Tout révéler" or "Tout masquer" buttons
 - grammar cloze exercises:
-	- 20 cloze questions testing grammar structures used in the text (drawn directly from sentences in the presentation text)
+	- title is simply "Exercices de Grammaire", nothing else (no counts, no controls)
+	- 10 cloze questions testing grammar structures used in the text (drawn directly from sentences in the presentation text)
 	- display order is randomized
+	- do not label or number them (e.g. do not show "Exercice #1")
+	- no "Progression" box or counter (e.g. no "X / 10 résolues")
+	- remove any "correct" status message
 	- real-time validation: turns green immediately when the correct answer is typed (case-insensitive and accent-tolerant; no "verify" button needed)
-	- hint button ("Indice") that reveals the correct answer letter-by-letter on each click until green
-	- live counter showing progression (e.g. "X / 20 résolues")
+	- when an answer is correct: input turns green immediately and the cursor/focus automatically moves to the next grammar item's input box for immediate testing of the next item (when the 10th/final item is correct, keep it green and blurred)
+	- no "hint" / "Indice" button; instead, when the user types "?", this triggers a hint: the "?" is consumed (not displayed in the input) and fills in the next character of the correct answer (or fills the first character if empty)
+	- never have an answer that has a question mark in it
 
 ## Content
 
@@ -51,12 +59,20 @@
 	- no large, grand introduction panel with details, just the main title e.g. "Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz"
 
 ### Vocabulary Section
-	- 20 flashcards of the vocabulary words used in the main text
+	- title is simply "Cartes de Vocabulaire" (nothing else)
+	- 10 flashcards of vocabulary words used in the main text
 	- randomized initial order
+	- no card numbering, no helper/click instructions, no reveal/hide-all buttons
+	- front shows TARGET language phrase (e.g. "la bureaucratie"); toggles TARGET language explanation and TARGET language example (monolingual)
+	- only one card open at a time
 
 ### Grammar Section
-	- 20 cloze questions testing grammar topics used in the main text (e.g. conditionnel présent, prepositions, negations, relative pronouns, comparatives, pronominal verbs), drawn directly from sentences in the presentation text
+	- title is simply "Exercices de Grammaire" (nothing else)
+	- 10 cloze questions testing grammar topics used in the main text (e.g. conditionnel présent, prepositions, negations, relative pronouns, comparatives, pronominal verbs), drawn directly from sentences in the presentation text
 	- randomized initial order
+	- no "Exercice #1" labels, no progression box, no "correct" messages
+	- typing "?" is consumed and fills in the next character of the answer
+	- auto-advance cursor to next input immediately upon typing the correct answer
 
 ### Presentation Text
 	- a text that can be read as a presentation in 10 minutes (~1,000–1,200 words at A2 speaking pace)
@@ -65,14 +81,16 @@
 	- the main text must be left-aligned, not full-justified
 	- the only headers should be "Texte de la Présentation" and narrative sub-headers, e.g. "Introduction : Trois cercles de vie"
 	- no timestamps or charts, just text like a university essay typed on a typewriter
-	- interactive glossing: difficult vocabulary words or phrases in the text are clickable to toggle an explanation card/box directly under the paragraph containing the word
-		- gloss the 20 vocabulary flashcard words plus 10–15 additional idiomatic A2 expressions (approx. 30–35 glossed terms total)
+	- do not include any user instructions (e.g. do not write "Cliquez sur un mot souligné...")
+	- do not include a "Tout afficher / masquer" toggle button
+	- interactive glossing: difficult vocabulary words or phrases in the text are clickable to toggle an explanation card/box directly under the line in which the word appears, not under the entire paragraph in which it appears
+		- display as an anchored floating popover/card positioned directly beneath the clicked word/line without breaking the paragraph layout
+		- gloss the 10 vocabulary flashcard words plus 10–15 additional idiomatic A2 expressions (approx. 20–25 glossed terms total)
 		- the card content must be in the TARGET language (French): an explanation in French and another example of that word or phrase used in a different context in French (do not use brackets "[]")
-		- for words that also appear in the vocabulary flashcards, the example sentence in the pop-in toggle card must be DIFFERENT from the example sentence used in the flashcard
-		- clicking a word appends its card under the paragraph; multiple word cards can be open simultaneously; clicking the word again toggles it closed
+		- for words that also appear in the vocabulary flashcards, the example sentence in the pop-in card must be DIFFERENT from the example sentence used in the flashcard
+		- clicking a vocabulary word closes all other open gloss popovers (only one open at a time); clicking the active word again closes it
 		- allow the user to select and copy text inside the explanation card and within the text without the card closing again
 		- Ctrl-click also supported to toggle
-		- include a quick "Tout afficher / masquer" toggle button for convenience
 
 ### testing
 
