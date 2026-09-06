@@ -2,10 +2,10 @@
 
 ## Basic info
 
-- the topic is: "Parlez de votre environnement où vous habitez. Ce que vous aimez, ce que vous n’aimez pas, ce que vous aimeriez voir changer, etc (three environments: the world in 2026, Berlin, Steglitz, for each mention 5 things you like, 5 things you don't like)"
+- the topic is: "Parlez de votre environnement où vous habitez. Ce que vous aimez et ce que vous n’aimez pas (three environments: the world in 2026, Berlin, Steglitz, for each mention 5 things you like, 5 things you don't like; no desired changes section)"
 - the number of different topic presentations to create is: 1
 - the language to create the presentations in is: French
-- the lingustic level write the text in is: A2
+- the linguistic level to write the text in is: A2
 - your audience is addressed with: vous (not tu)
 - English is the source language, French is the target language
 
@@ -14,42 +14,66 @@
 - a topic presentation is a self-contained HTML file with CSS and JavaScript all in one file
 - you don't need to create images or links
 - first, choose a short but unique id-code to identify the folder and names of the presentation files
-	- the code should identify the topic at first glance, e.g. "hike-preparation"
-	- the code should be English
+	- the code should identify the topic at first glance, e.g. "living-environments"
+	- the code should be in English
 	- create a directory with this code-name under dev\topic-presentations
 	- inside that directory, each presentation is then called e.g.
-		- "hike-preparation-001.html"
-		- "hike-preparation-002.html"
-		- "hike-preparation-003.html"
-- the main text should be just text to read, but a nice font, easy to read, not too small
-- theme is a warm, paper background, but a dark background, easy on the eyes
-- the vocabularly cards shouldn't be cards that flip over, but simply e.g. show known language, if user clicks it, it the target language appears below it
-	- it can be a box or panel, but after clicking the source language, both source and target should be showing so they can be compared
-	- list all "cards" at once so they can all be seen, more than one can be open at once
-- make the grammar cloze exercises turn green as soon as the user types the correct answer, not "verify" button is needed
-	- there is a hint button for each questions that adds another letter of the correct answer each time it is clicked until it is green
+		- "living-environments-001.html"
+		- "living-environments-002.html"
+		- "living-environments-003.html"
+- theme and typography:
+	- warm espresso/dark kraft background (`#1e1b18`) with warm ivory text (`#e8e1d5`)
+	- font is 'Courier Prime' (crisp, authentic typewriter font), easy to read, not too small
+	- layout is very clean, like a university essay typed on a typewriter
+	- main presentation text must be left-aligned (not full-justified)
+- layout and structure:
+	- single continuous page with all sections displayed sequentially (no tabs) in this order:
+		1. "Cartes de Vocabulaire (20)"
+		2. "Exercices de Grammaire (20)"
+		3. "Texte de la Présentation"
+- vocabulary flashcards:
+	- 20 cards based on words from the text
+	- display order is randomized
+	- cards shouldn't flip over: show English prompt on top, clicking reveals French translation underneath along with an example sentence in French and its English translation so both are visible simultaneously for comparison (do not use brackets "[]")
+	- allow the user to select and copy text inside the opened card without the card closing again
+	- multiple cards can be open at once
+	- include "Tout révéler" (Reveal All) and "Tout masquer" (Hide All) controls
+- grammar cloze exercises:
+	- 20 cloze questions testing grammar structures used in the text (drawn directly from sentences in the presentation text)
+	- display order is randomized
+	- real-time validation: turns green immediately when the correct answer is typed (case-insensitive and accent-tolerant; no "verify" button needed)
+	- hint button ("Indice") that reveals the correct answer letter-by-letter on each click until green
+	- live counter showing progression (e.g. "X / 20 résolues")
 
 ## Content
 
+### Entirety
+	- no large, grand introduction panel with details, just the main title e.g. "Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz"
+
 ### Vocabulary Section
-	- 20 flashcards of the vocabulary words that is used in the main text
-	- mark ten as difficult, and ten as easy
+	- 20 flashcards of the vocabulary words used in the main text
+	- randomized initial order
 
 ### Grammar Section
-	- 20 cloze questions testing grammar topis used in the main text
-	- mark 10 as difficult and 10 as easy
+	- 20 cloze questions testing grammar topics used in the main text (e.g. conditionnel présent, prepositions, negations, relative pronouns, comparatives, pronominal verbs), drawn directly from sentences in the presentation text
+	- randomized initial order
 
 ### Presentation Text
-	- a text that can be read as a presentation in 10 minutes
-	- a wide range of appropriate vocabulary about the topic
-	- a well-structured format, e.g. informative, argumentative, etc.
-	- the only headers should be "Texte de la Présentation" and then any sub-headers in the text, e.g. "Introduction : Trois cercles de vie"
-	- no need to list any information like "[0:00 - 1:30] • Introduction générale"
-	- no charts or tables, just text like a university essay typed on a typewriter
-	- for all difficult vocabulary words or phrases, make them clickable and the English is toggled in and out on click
+	- a text that can be read as a presentation in 10 minutes (~1,000–1,200 words at A2 speaking pace)
+	- a wide range of appropriate A2 vocabulary about the topic
+	- a well-structured format: flowing essay prose with clear thematic transitions where all likes (5) and dislikes (5) for each environment are distinct and prominent (no "desired changes")
+	- the main text must be left-aligned, not full-justified
+	- the only headers should be "Texte de la Présentation" and narrative sub-headers, e.g. "Introduction : Trois cercles de vie"
+	- no timestamps or charts, just text like a university essay typed on a typewriter
+	- interactive glossing: difficult vocabulary words or phrases in the text are clickable to toggle an explanation card/box directly under the paragraph containing the word
+		- gloss the 20 vocabulary flashcard words plus 10–15 additional idiomatic A2 expressions (approx. 30–35 glossed terms total)
+		- the card content must be in the TARGET language (French): an explanation in French and another example of that word or phrase used in a different context in French (do not use brackets "[]")
+		- for words that also appear in the vocabulary flashcards, the example sentence in the pop-in toggle card must be DIFFERENT from the example sentence used in the flashcard
+		- clicking a word appends its card under the paragraph; multiple word cards can be open simultaneously; clicking the word again toggles it closed
+		- allow the user to select and copy text inside the explanation card and within the text without the card closing again
+		- Ctrl-click also supported to toggle
+		- include a quick "Tout afficher / masquer" toggle button for convenience
 
+### testing
 
-	
-
-
-
+	- you don't need to test the created file in the browser, just create it and you're finished
