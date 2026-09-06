@@ -1,0 +1,44 @@
+# Create Topic Preparations
+
+## Basic info
+
+- the topic is: "Parlez de votre environnement où vous habitez. Ce que vous aimez, ce que vous n’aimez pas, ce que vous aimeriez voir changer, etc (three environments: the world in 2026, Berlin, Steglitz, for each mention 5 things you like, 5 things you don't like)"
+- the number of different topic presentations to create is: 1
+- the language to create the presentations in is: French
+- the lingustic level write the text in is: A2
+- your audience is addressed with: vous (not tu)
+
+## Technical specs
+
+- a topic presentation is a self-contained HTML file with CSS and JavaScript all in one file
+- you don't need to create images or links
+- first, choose a short but unique id-code to identify the folder and names of the presentation files
+	- the code should identify the topic at first glance, e.g. "hike-preparation"
+	- the code should be English
+	- create a directory with this code-name under dev\topic-presentations
+	- inside that directory, each presentation is then called e.g.
+		- "hike-preparation-001.html"
+		- "hike-preparation-002.html"
+		- "hike-preparation-003.html"
+- the main text should be just text to read, but a nice font, easy to read, not too small
+
+## Content
+
+### Vocabulary Section
+	- 10 flashcards of the most difficult vocabulary words that is used in the main text
+	- show English on front, test French on back
+
+### Grammar Section
+	- 10 flashcards of grammar topics that are used in the main text
+	- 10 cloze questions testing grammar topis used in the main text
+
+### Presentation Text
+	- a text that can be read as a presentation in 10 minutes
+	- a wide range of appropriate vocabulary about the topic
+	- a well-structured format, e.g. informative, argumentative, etc.
+
+
+	
+
+
+

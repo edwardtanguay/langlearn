@@ -1,3 +1,79 @@
+- topics
+	- nnnnn
+		- Parlez de votre environnement où vous habitez. Ce que vous aimez, ce que vous n’aimez pas, ce que vous aimeriez voir changer, etc
+	- typical-hike-day
+		- Parlez d’une journée typique de randonnée que vous avez effectuée. Précisez ce qui s’est passé avant le début de la randonnée, les moments marquants et la fin
+		- une brève introduction
+			- Caspar-David-Friedrich-Weg
+			- Nous avons fait cette randonnée pendant nos vacances la semaine dernière, de dimanche à mercredi
+			- C'était un artiste romantique du début du XIXe siècle
+			- Il a créé le tableau « Le Voyageur ».
+				- Peut-être connaissez-vous sa peinture.
+				- On y voit un homme au sommet d'une colline, contemplant un paysage de brume et de rochers.
+			- Bad Schandau 
+				- Sächsische Schweiz (Suisse-Saxonne)
+				- au sud de Dresde
+			- 15 km + 4 + 4 
+				- de l'hôtel au point de départ de la randonnée
+				- du début de la randonnée jusqu'au retour à l'hôtel
+		- avant le début de la randonnée
+			- vous devez disposer de l'équipement de base
+				- chaussures de randonnée
+					- s'il y a beaucoup de rochers
+					- il ne faut pas oublier que les chaussures de randonnée sont lourdes et que marcher avec elles utiliser des muscles différents dans les jambes
+						- Vous pouvez avoir des crampes.
+					- il est donc nécessaire de faire de la randonnée régulièrement
+				- le pantalon de randonnée
+					- Pas trop serré, ne frottez pas
+					- si vous portez un jean
+					- capable de les faire passer de court à long
+				- bâtons de randonnée
+					- beaucoup de gens prennent des bâtons de randonnée
+					- pour moi, ils sont parfois davantage un fardeau qu'une aide
+					- c'est juste un choix personnel.
+				- les pansements 
+					- sont très importants au cas où vous auriez une ampoule.
+				- chacun une bouteille d'eau
+			- Il faut savoir où se trouve le sentier.
+				- Certaines personnes paient pour Komoot et utilisent l'application.
+				- J'utilise le site Komoot pour trouver l'itinéraire général, puis je le recrée moi-même dans Google Earth.
+					- on peut tracer une ligne sur une carte pour indiquer où on veut aller
+					- et grâce à mobile appli, tu peux ensuite voir où tu te trouves par rapport au sentier
+					- j'aime faire cela car je recherche aussi d'autres informations, comme des sites à visiter, des restaurants, des magasins pour acheter à manger ou à boire, des itinéraires alternatifs, etc.
+					- Je peux faire des recherches sur la zone et ajouter des informations au fichier KMZ afin de voir ces notes sur mon téléphone pendant la randonnée.
+			- planification
+				- tu te dois assurer de faire ta randonnée pendant la journée
+					- assurez-vous de ne pas commencer trop tard
+					- sinon, veillez à emporter vos lampes frontales
+				- s'il fait beau, prenez des lunettes de soleil et de la crème solaire.
+				- s'il doit pleuvoir, prendre une veste et un pantalon de pluie
+				- si la randonnée dépasse 10 km, emporter une batterie externe
+				- Prévoyez comment vous vous rendrez au point de départ et comment vous en reviendrez.
+		- les moments marquants
+			- l'attente de la randonnée est agréable 
+				- mais on est aussi un peu nerveux et incertain
+				- on ne sait jamais ce qui va se passer
+			- la longue marche le long de la crête des montagnes
+			- nous avons gravi les grandes marches menant à la vaste plaine 
+				- c'était comme un monde nouveau 
+				— et nous y avons fait une pause
+			- jusqu'au sommet du Kaiserstuhl, une petite saillie rocheuse
+			- nous avons trouvé un restaurant appelé « Dorfladen » (magasin du village)
+				- C'était une toute petite boutique où l'on n'achetait que quelques articles alimentaires
+				- C'était aussi un restaurant, mais ils ne proposaient que deux plats : de l'escalope panée et de la pizza
+					- Ils avaient un endroit agréable à l'extérieur pour manger.
+					- Nous y avons mangé avec d'autres groupes de randonneurs.
+			- Au cours des deux heures suivantes, il y eut peu de moments marquants
+				- à travers de petits villages et des champs
+			- la dernière partie traversait à nouveau une forêt, sur un très beau et large sentier ; c'était magnifique.
+				- très peu de gens
+		- le fin
+			- Nous sommes arrivés dans la ville où nous avions commencé : Krippen
+			- Nous étions à 4 km de notre hôtel.
+				- je ne savais pas où se trouvait l'arrêt de bus et ferry
+				- un dimanche soir
+			- C'est comme dans un marathon : il vous reste 4 km à parcourir, vous avez mal aux pieds — j'avais une ampoule au pied gauche —, mais il faut continuer.
+			- Pour compenser cela, nous avons profité d'un magnifique coucher de soleil en longeant la rivière pour regagner l'hôtel.
 - speaking notes
 	- staccato
 	- no ums, ahs

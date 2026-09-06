@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Présentation B1 : Conseils et Méthode pour une Randonnée Réussie (Guide Pratique)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-surface: #111827;
+      --bg-surface-elevated: #1a2234;
+      --bg-card: #141d2e;
+      --border-subtle: #243046;
+      --border-focus: #10b981;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent-emerald: #10b981;
+      --accent-emerald-glow: rgba(16, 185, 129, 0.18);
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --font-display: 'Outfit', sans-serif;
+      --font-ui: 'Plus Jakarta Sans', sans-serif;
+      --font-reading: 'Source Serif 4', Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2.5rem 1rem 5rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-emerald-glow);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+
+    .topic-prompt {
+      background: rgba(30, 41, 59, 0.6);
+      border-left: 4px solid var(--accent-emerald);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 1.15rem 1.4rem;
+      text-align: left;
+      font-size: 1rem;
+      color: #e2e8f0;
+      margin-top: 1.5rem;
+      font-style: italic;
+    }
+
+    .topic-prompt strong {
+      color: var(--accent-emerald);
+      font-style: normal;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      display: block;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.05em;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 1.4rem;
+      background: linear-gradient(to bottom, var(--accent-teal), var(--accent-emerald));
+      border-radius: 4px;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Modules */
+    .study-module {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      margin-bottom: 3.5rem;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .flashcard-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .view-toggle-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .view-toggle-btn:hover {
+      background: var(--border-subtle);
+      border-color: var(--accent-emerald);
+      color: #ffffff;
+    }
+
+    .status-counter {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Flip Cards */
+    .carousel-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .card-scene {
+      width: 100%;
+      max-width: 580px;
+      height: 310px;
+      perspective: 1200px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      border-radius: var(--radius-md);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-scene.is-flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .card-front {
+      background: linear-gradient(145deg, #131d2e, #1a273e);
+      border-top: 3px solid var(--accent-emerald);
+    }
+
+    .card-back {
+      background: linear-gradient(145deg, #0e202e, #132d3d);
+      border-top: 3px solid var(--accent-teal);
+      transform: rotateY(180deg);
+    }
+
+    .card-face-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-emerald);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-back .card-face-tag {
+      color: var(--accent-teal);
+    }
+
+    .card-prompt {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.45;
+      text-align: center;
+      margin: auto 0;
+    }
+
+    .cloze-text {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: #e5e7eb;
+      text-align: center;
+    }
+
+    .cloze-blank {
+      color: var(--accent-amber);
+      font-weight: 700;
+      border-bottom: 2px dashed var(--accent-amber);
+      padding: 0 4px;
+    }
+
+    .card-solution {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-pos {
+      font-size: 0.85rem;
+      color: var(--accent-teal);
+      font-weight: 500;
+      margin-bottom: 0.85rem;
+      display: inline-block;
+    }
+
+    .card-context-sample {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-sm);
+      border-left: 2px solid var(--accent-teal);
+    }
+
+    .card-rule-explanation {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .card-tap-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .carousel-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-btn {
+      background: var(--bg-surface-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      background: var(--border-subtle);
+      border-color: var(--accent-emerald);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .action-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .action-btn.is-active {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+      font-weight: 600;
+    }
+
+    /* Grid View */
+    .grid-view {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .grid-card {
+      height: 250px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .grid-card .card-face {
+      padding: 1.25rem;
+    }
+
+    .grid-card .card-prompt {
+      font-size: 1.05rem;
+    }
+
+    .grid-card .card-solution {
+      font-size: 1.15rem;
+    }
+
+    .grid-card .card-context-sample,
+    .grid-card .card-rule-explanation {
+      font-size: 0.82rem;
+      padding: 0.5rem 0.65rem;
+    }
+
+    /* Presentation Script Section */
+    .script-module {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .speech-timing-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+      color: #a7f3d0;
+    }
+
+    .presentation-article {
+      font-family: var(--font-reading);
+      font-size: 1.18rem;
+      line-height: 1.95;
+      color: #e2e8f0;
+    }
+
+    .speech-section {
+      margin-bottom: 2.75rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px dashed var(--border-subtle);
+    }
+
+    .speech-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-timing-cue {
+      font-family: var(--font-ui);
+      display: inline-block;
+      background: var(--bg-surface-elevated);
+      color: var(--accent-emerald);
+      border: 1px solid var(--border-subtle);
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.03em;
+    }
+
+    .speech-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.15rem;
+    }
+
+    .speech-section p {
+      margin-bottom: 1.4rem;
+      text-align: justify;
+    }
+
+    .speech-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .word-count-badge {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      font-family: var(--font-ui);
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1.5rem 0.75rem 3rem;
+      }
+      h1 {
+        font-size: 1.75rem;
+      }
+      .study-module,
+      .script-module {
+        padding: 1.5rem 1.1rem;
+      }
+      .card-scene {
+        height: 330px;
+      }
+      .presentation-article {
+        font-size: 1.08rem;
+        line-height: 1.8;
+      }
+      .speech-section p {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="badge-pill">DELF B1 • Production Orale • Présentation 002</div>
+      <h1>L'Art et la Méthode d'une Journée de Randonnée Réussie</h1>
+      <p style="color: var(--text-secondary); font-size: 1.05rem;">Approche : Guide pratique, conseils méthodologiques et partage d'expérience</p>
+      
+      <div class="topic-prompt">
+        <strong>Sujet officiel :</strong>
+        « Parlez d’une journée typique de randonnée que vous avez effectuée. Précisez ce qui s’est passé avant le début de la randonnée, les moments marquants et la fin. »
+      </div>
+
+      <div class="meta-bar">
+        <span class="meta-item">⏱️ <strong>Durée :</strong> ~10 minutes (discours structuré)</span>
+        <span class="meta-item">📝 <strong>Longueur :</strong> ~1 140 mots</span>
+        <span class="meta-item">🎯 <strong>Niveau :</strong> B1 (Subjonctif de nécessité, Hypothèse, Conseils &amp; Récit)</span>
+      </div>
+    </header>
+
+    <!-- Vocabulary Section -->
+    <section class="study-module" id="vocab-section">
+      <h2 class="section-title">Vocabulaire Pratique &amp; Technique</h2>
+      <p class="section-subtitle">10 flashcards de rappel actif. Le recto présente la définition en anglais ; cliquez pour afficher le mot français et son usage dans le texte.</p>
+
+      <div class="flashcard-controls">
+        <button class="view-toggle-btn" id="vocab-view-toggle">Afficher toutes les cartes en grille</button>
+        <span class="status-counter" id="vocab-counter">Carte 1 sur 10</span>
+        <button class="action-btn" id="vocab-known-btn">
+          <span>✓</span> Marquer comme connue (<span id="vocab-known-count">0</span>/10)
+        </button>
+      </div>
+
+      <!-- Carousel View -->
+      <div class="carousel-view" id="vocab-carousel">
+        <div class="card-scene" id="vocab-scene" title="Cliquez pour retourner">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-face-tag">
+                <span>Rappel Actif • Définition</span>
+                <span>Recto</span>
+              </div>
+              <div class="card-prompt" id="vocab-front-prompt">...</div>
+              <div class="card-tap-hint">👆 Cliquez pour retourner la carte</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-face-tag">
+                <span>Terme Français &amp; Usage</span>
+                <span>Verso</span>
+              </div>
+              <div>
+                <div class="card-solution" id="vocab-back-term">...</div>
+                <div class="card-pos" id="vocab-back-pos">...</div>
+                <div class="card-context-sample" id="vocab-back-sample">...</div>
+              </div>
+              <div class="card-tap-hint">👆 Cliquez pour revenir au recto</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-nav">
+          <button class="nav-btn" id="vocab-prev" aria-label="Carte précédente">←</button>
+          <button class="view-toggle-btn" id="vocab-flip-btn" style="padding: 0.55rem 1.4rem;">Retourner</button>
+          <button class="nav-btn" id="vocab-next" aria-label="Carte suivante">→</button>
+        </div>
+      </div>
+
+      <!-- Grid View -->
+      <div class="grid-view" id="vocab-grid"></div>
+    </section>
+
+    <!-- Grammar Section -->
+    <section class="study-module" id="grammar-section">
+      <h2 class="section-title">Points de Grammaire &amp; Structures B1</h2>
+      <p class="section-subtitle">10 phrases à trous axées sur l'obligation, l'hypothèse, les propositions de but et l'infinitif passé.</p>
+
+      <div class="flashcard-controls">
+        <button class="view-toggle-btn" id="grammar-view-toggle">Afficher toutes les cartes en grille</button>
+        <span class="status-counter" id="grammar-counter">Carte 1 sur 10</span>
+        <button class="action-btn" id="grammar-known-btn">
+          <span>✓</span> Marquer comme connue (<span id="grammar-known-count">0</span>/10)
+        </button>
+      </div>
+
+      <!-- Carousel View -->
+      <div class="carousel-view" id="grammar-carousel">
+        <div class="card-scene" id="grammar-scene" title="Cliquez pour retourner">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-face-tag">
+                <span>Exercice à Trous • B1</span>
+                <span>Recto</span>
+              </div>
+              <div class="cloze-text" id="grammar-front-cloze">...</div>
+              <div class="card-tap-hint">👆 Cliquez pour voir la réponse et la règle</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-face-tag">
+                <span>Correction &amp; Explication</span>
+                <span>Verso</span>
+              </div>
+              <div>
+                <div class="card-solution" id="grammar-back-answer" style="color: var(--accent-emerald);">...</div>
+                <div class="card-rule-explanation" id="grammar-back-rule">...</div>
+              </div>
+              <div class="card-tap-hint">👆 Cliquez pour revenir au recto</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-nav">
+          <button class="nav-btn" id="grammar-prev" aria-label="Carte précédente">←</button>
+          <button class="view-toggle-btn" id="grammar-flip-btn" style="padding: 0.55rem 1.4rem;">Retourner</button>
+          <button class="nav-btn" id="grammar-next" aria-label="Carte suivante">→</button>
+        </div>
+      </div>
+
+      <!-- Grid View -->
+      <div class="grid-view" id="grammar-grid"></div>
+    </section>
+
+    <!-- Presentation Text -->
+    <main class="script-module">
+      <h2 class="section-title">Texte de la Présentation (10 minutes)</h2>
+      <p class="section-subtitle">Discours calibré pour un exposé oral fluide de 10 minutes (rythme d'environ 114 mots par minute avec silences d'emphase).</p>
+
+      <div class="speech-timing-indicator">
+        <span>⏱️ <strong>Rythme conseillé :</strong> Posé, explicatif et chaleureux</span>
+        <span>🗣️ <strong>Total :</strong> 1 142 mots</span>
+      </div>
+
+      <article class="presentation-article">
+        <!-- Section 1 -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[0:00 - 2:00] • Introduction &amp; Préparatifs essentiels</span>
+          <h3>1. L'importance capitale des préparatifs et la rigueur d'avant-départ</h3>
+          <p>
+            Chers amis auditeurs, bonjour. Si vous demandez à un guide de montagne ce qui distingue une randonnée inoubliable d'une mauvaise expérience pénible, il vous répondra invariablement : la qualité de la préparation. Aujourd'hui, je souhaite vous raconter une journée de marche type que j'ai menée dans le massif volcanique du Puy de Sancy, tout en partageant avec vous les principes concrets qui m'ont permis de vivre cette aventure en toute sécurité et avec un plaisir absolu.
+          </p>
+          <p>
+            Avant même de chausser ses crampons ou ses baskets de sentier, la journée de randonnée commence plusieurs heures avant le départ, souvent la veille. Lors de cette journée précise, la première étape fondamentale a consisté à concevoir notre <strong>itinéraire</strong> avec minutie. J’ai calculé les distances, évalué les courbes de niveau et prévu des points d'échappatoire au cas où la fatigue se ferait trop sentir. Pour une excursion d'une journée complète, il est primordial que chaque participant prenne connaissance du parcours et que l’on prévoie une marge de sécurité horaire de deux heures avant le coucher du soleil.
+          </p>
+          <p>
+            Ensuite vient la préparation du sac à dos, un véritable exercice d’équilibre entre légèreté et prévoyance. J’ai appliqué sans compromis le célèbre <strong>système des trois couches</strong> pour les vêtements : un sous-vêtement thermique et respirant, une polaire intermédiaire pour conserver la chaleur et un <strong>coupe-vent</strong> imperméable pour se protéger des rafales soudaines. J'ai également vérifié ma <strong>trousse de premiers secours</strong>, sans laquelle aucun randonneur sérieux ne s’aventure sur les crêtes : compresses stériles, désinfectant et surtout pansements spécifiques pour prévenir l'apparition d'une <strong>ampoule</strong> douloureuse au talon. Après avoir préparé nos provisions et rempli nos réservoirs d'eau, nous nous sommes couchés tôt, sereins et prêts pour le départ matinal.
+          </p>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[2:00 - 5:00] • Gestion de l'effort et cheminement</span>
+          <h3>2. Les premières heures de marche : réguler l'allure et lire le terrain</h3>
+          <p>
+            À sept heures du matin, nous sommes arrivés au point de départ au pied de la vallée. L'air était vif, chargé de cette odeur pure d'herbe mouillée par la rosée. Dès les premières minutes, une erreur fréquente consiste à vouloir marcher à une vitesse excessive pour se réchauffer rapidement. Au contraire, nous avons pris soin d'adopter dès le début une <strong>cadence</strong> mesurée. Trouver son propre pas, c'est adopter une allure à laquelle on peut tenir une conversation sans être essoufflé. C'est le secret pour préserver son endurance sur une durée de six à sept heures.
+          </p>
+          <p>
+            Nous nous sommes engagés sur le <strong>sentier balisé</strong>, en prêtant une attention constante aux repères peints en jaune sur les rochers bordant le chemin. En montagne, s'écarter du tracé officiel pour raccourcir un virage accélère l'érosion du sol et augmente considérablement le risque d'entorse ou de chute sur un sol instable. Pendant que nous montions doucement le long du torrent impétueux, nous avons instauré une règle d'or : boire deux à trois gorgées d'eau fraîche toutes les vingt minutes, sans attendre de ressentir la sensation de soif, qui est déjà le signal d'un début de déshydratation musculaire.
+          </p>
+          <p>
+            Après deux heures de marche ascendante et progressive, nous avons franchi la limite des forêts de hêtres pour atteindre les hauts plateaux pastoraux. Là, le panorama s'est ouvert à trois cent soixante degrés. Le contraste entre le vert éclatant des pentes volcaniques et le bleu intense du ciel sans nuage était saisissant. Nous avons fait une halte de dix minutes pour retirer une couche de vêtement, grignoter une poignée d'amandes et admirer les vallées glaciaires qui s'étiraient sous nos yeux. Cette gestion réfléchie de l'effort physique nous a permis d'arriver au pied du sommet principal avec une énergie intacte.
+          </p>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[5:00 - 7:30] • Les moments marquants</span>
+          <h3>3. L'atteinte du col, le sommet et le partage au cœur de la journée</h3>
+          <p>
+            Le moment culminant de cette journée s'est produit aux alentours de midi, lorsque nous avons atteint le <strong>col</strong> d'altitude reliant les deux grands versants du massif. À cet endroit précis, le vent soufflait avec vigueur, nous rappelant immédiatement l'utilité du coupe-vent que nous avions préparé le matin. La vue plongeante sur la chaîne des Puys et les dômes volcaniques environnants était spectaculaire, offrant un tableau d'une majesté brute.
+          </p>
+          <p>
+            Nous avons pris le temps de nous abriter derrière un muret de pierres sèches pour installer notre pique-nique. Ce moment de repos au sommet est bien plus qu'une simple pause alimentaire : c'est un instant privilégié de convivialité, d'échanges et de contemplation. Partager du pain croustillant, des fruits frais et un morceau de tomme d'Auvergne tout en observant le vol circulaire d'un faucon pèlerin au-dessus du vide procure un sentiment incomparable de liberté et de plénitude.
+          </p>
+          <p>
+            Cette pause d'une heure a également permis à nos corps de <strong>récupérer</strong> en profondeur. Nous avons veillé à ne pas laisser nos muscles se refroidir excessivement en effectuant quelques mouvements doux avant de remettre nos sacs. En observant les autres groupes de randonneurs qui atteignaient le col avec le sourire, j'ai mesuré à quel point la montagne crée naturellement du lien et de la bienveillance entre les personnes : les gens se saluent chaleureusement, s'échangent des conseils sur l'état des sentiers et partagent spontanément leurs impressions.
+          </p>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[7:30 - 10:00] • La descente et le débriefing</span>
+          <h3>4. La technique de descente, le retour en plaine et le bilan d'apprentissage</h3>
+          <p>
+            À treize heures trente, nous avons amorcé la descente par le versant sud afin d'effectuer une boucle complète. Beaucoup de marcheurs débutants sous-estiment cette phase, croyant que descendre ne demande aucun effort. C'est une illusion : la descente soumet les articulations des genoux et les chevilles à une charge trois fois supérieure à celle du plat. Nous avons donc raccourci notre foulée, fléchi légèrement les jambes pour absorber les impacts et utilisé nos bâtons pour soulager la pression articulaire.
+          </p>
+          <p>
+            Vers quinze heures quarante-cinq, nous avons retrouvé les prairies de basse altitude et le ruisseau que nous avions longé à l'aube. En atteignant enfin notre véhicule à seize heures trente, une saine fatigue s'est emparée de nous. Avant même de monter en voiture, nous avons consacré dix minutes à réaliser quelques <strong>étirements</strong> indispensables des mollets, des quadriceps et du dos pour favoriser une récupération musculaire optimale.
+          </p>
+          <p>
+            Cette journée s'est terminée dans une auberge de campagne autour d'une collation traditionnelle, où nous avons débriefé notre sortie : le temps total de marche, les kilomètres parcourus et les plus beaux panoramas immortalisés en mémoire. Si vous appliquez ces principes simples de précaution et d'écoute de votre corps, vos randonnées deviendront des expériences inépuisables de bonheur et d'équilibre. Je vous remercie pour votre attention et je répondrai avec plaisir à vos interrogations.
+          </p>
+          <div class="word-count-badge">Compteur total : 1 142 mots • Rythme moyen recommandé : 114 mots/min (10 min 00 sec)</div>
+        </section>
+      </article>
+    </main>
+
+    <footer>
+      <p>© 2026 Préparation DELF B1 • Fiche 002 • Guide Pratique de Randonnée</p>
+    </footer>
+  </div>
+
+  <script>
+    // --- Data Definitions ---
+    const vocabData = [
+      {
+        prompt: "the route / itinerary",
+        term: "l'itinéraire",
+        pos: "nom masculin",
+        sample: "« ...la première étape fondamentale a consisté à concevoir notre itinéraire avec minutie. »"
+      },
+      {
+        prompt: "a marked trail / waymarked footpath",
+        term: "le sentier balisé",
+        pos: "locution nominale (m.)",
+        sample: "« Nous nous sommes engagés sur le sentier balisé en prêtant attention aux repères peints. »"
+      },
+      {
+        prompt: "the three-layer system (clothing)",
+        term: "le système des trois couches",
+        pos: "locution nominale (m.)",
+        sample: "« J’ai appliqué sans compromis le célèbre système des trois couches pour les vêtements... »"
+      },
+      {
+        prompt: "a windbreaker jacket",
+        term: "le coupe-vent",
+        pos: "nom masculin",
+        sample: "« ...un coupe-vent imperméable pour se protéger des rafales soudaines. »"
+      },
+      {
+        prompt: "a first-aid kit",
+        term: "la trousse de premiers secours",
+        pos: "locution nominale (f.)",
+        sample: "« J'ai également vérifié ma trousse de premiers secours sans laquelle on ne part jamais. »"
+      },
+      {
+        prompt: "a blister (on skin/foot)",
+        term: "l'ampoule",
+        pos: "nom féminin",
+        sample: "« ...des pansements spécifiques pour prévenir l'apparition d'une ampoule douloureuse au talon. »"
+      },
+      {
+        prompt: "cadence / steady walking rhythm",
+        term: "la cadence",
+        pos: "nom féminin",
+        sample: "« ...nous avons pris soin d'adopter dès le début une cadence mesurée. »"
+      },
+      {
+        prompt: "a mountain pass / col",
+        term: "le col",
+        pos: "nom masculin",
+        sample: "« ...lorsque nous avons atteint le col d'altitude reliant les deux grands versants du massif. »"
+      },
+      {
+        prompt: "to recover / regain energy",
+        term: "récupérer",
+        pos: "verbe du 1er groupe",
+        sample: "« Cette pause d'une heure a également permis à nos corps de récupérer en profondeur. »"
+      },
+      {
+        prompt: "stretching exercises",
+        term: "les étirements",
+        pos: "nom masculin pluriel",
+        sample: "« ...nous avons consacré dix minutes à réaliser quelques étirements indispensables. »"
+      }
+    ];
+
+    const grammarData = [
+      {
+        cloze: "Il est primordial que chaque participant [...] (prendre) connaissance du parcours avant de partir.",
+        answer: "prenne",
+        rule: "Subjonctif après une tournure impersonnelle d'obligation : 'Il est primordial que' impose l'emploi du subjonctif présent (prendre -> qu'il prenne)."
+      },
+      {
+        cloze: "Si vous [...] (suivre) ces conseils simples, vos sorties seront une réussite.",
+        answer: "suivez",
+        rule: "L'hypothèse réalisable (Si + présent -> futur simple) : 'Si' de condition suivi d'un verbe au présent commande le futur simple dans la proposition principale."
+      },
+      {
+        cloze: "Après [...] (avoir préparé) notre sac à dos la veille, nous nous sommes couchés tôt.",
+        answer: "avoir préparé",
+        rule: "L'infinitif passé après 'Après' : 'Après' doit obligatoirement être suivi de l'infinitif passé (avoir/être à l'infinitif + participe passé)."
+      },
+      {
+        cloze: "Pendant que nous [...] (monter) doucement le long du torrent, nous buvions régulièrement.",
+        answer: "montions",
+        rule: "Imparfait après 'Pendant que' : Utilisé pour exprimer une action continue et progressive en arrière-plan d'un récit au passé."
+      },
+      {
+        cloze: "C'est une trousse médicale [...] laquelle nous ne partons jamais en randonnée.",
+        answer: "sans",
+        rule: "Préposition + pronom relatif : 'Sans laquelle' exprime la condition indispensable en reprenant un nom féminin singulier (la trousse)."
+      },
+      {
+        cloze: "Les conseils que le guide nous a [...] (transmettre) se sont révélés précieux.",
+        answer: "transmis",
+        rule: "Accord du participe passé avec 'avoir' : Le pronom relatif 'que' (COD) est placé devant l'auxiliaire et reprend 'les conseils' (masc. pluriel). Le verbe 'transmettre' fait son participe en -is."
+      },
+      {
+        cloze: "Nous marchons prudemment afin que personne ne [...] (se blesser) dans la descente.",
+        answer: "se blesse",
+        rule: "Subjonctif de but après 'Afin que' : Les locutions conjonctives de but (afin que, pour que) exigent toujours le subjonctif présent."
+      },
+      {
+        cloze: "Nous avons marché sur ce chemin [...] trois heures avant d'arriver au sommet.",
+        answer: "pendant",
+        rule: "Expression de la durée délimitée : 'Pendant' introduit une durée complète et délimitée d'une action achevée."
+      },
+      {
+        cloze: "Au lieu de [...] (courir) dans la pente, raccourcissez votre foulée.",
+        answer: "courir",
+        rule: "Infinitif après locution prépositive : Après 'au lieu de', 'afin de', 'avant de', le verbe se met obligatoirement à l'infinitif."
+      },
+      {
+        cloze: "Le magnifique panorama [...] nous pouvions admirer depuis le col était grandiose.",
+        answer: "que",
+        rule: "Pronom relatif 'que' : Complément d'objet direct du verbe admirer (nous pouvions admirer ce panorama -> que)."
+      }
+    ];
+
+    // --- Flashcard Engine ---
+    function setupFlashcardModule(options) {
+      const { data, prefix, renderFront, renderBack } = options;
+
+      let currentIndex = 0;
+      const knownSet = new Set();
+      let isGridView = false;
+
+      const sceneEl = document.getElementById(`${prefix}-scene`);
+      const counterEl = document.getElementById(`${prefix}-counter`);
+      const prevBtn = document.getElementById(`${prefix}-prev`);
+      const nextBtn = document.getElementById(`${prefix}-next`);
+      const flipBtn = document.getElementById(`${prefix}-flip-btn`);
+      const knownBtn = document.getElementById(`${prefix}-known-btn`);
+      const knownCountEl = document.getElementById(`${prefix}-known-count`);
+      const viewToggleBtn = document.getElementById(`${prefix}-view-toggle`);
+      const carouselEl = document.getElementById(`${prefix}-carousel`);
+      const gridEl = document.getElementById(`${prefix}-grid`);
+
+      function updateCardDisplay() {
+        sceneEl.classList.remove('is-flipped');
+        const item = data[currentIndex];
+        renderFront(item);
+        renderBack(item);
+
+        counterEl.textContent = `Carte ${currentIndex + 1} sur ${data.length}`;
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === data.length - 1;
+
+        if (knownSet.has(currentIndex)) {
+          knownBtn.classList.add('is-active');
+        } else {
+          knownBtn.classList.remove('is-active');
+        }
+      }
+
+      function flipCard() {
+        sceneEl.classList.toggle('is-flipped');
+      }
+
+      sceneEl.addEventListener('click', flipCard);
+      flipBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        flipCard();
+      });
+
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCardDisplay();
+        }
+      });
+
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentIndex < data.length - 1) {
+          currentIndex++;
+          updateCardDisplay();
+        }
+      });
+
+      knownBtn.addEventListener('click', () => {
+        if (knownSet.has(currentIndex)) {
+          knownSet.delete(currentIndex);
+        } else {
+          knownSet.add(currentIndex);
+        }
+        knownCountEl.textContent = knownSet.size;
+        updateCardDisplay();
+      });
+
+      function buildGrid() {
+        gridEl.innerHTML = '';
+        data.forEach((item, index) => {
+          const gridCard = document.createElement('div');
+          gridCard.className = 'grid-card card-scene';
+          gridCard.innerHTML = `
+            <div class="card-inner">
+              <div class="card-face card-front">
+                <div class="card-face-tag"><span>#${index + 1} Recto</span></div>
+                ${options.getGridFrontHTML(item)}
+                <div class="card-tap-hint">👆 Cliquer pour voir</div>
+              </div>
+              <div class="card-face card-back">
+                <div class="card-face-tag"><span>#${index + 1} Verso</span></div>
+                ${options.getGridBackHTML(item)}
+                <div class="card-tap-hint">👆 Cliquer pour retourner</div>
+              </div>
+            </div>
+          `;
+          gridCard.addEventListener('click', () => {
+            gridCard.classList.toggle('is-flipped');
+          });
+          gridEl.appendChild(gridCard);
+        });
+      }
+
+      viewToggleBtn.addEventListener('click', () => {
+        isGridView = !isGridView;
+        if (isGridView) {
+          buildGrid();
+          carouselEl.style.display = 'none';
+          gridEl.style.display = 'grid';
+          viewToggleBtn.textContent = 'Afficher le mode carrousel';
+        } else {
+          carouselEl.style.display = 'flex';
+          gridEl.style.display = 'none';
+          viewToggleBtn.textContent = 'Afficher toutes les cartes en grille';
+          updateCardDisplay();
+        }
+      });
+
+      updateCardDisplay();
+    }
+
+    // Init Vocabulary
+    setupFlashcardModule({
+      data: vocabData,
+      prefix: 'vocab',
+      renderFront: (item) => {
+        document.getElementById('vocab-front-prompt').textContent = item.prompt;
+      },
+      renderBack: (item) => {
+        document.getElementById('vocab-back-term').textContent = item.term;
+        document.getElementById('vocab-back-pos').textContent = item.pos;
+        document.getElementById('vocab-back-sample').textContent = item.sample;
+      },
+      getGridFrontHTML: (item) => `
+        <div class="card-prompt" style="font-size: 1.05rem;">${item.prompt}</div>
+      `,
+      getGridBackHTML: (item) => `
+        <div>
+          <div class="card-solution" style="font-size: 1.15rem;">${item.term}</div>
+          <div class="card-pos">${item.pos}</div>
+          <div class="card-context-sample" style="font-size: 0.8rem;">${item.sample}</div>
+        </div>
+      `
+    });
+
+    // Init Grammar
+    setupFlashcardModule({
+      data: grammarData,
+      prefix: 'grammar',
+      renderFront: (item) => {
+        const formatted = item.cloze.replace(/\[\.\.\.\]/g, '<span class="cloze-blank">[ ... ]</span>');
+        document.getElementById('grammar-front-cloze').innerHTML = formatted;
+      },
+      renderBack: (item) => {
+        document.getElementById('grammar-back-answer').textContent = item.answer;
+        document.getElementById('grammar-back-rule').textContent = item.rule;
+      },
+      getGridFrontHTML: (item) => `
+        <div class="cloze-text" style="font-size: 0.95rem;">${item.cloze.replace(/\[\.\.\.\]/g, '<span class="cloze-blank">[ ... ]</span>')}</div>
+      `,
+      getGridBackHTML: (item) => `
+        <div>
+          <div class="card-solution" style="font-size: 1.15rem; color: var(--accent-emerald);">${item.answer}</div>
+          <div class="card-rule-explanation" style="font-size: 0.82rem;">${item.rule}</div>
+        </div>
+      `
+    });
+  </script>
+</body>
+</html>
