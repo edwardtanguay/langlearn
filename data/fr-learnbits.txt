@@ -1,6 +1,78 @@
 - topics
-	- nnnnn
-		- Parlez de votre environnement où vous habitez. Ce que vous aimez, ce que vous n’aimez pas, ce que vous aimeriez voir changer, etc
+	- nnnn
+		- task
+		- Vous êtes en voyage et vous rencontrez quelqu’un qui vous demande de lui parler des traditions culinaires de votre localité, ce que les gens aiment manger, ce qu’ils n’aiment pas manger et pourquoi.
+	- living-environments
+		- task
+			- Parlez de votre environnement où vous habitez. Ce que vous aimez, ce que vous n’aimez pas, ce que vous aimeriez voir changer, etc
+		- intro
+			- Ma réponse développe la question.
+		- le monde
+			- j'aime
+				- En général, nous prenons bien mieux soin de l'environnement qu'il y a 100 ou 200 ans.
+				- En général, plus vous êtes prêt à travailler, plus vous trouverez d'opportunités.
+				- La technologie est très avancée.
+				- Pour moi, l'IA est un véritable luxe, tant au travail que dans la vie privée.
+			- je n'aime pas
+				- la politique mondiale et les médias sont devenus corrompus et irresponsables
+				- les politiciens, les personnes fortunées et les célébrités font simplement ce qu'ils veulent, sans rendre de comptes.
+				- C'est horrible d'entendre parler de guerres tous les jours aux informations ; il est incroyable que les gens ne puissent pas — ou ne veuillent pas — les rendre illégales et faire respecter cette interdiction.
+				- L'information est véritablement partout.
+					- La capacité d'apprendre est illimitée.
+					- Dans les années 1980, je transportais dans mon sac à dos un atlas, une encyclopédie compacte et un dictionnaire.
+				- Les réseaux sociaux rendent les gens de plus en plus superficiels.
+					- mais cela offre davantage d'opportunités aux gens et leur permet de rester en contact
+		- Berlin
+			- j'aime
+				- très internationale
+				- grande qualité de l'offre culturelle
+				- C'est une ville très verte.
+					- La plupart des rues sont bordées d'arbres.
+					- Il y a de grands parcs et d'immenses forêts à l'intérieur de la ville 
+					- les transports en commun sont peu coûteux, fiables et couvrent bien toute la ville
+						- Par rapport aux autres grandes villes que j'ai visitées, 
+				- Nous utilisons le covoiturage.
+				- L'âge d'or de Berlin, c'étaient les années 1990
+					- une grande partie de ce que j'aimais à Berlin a disparu
+					- fortement subventionné
+					- le coût de la vie était bas
+					- la vie était abordable
+					- une offre culturelle de grande qualité était présente partout
+			- je n'aime pas
+				- Ce que je n'aime pas à Berlin, ce sont surtout les choses qui ont changé depuis les années 1990.
+				- Certaines bonnes choses des années 1990 ont disparu et se sont transformées en mauvaises choses.
+					- C'est beaucoup plus cher de vivre ici.
+					- Trouver un appartement en ville est presque impossible.
+				- Cela dit, Berlin n'est pas aussi mal lotie que d'autres capitales sur ces points.
+				- 
+		- Steglitz / ma rue / mon appartement
+			- j'aime
+				- Notre rue est très calme.
+					- Les gens de la petite ville où ma femme et moi avons une ferme disent
+						- lorsqu'ils viennent ici
+						- c'est plus calme qu'à la ferme 
+						- il n'y a ni coq ni bruits de vaches.
+					- Il y a un carrefour très fréquenté à une rue de là, mais des immeubles résidentiels situés entre la rue et notre appartement font barrage au bruit.
+					- Le seul bruit venant du voisinage provient d'une personne de l'autre côté de la rue qui joue du piano et de notre voisin du dessous, membre d'un orchestre ; toutefois, ces sons sont culturellement agréables.
+				- Nous avons un beau grand parc tout près de chez nous.
+				- Même si le quartier est calme, nous avons de nombreuses boulangeries, magasins et services à quelques rues de là.
+					- me faire couper les cheveux chez un barbier turc au coin de la rue
+					- my dentist is around the corner
+					- Notre optométriste est juste au coin de la rue.
+					- Nous avons un magasin ouvert du lundi au samedi, de 7 h à minuit.
+					- C'est rare à Berlin ; seuls les magasins situés près des zones touristiques ont des horaires particuliers, mais le nôtre fait exception.
+				- Nous avons un appartement de type « Altbau », construit en 1911.
+					- de hauts plafonds 
+					- plus de caractère et de charme
+			- je n'aime pas
+				- Steglitz est un quartier principalement résidentiel, fréquenté surtout par des familles ; il ne dispose donc pas d'une vie nocturne animée.
+					- La plupart des restaurants sont fermés à 22 h 00.
+				- manque de places de stationnement pour une voiture
+		- conclusion
+			- En général, la vie est meilleure aujourd'hui que par le passé
+				- mais nous devons faire preuve d'esprit critique 
+				- Nous devons chercher des moyens de corriger ce qui ne nous plaît pas.
+		
 	- typical-hike-day
 		- Parlez d’une journée typique de randonnée que vous avez effectuée. Précisez ce qui s’est passé avant le début de la randonnée, les moments marquants et la fin
 		- une brève introduction
@@ -182,16 +254,23 @@
 			- ,, = eingeschrieben, warten ob stattfindet
 			- )) = muss noch einschreiben
 		- MONTAG
-			- ,,ausgelichen [CW408-372H] 07:00-08:30 Französisch B1/B2: Segrestin, Adèle (La Rochelle, jung, unbeschwert), 14.09.-07.12.
+			- ,,ausgeglichen [CW408-372H] 07:00-08:30 Französisch B1/B2: Segrestin, Adèle (La Rochelle, jung, unbeschwert), 14.09.-07.12.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=791220
-			- ,,ausgelichen [FK4.F421] 18:00-19:30 Französisch B2 Conversation & littèrature & grammaire: Christine Belakhdar (69, intellectual, academic, Algeria, présentation), 14.09.-30.11.
+			- ,,ausgeglichen [FK4.F421] 18:00-19:30 Französisch B2 Conversation & littèrature & grammaire: Christine Belakhdar (69, intellectual, academic, Algeria, présentation), 14.09.-30.11.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=799049
 		- DIENSTAG
 			- ,,offen [MH4.08-180-H] 16:00-17:30 Konversation A2/B1: Alexandre Schuck (Grenoble, Regensburg, USA, art, pronunciation), 08.09.-01.12.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=792968
+				- from mail
+					- Treten Sie dem Online-Kursraum mit folgendem Kurscode bei: 792968@berlin.vhs.cloud
+					- Zur Registrierung in der vhs.cloud: https://www.vhs.cloud/wws/registrierung-kursteilnehmende.php
+					- Zum Kursbeitritt per Kurscode: https://www.vhs.cloud/wws/kurs-beitreten.php
 			- ,,offen [TS440.076H-W] 18:30-20:00 Französisch B1/B2 Cours de conversation Online: Edwige Bernanoce (Grenoble, Potsdam, Theaterwissenschaften, Sprachdidaktik), 08.09-13.10.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=797913	
-	
+				- from mail
+					- Treten Sie dem Online-Kursraum mit folgendem Kurscode bei: 797913@berlin.vhs.cloud
+					- Zur Registrierung in der vhs.cloud: https://www.vhs.cloud/wws/registrierung-kursteilnehmende.php
+					- Zum Kursbeitritt per Kurscode: https://www.vhs.cloud/wws/kurs-beitreten.php
 	- MONDAY
 		- ,, SIGNED-UP 7:00 Französisch B1/B2
 			- **** [monday mornings, fun, light, young teacher]

@@ -2,7 +2,7 @@
 
 ## Basic info
 
-- the topic is: "Parlez de votre environnement où vous habitez. Ce que vous aimez et ce que vous n’aimez pas (three environments: the world in 2026, Berlin, Steglitz, for each mention 5 things you like, 5 things you don't like; no desired changes section)"
+- the topic is: "Vous êtes en voyage et vous rencontrez quelqu’un qui vous demande de lui parler des traditions culinaires de votre localité, ce que les gens aiment manger, ce qu’ils n’aiment pas manger et pourquoi."
 - the number of different topic presentations to create is: 1
 - the language to create the presentations in is: French
 - the linguistic level to write the text in is: A2
@@ -38,8 +38,7 @@
 	- do not number the cards (e.g. do not display "#1")
 	- do not write helper instructions like "Cliquez pour afficher la traduction et l'exemple"
 	- cards shouldn't flip over: show the TARGET language phrase on top (e.g. "la bureaucratie"); clicking reveals the TARGET language explanation underneath along with a TARGET language example sentence (completely monolingual in the target language; do not use brackets "[]")
-	- accordion behavior: clicking a card toggles it open and closes any other open card (only one card open at a time)
-	- allow the user to select and copy text inside the opened card without the card closing again
+	- accordion behavior: clicking a card toggles it open and closes any other open card (only one card open at a time); allow the user to click anywhere on an open card to close it back up (while preserving text selection so highlighting/copying text inside the card does not close it)
 	- no "Tout révéler" or "Tout masquer" buttons
 - grammar cloze exercises:
 	- title is simply "Exercices de Grammaire", nothing else (no counts, no controls)
@@ -49,7 +48,7 @@
 	- no "Progression" box or counter (e.g. no "X / 10 résolues")
 	- remove any "correct" status message
 	- real-time validation: turns green immediately when the correct answer is typed (case-insensitive and accent-tolerant; no "verify" button needed)
-	- when an answer is correct: input turns green immediately and the cursor/focus automatically moves to the next grammar item's input box for immediate testing of the next item (when the 10th/final item is correct, keep it green and blurred)
+	- when an answer is correct: the answer becomes part of the normal text formatted in bold green (`#95d5b2`, bold, no input box border or background) so that the user can seamlessly select and copy any part of the answer and surrounding text easily; cursor/focus automatically moves to the next grammar item's input box for immediate testing of the next item (when the 10th/final item is correct, it simply turns into normal green text)
 	- no "hint" / "Indice" button; instead, when the user types "?", this triggers a hint: the "?" is consumed (not displayed in the input) and fills in the next character of the correct answer (or fills the first character if empty)
 	- never have an answer that has a question mark in it
 
@@ -64,7 +63,7 @@
 	- randomized initial order
 	- no card numbering, no helper/click instructions, no reveal/hide-all buttons
 	- front shows TARGET language phrase (e.g. "la bureaucratie"); toggles TARGET language explanation and TARGET language example (monolingual)
-	- only one card open at a time
+	- only one card open at a time; clicking anywhere on an open card closes it back up (text selection inside remains possible without closing)
 
 ### Grammar Section
 	- title is simply "Exercices de Grammaire" (nothing else)
@@ -72,7 +71,7 @@
 	- randomized initial order
 	- no "Exercice #1" labels, no progression box, no "correct" messages
 	- typing "?" is consumed and fills in the next character of the answer
-	- auto-advance cursor to next input immediately upon typing the correct answer
+	- auto-advance cursor to next input immediately upon typing the correct answer; the answer becomes normal bold green text so user can select and copy any part of the text and answer seamlessly
 
 ### Presentation Text
 	- a text that can be read as a presentation in 10 minutes (~1,000–1,200 words at A2 speaking pace)

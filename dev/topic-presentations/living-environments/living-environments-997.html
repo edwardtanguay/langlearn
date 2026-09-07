@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #1e1b18;
+      --bg-page: #24201c;
+      --bg-card: #2b2621;
+      --bg-card-hover: #332d27;
+      --bg-active: #3a332c;
+      --border-soft: #423b32;
+      --border-accent: #6b5f50;
+      --border-green: #38a169;
+      --text-main: #e8e1d5;
+      --text-muted: #a69c8e;
+      --text-faint: #756c60;
+      --accent-warm: #d4a373;
+      --accent-green: #48bb78;
+      --accent-green-bg: rgba(72, 187, 120, 0.18);
+      --accent-diff: #e28743;
+      --accent-diff-bg: rgba(226, 135, 67, 0.18);
+      --accent-gloss: #f6ad55;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --shadow-page: 0 8px 30px rgba(0, 0, 0, 0.45);
+      --shadow-card: 0 3px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      background-image: 
+        radial-gradient(#29241f 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 27, 24, 0.95), rgba(30, 27, 24, 0.98));
+      background-size: 20px 20px, 100% 100%;
+      color: var(--text-main);
+      font-family: 'Courier Prime', Courier, monospace;
+      line-height: 1.75;
+      font-size: 1.05rem;
+      padding: 2.5rem 1rem 5rem;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      background: var(--bg-page);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.75rem;
+      box-shadow: var(--shadow-page);
+      position: relative;
+    }
+
+    /* Paper top accent rule */
+    .container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-warm);
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
+    }
+
+    /* Document Header */
+    header.doc-header {
+      margin-bottom: 2.75rem;
+      text-align: center;
+      border-bottom: 2px dashed var(--border-soft);
+      padding-bottom: 1.75rem;
+    }
+
+    h1.main-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+    }
+
+    .doc-meta {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* Sequential Section Headers */
+    .section-block {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--accent-warm);
+      padding-bottom: 0.6rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent-warm);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .section-ctrls {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* Buttons */
+    .btn-action {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      color: var(--text-main);
+      padding: 0.4rem 0.85rem;
+      font-family: 'Courier Prime', Courier, monospace;
+      font-size: 0.85rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .btn-action:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-warm);
+      color: var(--accent-warm);
+    }
+
+    /* -------------------------------------------------- */
+    /* 1. Vocabulary Flashcards Section                   */
+    /* -------------------------------------------------- */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .flashcard {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 1.15rem 1.25rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      user-select: text;
+    }
+
+    .flashcard:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .card-prompt-en {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .card-num {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      font-weight: 700;
+    }
+
+    .card-tap-hint {
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 0.2rem;
+    }
+
+    .flashcard.revealed .card-tap-hint {
+      display: none;
+    }
+
+    .card-target-box {
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--border-soft);
+      display: none;
+      user-select: text;
+      cursor: default;
+    }
+
+    .flashcard.revealed .card-target-box {
+      display: block;
+      animation: fadeIn 0.2s ease-in;
+    }
+
+    .card-target-fr {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent-warm);
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-example-fr {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      line-height: 1.5;
+      font-style: italic;
+      margin-bottom: 0.3rem;
+    }
+
+    .card-example-en {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* -------------------------------------------------- */
+    /* 2. Grammar Cloze Section                           */
+    /* -------------------------------------------------- */
+    .score-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .score-stat {
+      color: var(--text-muted);
+    }
+
+    .score-stat strong {
+      color: var(--accent-warm);
+      font-size: 1.05rem;
+    }
+
+    .cloze-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .cloze-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1.35rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .cloze-item.solved {
+      border-color: var(--border-green);
+      background: rgba(43, 38, 33, 0.9);
+    }
+
+    .cloze-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .cloze-topic {
+      font-weight: 700;
+      color: var(--accent-warm);
+      letter-spacing: 0.02em;
+    }
+
+    .cloze-prompt {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--text-main);
+    }
+
+    .cloze-input {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+      font-family: 'Courier Prime', Courier, monospace;
+      font-size: 1.02rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      min-width: 140px;
+      outline: none;
+      transition: all 0.2s;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .cloze-input:focus {
+      border-color: var(--accent-warm);
+      box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.25);
+    }
+
+    .cloze-input.correct {
+      background-color: var(--accent-green-bg);
+      border-color: var(--accent-green);
+      color: #68d391;
+      font-weight: 700;
+      box-shadow: 0 0 0 2px rgba(72, 187, 120, 0.35);
+    }
+
+    .cloze-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--border-soft);
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .cloze-status {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .cloze-status.correct-text {
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+    .hint-btn {
+      background: var(--bg-active);
+      border: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .hint-btn:hover:not(:disabled) {
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+      border-color: var(--border-accent);
+    }
+
+    .hint-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* -------------------------------------------------- */
+    /* 3. Presentation Text & Glossing                    */
+    /* -------------------------------------------------- */
+    .gloss-instruction-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 0.85rem 1.15rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 2rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .essay-article {
+      text-align: left;
+    }
+
+    .essay-subhead {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--accent-warm);
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-soft);
+      letter-spacing: 0.02em;
+    }
+
+    .essay-p {
+      margin-bottom: 1.35rem;
+      text-align: left;
+      color: var(--text-main);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      user-select: text;
+    }
+
+    .essay-p strong {
+      color: var(--accent-warm);
+      font-weight: 700;
+    }
+
+    /* Clickable Interactive Gloss Word */
+    .gloss-word {
+      border-bottom: 1px dotted var(--accent-gloss);
+      color: var(--text-main);
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.15s, color 0.15s;
+      padding: 0 2px;
+      border-radius: 2px;
+      user-select: text;
+    }
+
+    .gloss-word:hover {
+      background-color: rgba(246, 173, 85, 0.18);
+      color: #fff;
+    }
+
+    .gloss-word.active {
+      background-color: rgba(246, 173, 85, 0.3);
+      border-bottom: 2px solid var(--accent-gloss);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* Attached Paragraph Gloss Box */
+    .para-gloss-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .gloss-card {
+      background: #201c18;
+      border: 1px solid var(--border-accent);
+      border-left: 4px solid var(--accent-gloss);
+      border-radius: var(--radius-sm);
+      padding: 0.95rem 1.15rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      animation: fadeIn 0.2s ease-in-out;
+      user-select: text;
+      cursor: default;
+    }
+
+    .gloss-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.45rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px dashed var(--border-soft);
+    }
+
+    .gloss-card-term {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent-gloss);
+    }
+
+    .gloss-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-faint);
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0 0.35rem;
+      transition: color 0.15s;
+    }
+
+    .gloss-close-btn:hover {
+      color: var(--text-main);
+    }
+
+    .gloss-def {
+      font-size: 0.92rem;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+      line-height: 1.55;
+    }
+
+    .gloss-def strong {
+      color: var(--accent-warm);
+    }
+
+    .gloss-example {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.55;
+    }
+
+    .gloss-example strong {
+      color: var(--accent-warm);
+      font-style: normal;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem 1.25rem;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      h1.main-title {
+        font-size: 1.3rem;
+      }
+      .cloze-input {
+        min-width: 110px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Document Main Title -->
+    <header class="doc-header">
+      <h1 class="main-title">Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz</h1>
+      <div class="doc-meta">Niveau Linguistique A2 &bull; Présentation Orale (10 Minutes) &bull; Berlin, Allemagne</div>
+    </header>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 1 : CARTES DE VOCABULAIRE (20)               -->
+    <!-- ==================================================== -->
+    <section class="section-block" id="section-vocabulaire">
+      <div class="section-title-bar">
+        <h2 class="section-title">1. Cartes de Vocabulaire (20)</h2>
+        <div class="section-ctrls">
+          <button type="button" class="btn-action" id="btn-reveal-all-vocab">Tout révéler</button>
+          <button type="button" class="btn-action" id="btn-hide-all-vocab">Tout masquer</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="vocab-cards-grid">
+        <!-- Rendered dynamically in randomized order -->
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 2 : EXERCICES DE GRAMMAIRE (20)              -->
+    <!-- ==================================================== -->
+    <section class="section-block" id="section-grammaire">
+      <div class="section-title-bar">
+        <h2 class="section-title">2. Exercices de Grammaire (20)</h2>
+        <div class="score-banner">
+          <span class="score-stat">Progression : <strong id="grammar-score-counter">0 / 20 résolues</strong></span>
+          <span class="score-stat">Validation instantanée &bull; Tolérance aux accents</span>
+        </div>
+      </div>
+      <div class="cloze-list" id="grammar-cloze-list">
+        <!-- Rendered dynamically in randomized order -->
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 3 : TEXTE DE LA PRÉSENTATION                 -->
+    <!-- ==================================================== -->
+    <section class="section-block" id="section-texte">
+      <div class="section-title-bar">
+        <h2 class="section-title">Texte de la Présentation</h2>
+        <div class="section-ctrls">
+          <button type="button" class="btn-action" id="btn-toggle-all-gloss">Tout afficher les explications</button>
+        </div>
+      </div>
+
+      <div class="gloss-instruction-bar">
+        <span>&bull; Cliquez sur un mot souligné pour voir son explication en français et un autre exemple.</span>
+        <span>&bull; Le texte et les cartes restent entièrement sélectionnables pour la copie.</span>
+      </div>
+
+      <article class="essay-article" id="essay-content">
+
+        <!-- SUBHEAD 1 -->
+        <h3 class="essay-subhead">Introduction : Trois cercles de vie</h3>
+        
+        <p class="essay-p" id="p-1">
+          Bonjour à toutes et à tous. Dans cette présentation, j'aimerais partager avec vous mon regard sur trois cercles de vie. Quand nous réfléchissons à notre environnement, nous pensons souvent à notre appartement ou à notre rue. Mais en réalité, nous habitons tous dans trois espaces superposés : notre planète en cette année 2026, la métropole où nous vivons, et le quartier précis où nous dormons chaque nuit. Aujourd'hui, nous nous déplaçons facilement à travers les continents pour le travail ou les loisirs. Mais nous avons toujours besoin d'un ancrage local rassurant. À première vue, ces trois échelles semblent très différentes. Pourtant, elles s'influencent mutuellement chaque jour. Je vous propose donc d'explorer ensemble ce que j'aime et ce que je n'aime pas dans ces trois environnements : d'abord à l'échelle du monde contemporain, ensuite dans la vibrante capitale de Berlin, et enfin dans mon paisible quartier de Steglitz.
+        </p>
+        <div class="para-gloss-container" id="gloss-container-p-1"></div>
+
+        <!-- SUBHEAD 2 -->
+        <h3 class="essay-subhead">Le Monde en 2026 : Entre opportunités et tensions</h3>
+
+        <p class="essay-p" id="p-2">
+          Commençons par le grand cercle : le monde en 2026. À cette échelle planétaire, il existe cinq aspects remarquables que j'apprécie profondément. Premièrement, le développement fantastique du travail à distance nous offre une liberté géographique inédite ; nous pouvons collaborer avec des collègues situés à des milliers de kilomètres sans quitter notre bureau personnel. Deuxièmement, l'accès instantané aux connaissances sur Internet transforme l'éducation. C'est un monde moderne où les personnes curieuses peuvent apprendre n'importe quel sujet en ligne. Troisièmement, la transition écologique stimule les énergies renouvelables qui créent des milliers d'emplois verts. Quatrièmement, la diversité culturelle et les échanges internationaux enrichissent nos sociétés ; nous découvrons de nouvelles gastronomies et nous apprenons à garder le contact avec des amis du monde entier. Cinquièmement, les progrès récents de la médecine connectée permettent de diagnostiquer plus vite les maladies et d'améliorer la santé publique globale. En 2026, notre société mondiale bénéficie d'une technologie incroyable qui rapproche les êtres humains.
+        </p>
+        <div class="para-gloss-container" id="gloss-container-p-2"></div>
+
+        <p class="essay-p" id="p-3">
+          En revanche, ce monde global présente aussi cinq défauts majeurs qui m'inquiètent sérieusement. Tout d'abord, le changement climatique produit des catastrophes de plus en plus fréquentes ; chaque été, la canicule frappe durement plusieurs régions et menace l'agriculture. Ensuite, la surcharge d'informations est une réalité que nous ressentons tous devant nos écrans. Nous recevons trop de notifications urgentes et de messages continus, ce qui provoque du stress mental. De plus, le coût de la vie augmente partout. À cause de la hausse des prix, beaucoup de citoyens ne peuvent plus épargner d'argent chaque mois. Par ailleurs, la polarisation des débats sur les réseaux sociaux détruit souvent l'écoute bienveillante et divise les communautés. Enfin, la dépendance généralisée aux outils technologiques et aux smartphones affaiblit parfois notre autonomie ; quand le réseau tombe en panne, nous avons du mal à accomplir les gestes les plus simples du quotidien.
+        </p>
+        <div class="para-gloss-container" id="gloss-container-p-3"></div>
+
+        <!-- SUBHEAD 3 -->
+        <h3 class="essay-subhead">Berlin : Une métropole vibrante mais exigeante</h3>
+
+        <p class="essay-p" id="p-4">
+          Descendons maintenant au deuxième cercle : la métropole de Berlin. Vivre dans cette capitale offre cinq atouts incomparables. En premier lieu, le réseau de transport public est probablement l'élément le plus pratique de la capitale allemande. Les lignes de métro U-Bahn, les trains S-Bahn et les trams circulent jour et nuit avec une ponctualité remarquable. En deuxième lieu, Berlin est plus verte que beaucoup d'autres capitales européennes grâce à ses immenses parcs. En troisième lieu, la richesse culturelle est exceptionnelle. Si vous aimez les activités culturelles, vous pourriez visiter un musée différent chaque semaine. En quatrième lieu, quand vous arrivez à Berlin, vous remarquez immédiatement une liberté et une tolérance remarquables. L'ouverture d'esprit des habitants permet à chacun de vivre selon ses propres convictions sans jugement. Enfin, la culture du vélo est très développée : presque chaque grande rue possède une piste cyclable pour se déplacer rapidement sans polluer. Depuis que je suis venu m'installer ici, j'apprécie cette grande diversité au quotidien.
+        </p>
+        <div class="para-gloss-container" id="gloss-container-p-4"></div>
+
+        <p class="essay-p" id="p-5">
+          Toutefois, vivre à Berlin comporte aussi cinq aspects négatifs qu'il ne faut pas cacher. Le premier problème, et sans doute le plus grave, est la crise du logement : trouver un appartement décent à un prix raisonnable est devenu un véritable parcours du combattant pour les étudiants et les jeunes travailleurs. Le deuxième point négatif concerne la bureaucratie administrative. Pour obtenir un document officiel à la mairie, il faut parfois attendre plusieurs semaines afin de trouver un rendez-vous disponible au Bürgeramt. Le troisième inconvénient réside dans le climat hivernal : les hivers sont particulièrement longs, froids et gris, ce qui pèse lourdement sur le moral des habitants entre novembre et mars. Quatrièmement, les chantiers permanents et les travaux sur les voies ferrées créent souvent des retards imprévus sur nos trajets quotidiens. Enfin, certains boulevards centraux souffrent souvent du bruit et de la saleté sur les trottoirs, car les déchets s'accumulent le week-end après les fêtes nocturnes.
+        </p>
+        <div class="para-gloss-container" id="gloss-container-p-5"></div>
+
+        <!-- SUBHEAD 4 -->
+        <h3 class="essay-subhead">Steglitz : Le calme résidentiel au sud de la capitale</h3>
+
+        <p class="essay-p" id="p-6">
+          Arrivons à présent au troisième cercle, le plus intime : mon quartier d'habitation, Steglitz. Mon quartier de Steglitz se trouve au sud de Berlin, loin de l'agitation touristique. J'y trouve cinq qualités précieuses qui rendent ma vie très agréable. D'un côté, le calme des rues bordées de vieux arbres apporte une sérénité totale ; on peut marcher tranquillement le soir et se sentir en sécurité à toute heure. De l'autre côté, le magnifique Jardin Botanique de Steglitz offre un espace vert grandiose où l'on peut prendre l'air et observer des plantes du monde entier au fil des saisons. Le Jardin Botanique apporte une immense fraîcheur à notre environnement de vie. Troisièmement, dans cette avenue commerçante appelée la Schloßstraße, on trouve tous les magasins nécessaires pour faire des courses sans devoir traverser toute la ville. Quatrièmement, l'ambiance générale est chaleureuse et familiale : le bon voisinage se manifeste par des sourires polis et une entraide spontanée entre voisins de palier. Cinquièmement, la connexion de transport est excellente : bien que situé en périphérie sud, le quartier est directement relié à la ligne de métro U9 et au train S1, ce qui permet de rejoindre le centre-ville en moins de vingt minutes.
+        </p>
+        <div class="para-gloss-container" id="gloss-container-p-6"></div>
+
+        <p class="essay-p" id="p-7">
+          Cependant, Steglitz a également cinq inconvénients que je dois mentionner. Premièrement, le quartier manque d'animation en soirée : après vingt heures, les magasins ferment et la vie nocturne est presque inexistante par rapport aux quartiers branchés comme Neukölln ou Kreuzberg. Deuxièmement, la variété gastronomique est assez limitée : on y trouve quelques cafés traditionnels et brasseries allemandes, mais très peu de cuisine internationale moderne. Troisièmement, le trafic automobile sur les grands axes comme l'avenue Unter den Eichen devient particulièrement dense pendant les heures de pointe du matin et de fin d'après-midi. Quatrièmement, certaines rues secondaires manquent d'aménagements modernes pour les cyclistes, ce qui rend la circulation à vélo moins agréable que dans le centre. Cinquièmement, on ressent parfois un certain éloignement culturel : pour assister à une exposition contemporaine ou à un festival artistique, il faut presque toujours voyager vers le nord ou l'est de Berlin. Autrefois, le quartier était une petite commune indépendante avant d'être intégrée à la métropole, et il garde encore aujourd'hui ce caractère un peu provincial.
+        </p>
+        <div class="para-gloss-container" id="gloss-container-p-7"></div>
+
+        <!-- SUBHEAD 5 -->
+        <h3 class="essay-subhead">Conclusion : Trouver l'équilibre au quotidien</h3>
+
+        <p class="essay-p" id="p-8">
+          En conclusion, habiter dans ces trois cercles nous invite à trouver un équilibre personnel. Le monde en 2026 nous ouvre des horizons immenses tout en nous confrontant à des crises écologiques et économiques sérieuses. La métropole berlinoise nous procure une effervescence culturelle et une liberté sociale extraordinaires, malgré ses lenteurs administratives et ses difficultés de logement. Enfin, mon quartier de Steglitz m'offre le refuge tranquille et la verdure indispensables pour recharger mes batteries après des journées chargées. Les rues résidentielles de Steglitz ne dorment jamais complètement, mais elles restent très paisibles. À long terme, apprendre à apprécier les avantages de chaque niveau tout en composant avec leurs limites permet de construire une vie sereine. Dans les années futures, nous verrons comment ces trois cercles continueront d'évoluer ensemble. Je vous remercie chaleureusement pour votre attention et je répondrai avec grand plaisir à toutes vos questions.
+        </p>
+        <div class="para-gloss-container" id="gloss-container-p-8"></div>
+
+      </article>
+    </section>
+
+  </div>
+
+  <script>
+    /* ========================================================= */
+    /* DATA STORE                                                */
+    /* ========================================================= */
+
+    // 20 Vocabulary Flashcards
+    // English prompt on top -> reveals French word + French example + English example
+    // Note: No brackets [] used anywhere
+    const VOCAB_DATA = [
+      {
+        id: "v01",
+        en: "remote work / teleworking",
+        fr: "le travail à distance",
+        exFr: "Avec le travail à distance, beaucoup d'employés travaillent depuis leur maison.",
+        exEn: "With remote work, many employees work from home."
+      },
+      {
+        id: "v02",
+        en: "climate change",
+        fr: "le changement climatique",
+        exFr: "Le changement climatique provoque des étés plus chauds et secs en Europe.",
+        exEn: "Climate change causes hotter and drier summers in Europe."
+      },
+      {
+        id: "v03",
+        en: "renewable energy",
+        fr: "les énergies renouvelables",
+        exFr: "Les énergies renouvelables comme le solaire produisent une électricité propre.",
+        exEn: "Renewable energy such as solar produces clean electricity."
+      },
+      {
+        id: "v04",
+        en: "cost of living",
+        fr: "le coût de la vie",
+        exFr: "Le coût de la vie est plus élevé dans les grandes capitales européennes.",
+        exEn: "The cost of living is higher in major European capitals."
+      },
+      {
+        id: "v05",
+        en: "information overload",
+        fr: "la surcharge d'informations",
+        exFr: "Lire les actualités toute la journée crée une surcharge d'informations fatigante.",
+        exEn: "Reading the news all day creates an exhausting information overload."
+      },
+      {
+        id: "v06",
+        en: "heatwave",
+        fr: "la canicule",
+        exFr: "Pendant la canicule en juillet, il faut boire beaucoup d'eau fraîche.",
+        exEn: "During the heatwave in July, one must drink plenty of cool water."
+      },
+      {
+        id: "v07",
+        en: "transport network",
+        fr: "le réseau de transport",
+        exFr: "Le réseau de transport permet de traverser toute la ville sans voiture.",
+        exEn: "The transport network allows traveling across the entire city without a car."
+      },
+      {
+        id: "v08",
+        en: "housing crisis",
+        fr: "la crise du logement",
+        exFr: "La crise du logement rend les appartements disponibles rares et chers.",
+        exEn: "The housing crisis makes available apartments scarce and expensive."
+      },
+      {
+        id: "v09",
+        en: "bureaucracy",
+        fr: "la bureaucratie",
+        exFr: "La bureaucratie administrative demande souvent de remplir beaucoup de formulaires.",
+        exEn: "Administrative bureaucracy often requires filling out many forms."
+      },
+      {
+        id: "v10",
+        en: "bike path / cycle lane",
+        fr: "la piste cyclable",
+        exFr: "Je roule sur la piste cyclable pour aller au travail à vélo en sécurité.",
+        exEn: "I ride on the bike path to go to work safely by bicycle."
+      },
+      {
+        id: "v11",
+        en: "waste / litter / trash",
+        fr: "les déchets",
+        exFr: "Il faut jeter les déchets dans la bonne poubelle pour respecter le tri.",
+        exEn: "One must throw trash into the correct bin to respect sorting."
+      },
+      {
+        id: "v12",
+        en: "peace and quiet / calm",
+        fr: "le calme",
+        exFr: "J'aime le calme de cette petite rue résidentielle le soir venu.",
+        exEn: "I like the quiet of this small residential street come evening."
+      },
+      {
+        id: "v13",
+        en: "good neighborhood relations",
+        fr: "le bon voisinage",
+        exFr: "Le bon voisinage commence par un simple bonjour souriant dans l'escalier.",
+        exEn: "Good neighborhood relations start with a simple smiling hello in the staircase."
+      },
+      {
+        id: "v14",
+        en: "city center / downtown",
+        fr: "le centre-ville",
+        exFr: "Le train S-Bahn m'emmène directement au centre-ville en quinze minutes.",
+        exEn: "The S-Bahn train takes me directly downtown in fifteen minutes."
+      },
+      {
+        id: "v15",
+        en: "rush hour",
+        fr: "les heures de pointe",
+        exFr: "Il y a beaucoup d'embouteillages sur les boulevards pendant les heures de pointe.",
+        exEn: "There are many traffic jams on the boulevards during rush hour."
+      },
+      {
+        id: "v16",
+        en: "nightlife",
+        fr: "la vie nocturne",
+        exFr: "Ce quartier tranquille a très peu de vie nocturne après dix heures du soir.",
+        exEn: "This quiet neighborhood has very little nightlife after ten in the evening."
+      },
+      {
+        id: "v17",
+        en: "dependence / addiction",
+        fr: "la dépendance",
+        exFr: "La dépendance aux téléphones portables peut nuire à la qualité du sommeil.",
+        exEn: "Dependence on mobile phones can harm the quality of sleep."
+      },
+      {
+        id: "v18",
+        en: "green space / park",
+        fr: "un espace vert",
+        exFr: "Chaque grande ville moderne devrait créer un espace vert près des habitations.",
+        exEn: "Every modern large city should create a green space near dwellings."
+      },
+      {
+        id: "v19",
+        en: "appointment",
+        fr: "un rendez-vous",
+        exFr: "Il est parfois difficile d'obtenir un rendez-vous rapide à l'administration.",
+        exEn: "It is sometimes difficult to get a quick appointment at the administration office."
+      },
+      {
+        id: "v20",
+        en: "open-mindedness",
+        fr: "l'ouverture d'esprit",
+        exFr: "L'ouverture d'esprit des résidents permet à chacun de se sentir pleinement accepté.",
+        exEn: "The open-mindedness of residents allows everyone to feel fully accepted."
+      }
+    ];
+
+    // 20 Grammar Cloze items
+    // ALL 20 sentences are drawn verbatim from the presentation text
+    const GRAMMAR_DATA = [
+      {
+        id: "g01",
+        topic: "Verbe pronominal au présent (se déplacer)",
+        before: "Aujourd'hui, nous ",
+        answer: "nous déplaçons",
+        after: " facilement à travers les continents pour le travail ou les loisirs.",
+        level: "facile"
+      },
+      {
+        id: "g02",
+        topic: "Conditionnel présent (aimer)",
+        before: "Dans cette présentation, j'",
+        answer: "aimerais",
+        after: " partager avec vous mon regard sur trois cercles de vie.",
+        level: "facile"
+      },
+      {
+        id: "g03",
+        topic: "Préposition avec une année (en)",
+        before: "",
+        answer: "En",
+        after: " 2026, notre société mondiale bénéficie d'une technologie incroyable qui rapproche les êtres humains.",
+        level: "facile"
+      },
+      {
+        id: "g04",
+        topic: "Pronom relatif sujet (qui)",
+        before: "Troisièmement, la transition écologique stimule les énergies renouvelables ",
+        answer: "qui",
+        after: " créent des milliers d'emplois verts.",
+        level: "facile"
+      },
+      {
+        id: "g05",
+        topic: "Pronom relatif de lieu (où)",
+        before: "C'est un monde moderne ",
+        answer: "où",
+        after: " les personnes curieuses peuvent apprendre n'importe quel sujet en ligne.",
+        level: "facile"
+      },
+      {
+        id: "g06",
+        topic: "Pronom relatif objet direct (que)",
+        before: "Ensuite, la surcharge d'informations est une réalité ",
+        answer: "que",
+        after: " nous ressentons tous devant nos écrans.",
+        level: "facile"
+      },
+      {
+        id: "g07",
+        topic: "Négation restrictive (ne ... plus)",
+        before: "À cause de la hausse des prix, beaucoup de citoyens ne peuvent ",
+        answer: "plus",
+        after: " épargner d'argent chaque mois.",
+        level: "moyen"
+      },
+      {
+        id: "g08",
+        topic: "Comparatif de supériorité (plus ... que)",
+        before: "Berlin est ",
+        answer: "plus",
+        after: " verte que beaucoup d'autres capitales européennes grâce à ses immenses parcs.",
+        level: "facile"
+      },
+      {
+        id: "g09",
+        topic: "Préposition de lieu avec ville (à)",
+        before: "En quatrième lieu, quand vous arrivez ",
+        answer: "à",
+        after: " Berlin, vous remarquez immédiatement une liberté et une tolérance remarquables.",
+        level: "facile"
+      },
+      {
+        id: "g10",
+        topic: "Article partitif contracté (du)",
+        before: "Enfin, certains boulevards centraux souffrent souvent ",
+        answer: "du",
+        after: " bruit et de la saleté sur les trottoirs, car les déchets s'accumulent le week-end après les fêtes nocturnes.",
+        level: "moyen"
+      },
+      {
+        id: "g11",
+        topic: "Superlatif relatif (le plus)",
+        before: "En premier lieu, le réseau de transport public est probablement l'élément ",
+        answer: "le plus",
+        after: " pratique de la capitale allemande.",
+        level: "facile"
+      },
+      {
+        id: "g12",
+        topic: "Conditionnel présent (pouvoir)",
+        before: "Si vous aimez les activités culturelles, vous ",
+        answer: "pourriez",
+        after: " visiter un musée différent chaque semaine.",
+        level: "moyen"
+      },
+      {
+        id: "g13",
+        topic: "Auxiliaire être au passé composé (suis)",
+        before: "Depuis que je ",
+        answer: "suis",
+        after: " venu m'installer ici, j'apprécie cette grande diversité au quotidien.",
+        level: "moyen"
+      },
+      {
+        id: "g14",
+        topic: "Préposition de situation géographique (au sud de)",
+        before: "Mon quartier de Steglitz se trouve ",
+        answer: "au",
+        after: " sud de Berlin, loin de l'agitation touristique.",
+        level: "facile"
+      },
+      {
+        id: "g15",
+        topic: "Adjectif démonstratif féminin (cette)",
+        before: "Troisièmement, dans ",
+        answer: "cette",
+        after: " avenue commerçante appelée la Schloßstraße, on trouve tous les magasins nécessaires pour faire des courses sans devoir traverser toute la ville.",
+        level: "facile"
+      },
+      {
+        id: "g16",
+        topic: "Adjectif possessif (notre)",
+        before: "Le Jardin Botanique apporte une immense fraîcheur à ",
+        answer: "notre",
+        after: " environnement de vie.",
+        level: "facile"
+      },
+      {
+        id: "g17",
+        topic: "Verbe impersonnel d'obligation (falloir au présent)",
+        before: "Pour obtenir un document officiel à la mairie, il ",
+        answer: "faut",
+        after: " parfois attendre plusieurs semaines afin de trouver un rendez-vous disponible au Bürgeramt.",
+        level: "facile"
+      },
+      {
+        id: "g18",
+        topic: "Négation temporelle (ne ... jamais)",
+        before: "Les rues résidentielles de Steglitz ne dorment ",
+        answer: "jamais",
+        after: " complètement, mais elles restent très paisibles.",
+        level: "moyen"
+      },
+      {
+        id: "g19",
+        topic: "Imparfait de description (être)",
+        before: "Autrefois, le quartier ",
+        answer: "était",
+        after: " une petite commune indépendante avant d'être intégrée à la métropole, et il garde encore aujourd'hui ce caractère un peu provincial.",
+        level: "moyen"
+      },
+      {
+        id: "g20",
+        topic: "Futur simple (voir)",
+        before: "Dans les années futures, nous ",
+        answer: "verrons",
+        after: " comment ces trois cercles continueront d'évoluer ensemble.",
+        level: "moyen"
+      }
+    ];
+
+    // Interactive Glossing Data (Target language French)
+    // 32 words/expressions:
+    // - the 20 flashcard words have French definitions + DIFFERENT French example sentences from the flashcards
+    // - 12 additional A2 idiomatic expressions
+    const GLOSSARY_DATA = {
+      // 1. remote work
+      "travail à distance": {
+        term: "le travail à distance",
+        def: "Mode d'organisation professionnelle où l'employé effectue ses tâches hors du bureau, généralement chez soi grâce à un ordinateur et Internet.",
+        ex: "Mon entreprise autorise le travail à distance deux jours par semaine pour éviter les longs trajets."
+      },
+      // 2. climate change
+      "changement climatique": {
+        term: "le changement climatique",
+        def: "Modification globale et durable du climat de la Terre, caractérisée par une hausse des températures moyennes et des dérèglements météo.",
+        ex: "Les lycéens de notre ville manifestent souvent pour alerter sur le changement climatique."
+      },
+      // 3. renewable energies
+      "énergies renouvelables": {
+        term: "les énergies renouvelables",
+        def: "Sources d'énergie inépuisables issues de ressources naturelles régulières comme le soleil, le vent ou la force de l'eau.",
+        ex: "L'Allemagne investit massivement dans les énergies renouvelables pour décarboner son industrie."
+      },
+      // 4. cost of living
+      "coût de la vie": {
+        term: "le coût de la vie",
+        def: "Montant financier global nécessaire à un foyer pour payer ses besoins essentiels : logement, alimentation, énergie et transports.",
+        ex: "La hausse soudaine du coût de la vie pousse les familles à surveiller de très près leur budget courses."
+      },
+      // 5. information overload
+      "surcharge d'informations": {
+        term: "la surcharge d'informations",
+        def: "État de fatigue mentale provoqué par la réception d'une quantité excessive de données, d'e-mails et de nouvelles en continu.",
+        ex: "Pour éviter la surcharge d'informations, j'ai décidé de désactiver les alertes d'actualités sur mon téléphone."
+      },
+      // 6. heatwave
+      "canicule": {
+        term: "la canicule",
+        def: "Période de très forte chaleur diurne et nocturne qui se prolonge pendant plusieurs journées d'affilée.",
+        ex: "Durant la canicule, la municipalité ouvre des salles rafraîchies pour les personnes âgées."
+      },
+      // 7. transport network
+      "réseau de transport": {
+        term: "le réseau de transport",
+        def: "Système complet de lignes coordonnées de bus, métros et trains reliant les différents secteurs d'une ville ou région.",
+        ex: "Les nouveaux arrivants apprécient beaucoup la clarté et la fluidité de notre réseau de transport urbain."
+      },
+      // 8. housing crisis
+      "crise du logement": {
+        term: "la crise du logement",
+        def: "Déséquilibre sévère entre le manque d'appartements disponibles et la forte demande des locataires, provoquant une envolée des loyers.",
+        ex: "Pour freiner la crise du logement, les élus prévoient d'accélérer la rénovation de bâtiments publics vacants."
+      },
+      // 9. bureaucracy
+      "bureaucratie": {
+        term: "la bureaucratie",
+        def: "Ensemble complexe et parfois rigide des règles administratives et des dossiers officiels à fournir.",
+        ex: "Alléger la bureaucratie permettrait aux petites entreprises de créer de nouveaux postes plus facilement."
+      },
+      // 10. bike path
+      "piste cyclable": {
+        term: "la piste cyclable",
+        def: "Voie de circulation expressément aménagée et réservée aux bicyclettes pour garantir leur protection contre les voitures.",
+        ex: "La ville a inauguré une nouvelle piste cyclable sécurisée bordée d'arbustes le long du grand canal."
+      },
+      // 11. waste / litter
+      "déchets": {
+        term: "les déchets",
+        def: "Résidus ménagers, emballages usagés ou détritus abandonnés que l'on doit recycler ou éliminer.",
+        ex: "Des bénévoles du quartier se réunissent un samedi par mois pour ramasser les déchets dans les parcs publics."
+      },
+      // 12. quiet / calm
+      "calme": {
+        term: "le calme",
+        def: "Absence de vacarme, de tumulte ou de circulation bruyante ; sentiment apaisant de tranquillité.",
+        ex: "Après une journée de réunion intense, je savoure le calme reposant de mon jardin fleuri."
+      },
+      // 13. good neighborliness
+      "bon voisinage": {
+        term: "le bon voisinage",
+        def: "Relations amicales, respectueuses et solidaires entretenues entre des personnes habitant à proximité.",
+        ex: "La fête des voisins organisée dans la cour intérieure renforce le bon voisinage et l'entraide mutuelle."
+      },
+      // 14. city center
+      "centre-ville": {
+        term: "le centre-ville",
+        def: "Cœur historique, culturel et commercial d'une grande cité, rassemblant boutiques, institutions et animations.",
+        ex: "Nous nous donnons rendez-vous en plein centre-ville pour déjeuner ensemble avant d'aller au cinéma."
+      },
+      // 15. rush hours
+      "heures de pointe": {
+        term: "les heures de pointe",
+        def: "Moments d'affluence maximale sur les routes et dans les transports en commun, le matin et en fin d'après-midi.",
+        ex: "Partir au travail trente minutes plus tôt permet d'échapper à la cohue des heures de pointe."
+      },
+      // 16. nightlife
+      "vie nocturne": {
+        term: "la vie nocturne",
+        def: "Animation nocturne d'une localité portée par ses théâtres, ses clubs musicaux, ses bars ouverts et ses terrasses.",
+        ex: "Les étudiants de passage choisissent volontiers des quartiers célèbres pour leur vie nocturne animée."
+      },
+      // 17. dependence
+      "dépendance": {
+        term: "la dépendance",
+        def: "Assujettissement fort et besoin constant envers une habitude, un appareil ou une substance dont on ne peut plus se passer.",
+        ex: "Prendre un jour sans écran chaque semaine aide à rompre notre dépendance aux réseaux numériques."
+      },
+      // 18. green space
+      "espace vert": {
+        term: "un espace vert",
+        def: "Zone boisée, square ou pelouse publique en milieu urbain dédiée à la détente, à la promenade et à la nature.",
+        ex: "La création d'un espace vert au pied des immeubles améliore notablement la qualité de vie des habitants."
+      },
+      // 19. appointment
+      "rendez-vous": {
+        term: "un rendez-vous",
+        def: "Entrevue fixée à l'avance à une date et une heure précises avec un interlocuteur ou un service public.",
+        ex: "J'ai pris un rendez-vous chez le dentiste pour une simple visite de contrôle semestrielle."
+      },
+      // 20. open-mindedness
+      "ouverture d'esprit": {
+        term: "l'ouverture d'esprit",
+        def: "Dispositions morales et intellectuelles fondées sur la curiosité, l'écoute sans préjugés et la tolérance envers la diversité.",
+        ex: "L'ouverture d'esprit des Berlinois encourage les artistes du monde entier à venir exprimer leur créativité."
+      },
+      // 21. on a daily basis
+      "au quotidien": {
+        term: "au quotidien",
+        def: "Dans la vie de tous les jours, de manière régulière, courante et habituelle.",
+        ex: "Boire suffisamment d'eau et cuisiner des légumes frais au quotidien favorise une bonne santé générale."
+      },
+      // 22. at first glance
+      "à première vue": {
+        term: "à première vue",
+        def: "D'après la première impression ou l'observation immédiate, avant tout examen approfondi.",
+        ex: "À première vue, le plan de la ville semblait compliqué, mais le plan de métro s'avère très logique."
+      },
+      // 23. on the other hand / however
+      "en revanche": {
+        term: "en revanche",
+        def: "Locution exprimant une opposition nette, une nuance contrastée ou une compensation entre deux idées.",
+        ex: "Cet appartement est plus petit ; en revanche, il est idéalement orienté au sud et baigné de lumière naturelle."
+      },
+      // 24. to get some fresh air
+      "prendre l'air": {
+        term: "prendre l'air",
+        def: "Quitter un endroit clos pour sortir respirer de l'air frais à l'extérieur et se détendre quelques instants.",
+        ex: "Après trois heures passées à lire dans la bibliothèque, j'ai eu grand besoin de sortir prendre l'air au bord du fleuve."
+      },
+      // 25. to have trouble doing something
+      "avons du mal à": {
+        term: "avoir du mal à",
+        def: "Éprouver des difficultés ou rencontrer des obstacles importants pour réaliser une action déterminée.",
+        ex: "Beaucoup d'expatriés ont du mal à déchiffrer les lettres officielles de l'administration fiscale au début."
+      },
+      // 26. through the seasons
+      "au fil des saisons": {
+        term: "au fil des saisons",
+        def: "Au fur et à mesure que les saisons se succèdent dans l'année, témoignant du passage du temps.",
+        ex: "La végétation de la forêt de Grunewald offre des teintes somptueuses au fil des saisons."
+      },
+      // 27. to do grocery shopping
+      "faire des courses": {
+        term: "faire des courses",
+        def: "Se rendre dans les magasins ou sur les marchés pour acheter la nourriture et les produits d'usage courant.",
+        ex: "Le samedi matin, nous préférons faire des courses chez les commerçants du quartier plutôt que dans les hypermarchés."
+      },
+      // 28. to feel safe
+      "se sentir en sécurité": {
+        term: "se sentir en sécurité",
+        def: "Ressentir une absence de danger ou de menace, être rassuré et détendu dans son environnement.",
+        ex: "Il est particulièrement agréable de pouvoir se promener tard sans crainte et de se sentir en sécurité dans sa propre rue."
+      },
+      // 29. to keep in touch
+      "garder le contact": {
+        term: "garder le contact",
+        def: "Maintenir des relations et des échanges de nouvelles réguliers avec des amis, de la famille ou des connaissances.",
+        ex: "Les appels vidéo du dimanche nous permettent de garder le contact avec mes grands-parents installés dans le sud."
+      },
+      // 30. to be connected to
+      "relié à": {
+        term: "être relié à",
+        def: "Être directement rattaché, branché ou connecté à un réseau de transport, une voie ou une infrastructure.",
+        ex: "L'aéroport international est directement relié à la gare centrale par un train régional ultra-rapide."
+      },
+      // 31. in the long run
+      "à long terme": {
+        term: "à long terme",
+        def: "Sur une période de temps lointaine et étendue dans le futur.",
+        ex: "Adopter une mobilité douce et moins polluante transforme durablement la qualité de l'air urbain à long terme."
+      },
+      // 32. from one side ... on the other side
+      "d'un côté": {
+        term: "d'un côté ... de l'autre côté",
+        def: "Formule comparative servant à examiner successivement deux facettes complémentaires ou opposées d'une même situation.",
+        ex: "D'un côté, le centre est animé et commerçant ; de l'autre côté, la périphérie offre le calme et la verdure."
+      }
+    };
+
+    /* ========================================================= */
+    /* HELPER UTILITIES                                          */
+    /* ========================================================= */
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Accent-tolerant, lowercase, trimmed string normalization
+    function normalizeStr(str) {
+      if (!str) return '';
+      return str.trim()
+        .toLowerCase()
+        .replace(/[’']/g, "'")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""); // remove diacritics
+    }
+
+    /* ========================================================= */
+    /* INITIALIZATION LOGIC                                      */
+    /* ========================================================= */
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* ------------------------------------------------------- */
+      /* 1. Vocabulary Flashcards Setup                          */
+      /* ------------------------------------------------------- */
+      const vocabGrid = document.getElementById('vocab-cards-grid');
+      const shuffledVocab = shuffleArray(VOCAB_DATA);
+
+      shuffledVocab.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'flashcard';
+        card.dataset.id = item.id;
+
+        card.innerHTML = `
+          <div class="card-top">
+            <div class="card-prompt-en">${item.en}</div>
+            <span class="card-num">#${index + 1}</span>
+          </div>
+          <div class="card-tap-hint">▶ Cliquez pour afficher la traduction et l'exemple</div>
+          <div class="card-target-box">
+            <div class="card-target-fr">${item.fr}</div>
+            <div class="card-example-fr">${item.exFr}</div>
+            <div class="card-example-en">${item.exEn}</div>
+          </div>
+        `;
+
+        // Card click handler: toggle revealed state
+        card.addEventListener('click', (e) => {
+          // If click was inside the target box or text is selected, do not close
+          const sel = window.getSelection();
+          if (sel && sel.toString().trim().length > 0) return;
+          if (e.target.closest('.card-target-box')) return;
+
+          card.classList.toggle('revealed');
+        });
+
+        vocabGrid.appendChild(card);
+      });
+
+      // Vocabulary Global Controls
+      document.getElementById('btn-reveal-all-vocab').addEventListener('click', () => {
+        vocabGrid.querySelectorAll('.flashcard').forEach(c => c.classList.add('revealed'));
+      });
+
+      document.getElementById('btn-hide-all-vocab').addEventListener('click', () => {
+        vocabGrid.querySelectorAll('.flashcard').forEach(c => c.classList.remove('revealed'));
+      });
+
+      /* ------------------------------------------------------- */
+      /* 2. Grammar Cloze Setup                                  */
+      /* ------------------------------------------------------- */
+      const grammarList = document.getElementById('grammar-cloze-list');
+      const scoreCounter = document.getElementById('grammar-score-counter');
+      const shuffledGrammar = shuffleArray(GRAMMAR_DATA);
+      const solvedSet = new Set();
+
+      function updateGrammarScore() {
+        scoreCounter.textContent = `${solvedSet.size} / ${shuffledGrammar.length} résolues`;
+      }
+
+      shuffledGrammar.forEach((item, index) => {
+        const clozeCard = document.createElement('div');
+        clozeCard.className = 'cloze-item';
+        clozeCard.dataset.id = item.id;
+
+        clozeCard.innerHTML = `
+          <div class="cloze-header">
+            <span class="cloze-topic">${item.topic}</span>
+            <span>Exercice #${index + 1}</span>
+          </div>
+          <div class="cloze-prompt">
+            ${item.before}<input type="text" class="cloze-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="..." data-answer="${item.answer}">${item.after}
+          </div>
+          <div class="cloze-controls">
+            <div class="cloze-status" id="status-${item.id}">Tapez la réponse ci-dessus</div>
+            <button type="button" class="hint-btn" id="hint-btn-${item.id}">Indice (+1 lettre)</button>
+          </div>
+        `;
+
+        const input = clozeCard.querySelector('.cloze-input');
+        const status = clozeCard.querySelector(`#status-${item.id}`);
+        const hintBtn = clozeCard.querySelector(`#hint-btn-${item.id}`);
+        let hintLettersCount = 0;
+
+        function checkInput() {
+          const userVal = input.value;
+          const targetAnswer = item.answer;
+          const isMatch = normalizeStr(userVal) === normalizeStr(targetAnswer);
+
+          if (isMatch) {
+            input.value = targetAnswer; // standard display capitalization
+            input.classList.add('correct');
+            input.readOnly = true;
+            clozeCard.classList.add('solved');
+            status.textContent = '✓ Correct !';
+            status.classList.add('correct-text');
+            hintBtn.disabled = true;
+            solvedSet.add(item.id);
+            updateGrammarScore();
+          } else {
+            input.classList.remove('correct');
+            clozeCard.classList.remove('solved');
+            status.textContent = 'Tapez la réponse ci-dessus';
+            status.classList.remove('correct-text');
+            solvedSet.delete(item.id);
+            updateGrammarScore();
+          }
+        }
+
+        input.addEventListener('input', checkInput);
+
+        hintBtn.addEventListener('click', () => {
+          hintLettersCount++;
+          input.value = item.answer.substring(0, hintLettersCount);
+          checkInput();
+          if (hintLettersCount >= item.answer.length) {
+            hintBtn.disabled = true;
+          }
+        });
+
+        grammarList.appendChild(clozeCard);
+      });
+
+      /* ------------------------------------------------------- */
+      /* 3. Interactive Glossing in Presentation Text             */
+      /* ------------------------------------------------------- */
+
+      // Wrap glossed phrases in paragraphs dynamically or bind already markup-embedded terms
+      // Let's create an intelligent binder for terms in paragraphs
+      const termKeys = Object.keys(GLOSSARY_DATA).sort((a, b) => b.length - a.length);
+
+      const paragraphs = document.querySelectorAll('.essay-p');
+
+      paragraphs.forEach(p => {
+        const pId = p.id;
+        let pText = p.innerHTML;
+
+        // Replace matched terms with clickable span without breaking HTML tags
+        termKeys.forEach(term => {
+          // Regex with boundary to avoid partial sub-word replacement
+          const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const reg = new RegExp(`(?<!<[^>]*)(${escaped})(?![^<]*>)`, 'i');
+          if (reg.test(pText)) {
+            pText = pText.replace(reg, `<span class="gloss-word" data-term="${term}" data-para="${pId}">$1</span>`);
+          }
+        });
+
+        p.innerHTML = pText;
+      });
+
+      // Track drag vs click for copy safety
+      let isDragging = false;
+      let startX = 0, startY = 0;
+
+      document.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        startY = e.clientY;
+        isDragging = false;
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (Math.abs(e.clientX - startX) > 5 || Math.abs(e.clientY - startY) > 5) {
+          isDragging = true;
+        }
+      });
+
+      function toggleGlossCard(wordElem) {
+        const termKey = wordElem.dataset.term;
+        const pId = wordElem.dataset.para;
+        const data = GLOSSARY_DATA[termKey];
+        if (!data) return;
+
+        const container = document.getElementById(`gloss-container-${pId}`);
+        if (!container) return;
+
+        // Check if card exists
+        const existingCard = container.querySelector(`[data-card-term="${termKey}"]`);
+
+        if (existingCard) {
+          // Remove card
+          existingCard.remove();
+          wordElem.classList.remove('active');
+        } else {
+          // Add card
+          wordElem.classList.add('active');
+          const card = document.createElement('div');
+          card.className = 'gloss-card';
+          card.dataset.cardTerm = termKey;
+
+          card.innerHTML = `
+            <div class="gloss-card-head">
+              <span class="gloss-card-term">${data.term}</span>
+              <button type="button" class="gloss-close-btn" title="Fermer">✕</button>
+            </div>
+            <div class="gloss-def"><strong>Définition :</strong> ${data.def}</div>
+            <div class="gloss-example"><strong>Autre contexte :</strong> « ${data.ex} »</div>
+          `;
+
+          // Close button handler
+          card.querySelector('.gloss-close-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            card.remove();
+            wordElem.classList.remove('active');
+          });
+
+          // Prevent click inside card from closing or bubbling up
+          card.addEventListener('click', (e) => {
+            e.stopPropagation();
+          });
+
+          container.appendChild(card);
+        }
+      }
+
+      // Bind click on all gloss words
+      document.querySelectorAll('.gloss-word').forEach(word => {
+        word.addEventListener('click', (e) => {
+          // If text is selected for copying, do nothing
+          const sel = window.getSelection();
+          if (sel && sel.toString().trim().length > 0) return;
+          if (isDragging) return;
+
+          toggleGlossCard(word);
+        });
+      });
+
+      // Global Toggle All Gloss
+      const btnToggleAllGloss = document.getElementById('btn-toggle-all-gloss');
+      let allGlossShown = false;
+
+      btnToggleAllGloss.addEventListener('click', () => {
+        allGlossShown = !allGlossShown;
+        const allWords = document.querySelectorAll('.gloss-word');
+
+        allWords.forEach(word => {
+          const termKey = word.dataset.term;
+          const pId = word.dataset.para;
+          const container = document.getElementById(`gloss-container-${pId}`);
+          if (!container) return;
+
+          const existingCard = container.querySelector(`[data-card-term="${termKey}"]`);
+
+          if (allGlossShown && !existingCard) {
+            toggleGlossCard(word);
+          } else if (!allGlossShown && existingCard) {
+            toggleGlossCard(word);
+          }
+        });
+
+        btnToggleAllGloss.textContent = allGlossShown ? "Tout masquer les explications" : "Tout afficher les explications";
+      });
+
+    });
+  </script>
+</body>
+</html>
