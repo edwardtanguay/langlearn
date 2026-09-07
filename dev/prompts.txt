@@ -5,7 +5,7 @@
 - the topic is: "Vous êtes en voyage et vous rencontrez quelqu’un qui vous demande de lui parler des traditions culinaires de votre localité, ce que les gens aiment manger, ce qu’ils n’aiment pas manger et pourquoi."
 - the number of different topic presentations to create is: 1
 - the language to create the presentations in is: French
-- the linguistic level to write the text in is: A2
+- the linguistic level to write the text in is: B1
 - your audience is addressed with: vous (not tu)
 - English is the source language, French is the target language
 

@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Saveurs de Berlin : Traditions Culinaires, Goûts et Habitudes de ma Ville</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       THEME & TYPOGRAPHY: Crisp Typewriter Aesthetic
+       Dark espresso / warm kraft background (#1e1b18) & warm ivory text (#e8e1d5)
+       ========================================================================== */
+    :root {
+      --bg-main: #1e1b18;
+      --bg-surface: #26221e;
+      --bg-surface-alt: #2e2a25;
+      --bg-highlight: #3a332a;
+      --border-color: rgba(232, 225, 213, 0.22);
+      --border-subtle: rgba(232, 225, 213, 0.12);
+      --text-main: #e8e1d5;
+      --text-muted: #b8aea0;
+      --text-dim: #8a8275;
+      --accent-amber: #d4a373;
+      --accent-gold: #e09f3e;
+      --accent-green: #52b788;
+      --accent-green-bg: rgba(82, 183, 136, 0.16);
+      --accent-green-border: #40916c;
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --font-family: 'Courier Prime', Courier, 'Courier New', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      font-size: 17px;
+      line-height: 1.75;
+      padding: 40px 20px 100px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Selection styling */
+    ::selection {
+      background: var(--accent-amber);
+      color: var(--bg-main);
+    }
+
+    /* Page Header */
+    header.doc-header {
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 28px;
+      margin-bottom: 50px;
+    }
+
+    h1.doc-title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+      color: var(--text-main);
+      text-transform: none;
+    }
+
+    /* Sections */
+    section.content-section {
+      margin-bottom: 60px;
+    }
+
+    h2.section-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 28px;
+    }
+
+    /* ==========================================================================
+       SECTION 1 : CARTES DE VOCABULAIRE
+       Accordion style: one open at a time, selectable text, monolingual French
+       ========================================================================== */
+    .vocab-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .vocab-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .vocab-card:hover {
+      border-color: var(--accent-amber);
+    }
+
+    .vocab-card.is-open {
+      border-color: var(--accent-amber);
+      background-color: var(--bg-surface-alt);
+    }
+
+    .vocab-header {
+      padding: 14px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .vocab-term {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .vocab-indicator {
+      font-size: 14px;
+      color: var(--accent-amber);
+      transition: transform 0.2s ease;
+    }
+
+    .vocab-card.is-open .vocab-indicator {
+      transform: rotate(90deg);
+    }
+
+    .vocab-body {
+      display: none;
+      padding: 0 20px 18px 20px;
+      border-top: 1px dashed var(--border-subtle);
+      user-select: text;
+    }
+
+    .vocab-card.is-open .vocab-body {
+      display: block;
+    }
+
+    .vocab-field {
+      margin-top: 12px;
+    }
+
+    .vocab-label {
+      display: block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-amber);
+      margin-bottom: 2px;
+    }
+
+    .vocab-text {
+      font-size: 16px;
+      color: var(--text-main);
+    }
+
+    .vocab-example {
+      font-style: italic;
+      color: #dfd5c7;
+    }
+
+    /* ==========================================================================
+       SECTION 2 : EXERCICES DE GRAMMAIRE
+       Real-time green validation, accent-tolerant, auto-focus next, '?' hint
+       ========================================================================== */
+    .grammar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .grammar-item {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 16px 20px;
+      line-height: 1.9;
+      font-size: 17px;
+    }
+
+    .cloze-input {
+      font-family: var(--font-family);
+      font-size: 17px;
+      color: var(--text-main);
+      background-color: #141210;
+      border: 1px solid var(--border-color);
+      border-bottom: 2px solid var(--accent-amber);
+      border-radius: 2px;
+      padding: 2px 8px;
+      margin: 0 4px;
+      outline: none;
+      vertical-align: baseline;
+      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+    }
+
+    .cloze-input:focus {
+      border-color: var(--accent-gold);
+      background-color: #1b1713;
+      box-shadow: 0 0 5px rgba(224, 159, 62, 0.35);
+    }
+
+    .cloze-input.is-correct {
+      background-color: var(--accent-green-bg) !important;
+      border-color: var(--accent-green-border) !important;
+      border-bottom-color: var(--accent-green) !important;
+      color: #95d5b2 !important;
+      font-weight: 700;
+      box-shadow: 0 0 6px rgba(82, 183, 136, 0.4);
+    }
+
+    .cloze-correct-text {
+      color: #95d5b2;
+      font-weight: 700;
+      display: inline;
+      user-select: text;
+    }
+
+    /* ==========================================================================
+       SECTION 3 : TEXTE DE LA PRÉSENTATION
+       Left-aligned flowing essay prose, anchored floating popover for glossing
+       ========================================================================== */
+    .essay-article {
+      text-align: left;
+    }
+
+    h3.essay-subhead {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--accent-amber);
+      margin-top: 36px;
+      margin-bottom: 16px;
+      border-left: 3px solid var(--accent-amber);
+      padding-left: 12px;
+    }
+
+    .essay-p {
+      margin-bottom: 20px;
+      font-size: 17px;
+      line-height: 1.85;
+      color: var(--text-main);
+      text-align: left;
+      position: relative;
+    }
+
+    /* Clickable glossed word */
+    .gloss-word {
+      color: var(--text-main);
+      text-decoration: underline;
+      text-decoration-style: dashed;
+      text-decoration-color: var(--accent-amber);
+      text-underline-offset: 4px;
+      cursor: pointer;
+      position: relative;
+      display: inline;
+      transition: background-color 0.2s, color 0.2s;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    .gloss-word:hover {
+      background-color: var(--bg-highlight);
+      color: #fff;
+    }
+
+    .gloss-word.is-active {
+      background-color: var(--accent-amber);
+      color: var(--bg-main);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* Anchored Floating Popover Card */
+    .gloss-popover {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+      width: 320px;
+      max-width: 90vw;
+      background-color: #24201c;
+      border: 1px solid var(--accent-amber);
+      box-shadow: var(--card-shadow);
+      border-radius: 4px;
+      padding: 14px 16px;
+      margin-top: 6px;
+      text-align: left;
+      font-style: normal;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--text-main);
+      user-select: text;
+      animation: popoverFadeIn 0.15s ease-out;
+    }
+
+    @keyframes popoverFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .gloss-popover .popover-term {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-amber);
+      margin-bottom: 8px;
+      border-bottom: 1px dashed var(--border-subtle);
+      padding-bottom: 4px;
+    }
+
+    .gloss-popover .popover-label {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+      margin-top: 8px;
+      margin-bottom: 2px;
+    }
+
+    .gloss-popover .popover-def {
+      color: var(--text-main);
+    }
+
+    .gloss-popover .popover-ex {
+      color: #dfd5c7;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* Small pointer tip */
+    .gloss-popover::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 20px;
+      width: 10px;
+      height: 10px;
+      background-color: #24201c;
+      border-left: 1px solid var(--accent-amber);
+      border-top: 1px solid var(--accent-amber);
+      transform: rotate(45deg);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        font-size: 15.5px;
+        padding: 24px 14px 80px;
+      }
+      h1.doc-title {
+        font-size: 21px;
+      }
+      .gloss-popover {
+        width: 270px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Document Title -->
+    <header class="doc-header">
+      <h1 class="doc-title">Les Saveurs de Berlin : Traditions Culinaires, Goûts et Habitudes de ma Ville</h1>
+    </header>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 1 : CARTES DE VOCABULAIRE                    -->
+    <!-- ==================================================== -->
+    <section class="content-section" id="section-vocab">
+      <h2 class="section-title">Cartes de Vocabulaire</h2>
+      <div class="vocab-list" id="vocab-container">
+        <!-- Injected dynamically in randomized order -->
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 2 : EXERCICES DE GRAMMAIRE                   -->
+    <!-- ==================================================== -->
+    <section class="content-section" id="section-grammaire">
+      <h2 class="section-title">Exercices de Grammaire</h2>
+      <div class="grammar-list" id="grammar-container">
+        <!-- Injected dynamically in randomized order -->
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 3 : TEXTE DE LA PRÉSENTATION                 -->
+    <!-- ==================================================== -->
+    <section class="content-section" id="section-texte">
+      <h2 class="section-title">Texte de la Présentation</h2>
+
+      <article class="essay-article" id="essay-container">
+
+        <h3 class="essay-subhead">Introduction : Une rencontre en voyage et une curiosité partagée</h3>
+        <p class="essay-p">
+          Bonjour à toutes et à tous. Lors de mes voyages récents, j'ai rencontré un passionné de gastronomie qui m'a interrogé avec curiosité sur la cuisine de ma région d'origine. Il m'a demandé ce que les habitants aiment réellement manger au quotidien, ce qu'ils évitent, et pour quelles raisons ces habitudes perdurent. Lorsqu'on évoque la gastronomie allemande à l'étranger, les gens imaginent souvent un cliché composé uniquement de saucisses grasses et de bière. Pourtant, la réalité de Berlin est infiniment plus nuancée, surprenante et contrastée. Vivre dans la capitale permet d'observer un dialogue passionnant entre les coutumes d'autrefois, les spécialités populaires du vingtième siècle et les influences internationales. Si vous veniez visiter ma ville, je vous <span class="cloze-target-source">conseillerais</span> de goûter à ses créations populaires sans préjugé. Je vous propose donc d'explorer les traditions culinaires berlinoises à travers cinq spécialités incontournables que nous adorons, suivies de cinq plats controversés ou délaissés que beaucoup d'entre nous évitent soigneusement.
+        </p>
+
+        <h3 class="essay-subhead">Ce que les Berlinois adorent manger : Cinq traditions populaires</h3>
+        <p class="essay-p">
+          Commençons par explorer les cinq piliers gustatifs que les Berlinois plébiscitent avec enthousiasme. Le premier d'entre eux est incontestablement la Currywurst, inventée en 1949 dans les ruines d'après-guerre par Herta Heuwer. Cette saucisse grillée, nappée d'une sauce tiède à base de tomate et saupoudrée de curry doux, constitue bien plus qu'un simple <span class="gloss-word" data-term-id="t12">en-cas</span> avalé <span class="gloss-word" data-term-id="t16">sur le pouce</span>. C'est une spécialité savoureuse <span class="cloze-target-source">dont</span> les habitants sont très fiers parce qu'elle incarne l'esprit débrouillard et populaire de la ville.
+        </p>
+        <p class="essay-p">
+          Le deuxième trésor de notre quotidien concerne notre culture boulangère et l'amour pour les pains au <span class="gloss-word" data-term-id="t01">levain</span> naturel. Contrairement aux baguettes blanches très légères, les Berlinois privilégient des miches denses de seigle complet, à la mie sombre et parfumée, protégées par un remarquable <span class="gloss-word" data-term-id="t09">croustillant</span>. Les Berlinois aiment le pain noir et ils <span class="cloze-target-source">en</span> mangent à chaque repas, notamment lors du petit-déjeuner dominical où l'on s'attarde autour de fromages affinés, d'œufs mollets et de charcuteries.
+        </p>
+        <p class="essay-p">
+          La troisième passion culinaire est saisonnière et attendue chaque année avec impatience : il s'agit de la période où <span class="gloss-word" data-term-id="t02">l'asperge blanche</span> fait son apparition. De la mi-avril jusqu'à la fin juin, les étals sont submergés par ces légumes récoltés dans la région voisine de Beelitz. Bien que cette recette <span class="cloze-target-source">paraisse</span> simple <span class="gloss-word" data-term-id="t15">au premier abord</span>, préparer ces tiges délicates avec des pommes de terre fondantes et une sauce hollandaise onctueuse suffit à <span class="gloss-word" data-term-id="t19">mettre l'eau à la bouche</span> de tout un quartier. C'est en <span class="cloze-target-source">discutant</span> avec les producteurs locaux que l'on comprend à quel point cette fraîcheur printanière rassemble toutes les générations.
+        </p>
+        <p class="essay-p">
+          Le quatrième pilier illustre notre modernité urbaine : le fameux Döner Kebab berlinois. Créé dans les années 1970 par les travailleurs immigrés turcs dans le quartier de Kreuzberg, ce sandwich garni de viande marinée, de chou croquant, d'oignons doux et d'une sauce parfumée représente un admirable exemple de <span class="gloss-word" data-term-id="t03">métissage culinaire</span>. La cuisine berlinoise s'est enrichie <span class="cloze-target-source">grâce</span> à l'arrivée de communautés du monde entier, et ce plat est devenu un emblème de convivialité accessible à tous. Au fil des décennies, cette spécialité s'est <span class="cloze-target-source">imposée</span> comme un véritable emblème urbain.
+        </p>
+        <p class="essay-p">
+          Enfin, le cinquième amour gastronomique des résidents réside dans la coutume paisible du café et gâteau de l'après-midi. Vers seize heures, les cuisines familiales et les salons de thé s'animent pour déguster une tarte tiède aux prunes, un strudel ou un gâteau au fromage blanc. Ce moment de détente réconfortant est un véritable <span class="gloss-word" data-term-id="t18">péché mignon</span> partagé entre amis ou collègues, célébré <span class="gloss-word" data-term-id="t22">sans tambour ni trompette</span> dans chaque quartier.
+        </p>
+
+        <h3 class="essay-subhead">Ce que les gens n'aiment pas ou évitent : Cinq plats controversés ou délaissés</h3>
+        <p class="essay-p">
+          À l'opposé de ces délices, il existe cinq traditions culinaires qui suscitent aujourd'hui un rejet marqué ou un net désintérêt. En tête de liste figure sans conteste l'Eisbein traditionnel, préparé à partir d'un imposant <span class="gloss-word" data-term-id="t05">jarret de porc</span> mariné dans la saumure puis bouilli. Ce morceau épais est entouré d'une couenne gélatineuse et d'une graisse pâle qui rebute les convives d'aujourd'hui. Il faut véritablement <span class="gloss-word" data-term-id="t20">avoir le cœur bien accroché</span> pour apprécier cette viande lourde, et beaucoup font visiblement <span class="gloss-word" data-term-id="t11">la moue</span> quand ce plat ancestral apparaît. Les jeunes générations ne veulent <span class="cloze-target-source">plus</span> consommer ces viandes bouillies trop grasses qui ne correspondent plus du tout à nos modes de vie sédentaires.
+        </p>
+        <p class="essay-p">
+          Le deuxième aliment délaissé est la choucroute industrielle réchauffée dans de la graisse animale comme <span class="gloss-word" data-term-id="t04">le saindoux</span> fondu. Si le chou fermenté cru possède d'excellentes qualités nutritives, les préparations trop grasses et surcuites sont désormais rejetées en raison de leur lourdeur digestive excessive.
+        </p>
+        <p class="essay-p">
+          Le troisième mets qui divise profondément les esprits est la soupe froide sucrée aux fruits rouges servie en été. Cette soupe acidulée et épaissie avec de la fécule possède une consistance visqueuse que la plupart des palais contemporains jugent déroutante. On préfère largement savourer des baies fraîches plutôt que ces mélanges sucrés d'un autre siècle.
+        </p>
+        <p class="essay-p">
+          Le quatrième rejet vise les sauces épaisses à base de farine torréfiée. Les Berlinois rejettent les sauces où la matière grasse finit par <span class="gloss-word" data-term-id="t14">prendre le dessus</span> sur les herbes fraîches et les saveurs naturelles. On recherche aujourd'hui la légèreté, la cuisson juste et l'authenticité des saveurs du terroir.
+        </p>
+        <p class="essay-p">
+          Enfin, le cinquième point de discorde concerne la nourriture fade et dénuée d'assaisonnement. Dans une métropole où chaque rue abrite des épiceries du monde entier, les plats insipides sont immédiatement boudés. Nous aimons qu'un plat possède <span class="gloss-word" data-term-id="t10">un goût prononcé</span> et sincère, qu'il s'agisse d'un légume de saison ou d'une viande mijotée aux herbes aromatiques.
+        </p>
+
+        <h3 class="essay-subhead">Les habitudes de table et la convivialité : Pourquoi nous mangeons ainsi</h3>
+        <p class="essay-p">
+          Pour comprendre cette dualité entre plats chéris et mets délaissés, il convient d'analyser la philosophie de vie berlinoise. Notre façon de manger reflète d'abord une grande recherche d'informalité. Les habitants aiment se rassembler dehors dès les premiers beaux jours. Les jardins de la bière et les parcs accueillent des tablées joyeuses où chacun apporte du pain artisanal, une terrine végétale ou une salade maison.
+        </p>
+        <p class="essay-p">
+          Ce marché couvert attire les gourmands qui <span class="cloze-target-source">y</span> trouvent d'excellents produits. Chaque quartier possède <span class="gloss-word" data-term-id="t08">un étal de marché</span> hebdomadaire où les maraîchers régionaux proposent leurs récoltes matinales. Les consommateurs échangent directement avec les producteurs pour connaître l'origine exacte de leurs achats. Voici le principe sur <span class="cloze-target-source">lequel</span> repose notre philosophie culinaire : manger simple, frais, de saison, et privilégier le partage fraternel plutôt que le luxe ostentatoire.
+        </p>
+        <p class="essay-p">
+          <span class="gloss-word" data-term-id="t07">La convivialité</span> locale s'accompagne d'une belle créativité. Les chefs s'amusent à <span class="gloss-word" data-term-id="t17">remettre au goût du jour</span> d'anciennes recettes régionales en réduisant les graisses et en apportant <span class="gloss-word" data-term-id="t06">une saveur acidulée</span> grâce au vinaigre de cidre ou aux herbes sauvages. On cherche constamment à <span class="gloss-word" data-term-id="t21">faire la part belle à</span> des ingrédients sains qui nourrissent le corps sans l'alourdir. C'est une cuisine qui invite à savourer l'instant présent autour d'un plat généreux et tout simplement <span class="gloss-word" data-term-id="t13">à s'en lécher les doigts</span>.
+        </p>
+
+        <h3 class="essay-subhead">Conclusion : Une gastronomie vivante et sans prétention</h3>
+        <p class="essay-p">
+          En conclusion, lorsqu'un voyageur me demande ce que l'on mange à Berlin, je lui réponds toujours que notre cuisine est à l'image de notre ville : ouverte, pragmatique, chaleureuse et sans prétention superflue. Nous avons su abandonner les préparations trop lourdes du passé pour préserver le meilleur : le pain d'exception au levain, les légumes de saison savoureux comme l'asperge blanche de Beelitz, et des en-cas urbains métissés comme le Döner et la Currywurst. Manger chez nous, c'est participer à un art de vivre où la simplicité des produits rime avec la générosité humaine. Je vous remercie chaleureusement pour votre écoute et je serai ravi de répondre à toutes vos questions.
+        </p>
+
+      </article>
+    </section>
+
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- JAVASCRIPT LOGIC                                     -->
+  <!-- ==================================================== -->
+  <script>
+    /* --------------------------------------------------
+       1. DATA STRUCTURES (B1 Level)
+       -------------------------------------------------- */
+
+    // 10 Flashcard Items (Monolingual French, B1 level)
+    const VOCAB_DATA = [
+      {
+        id: "t01",
+        term: "le levain",
+        def: "Une pâte fermentée naturelle composée de farine et d'eau qui fait lever le pain et lui confère une agréable note acidulée.",
+        ex: "Ce maître boulanger pétrit son pain au levain pour obtenir une mie aérée et digeste."
+      },
+      {
+        id: "t02",
+        term: "l'asperge blanche",
+        def: "Une tige légumière printanière qui pousse sous la terre, particulièrement appréciée pour sa texture tendre et sa saveur délicate.",
+        ex: "Au printemps en Allemagne, l'asperge blanche se déguste traditionnellement avec une sauce hollandaise."
+      },
+      {
+        id: "t03",
+        term: "le métissage culinaire",
+        def: "L'alliance harmonieuse d'ingrédients, de techniques et d'habitudes gastronomiques issues de cultures diverses.",
+        ex: "Le succès du Döner berlinois illustre parfaitement la richesse du métissage culinaire germano-turc."
+      },
+      {
+        id: "t04",
+        term: "le saindoux",
+        def: "Une matière grasse blanche obtenue par la fonte du tissu adipeux de porc, couramment employée autrefois pour la friture et la conservation.",
+        ex: "Les grands-mères préparaient souvent la choucroute avec une cuillerée de saindoux pour lier le chou."
+      },
+      {
+        id: "t05",
+        term: "le jarret de porc",
+        def: "Le morceau de viande osseux et gélatineux entourant le tibia du porc, cuit longuement à l'eau ou rôti au four.",
+        ex: "L'Eisbein traditionnel berlinois est préparé avec un jarret de porc bouilli dans une saumure aromatique."
+      },
+      {
+        id: "t06",
+        term: "une saveur acidulée",
+        def: "Une sensation gustative vive et légèrement acide qui apporte de la fraîcheur et du relief en bouche.",
+        ex: "L'ajout d'une vinaigrette aux herbes procure une saveur acidulée bienvenue qui équilibre ce plat riche."
+      },
+      {
+        id: "t07",
+        term: "la convivialité",
+        def: "La qualité chaleureuse et spontanée des relations humaines créées lors du partage d'une table ou d'un moment festif.",
+        ex: "Les grandes tablées des brasseries et des jardins de la bière favorisent une grande convivialité entre voisins."
+      },
+      {
+        id: "t08",
+        term: "un étal de marché",
+        def: "Une table installée en plein air sur laquelle un commerçant ou un paysan présente ses denrées fraîches aux chalands.",
+        ex: "Chaque samedi matin, les maraîchers locaux dressent un étal de marché couvert de légumes fraîchement récoltés."
+      },
+      {
+        id: "t09",
+        term: "le croustillant",
+        def: "La propriété croustillante et cassante d'un aliment qui craque agréablement sous les dents à la première bouchée.",
+        ex: "La croûte épaisse de cette miche de seigle possède un croustillant exceptionnel."
+      },
+      {
+        id: "t10",
+        term: "un goût prononcé",
+        def: "Une intensité aromatique affirmée et remarquable qui marque nettement le palais sans fadeur.",
+        ex: "Les fromages d'alpage affinés développent un goût prononcé que les amateurs de terroir recherchent."
+      }
+    ];
+
+    // Total 22 glossed terms in text
+    // Note: For words appearing in VOCAB_DATA, the example sentence in GLOSS_DICT is DIFFERENT.
+    const GLOSS_DICT = {
+      t01: {
+        term: "le levain",
+        def: "Une culture vivante de bactéries et de levures naturelles servant à faire lever la pâte à pain.",
+        ex: "En laissant reposer la pâte avec du levain pendant douze heures, les arômes se développent lentement."
+      },
+      t02: {
+        term: "l'asperge blanche",
+        def: "Un légume cultivé à l'abri de la lumière solaire dont les pousses restent d'un blanc nacré très fin.",
+        ex: "Durant les mois de mai et juin, les restaurants affichent fièrement des menus entièrement dédiés à l'asperge blanche."
+      },
+      t03: {
+        term: "le métissage culinaire",
+        def: "L'enrichissement réciproque de cuisines de différents pays qui donne naissance à de nouvelles recettes régionales.",
+        ex: "Cette nouvelle cantine de quartier pratique un métissage culinaire créatif entre recettes asiatiques et produits locaux."
+      },
+      t04: {
+        term: "le saindoux",
+        def: "La graisse animale fondue autrefois incontournable dans les foyers ruraux pour cuire les légumes d'hiver.",
+        ex: "Pour alléger son menu, le chef remplace désormais le saindoux par de l'huile de colza vierge."
+      },
+      t05: {
+        term: "le jarret de porc",
+        def: "La partie inférieure de la cuisse de porc très riche en collagène et en os.",
+        ex: "Certains brasseurs préfèrent faire rôtir le jarret de porc pour rendre sa couenne très croquante."
+      },
+      t06: {
+        term: "une saveur acidulée",
+        def: "Un profil gustatif frais et piquant qui réveille les papilles sans excès d'amertume.",
+        ex: "Ces pommes de verger offrent une saveur acidulée parfaite pour garnir les gâteaux d'automne."
+      },
+      t07: {
+        term: "la convivialité",
+        def: "Le plaisir partagé d'être ensemble dans une atmosphère bienveillante et détendue autour d'un repas.",
+        ex: "La fête des voisins a permis de recréer une belle convivialité au cœur de notre résidence."
+      },
+      t08: {
+        term: "un étal de marché",
+        def: "L'espace d'exposition d'un marchand forain présentant ses produits alimentaires.",
+        ex: "Nous nous sommes arrêtés devant un étal de marché proposant des miels et des confitures artisanales."
+      },
+      t09: {
+        term: "le croustillant",
+        def: "La sensation tactile et sonore d'une texture bien dorée qui cède sous la pression dentaire.",
+        ex: "Pour conserver tout le croustillant de la pâte feuilletée, il convient de la servir juste sortie du four."
+      },
+      t10: {
+        term: "un goût prononcé",
+        def: "Une présence en bouche puissante, épicée ou aromatique qui ne laisse personne indifférent.",
+        ex: "Cette moutarde traditionnelle au raifort dégage un goût prononcé qui relève immédiatement la viande froide."
+      },
+      t11: {
+        term: "la moue",
+        def: "Une contraction dédaigneuse des lèvres manifestant l'hésitation, le dégoût ou le refus poli.",
+        ex: "L'enfant fit une moue d'indifférence devant son assiette de chou-fleur cuit à l'eau."
+      },
+      t12: {
+        term: "un en-cas",
+        def: "Une petite collation rapide consommée pour apaiser une faim soudaine entre les repas principaux.",
+        ex: "Il emporte toujours quelques amandes et une pomme dans son sac comme en-cas de secours."
+      },
+      t13: {
+        term: "à s'en lécher les doigts",
+        def: "Une expression imagée désignant une nourriture exquise, réjouissante et délicieusement gourmande.",
+        ex: "Cette sauce aux morilles et à la crème est tellement bonne qu'elle est à s'en lécher les doigts."
+      },
+      t14: {
+        term: "prendre le dessus",
+        def: "Prendre un ascendant dominant sur d'autres éléments au détriment de l'harmonie globale.",
+        ex: "Il ne faut pas abuser du piment afin qu'il ne prenne pas le dessus sur la délicatesse du poisson."
+      },
+      t15: {
+        term: "au premier abord",
+        def: "Selon l'impression immédiate et spontanée, avant une analyse ou une expérience plus approfondie.",
+        ex: "Au premier abord, cette ville semble industrielle, mais on y découvre vite des parcs magnifiques."
+      },
+      t16: {
+        term: "sur le pouce",
+        def: "Pris très rapidement, debout ou en marchant, sans s'attabler formellement.",
+        ex: "Pressés par l'horaire de leur train, ils ont simplement déjeuné d'un sandwich sur le pouce."
+      },
+      t17: {
+        term: "remettre au goût du jour",
+        def: "Moderniser une recette traditionnelle ou un usage démodé pour le rendre séduisant aujourd'hui.",
+        ex: "Ce jeune cuisinier tente de remettre au goût du jour d'anciens légumes oubliés comme le panais."
+      },
+      t18: {
+        term: "un péché mignon",
+        def: "Une faiblesse agréable et sans gravité envers une gourmandise particulière.",
+        ex: "Le chocolat noir aux noisettes grillées est le péché mignon dont elle ne peut se passer le soir."
+      },
+      t19: {
+        term: "mettre l'eau à la bouche",
+        def: "Stimuler irrésistiblement l'appétit et le désir gustatif par une belle vue ou un parfum envoûtant.",
+        ex: "La délicieuse odeur de brioche chaude qui s'échappait du fournil mettait l'eau à la bouche des passants."
+      },
+      t20: {
+        term: "avoir le cœur bien accroché",
+        def: "Être capable d'affronter sans haut-le-cœur ni dégoût des odeurs fortes ou des textures insolites.",
+        ex: "Pour déguster ces tripes fumantes au petit matin, il vaut mieux avoir le cœur bien accroché."
+      },
+      t21: {
+        term: "faire la part belle à",
+        def: "Réserver une place d'honneur prépondérante et avantageuse à un ingrédient ou à un thème.",
+        ex: "La nouvelle carte de ce bistrot fait la part belle aux herbes fraîches et aux légumes bio."
+      },
+      t22: {
+        term: "sans tambour ni trompette",
+        def: "En toute discrétion et simplicité naturelle, sans chercher à impressionner par un luxe bruyant.",
+        ex: "Ils se réunissent chaque dimanche sans tambour ni trompette pour partager un goûter convivial."
+      }
+    };
+
+    // 10 Grammar Cloze items drawn directly from sentences in the presentation text (B1 Level)
+    const GRAMMAR_DATA = [
+      {
+        id: "g01",
+        before: "Si vous veniez visiter ma ville, je vous ",
+        answer: "conseillerais",
+        after: " de goûter à ses créations populaires sans préjugé."
+      },
+      {
+        id: "g02",
+        before: "C'est une spécialité savoureuse ",
+        answer: "dont",
+        after: " les habitants sont très fiers parce qu'elle incarne l'esprit débrouillard et populaire de la ville."
+      },
+      {
+        id: "g03",
+        before: "Les Berlinois aiment le pain noir et ils ",
+        answer: "en",
+        after: " mangent à chaque repas, notamment lors du petit-déjeuner dominical où l'on s'attarde autour de fromages affinés, d'œufs mollets et de charcuteries."
+      },
+      {
+        id: "g04",
+        before: "Bien que cette recette ",
+        answer: "paraisse",
+        after: " simple au premier abord, préparer ces tiges délicates avec des pommes de terre fondantes et une sauce hollandaise onctueuse suffit à mettre l'eau à la bouche de tout un quartier."
+      },
+      {
+        id: "g05",
+        before: "C'est en ",
+        answer: "discutant",
+        after: " avec les producteurs locaux que l'on comprend à quel point cette fraîcheur printanière rassemble toutes les générations."
+      },
+      {
+        id: "g06",
+        before: "La cuisine berlinoise s'est enrichie ",
+        answer: "grâce",
+        after: " à l'arrivée de communautés du monde entier, et ce plat est devenu un emblème de convivialité accessible à tous."
+      },
+      {
+        id: "g07",
+        before: "Les jeunes générations ne veulent ",
+        answer: "plus",
+        after: " consommer ces viandes bouillies trop grasses qui ne correspondent plus du tout à nos modes de vie sédentaires."
+      },
+      {
+        id: "g08",
+        before: "Ce marché couvert attire les gourmands qui ",
+        answer: "y",
+        after: " trouvent d'excellents produits."
+      },
+      {
+        id: "g09",
+        before: "Voici le principe sur ",
+        answer: "lequel",
+        after: " repose notre philosophie culinaire : manger simple, frais, de saison, et privilégier le partage fraternel plutôt que le luxe ostentatoire."
+      },
+      {
+        id: "g10",
+        before: "Au fil des décennies, cette spécialité s'est ",
+        answer: "imposée",
+        after: " comme un véritable emblème urbain."
+      }
+    ];
+
+    /* --------------------------------------------------
+       UTILITY: Accent & Case Normalization
+       -------------------------------------------------- */
+    function normalizeStr(str) {
+      return (str || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    /* --------------------------------------------------
+       2. RENDER VOCABULARY SECTION (Accordion Flashcards)
+       -------------------------------------------------- */
+    function renderVocabCards() {
+      const container = document.getElementById("vocab-container");
+      container.innerHTML = "";
+      const shuffled = shuffleArray(VOCAB_DATA);
+
+      shuffled.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "vocab-card";
+        card.dataset.id = item.id;
+
+        const header = document.createElement("div");
+        header.className = "vocab-header";
+        header.innerHTML = `
+          <span class="vocab-term">${item.term}</span>
+          <span class="vocab-indicator">&#9656;</span>
+        `;
+
+        const body = document.createElement("div");
+        body.className = "vocab-body";
+        body.innerHTML = `
+          <div class="vocab-field">
+            <span class="vocab-label">Définition :</span>
+            <div class="vocab-text">${item.def}</div>
+          </div>
+          <div class="vocab-field">
+            <span class="vocab-label">Exemple :</span>
+            <div class="vocab-text vocab-example">${item.ex}</div>
+          </div>
+        `;
+
+        card.addEventListener("click", () => {
+          // If the user selected text inside the card, don't toggle/close it
+          const selectedText = window.getSelection().toString().trim();
+          if (selectedText.length > 0) return;
+
+          const wasOpen = card.classList.contains("is-open");
+          // Close all cards first (accordion behavior)
+          document.querySelectorAll(".vocab-card").forEach(c => c.classList.remove("is-open"));
+          if (!wasOpen) {
+            card.classList.add("is-open");
+          }
+        });
+
+        card.appendChild(header);
+        card.appendChild(body);
+        container.appendChild(card);
+      });
+    }
+
+    /* --------------------------------------------------
+       3. RENDER GRAMMAR SECTION (Cloze Validation & Auto-Focus)
+       -------------------------------------------------- */
+    function renderGrammarExercises() {
+      const container = document.getElementById("grammar-container");
+      container.innerHTML = "";
+      const shuffled = shuffleArray(GRAMMAR_DATA);
+
+      shuffled.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "grammar-item";
+        div.dataset.id = item.id;
+
+        const inputWidth = Math.max(item.answer.length + 3, 7);
+
+        div.innerHTML = `
+          <span>${item.before}</span><input 
+            type="text" 
+            class="cloze-input" 
+            data-answer="${item.answer}" 
+            data-index="${index}" 
+            size="${inputWidth}" 
+            autocomplete="off" 
+            autocorrect="off" 
+            autocapitalize="off" 
+            spellcheck="false"
+          ><span>${item.after}</span>
+        `;
+
+        const input = div.querySelector(".cloze-input");
+
+        // Keydown handling for '?' hint functionality
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "?" || (e.shiftKey && e.code === "Slash")) {
+            e.preventDefault();
+            handleQuestionMarkHint(input);
+          }
+        });
+
+        // Input handling for real-time validation
+        input.addEventListener("input", () => {
+          checkClozeInput(input);
+        });
+
+        container.appendChild(div);
+      });
+    }
+
+    function checkClozeInput(input) {
+      if (!input.isConnected) return;
+
+      const expected = input.dataset.answer;
+      const current = input.value;
+
+      if (normalizeStr(current) === normalizeStr(expected)) {
+        // Find next remaining input before replacing this one
+        const allInputs = Array.from(document.querySelectorAll(".cloze-input"));
+        const currentIndex = allInputs.indexOf(input);
+        const nextInput = allInputs[currentIndex + 1];
+
+        // Create the bold green inline span
+        const span = document.createElement("span");
+        span.className = "cloze-correct-text";
+        span.textContent = expected;
+
+        // Replace input with the span
+        input.replaceWith(span);
+
+        // Auto-advance cursor to next input immediately
+        if (nextInput) {
+          nextInput.focus();
+        }
+      }
+    }
+
+    function handleQuestionMarkHint(input) {
+      if (!input.isConnected) return;
+
+      const expected = input.dataset.answer;
+      const current = input.value;
+
+      // Determine matching prefix length
+      let matchLen = 0;
+      while (
+        matchLen < current.length &&
+        matchLen < expected.length &&
+        normalizeStr(current[matchLen]) === normalizeStr(expected[matchLen])
+      ) {
+        matchLen++;
+      }
+
+      // If matching prefix exists and is shorter than target, advance by 1 character
+      const nextLen = matchLen + 1;
+      input.value = expected.slice(0, nextLen);
+
+      // Trigger verification immediately
+      checkClozeInput(input);
+    }
+
+    /* --------------------------------------------------
+       4. INTERACTIVE GLOSSING POPOVERS
+       Anchored floating popovers, monolingual French, selection allowed
+       -------------------------------------------------- */
+    let currentActiveWord = null;
+    let currentPopover = null;
+
+    function closeCurrentGloss() {
+      if (currentPopover && currentPopover.parentNode) {
+        currentPopover.parentNode.removeChild(currentPopover);
+      }
+      if (currentActiveWord) {
+        currentActiveWord.classList.remove("is-active");
+      }
+      currentPopover = null;
+      currentActiveWord = null;
+    }
+
+    function setupInteractiveGlossing() {
+      const glossWords = document.querySelectorAll(".gloss-word");
+
+      glossWords.forEach(word => {
+        const toggleGloss = (e) => {
+          e.stopPropagation();
+          const termId = word.dataset.termId;
+          const termData = GLOSS_DICT[termId];
+          if (!termData) return;
+
+          // If clicking the currently active word, toggle it closed
+          if (currentActiveWord === word) {
+            closeCurrentGloss();
+            return;
+          }
+
+          // Close any other open popover
+          closeCurrentGloss();
+
+          // Open new floating popover
+          word.classList.add("is-active");
+          currentActiveWord = word;
+
+          const popover = document.createElement("div");
+          popover.className = "gloss-popover";
+          popover.innerHTML = `
+            <div class="popover-term">${termData.term}</div>
+            <div class="popover-label">Définition :</div>
+            <div class="popover-def">${termData.def}</div>
+            <div class="popover-label">Exemple :</div>
+            <div class="popover-ex">${termData.ex}</div>
+          `;
+
+          // Allow text selection inside without closing popover
+          popover.addEventListener("click", (evt) => {
+            evt.stopPropagation();
+          });
+
+          word.appendChild(popover);
+          currentPopover = popover;
+
+          // Ensure popover does not overflow window edges
+          adjustPopoverPosition(popover);
+        };
+
+        word.addEventListener("click", toggleGloss);
+      });
+
+      // Clicking anywhere outside closes the active gloss popover
+      document.addEventListener("click", () => {
+        closeCurrentGloss();
+      });
+
+      // Escape key closes popover
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeCurrentGloss();
+        }
+      });
+    }
+
+    function adjustPopoverPosition(popover) {
+      const rect = popover.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+
+      if (rect.right > viewportWidth - 15) {
+        const overflow = rect.right - (viewportWidth - 15);
+        popover.style.left = `-${overflow}px`;
+      }
+    }
+
+    /* --------------------------------------------------
+       INITIALIZATION
+       -------------------------------------------------- */
+    document.addEventListener("DOMContentLoaded", () => {
+      renderVocabCards();
+      renderGrammarExercises();
+      setupInteractiveGlossing();
+    });
+  </script>
+</body>
+</html>
