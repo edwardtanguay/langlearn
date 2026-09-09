@@ -1,0 +1,46 @@
+# Correct and teach
+
+You will examine a text in French, then create an HTML file with CSS/JS (all in one file) that shows the old version, the corrected version, and then exercises to teach the person who wrote it what their mistakes are so they can learn from them.
+
+## the text
+
+Je suis dans mon cours maintenant et les autres gens ne parlent pas autant que moi. Mais le professeur Alexandre est très sympathique avec tout le monde. Maintenant il recherche le mot phocéenne parce qu'un étudiant a demandé ce que le mot veut dire. Et maintenant il essaie d'explique le mot prisée, ou je veux dire qu'il pronouncer pour les autres étudiants. Et maintenant il demande si tout les personnes dans le classe comprends la vocabulaire. J'ai posé quelques questions de pronounciation. La pluspart de mes questions étaient sur les liaison.
+
+## technical infos about the file
+
+- save it with this file name: dev/correct-and-teach/correct-and-teach-001.html
+- always increment the number, e.g. 001, 002, etc.
+- all CSS and JavaScript are in one file
+
+## contents of file
+
+- show original text
+- show corrected text
+- create interactive exercises that will teach the person who wrote it what their mistakes are so they do not commit them again
+
+## structure of the file
+
+- sections
+	- show original text in a box
+	- show corrected text in a box
+	- show interactive exercises in a box
+	- list the three most difficult words, give them definition (in the target language, e.g. French), and then list three examples of each word being used
+- don't include any extra section between the texts and the exercises, just those listed above
+
+## requirements
+
+- all exercises must be interactive
+- exercises must be based on the mistakes in the text
+- exercises must be in French
+- exercises must be suitable for a B1 learner
+- exercises must be fun and engaging
+- exercises must provide immediate feedback
+- exercises must provide hints if the user needs help
+- exercises must be self-contained (no external dependencies)
+
+## presentation
+
+- use dark mode
+- use very simple, easy-to-read font
+- no special layout, no animations, no "flashy" stuff
+- just the content, clear and simple
