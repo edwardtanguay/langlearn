@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Correction & Apprentissage #001</title>
+  <style>
+    :root {
+      --bg-page: #141416;
+      --bg-box: #1e1e23;
+      --bg-inner: #282830;
+      --bg-hover: #32323c;
+      --border-color: #383842;
+      --text-main: #f0f0f3;
+      --text-muted: #a0a0ab;
+      --accent: #4f8cff;
+      --accent-bg: rgba(79, 140, 255, 0.15);
+      --success: #34d399;
+      --success-bg: rgba(52, 211, 153, 0.15);
+      --error: #f87171;
+      --error-bg: rgba(248, 113, 113, 0.15);
+      --hint: #fbbf24;
+      --hint-bg: rgba(251, 191, 36, 0.12);
+      --badge-err-bg: #592424;
+      --badge-err-text: #fca5a5;
+      --badge-cor-bg: #1a4731;
+      --badge-cor-text: #86efac;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 32px 16px 80px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .section-box {
+      background-color: var(--bg-box);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .badge-original {
+      background-color: var(--badge-err-bg);
+      color: var(--badge-err-text);
+    }
+
+    .badge-corrected {
+      background-color: var(--badge-cor-bg);
+      color: var(--badge-cor-text);
+    }
+
+    .badge-exercises {
+      background-color: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    .text-content {
+      font-size: 16px;
+      line-height: 1.8;
+      background: var(--bg-inner);
+      padding: 16px 20px;
+      border-radius: 6px;
+      border-left: 4px solid var(--border-color);
+    }
+
+    .original-text {
+      border-left-color: var(--error);
+    }
+
+    .corrected-text {
+      border-left-color: var(--success);
+    }
+
+    .highlight-err {
+      background: rgba(248, 113, 113, 0.25);
+      color: #fca5a5;
+      text-decoration: line-through;
+      padding: 0 4px;
+      border-radius: 3px;
+    }
+
+    .highlight-cor {
+      background: rgba(52, 211, 153, 0.22);
+      color: #86efac;
+      font-weight: 600;
+      padding: 0 4px;
+      border-radius: 3px;
+    }
+
+    /* Explanation list */
+    .recap-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .recap-item {
+      background: var(--bg-inner);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 14.5px;
+    }
+
+    .recap-item strong {
+      color: var(--text-main);
+    }
+
+    .rule-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-right: 6px;
+      background: var(--bg-hover);
+      color: var(--text-muted);
+    }
+
+    /* Exercises */
+    .exercise-card {
+      background: var(--bg-inner);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .exercise-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .exercise-number {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .exercise-instruction {
+      font-size: 15px;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .q-block {
+      background: var(--bg-box);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .q-text {
+      font-size: 15px;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+
+    .options-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    button.btn-option {
+      background: var(--bg-inner);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    button.btn-option:hover:not(:disabled) {
+      background: var(--bg-hover);
+      border-color: var(--text-muted);
+    }
+
+    button.btn-option.selected-correct {
+      background: var(--success-bg) !important;
+      border-color: var(--success) !important;
+      color: var(--success) !important;
+      font-weight: 600;
+    }
+
+    button.btn-option.selected-wrong {
+      background: var(--error-bg) !important;
+      border-color: var(--error) !important;
+      color: var(--error) !important;
+      text-decoration: line-through;
+    }
+
+    button.btn-option:disabled {
+      cursor: default;
+      opacity: 0.85;
+    }
+
+    .input-text-answer {
+      background: var(--bg-inner);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 15px;
+      padding: 8px 12px;
+      width: 220px;
+      max-width: 100%;
+      margin-right: 8px;
+    }
+
+    .input-text-answer:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .btn-action {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-action:hover {
+      opacity: 0.9;
+    }
+
+    .btn-hint {
+      background: transparent;
+      color: var(--hint);
+      border: 1px dashed var(--hint);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 6px;
+      display: inline-block;
+    }
+
+    .btn-hint:hover {
+      background: var(--hint-bg);
+    }
+
+    .btn-retry {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 8px;
+      margin-left: 8px;
+    }
+
+    .btn-retry:hover {
+      color: var(--text-main);
+      background: var(--bg-hover);
+    }
+
+    .hint-box {
+      display: none;
+      background: var(--hint-bg);
+      border-left: 3px solid var(--hint);
+      padding: 10px 14px;
+      border-radius: 4px;
+      margin-top: 10px;
+      font-size: 13.5px;
+      color: #fef08a;
+    }
+
+    .feedback-box {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 4px;
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .feedback-box.correct {
+      display: block;
+      background: var(--success-bg);
+      border: 1px solid var(--success);
+      color: #bbf7d0;
+    }
+
+    .feedback-box.wrong {
+      display: block;
+      background: var(--error-bg);
+      border: 1px solid var(--error);
+      color: #fecaca;
+    }
+
+    .score-banner {
+      background: var(--bg-inner);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .score-text {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .score-number {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>Correction & Apprentissage du Français</h1>
+    <p class="subtitle">Document de révision interactive &bull; Niveau B1 &bull; Fiche #001</p>
+  </header>
+
+  <!-- BOÎTE 1: TEXTE ORIGINAL -->
+  <div class="section-box">
+    <div class="section-title">
+      <span>Texte original</span>
+      <span class="badge badge-original">Version de l'étudiant</span>
+    </div>
+    <div class="text-content original-text">
+      Je suis dans mon cours maintenant et les autres gens ne parlent pas autant que moi. Mais le professeur Alexandre est très sympathique avec tout le monde. Maintenant il recherche le mot phocéenne parce qu'un étudiant a demandé ce que le mot veut dire. Et maintenant il essaie <span class="highlight-err">d'explique</span> le mot <span class="highlight-err">prisée</span>, ou je veux dire qu'il <span class="highlight-err">pronouncer</span> pour les autres étudiants. Et maintenant il demande si <span class="highlight-err">tout les personnes</span> dans <span class="highlight-err">le classe</span> <span class="highlight-err">comprends</span> <span class="highlight-err">la vocabulaire</span>. J'ai posé quelques questions de <span class="highlight-err">pronounciation</span>. <span class="highlight-err">La pluspart</span> de mes questions étaient sur <span class="highlight-err">les liaison</span>.
+    </div>
+  </div>
+
+  <!-- BOÎTE 2: TEXTE CORRIGÉ -->
+  <div class="section-box">
+    <div class="section-title">
+      <span>Texte corrigé</span>
+      <span class="badge badge-corrected">Version corrigée & expliquée</span>
+    </div>
+    <div class="text-content corrected-text">
+      Je suis dans mon cours actuellement et les autres personnes ne parlent pas autant que moi. Mais le professeur Alexandre est très sympathique avec tout le monde. En ce moment, il cherche le mot « phocéen » parce qu'un étudiant a demandé ce que le mot veut dire. Et maintenant, il essaie <span class="highlight-cor">d'expliquer</span> le mot « prisé », ou je veux dire qu'il <span class="highlight-cor">le prononce</span> pour les autres étudiants. Puis, il demande si <span class="highlight-cor">toutes les personnes</span> dans <span class="highlight-cor">la classe</span> <span class="highlight-cor">comprennent</span> <span class="highlight-cor">le vocabulaire</span>. J'ai posé quelques questions de <span class="highlight-cor">prononciation</span>. <span class="highlight-cor">La plupart</span> de mes questions étaient sur <span class="highlight-cor">les liaisons</span>.
+    </div>
+
+    <div class="recap-list">
+      <div class="recap-item">
+        <span class="rule-tag">Grammaire</span>
+        <strong>d'explique &rarr; d'expliquer</strong> : Après une préposition (<em>de</em>, <em>à</em>, <em>pour</em>, <em>sans</em>), le verbe se met toujours à <strong>l'infinitif</strong> (astuce : on peut remplacer par <em>vendre</em> ou <em>partir</em>).
+      </div>
+      <div class="recap-item">
+        <span class="rule-tag">Anglicisme / Conjugaison</span>
+        <strong>pronouncer &rarr; le prononce</strong> : Le verbe anglais <em>to pronounce</em> se traduit en français par <strong>prononcer</strong>. Au présent avec <em>il</em> : <em>il prononce</em> (et on ajoute le pronom <em>le</em> pour désigner le mot).
+      </div>
+      <div class="recap-item">
+        <span class="rule-tag">Accord de "tout"</span>
+        <strong>tout les personnes &rarr; toutes les personnes</strong> : Le nom <em>personne</em> est féminin pluriel. Le déterminant indéfini s'accorde donc : <strong>toutes</strong>.
+      </div>
+      <div class="recap-item">
+        <span class="rule-tag">Genre des noms</span>
+        <strong>le classe &rarr; la classe</strong> / <strong>la vocabulaire &rarr; le vocabulaire</strong> : <em>classe</em> est féminin (<em>une classe</em>) ; <em>vocabulaire</em> est masculin (<em>le vocabulaire</em>, comme la plupart des mots en <em>-aire</em> : dictionnaire, horaire, salaire).
+      </div>
+      <div class="recap-item">
+        <span class="rule-tag">Accord sujet-verbe</span>
+        <strong>toutes les personnes [...] comprends &rarr; comprennent</strong> : Le sujet est <em>toutes les personnes</em> (3e personne du pluriel = <em>elles</em>). La terminaison du verbe au présent est <strong>-ent</strong>.
+      </div>
+      <div class="recap-item">
+        <span class="rule-tag">Orthographe</span>
+        <strong>pronounciation &rarr; prononciation</strong> : En français, il n'y a pas de lettre <strong>u</strong> après le premier <strong>o</strong> (différent de l'anglais <em>pronunciation</em>).
+      </div>
+      <div class="recap-item">
+        <span class="rule-tag">Orthographe</span>
+        <strong>la pluspart &rarr; la plupart</strong> : <em>La plupart</em> s'écrit toujours sans « s ».
+      </div>
+      <div class="recap-item">
+        <span class="rule-tag">Nombre / Pluriel</span>
+        <strong>les liaison &rarr; les liaisons</strong> : Après l'article pluriel <em>les</em>, le nom prend la marque du pluriel (<strong>-s</strong>).
+      </div>
+    </div>
+  </div>
+
+  <!-- BOÎTE 3: EXERCICES INTERACTIFS -->
+  <div class="section-box">
+    <div class="section-title">
+      <span>Exercices d'entraînement interactifs</span>
+      <span class="badge badge-exercises">Pratique ciblée</span>
+    </div>
+
+    <!-- Tableau de bord score -->
+    <div class="score-banner">
+      <div class="score-text">Votre progression : <span id="score-val" class="score-number">0</span> / 6 exercices réussis</div>
+      <div style="font-size: 13px; color: var(--text-muted);">Répondez aux questions et utilisez les indices si nécessaire !</div>
+    </div>
+
+    <!-- EXERCICE 1: Genre des noms -->
+    <div class="exercise-card" id="ex-1">
+      <div class="exercise-header">
+        <div class="exercise-number">Exercice 1 &bull; Le genre des noms</div>
+      </div>
+      <p class="exercise-instruction">Choisissez le bon article défini (<strong>le</strong> ou <strong>la</strong>) pour chaque mot :</p>
+
+      <div class="q-block" data-answered="false" data-correct="la">
+        <div class="q-text">1. Est-ce qu'on dit <strong>... classe</strong> ?</div>
+        <div class="options-group">
+          <button class="btn-option" onclick="checkChoice(this, 'le')">le</button>
+          <button class="btn-option" onclick="checkChoice(this, 'la')">la</button>
+        </div>
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Indice</button>
+        <div class="hint-box">C'est un nom féminin : on dit « une belle classe ».</div>
+        <div class="feedback-box"></div>
+      </div>
+
+      <div class="q-block" data-answered="false" data-correct="le">
+        <div class="q-text">2. Est-ce qu'on dit <strong>... vocabulaire</strong> ?</div>
+        <div class="options-group">
+          <button class="btn-option" onclick="checkChoice(this, 'le')">le</button>
+          <button class="btn-option" onclick="checkChoice(this, 'la')">la</button>
+        </div>
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Indice</button>
+        <div class="hint-box">Pensez aux mots en « -aire » : dictionnaire, salaire, horaire... Ils sont presque tous masculins !</div>
+        <div class="feedback-box"></div>
+      </div>
+    </div>
+
+    <!-- EXERCICE 2: Infinitif après préposition -->
+    <div class="exercise-card" id="ex-2">
+      <div class="exercise-header">
+        <div class="exercise-number">Exercice 2 &bull; Infinitif ou verbe conjugué ?</div>
+      </div>
+      <p class="exercise-instruction">Complétez la phrase avec la bonne forme du verbe :</p>
+
+      <div class="q-block" data-answered="false" data-correct="expliquer">
+        <div class="q-text">« Le professeur essaie d'_________ la signification du mot aux étudiants. »</div>
+        <div class="options-group">
+          <button class="btn-option" onclick="checkChoice(this, 'explique')">explique</button>
+          <button class="btn-option" onclick="checkChoice(this, 'expliquer')">expliquer</button>
+          <button class="btn-option" onclick="checkChoice(this, 'expliqué')">expliqué</button>
+        </div>
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Indice</button>
+        <div class="hint-box">Règle d'or : après une préposition comme <em>de</em> (d'), <em>à</em>, <em>pour</em>, <em>sans</em>, le verbe suivant est toujours à l'infinitif (-er). Astuce : remplacez par « vendre » (il essaie de vendre).</div>
+        <div class="feedback-box"></div>
+      </div>
+    </div>
+
+    <!-- EXERCICE 3: Tout / Toute / Tous / Toutes -->
+    <div class="exercise-card" id="ex-3">
+      <div class="exercise-header">
+        <div class="exercise-number">Exercice 3 &bull; Choisir la bonne forme de « tout »</div>
+      </div>
+      <p class="exercise-instruction">Sélectionnez la forme correcte pour accorder avec le nom <strong>« les personnes »</strong> :</p>
+
+      <div class="q-block" data-answered="false" data-correct="toutes">
+        <div class="q-text">« Il demande si _________ les personnes écoutent attentivement. »</div>
+        <div class="options-group">
+          <button class="btn-option" onclick="checkChoice(this, 'tout')">tout</button>
+          <button class="btn-option" onclick="checkChoice(this, 'tous')">tous</button>
+          <button class="btn-option" onclick="checkChoice(this, 'toute')">toute</button>
+          <button class="btn-option" onclick="checkChoice(this, 'toutes')">toutes</button>
+        </div>
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Indice</button>
+        <div class="hint-box">« Une personne » est féminin. Au pluriel, « les personnes » est donc féminin pluriel. Quel est l'accord correspondant ?</div>
+        <div class="feedback-box"></div>
+      </div>
+    </div>
+
+    <!-- EXERCICE 4: Accord du verbe avec son sujet -->
+    <div class="exercise-card" id="ex-4">
+      <div class="exercise-header">
+        <div class="exercise-number">Exercice 4 &bull; L'accord du verbe avec le sujet pluriel</div>
+      </div>
+      <p class="exercise-instruction">Trouvez la forme verbale correcte pour le verbe <em>comprendre</em> :</p>
+
+      <div class="q-block" data-answered="false" data-correct="comprennent">
+        <div class="q-text">« Toutes les personnes dans la classe _________ l'explication du professeur. »</div>
+        <div class="options-group">
+          <button class="btn-option" onclick="checkChoice(this, 'comprends')">comprends</button>
+          <button class="btn-option" onclick="checkChoice(this, 'comprend')">comprend</button>
+          <button class="btn-option" onclick="checkChoice(this, 'comprennent')">comprennent</button>
+        </div>
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Indice</button>
+        <div class="hint-box">Attention au sujet : ce n'est pas « je » ni « tu », et ce n'est pas singulier. Le sujet est « Toutes les personnes » (= <em>elles</em>). Au présent, la terminaison avec <em>ils/elles</em> se termine par -ent.</div>
+        <div class="feedback-box"></div>
+      </div>
+    </div>
+
+    <!-- EXERCICE 5: Attention aux faux amis et anglicismes ! -->
+    <div class="exercise-card" id="ex-5">
+      <div class="exercise-header">
+        <div class="exercise-number">Exercice 5 &bull; Chasse aux anglicismes & orthographe</div>
+      </div>
+      <p class="exercise-instruction">Tapez le mot français correctement orthographié (sans anglicisme) :</p>
+
+      <div class="q-block" data-answered="false" data-correct-text="prononciation">
+        <div class="q-text">1. Comment s'écrit en français le mot correspondant à l'anglais <em>"pronunciation"</em> ?</div>
+        <div style="margin-bottom: 10px;">
+          <input type="text" class="input-text-answer" placeholder="Votre réponse en minuscules..." autocomplete="off">
+          <button class="btn-action" onclick="checkTextInput(this)">Valider</button>
+        </div>
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Indice</button>
+        <div class="hint-box">Retirez le « u » au milieu ! Ça commence par « pro-non-... ».</div>
+        <div class="feedback-box"></div>
+      </div>
+
+      <div class="q-block" data-answered="false" data-correct-text="plupart">
+        <div class="q-text">2. Complétez l'expression : « La _________ de mes questions étaient faciles. »</div>
+        <div style="margin-bottom: 10px;">
+          <input type="text" class="input-text-answer" placeholder="Votre réponse..." autocomplete="off">
+          <button class="btn-action" onclick="checkTextInput(this)">Valider</button>
+        </div>
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Indice</button>
+        <div class="hint-box">Attention : ce mot ne prend JAMAIS de « s » au milieu. Ce n'est pas « pluspart », mais « plu-... ».</div>
+        <div class="feedback-box"></div>
+      </div>
+    </div>
+
+    <!-- EXERCICE 6: Défi de synthèse (Corriger la phrase) -->
+    <div class="exercise-card" id="ex-6">
+      <div class="exercise-header">
+        <div class="exercise-number">Exercice 6 &bull; Défi synthèse : La phrase 100% correcte</div>
+      </div>
+      <p class="exercise-instruction">Parmi ces trois phrases, une seule est <strong>parfaitement correcte</strong>. Laquelle ?</p>
+
+      <div class="q-block" data-answered="false" data-correct="3">
+        <div class="q-text">Quelle phrase ne contient aucune faute ?</div>
+        <div class="options-group" style="flex-direction: column; align-items: flex-start;">
+          <button class="btn-option" style="text-align: left;" onclick="checkChoice(this, '1')">
+            A. « Maintenant il demande si tout les personnes dans le classe comprends la vocabulaire. »
+          </button>
+          <button class="btn-option" style="text-align: left;" onclick="checkChoice(this, '2')">
+            B. « Maintenant il demande si toutes les personnes dans la classe comprends le vocabulaire. »
+          </button>
+          <button class="btn-option" style="text-align: left;" onclick="checkChoice(this, '3')">
+            C. « Maintenant il demande si toutes les personnes dans la classe comprennent le vocabulaire. »
+          </button>
+        </div>
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Indice</button>
+        <div class="hint-box">Vérifiez 4 points : « toutes », « la classe », « comprennent » (avec -ent), et « le vocabulaire ». Seule la proposition C réunit tous ces critères !</div>
+        <div class="feedback-box"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function toggleHint(btn) {
+    const parent = btn.closest('.q-block');
+    const hint = parent.querySelector('.hint-box');
+    if (hint.style.display === 'block') {
+      hint.style.display = 'none';
+      btn.textContent = '💡 Indice';
+    } else {
+      hint.style.display = 'block';
+      btn.textContent = 'Masquer l\'indice';
+    }
+  }
+
+  function updateGlobalScore() {
+    const cards = document.querySelectorAll('.exercise-card');
+    let totalDone = 0;
+
+    cards.forEach(card => {
+      const qBlocks = card.querySelectorAll('.q-block');
+      let allCorrectInCard = true;
+      qBlocks.forEach(q => {
+        if (q.getAttribute('data-answered') !== 'true') {
+          allCorrectInCard = false;
+        }
+      });
+      if (allCorrectInCard && qBlocks.length > 0) {
+        totalDone++;
+      }
+    });
+
+    document.getElementById('score-val').textContent = totalDone;
+  }
+
+  function checkChoice(btn, userVal) {
+    const block = btn.closest('.q-block');
+    const correctVal = block.getAttribute('data-correct');
+    const feedback = block.querySelector('.feedback-box');
+    const allButtons = block.querySelectorAll('.btn-option');
+
+    if (userVal === correctVal) {
+      allButtons.forEach(b => {
+        b.disabled = true;
+        if (b === btn) {
+          b.classList.add('selected-correct');
+        } else {
+          b.classList.remove('selected-wrong');
+        }
+      });
+      feedback.className = 'feedback-box correct';
+      feedback.innerHTML = '<strong>Bravo ! C\'est exact.</strong> ' + getExplanation(block, true);
+      block.setAttribute('data-answered', 'true');
+      updateGlobalScore();
+    } else {
+      btn.classList.add('selected-wrong');
+      feedback.className = 'feedback-box wrong';
+      feedback.innerHTML = '<strong>Pas tout à fait.</strong> ' + getExplanation(block, false);
+    }
+  }
+
+  function checkTextInput(btn) {
+    const block = btn.closest('.q-block');
+    const input = block.querySelector('.input-text-answer');
+    const target = block.getAttribute('data-correct-text').trim().toLowerCase();
+    const feedback = block.querySelector('.feedback-box');
+    const answer = input.value.trim().toLowerCase();
+
+    if (answer === target) {
+      input.disabled = true;
+      btn.disabled = true;
+      feedback.className = 'feedback-box correct';
+      feedback.innerHTML = '<strong>Excellent !</strong> Vous avez correctement écrit : <em>' + target + '</em>.';
+      block.setAttribute('data-answered', 'true');
+      updateGlobalScore();
+    } else {
+      feedback.className = 'feedback-box wrong';
+      feedback.innerHTML = '<strong>Ce n\'est pas tout à fait ça.</strong> Réessayez ! N\'hésitez pas à consulter l\'indice ci-dessus.';
+    }
+  }
+
+  function getExplanation(block, isSuccess) {
+    const correct = block.getAttribute('data-correct');
+    if (correct === 'la') {
+      return isSuccess ? '« Classe » est un nom féminin : <em>la classe</em>.' : 'Rappelez-vous : <em>classe</em> est féminin.';
+    }
+    if (correct === 'le') {
+      return isSuccess ? '« Vocabulaire » est un nom masculin : <em>le vocabulaire</em>.' : 'Attention : <em>vocabulaire</em> est un mot masculin !';
+    }
+    if (correct === 'expliquer') {
+      return isSuccess ? 'Après la préposition « d\' », on utilise l\'infinitif en -er.' : 'Après une préposition, le verbe doit être à l\'infinitif.';
+    }
+    if (correct === 'toutes') {
+      return isSuccess ? '« Personnes » est féminin pluriel, on écrit donc « toutes les personnes ».' : 'Le mot « personnes » est féminin pluriel.';
+    }
+    if (correct === 'comprennent') {
+      return isSuccess ? 'Le sujet « toutes les personnes » est à la 3e personne du pluriel (-ent).' : 'Le sujet est au pluriel (« elles »), la terminaison doit être -ent.';
+    }
+    if (correct === '3') {
+      return isSuccess ? 'La phrase C corrige le déterminant (toutes), les genres (la classe, le vocabulaire) et la conjugaison (comprennent).' : 'Regardez bien les accords : « toutes les personnes [...] comprennent le vocabulaire ».';
+    }
+    return '';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Présentation A2 : Mon Environnement de Vie (Monde 2026, Berlin, Steglitz)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-warm-paper: #fdfbf7;
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --border-focus: #4f46e5;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent-indigo: #4f46e5;
+      --accent-indigo-light: #eef2ff;
+      --accent-emerald: #059669;
+      --accent-emerald-light: #ecfdf5;
+      --accent-amber: #d97706;
+      --accent-amber-light: #fffbeb;
+      --accent-rose: #e11d48;
+      --accent-rose-light: #fff1f2;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 12px 28px -6px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.05);
+      --font-display: 'Outfit', sans-serif;
+      --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-reading: 'Source Serif 4', Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2.5rem 1.25rem 5rem;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    /* Header Section */
+    .header {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.75rem 2.25rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      position: relative;
+    }
+
+    .header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-indigo), #818cf8, var(--accent-emerald));
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-indigo-light);
+      color: var(--accent-indigo);
+      border: 1px solid rgba(79, 70, 229, 0.25);
+      padding: 0.4rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .header-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 680px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .topic-prompt {
+      background: var(--bg-warm-paper);
+      border-left: 4px solid var(--accent-indigo);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 1.2rem 1.5rem;
+      text-align: left;
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      margin: 1.75rem auto 0;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.03);
+    }
+
+    .topic-prompt strong {
+      color: var(--accent-indigo);
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 0.35rem;
+      font-family: var(--font-ui);
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .meta-item strong {
+      color: var(--text-primary);
+    }
+
+    /* Section Titles */
+    .section-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 1.35rem;
+      background: var(--accent-indigo);
+      border-radius: 3px;
+    }
+
+    .section-title.emerald::before {
+      background: var(--accent-emerald);
+    }
+
+    .section-title.amber::before {
+      background: var(--accent-amber);
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+    }
+
+    /* Study Modules */
+    .study-module {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      margin-bottom: 2.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Module Controls */
+    .flashcard-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .view-toggle-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 0.55rem 1.15rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-ui);
+    }
+
+    .view-toggle-btn:hover {
+      background: #e2e8f0;
+      border-color: var(--accent-indigo);
+      color: var(--accent-indigo);
+    }
+
+    .status-counter {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .action-btn {
+      background: var(--accent-emerald-light);
+      border: 1px solid rgba(5, 150, 105, 0.3);
+      color: var(--accent-emerald);
+      padding: 0.55rem 1.15rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-ui);
+    }
+
+    .action-btn:hover {
+      background: #d1fae5;
+      border-color: var(--accent-emerald);
+    }
+
+    .action-btn.is-active {
+      background: var(--accent-emerald);
+      color: #ffffff;
+    }
+
+    /* Carousel 3D Flip Card View */
+    .carousel-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .card-scene {
+      width: 100%;
+      max-width: 620px;
+      height: 310px;
+      perspective: 1200px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-scene.is-flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-md);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .card-front {
+      background: linear-gradient(135deg, #ffffff 0%, var(--bg-surface-elevated) 100%);
+      border-top: 4px solid var(--accent-indigo);
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #ffffff 0%, var(--bg-warm-paper) 100%);
+      border-top: 4px solid var(--accent-emerald);
+      transform: rotateY(180deg);
+    }
+
+    .card-face-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-indigo);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-back .card-face-tag {
+      color: var(--accent-emerald);
+    }
+
+    .card-prompt {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+      text-align: center;
+      margin: auto 0;
+      font-family: var(--font-display);
+    }
+
+    .card-solution {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+      font-family: var(--font-display);
+    }
+
+    .card-pos {
+      font-size: 0.85rem;
+      color: var(--accent-indigo);
+      font-weight: 600;
+      margin-bottom: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .card-context-sample {
+      font-size: 0.98rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--accent-emerald);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.1rem;
+      font-style: italic;
+    }
+
+    .card-rule-box {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--accent-indigo);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.1rem;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+
+    .card-rule-formula {
+      font-weight: 700;
+      color: var(--accent-indigo);
+      margin-bottom: 0.25rem;
+      font-family: var(--font-ui);
+    }
+
+    .card-tap-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .carousel-nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .nav-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-btn:hover {
+      background: var(--accent-indigo-light);
+      border-color: var(--accent-indigo);
+      color: var(--accent-indigo);
+      transform: translateY(-1px);
+    }
+
+    /* Grid View */
+    .grid-view {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .grid-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .grid-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .grid-card.is-known {
+      border-color: rgba(5, 150, 105, 0.4);
+      background: #f0fdf4;
+    }
+
+    .grid-card-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-indigo);
+      margin-bottom: 0.5rem;
+    }
+
+    .grid-card-term {
+      font-family: var(--font-display);
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .grid-card-def {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .grid-card-example {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+      border-left: 2px solid var(--accent-indigo);
+      padding-left: 0.65rem;
+      margin-top: auto;
+    }
+
+    /* Cloze Quiz Section */
+    .cloze-quiz-container {
+      margin-top: 1.5rem;
+    }
+
+    .cloze-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1.15rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cloze-item:hover {
+      border-color: var(--border-strong);
+    }
+
+    .cloze-item.is-correct {
+      border-color: var(--accent-emerald);
+      background: #f0fdf4;
+    }
+
+    .cloze-item.is-wrong {
+      border-color: var(--accent-rose);
+      background: #fff1f2;
+    }
+
+    .cloze-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+    }
+
+    .cloze-number {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-amber);
+    }
+
+    .cloze-status-icon {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .cloze-sentence {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text-primary);
+    }
+
+    .cloze-input {
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--bg-surface-elevated);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      min-width: 140px;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .cloze-input:focus {
+      border-color: var(--accent-indigo);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+
+    .cloze-input.correct {
+      border-color: var(--accent-emerald);
+      background: #ecfdf5;
+      color: var(--accent-emerald);
+    }
+
+    .cloze-input.wrong {
+      border-color: var(--accent-rose);
+      background: #fff1f2;
+      color: var(--accent-rose);
+    }
+
+    .cloze-feedback {
+      display: none;
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--border-subtle);
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .cloze-feedback strong {
+      color: var(--accent-emerald);
+    }
+
+    .cloze-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .quiz-submit-btn {
+      background: var(--accent-indigo);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-ui);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quiz-submit-btn:hover {
+      background: #4338ca;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .quiz-reveal-btn {
+      background: var(--bg-surface-elevated);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-strong);
+      padding: 0.75rem 1.4rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-ui);
+    }
+
+    .quiz-reveal-btn:hover {
+      background: #e2e8f0;
+      color: var(--text-primary);
+    }
+
+    .quiz-score-banner {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--accent-indigo-light);
+      border: 1px solid rgba(79, 70, 229, 0.25);
+      color: var(--accent-indigo);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    /* Presentation Speech Section */
+    .script-module {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.75rem 2.5rem;
+      margin-bottom: 3.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .speech-timing-indicator {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg-warm-paper);
+      border: 1px solid rgba(217, 119, 6, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.25rem;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.25rem;
+    }
+
+    .speech-timing-indicator strong {
+      color: var(--accent-amber);
+    }
+
+    .presentation-article {
+      font-family: var(--font-reading);
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: #1e293b;
+    }
+
+    .speech-section {
+      margin-bottom: 2.75rem;
+      padding-bottom: 2.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .speech-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-timing-cue {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent-indigo);
+      background: var(--accent-indigo-light);
+      padding: 0.3rem 0.8rem;
+      border-radius: 9999px;
+      margin-bottom: 0.9rem;
+    }
+
+    .speech-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.2rem;
+      line-height: 1.35;
+    }
+
+    .speech-section p {
+      margin-bottom: 1.25rem;
+      text-align: justify;
+    }
+
+    .speech-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .speech-section strong {
+      color: var(--accent-indigo);
+      font-weight: 600;
+    }
+
+    .points-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin: 1.4rem 0;
+      font-family: var(--font-ui);
+    }
+
+    .point-box {
+      border-radius: var(--radius-sm);
+      padding: 1.15rem;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .point-box.likes {
+      background: #f0fdf4;
+      border: 1px solid rgba(5, 150, 105, 0.25);
+    }
+
+    .point-box.likes h4 {
+      color: var(--accent-emerald);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .point-box.dislikes {
+      background: #fff1f2;
+      border: 1px solid rgba(225, 29, 72, 0.25);
+    }
+
+    .point-box.dislikes h4 {
+      color: var(--accent-rose);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .point-box ul {
+      list-style: none;
+    }
+
+    .point-box li {
+      margin-bottom: 0.45rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .point-box li:last-child {
+      margin-bottom: 0;
+    }
+
+    .point-box li::before {
+      content: "•";
+      font-weight: bold;
+    }
+
+    .point-box.likes li::before {
+      color: var(--accent-emerald);
+    }
+
+    .point-box.dislikes li::before {
+      color: var(--accent-rose);
+    }
+
+    .wishes-callout {
+      background: var(--bg-warm-paper);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 1.1rem 1.35rem;
+      margin-top: 1.25rem;
+      font-size: 1rem;
+      font-family: var(--font-ui);
+      color: var(--text-secondary);
+    }
+
+    .wishes-callout strong {
+      color: var(--accent-amber);
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .word-count-badge {
+      display: block;
+      text-align: center;
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--border-subtle);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 0.75rem 3rem;
+      }
+      .header {
+        padding: 1.75rem 1.25rem;
+      }
+      h1 {
+        font-size: 1.75rem;
+      }
+      .study-module,
+      .script-module {
+        padding: 1.5rem 1.15rem;
+      }
+      .card-scene {
+        height: 340px;
+      }
+      .points-grid {
+        grid-template-columns: 1fr;
+      }
+      .presentation-article {
+        font-size: 1.06rem;
+      }
+      .speech-section p {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="badge-pill">DELF A2 • Production Orale • Présentation 001</div>
+      <h1>Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz</h1>
+      <p class="header-subtitle">Présentation structurée pour le DELF A2 • L'environnement en trois dimensions : la Terre en 2026, la métropole de Berlin et le quartier résidentiel de Steglitz.</p>
+
+      <div class="topic-prompt">
+        <strong>Sujet officiel :</strong>
+        « Parlez de votre environnement où vous habitez. Ce que vous aimez, ce que vous n’aimez pas, ce que vous aimeriez voir changer, etc. (trois environnements : le monde en 2026, Berlin, Steglitz ; pour chacun, mentionnez 5 choses que vous aimez et 5 choses que vous n'aimez pas). »
+      </div>
+
+      <div class="meta-bar">
+        <span class="meta-item">⏱️ <strong>Durée estimée :</strong> ~10 minutes (débit régulier A2)</span>
+        <span class="meta-item">📝 <strong>Longueur :</strong> ~1 130 mots</span>
+        <span class="meta-item">🎯 <strong>Niveau :</strong> A2 (Présent, Passé composé, Conditionnel de souhait, Comparatifs)</span>
+        <span class="meta-item">👥 <strong>Forme d'adresse :</strong> Vous (public formel)</span>
+      </div>
+    </header>
+
+    <!-- Vocabulary Section -->
+    <section class="study-module" id="vocab-section">
+      <div class="section-header">
+        <h2 class="section-title">Vocabulaire Clé de l'Environnement</h2>
+        <p class="section-subtitle">10 flashcards de rappel actif. Le recto présente la signification en anglais ; cliquez sur la carte pour afficher le terme français et son exemple dans le discours.</p>
+      </div>
+
+      <div class="flashcard-controls">
+        <button class="view-toggle-btn" id="vocab-view-toggle">Afficher toutes les cartes en grille</button>
+        <span class="status-counter" id="vocab-counter">Carte 1 sur 10</span>
+        <button class="action-btn" id="vocab-known-btn">
+          <span>✓</span> Marquer comme connue (<span id="vocab-known-count">0</span>/10)
+        </button>
+      </div>
+
+      <!-- Carousel View -->
+      <div class="carousel-view" id="vocab-carousel">
+        <div class="card-scene" id="vocab-scene" title="Cliquez pour retourner la carte">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-face-tag">
+                <span>Rappel Actif • Définition Anglaise</span>
+                <span>Recto</span>
+              </div>
+              <div class="card-prompt" id="vocab-front-prompt">...</div>
+              <div class="card-tap-hint">👆 Cliquez pour retourner la carte</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-face-tag">
+                <span>Terme Français &amp; Contexte</span>
+                <span>Verso</span>
+              </div>
+              <div>
+                <div class="card-solution" id="vocab-back-term">...</div>
+                <div class="card-pos" id="vocab-back-pos">...</div>
+                <div class="card-context-sample" id="vocab-back-sample">...</div>
+              </div>
+              <div class="card-tap-hint">👆 Cliquez pour revenir au recto</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-nav">
+          <button class="nav-btn" id="vocab-prev" aria-label="Carte précédente">←</button>
+          <button class="view-toggle-btn" id="vocab-flip-btn" style="padding: 0.55rem 1.4rem;">Retourner</button>
+          <button class="nav-btn" id="vocab-next" aria-label="Carte suivante">→</button>
+        </div>
+      </div>
+
+      <!-- Grid View -->
+      <div class="grid-view" id="vocab-grid"></div>
+    </section>
+
+    <!-- Grammar Concept Section -->
+    <section class="study-module" id="grammar-concept-section">
+      <div class="section-header">
+        <h2 class="section-title emerald">Fiches Pratiques de Grammaire (A2)</h2>
+        <p class="section-subtitle">10 cartes de concepts grammaticaux clés utilisés dans la présentation. Retournez chaque carte pour réviser la règle et sa formule avec un exemple authentique.</p>
+      </div>
+
+      <div class="flashcard-controls">
+        <button class="view-toggle-btn" id="grammar-view-toggle">Afficher toutes les cartes en grille</button>
+        <span class="status-counter" id="grammar-counter">Carte 1 sur 10</span>
+        <button class="action-btn" id="grammar-known-btn">
+          <span>✓</span> Marquer comme connue (<span id="grammar-known-count">0</span>/10)
+        </button>
+      </div>
+
+      <!-- Carousel View -->
+      <div class="carousel-view" id="grammar-carousel">
+        <div class="card-scene" id="grammar-scene" title="Cliquez pour retourner la carte">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-face-tag">
+                <span>Point de Grammaire • Fonction</span>
+                <span>Recto</span>
+              </div>
+              <div class="card-prompt" id="grammar-front-topic">...</div>
+              <div class="card-tap-hint">👆 Cliquez pour voir la règle et la formule</div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-face-tag">
+                <span>Règle &amp; Exemple en Contexte</span>
+                <span>Verso</span>
+              </div>
+              <div>
+                <div class="card-solution" id="grammar-back-name" style="font-size: 1.3rem; color: var(--accent-emerald);">...</div>
+                <div class="card-rule-box">
+                  <div class="card-rule-formula" id="grammar-back-formula">...</div>
+                  <div id="grammar-back-rule">...</div>
+                </div>
+                <div class="card-context-sample" id="grammar-back-example" style="margin-top: 0.65rem;">...</div>
+              </div>
+              <div class="card-tap-hint">👆 Cliquez pour revenir au recto</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-nav">
+          <button class="nav-btn" id="grammar-prev" aria-label="Carte précédente">←</button>
+          <button class="view-toggle-btn" id="grammar-flip-btn" style="padding: 0.55rem 1.4rem;">Retourner</button>
+          <button class="nav-btn" id="grammar-next" aria-label="Carte suivante">→</button>
+        </div>
+      </div>
+
+      <!-- Grid View -->
+      <div class="grid-view" id="grammar-grid"></div>
+    </section>
+
+    <!-- Cloze Quiz Section -->
+    <section class="study-module" id="cloze-section">
+      <div class="section-header">
+        <h2 class="section-title amber">Test Interactif à Trous (10 Questions)</h2>
+        <p class="section-subtitle">Complétez les phrases tirées du discours avec la forme grammaticale correcte, puis cliquez sur « Vérifier mes réponses » pour calculer votre score.</p>
+      </div>
+
+      <div class="cloze-quiz-container" id="cloze-container"></div>
+
+      <div class="cloze-actions">
+        <div class="quiz-score-banner" id="quiz-score-banner">
+          <span>🏆</span>
+          <span id="quiz-score-text">Votre résultat : 0 / 10</span>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button class="quiz-submit-btn" id="quiz-submit-btn">Vérifier mes réponses</button>
+          <button class="quiz-reveal-btn" id="quiz-reveal-btn">Afficher les solutions</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Presentation Speech Section -->
+    <main class="script-module">
+      <div class="section-header">
+        <h2 class="section-title">Texte de la Présentation Orale (10 minutes)</h2>
+        <p class="section-subtitle">Texte intégral structuré et rédigé au niveau A2, calibré pour une élocution fluide de 10 minutes (débit confortable de 110 à 115 mots par minute).</p>
+      </div>
+
+      <div class="speech-timing-indicator">
+        <span>⏱️ <strong>Rythme conseillé :</strong> Pauses claires entre les parties</span>
+        <span>🗣️ <strong>Longueur totale :</strong> 1 132 mots</span>
+        <span>📍 <strong>Progression :</strong> Du général vers le local</span>
+      </div>
+
+      <article class="presentation-article">
+        <!-- Section 0: Introduction -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[0:00 - 1:30] • Introduction générale</span>
+          <h3>Introduction : Trois cercles de vie</h3>
+          <p>
+            Bonjour à toutes et à tous. Je suis ravi d'être avec vous aujourd'hui pour vous parler d’un sujet qui nous concerne tous au quotidien : notre <strong>cadre de vie</strong>. Quand on réfléchit à l’endroit où l’on vit, on pense souvent à son appartement ou à sa maison. Pourtant, notre environnement est en réalité composé de plusieurs cercles : la planète sur laquelle nous vivons tous ensemble, la ville que nous traversons chaque jour, et enfin notre quartier de résidence immédiate.
+          </p>
+          <p>
+            Dans cette présentation d'une dizaine de minutes, je vous invite à explorer avec moi ces trois dimensions. Nous commencerons par regarder le monde global en 2026, puis nous nous intéresserons à notre capitale, Berlin, et nous terminerons par mon quartier quotidien, Steglitz. Pour chacun de ces trois espaces, je vais vous présenter en toute franchise cinq aspects que j'apprécie particulièrement, cinq difficultés ou points négatifs qui me déplaisent, et enfin les changements que j'aimerais voir se réaliser à l'avenir.
+          </p>
+        </section>
+
+        <!-- Section 1: Le Monde en 2026 -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[1:30 - 4:15] • Premier niveau d'environnement</span>
+          <h3>1. Notre Monde en 2026 : Progrès technologique et défis collectifs</h3>
+          <p>
+            Commençons par le premier niveau, le plus vaste : le monde contemporain en 2026. Vivre à notre époque représente une expérience fascinante, marquée par des transformations très rapides.
+          </p>
+
+          <div class="points-grid">
+            <div class="point-box likes">
+              <h4>👍 5 choses que j'aime dans le monde en 2026 :</h4>
+              <ul>
+                <li><strong>L'énergie verte :</strong> Le développement impressionnant des panneaux solaires et des éoliennes pour produire de l'électricité propre.</li>
+                <li><strong>Le télétravail :</strong> La possibilité de travailler à distance depuis chez soi, ce qui apporte beaucoup de liberté et de flexibilité.</li>
+                <li><strong>La connexion numérique :</strong> La facilité de communiquer en vidéo avec des amis ou de la famille à l'autre bout de la planète en un clic.</li>
+                <li><strong>Les progrès médicaux :</strong> La découverte constante de nouveaux traitements et médicaments qui soignent des maladies graves.</li>
+                <li><strong>L'apprentissage libre :</strong> L'accès universel à la culture, aux livres numériques et aux cours de langues étrangères grâce à internet.</li>
+              </ul>
+            </div>
+
+            <div class="point-box dislikes">
+              <h4>👎 5 choses que je n'aime pas dans le monde en 2026 :</h4>
+              <ul>
+                <li><strong>Le réchauffement climatique :</strong> La multiplication des canicules extrêmes en été et le manque de précipitations régulières.</li>
+                <li><strong>Les tensions internationales :</strong> Les conflits géopolitiques et le climat d'anxiété générale qui pèse sur l'avenir.</li>
+                <li><strong>La dépendance aux écrans :</strong> La perte de contact humain authentique à cause des réseaux sociaux et des smartphones omniprésents.</li>
+                <li><strong>L'augmentation des prix :</strong> La hausse importante du coût de la vie quotidienne qui complique le budget de nombreuses familles.</li>
+                <li><strong>La pollution plastique :</strong> Les trop nombreux emballages plastiques à usage unique qui continuent de polluer la nature et les océans.</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>
+            Comme vous le voyez, le monde moderne offre des opportunités extraordinaires, mais il génère aussi une charge mentale importante. D'un côté, la technologie nous simplifie la vie ; de l'autre côté, l'état écologique de la Terre reste très fragile et inquiétant.
+          </p>
+
+          <div class="wishes-callout">
+            <strong>🌱 Ce que j'aimerais voir changer dans le monde :</strong>
+            J'aimerais que les gouvernements collaborent davantage pour la paix et la protection de l'environnement, et que nous apprenions collectivement à ralentir notre rythme de consommation.
+          </div>
+        </section>
+
+        <!-- Section 2: Berlin -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[4:15 - 7:00] • Deuxième niveau d'environnement</span>
+          <h3>2. Ma Ville, Berlin : La liberté urbaine face aux défis métropolitains</h3>
+          <p>
+            Rapprochons-nous maintenant de notre échelle quotidienne pour parler de Berlin. J'habite dans cette ville depuis plusieurs années, et c'est une métropole tout à fait singulière en Europe. Elle possède une personnalité unique, faite de liberté, d'histoire et de contrastes saisissants.
+          </p>
+
+          <div class="points-grid">
+            <div class="point-box likes">
+              <h4>👍 5 choses que j'aime à Berlin :</h4>
+              <ul>
+                <li><strong>Les espaces verts immenses :</strong> Les parcs magnifiques comme le Tiergarten ou l'ancien aéroport de Tempelhof pour respirer en plein air.</li>
+                <li><strong>Les transports en commun :</strong> Le réseau très complet de métro (U-Bahn), de trains de banlieue (S-Bahn) et de bus qui circulent jour et nuit.</li>
+                <li><strong>L'ouverture d'esprit :</strong> Une atmosphère internationale, tolérante et multiculturelle où chacun peut s'exprimer librement.</li>
+                <li><strong>La pratique du vélo :</strong> Une topographie très plate qui permet de faire de longues balades à bicyclette en toute simplicité.</li>
+                <li><strong>La richesse culturelle :</strong> Une quantité incroyable de musées passionnants, de salles de concert, de théâtres et de cinémas d'art et d'essai.</li>
+              </ul>
+            </div>
+
+            <div class="point-box dislikes">
+              <h4>👎 5 choses que je n'aime pas à Berlin :</h4>
+              <ul>
+                <li><strong>L'hiver sombre et gris :</strong> Des mois d'hiver particulièrement froids où le soleil se couche très tôt et se montre très rarement.</li>
+                <li><strong>La crise du logement :</strong> La recherche d'un appartement convenable est devenue un véritable parcours du combattant, avec des loyers trop élevés.</li>
+                <li><strong>La lenteur administrative :</strong> L'extrême difficulté pour trouver un simple rendez-vous au Bürgeramt pour renouveler des papiers.</li>
+                <li><strong>Les retards et chantiers :</strong> Les travaux permanents sur les voies ferrées qui provoquent des annulations fréquentes de trains.</li>
+                <li><strong>La saleté par endroits :</strong> La présence de déchets, de graffitis dégradés et de bouteilles cassées dans certaines rues et stations.</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>
+            Berlin est une ville que l'on ne peut pas laisser indifférente. Elle offre une qualité de vie incomparable au printemps et en été grâce à ses lacs et ses terrasses, mais elle demande aussi une grande patience face aux réalités matérielles de la vie urbaine moderne.
+          </p>
+
+          <div class="wishes-callout">
+            <strong>🏛️ Ce que j'aimerais voir changer à Berlin :</strong>
+            J'aimerais que l'administration publique soit enfin totalement numérisée et accessible en ligne, et que la municipalité construise davantage de logements abordables pour les citoyens.
+          </div>
+        </section>
+
+        <!-- Section 3: Steglitz -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[7:00 - 9:00] • Troisième niveau d'environnement</span>
+          <h3>3. Mon Quartier, Steglitz : La quiétude résidentielle au sud-ouest</h3>
+          <p>
+            Enfin, zoomons sur mon environnement le plus immédiat : mon quartier de Steglitz, situé dans le sud-ouest de Berlin. C'est l'endroit où je commence et où je termine mes journées, le lieu où je fais mes courses et où je me promène le week-end.
+          </p>
+
+          <div class="points-grid">
+            <div class="point-box likes">
+              <h4>👍 5 choses que j'aime à Steglitz :</h4>
+              <ul>
+                <li><strong>Le calme résidentiel :</strong> Une tranquillité reposante le soir, avec des rues arborées et très peu de bruit de fête la nuit.</li>
+                <li><strong>Le Jardin Botanique :</strong> La proximité d'un des plus grands jardins botaniques du monde, idéal pour se ressourcer au milieu des plantes.</li>
+                <li><strong>Le shopping sur la Schloßstraße :</strong> Une grande variété de commerces, de librairies et de centres commerciaux sans devoir aller au centre-ville.</li>
+                <li><strong>L'excellente connexion ferroviaire :</strong> Le train S1 et la ligne de métro U9 qui permettent de rejoindre la Potsdamer Platz en vingt minutes.</li>
+                <li><strong>Le sentiment de sécurité :</strong> Une ambiance très familiale et rassurante, où l'on se sent serein à toute heure de la journée.</li>
+              </ul>
+            </div>
+
+            <div class="point-box dislikes">
+              <h4>👎 5 choses que je n'aime pas à Steglitz :</h4>
+              <ul>
+                <li><strong>La circulation automobile intense :</strong> Les embouteillages fréquents et le bruit des voitures sur l'Albrechtstraße et la Schloßstraße.</li>
+                <li><strong>Le manque de vie nocturne :</strong> Très peu de petits cafés alternatifs ou de restaurants ouverts tard le soir par rapport à Kreuzberg ou Neukölln.</li>
+                <li><strong>L'absence d'ascenseurs :</strong> Beaucoup de beaux immeubles anciens (Altbau) qui n'ont pas d'ascenseur, ce qui rend la montée des courses difficile.</li>
+                <li><strong>Les abords de la gare centrale :</strong> Une propreté insuffisante autour du pôle de transport de Rathaus Steglitz aux heures de pointe.</li>
+                <li><strong>Les pistes cyclables discontinues :</strong> Des voies cyclables qui s'arrêtent brusquement sur certains axes majeurs, obligeant à rouler au milieu des voitures.</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>
+            Steglitz représente pour moi un équilibre très agréable. On y trouve la sérénité d'une petite ville de banlieue tout en restant parfaitement relié à l'énergie dynamique de Berlin.
+          </p>
+
+          <div class="wishes-callout">
+            <strong>🚲 Ce que j'aimerais voir changer à Steglitz :</strong>
+            J'aimerais que la mairie aménage des pistes cyclables protégées le long de toutes les grandes artères et qu'elle transforme certaines rues commerçantes secondaires en zones piétonnes le samedi.
+          </div>
+        </section>
+
+        <!-- Section 4: Conclusion -->
+        <section class="speech-section">
+          <span class="section-timing-cue">[9:00 - 10:00] • Bilan &amp; Conclusion</span>
+          <h3>Conclusion : Trouver son équilibre au quotidien</h3>
+          <p>
+            Pour conclure cette présentation, nous pouvons constater que notre environnement de vie n'est jamais parfait à 100 %. Que ce soit à l'échelle du monde en 2026, à l'échelle d'une grande capitale comme Berlin, ou au coin de ma rue à Steglitz, il existe toujours des avantages réjouissants et des inconvénients à surmonter.
+          </p>
+          <p>
+            L'important, selon moi, est d'apprendre à apprécier les opportunités que nous avons : pouvoir profiter d'espaces verts soignés, voyager facilement grâce aux trains, et vivre en paix dans un quartier chaleureux. En même temps, nous devons rester actifs pour améliorer ce qui peut l'être, en particulier en protégeant notre nature et en favorisant des modes de déplacement plus doux.
+          </p>
+          <p>
+            Je vous remercie chaleureusement pour votre attention et votre écoute. J'espère que cette petite visite guidée de mes trois environnements vous a plu, et je suis à présent à votre entière disposition si vous avez des questions ou si vous souhaitez partager votre propre expérience de votre quartier !
+          </p>
+
+          <div class="word-count-badge">Compteur total : 1 132 mots • Rythme moyen recommandé : 110-115 mots/min (9 min 50 sec)</div>
+        </section>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 Préparation DELF A2 • Fiche 001 • Production Orale : Mon Environnement de Vie</p>
+    </footer>
+  </div>
+
+  <script>
+    // --- Data Definitions ---
+    const vocabData = [
+      {
+        prompt: "the living environment / surroundings",
+        term: "le cadre de vie",
+        pos: "nom masculin",
+        sample: "« Quand on réfléchit à l’endroit où l’on vit, on pense souvent à son cadre de vie quotidien. »"
+      },
+      {
+        prompt: "the cost of living",
+        term: "le coût de la vie",
+        pos: "nom masculin",
+        sample: "« La hausse importante du coût de la vie quotidienne complique le budget de nombreuses familles. »"
+      },
+      {
+        prompt: "green spaces / parks",
+        term: "les espaces verts",
+        pos: "nom masculin pluriel",
+        sample: "« Berlin possède des espaces verts immenses comme le Tiergarten pour respirer en plein air. »"
+      },
+      {
+        prompt: "remote working / telecommuting",
+        term: "le télétravail",
+        pos: "nom masculin",
+        sample: "« La possibilité de faire du télétravail apporte beaucoup de liberté et de flexibilité. »"
+      },
+      {
+        prompt: "public transportation",
+        term: "les transports en commun",
+        pos: "nom masculin pluriel",
+        sample: "« Le réseau très complet de transports en commun circule de jour comme de nuit. »"
+      },
+      {
+        prompt: "housing / accommodation",
+        term: "le logement",
+        pos: "nom masculin",
+        sample: "« La crise du logement et la recherche d'un appartement convenable restent un grand problème. »"
+      },
+      {
+        prompt: "administrative delays / bureaucratic slowness",
+        term: "la lenteur administrative",
+        pos: "nom féminin",
+        sample: "« La lenteur administrative pour obtenir un simple rendez-vous au Bürgeramt est pénible. »"
+      },
+      {
+        prompt: "bicycle lanes / cycle paths",
+        term: "les pistes cyclables",
+        pos: "nom féminin pluriel",
+        sample: "« J'aimerais que la ville aménage des pistes cyclables protégées et sécurisées. »"
+      },
+      {
+        prompt: "car traffic / road congestion",
+        term: "la circulation automobile",
+        pos: "nom féminin",
+        sample: "« À Steglitz, la circulation automobile intense provoque des bouchons sur les grandes artères. »"
+      },
+      {
+        prompt: "the feeling of safety / security",
+        term: "le sentiment de sécurité",
+        pos: "nom masculin",
+        sample: "« Dans mon quartier, il y a un excellent sentiment de sécurité et une ambiance familiale. »"
+      }
+    ];
+
+    const grammarConceptData = [
+      {
+        topic: "Exprimer ses goûts et préférences",
+        name: "Aimer / Préférer / Apprécier vs Détester",
+        formula: "J'aime + [nom / infinitif]  |  Je préfère...  |  Je déteste...",
+        rule: "Pour exprimer ses goûts, on utilise le verbe suivi d'un article défini (le, la, les) pour une généralité ou directement d'un verbe à l'infinitif.",
+        example: "« J'apprécie particulièrement le calme résidentiel et j'aime faire du vélo dans les parcs. »"
+      },
+      {
+        topic: "Exprimer ce qui plaît ou déplaît",
+        name: "Le verbe 'Plaire' & la tournure 'Ce qui me plaît'",
+        formula: "Ce qui me plaît / me déplaît, c'est + [nom / verbe]",
+        rule: "Le verbe 'plaire' s'accorde avec le sujet réel : 'La ville me plaît', 'Ces parcs me plaisent'. La structure 'Ce qui me plaît' met en valeur l'élément préféré.",
+        example: "« Ce qui me plaît le plus à Steglitz, c'est la proximité du Jardin Botanique. »"
+      },
+      {
+        topic: "Exprimer un souhait ou une proposition",
+        name: "Le Conditionnel de Souhait",
+        formula: "J'aimerais / Je voudrais + [verbe infinitif]",
+        rule: "Au niveau A2, le conditionnel présent s'emploie principalement avec 'aimer' ou 'vouloir' pour exprimer poliment un désir ou un changement souhaité.",
+        example: "« J'aimerais voir plus de pistes cyclables et on pourrait créer des zones piétonnes. »"
+      },
+      {
+        topic: "Comparer deux environnements",
+        name: "Le Comparatif de Supériorité et d'Infériorité",
+        formula: "Plus + [adjectif] + que  |  Moins + [adjectif] + que",
+        rule: "Permet d'évaluer deux espaces. L'adjectif s'accorde en genre et en nombre avec le premier élément comparé.",
+        example: "« Berlin est une ville plus animée que Steglitz, mais Steglitz est moins bruyant. »"
+      },
+      {
+        topic: "Situer un lieu géographique",
+        name: "Les Prépositions de Lieu (Villes & Pays)",
+        formula: "À + [ville]  |  En + [pays féminin]  |  Dans + [espace délimité]",
+        rule: "On utilise 'à' devant les villes (à Berlin), 'en' devant les pays féminins ou commençant par une voyelle (en Allemagne), et 'dans' pour un quartier ou le monde.",
+        example: "« J'habite à Berlin, en Allemagne, et plus précisément dans le quartier de Steglitz. »"
+      },
+      {
+        topic: "Expliquer la cause",
+        name: "Exprimer la Cause avec 'Parce que' et 'Car'",
+        formula: "[Conséquence] + parce que / car + [Cause (sujet + verbe)]",
+        rule: "'Parce que' répond à la question 'Pourquoi ?'. Devant une voyelle, il devient 'parce qu''. 'Car' s'emploie de préférence à l'écrit ou dans un discours soigné.",
+        example: "« J'utilise souvent mon vélo parce que le relief de la ville est très plat. »"
+      },
+      {
+        topic: "Exprimer le contraste et l'opposition",
+        name: "L'Opposition avec 'Mais' et 'Cependant'",
+        formula: "[Idée positive] + mais / cependant + [Idée contrastée]",
+        rule: "'Mais' est le connecteur d'opposition le plus fréquent. 'Cependant' et 'pourtant' apportent une nuance plus élégante et mesurée lors d'un discours.",
+        example: "« Le quartier est très agréable, cependant il y a trop de voitures sur l'avenue. »"
+      },
+      {
+        topic: "Préciser sans répéter le nom",
+        name: "Les Pronoms Relatifs 'Qui' et 'Que'",
+        formula: "[Nom] + qui + [verbe]  |  [Nom] + que + [sujet + verbe]",
+        rule: "'Qui' est le sujet du verbe qui suit (ne s'élide jamais). 'Que' est le complément d'objet direct et devient 'qu'' devant une voyelle.",
+        example: "« C'est un endroit qui est très reposant et que je visite souvent le dimanche. »"
+      },
+      {
+        topic: "Exprimer une négation précise",
+        name: "La Négation Nuancée (Ne... plus, Ne... jamais)",
+        formula: "Ne + [verbe] + plus / jamais / rien / pas",
+        rule: "'Ne... plus' indique l'arrêt d'une habitude ('no longer'). 'Ne... jamais' exprime la fréquence zéro ('never'). Ils remplacent 'pas'.",
+        example: "« À Steglitz, nous n'avons plus besoin de prendre la voiture pour faire nos courses. »"
+      },
+      {
+        topic: "Parler des projets et changements futurs",
+        name: "Le Futur Proche pour les Projets",
+        formula: "Aller (au présent) + [verbe à l'infinitif]",
+        rule: "Très utilisé à l'oral en français pour annoncer des évolutions prévues ou certaines dans un avenir proche.",
+        example: "« La municipalité va construire de nouveaux appartements dans les prochaines années. »"
+      }
+    ];
+
+    const clozeQuizData = [
+      {
+        id: 1,
+        before: "J'habite ",
+        expected: "à",
+        after: " Berlin depuis plusieurs années et j'apprécie cette métropole.",
+        hint: "Préposition de lieu devant un nom de ville (à / en / au).",
+        explanation: "Devant le nom d'une ville (Berlin, Paris, Rome), on utilise toujours la préposition « à »."
+      },
+      {
+        id: 2,
+        before: "Dans le monde de 2026, j'",
+        expected: "aimerais",
+        after: " (aimer) voir plus de solidarité entre les peuples.",
+        hint: "Conditionnel présent du verbe 'aimer' à la 1re personne du singulier.",
+        explanation: "Le conditionnel de politesse et de souhait à la 1re personne est « j'aimerais » (terminaison -ais)."
+      },
+      {
+        id: 3,
+        before: "Ce ",
+        expected: "qui",
+        after: " me plaît le plus à Steglitz, c'est le calme des rues résidentielles.",
+        hint: "Pronom relatif sujet devant le verbe 'plaît' (qui / que).",
+        explanation: "Le pronom relatif « qui » est sujet du verbe 'plaît' (contrairement à 'que' qui est COD)."
+      },
+      {
+        id: 4,
+        before: "J'utilise souvent mon vélo ",
+        expected: "parce que",
+        after: " le relief de la capitale est très plat.",
+        hint: "Conjonction de cause exprimant 'because'.",
+        explanation: "« Parce que » introduit la cause directe qui explique pourquoi on utilise le vélo."
+      },
+      {
+        id: 5,
+        before: "Berlin est une ville ",
+        expected: "plus",
+        after: " animée que les petites villes de province.",
+        hint: "Comparatif de supériorité (plus / moins / aussi).",
+        explanation: "La comparaison de supériorité se construit avec « plus + adjectif + que »."
+      },
+      {
+        id: 6,
+        before: "Grâce aux commerces locaux, nous n'avons ",
+        expected: "plus",
+        after: " besoin de prendre la voiture pour nos achats.",
+        hint: "Négation marquant la cessation ('no longer' : ne... plus).",
+        explanation: "« Ne... plus » exprime qu'une action ou nécessité passée n'existe plus aujourd'hui."
+      },
+      {
+        id: 7,
+        before: "Le Jardin Botanique est un lieu magnifique ",
+        expected: "que",
+        after: " je visite régulièrement en été.",
+        hint: "Pronom relatif COD devant le sujet 'je' (qui / que).",
+        explanation: "« Que » est le complément d'objet direct du verbe 'visite' (je visite ce lieu magnifique)."
+      },
+      {
+        id: 8,
+        before: "La municipalité ",
+        expected: "va",
+        after: " (aller) aménager de nouvelles pistes cyclables.",
+        hint: "Verbe aller au présent à la 3e personne du singulier pour former le futur proche.",
+        explanation: "Le futur proche se compose du verbe aller au présent (« elle va ») suivi de l'infinitif."
+      },
+      {
+        id: 9,
+        before: "En hiver, les journées à Berlin sont particulièrement ",
+        expected: "froides",
+        after: " (froid) et sombres.",
+        hint: "Accord de l'adjectif qualificatif 'froid' avec 'les journées' (féminin pluriel).",
+        explanation: "L'adjectif s'accorde avec le nom féminin pluriel « les journées » -> « froides »."
+      },
+      {
+        id: 10,
+        before: "S'il y avait moins de voitures, l'air ",
+        expected: "serait",
+        after: " (être) plus pur dans notre quartier.",
+        hint: "Conditionnel présent du verbe 'être' après une hypothèse à l'imparfait (Si + imparfait -> conditionnel).",
+        explanation: "La structure de l'hypothèse est : Si + imparfait ('s'il y avait') -> Conditionnel présent ('l'air serait')."
+      }
+    ];
+
+    // --- Interactive Flashcard Factory ---
+    function initFlashcardModule(config) {
+      const {
+        data,
+        prefix,
+        renderFront,
+        renderBack,
+        renderGridItem
+      } = config;
+
+      let currentIndex = 0;
+      let isFlipped = false;
+      let isGridView = false;
+      const knownSet = new Set();
+
+      // DOM Elements
+      const sceneEl = document.getElementById(`${prefix}-scene`);
+      const counterEl = document.getElementById(`${prefix}-counter`);
+      const knownCountEl = document.getElementById(`${prefix}-known-count`);
+      const knownBtn = document.getElementById(`${prefix}-known-btn`);
+      const prevBtn = document.getElementById(`${prefix}-prev`);
+      const nextBtn = document.getElementById(`${prefix}-next`);
+      const flipBtn = document.getElementById(`${prefix}-flip-btn`);
+      const toggleViewBtn = document.getElementById(`${prefix}-view-toggle`);
+      const carouselContainer = document.getElementById(`${prefix}-carousel`);
+      const gridContainer = document.getElementById(`${prefix}-grid`);
+
+      function updateCardView() {
+        if (sceneEl.classList.contains('is-flipped')) {
+          sceneEl.classList.remove('is-flipped');
+          isFlipped = false;
+        }
+
+        const item = data[currentIndex];
+        renderFront(item);
+        renderBack(item);
+
+        counterEl.textContent = `Carte ${currentIndex + 1} sur ${data.length}`;
+        
+        if (knownSet.has(currentIndex)) {
+          knownBtn.classList.add('is-active');
+          knownBtn.innerHTML = `<span>✓</span> Connue (${knownSet.size}/${data.length})`;
+        } else {
+          knownBtn.classList.remove('is-active');
+          knownBtn.innerHTML = `<span>✓</span> Marquer comme connue (${knownSet.size}/${data.length})`;
+        }
+      }
+
+      function flipCard() {
+        isFlipped = !isFlipped;
+        sceneEl.classList.toggle('is-flipped', isFlipped);
+      }
+
+      function renderGrid() {
+        gridContainer.innerHTML = '';
+        data.forEach((item, index) => {
+          const card = document.createElement('div');
+          card.className = `grid-card ${knownSet.has(index) ? 'is-known' : ''}`;
+          card.innerHTML = renderGridItem(item, index);
+          
+          card.addEventListener('click', () => {
+            // Toggle known status on grid click
+            if (knownSet.has(index)) {
+              knownSet.delete(index);
+              card.classList.remove('is-known');
+            } else {
+              knownSet.add(index);
+              card.classList.add('is-known');
+            }
+            knownCountEl.textContent = knownSet.size;
+            updateCardView();
+          });
+
+          gridContainer.appendChild(card);
+        });
+      }
+
+      // Event listeners
+      sceneEl.addEventListener('click', flipCard);
+      flipBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        flipCard();
+      });
+
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + data.length) % data.length;
+        updateCardView();
+      });
+
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % data.length;
+        updateCardView();
+      });
+
+      knownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (knownSet.has(currentIndex)) {
+          knownSet.delete(currentIndex);
+        } else {
+          knownSet.add(currentIndex);
+        }
+        knownCountEl.textContent = knownSet.size;
+        updateCardView();
+        if (isGridView) renderGrid();
+      });
+
+      toggleViewBtn.addEventListener('click', () => {
+        isGridView = !isGridView;
+        if (isGridView) {
+          renderGrid();
+          carouselContainer.style.display = 'none';
+          gridContainer.style.display = 'grid';
+          toggleViewBtn.textContent = 'Afficher le mode carte unique (Carrousel)';
+        } else {
+          carouselContainer.style.display = 'flex';
+          gridContainer.style.display = 'none';
+          toggleViewBtn.textContent = 'Afficher toutes les cartes en grille';
+          updateCardView();
+        }
+      });
+
+      // Initial setup
+      updateCardView();
+    }
+
+    // --- Init Vocabulary Module ---
+    initFlashcardModule({
+      data: vocabData,
+      prefix: 'vocab',
+      renderFront: (item) => {
+        document.getElementById('vocab-front-prompt').textContent = item.prompt;
+      },
+      renderBack: (item) => {
+        document.getElementById('vocab-back-term').textContent = item.term;
+        document.getElementById('vocab-back-pos').textContent = item.pos;
+        document.getElementById('vocab-back-sample').textContent = item.sample;
+      },
+      renderGridItem: (item, idx) => `
+        <div>
+          <div class="grid-card-tag">Carte ${idx + 1} • ${item.pos}</div>
+          <div class="grid-card-term">${item.term}</div>
+          <div class="grid-card-def"><strong>Anglais :</strong> ${item.prompt}</div>
+        </div>
+        <div class="grid-card-example">${item.sample}</div>
+      `
+    });
+
+    // --- Init Grammar Concepts Module ---
+    initFlashcardModule({
+      data: grammarConceptData,
+      prefix: 'grammar',
+      renderFront: (item) => {
+        document.getElementById('grammar-front-topic').textContent = item.topic;
+      },
+      renderBack: (item) => {
+        document.getElementById('grammar-back-name').textContent = item.name;
+        document.getElementById('grammar-back-formula').textContent = item.formula;
+        document.getElementById('grammar-back-rule').textContent = item.rule;
+        document.getElementById('grammar-back-example').textContent = item.example;
+      },
+      renderGridItem: (item, idx) => `
+        <div>
+          <div class="grid-card-tag" style="color: var(--accent-emerald);">Fiche ${idx + 1} • ${item.topic}</div>
+          <div class="grid-card-term" style="font-size: 1.1rem; color: var(--accent-indigo);">${item.name}</div>
+          <div class="grid-card-def" style="margin-bottom: 0.5rem;"><strong>Formule :</strong> <code>${item.formula}</code></div>
+          <div class="grid-card-def" style="font-size: 0.84rem;">${item.rule}</div>
+        </div>
+        <div class="grid-card-example" style="border-left-color: var(--accent-emerald);">${item.example}</div>
+      `
+    });
+
+    // --- Cloze Quiz Module Logic ---
+    function initClozeQuiz() {
+      const container = document.getElementById('cloze-container');
+      const submitBtn = document.getElementById('quiz-submit-btn');
+      const revealBtn = document.getElementById('quiz-reveal-btn');
+      const scoreBanner = document.getElementById('quiz-score-banner');
+      const scoreText = document.getElementById('quiz-score-text');
+
+      let solutionsVisible = false;
+
+      // Render quiz questions
+      container.innerHTML = '';
+      clozeQuizData.forEach((q, idx) => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'cloze-item';
+        itemEl.id = `cloze-item-${q.id}`;
+        itemEl.innerHTML = `
+          <div class="cloze-header">
+            <span class="cloze-number">Question ${idx + 1} sur ${clozeQuizData.length}</span>
+            <span class="cloze-status-icon" id="status-icon-${q.id}"></span>
+          </div>
+          <div class="cloze-sentence">
+            ${q.before}
+            <input type="text" class="cloze-input" id="input-${q.id}" autocomplete="off" placeholder="..." spellcheck="false">
+            ${q.after}
+          </div>
+          <div class="cloze-feedback" id="feedback-${q.id}">
+            <div>💡 <strong>Réponse attendue :</strong> « ${q.expected} »</div>
+            <div style="margin-top: 0.25rem;">${q.explanation}</div>
+          </div>
+        `;
+        container.appendChild(itemEl);
+      });
+
+      // Verification function
+      function verifyAnswers() {
+        let score = 0;
+
+        clozeQuizData.forEach((q) => {
+          const input = document.getElementById(`input-${q.id}`);
+          const item = document.getElementById(`cloze-item-${q.id}`);
+          const statusIcon = document.getElementById(`status-icon-${q.id}`);
+          const feedback = document.getElementById(`feedback-${q.id}`);
+
+          const userVal = input.value.trim().toLowerCase();
+          const targetVal = q.expected.trim().toLowerCase();
+
+          input.classList.remove('correct', 'wrong');
+          item.classList.remove('is-correct', 'is-wrong');
+
+          if (userVal === targetVal) {
+            score++;
+            input.classList.add('correct');
+            item.classList.add('is-correct');
+            statusIcon.textContent = '✅ Correct';
+            statusIcon.style.color = 'var(--accent-emerald)';
+          } else {
+            input.classList.add('wrong');
+            item.classList.add('is-wrong');
+            statusIcon.textContent = '❌ À revoir';
+            statusIcon.style.color = 'var(--accent-rose)';
+            feedback.style.display = 'block';
+          }
+        });
+
+        scoreBanner.style.display = 'flex';
+        scoreText.textContent = `Votre score : ${score} sur ${clozeQuizData.length} (${Math.round((score / clozeQuizData.length) * 100)} %)`;
+        
+        if (score === clozeQuizData.length) {
+          scoreBanner.style.background = 'var(--accent-emerald-light)';
+          scoreBanner.style.color = 'var(--accent-emerald)';
+          scoreBanner.style.borderColor = 'rgba(5, 150, 105, 0.3)';
+        } else {
+          scoreBanner.style.background = 'var(--accent-indigo-light)';
+          scoreBanner.style.color = 'var(--accent-indigo)';
+          scoreBanner.style.borderColor = 'rgba(79, 70, 229, 0.25)';
+        }
+      }
+
+      // Toggle solutions
+      function toggleSolutions() {
+        solutionsVisible = !solutionsVisible;
+        clozeQuizData.forEach((q) => {
+          const feedback = document.getElementById(`feedback-${q.id}`);
+          const input = document.getElementById(`input-${q.id}`);
+          
+          if (solutionsVisible) {
+            feedback.style.display = 'block';
+            if (!input.value.trim()) {
+              input.value = q.expected;
+              input.classList.add('correct');
+            }
+          } else {
+            feedback.style.display = 'none';
+          }
+        });
+
+        revealBtn.textContent = solutionsVisible ? 'Masquer les explications' : 'Afficher les solutions';
+      }
+
+      submitBtn.addEventListener('click', verifyAnswers);
+      revealBtn.addEventListener('click', toggleSolutions);
+
+      // Support enter key on inputs
+      container.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          verifyAnswers();
+        }
+      });
+    }
+
+    initClozeQuiz();
+  </script>
+</body>
+</html>

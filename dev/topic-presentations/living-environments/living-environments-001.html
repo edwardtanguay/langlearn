@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       THEME & TYPOGRAPHY: Crisp Typewriter Aesthetic
+       Dark espresso / warm kraft background (#1e1b18) & warm ivory text (#e8e1d5)
+       ========================================================================== */
+    :root {
+      --bg-main: #1e1b18;
+      --bg-surface: #26221e;
+      --bg-surface-alt: #2e2a25;
+      --bg-highlight: #3a332a;
+      --border-color: rgba(232, 225, 213, 0.22);
+      --border-subtle: rgba(232, 225, 213, 0.12);
+      --text-main: #e8e1d5;
+      --text-muted: #b8aea0;
+      --text-dim: #8a8275;
+      --accent-amber: #d4a373;
+      --accent-gold: #e09f3e;
+      --accent-green: #52b788;
+      --accent-green-bg: rgba(82, 183, 136, 0.16);
+      --accent-green-border: #40916c;
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --font-family: 'Courier Prime', Courier, 'Courier New', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      font-size: 17px;
+      line-height: 1.75;
+      padding: 40px 20px 100px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Selection styling */
+    ::selection {
+      background: var(--accent-amber);
+      color: var(--bg-main);
+    }
+
+    /* Page Header */
+    header.doc-header {
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 28px;
+      margin-bottom: 50px;
+    }
+
+    h1.doc-title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+      color: var(--text-main);
+      text-transform: none;
+    }
+
+    /* Sections */
+    section.content-section {
+      margin-bottom: 60px;
+    }
+
+    h2.section-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 28px;
+    }
+
+    /* ==========================================================================
+       SECTION 1 : CARTES DE VOCABULAIRE
+       Accordion style: one open at a time, selectable text, monolingual French
+       ========================================================================== */
+    .vocab-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .vocab-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .vocab-card:hover {
+      border-color: var(--accent-amber);
+    }
+
+    .vocab-card.is-open {
+      border-color: var(--accent-amber);
+      background-color: var(--bg-surface-alt);
+    }
+
+    .vocab-header {
+      padding: 14px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .vocab-term {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .vocab-indicator {
+      font-size: 14px;
+      color: var(--accent-amber);
+      transition: transform 0.2s ease;
+    }
+
+    .vocab-card.is-open .vocab-indicator {
+      transform: rotate(90deg);
+    }
+
+    .vocab-body {
+      display: none;
+      padding: 0 20px 18px 20px;
+      border-top: 1px dashed var(--border-subtle);
+      user-select: text;
+    }
+
+    .vocab-card.is-open .vocab-body {
+      display: block;
+    }
+
+    .vocab-field {
+      margin-top: 12px;
+    }
+
+    .vocab-label {
+      display: block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-amber);
+      margin-bottom: 2px;
+    }
+
+    .vocab-text {
+      font-size: 16px;
+      color: var(--text-main);
+    }
+
+    .vocab-example {
+      font-style: italic;
+      color: #dfd5c7;
+    }
+
+    /* ==========================================================================
+       SECTION 2 : EXERCICES DE GRAMMAIRE
+       Real-time green validation, accent-tolerant, auto-focus next, '?' hint
+       ========================================================================== */
+    .grammar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .grammar-item {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 16px 20px;
+      line-height: 1.9;
+      font-size: 17px;
+    }
+
+    .cloze-input {
+      font-family: var(--font-family);
+      font-size: 17px;
+      color: var(--text-main);
+      background-color: #141210;
+      border: 1px solid var(--border-color);
+      border-bottom: 2px solid var(--accent-amber);
+      border-radius: 2px;
+      padding: 2px 8px;
+      margin: 0 4px;
+      outline: none;
+      vertical-align: baseline;
+      transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+    }
+
+    .cloze-input:focus {
+      border-color: var(--accent-gold);
+      background-color: #1b1713;
+      box-shadow: 0 0 5px rgba(224, 159, 62, 0.35);
+    }
+
+    .cloze-input.is-correct {
+      background-color: var(--accent-green-bg) !important;
+      border-color: var(--accent-green-border) !important;
+      border-bottom-color: var(--accent-green) !important;
+      color: #95d5b2 !important;
+      font-weight: 700;
+      box-shadow: 0 0 6px rgba(82, 183, 136, 0.4);
+    }
+
+    .cloze-correct-text {
+      color: #95d5b2;
+      font-weight: 700;
+      display: inline;
+      user-select: text;
+    }
+
+    /* ==========================================================================
+       SECTION 3 : TEXTE DE LA PRÉSENTATION
+       Left-aligned flowing essay prose, anchored floating popover for glossing
+       ========================================================================== */
+    .essay-article {
+      text-align: left;
+    }
+
+    h3.essay-subhead {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--accent-amber);
+      margin-top: 36px;
+      margin-bottom: 16px;
+      border-left: 3px solid var(--accent-amber);
+      padding-left: 12px;
+    }
+
+    .essay-p {
+      margin-bottom: 20px;
+      font-size: 17px;
+      line-height: 1.85;
+      color: var(--text-main);
+      text-align: left;
+      position: relative;
+    }
+
+    /* Clickable glossed word */
+    .gloss-word {
+      color: var(--text-main);
+      text-decoration: underline;
+      text-decoration-style: dashed;
+      text-decoration-color: var(--accent-amber);
+      text-underline-offset: 4px;
+      cursor: pointer;
+      position: relative;
+      display: inline;
+      transition: background-color 0.2s, color 0.2s;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    .gloss-word:hover {
+      background-color: var(--bg-highlight);
+      color: #fff;
+    }
+
+    .gloss-word.is-active {
+      background-color: var(--accent-amber);
+      color: var(--bg-main);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* Anchored Floating Popover Card */
+    .gloss-popover {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+      width: 320px;
+      max-width: 90vw;
+      background-color: #24201c;
+      border: 1px solid var(--accent-amber);
+      box-shadow: var(--card-shadow);
+      border-radius: 4px;
+      padding: 14px 16px;
+      margin-top: 6px;
+      text-align: left;
+      font-style: normal;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--text-main);
+      user-select: text;
+      animation: popoverFadeIn 0.15s ease-out;
+    }
+
+    @keyframes popoverFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .gloss-popover .popover-term {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-amber);
+      margin-bottom: 8px;
+      border-bottom: 1px dashed var(--border-subtle);
+      padding-bottom: 4px;
+    }
+
+    .gloss-popover .popover-label {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-amber);
+      margin-top: 8px;
+      margin-bottom: 2px;
+    }
+
+    .gloss-popover .popover-def {
+      color: var(--text-main);
+    }
+
+    .gloss-popover .popover-ex {
+      color: #dfd5c7;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* Small pointer tip */
+    .gloss-popover::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 20px;
+      width: 10px;
+      height: 10px;
+      background-color: #24201c;
+      border-left: 1px solid var(--accent-amber);
+      border-top: 1px solid var(--accent-amber);
+      transform: rotate(45deg);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        font-size: 15.5px;
+        padding: 24px 14px 80px;
+      }
+      h1.doc-title {
+        font-size: 21px;
+      }
+      .gloss-popover {
+        width: 270px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Document Title -->
+    <header class="doc-header">
+      <h1 class="doc-title">Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz</h1>
+    </header>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 1 : CARTES DE VOCABULAIRE                    -->
+    <!-- ==================================================== -->
+    <section class="content-section" id="section-vocab">
+      <h2 class="section-title">Cartes de Vocabulaire</h2>
+      <div class="vocab-list" id="vocab-container">
+        <!-- Injected dynamically in randomized order -->
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 2 : EXERCICES DE GRAMMAIRE                   -->
+    <!-- ==================================================== -->
+    <section class="content-section" id="section-grammaire">
+      <h2 class="section-title">Exercices de Grammaire</h2>
+      <div class="grammar-list" id="grammar-container">
+        <!-- Injected dynamically in randomized order -->
+      </div>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- SECTION 3 : TEXTE DE LA PRÉSENTATION                 -->
+    <!-- ==================================================== -->
+    <section class="content-section" id="section-texte">
+      <h2 class="section-title">Texte de la Présentation</h2>
+
+      <article class="essay-article" id="essay-container">
+
+        <h3 class="essay-subhead">Introduction : Trois cercles de vie</h3>
+        <p class="essay-p">
+          Bonjour à toutes et à tous. Dans cette présentation, j'<span class="cloze-target-source">aimerais</span> partager avec vous mon regard sur trois cercles de vie. Quand nous réfléchissons à notre environnement, nous pensons souvent à notre appartement ou à notre rue. Mais en réalité, nous habitons tous dans trois espaces superposés : notre planète en cette année 2026, la métropole où nous vivons, et le quartier précis où nous dormons chaque nuit. Aujourd'hui, nous nous <span class="cloze-target-source">déplaçons</span> facilement à travers les continents pour le travail ou les loisirs. Mais nous avons toujours besoin d'<span class="gloss-word" data-term-id="t11">un ancrage</span> local rassurant. À première vue, ces trois échelles semblent très différentes. Pourtant, elles s'influencent mutuellement chaque jour. Je vous propose donc d'explorer ensemble ce que j'aime et ce que je n'aime pas dans ces trois environnements : d'abord à l'échelle du monde contemporain, ensuite dans la vibrante capitale de Berlin, et enfin dans mon paisible quartier de Steglitz.
+        </p>
+
+        <h3 class="essay-subhead">Le Monde en 2026 : Entre opportunités et tensions</h3>
+        <p class="essay-p">
+          Commençons par le grand cercle : le monde en 2026. À cette échelle planétaire, il existe cinq aspects remarquables que j'apprécie profondément. Premièrement, le développement fantastique du <span class="gloss-word" data-term-id="t01">travail à distance</span> nous offre une liberté géographique inédite ; nous pouvons collaborer avec des collègues situés à des milliers de kilomètres sans quitter notre bureau personnel. Deuxièmement, l'accès instantané aux connaissances sur Internet transforme l'éducation. C'est un monde moderne <span class="cloze-target-source">où</span> les personnes curieuses peuvent apprendre n'importe quel sujet en ligne. Troisièmement, la transition écologique stimule <span class="gloss-word" data-term-id="t03">les énergies renouvelables</span> <span class="cloze-target-source">qui</span> créent des milliers d'emplois verts. Quatrièmement, la diversité culturelle et les échanges internationaux enrichissent nos sociétés ; nous découvrons de nouvelles traditions et nous gardons facilement le contact avec des amis du monde entier. Cinquièmement, les progrès récents de <span class="gloss-word" data-term-id="t12">la médecine connectée</span> permettent de soigner plus vite les patients et d'améliorer la santé publique globale. <span class="cloze-target-source">En</span> 2026, notre société mondiale bénéficie d'une technologie incroyable qui rapproche les êtres humains.
+        </p>
+        <p class="essay-p">
+          En revanche, ce monde global présente aussi cinq défauts majeurs qui m'inquiètent sérieusement. Tout d'abord, <span class="gloss-word" data-term-id="t02">le changement climatique</span> produit des catastrophes environnementales fréquentes ; chaque été, <span class="gloss-word" data-term-id="t06">la canicule</span> frappe durement plusieurs régions et menace l'agriculture. Ensuite, <span class="gloss-word" data-term-id="t05">la surcharge d'informations</span> est une réalité que nous ressentons tous devant nos écrans. Nous recevons trop de messages continus, ce qui provoque du stress mental. De plus, <span class="gloss-word" data-term-id="t04">le coût de la vie</span> augmente partout. À cause de la hausse des prix, beaucoup de citoyens ne peuvent plus économiser d'argent chaque mois. Par ailleurs, la polarisation sur <span class="gloss-word" data-term-id="t13">les réseaux sociaux</span> détruit souvent l'écoute bienveillante et divise les communautés. Enfin, la dépendance excessive aux outils technologiques affaiblit parfois notre autonomie ; quand le réseau tombe en panne, nous avons du mal à accomplir les tâches les plus simples.
+        </p>
+
+        <h3 class="essay-subhead">Berlin : Une métropole vibrante mais exigeante</h3>
+        <p class="essay-p">
+          Descendons maintenant au deuxième cercle : la métropole de Berlin où je vis actuellement. Vivre dans cette capitale offre cinq atouts incomparables. En premier lieu, <span class="gloss-word" data-term-id="t07">le réseau de transport</span> est probablement l'élément le plus pratique de la capitale allemande. Les métros, les trains urbains et les trams circulent jour et nuit avec une grande régularité. En deuxième lieu, Berlin est <span class="cloze-target-source">plus</span> verte que beaucoup d'autres capitales européennes grâce à ses parcs immenses. En troisième lieu, la richesse culturelle est exceptionnelle. Si vous aimez les sorties culturelles, vous <span class="cloze-target-source">pourriez</span> visiter un musée différent chaque semaine. En quatrième lieu, quand vous arrivez à Berlin, vous remarquez immédiatement une liberté et une tolérance remarquables. <span class="gloss-word" data-term-id="t15">L'ouverture d'esprit</span> des résidents permet à chacun de vivre selon ses choix personnels. Enfin, la culture du vélo est très développée : presque chaque grande rue possède <span class="gloss-word" data-term-id="t10">une piste cyclable</span> pour se déplacer sans polluer. Depuis que je suis <span class="cloze-target-source">venu</span> m'installer ici, j'apprécie cette grande diversité au quotidien.
+        </p>
+        <p class="essay-p">
+          Toutefois, vivre à Berlin comporte aussi cinq aspects négatifs qu'il ne faut pas oublier. Le premier problème est sans aucun doute <span class="gloss-word" data-term-id="t08">la crise du logement</span> : trouver un appartement décent à un prix abordable est devenu <span class="gloss-word" data-term-id="t16">un parcours du combattant</span> pour les jeunes travailleurs. Le deuxième point négatif concerne <span class="gloss-word" data-term-id="t09">la bureaucratie</span> administrative. Pour obtenir un document officiel à la mairie, il <span class="cloze-target-source">faut</span> parfois attendre plusieurs semaines afin d'obtenir <span class="gloss-word" data-term-id="t17">un rendez-vous</span> disponible. Le troisième inconvénient réside dans le climat hivernal : les hivers sont longs, froids et gris, ce qui pèse lourdement sur le moral des habitants. Quatrièmement, les chantiers permanents et les travaux de construction créent souvent des retards imprévus sur les trajets quotidiens. Enfin, certains quartiers centraux souffrent souvent du bruit nocturne et des déchets sur les trottoirs après les fêtes du week-end.
+        </p>
+
+        <h3 class="essay-subhead">Steglitz : Le calme résidentiel au sud de la capitale</h3>
+        <p class="essay-p">
+          Arrivons à présent au troisième cercle, le plus intime : mon quartier d'habitation, Steglitz. Situé dans le sud-ouest berlinois, ce quartier offre cinq qualités précieuses qui rendent ma vie quotidienne très paisible. D'un côté, la tranquillité des rues bordées d'arbres apporte un grand repos ; on peut marcher calmement le soir et se <span class="cloze-target-source">sentir</span> en sécurité à toute heure. De l'autre côté, la présence du Jardin Botanique offre <span class="gloss-word" data-term-id="t18">un espace vert</span> exceptionnel où l'on peut <span class="gloss-word" data-term-id="t14">prendre l'air</span> et observer des plantes rares <span class="gloss-word" data-term-id="t22">au fil des saisons</span>. Troisièmement, le long de la grande avenue commerçante, on trouve tous les magasins nécessaires pour <span class="gloss-word" data-term-id="t20">faire des courses</span> sans devoir se déplacer au centre-ville. Quatrièmement, l'atmosphère générale est rassurante et familiale : <span class="gloss-word" data-term-id="t19">le bon voisinage</span> se remarque par la politesse et la gentillesse des résidents dans les immeubles. Cinquièmement, la connexion de transport est optimale : les stations de métro et de train régional permettent d'accéder au cœur de la métropole en moins de vingt minutes.
+        </p>
+        <p class="essay-p">
+          Néanmoins, la vie à Steglitz présente aussi cinq limites concrètes. Premièrement, <span class="gloss-word" data-term-id="t21">la vie nocturne</span> y est presque inexistante ; après vingt-deux heures, les rues deviennent totalement calmes et désertes. Deuxièmement, le choix de cafés branchés et de restaurants internationaux est beaucoup plus limité que dans les quartiers artistiques comme Neukölln ou Kreuzberg. Troisièmement, trouver une place de stationnement pour une voiture devient souvent compliqué dans les ruelles résidentielles étroites. Quatrièmement, la distance géographique avec les grands lacs de l'ouest demande du temps de trajet pour les excursions du week-end. Enfin, les loyers à Steglitz augmentent rapidement depuis quelques années, ce qui rend l'accès à ce quartier calme plus difficile pour les nouvelles familles.
+        </p>
+
+        <h3 class="essay-subhead">Conclusion : L'harmonie entre nos trois espaces</h3>
+        <p class="essay-p">
+          En conclusion, vivre harmonieusement en 2026 demande de trouver un équilibre entre ces trois cercles. Le monde global nous offre des outils technologiques formidables pour travailler et communiquer, même s'il nous expose à des crises écologiques et économiques sérieuses. La ville de Berlin nous apporte son dynamisme culturel, sa tolérance et son ouverture d'esprit, malgré les difficultés de logement et les lenteurs administratives. Enfin, Steglitz m'offre le refuge tranquille, la verdure et la sécurité indispensables pour me reposer après des journées de travail intenses. Chacun de ces trois cercles a ses forces et ses faiblesses, mais ensemble, ils composent un cadre de vie stimulant et équilibré. Je vous remercie chaleureusement pour votre attention bienveillante et je serai très heureux de répondre à vos questions.
+        </p>
+
+      </article>
+    </section>
+
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- JAVASCRIPT LOGIC                                     -->
+  <!-- ==================================================== -->
+  <script>
+    /* --------------------------------------------------
+       1. DATA STRUCTURES
+       -------------------------------------------------- */
+
+    // 10 Flashcard Items (Monolingual French)
+    const VOCAB_DATA = [
+      {
+        id: "t01",
+        term: "le travail à distance",
+        def: "L'activité professionnelle effectuée depuis chez soi grâce à un ordinateur et une connexion Internet.",
+        ex: "Le travail à distance permet d'éviter les embouteillages du matin."
+      },
+      {
+        id: "t02",
+        term: "le changement climatique",
+        def: "La modification durable des températures et des équilibres météorologiques sur la planète.",
+        ex: "Le changement climatique provoque des étés de plus en plus chauds."
+      },
+      {
+        id: "t03",
+        term: "les énergies renouvelables",
+        def: "Les sources d'énergie inépuisables issues de la nature, comme le vent, le soleil ou l'eau.",
+        ex: "L'énergie solaire est une énergie renouvelable très propre."
+      },
+      {
+        id: "t04",
+        term: "le coût de la vie",
+        def: "Le montant d'argent nécessaire pour payer le logement, la nourriture et les dépenses du quotidien.",
+        ex: "Le coût de la vie augmente régulièrement dans les capitales européennes."
+      },
+      {
+        id: "t05",
+        term: "la surcharge d'informations",
+        def: "L'excès de nouvelles et de messages numériques qui fatigue l'esprit humain.",
+        ex: "Éteindre son téléphone le soir évite la surcharge d'informations."
+      },
+      {
+        id: "t06",
+        term: "la canicule",
+        def: "Une période de très forte chaleur qui dure plusieurs jours et plusieurs nuits consécutifs.",
+        ex: "Pendant la canicule en été, il faut boire beaucoup d'eau fraîche."
+      },
+      {
+        id: "t07",
+        term: "le réseau de transport",
+        def: "L'ensemble organisé des lignes de métro, de bus et de trains qui desservent une région.",
+        ex: "Le réseau de transport berlinois fonctionne aussi pendant la nuit."
+      },
+      {
+        id: "t08",
+        term: "la crise du logement",
+        def: "La difficulté importante de trouver un appartement abordable en raison du manque de logements.",
+        ex: "La crise du logement touche beaucoup d'étudiants dans les grandes villes."
+      },
+      {
+        id: "t09",
+        term: "la bureaucratie",
+        def: "L'ensemble des procédures administratives, des formulaires et des démarches officielles.",
+        ex: "La bureaucratie administrative demande souvent de la patience."
+      },
+      {
+        id: "t10",
+        term: "la piste cyclable",
+        def: "Une voie réservée exclusivement à la circulation des vélos pour assurer leur sécurité.",
+        ex: "Cette avenue dispose d'une piste cyclable bien séparée des voitures."
+      }
+    ];
+
+    // Additional glossed expressions (total 22 terms glossed in text)
+    // For flashcard words, popover examples are DIFFERENT from flashcard examples.
+    const GLOSS_DICT = {
+      t01: {
+        term: "le travail à distance",
+        def: "L'activité professionnelle réalisée hors des locaux de l'entreprise via Internet.",
+        ex: "Beaucoup d'entreprises proposent deux jours de travail à distance par semaine."
+      },
+      t02: {
+        term: "le changement climatique",
+        def: "L'évolution globale du climat de la Terre due aux activités humaines.",
+        ex: "La protection des forêts aide à ralentir le changement climatique."
+      },
+      t03: {
+        term: "les énergies renouvelables",
+        def: "Les formes d'énergie naturelles qui ne s'épuisent jamais (solaire, éolien).",
+        ex: "L'installation d'éoliennes favorise les énergies renouvelables."
+      },
+      t04: {
+        term: "le coût de la vie",
+        def: "Le niveau général des prix pour les besoins essentiels d'une personne.",
+        ex: "Avant de déménager, nous avons calculé le coût de la vie dans cette région."
+      },
+      t05: {
+        term: "la surcharge d'informations",
+        def: "La réception excessive de données qui rend difficile la concentration.",
+        ex: "Pour limiter la surcharge d'informations, je ne consulte mes courriels que deux fois par jour."
+      },
+      t06: {
+        term: "la canicule",
+        def: "Une vague de chaleur intense et prolongée en saison estivale.",
+        ex: "Les personnes âgées doivent rester au frais durant la canicule."
+      },
+      t07: {
+        term: "le réseau de transport",
+        def: "Le système public de circulation (tramway, métro, autobus).",
+        ex: "Un bon réseau de transport encourage les gens à laisser leur voiture au garage."
+      },
+      t08: {
+        term: "la crise du logement",
+        def: "La pénurie d'habitations disponibles causant une hausse des prix.",
+        ex: "Les mairies cherchent des solutions concrètes face à la crise du logement."
+      },
+      t09: {
+        term: "la bureaucratie",
+        def: "Le fonctionnement formel et parfois rigide des administrations publiques.",
+        ex: "Remplir tous ces documents officiels illustre bien la bureaucratie."
+      },
+      t10: {
+        term: "une piste cyclable",
+        def: "Une bande de circulation réservée aux usagers à bicyclette.",
+        ex: "J'emprunte la piste cyclable pour me rendre à mon cours de français."
+      },
+      t11: {
+        term: "un ancrage",
+        def: "Un point d'attache stable qui donne un sentiment de sécurité et de repère.",
+        ex: "Avoir une maison dans son village natal offre un ancrage précieux."
+      },
+      t12: {
+        term: "la médecine connectée",
+        def: "L'usage des technologies numériques et des applications pour le suivi médical.",
+        ex: "Grâce à la médecine connectée, le médecin reçoit directement les résultats d'analyses."
+      },
+      t13: {
+        term: "les réseaux sociaux",
+        def: "Les plateformes en ligne permettant d'échanger des messages et des contenus.",
+        ex: "Il partage ses photos de voyage sur les réseaux sociaux avec ses amis."
+      },
+      t14: {
+        term: "prendre l'air",
+        def: "Sortir dehors pour respirer de l'air frais et se détendre quelques instants.",
+        ex: "Après trois heures devant l'ordinateur, j'ai besoin de prendre l'air dans le jardin."
+      },
+      t15: {
+        term: "l'ouverture d'esprit",
+        def: "La disposition à accepter des idées, des modes de vie ou des avis différents du sien.",
+        ex: "Son ouverture d'esprit lui permet de dialoguer facilement avec des personnes de toutes cultures."
+      },
+      t16: {
+        term: "un parcours du combattant",
+        def: "Une succession de difficultés ou d'obstacles compliqués à surmonter.",
+        ex: "Obtenir un prêt bancaire est devenu un véritable parcours du combattant."
+      },
+      t17: {
+        term: "un rendez-vous",
+        def: "Une rencontre fixée à l'avance entre deux ou plusieurs personnes à une heure précise.",
+        ex: "J'ai pris un rendez-vous chez le dentiste pour mardi prochain."
+      },
+      t18: {
+        term: "un espace vert",
+        def: "Un terrain public aménagé avec des pelouses, des arbres et des fleurs.",
+        ex: "Les enfants jouent au ballon dans l'espace vert du quartier."
+      },
+      t19: {
+        term: "le bon voisinage",
+        def: "Les relations cordiales, respectueuses et solidaires entre voisins d'un même quartier.",
+        ex: "Le bon voisinage facilite le partage de petits services au quotidien."
+      },
+      t20: {
+        term: "faire des courses",
+        def: "Acheter les aliments et les objets utiles pour la maison dans les magasins.",
+        ex: "Le samedi matin, je vais au marché pour faire des courses de produits frais."
+      },
+      t21: {
+        term: "la vie nocturne",
+        def: "L'animation sociale, les spectacles, les cafés et les fêtes qui se déroulent la nuit.",
+        ex: "Ce quartier étudiant est réputé pour sa vie nocturne joyeuse."
+      },
+      t22: {
+        term: "au fil des saisons",
+        def: "Progressivement, au rythme du changement régulier des quatre saisons de l'année.",
+        ex: "La couleur des arbres change magnifiquement au fil des saisons."
+      }
+    };
+
+    // 10 Grammar Cloze items drawn directly from sentences in the presentation text
+    const GRAMMAR_DATA = [
+      {
+        id: "g01",
+        before: "Aujourd'hui, nous ",
+        answer: "nous déplaçons",
+        after: " facilement à travers les continents pour le travail ou les loisirs."
+      },
+      {
+        id: "g02",
+        before: "Dans cette présentation, j'",
+        answer: "aimerais",
+        after: " partager avec vous mon regard sur trois cercles de vie."
+      },
+      {
+        id: "g03",
+        before: "",
+        answer: "En",
+        after: " 2026, notre société mondiale bénéficie d'une technologie incroyable qui rapproche les êtres humains."
+      },
+      {
+        id: "g04",
+        before: "Troisièmement, la transition écologique stimule les énergies renouvelables ",
+        answer: "qui",
+        after: " créent des milliers d'emplois verts."
+      },
+      {
+        id: "g05",
+        before: "C'est un monde moderne ",
+        answer: "où",
+        after: " les personnes curieuses peuvent apprendre n'importe quel sujet en ligne."
+      },
+      {
+        id: "g06",
+        before: "Berlin est ",
+        answer: "plus",
+        after: " verte que beaucoup d'autres capitales européennes grâce à ses parcs immenses."
+      },
+      {
+        id: "g07",
+        before: "Si vous aimez les sorties culturelles, vous ",
+        answer: "pourriez",
+        after: " visiter un musée différent chaque semaine."
+      },
+      {
+        id: "g08",
+        before: "Pour obtenir un document officiel à la mairie, il ",
+        answer: "faut",
+        after: " parfois attendre plusieurs semaines afin d'obtenir un rendez-vous disponible."
+      },
+      {
+        id: "g09",
+        before: "Depuis que je suis ",
+        answer: "venu",
+        after: " m'installer ici, j'apprécie cette grande diversité au quotidien."
+      },
+      {
+        id: "g10",
+        before: "On peut marcher calmement le soir et se ",
+        answer: "sentir",
+        after: " en sécurité à toute heure."
+      }
+    ];
+
+    /* --------------------------------------------------
+       UTILITY: Accent & Case Normalization
+       -------------------------------------------------- */
+    function normalizeStr(str) {
+      return (str || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    /* --------------------------------------------------
+       2. RENDER VOCABULARY SECTION (Accordion Flashcards)
+       -------------------------------------------------- */
+    function renderVocabCards() {
+      const container = document.getElementById("vocab-container");
+      container.innerHTML = "";
+      const shuffled = shuffleArray(VOCAB_DATA);
+
+      shuffled.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "vocab-card";
+        card.dataset.id = item.id;
+
+        const header = document.createElement("div");
+        header.className = "vocab-header";
+        header.innerHTML = `
+          <span class="vocab-term">${item.term}</span>
+          <span class="vocab-indicator">&#9656;</span>
+        `;
+
+        const body = document.createElement("div");
+        body.className = "vocab-body";
+        body.innerHTML = `
+          <div class="vocab-field">
+            <span class="vocab-label">Définition :</span>
+            <div class="vocab-text">${item.def}</div>
+          </div>
+          <div class="vocab-field">
+            <span class="vocab-label">Exemple :</span>
+            <div class="vocab-text vocab-example">${item.ex}</div>
+          </div>
+        `;
+
+        card.addEventListener("click", () => {
+          // If the user selected text inside the card, don't toggle/close it
+          const selectedText = window.getSelection().toString().trim();
+          if (selectedText.length > 0) return;
+
+          const wasOpen = card.classList.contains("is-open");
+          // Close all cards first (accordion behavior)
+          document.querySelectorAll(".vocab-card").forEach(c => c.classList.remove("is-open"));
+          if (!wasOpen) {
+            card.classList.add("is-open");
+          }
+        });
+
+        card.appendChild(header);
+        card.appendChild(body);
+        container.appendChild(card);
+      });
+    }
+
+    /* --------------------------------------------------
+       3. RENDER GRAMMAR SECTION (Cloze Validation & Auto-Focus)
+       -------------------------------------------------- */
+    function renderGrammarExercises() {
+      const container = document.getElementById("grammar-container");
+      container.innerHTML = "";
+      const shuffled = shuffleArray(GRAMMAR_DATA);
+
+      shuffled.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "grammar-item";
+        div.dataset.id = item.id;
+
+        const inputWidth = Math.max(item.answer.length + 3, 7);
+
+        div.innerHTML = `
+          <span>${item.before}</span><input 
+            type="text" 
+            class="cloze-input" 
+            data-answer="${item.answer}" 
+            data-index="${index}"
+            size="${inputWidth}" 
+            autocomplete="off" 
+            autocorrect="off" 
+            autocapitalize="off" 
+            spellcheck="false"
+          ><span>${item.after}</span>
+        `;
+
+        const input = div.querySelector(".cloze-input");
+
+        // Keydown handling for '?' hint functionality
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "?" || (e.shiftKey && e.code === "Slash")) {
+            e.preventDefault();
+            handleQuestionMarkHint(input);
+          }
+        });
+
+        // Input handling for real-time validation
+        input.addEventListener("input", () => {
+          checkClozeInput(input);
+        });
+
+        container.appendChild(div);
+      });
+    }
+
+    function checkClozeInput(input) {
+      if (!input.isConnected) return;
+
+      const expected = input.dataset.answer;
+      const current = input.value;
+
+      if (normalizeStr(current) === normalizeStr(expected)) {
+        // Find next remaining input before replacing this one
+        const allInputs = Array.from(document.querySelectorAll(".cloze-input"));
+        const currentIndex = allInputs.indexOf(input);
+        const nextInput = allInputs[currentIndex + 1];
+
+        // Create the bold green inline span
+        const span = document.createElement("span");
+        span.className = "cloze-correct-text";
+        span.textContent = expected;
+
+        // Replace input with the span
+        input.replaceWith(span);
+
+        // Auto-advance cursor to next input immediately
+        if (nextInput) {
+          nextInput.focus();
+        }
+      }
+    }
+
+    function handleQuestionMarkHint(input) {
+      if (!input.isConnected) return;
+
+      const expected = input.dataset.answer;
+      const current = input.value;
+
+      // Determine matching prefix length
+      let matchLen = 0;
+      while (
+        matchLen < current.length &&
+        matchLen < expected.length &&
+        normalizeStr(current[matchLen]) === normalizeStr(expected[matchLen])
+      ) {
+        matchLen++;
+      }
+
+      // If matching prefix exists and is shorter than target, advance by 1 character
+      // If there's an error at matchLen, fix and advance
+      const nextLen = matchLen + 1;
+      input.value = expected.slice(0, nextLen);
+
+      // Trigger verification immediately
+      checkClozeInput(input);
+    }
+
+    /* --------------------------------------------------
+       4. INTERACTIVE GLOSSING POPOVERS
+       Anchored floating popovers, monolingual French, selection allowed
+       -------------------------------------------------- */
+    let currentActiveWord = null;
+    let currentPopover = null;
+
+    function closeCurrentGloss() {
+      if (currentPopover && currentPopover.parentNode) {
+        currentPopover.parentNode.removeChild(currentPopover);
+      }
+      if (currentActiveWord) {
+        currentActiveWord.classList.remove("is-active");
+      }
+      currentPopover = null;
+      currentActiveWord = null;
+    }
+
+    function setupInteractiveGlossing() {
+      const glossWords = document.querySelectorAll(".gloss-word");
+
+      glossWords.forEach(word => {
+        word.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const termId = word.dataset.termId;
+          const termData = GLOSS_DICT[termId];
+          if (!termData) return;
+
+          // If clicking the currently active word, toggle it closed
+          if (currentActiveWord === word) {
+            closeCurrentGloss();
+            return;
+          }
+
+          // Close any other open popover
+          closeCurrentGloss();
+
+          // Open new floating popover
+          word.classList.add("is-active");
+          currentActiveWord = word;
+
+          const popover = document.createElement("div");
+          popover.className = "gloss-popover";
+          popover.innerHTML = `
+            <div class="popover-term">${termData.term}</div>
+            <div class="popover-label">Définition :</div>
+            <div class="popover-def">${termData.def}</div>
+            <div class="popover-label">Exemple :</div>
+            <div class="popover-ex">${termData.ex}</div>
+          `;
+
+          // Allow text selection inside without closing popover
+          popover.addEventListener("click", (evt) => {
+            evt.stopPropagation();
+          });
+
+          word.appendChild(popover);
+          currentPopover = popover;
+
+          // Ensure popover does not overflow window edges
+          adjustPopoverPosition(popover);
+        });
+      });
+
+      // Clicking anywhere outside closes the active gloss popover
+      document.addEventListener("click", () => {
+        closeCurrentGloss();
+      });
+
+      // Escape key closes popover
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeCurrentGloss();
+        }
+      });
+    }
+
+    function adjustPopoverPosition(popover) {
+      const rect = popover.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+
+      if (rect.right > viewportWidth - 15) {
+        const overflow = rect.right - (viewportWidth - 15);
+        popover.style.left = `-${overflow}px`;
+      }
+    }
+
+    /* --------------------------------------------------
+       INITIALIZATION
+       -------------------------------------------------- */
+    document.addEventListener("DOMContentLoaded", () => {
+      renderVocabCards();
+      renderGrammarExercises();
+      setupInteractiveGlossing();
+    });
+  </script>
+</body>
+</html>

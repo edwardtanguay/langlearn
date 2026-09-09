@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #1e1b18;
+      --bg-page: #24201c;
+      --bg-card: #2b2621;
+      --bg-card-hover: #332d27;
+      --bg-active: #3a332c;
+      --border-soft: #423b32;
+      --border-accent: #6b5f50;
+      --border-green: #38a169;
+      --text-main: #e8e1d5;
+      --text-muted: #a69c8e;
+      --text-faint: #756c60;
+      --accent-warm: #d4a373;
+      --accent-green: #48bb78;
+      --accent-green-bg: rgba(72, 187, 120, 0.18);
+      --accent-diff: #e28743;
+      --accent-diff-bg: rgba(226, 135, 67, 0.18);
+      --accent-gloss: #f6ad55;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --shadow-page: 0 8px 30px rgba(0, 0, 0, 0.45);
+      --shadow-card: 0 3px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      background-image: 
+        radial-gradient(#29241f 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 27, 24, 0.95), rgba(30, 27, 24, 0.98));
+      background-size: 20px 20px, 100% 100%;
+      color: var(--text-main);
+      font-family: 'Courier Prime', Courier, monospace;
+      line-height: 1.75;
+      font-size: 1.05rem;
+      padding: 2.5rem 1rem 5rem;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-page);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.75rem;
+      box-shadow: var(--shadow-page);
+      position: relative;
+    }
+
+    /* Paper border header rule */
+    .container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-warm);
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
+    }
+
+    header.doc-header {
+      margin-bottom: 2.25rem;
+      text-align: center;
+      border-bottom: 2px dashed var(--border-soft);
+      padding-bottom: 1.75rem;
+    }
+
+    h1.main-title {
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .meta-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* Tab navigation bar */
+    .nav-tabs {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-soft);
+      padding-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Courier Prime', Courier, monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tab-btn:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+      border-color: var(--border-accent);
+    }
+
+    .tab-btn.active {
+      background: var(--bg-active);
+      color: var(--accent-warm);
+      border-color: var(--accent-warm);
+      box-shadow: inset 0 0 0 1px var(--accent-warm);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ------------------------------------------------ */
+    /* Presentation Text Tab                            */
+    /* ------------------------------------------------ */
+    .text-section-header {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent-warm);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent-warm);
+      padding-left: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .sub-header {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 2.25rem 0 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-soft);
+      letter-spacing: 0.02em;
+    }
+
+    .essay-p {
+      margin-bottom: 1.4rem;
+      text-align: justify;
+      hyphens: auto;
+      color: var(--text-main);
+      font-size: 1.05rem;
+    }
+
+    .essay-p strong {
+      color: var(--accent-warm);
+      font-weight: 700;
+    }
+
+    /* Typewriter Clickable Gloss */
+    .gloss-word {
+      border-bottom: 1px dotted var(--accent-warm);
+      color: var(--text-main);
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.15s, color 0.15s;
+      padding: 0 2px;
+      border-radius: 2px;
+      user-select: text;
+    }
+
+    .gloss-word:hover {
+      background-color: rgba(212, 163, 115, 0.15);
+    }
+
+    .gloss-word.active {
+      background-color: rgba(212, 163, 115, 0.25);
+      border-bottom-style: solid;
+      color: #fff;
+    }
+
+    .gloss-tag {
+      display: none;
+      font-size: 0.85rem;
+      color: var(--accent-gloss);
+      font-style: italic;
+      margin-left: 0.35rem;
+      padding: 0 0.25rem;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--accent-warm);
+      border-radius: 3px;
+      user-select: all;
+    }
+
+    .gloss-word.active .gloss-tag {
+      display: inline-block;
+    }
+
+    .gloss-instructions {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 2rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    /* ------------------------------------------------ */
+    /* Flashcard Section                                */
+    /* ------------------------------------------------ */
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px dashed var(--border-soft);
+      padding-bottom: 1.25rem;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      padding: 0.4rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--border-accent);
+      color: var(--text-main);
+    }
+
+    .filter-btn.active {
+      background: var(--bg-active);
+      color: var(--accent-warm);
+      border-color: var(--accent-warm);
+    }
+
+    .action-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      background: transparent;
+      border: 1px dashed var(--border-accent);
+      color: var(--text-muted);
+      padding: 0.4rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .action-btn:hover {
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1rem;
+    }
+
+    .flashcard {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 1.15rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .flashcard:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .card-source {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .level-badge {
+      font-size: 0.72rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge-easy {
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      border: 1px solid var(--accent-green);
+    }
+
+    .badge-diff {
+      background: var(--accent-diff-bg);
+      color: var(--accent-diff);
+      border: 1px solid var(--accent-diff);
+    }
+
+    .card-target-box {
+      margin-top: 0.5rem;
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--border-soft);
+      display: none;
+    }
+
+    .flashcard.revealed .card-target-box {
+      display: block;
+      animation: fadeIn 0.2s ease-in;
+    }
+
+    .card-target {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-warm);
+      line-height: 1.4;
+    }
+
+    .card-context {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      font-style: italic;
+    }
+
+    .card-hint-click {
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      margin-top: 0.25rem;
+    }
+
+    .flashcard.revealed .card-hint-click {
+      display: none;
+    }
+
+    /* ------------------------------------------------ */
+    /* Grammar Cloze Section                            */
+    /* ------------------------------------------------ */
+    .cloze-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .cloze-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1.4rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s;
+    }
+
+    .cloze-item.solved {
+      border-color: var(--border-green);
+      background: rgba(43, 38, 33, 0.9);
+    }
+
+    .cloze-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .cloze-topic {
+      font-weight: 700;
+      color: var(--accent-warm);
+    }
+
+    .cloze-prompt {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-main);
+    }
+
+    .cloze-input {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+      font-family: 'Courier Prime', Courier, monospace;
+      font-size: 1.05rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      min-width: 140px;
+      outline: none;
+      transition: all 0.2s;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .cloze-input:focus {
+      border-color: var(--accent-warm);
+      box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.25);
+    }
+
+    .cloze-input.correct {
+      background-color: var(--accent-green-bg);
+      border-color: var(--accent-green);
+      color: #68d391;
+      font-weight: 700;
+      box-shadow: 0 0 0 2px rgba(72, 187, 120, 0.35);
+    }
+
+    .cloze-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--border-soft);
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .cloze-status {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .cloze-status.correct-text {
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+    .hint-btn {
+      background: var(--bg-active);
+      border: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .hint-btn:hover:not(:disabled) {
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+      border-color: var(--border-accent);
+    }
+
+    .hint-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Score counter */
+    .score-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .score-stat {
+      color: var(--text-muted);
+    }
+
+    .score-stat strong {
+      color: var(--accent-warm);
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        padding: 1.75rem 1.25rem;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      h1.main-title {
+        font-size: 1.25rem;
+      }
+      .nav-tabs {
+        flex-direction: column;
+      }
+      .tab-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <header class="doc-header">
+      <h1 class="main-title">Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz</h1>
+      <div class="meta-subtitle">Présentation Orale A2 • Cadre de Vie, Perceptions et Perspectives</div>
+    </header>
+
+    <nav class="nav-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="tab-text" role="tab" aria-selected="true">
+        Texte de la Présentation
+      </button>
+      <button class="tab-btn" data-tab="tab-vocab" role="tab" aria-selected="false">
+        Cartes de Vocabulaire (20)
+      </button>
+      <button class="tab-btn" data-tab="tab-grammar" role="tab" aria-selected="false">
+        Exercices de Grammaire (20)
+      </button>
+    </nav>
+
+    <!-- =============================================== -->
+    <!-- TAB 1 : TEXTE DE LA PRÉSENTATION                -->
+    <!-- =============================================== -->
+    <main id="tab-text" class="tab-pane active" role="tabpanel">
+      
+      <div class="gloss-instructions">
+        <span>💡 <strong>Astuce de lecture :</strong> Cliquez sur les expressions soulignées pour afficher/masquer la traduction en anglais. La sélection et la copie à la souris restent libres.</span>
+        <button type="button" class="action-btn" id="btn-toggle-all-gloss">Tout afficher / masquer</button>
+      </div>
+
+      <h2 class="text-section-header">Texte de la Présentation</h2>
+
+      <h3 class="sub-header">Introduction : Trois cercles de vie</h3>
+      <p class="essay-p">
+        Bonjour à toutes et à tous. Aujourd’hui, j’ai le grand plaisir de <span class="gloss-word" data-en="to share with you">partager avec vous</span> une réflexion personnelle sur notre <span class="gloss-word" data-en="living environment">environnement de vie</span>. Pour bien comprendre où et comment nous vivons, il ne suffit pas de regarder seulement notre appartement ou notre rue. En réalité, notre existence s’organise en <span class="gloss-word" data-en="three interconnected circles">trois cercles interconnectés</span> : d’abord l’état général du monde dans lequel nous vivons en cette année 2026, ensuite la métropole dynamique de Berlin, et enfin notre environnement immédiat et paisible, le quartier de Steglitz. À chaque niveau, il y a des choses formidables que j’apprécie profondément, mais aussi des difficultés, des frustrations, et des aspects essentiels que <span class="gloss-word" data-en="I would like to see change">j’aimerais voir changer</span> à l’avenir.
+      </p>
+
+      <h3 class="sub-header">1. Le Monde en 2026 : Entre progrès technique et incertitudes collectives</h3>
+      <p class="essay-p">
+        Commençons par le cercle le plus large : notre planète aujourd’hui en 2026. Quand je regarde le monde actuel, je constate d’abord des progrès fascinants. 
+        Premièrement, ce qui me plaît beaucoup, c’est <span class="gloss-word" data-en="instant communication">la communication instantanée</span> et les outils de traduction automatique. Aujourd’hui, nous pouvons échanger sans barrière avec des correspondants du monde entier en quelques secondes. 
+        Deuxièmement, j’apprécie énormément <span class="gloss-word" data-en="universal access to knowledge">l'accès universel au savoir</span> : n’importe qui peut suivre un cours universitaire ou apprendre une langue étrangère en ligne depuis son salon. 
+        Troisièmement, le développement rapide des <span class="gloss-word" data-en="renewable energies">énergies renouvelables</span>, comme le solaire et l’éolien, me donne de l'espoir pour l'avenir énergétique. 
+        Quatrièmement, la généralisation du <span class="gloss-word" data-en="teleworking / remote work">télétravail</span> offre une grande liberté d'organisation et nous permet de collaborer avec des équipes internationales sans devoir voyager constamment. 
+        Cinquièmement, les progrès de la médecine moderne et des vaccins de nouvelle génération améliorent considérablement <span class="gloss-word" data-en="general well-being">le bien-être général</span> et la santé collective.
+      </p>
+      <p class="essay-p">
+        Cependant, notre monde en 2026 traverse également de graves crises qui m'inquiètent profondément. 
+        D’abord, ce que je déteste, c'est <span class="gloss-word" data-en="global warming">le réchauffement climatique</span> qui s'accélère et la pollution plastique tenace dans les océans. 
+        Ensuite, je n'aime pas du tout la prolifération de <span class="gloss-word" data-en="misinformation">la désinformation</span> et des fausses nouvelles sur les réseaux sociaux, qui détruisent la confiance entre les citoyens. 
+        Un troisième point très négatif est <span class="gloss-word" data-en="the fast-paced rhythm of life">le rythme de vie trop rapide</span> imposé par l'hyperconnexion permanente, qui engendre de l'anxiété et de l'épuisement mental. 
+        Quatrièmement, je regrette les <span class="gloss-word" data-en="growing inequalities">inégalités économiques grandissantes</span> entre les pays riches et les populations vulnérables. 
+        Enfin, je déplore notre <span class="gloss-word" data-en="excessive dependence on screens">dépendance excessive aux écrans</span>, qui affaiblit souvent la spontanéité des conversations humaines directes.
+      </p>
+      <p class="essay-p">
+        Pour notre planète, ce que <span class="gloss-word" data-en="I would sincerely like to see change">j'aimerais sincèrement voir changer</span>, c’est une réelle solidarité internationale avec des accords écologiques contraignants pour protéger la nature, et une régulation sage des algorithmes afin de remettre l'humain et le repos au centre de notre société.
+      </p>
+
+      <h3 class="sub-header">2. Berlin : L'énergie d'une métropole libre et contrastée</h3>
+      <p class="essay-p">
+        Resserrons maintenant notre regard sur Berlin, la ville où nous habitons. Berlin est une métropole tout à fait exceptionnelle qui ne ressemble à aucune autre capitale européenne. 
+        Premièrement, ce que j’adore à Berlin, c’est la présence abondante de la nature : il y a d’immenses <span class="gloss-word" data-en="green spaces and parks">espaces verts et parcs</span>, comme le Tiergarten ou le Tempelhofer Feld, où l'on peut respirer et faire du sport. 
+        Deuxièmement, <span class="gloss-word" data-en="public transportation">les transports en commun</span> sont remarquables : le réseau de métro, de trains urbains et de tramways fonctionne jour et nuit avec une excellente fréquence. 
+        Troisièmement, j’admire la liberté d’esprit, la tolérance et la grande diversité culturelle des habitants ; chacun peut s'habiller et vivre comme il le souhaite sans jugement. 
+        Quatrièmement, la vie culturelle est d'une richesse incroyable, avec ses dizaines de musées prestigieux, ses théâtres, ses galeries d'art et ses concerts accessibles. 
+        Cinquièmement, Berlin est une ville très plate dotée de nombreuses <span class="gloss-word" data-en="bike paths">pistes cyclables</span>, ce qui rend le vélo très agréable pendant la belle saison.
+      </p>
+      <p class="essay-p">
+        Mais Berlin a aussi des côtés sombres et irritants au quotidien. 
+        Le premier point noir, ce sont les longs mois d’hiver : le ciel reste gris, le froid est mordant et le manque de lumière solaire est difficile pour le moral. 
+        Le deuxième problème majeur concerne la bureaucratie : accomplir la moindre <span class="gloss-word" data-en="administrative procedure">démarche administrative</span> au Bürgeramt relève d'un parcours du combattant tellement les rendez-vous sont rares. 
+        Troisièmement, la pénurie de <span class="gloss-word" data-en="housing and high rents">logements et les loyers élevés</span> rendent l’installation des étudiants et des familles de plus en plus précaire. 
+        Quatrièmement, je regrette le manque d'entretien et la saleté visible dans certaines stations de métro et sur plusieurs avenues. 
+        Cinquièmement, les chantiers de construction permanents perturbent sans cesse la circulation et les horaires de train.
+      </p>
+      <p class="essay-p">
+        Ce que j’aimerais voir changer à Berlin, c'est une modernisation numérique rapide de l'administration publique pour supprimer les délais inutiles, un plan d'action efficace pour construire des appartements abordables, et une propreté municipale renforcée dans les espaces publics.
+      </p>
+
+      <h3 class="sub-header">3. Steglitz : La sérénité d'un quartier vert et familial</h3>
+      <p class="essay-p">
+        Arrivons enfin à notre échelle la plus intime : le quartier de Steglitz, situé dans le sud-ouest de Berlin. C'est ici que se déroule notre <span class="gloss-word" data-en="everyday life / daily routine">quotidien</span>, loin du tumulte des quartiers touristiques. 
+        D'abord, ce qui me plaît particulièrement à Steglitz, c’est <span class="gloss-word" data-en="the remarkable calmness">le calme remarquable</span> le soir et le week-end, propice au repos et au travail intellectuel. 
+        Deuxièmement, nous avons la chance d'habiter tout près du célèbre Jardin botanique, un véritable trésor végétal avec des serres historiques extraordinaires. 
+        Troisièmement, la grande artère commerçante de la Schloßstraße propose tous les magasins indispensables, des supermarchés aux librairies indépendantes, accessibles à pied. 
+        Quatrièmement, les rues résidentielles sont magnifiques, bordées d'arbres centenaires et de villas bourgeoises qui donnent une élégance intemporelle au quartier. 
+        Cinquièmement, on y ressent un très fort <span class="gloss-word" data-en="feeling of safety">sentiment de sécurité</span> et <span class="gloss-word" data-en="a real cleanliness">une réelle propreté</span> dans les rues et les petits parcs de quartier.
+      </p>
+      <p class="essay-p">
+        Néanmoins, Steglitz n'est pas parfait et possède aussi des limites évidentes. 
+        Premièrement, ce que je regrette, c'est le manque d’animation nocturne le week-end : après vingt heures, les rues deviennent presque désertes et il y a très peu de bars conviviaux. 
+        Deuxièmement, plusieurs petits commerces traditionnels ferment très tôt en fin d'après-midi, ce qui est peu pratique après le travail. 
+        Troisièmement, pendant <span class="gloss-word" data-en="rush hour">les heures de pointe</span>, la circulation automobile sur la Schloßstraße devient extrêmement dense, bruyante et polluée. 
+        Quatrièmement, le coût de la vie et de l'immobilier y est assez élevé, ce qui exclut une partie des jeunes actifs. 
+        Cinquièmement, l'offre de restaurants reste assez classique et traditionnelle ; il manque de cuisine du monde créative et abordable comme on en trouve à Kreuzberg ou Neukölln.
+      </p>
+      <p class="essay-p">
+        À Steglitz, ce que j’aimerais voir changer, ce serait la création de terrasses chaleureuses et de cafés de quartier ouverts le soir pour favoriser les rencontres entre voisins, ainsi que la piétonnisation partielle de certaines rues secondaires pour apaiser le trafic automobile.
+      </p>
+
+      <h3 class="sub-header">Conclusion : Trouver l'équilibre au quotidien</h3>
+      <p class="essay-p">
+        Pour conclure, notre environnement de vie n’est pas un espace figé, mais une relation constante entre notre chambre, notre quartier, notre ville et notre époque. Si le monde de 2026 nous oblige à rester vigilants face au climat et aux écrans, la vibrante ville de Berlin nous apporte l'énergie culturelle et la liberté. Steglitz, enfin, nous offre le calme indispensable pour nous ressourcer. En comprenant ce qui nous plaît et ce qui doit changer, nous pouvons participer activement à <span class="gloss-word" data-en="improve our daily life">améliorer notre quotidien</span> et préserver notre équilibre personnel. 
+      </p>
+      <p class="essay-p">
+        Je vous remercie chaleureusement pour votre attention et je suis prêt à répondre à vos questions ou à écouter vos propres impressions sur vos quartiers !
+      </p>
+
+    </main>
+
+    <!-- =============================================== -->
+    <!-- TAB 2 : CARTES DE VOCABULAIRE                   -->
+    <!-- =============================================== -->
+    <section id="tab-vocab" class="tab-pane" role="tabpanel">
+      
+      <div class="filter-bar">
+        <div class="filter-group">
+          <button type="button" class="filter-btn active" data-vfilter="all">Tous (20)</button>
+          <button type="button" class="filter-btn" data-vfilter="easy">Faciles (10)</button>
+          <button type="button" class="filter-btn" data-vfilter="diff">Difficiles (10)</button>
+        </div>
+        <div class="action-group">
+          <button type="button" class="action-btn" id="btn-reveal-all-cards">Tout révéler</button>
+          <button type="button" class="action-btn" id="btn-hide-all-cards">Tout masquer</button>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="vocab-cards-container">
+        <!-- Injected via JavaScript in randomized order -->
+      </div>
+
+    </section>
+
+    <!-- =============================================== -->
+    <!-- TAB 3 : EXERCICES DE GRAMMAIRE                  -->
+    <!-- =============================================== -->
+    <section id="tab-grammar" class="tab-pane" role="tabpanel">
+      
+      <div class="score-banner">
+        <div class="score-stat">
+          Progression : <strong id="score-counter">0 / 20</strong> questions résolues
+        </div>
+        <div class="filter-group">
+          <button type="button" class="filter-btn active" data-gfilter="all">Toutes (20)</button>
+          <button type="button" class="filter-btn" data-gfilter="easy">Faciles (10)</button>
+          <button type="button" class="filter-btn" data-gfilter="diff">Difficiles (10)</button>
+        </div>
+      </div>
+
+      <div class="cloze-list" id="grammar-cloze-container">
+        <!-- Injected via JavaScript in randomized order -->
+      </div>
+
+    </section>
+
+  </div>
+
+  <script>
+    /* ========================================================= */
+    /* DATA STORE: 20 Vocabulary Flashcards                      */
+    /* ========================================================= */
+    const VOCAB_DATA = [
+      // 10 Easy Cards
+      { id: 'v1', level: 'easy', en: 'the environment', fr: "l'environnement (m.)", ctx: 'Notre environnement de vie façonne nos journées.' },
+      { id: 'v2', level: 'easy', en: 'the neighborhood / district', fr: 'le quartier', ctx: 'Steglitz est un quartier calme et familial de Berlin.' },
+      { id: 'v3', level: 'easy', en: 'everyday life / daily routine', fr: 'le quotidien', ctx: 'Le télétravail a transformé notre quotidien.' },
+      { id: 'v4', level: 'easy', en: 'nature', fr: 'la nature', ctx: 'Il y a beaucoup d’espaces pour profiter de la nature.' },
+      { id: 'v5', level: 'easy', en: 'housing / accommodation', fr: 'le logement', ctx: 'La recherche d’un logement est difficile dans la capitale.' },
+      { id: 'v6', level: 'easy', en: 'public transit / transportation', fr: 'le transport en commun', ctx: 'Prendre le transport en commun est très pratique.' },
+      { id: 'v7', level: 'easy', en: 'cleanliness', fr: 'la propreté', ctx: 'Les résidents apprécient la propreté de leurs rues.' },
+      { id: 'v8', level: 'easy', en: 'calmness / quietness', fr: 'le calme', ctx: 'Le soir, le calme règne dans les allées résidentielles.' },
+      { id: 'v9', level: 'easy', en: 'to share', fr: 'partager', ctx: 'J’ai le plaisir de partager mon expérience avec vous.' },
+      { id: 'v10', level: 'easy', en: 'to improve', fr: 'améliorer', ctx: 'Nous cherchons tous des moyens d’améliorer notre vie.' },
+      
+      // 10 Difficult Cards
+      { id: 'v11', level: 'diff', en: 'global warming / climate change', fr: 'le réchauffement climatique', ctx: 'Le réchauffement climatique menace les équilibres naturels.' },
+      { id: 'v12', level: 'diff', en: 'renewable energies', fr: 'les énergies renouvelables (f.pl.)', ctx: 'Le solaire et l’éolien représentent les énergies renouvelables.' },
+      { id: 'v13', level: 'diff', en: 'misinformation / fake news', fr: 'la désinformation', ctx: 'La désinformation se répand trop vite sur internet.' },
+      { id: 'v14', level: 'diff', en: 'growing inequalities', fr: 'les inégalités (f.pl.) grandissantes', ctx: 'Les inégalités entre régions créent des tensions.' },
+      { id: 'v15', level: 'diff', en: 'a green space / park', fr: 'un espace vert', ctx: 'Le Tiergarten est un immense espace vert au centre.' },
+      { id: 'v16', level: 'diff', en: 'an administrative procedure', fr: 'une démarche administrative', ctx: 'Faire une démarche administrative demande de la patience.' },
+      { id: 'v17', level: 'diff', en: 'a bike path / cycle lane', fr: 'une piste cyclable', ctx: 'La mairie construit une nouvelle piste cyclable sécurisée.' },
+      { id: 'v18', level: 'diff', en: 'rush hour / peak hours', fr: 'les heures de pointe (f.pl.)', ctx: 'Aux heures de pointe, la circulation est saturée.' },
+      { id: 'v19', level: 'diff', en: 'a feeling / sense of safety', fr: 'un sentiment de sécurité', ctx: 'Les promeneurs éprouvent un fort sentiment de sécurité.' },
+      { id: 'v20', level: 'diff', en: 'well-being', fr: 'le bien-être', ctx: 'Un équilibre sain favorise le bien-être général.' }
+    ];
+
+    /* ========================================================= */
+    /* DATA STORE: 20 Grammar Cloze Questions                    */
+    /* ========================================================= */
+    const GRAMMAR_DATA = [
+      // 10 Easy Cloze Questions
+      {
+        id: 'g1',
+        level: 'easy',
+        topic: 'Conditionnel présent (aimer)',
+        before: 'Si je pouvais choisir mon logement idéal, j’',
+        answer: 'aimerais',
+        after: ' habiter tout près d’un grand jardin botanique.',
+        hint: 'aimerais'
+      },
+      {
+        id: 'g2',
+        level: 'easy',
+        topic: 'Préposition devant les villes',
+        before: 'En ce moment, nous habitons ',
+        answer: 'à',
+        after: ' Berlin depuis plusieurs années.',
+        hint: 'à'
+      },
+      {
+        id: 'g3',
+        level: 'easy',
+        topic: 'Préposition devant les pays féminins',
+        before: 'Il y a de magnifiques pistes cyclables ',
+        answer: 'en',
+        after: ' Allemagne pour se déplacer le week-end.',
+        hint: 'en'
+      },
+      {
+        id: 'g4',
+        level: 'easy',
+        topic: 'Préposition (dans le monde)',
+        before: 'Les technologies relient les citoyens partout ',
+        answer: 'dans',
+        after: ' le monde en temps réel.',
+        hint: 'dans'
+      },
+      {
+        id: 'g5',
+        level: 'easy',
+        topic: 'Négation simple (ne... pas)',
+        before: 'Dans cette rue calme de Steglitz, il n’y a ',
+        answer: 'pas',
+        after: ' de bruit de moteurs après vingt heures.',
+        hint: 'pas'
+      },
+      {
+        id: 'g6',
+        level: 'easy',
+        topic: 'Comparatif de supériorité (plus... que)',
+        before: 'Le centre de la capitale est souvent ',
+        answer: 'plus',
+        after: ' bruyant que notre quartier résidentiel.',
+        hint: 'plus'
+      },
+      {
+        id: 'g7',
+        level: 'easy',
+        topic: 'Pronom relatif sujet (qui)',
+        before: 'J’apprécie beaucoup les espaces verts ',
+        answer: 'qui',
+        after: ' permettent de faire du sport en plein air.',
+        hint: 'qui'
+      },
+      {
+        id: 'g8',
+        level: 'easy',
+        topic: 'Futur proche (aller au présent)',
+        before: 'Demain matin, nous ',
+        answer: 'allons',
+        after: ' visiter une nouvelle librairie de la Schloßstraße.',
+        hint: 'allons'
+      },
+      {
+        id: 'g9',
+        level: 'easy',
+        topic: 'Article partitif et quantité (moins de)',
+        before: 'Pour protéger la faune marine, il faut consommer moins ',
+        answer: 'de',
+        after: ' plastique à usage unique.',
+        hint: 'de'
+      },
+      {
+        id: 'g10',
+        level: 'easy',
+        topic: 'Pronom complément d’objet direct (la)',
+        before: 'Cette ville ouverte et multiculturelle, je ',
+        answer: 'la',
+        after: ' trouve très inspirante au quotidien.',
+        hint: 'la'
+      },
+
+      // 10 Difficult Cloze Questions
+      {
+        id: 'g11',
+        level: 'diff',
+        topic: 'Conditionnel de pouvoir (3e personne pluriel)',
+        before: 'Avec un meilleur réseau cyclable, les résidents ',
+        answer: 'pourraient',
+        after: ' circuler en sécurité à toute heure.',
+        hint: 'pourraient'
+      },
+      {
+        id: 'g12',
+        level: 'diff',
+        topic: 'Verbe pronominal (se plaindre au présent)',
+        before: 'Les usagers ',
+        answer: 'se plaignent',
+        after: ' parfois de la lenteur des démarches administratives.',
+        hint: 'se plaignent'
+      },
+      {
+        id: 'g13',
+        level: 'diff',
+        topic: 'Négation restrictive (ne... que)',
+        before: 'Le soir à Steglitz, il ',
+        answer: 'ne',
+        after: ' reste que de rares cafés ouverts après vingt heures.',
+        hint: 'ne'
+      },
+      {
+        id: 'g14',
+        level: 'diff',
+        topic: 'Pronom relatif de lieu (où)',
+        before: 'C’est un quartier paisible ',
+        answer: 'où',
+        after: ' l’on peut se reposer après une longue journée.',
+        hint: 'où'
+      },
+      {
+        id: 'g15',
+        level: 'diff',
+        topic: 'Pronom relatif objet direct (que)',
+        before: 'Les transports en commun ',
+        answer: 'que',
+        after: ' vous prenez tous les matins sont très réguliers.',
+        hint: 'que'
+      },
+      {
+        id: 'g16',
+        level: 'diff',
+        topic: 'Conditionnel d’obligation (devoir au singulier)',
+        before: 'Pour lutter contre la crise du logement, la mairie ',
+        answer: 'devrait',
+        after: ' encourager la rénovation d’immeubles.',
+        hint: 'devrait'
+      },
+      {
+        id: 'g17',
+        level: 'diff',
+        topic: 'Négation totale (ne... rien)',
+        before: 'Sans connexion internet moderne, on ne peut ',
+        answer: 'rien',
+        after: ' accomplir au travail de bureau.',
+        hint: 'rien'
+      },
+      {
+        id: 'g18',
+        level: 'diff',
+        topic: 'Négation de rupture temporelle (ne... plus)',
+        before: 'Après cette expérience éprouvante, je ne veux ',
+        answer: 'plus',
+        after: ' vivre dans un boulevard saturé de camions.',
+        hint: 'plus'
+      },
+      {
+        id: 'g19',
+        level: 'diff',
+        topic: 'Superlatif d’intensité (les plus)',
+        before: 'La Schloßstraße est l’une des artères les ',
+        answer: 'plus',
+        after: ' animées et commerçantes du sud de Berlin.',
+        hint: 'plus'
+      },
+      {
+        id: 'g20',
+        level: 'diff',
+        topic: 'Conditionnel réfléchi (s’installer au pluriel)',
+        before: 'Si les loyers étaient modérés, de nombreux étudiants ',
+        answer: 's’installeraient',
+        after: ' volontiers dans ce quartier vert.',
+        hint: 's’installeraient'
+      }
+    ];
+
+    /* ========================================================= */
+    /* UTILITY: Seeded/Random Shuffle Function                   */
+    /* ========================================================= */
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Normalize input string for comparison (accent tolerant, trim, lowercase, apostrophe handling)
+    function normalizeStr(str) {
+      if (!str) return '';
+      return str.trim()
+        .toLowerCase()
+        .replace(/[’']/g, "'")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""); // strip diacritics for flexible matching
+    }
+
+    /* ========================================================= */
+    /* INITIALIZATION & LOGIC                                    */
+    /* ========================================================= */
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* 1. Tab Switching */
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          tabPanes.forEach(p => p.classList.remove('active'));
+
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          const targetPane = document.getElementById(btn.dataset.tab);
+          if (targetPane) targetPane.classList.add('active');
+        });
+      });
+
+      /* 2. Presentation Text: Drag-Safe Click & Ctrl-Click Glossing */
+      let isDragging = false;
+      let startX = 0, startY = 0;
+
+      document.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        startY = e.clientY;
+        isDragging = false;
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (Math.abs(e.clientX - startX) > 5 || Math.abs(e.clientY - startY) > 5) {
+          isDragging = true;
+        }
+      });
+
+      const glossWords = document.querySelectorAll('.gloss-word');
+      glossWords.forEach(word => {
+        const enTranslation = word.getAttribute('data-en');
+        const tag = document.createElement('span');
+        tag.className = 'gloss-tag';
+        tag.textContent = `[${enTranslation}]`;
+        word.appendChild(tag);
+
+        word.addEventListener('click', (e) => {
+          // If user selected text to copy, do not toggle
+          const selection = window.getSelection();
+          if (selection && selection.toString().trim().length > 0) {
+            return;
+          }
+          if (isDragging) return;
+
+          // Toggle this item
+          word.classList.toggle('active');
+        });
+      });
+
+      // Toggle All Gloss Button
+      const btnToggleAllGloss = document.getElementById('btn-toggle-all-gloss');
+      let allGlossVisible = false;
+      btnToggleAllGloss.addEventListener('click', () => {
+        allGlossVisible = !allGlossVisible;
+        glossWords.forEach(w => {
+          if (allGlossVisible) w.classList.add('active');
+          else w.classList.remove('active');
+        });
+        btnToggleAllGloss.textContent = allGlossVisible ? 'Tout masquer' : 'Tout afficher';
+      });
+
+      /* 3. Vocabulary Cards: Render in Randomized Order */
+      const shuffledVocab = shuffleArray(VOCAB_DATA);
+      const vocabContainer = document.getElementById('vocab-cards-container');
+
+      shuffledVocab.forEach(item => {
+        const card = document.createElement('div');
+        card.className = `flashcard v-item-${item.level}`;
+        card.dataset.level = item.level;
+        card.dataset.id = item.id;
+
+        const badgeClass = item.level === 'easy' ? 'badge-easy' : 'badge-diff';
+        const badgeLabel = item.level === 'easy' ? 'Facile' : 'Difficile';
+
+        card.innerHTML = `
+          <div class="card-top">
+            <div class="card-source">${item.en}</div>
+            <span class="level-badge ${badgeClass}">${badgeLabel}</span>
+          </div>
+          <div class="card-hint-click">▶ Cliquez pour voir la traduction française</div>
+          <div class="card-target-box">
+            <div class="card-target">${item.fr}</div>
+            <div class="card-context">« ${item.ctx} »</div>
+          </div>
+        `;
+
+        card.addEventListener('click', () => {
+          card.classList.toggle('revealed');
+        });
+
+        vocabContainer.appendChild(card);
+      });
+
+      // Vocabulary Filters
+      const vFilterButtons = document.querySelectorAll('[data-vfilter]');
+      vFilterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          vFilterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.vfilter;
+
+          const cards = vocabContainer.querySelectorAll('.flashcard');
+          cards.forEach(card => {
+            if (filter === 'all' || card.dataset.level === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Vocab Reveal/Hide All Controls
+      document.getElementById('btn-reveal-all-cards').addEventListener('click', () => {
+        vocabContainer.querySelectorAll('.flashcard').forEach(c => c.classList.add('revealed'));
+      });
+      document.getElementById('btn-hide-all-cards').addEventListener('click', () => {
+        vocabContainer.querySelectorAll('.flashcard').forEach(c => c.classList.remove('revealed'));
+      });
+
+      /* 4. Grammar Cloze: Render in Randomized Order with Instant Validation & Hints */
+      const shuffledGrammar = shuffleArray(GRAMMAR_DATA);
+      const grammarContainer = document.getElementById('grammar-cloze-container');
+      const scoreCounter = document.getElementById('score-counter');
+      const solvedSet = new Set();
+
+      function updateScore() {
+        scoreCounter.textContent = `${solvedSet.size} / ${shuffledGrammar.length}`;
+      }
+
+      shuffledGrammar.forEach((item, index) => {
+        const clozeCard = document.createElement('div');
+        clozeCard.className = `cloze-item g-item-${item.level}`;
+        clozeCard.dataset.level = item.level;
+        clozeCard.dataset.id = item.id;
+
+        const badgeClass = item.level === 'easy' ? 'badge-easy' : 'badge-diff';
+        const badgeLabel = item.level === 'easy' ? 'Facile' : 'Difficile';
+
+        clozeCard.innerHTML = `
+          <div class="cloze-header">
+            <span class="cloze-topic">${item.topic}</span>
+            <span class="level-badge ${badgeClass}">${badgeLabel}</span>
+          </div>
+          <div class="cloze-prompt">
+            ${item.before}<input type="text" class="cloze-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="..." data-answer="${item.answer}">${item.after}
+          </div>
+          <div class="cloze-controls">
+            <div class="cloze-status" id="status-${item.id}">Tapez la réponse ci-dessus</div>
+            <button type="button" class="hint-btn" id="hint-btn-${item.id}">Indice (+1 lettre)</button>
+          </div>
+        `;
+
+        const input = clozeCard.querySelector('.cloze-input');
+        const status = clozeCard.querySelector(`#status-${item.id}`);
+        const hintBtn = clozeCard.querySelector(`#hint-btn-${item.id}`);
+
+        let hintLettersRevealed = 0;
+
+        // Auto-check function
+        function checkInput() {
+          const userVal = input.value;
+          const targetAnswer = item.answer;
+
+          // Check normalized exact string
+          const isMatch = normalizeStr(userVal) === normalizeStr(targetAnswer);
+
+          if (isMatch) {
+            input.value = targetAnswer; // restore exact pretty typography if needed
+            input.classList.add('correct');
+            input.readOnly = true;
+            clozeCard.classList.add('solved');
+            status.textContent = '✓ Correct !';
+            status.classList.add('correct-text');
+            hintBtn.disabled = true;
+            solvedSet.add(item.id);
+            updateScore();
+          } else {
+            input.classList.remove('correct');
+            clozeCard.classList.remove('solved');
+            status.textContent = 'Tapez la réponse ci-dessus';
+            status.classList.remove('correct-text');
+            solvedSet.delete(item.id);
+            updateScore();
+          }
+        }
+
+        input.addEventListener('input', checkInput);
+
+        // Hint Button logic: appends next letter of answer
+        hintBtn.addEventListener('click', () => {
+          hintLettersRevealed++;
+          const partial = item.answer.substring(0, hintLettersRevealed);
+          input.value = partial;
+          checkInput();
+          if (hintLettersRevealed >= item.answer.length) {
+            hintBtn.disabled = true;
+          }
+        });
+
+        grammarContainer.appendChild(clozeCard);
+      });
+
+      // Grammar Filters
+      const gFilterButtons = document.querySelectorAll('[data-gfilter]');
+      gFilterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          gFilterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.gfilter;
+
+          const items = grammarContainer.querySelectorAll('.cloze-item');
+          items.forEach(item => {
+            if (filter === 'all' || item.dataset.level === filter) {
+              item.style.display = 'flex';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+    });
+  </script>
+</body>
+</html>

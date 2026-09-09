@@ -1,0 +1,96 @@
+# Create Topic Preparations
+
+## Basic info
+
+- the topic is: "Vous êtes en voyage et vous rencontrez quelqu’un qui vous demande de lui parler des traditions culinaires de votre localité, ce que les gens aiment manger, ce qu’ils n’aiment pas manger et pourquoi."
+- the number of different topic presentations to create is: 1
+- the language to create the presentations in is: French
+- the linguistic level to write the text in is: B1
+- your audience is addressed with: vous (not tu)
+- English is the source language, French is the target language
+
+## Technical specs
+
+- a topic presentation is a self-contained HTML file with CSS and JavaScript all in one file
+- you don't need to create images or links
+- first, choose a short but unique id-code to identify the folder and names of the presentation files
+	- the code should identify the topic at first glance, e.g. "living-environments"
+	- the code should be in English
+	- create a directory with this code-name under dev\topic-presentations
+	- inside that directory, each presentation is then called e.g.
+		- "living-environments-001.html"
+		- "living-environments-002.html"
+		- "living-environments-003.html"
+- theme and typography:
+	- warm espresso/dark kraft background (`#1e1b18`) with warm ivory text (`#e8e1d5`)
+	- font is 'Courier Prime' (crisp, authentic typewriter font), easy to read, not too small
+	- layout is very clean, like a university essay typed on a typewriter
+	- main presentation text must be left-aligned (not full-justified)
+- layout and structure:
+	- single continuous page with all sections displayed sequentially (no tabs) in this order:
+		1. "Cartes de Vocabulaire"
+		2. "Exercices de Grammaire"
+		3. "Texte de la Présentation"
+- vocabulary flashcards:
+	- title is just "Cartes de Vocabulaire", nothing else (no counts, no controls)
+	- 10 cards based on words from the text
+	- display order is randomized
+	- do not number the cards (e.g. do not display "#1")
+	- do not write helper instructions like "Cliquez pour afficher la traduction et l'exemple"
+	- cards shouldn't flip over: show the TARGET language phrase on top (e.g. "la bureaucratie"); clicking reveals the TARGET language explanation underneath along with a TARGET language example sentence (completely monolingual in the target language; do not use brackets "[]")
+	- accordion behavior: clicking a card toggles it open and closes any other open card (only one card open at a time); allow the user to click anywhere on an open card to close it back up (while preserving text selection so highlighting/copying text inside the card does not close it)
+	- no "Tout révéler" or "Tout masquer" buttons
+- grammar cloze exercises:
+	- title is simply "Exercices de Grammaire", nothing else (no counts, no controls)
+	- 10 cloze questions testing grammar structures used in the text (drawn directly from sentences in the presentation text)
+	- display order is randomized
+	- do not label or number them (e.g. do not show "Exercice #1")
+	- no "Progression" box or counter (e.g. no "X / 10 résolues")
+	- remove any "correct" status message
+	- real-time validation: turns green immediately when the correct answer is typed (case-insensitive and accent-tolerant; no "verify" button needed)
+	- when an answer is correct: the answer becomes part of the normal text formatted in bold green (`#95d5b2`, bold, no input box border or background) so that the user can seamlessly select and copy any part of the answer and surrounding text easily; cursor/focus automatically moves to the next grammar item's input box for immediate testing of the next item (when the 10th/final item is correct, it simply turns into normal green text)
+	- no "hint" / "Indice" button; instead, when the user types "?", this triggers a hint: the "?" is consumed (not displayed in the input) and fills in the next character of the correct answer (or fills the first character if empty)
+	- never have an answer that has a question mark in it
+
+## Content
+
+### Entirety
+	- no large, grand introduction panel with details, just the main title e.g. "Mon Environnement de Vie : Du Monde Global à Mon Quartier de Steglitz"
+
+### Vocabulary Section
+	- title is simply "Cartes de Vocabulaire" (nothing else)
+	- 10 flashcards of vocabulary words used in the main text
+	- randomized initial order
+	- no card numbering, no helper/click instructions, no reveal/hide-all buttons
+	- front shows TARGET language phrase (e.g. "la bureaucratie"); toggles TARGET language explanation and TARGET language example (monolingual)
+	- only one card open at a time; clicking anywhere on an open card closes it back up (text selection inside remains possible without closing)
+
+### Grammar Section
+	- title is simply "Exercices de Grammaire" (nothing else)
+	- 10 cloze questions testing grammar topics used in the main text (e.g. conditionnel présent, prepositions, negations, relative pronouns, comparatives, pronominal verbs), drawn directly from sentences in the presentation text
+	- randomized initial order
+	- no "Exercice #1" labels, no progression box, no "correct" messages
+	- typing "?" is consumed and fills in the next character of the answer
+	- auto-advance cursor to next input immediately upon typing the correct answer; the answer becomes normal bold green text so user can select and copy any part of the text and answer seamlessly
+
+### Presentation Text
+	- a text that can be read as a presentation in 10 minutes (~1,000–1,200 words at A2 speaking pace)
+	- a wide range of appropriate A2 vocabulary about the topic
+	- a well-structured format: flowing essay prose with clear thematic transitions where all likes (5) and dislikes (5) for each environment are distinct and prominent (no "desired changes")
+	- the main text must be left-aligned, not full-justified
+	- the only headers should be "Texte de la Présentation" and narrative sub-headers, e.g. "Introduction : Trois cercles de vie"
+	- no timestamps or charts, just text like a university essay typed on a typewriter
+	- do not include any user instructions (e.g. do not write "Cliquez sur un mot souligné...")
+	- do not include a "Tout afficher / masquer" toggle button
+	- interactive glossing: difficult vocabulary words or phrases in the text are clickable to toggle an explanation card/box directly under the line in which the word appears, not under the entire paragraph in which it appears
+		- display as an anchored floating popover/card positioned directly beneath the clicked word/line without breaking the paragraph layout
+		- gloss the 10 vocabulary flashcard words plus 10–15 additional idiomatic A2 expressions (approx. 20–25 glossed terms total)
+		- the card content must be in the TARGET language (French): an explanation in French and another example of that word or phrase used in a different context in French (do not use brackets "[]")
+		- for words that also appear in the vocabulary flashcards, the example sentence in the pop-in card must be DIFFERENT from the example sentence used in the flashcard
+		- clicking a vocabulary word closes all other open gloss popovers (only one open at a time); clicking the active word again closes it
+		- allow the user to select and copy text inside the explanation card and within the text without the card closing again
+		- Ctrl-click also supported to toggle
+
+### testing
+
+	- you don't need to test the created file in the browser, just create it and you're finished
