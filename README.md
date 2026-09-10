@@ -78,7 +78,7 @@ NUXT_PUBLIC_BYPASS_AUTH=false
 
 ## Publish a new version at Hetzner
 
-- pre-flight checks:
+- before publishing
     - verify all roadmap items for this version are correctly labeled as BUGFIX or FEATURE
     - make sure the version is marked as published in Version Management (so the version number appears in the site footer)
 - merge version into main
