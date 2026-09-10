@@ -4,6 +4,10 @@ import { ref, watch, nextTick } from 'vue'
 interface Tag {
   id: string
   abbreviation: string
+  description?: string
+  _count?: {
+    flashcards: number
+  }
 }
 interface FlashcardTag { tag: Tag }
 interface Flashcard { tags: FlashcardTag[] }
@@ -22,9 +26,34 @@ const emit = defineEmits<{
   (e: 'submit-new-tag'): void
 }>()
 
+const showAllTags = ref(false)
+
 function hasTag(abbreviation: string) {
   return props.currentCard.tags.some(t => t.tag.abbreviation === abbreviation)
 }
+
+// Sort tags based on times used (descending)
+const sortedTags = computed(() => {
+  return [...props.allTags].sort((a, b) => {
+    const countA = a._count?.flashcards ?? 0
+    const countB = b._count?.flashcards ?? 0
+    if (countB !== countA) return countB - countA
+    return a.abbreviation.localeCompare(b.abbreviation)
+  })
+})
+
+// Hide tags used less than 5 times unless active on current card or showAllTags is true
+const visibleTags = computed(() => {
+  if (showAllTags.value) return sortedTags.value
+  return sortedTags.value.filter(tag => {
+    const count = tag._count?.flashcards ?? 0
+    return count >= 5 || hasTag(tag.abbreviation)
+  })
+})
+
+const hasHiddenTags = computed(() => {
+  return sortedTags.value.some(tag => (tag._count?.flashcards ?? 0) < 5 && !hasTag(tag.abbreviation))
+})
 
 const newTagInputEl = ref<HTMLInputElement | null>(null)
 
@@ -40,16 +69,28 @@ watch(isAddingTag, async (val) => {
   <div class="bg-gray-50 dark:bg-gray-950 p-3 rounded-xl border border-gray-100 dark:border-gray-800/60">
     <div class="flex flex-wrap gap-2 items-center justify-center">
       <button
-        v-for="tag in allTags"
+        v-for="tag in visibleTags"
         :key="tag.id"
         @click.stop="$emit('toggle-tag', tag.abbreviation)"
         :class="[
-          'text-[10px] px-2 py-1 rounded-lg border font-bold transition-all duration-150 uppercase tracking-wide',
+          'text-[10px] px-2 py-1 rounded-lg border font-bold transition-all duration-150 uppercase tracking-wide cursor-pointer',
           hasTag(tag.abbreviation)
             ? 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600'
             : 'bg-transparent text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 opacity-85 hover:opacity-100'
         ]"
       >{{ tag.abbreviation }}</button>
+
+      <!-- [...] button to show/hide tags used less than 5 times -->
+      <button
+        v-if="hasHiddenTags || showAllTags"
+        type="button"
+        @click.stop="showAllTags = !showAllTags"
+        class="text-[10px] px-2 py-1 rounded-lg border font-bold transition-all duration-150 uppercase tracking-wide cursor-pointer"
+        :class="showAllTags ? 'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border-indigo-300 dark:border-indigo-700' : 'bg-transparent text-gray-400 dark:text-gray-500 border-dashed border-gray-300 dark:border-gray-700 hover:text-gray-600 dark:hover:text-gray-300'"
+        :title="showAllTags ? 'Hide infrequent tags' : 'Show all tags'"
+      >
+        {{ showAllTags ? '[-]' : '[...]' }}
+      </button>
 
       <!-- + tag button / input -->
       <button v-if="!isAddingTag" @click.stop="isAddingTag = true"

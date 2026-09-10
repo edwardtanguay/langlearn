@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { ArrowRightOnRectangleIcon, TrashIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
+import { ArrowRightOnRectangleIcon, TrashIcon, ExclamationTriangleIcon, SunIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - User Profile',
@@ -9,9 +9,13 @@ useHead({
   ]
 })
 
+const { isSunMode, toggleSunMode } = useSunMode()
+
+const config = useRuntimeConfig()
+const isBypass = computed(() => Boolean(config.public.bypassAuth))
 const auth = useAuth()
-const loggedIn = computed(() => auth?.loggedIn ?? false)
-const user = computed(() => auth?.user ?? null)
+const loggedIn = computed(() => isBypass.value ? true : (auth?.loggedIn ?? false))
+const user = computed(() => isBypass.value ? { given_name: 'Edward', family_name: 'Tanguay', email: 'edwardtanguay@gmail.com', picture: null } : (auth?.user ?? null))
 
 // Redirect if not logged in
 onMounted(() => {
@@ -216,6 +220,35 @@ const handleLogout = () => {
           </div>
           <p v-if="groupSizeSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Testing group size saved!</p>
         </form>
+
+        <!-- Sun Mode Setting Section -->
+        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <SunIcon class="w-5 h-5 text-amber-500 shrink-0" />
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                Sun Mode
+              </span>
+            </div>
+            <!-- Toggle Switch -->
+            <button
+              type="button"
+              @click="toggleSunMode"
+              class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden"
+              :class="isSunMode ? 'bg-amber-500' : 'bg-gray-200 dark:bg-gray-700'"
+              role="switch"
+              :aria-checked="isSunMode"
+            >
+              <span
+                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
+                :class="isSunMode ? 'translate-x-5' : 'translate-x-0'"
+              />
+            </button>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            Sun mode is designed for when you use LangLearn outside in bright sunlight. It keeps your dark background while making all text and symbols much brighter and bolder so everything remains easy to read under the sun.
+          </p>
+        </div>
 
         <!-- Account Stats & Details -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-4">

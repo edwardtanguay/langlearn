@@ -74,6 +74,10 @@ function openVousToTuSearch() {
   window.open(url, '_blank')
 }
 
+const emit = defineEmits<{
+  (e: 'open-examples', word: string): void
+}>()
+
 const stripFormatting = (text: string) => {
   if (!text) return ''
   return text.replace(/[\*<>]/g, '')
@@ -83,22 +87,34 @@ const renderFrontTextWithHighlights = (text: string) => {
   if (!text) return ''
   // Replace <verb> with solid underline & amber tint
   let result = text.replace(/<([^>]+)>/g, '<span class="border-b-2 border-amber-400 dark:border-amber-400 bg-amber-500/20 dark:bg-amber-500/25 px-1 rounded-sm">$1</span>')
-  // Replace *text* with dashed underline
-  result = result.replace(/\*(.*?)\*/g, '<span class="border-b border-dashed border-gray-400 dark:border-white/60 bg-gray-200/40 dark:bg-white/10 px-1 rounded-sm">$1</span>')
+  // Replace *text* with dashed underline and clickable example word
+  result = result.replace(/\*(.*?)\*/g, '<span data-example-word="$1" class="border-b border-dashed border-gray-400 dark:border-white/60 bg-gray-200/40 dark:bg-white/10 px-1 rounded-sm cursor-pointer hover:bg-amber-500/20 hover:border-amber-400 transition-colors" title="View 3 examples with \'$1\'">$1</span>')
   return result
+}
+
+function handleTextClick(event: MouseEvent) {
+  const target = event.target as HTMLElement
+  const exampleEl = target.closest('[data-example-word]') as HTMLElement | null
+  if (exampleEl) {
+    event.stopPropagation()
+    const word = exampleEl.getAttribute('data-example-word')
+    if (word) {
+      emit('open-examples', word)
+    }
+  }
 }
 
 const getTextClass = (text: string) => {
   const clean = stripFormatting(text)
   const len = clean ? clean.length : 0
   if (len < 30) {
-    return 'text-2xl sm:text-3xl text-center leading-tight max-w-md'
+    return 'text-2xl sm:text-3xl text-center leading-tight max-w-md select-text'
   } else if (len < 60) {
-    return 'text-xl sm:text-3xl text-center leading-tight max-w-md'
+    return 'text-xl sm:text-3xl text-center leading-tight max-w-md select-text'
   } else if (len < 100) {
-    return 'text-lg sm:text-2xl text-center leading-tight max-w-md'
+    return 'text-lg sm:text-2xl text-center leading-tight max-w-md select-text'
   } else {
-    return 'text-base sm:text-xl line-clamp-3 text-center leading-tight max-w-md'
+    return 'text-base sm:text-xl line-clamp-3 text-center leading-tight max-w-md select-text'
   }
 }
 </script>
@@ -111,7 +127,7 @@ const getTextClass = (text: string) => {
     <!-- Language badge (Absolute) -->
     <div class="absolute bottom-3 left-0 z-10 pointer-events-none backface-hidden">
       <div 
-        class="text-[12px] font-black tracking-wider uppercase pl-4 pr-24 h-[32px] flex items-center !text-white pointer-events-auto transition-transform"
+        class="text-[12px] font-black tracking-wider uppercase pl-4 pr-24 h-[32px] flex items-center !text-white pointer-events-auto transition-transform select-none"
         :class="{ 'animate-lang-flicker': isFlickering }"
         :style="{ 
           background: `linear-gradient(45deg, ${languageColors[currentCard.backLanguage] || '#4f46e5'} 20%, transparent 85%)`,
@@ -134,6 +150,7 @@ const getTextClass = (text: string) => {
       <p 
         :class="getTextClass(currentCard.front)"
         v-html="renderFrontTextWithHighlights(currentCard.front)"
+        @click="handleTextClick"
       ></p>
       <!-- Memory Hook below front text with pulsating effect -->
       <Transition name="fade-mnemonic">

@@ -91,6 +91,24 @@ async function main() {
     }
   }
 
+  // Ensure pronunciationStatus column exists on Flashcard table
+  try {
+    await client.execute("ALTER TABLE Flashcard ADD COLUMN pronunciationStatus TEXT DEFAULT 'UNTESTED';")
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
+  // Ensure pronunciationTimesTaken column exists on Flashcard table
+  try {
+    await client.execute('ALTER TABLE Flashcard ADD COLUMN pronunciationTimesTaken INTEGER DEFAULT 0;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   // Ensure testingGroupSize column exists on User table
   try {
     await client.execute('ALTER TABLE User ADD COLUMN testingGroupSize INTEGER DEFAULT 10;')

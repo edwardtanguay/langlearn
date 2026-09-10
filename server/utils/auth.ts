@@ -2,6 +2,32 @@ import { H3Event } from 'h3'
 import { prisma } from './prisma'
 
 export async function requireAuth(event: H3Event) {
+  if (process.env.NUXT_PUBLIC_BYPASS_AUTH === 'true') {
+    let dbUser = await prisma.user.findFirst({
+      where: { role: 'admin' }
+    }) || await prisma.user.findFirst()
+
+    if (!dbUser) {
+      dbUser = await prisma.user.create({
+        data: {
+          email: 'edwardtanguay@gmail.com',
+          firstName: 'Edward',
+          lastName: 'Tanguay',
+          role: 'admin'
+        }
+      })
+    }
+
+    return {
+      id: dbUser.id,
+      email: dbUser.email,
+      given_name: dbUser.firstName,
+      family_name: dbUser.lastName,
+      role: dbUser.role,
+      dbId: dbUser.id
+    }
+  }
+
   const kinde = event.context.kinde
   if (!kinde) {
     throw createError({

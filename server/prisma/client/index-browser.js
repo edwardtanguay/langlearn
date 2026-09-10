@@ -182,6 +182,8 @@ exports.Prisma.FlashcardScalarFieldEnum = {
   memoryHook: 'memoryHook',
   nextTestTime: 'nextTestTime',
   timesShownDragDrop: 'timesShownDragDrop',
+  pronunciationStatus: 'pronunciationStatus',
+  pronunciationTimesTaken: 'pronunciationTimesTaken',
   copiedFromId: 'copiedFromId'
 };
 

@@ -56,3 +56,47 @@ h2 {
 .page-leave-to {
   opacity: 0;
 }
+
+/* Sun Mode: Keeps dark theme background, but dramatically elevates text brightness, font-weight, and contrast for outdoor visibility in bright sunlight */
+html.sun-mode {
+  --sun-mode: 1;
+}
+
+html.sun-mode body {
+  font-weight: 600 !important;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+html.sun-mode .text-gray-400,
+html.sun-mode .text-gray-500,
+html.sun-mode .text-gray-600,
+html.sun-mode .dark\:text-gray-400,
+html.sun-mode .dark\:text-gray-500 {
+  color: #f1f5f9 !important;
+  font-weight: 600 !important;
+}
+
+html.sun-mode .text-gray-700,
+html.sun-mode .text-gray-800,
+html.sun-mode .text-gray-900,
+html.sun-mode .dark\:text-gray-200,
+html.sun-mode .dark\:text-gray-300,
+html.sun-mode .dark\:text-white {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+html.sun-mode .border-gray-100,
+html.sun-mode .border-gray-200,
+html.sun-mode .border-gray-300,
+html.sun-mode .border-gray-700,
+html.sun-mode .border-gray-800 {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+html.sun-mode .opacity-50,
+html.sun-mode .opacity-60,
+html.sun-mode .opacity-75,
+html.sun-mode .opacity-85 {
+  opacity: 1 !important;
+}

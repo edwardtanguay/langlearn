@@ -42,6 +42,7 @@ interface Flashcard {
   rank: number
   memoryHook: string | null
   nextTestTime?: string | Date | null
+  createdAt?: string | Date | null
   tags: FlashcardTag[]
 }
 
@@ -110,7 +111,46 @@ const currentStrategyExplainer = computed(() => {
   }
 })
 
-const showMobileControls = ref(false)
+// Search & Controls toggle: collapsed by default on both desktop and mobile
+const showControls = ref(false)
+
+function formatImportDate(dateStr?: string | Date | null): string {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return ''
+  return 'Imported ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
+const cardStatusLabel = computed(() => {
+  if (!currentCard.value) return ''
+  const slot = batchSlots.value.find(s => s.id === currentCard.value?.id)
+  if (slot) {
+    if (slot.status === 'learned') return 'learned'
+    if (slot.status === 'testing') return 'keep testing'
+    if (slot.status === 'parked') return 'parked'
+    if (slot.status === 'untested') return 'untested'
+  }
+  const st = currentCard.value.status?.toLowerCase() || ''
+  if (st === 'learned') return 'learned'
+  if (st === 'learning') return 'keep testing'
+  return st
+})
+
+function handleCardFlip() {
+  if (isEditing.value) return
+  const selection = window.getSelection()?.toString().trim()
+  if (selection) return
+  isFlipped.value = !isFlipped.value
+}
+
+function handleOpenExamplesFromWord(word: string) {
+  if (!currentCard.value) return
+  const langCode = currentCard.value.backLanguage || currentCard.value.frontLanguage || 'fr'
+  const langName = languageNames[langCode] ? languageNames[langCode].toLowerCase() : 'french'
+  const query = `create 3 ${langName} examples with "${word}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
 
 const isLanguageDropdownOpen = ref(false)
 const languageDropdownRef = ref<HTMLElement | null>(null)
@@ -701,7 +741,7 @@ function markAction(actionTaken: string, newStatus?: string) {
       if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
 
       cardAnimState.value = 'entering'
-      setTimeout(() => { cardAnimState.value = 'idle' }, 380)
+      setTimeout(() => { cardAnimState.value = 'idle' }, 320)
     } else {
       // Learned, Parked, or Deleted: remove card from active batch
       const [removedCard] = testQueue.value.splice(currentQueueIndex.value, 1)
@@ -715,13 +755,13 @@ function markAction(actionTaken: string, newStatus?: string) {
         currentQueueIndex.value = 0
         if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
         cardAnimState.value = 'entering'
-        setTimeout(() => { cardAnimState.value = 'idle' }, 380)
+        setTimeout(() => { cardAnimState.value = 'idle' }, 320)
       } else {
         cardAnimState.value = 'idle'
         triggerBatchCompletion()
       }
     }
-  }, 140)
+  }, 270)
 
   $fetch(`/api/flashcards/${cardId}/action`, {
     method: 'POST',
@@ -988,17 +1028,17 @@ onBeforeUnmount(() => {
       <div 
         v-if="loggedIn"
       >
-        <!-- Mobile Toggle Link for Search & Controls -->
-        <div class="sm:hidden flex justify-center pt-0 pb-1">
+        <!-- Toggle Link for Search & Controls (Both desktop and mobile) -->
+        <div class="flex justify-center pt-0 pb-1">
           <button
             type="button"
-            @click="showMobileControls = !showMobileControls"
+            @click="showControls = !showControls"
             class="inline-flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors py-1 cursor-pointer"
           >
-            <span>{{ showMobileControls ? 'Hide search & controls' : 'Show search & controls' }}</span>
+            <span>{{ showControls ? 'Hide search & controls' : 'Show search & controls' }}</span>
             <svg
               class="w-3.5 h-3.5 transition-transform duration-200"
-              :class="{ 'rotate-180': showMobileControls }"
+              :class="{ 'rotate-180': showControls }"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -1009,7 +1049,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- Center-aligned Search Box -->
-        <div :class="showMobileControls ? 'block' : 'hidden sm:block'">
+        <div :class="showControls ? 'block' : 'hidden'">
           <SearchBox v-model="searchQuery" :stats="cardStats" @search="handleSearch" />
         </div>
 
@@ -1039,7 +1079,7 @@ onBeforeUnmount(() => {
             <!-- Batch Controls: Strategy & Language Selector -->
             <div 
               class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs space-y-2"
-              :class="showMobileControls ? 'block' : 'hidden sm:block'"
+              :class="showControls ? 'block' : 'hidden'"
             >
               <div class="flex flex-col sm:flex-row gap-2.5">
                 <!-- Language Filter Dropdown -->
@@ -1206,8 +1246,8 @@ onBeforeUnmount(() => {
 
                     <!-- Flashcard -->
                     <div
-                      @click="!isEditing && (isFlipped = !isFlipped)"
-                      class="relative h-full w-full select-none preserve-3d card-flip-transition"
+                      @click="handleCardFlip"
+                      class="relative h-full w-full preserve-3d card-flip-transition"
                       :style="{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }"
                       :class="[isEditing ? 'cursor-default' : 'cursor-pointer']"
                     >
@@ -1220,6 +1260,7 @@ onBeforeUnmount(() => {
                         :language-colors="languageColors" 
                         :is-flipped="isFlipped"
                         :is-editing="isEditing"
+                        @open-examples="handleOpenExamplesFromWord"
                       />
 
                       <!-- Back Side -->
@@ -1240,6 +1281,7 @@ onBeforeUnmount(() => {
                         @start-edit="startEdit" 
                         @cancel-edit="cancelEdit" 
                         @save-edit="saveEdit" 
+                        @open-examples="handleOpenExamplesFromWord"
                       />
                     </div>
 
@@ -1282,6 +1324,12 @@ onBeforeUnmount(() => {
                 </div>
 
               </Transition>
+            </div>
+
+            <!-- Nuanced info outside bottom of card: status (left) and import date (right) -->
+            <div v-if="!isLoadingQueue && currentCard && !isBatchComplete" class="w-full flex items-center justify-between px-3 pt-0.5 text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
+              <span>{{ cardStatusLabel }}</span>
+              <span>{{ formatImportDate(currentCard.createdAt) }}</span>
             </div>
 
             <!-- Single compact panel — visible when card is flipped and not editing -->
@@ -1410,8 +1458,14 @@ onBeforeUnmount(() => {
   from { transform: translateX(110%);  opacity: 0; }
   to   { transform: translateX(0);     opacity: 1; }
 }
-.card-exit  { animation: slideExitLeft  0.28s ease-in  forwards; }
-.card-enter { animation: slideEnterRight 0.36s ease-out forwards; }
+.card-exit  {
+  animation: slideExitLeft 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
+.card-enter {
+  animation: slideEnterRight 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
 
 .content-fade-enter-active,
 .content-fade-leave-active { transition: opacity 0.18s ease; }
