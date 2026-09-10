@@ -57,6 +57,24 @@ const searchQuery = ref('')
 
 // Edit Modals for Admin
 const showEditItemModal = ref(false)
+const isTypeDropdownOpen = ref(false)
+const typeDropdownRef = ref<HTMLElement | null>(null)
+
+function toggleTypeDropdown() {
+  isTypeDropdownOpen.value = !isTypeDropdownOpen.value
+}
+
+function selectItemType(type: 'BUGFIX' | 'FEATURE') {
+  editingItem.value.type = type
+  isTypeDropdownOpen.value = false
+}
+
+function handleClickOutsideTypeDropdown(e: MouseEvent) {
+  if (typeDropdownRef.value && !typeDropdownRef.value.contains(e.target as Node)) {
+    isTypeDropdownOpen.value = false
+  }
+}
+
 const editingItem = ref<{ id: string; versionId: string; versionCategoryId: string; afterItemId: string; body: string; type: 'FEATURE' | 'BUGFIX'; rank: number }>({
   id: '', versionId: 'none', versionCategoryId: '', afterItemId: '', body: '', type: 'BUGFIX', rank: 2.5
 })
@@ -154,6 +172,9 @@ onMounted(() => {
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', checkMobileView)
   }
+  if (typeof document !== 'undefined') {
+    document.addEventListener('click', handleClickOutsideTypeDropdown)
+  }
   loadData(true)
 
   // Listen for newly added ideas from QuickAddIdeaDrawer
@@ -171,6 +192,9 @@ onMounted(() => {
 onUnmounted(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('resize', checkMobileView)
+  }
+  if (typeof document !== 'undefined') {
+    document.removeEventListener('click', handleClickOutsideTypeDropdown)
   }
   if (removeHookListener) {
     removeHookListener()
@@ -603,12 +627,14 @@ const openAddItem = (versionId: string | null, afterItemId?: string, sourceItem?
       rank: 2.5
     }
   }
+  isTypeDropdownOpen.value = false
   showEditItemModal.value = true
   focusFirstModalInput(true)
 }
 
 const openEditItem = (item: VersionItem) => {
   isNewItem.value = false
+  isTypeDropdownOpen.value = false
   const rankVal = item.rank ?? 2.5
   itemRankStr.value = rankVal.toString()
   editingItem.value = {
@@ -1691,16 +1717,50 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewItem ? 'Admin Add: Roadmap Item' : 'Admin Edit: Roadmap Item' }}</h3>
         <form @submit.prevent="saveAdminItem" class="space-y-3 text-xs">
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div>
+            <div class="relative" ref="typeDropdownRef">
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Type</label>
-              <select
-                v-model="editingItem.type"
-                class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded font-mono font-semibold"
+              <button
+                type="button"
+                @click="toggleTypeDropdown"
+                class="w-full flex items-center justify-between px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded font-mono font-semibold text-xs transition-colors focus:outline-none focus:ring-1 focus:ring-amber-500/50 cursor-pointer"
                 :class="editingItem.type === 'BUGFIX' ? 'text-orange-600 dark:text-orange-400' : 'text-emerald-600 dark:text-emerald-400'"
               >
-                <option value="BUGFIX" class="text-orange-600 dark:text-orange-400 font-semibold">BUGFIX</option>
-                <option value="FEATURE" class="text-emerald-600 dark:text-emerald-400 font-semibold">FEATURE</option>
-              </select>
+                <span>{{ editingItem.type }}</span>
+                <svg
+                  class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 transition-transform duration-150 shrink-0 ml-1"
+                  :class="{ 'rotate-180': isTypeDropdownOpen }"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <!-- Custom Dropdown Menu -->
+              <div
+                v-if="isTypeDropdownOpen"
+                class="absolute left-0 right-0 top-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl z-50 py-1 font-mono text-xs overflow-hidden"
+              >
+                <button
+                  type="button"
+                  @click="selectItemType('BUGFIX')"
+                  class="w-full px-3 py-2 text-left font-semibold text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-950/40 flex items-center justify-between transition-colors cursor-pointer"
+                  :class="{ 'bg-orange-50 dark:bg-orange-950/30': editingItem.type === 'BUGFIX' }"
+                >
+                  <span>BUGFIX</span>
+                  <span v-if="editingItem.type === 'BUGFIX'" class="text-orange-600 dark:text-orange-400 text-xs">✓</span>
+                </button>
+                <button
+                  type="button"
+                  @click="selectItemType('FEATURE')"
+                  class="w-full px-3 py-2 text-left font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 flex items-center justify-between transition-colors cursor-pointer"
+                  :class="{ 'bg-emerald-50 dark:bg-emerald-950/30': editingItem.type === 'FEATURE' }"
+                >
+                  <span>FEATURE</span>
+                  <span v-if="editingItem.type === 'FEATURE'" class="text-emerald-600 dark:text-emerald-400 text-xs">✓</span>
+                </button>
+              </div>
             </div>
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Category</label>

@@ -379,7 +379,6 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
           currentQueueIndex.value = 0
           if (fromPronunciation.value) {
             isFlipped.value = true
-            startEdit()
           } else {
             isFlipped.value = false
           }
