@@ -150,14 +150,14 @@ const cardStatusLabel = computed(() => {
   let label = ''
   if (slot) {
     if (slot.status === 'learned') label = 'learned'
-    else if (slot.status === 'testing') label = 'keep testing'
+    else if (slot.status === 'testing') label = 'currently testing'
     else if (slot.status === 'parked') label = 'parked'
     else if (slot.status === 'untested') label = 'untested'
   }
   if (!label) {
     const st = currentCard.value.status?.toLowerCase() || ''
     if (st === 'learned') label = 'learned'
-    else if (st === 'learning') label = 'keep testing'
+    else if (st === 'learning') label = 'currently testing'
     else label = st
   }
   return label.toUpperCase()

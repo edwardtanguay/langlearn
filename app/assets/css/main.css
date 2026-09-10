@@ -17,18 +17,19 @@ a, a:visited {
   @apply text-blue-600 dark:text-blue-400;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-semibold text-gray-900 dark:text-white;
-}
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-gray-900 dark:text-white;
+  }
 
-h2 {
-  @apply text-2xl;
-  @apply mb-6;
+  h2 {
+    @apply text-2xl mb-6;
+  }
 } 
 
 .container-custom {

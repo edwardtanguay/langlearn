@@ -106,7 +106,7 @@ function cardStatusLabel(card: Flashcard | null): string {
   if (!card) return ''
   const st = card.status?.toLowerCase() || ''
   if (st === 'learned') return 'LEARNED'
-  if (st === 'learning') return 'KEEP TESTING'
+  if (st === 'learning') return 'CURRENTLY TESTING'
   if (st === 'untested') return 'UNTESTED'
   if (st === 'parked') return 'PARKED'
   return st.toUpperCase()
@@ -298,7 +298,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
     <!-- Active Practice Card -->
     <div v-else-if="currentCard" class="space-y-4">
       <div
-        class="relative min-h-[260px] rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center transition-all duration-300 border-4 shadow-xl select-none"
+        class="relative min-h-[260px] rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center transition-colors duration-300 border-4 shadow-xl select-none"
         :style="{
           borderColor: languageColors[currentCard.backLanguage] || '#333388',
           backgroundColor: `color-mix(in srgb, ${languageColors[currentCard.backLanguage] || '#4f46e5'} 25%, #111827)`
@@ -323,15 +323,15 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         </div>
 
         <!-- Target Phrase (Click to toggle French/English) -->
-        <div class="my-auto py-3">
-          <h2
+        <div class="my-auto py-3 min-h-[64px] flex items-center justify-center">
+          <div
             @click="showSourceText = !showSourceText"
-            class="tracking-tight leading-tight cursor-pointer select-none transition-all"
-            :class="showSourceText ? 'text-xl sm:text-3xl font-normal text-gray-300/70 italic' : 'text-2xl sm:text-4xl font-extrabold text-white'"
+            class="tracking-tight leading-tight cursor-pointer select-none"
+            :class="showSourceText ? 'text-base font-normal text-gray-400 italic' : 'text-xl font-semibold text-white'"
             :title="showSourceText ? 'Click to show target phrase' : 'Click to show translation'"
           >
             {{ showSourceText ? stripAsterisks(currentCard.front) : stripAsterisks(currentCard.back) }}
-          </h2>
+          </div>
         </div>
 
         <!-- Reveal / Pronunciation Area (Positioned halfway between phrase and bottom of card) -->
@@ -354,7 +354,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
               class="text-sm sm:text-base md:text-lg tracking-wide"
               style="font-family: 'Courier New', Courier, monospace"
             >
-              <span class="text-amber-300/40 font-normal">[ </span><span class="text-emerald-400 font-bold">{{ currentCard.pronunciation }}</span><span class="text-amber-300/40 font-normal"> ]</span>
+              <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold">{{ currentCard.pronunciation }}</span><span class="text-yellow-300/40 font-normal"> ]</span>
             </div>
           </div>
         </div>
@@ -363,13 +363,13 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         <NuxtLink
           v-if="isRevealed"
           :to="`/flashcard/${currentCard.id}?from=pronunciation`"
-          class="absolute bottom-3 left-4 flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10"
+          class="absolute bottom-3 left-4 flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white hover:text-white/80 hover:bg-white/10"
           title="Edit flashcard"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
           </svg>
-          <span>edit</span>
+          <span>edit flashcard</span>
         </NuxtLink>
 
         <!-- Audio Button (Lower Right, visible after reveal) -->
