@@ -201,7 +201,7 @@ const submitIdea = async () => {
     setTimeout(() => {
       isOpen.value = false
       feedbackMsg.value = ''
-    }, 2000)
+    }, 500)
   } catch (err: any) {
     feedbackError.value = true
     feedbackMsg.value = err.data?.statusMessage || 'Failed to submit idea.'

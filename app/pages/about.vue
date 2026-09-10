@@ -1693,9 +1693,13 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div>
               <label class="block text-gray-700 dark:text-gray-300 mb-1">Type</label>
-              <select v-model="editingItem.type" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono">
-                <option value="BUGFIX">🐛 BUGFIX</option>
-                <option value="FEATURE">✨ FEATURE</option>
+              <select
+                v-model="editingItem.type"
+                class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded font-mono font-semibold"
+                :class="editingItem.type === 'BUGFIX' ? 'text-orange-600 dark:text-orange-400' : 'text-emerald-600 dark:text-emerald-400'"
+              >
+                <option value="BUGFIX" class="text-orange-600 dark:text-orange-400 font-semibold">BUGFIX</option>
+                <option value="FEATURE" class="text-emerald-600 dark:text-emerald-400 font-semibold">FEATURE</option>
               </select>
             </div>
             <div>
@@ -1734,7 +1738,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Description / Body</label>
-            <textarea v-model="editingItem.body" @keydown.enter.exact.prevent="saveAdminItem" rows="3" placeholder="Describe the feature or bug fix..." class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white"></textarea>
+            <textarea v-model="editingItem.body" @keydown.ctrl.enter.prevent="saveAdminItem" rows="3" placeholder="Describe the feature or bug fix..." class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white"></textarea>
           </div>
           <div class="flex justify-end space-x-2 pt-2">
             <button type="button" @click="showEditItemModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { SpeakerWaveIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftIcon, ArrowPathIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - Pronunciation Practice',
@@ -8,6 +8,8 @@ useHead({
     { name: 'description', content: 'Practice phrase pronunciation with interactive reveal and independent status tracking.' }
   ]
 })
+
+const route = useRoute()
 
 interface Tag {
   id: string
@@ -25,6 +27,7 @@ interface Flashcard {
   pronunciationStatus?: string
   pronunciationTimesTaken?: number
   rank: number
+  createdAt?: string | Date | null
   tags?: { tag: Tag }[]
 }
 
@@ -52,6 +55,7 @@ const isLoading = ref(true)
 const cards = ref<Flashcard[]>([])
 const currentIndex = ref(0)
 const isRevealed = ref(false)
+const showSourceText = ref(false)
 const isSubmittingAction = ref(false)
 const metrics = ref<Metrics>({
   learned: 0,
@@ -69,6 +73,45 @@ function stripAsterisks(text: string): string {
   return text ? text.replace(/\*/g, '') : ''
 }
 
+function formatImportDate(dateStr?: string | Date | null): string {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return ''
+
+  const now = new Date()
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+  const dStart = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()
+  const diffDays = Math.round((todayStart - dStart) / (1000 * 60 * 60 * 24))
+
+  if (diffDays <= 0) {
+    return 'imported today'
+  }
+  if (diffDays === 1) {
+    return 'imported yesterday'
+  }
+  if (diffDays <= 7) {
+    return `imported ${diffDays} days ago`
+  }
+
+  const isCurrentYear = d.getFullYear() === now.getFullYear()
+  const dateFormatted = d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    ...(isCurrentYear ? {} : { year: 'numeric' })
+  })
+  return `imported ${dateFormatted}`
+}
+
+function cardStatusLabel(card: Flashcard | null): string {
+  if (!card) return ''
+  const st = card.status?.toLowerCase() || ''
+  if (st === 'learned') return 'LEARNED'
+  if (st === 'learning') return 'KEEP TESTING'
+  if (st === 'untested') return 'UNTESTED'
+  if (st === 'parked') return 'PARKED'
+  return st.toUpperCase()
+}
+
 const loadData = async () => {
   isLoading.value = true
   try {
@@ -78,6 +121,15 @@ const loadData = async () => {
       cards.value = data.cards || []
       currentIndex.value = 0
       isRevealed.value = false
+      showSourceText.value = false
+
+      const targetCardId = (route.query.cardId as string) || null
+      if (targetCardId) {
+        const foundIdx = cards.value.findIndex(c => c.id === targetCardId)
+        if (foundIdx !== -1) {
+          currentIndex.value = foundIdx
+        }
+      }
     }
   } catch (err) {
     console.error('Failed to load pronunciation practice data:', err)
@@ -141,6 +193,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
   }
 
   isRevealed.value = false
+  showSourceText.value = false
 
   // Persist to server in background
   $fetch('/api/activities/pronunciation-action', {
@@ -169,7 +222,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
       </span>
     </div>
 
-    <!-- Header Summary Metrics: Learned, Taken, New -->
+    <!-- Header Summary Metrics: Learned, Testing, New -->
     <div class="grid grid-cols-3 gap-3">
       <!-- Learned Metric -->
       <div class="bg-white dark:bg-gray-900 border border-emerald-200 dark:border-emerald-900/60 rounded-2xl p-3.5 text-center shadow-xs">
@@ -184,16 +237,16 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         </div>
       </div>
 
-      <!-- Taken Metric -->
+      <!-- Testing Metric -->
       <div class="bg-white dark:bg-gray-900 border border-indigo-200 dark:border-indigo-900/60 rounded-2xl p-3.5 text-center shadow-xs">
         <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-0.5">
-          Taken
+          Testing
         </div>
         <div class="text-2xl sm:text-3xl font-black font-mono text-indigo-700 dark:text-indigo-300">
           {{ metrics.taken }}
         </div>
         <div class="text-[10px] text-gray-400 dark:text-gray-500">
-          practiced >= 1 time
+          tested >= 1 time
         </div>
       </div>
 
@@ -265,56 +318,80 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
             class="text-[11px] font-mono tracking-wider uppercase font-bold"
             :class="currentCard.pronunciationStatus === 'LEARNED' ? 'text-emerald-400' : (currentCard.pronunciationTimesTaken ?? 0) > 0 ? 'text-sky-400' : 'text-amber-300'"
           >
-            {{ currentCard.pronunciationStatus === 'LEARNED' ? 'Learned' : (currentCard.pronunciationTimesTaken ?? 0) > 0 ? 'Taken' : 'New' }}
+            {{ currentCard.pronunciationStatus === 'LEARNED' ? 'Learned' : (currentCard.pronunciationTimesTaken ?? 0) > 0 ? 'Testing' : 'New' }}
           </span>
         </div>
 
-        <!-- Target Phrase & Source Phrase -->
+        <!-- Target Phrase (Click to toggle French/English) -->
         <div class="my-auto py-4">
-          <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-            {{ stripAsterisks(currentCard.back) }}
+          <h2
+            @click="showSourceText = !showSourceText"
+            class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight cursor-pointer select-none transition-all"
+            :class="showSourceText ? 'text-white/70 italic' : 'text-white'"
+            :title="showSourceText ? 'Click to show target phrase' : 'Click to show translation'"
+          >
+            {{ showSourceText ? stripAsterisks(currentCard.front) : stripAsterisks(currentCard.back) }}
           </h2>
-          <p class="text-xs sm:text-sm text-white/40 italic font-normal mt-1">
-            {{ currentCard.front }}
-          </p>
         </div>
 
         <!-- Reveal / Pronunciation Area -->
         <div class="w-full">
-          <!-- Unrevealed Button -->
+          <!-- Unrevealed Button (Audio icon removed) -->
           <button
             v-if="!isRevealed"
             @click="revealPronunciation"
-            class="w-full max-w-xs mx-auto py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+            class="w-full max-w-xs mx-auto py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-xs flex items-center justify-center cursor-pointer"
           >
-            <SpeakerWaveIcon class="w-4 h-4 text-emerald-400" />
             <span>Reveal Pronunciation</span>
           </button>
 
-          <!-- Revealed Pronunciation and Google Translate Button -->
+          <!-- Revealed Pronunciation (Centered adhesive tape style) -->
           <div
             v-else
-            class="w-full max-w-md mx-auto p-3 rounded-2xl bg-black/40 border border-white/20 backdrop-blur-xs flex items-center justify-between gap-3"
+            class="w-full max-w-md mx-auto p-3 rounded-2xl bg-black/40 border border-white/20 backdrop-blur-xs flex items-center justify-center"
           >
-            <div class="flex-1 text-left pl-2">
-              <span class="text-sm sm:text-base font-bold font-mono text-white tracking-wider text-emerald-300 drop-shadow-md">
-                [{{ currentCard.pronunciation }}]
-              </span>
-            </div>
-
-            <!-- Google Translate Button -->
-            <button
-              @click="openTranslateAudio(currentCard, $event)"
-              class="inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-semibold text-white bg-white/15 hover:bg-white/25 active:bg-white/30 border border-white/20 transition-all cursor-pointer shrink-0"
-              title="Listen on Google Translate"
+            <div 
+              class="text-sm sm:text-base md:text-lg font-bold tracking-wide bg-white/15 rounded-none"
+              style="font-family: 'Courier New', Courier, monospace"
             >
-              <span>Google Translate</span>
-            </button>
+              <span class="text-amber-300 font-extrabold">[</span><span class="text-emerald-400 font-bold">{{ currentCard.pronunciation }}</span><span class="text-amber-300 font-extrabold">]</span>
+            </div>
           </div>
         </div>
+
+        <!-- Edit Flashcard (Lower Left, visible after reveal) -->
+        <NuxtLink
+          v-if="isRevealed"
+          :to="`/flashcard/${currentCard.id}?from=pronunciation`"
+          class="absolute bottom-3 left-4 flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10"
+          title="Edit flashcard"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+          </svg>
+        </NuxtLink>
+
+        <!-- Audio Button (Lower Right, visible after reveal) -->
+        <button
+          v-if="isRevealed"
+          @click="openTranslateAudio(currentCard, $event)"
+          class="absolute bottom-3 right-4 flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10"
+          title="Audio on Google Translate"
+        >
+          <span>Audio</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072M17.657 6.343a8 8 0 010 11.314M5 10v4a2 2 0 002 2h3l5 5V3l-5 5H7a2 2 0 00-2 2z" />
+          </svg>
+        </button>
       </div>
 
-      <!-- Action Buttons [Learned] and [Keep Taking] (Visible immediately upon reveal) -->
+      <!-- Nuanced info outside bottom of card: import date (left) and status (right) -->
+      <div class="w-full flex items-center justify-between px-3 -mt-2 text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
+        <span class="tracking-wider uppercase">{{ formatImportDate(currentCard.createdAt) }}</span>
+        <span class="tracking-wider uppercase">{{ cardStatusLabel(currentCard) }}</span>
+      </div>
+
+      <!-- Action Buttons [Learned] and [Keep Testing] (Visible immediately upon reveal) -->
       <div v-if="isRevealed" class="grid grid-cols-2 gap-3 pt-1">
         <!-- Learned Button (Left, Green) -->
         <button
@@ -324,12 +401,12 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
           <span>Learned</span>
         </button>
 
-        <!-- Keep Taking Button (Right, Blue) -->
+        <!-- Keep Testing Button (Right, Blue) -->
         <button
           @click="handleAction('KEEP_TAKING')"
           class="py-3 px-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center cursor-pointer"
         >
-          <span>Keep Taking</span>
+          <span>Keep Testing</span>
         </button>
       </div>
     </div>
