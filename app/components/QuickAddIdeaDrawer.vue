@@ -43,7 +43,7 @@
                   type="button"
                   @click="form.type = 'BUGFIX'"
                   :disabled="isSubmitting || feedbackMsg !== ''"
-                  :class="form.type === 'BUGFIX' ? 'bg-white dark:bg-gray-900 text-[#ea580c] font-bold border-b-2 border-[#ea580c]' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+                  :class="form.type === 'BUGFIX' ? 'bg-white dark:bg-gray-900 text-[#ea580c] font-bold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
                   class="px-4 py-1.5 transition-colors focus:outline-none disabled:opacity-50"
                 >
                   Bug fix
@@ -52,7 +52,7 @@
                   type="button"
                   @click="form.type = 'FEATURE'"
                   :disabled="isSubmitting || feedbackMsg !== ''"
-                  :class="form.type === 'FEATURE' ? 'bg-white dark:bg-gray-900 text-[#16a34a] font-bold border-b-2 border-[#16a34a]' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+                  :class="form.type === 'FEATURE' ? 'bg-white dark:bg-gray-900 text-[#16a34a] font-bold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
                   class="px-4 py-1.5 transition-colors focus:outline-none disabled:opacity-50"
                 >
                   Feature
