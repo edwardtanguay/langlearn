@@ -10,6 +10,7 @@ useHead({
 })
 
 const route = useRoute()
+const router = useRouter()
 
 interface Tag {
   id: string
@@ -112,10 +113,10 @@ function cardStatusLabel(card: Flashcard | null): string {
   return st.toUpperCase()
 }
 
-const loadData = async () => {
+const loadData = async (isReview = false) => {
   isLoading.value = true
   try {
-    const data = await $fetch<{ metrics: Metrics; cards: Flashcard[] }>('/api/activities/pronunciation')
+    const data = await $fetch<{ metrics: Metrics; cards: Flashcard[] }>(`/api/activities/pronunciation${isReview ? '?review=true' : ''}`)
     if (data) {
       metrics.value = data.metrics
       cards.value = data.cards || []
@@ -127,9 +128,14 @@ const loadData = async () => {
       if (targetCardId) {
         const foundIdx = cards.value.findIndex(c => c.id === targetCardId)
         if (foundIdx !== -1) {
-          currentIndex.value = foundIdx
+          const [targetCard] = cards.value.splice(foundIdx, 1)
+          if (targetCard) {
+            cards.value.unshift(targetCard)
+          }
         }
+        router.replace({ query: { ...route.query, cardId: undefined } })
       }
+      currentIndex.value = 0
     }
   } catch (err) {
     console.error('Failed to load pronunciation practice data:', err)
@@ -177,9 +183,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
   if (action === 'LEARNED') {
     // Remove learned card from active practice list
     cards.value.splice(currentIndex.value, 1)
-    if (currentIndex.value >= cards.value.length) {
-      currentIndex.value = 0
-    }
+    currentIndex.value = 0
   } else {
     // Rotate card to the back
     const [card] = cards.value.splice(currentIndex.value, 1)
@@ -188,9 +192,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
       card.pronunciationStatus = 'LEARNING'
       cards.value.push(card)
     }
-    if (currentIndex.value >= cards.value.length) {
-      currentIndex.value = 0
-    }
+    currentIndex.value = 0
   }
 
   isRevealed.value = false
@@ -287,7 +289,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
       </div>
       <div class="pt-2">
         <button
-          @click="loadData"
+          @click="loadData(true)"
           class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl text-xs shadow-md transition-all inline-flex items-center gap-2 cursor-pointer"
         >
           <ArrowPathIcon class="w-4 h-4" />
