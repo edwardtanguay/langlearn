@@ -118,22 +118,48 @@ function formatImportDate(dateStr?: string | Date | null): string {
   if (!dateStr) return ''
   const d = new Date(dateStr)
   if (isNaN(d.getTime())) return ''
-  return 'Imported ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+
+  const now = new Date()
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+  const dStart = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()
+  const diffDays = Math.round((todayStart - dStart) / (1000 * 60 * 60 * 24))
+
+  if (diffDays <= 0) {
+    return 'imported today'
+  }
+  if (diffDays === 1) {
+    return 'imported yesterday'
+  }
+  if (diffDays <= 7) {
+    return `imported ${diffDays} days ago`
+  }
+
+  const isCurrentYear = d.getFullYear() === now.getFullYear()
+  const dateFormatted = d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    ...(isCurrentYear ? {} : { year: 'numeric' })
+  })
+  return `imported ${dateFormatted}`
 }
 
 const cardStatusLabel = computed(() => {
   if (!currentCard.value) return ''
   const slot = batchSlots.value.find(s => s.id === currentCard.value?.id)
+  let label = ''
   if (slot) {
-    if (slot.status === 'learned') return 'learned'
-    if (slot.status === 'testing') return 'keep testing'
-    if (slot.status === 'parked') return 'parked'
-    if (slot.status === 'untested') return 'untested'
+    if (slot.status === 'learned') label = 'learned'
+    else if (slot.status === 'testing') label = 'keep testing'
+    else if (slot.status === 'parked') label = 'parked'
+    else if (slot.status === 'untested') label = 'untested'
   }
-  const st = currentCard.value.status?.toLowerCase() || ''
-  if (st === 'learned') return 'learned'
-  if (st === 'learning') return 'keep testing'
-  return st
+  if (!label) {
+    const st = currentCard.value.status?.toLowerCase() || ''
+    if (st === 'learned') label = 'learned'
+    else if (st === 'learning') label = 'keep testing'
+    else label = st
+  }
+  return label.toUpperCase()
 })
 
 function handleCardFlip() {
@@ -1327,9 +1353,9 @@ onBeforeUnmount(() => {
             </div>
 
             <!-- Nuanced info outside bottom of card: status (left) and import date (right) -->
-            <div v-if="!isLoadingQueue && currentCard && !isBatchComplete" class="w-full flex items-center justify-between px-3 pt-0.5 text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
-              <span>{{ cardStatusLabel }}</span>
-              <span>{{ formatImportDate(currentCard.createdAt) }}</span>
+            <div v-if="!isLoadingQueue && currentCard && !isBatchComplete" class="w-full flex items-center justify-between px-3 -mt-2 text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
+              <span class="tracking-wider uppercase">{{ cardStatusLabel }}</span>
+              <span class="tracking-wider uppercase">{{ formatImportDate(currentCard.createdAt) }}</span>
             </div>
 
             <!-- Single compact panel — visible when card is flipped and not editing -->
