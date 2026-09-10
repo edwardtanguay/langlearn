@@ -43,7 +43,7 @@
                   type="button"
                   @click="form.type = 'BUGFIX'"
                   :disabled="isSubmitting || feedbackMsg !== ''"
-                  :class="form.type === 'BUGFIX' ? 'bg-white dark:bg-gray-900 text-[#ea580c] font-bold border-b-2 border-[#ea580c]' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+                  :class="form.type === 'BUGFIX' ? 'bg-white dark:bg-gray-900 text-[#ea580c] font-bold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
                   class="px-4 py-1.5 transition-colors focus:outline-none disabled:opacity-50"
                 >
                   Bug fix
@@ -52,14 +52,14 @@
                   type="button"
                   @click="form.type = 'FEATURE'"
                   :disabled="isSubmitting || feedbackMsg !== ''"
-                  :class="form.type === 'FEATURE' ? 'bg-white dark:bg-gray-900 text-[#16a34a] font-bold border-b-2 border-[#16a34a]' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+                  :class="form.type === 'FEATURE' ? 'bg-white dark:bg-gray-900 text-[#16a34a] font-bold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
                   class="px-4 py-1.5 transition-colors focus:outline-none disabled:opacity-50"
                 >
                   Feature
                 </button>
               </div>
 
-              <!-- Body Input -->
+              <!-- Body Input with type-based background color -->
               <div>
                 <textarea
                   ref="textareaRef"
@@ -69,7 +69,10 @@
                   :disabled="isSubmitting || feedbackMsg !== ''"
                   :placeholder="form.type === 'BUGFIX' ? 'Describe a bug here...' : 'Describe a feature request here...'"
                   @keydown.ctrl.enter.prevent="submitIdea"
-                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700/80 rounded-b-md rounded-tr-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/40 block disabled:opacity-50 transition-all"
+                  :class="form.type === 'BUGFIX'
+                    ? 'bg-orange-50/50 dark:bg-orange-950/25 border-orange-400/60 dark:border-orange-600/50 focus:border-orange-500 focus:ring-orange-500/30'
+                    : 'bg-emerald-50/50 dark:bg-emerald-950/25 border-emerald-400/60 dark:border-emerald-600/50 focus:border-emerald-500 focus:ring-emerald-500/30'"
+                  class="w-full px-3 py-2 border rounded-b-md rounded-tr-md shadow-xs text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-1 block disabled:opacity-50 transition-all"
                 ></textarea>
               </div>
 
@@ -101,17 +104,20 @@
                     type="button"
                     @click="isOpen = false"
                     :disabled="isSubmitting"
-                    class="px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md disabled:opacity-50"
+                    class="px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md disabled:opacity-50 cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     :disabled="isSubmitting || !form.body.trim() || feedbackMsg !== ''"
-                    class="px-4 py-1.5 text-xs font-medium text-white bg-amber-600 hover:bg-amber-700 active:bg-amber-800 rounded-md shadow-sm disabled:opacity-50 transition-colors flex items-center space-x-1"
+                    :class="form.type === 'BUGFIX'
+                      ? 'bg-orange-600 hover:bg-orange-700 active:bg-orange-800'
+                      : 'bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800'"
+                    class="px-4 py-1.5 text-xs font-medium text-white rounded-md shadow-sm disabled:opacity-50 transition-colors flex items-center space-x-1 cursor-pointer"
                   >
                     <span v-if="isSubmitting" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin mr-1"></span>
-                    <span>{{ isSubmitting ? 'Submitting...' : 'Submit Idea' }}</span>
+                    <span>{{ isSubmitting ? 'Submitting...' : form.type === 'BUGFIX' ? 'submit bug' : 'submit feature' }}</span>
                   </button>
                 </div>
               </div>

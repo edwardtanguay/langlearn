@@ -8,6 +8,13 @@ useHead({
 
 const activities = [
   {
+    title: 'Pronunciation Practice',
+    path: '/activities/pronunciation-practice',
+    description: 'Test your pronunciation recall with phonetics reveal, independent progress tracking, and audio pronunciation.',
+    badge: 'Pronunciation',
+    badgeColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/30'
+  },
+  {
     title: 'Gemini Quiz Prompts',
     path: '/activities/gemini-quiz',
     description: 'Prompts to copy and paste into Gemini\u00A0AI to generate custom quizzes for specific vocabulary, grammar patterns, and CEFR levels.',
@@ -38,7 +45,7 @@ const activities = [
       <p class="text-gray-600 dark:text-gray-400 mt-1">Choose an activity to practice your language skills and reinforce key vocabulary.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <NuxtLink
         v-for="act in activities"
         :key="act.path"

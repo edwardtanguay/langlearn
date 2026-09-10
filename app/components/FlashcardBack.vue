@@ -34,11 +34,12 @@ const editBack = defineModel<string>('editBack', { required: true })
 const editPronunciation = defineModel<string>('editPronunciation', { required: true })
 const editMemoryHook = defineModel<string>('editMemoryHook', { required: true })
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'open-audio'): void
   (e: 'start-edit'): void
   (e: 'save-edit'): void
   (e: 'cancel-edit'): void
+  (e: 'open-examples', word: string): void
 }>()
 
 const showPronunciation = ref(false)
@@ -91,22 +92,34 @@ const renderBackTextWithHighlights = (text: string) => {
     .replace(/'/g, '&#039;')
   // 3. Render <verb> as solid underline with amber background tint
   result = result.replace(/___VERB_START___(.*?)___VERB_END___/g, '<span class="border-b-2 border-amber-400 bg-amber-500/20 px-1 rounded-sm">$1</span>')
-  // 4. Render *text* with dashed underline
-  result = result.replace(/\*(.*?)\*/g, '<span class="border-b border-dashed border-white/60 bg-white/10 px-1 rounded-sm">$1</span>')
+  // 4. Render *text* with dashed underline and clickable example word
+  result = result.replace(/\*(.*?)\*/g, '<span data-example-word="$1" class="border-b border-dashed border-white/70 bg-white/10 px-1 rounded-sm cursor-pointer hover:bg-amber-400/20 hover:border-amber-300 transition-colors" title="View 3 examples with \'$1\'">$1</span>')
   return result
+}
+
+function handleTextClick(event: MouseEvent) {
+  const target = event.target as HTMLElement
+  const exampleEl = target.closest('[data-example-word]') as HTMLElement | null
+  if (exampleEl) {
+    event.stopPropagation()
+    const word = exampleEl.getAttribute('data-example-word')
+    if (word) {
+      emit('open-examples', word)
+    }
+  }
 }
 
 const getTextClass = (text: string) => {
   const clean = stripFormatting(text)
   const len = clean ? clean.length : 0
   if (len < 30) {
-    return 'text-2xl sm:text-3xl text-center leading-tight max-w-md'
+    return 'text-2xl sm:text-3xl text-center leading-tight max-w-md select-text'
   } else if (len < 60) {
-    return 'text-xl sm:text-3xl text-center leading-tight max-w-md'
+    return 'text-xl sm:text-3xl text-center leading-tight max-w-md select-text'
   } else if (len < 100) {
-    return 'text-lg sm:text-2xl text-center leading-tight max-w-md'
+    return 'text-lg sm:text-2xl text-center leading-tight max-w-md select-text'
   } else {
-    return 'text-base sm:text-xl line-clamp-3 text-center leading-tight max-w-md'
+    return 'text-base sm:text-xl line-clamp-3 text-center leading-tight max-w-md select-text'
   }
 }
 </script>
@@ -128,13 +141,17 @@ const getTextClass = (text: string) => {
           <p 
             :class="getTextClass(stripAsterisks(currentCard.back))"
             v-html="renderBackTextWithHighlights(currentCard.back)"
+            @click="handleTextClick"
           ></p>
-          <!-- Pronunciation display below the word (brighter & pulsating visual cue) -->
-          <p v-if="currentCard.pronunciation && isFlipped && !isEditing" 
-             class="text-xs sm:text-sm text-slate-100 font-semibold drop-shadow-xs text-center max-w-md mt-4 pt-1 animate-pulsate tracking-wide"
-             style="font-family: 'Courier New', Courier, monospace">
-            <span class="text-white/60 mr-1.5">[</span>{{ currentCard.pronunciation }}<span class="text-white/60 ml-1.5">]</span>
-          </p>
+          <!-- Pronunciation display below the word (clean monospace, no grey pill) -->
+          <div v-if="currentCard.pronunciation && isFlipped && !isEditing" class="mt-4 pt-1 flex items-center justify-center">
+            <div 
+              class="text-sm sm:text-base md:text-lg font-bold text-white tracking-wide"
+              style="font-family: 'Courier New', Courier, monospace"
+            >
+              <span class="text-amber-300 mr-1 font-extrabold">[</span>{{ currentCard.pronunciation }}<span class="text-amber-300 ml-1 font-extrabold">]</span>
+            </div>
+          </div>
         </div>
 
         <!-- Google Translate / Audio (Bottom Left) -->
@@ -233,5 +250,14 @@ const getTextClass = (text: string) => {
 }
 .animate-pulsate {
   animation: pulsateKeyframe 1.8s infinite ease-in-out;
+}
+
+@keyframes pronounceAwareKeyframe {
+  0% { transform: scale(0.92); opacity: 0; filter: brightness(1.7); }
+  50% { transform: scale(1.05); filter: brightness(1.4); }
+  100% { transform: scale(1); opacity: 1; filter: brightness(1); }
+}
+.animate-pronounce-aware {
+  animation: pronounceAwareKeyframe 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 </style>

@@ -1404,7 +1404,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                 <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
                   <li v-for="(item, itemIdx) in ver.versionItems" :key="item.id" class="flex items-start justify-between gap-3 py-0.5 rounded transition-all" :class="{ 'animate-subtle-bounce border-l-4 border-amber-500 pl-2': recentlyEditedItemId === item.id }">
                     <div class="flex items-start gap-2 flex-1 min-w-0">
-                      <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
+                      <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-orange-100 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-700/60 text-orange-800 dark:text-orange-300 font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
                       <!-- Tested checkbox for IN_PROGRESS versions in Admin mode -->
@@ -1543,7 +1543,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300 pl-3">
                     <li v-for="(item, itemIdx) in group.items" :key="item.id" class="flex items-start justify-between gap-3 py-0.5 rounded transition-all" :class="{ 'animate-subtle-bounce border-l-4 border-amber-500 pl-2': recentlyEditedItemId === item.id }">
                       <div class="flex items-start gap-2 flex-1 min-w-0">
-                        <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-[#4ade80] font-normal'">
+                        <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-orange-100 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-700/60 text-orange-800 dark:text-orange-300 font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
                         <!-- Tested checkbox for IN_PROGRESS versions in Admin mode -->

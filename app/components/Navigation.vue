@@ -45,8 +45,9 @@ const showColorModeToggle = config.public.showColorModeToggle
 const showDevPageConfig = computed(() => config.public.showDevPage)
 
 const auth = useAuth()
-const loggedIn = computed(() => auth?.loggedIn ?? false)
-const user = computed(() => auth?.user ?? null)
+const isBypass = computed(() => Boolean(config.public.bypassAuth))
+const loggedIn = computed(() => isBypass.value ? true : (auth?.loggedIn ?? false))
+const user = computed(() => isBypass.value ? { given_name: 'Edward', picture: null } : (auth?.user ?? null))
 
 const userRole = ref<string>('member')
 
@@ -126,7 +127,6 @@ const navItems = computed(() => {
   if (loggedIn.value) {
     items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
     items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
-    items.push({ name: 'Pronunciation', path: '/pronunciation', icon: SpeakerWaveIcon })
     items.push({ name: 'Videos', path: '/videos', icon: VideoCameraIcon })
     items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
     if (showDevPageConfig.value && isAdmin.value) {

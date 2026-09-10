@@ -88,6 +88,10 @@ model Flashcard {
   nextTestTime       DateTime?
   timesShownDragDrop Int       @default(0)
 
+  // Pronunciation practice state
+  pronunciationStatus     String @default("UNTESTED")
+  pronunciationTimesTaken Int    @default(0)
+
   // Self-referencing relation to track copied cards
   copiedFromId String?
   copiedFrom   Flashcard?  @relation("CardCopies", fields: [copiedFromId], references: [id], onDelete: Restrict)
