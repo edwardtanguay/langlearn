@@ -29,6 +29,17 @@ export default defineEventHandler(async (event) => {
           include: {
             tag: true
           }
+        },
+        activities: {
+          where: {
+            actionTaken: {
+              in: ['PRONUNCIATION_KEEP_TAKING', 'PRONUNCIATION_LEARNED']
+            }
+          },
+          orderBy: {
+            whenActedUpon: 'desc'
+          },
+          take: 1
         }
       }
     })
@@ -48,20 +59,33 @@ export default defineEventHandler(async (event) => {
     const taken = validCards.filter(c => (c.pronunciationTimesTaken ?? 0) >= 1).length
     const newCount = validCards.filter(c => (c.pronunciationTimesTaken ?? 0) === 0).length
 
-    // Practice queue: prioritize unlearned cards (least taken first, then highest rank)
+    const query = getQuery(event)
+    const reviewMode = query.review === 'true'
+
+    // Separate unlearned cards into "new" (untested) and "testing" (in-progress)
     const unlearned = validCards.filter(c => c.pronunciationStatus !== 'LEARNED')
     const learnedCards = validCards.filter(c => c.pronunciationStatus === 'LEARNED')
 
-    unlearned.sort((a, b) => {
-      const timesA = a.pronunciationTimesTaken ?? 0
-      const timesB = b.pronunciationTimesTaken ?? 0
-      if (timesA !== timesB) return timesA - timesB
+    const newCards = unlearned.filter(c => (c.pronunciationTimesTaken ?? 0) === 0)
+    const testingCards = unlearned.filter(c => (c.pronunciationTimesTaken ?? 0) >= 1)
+
+    // Group 1: New untested cards sorted by rank descending (highest priority first)
+    newCards.sort((a, b) => (b.rank ?? 2.5) - (a.rank ?? 2.5))
+
+    // Group 2: Testing cards sorted by last tested time ascending (oldest tested first, newly tested at the back)
+    testingCards.sort((a, b) => {
+      const lastA = a.activities?.[0]?.whenActedUpon ? new Date(a.activities[0].whenActedUpon).getTime() : 0
+      const lastB = b.activities?.[0]?.whenActedUpon ? new Date(b.activities[0].whenActedUpon).getTime() : 0
+      if (lastA !== lastB) return lastA - lastB
       return (b.rank ?? 2.5) - (a.rank ?? 2.5)
     })
 
-    learnedCards.sort((a, b) => (b.rank ?? 2.5) - (a.rank ?? 2.5))
+    const rawQueue = unlearned.length > 0
+      ? [...newCards, ...testingCards]
+      : (reviewMode ? learnedCards.sort((a, b) => (b.rank ?? 2.5) - (a.rank ?? 2.5)) : [])
 
-    const practiceQueue = unlearned.length > 0 ? unlearned : learnedCards
+    // Strip internal activities relation before sending to client
+    const practiceQueue = rawQueue.map(({ activities, ...card }) => card)
 
     return {
       metrics: {

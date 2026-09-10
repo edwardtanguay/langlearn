@@ -143,38 +143,41 @@ const getTextClass = (text: string) => {
             v-html="renderBackTextWithHighlights(currentCard.back)"
             @click="handleTextClick"
           ></p>
-          <!-- Pronunciation display below the word (clean monospace, no grey pill) -->
+          <!-- Pronunciation display below the word -->
           <div v-if="currentCard.pronunciation && isFlipped && !isEditing" class="mt-4 pt-1 flex items-center justify-center">
             <div 
-              class="text-sm sm:text-base md:text-lg font-bold text-white tracking-wide"
+              class="text-sm sm:text-base md:text-lg tracking-wide"
               style="font-family: 'Courier New', Courier, monospace"
             >
-              <span class="text-amber-300 mr-1 font-extrabold">[</span>{{ currentCard.pronunciation }}<span class="text-amber-300 ml-1 font-extrabold">]</span>
+              <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold">{{ currentCard.pronunciation }}</span><span class="text-yellow-300/40 font-normal"> ]</span>
             </div>
           </div>
         </div>
 
-        <!-- Google Translate / Audio (Bottom Left) -->
-        <button
-          @click.stop="$emit('open-audio')"
-          class="absolute bottom-3 left-4 flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/10 backface-hidden"
-          title="Écouter sur Google Translate"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072M17.657 6.343a8 8 0 010 11.314M5 10v4a2 2 0 002 2h3l5 5V3l-5 5H7a2 2 0 00-2 2z" />
-          </svg>
-          <span>google translate</span>
-        </button>
-
-        <!-- Edit Card (Bottom Right) -->
+        <!-- Edit Card (Bottom Left) -->
         <button
           @click.stop="$emit('start-edit')"
-          class="absolute bottom-3 right-4 flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/10 backface-hidden"
+          class="absolute bottom-3 left-4 flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10 backface-hidden"
           title="Edit card"
         >
-          <span>edit</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+          </svg>
+          <span>edit</span>
+        </button>
+
+        <!-- Audio Button (Bottom Right) -->
+        <button
+          @click.stop="$emit('open-audio')"
+          class="absolute bottom-3 right-4 flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10 backface-hidden"
+          title="Audio on Google Translate"
+        >
+          <span>Audio</span>
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+            <rect x="7.5" y="7.5" width="13" height="13" rx="2.5" fill="#ffffff" />
+            <path d="M12.5 13.5h4.5m-2.25-1.5v4" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" />
+            <rect x="3.5" y="3.5" width="13" height="13" rx="2.5" fill="#1a73e8" />
+            <path d="M12.5 9.5H9.5V11H11.2C10.9 11.9 10.2 12.5 9.5 12.5C8.4 12.5 7.5 11.6 7.5 10.5C7.5 9.4 8.4 8.5 9.5 8.5C10 8.5 10.5 8.7 10.8 9L11.8 8C11.2 7.4 10.4 7 9.5 7C7.6 7 6 8.6 6 10.5C6 12.4 7.6 14 9.5 14C11.4 14 12.7 12.6 12.7 10.6C12.7 10.2 12.6 9.8 12.5 9.5Z" fill="#ffffff" />
           </svg>
         </button>
       </div>

@@ -10,6 +10,7 @@ useHead({
 
 const route = useRoute()
 const router = useRouter()
+const fromPronunciation = ref(route.query.from === 'pronunciation')
 
 const config = useRuntimeConfig()
 const isBypass = config.public.bypassAuth
@@ -149,14 +150,14 @@ const cardStatusLabel = computed(() => {
   let label = ''
   if (slot) {
     if (slot.status === 'learned') label = 'learned'
-    else if (slot.status === 'testing') label = 'keep testing'
+    else if (slot.status === 'testing') label = 'currently testing'
     else if (slot.status === 'parked') label = 'parked'
     else if (slot.status === 'untested') label = 'untested'
   }
   if (!label) {
     const st = currentCard.value.status?.toLowerCase() || ''
     if (st === 'learned') label = 'learned'
-    else if (st === 'learning') label = 'keep testing'
+    else if (st === 'learning') label = 'currently testing'
     else label = st
   }
   return label.toUpperCase()
@@ -361,9 +362,9 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
           window.history.replaceState(null, '', '/flashcard')
         }
 
-        // Only pin specificCard if it matches the active strategy (e.g. if newly imported, must be untested)
+        // Only pin specificCard if it matches the active strategy or arrived from pronunciation
         const isEligibleForStrategy = specificCard && (
-          selectedStrategy.value !== 'last_imported' || (specificCard.status === 'LEARNING' && !specificCard.nextTestTime)
+          fromPronunciation.value || selectedStrategy.value !== 'last_imported' || (specificCard.status === 'LEARNING' && !specificCard.nextTestTime)
         )
 
         if (isEligibleForStrategy && specificCard.id) {
@@ -376,7 +377,11 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
             status: 'untested'
           }))
           currentQueueIndex.value = 0
-          isFlipped.value = false
+          if (fromPronunciation.value) {
+            isFlipped.value = true
+          } else {
+            isFlipped.value = false
+          }
           learnedInBatchCount.value = 0
           totalInBatch.value = testQueue.value.length
           sliderValue.value = specificCard.rank
@@ -1249,6 +1254,17 @@ onBeforeUnmount(() => {
               :active-card-id="currentCard?.id"
               :is-batch-complete="isBatchComplete"
             />
+
+            <!-- Return to Pronunciation Activity Link (if navigated from pronunciation) -->
+            <div v-if="fromPronunciation" class="w-full flex items-center justify-start pb-1">
+              <NuxtLink
+                :to="`/activities/pronunciation-practice${currentCard?.id ? '?cardId=' + currentCard.id : ''}`"
+                class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-950/80 dark:hover:bg-emerald-900 border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200 text-xs font-bold shadow-xs transition-all"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                <span>return to pronunciation activity</span>
+              </NuxtLink>
+            </div>
 
             <!-- Relative card wrapper of fixed height that crossfades loading state and card -->
             <div class="relative w-full h-[256px]">
