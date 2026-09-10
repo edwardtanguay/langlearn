@@ -1,0 +1,19 @@
+- Guess the Phrase
+	- show [toot-(en)-BAH] or [koh-key-YAHZH]
+	- user guesses French phrase 
+	- click to reveal French
+	- option: show English
+	- option: show at Google Translate for audio
+- Guess the Pronunciation
+	- show target phrase, e.g. French
+	- user guesses pronunciation
+	- user clicks reveal to get answer
+	- record as [learned] or [not learned], these are independ of the card itself being marked as learned or not
+- Match the Pronunciation
+	- show 4 French phrases in one column (2 columns total)
+	- show 4 pronunciation notes in the other column
+	- user matches them by dragging them together
+- Speed Pronunciation 
+	- show phrase and two choices for pronuncation
+	- user clicks correct choice as fast as they can (on telephone, two thumbs)
+	- sets of ten, a celebration if all correct in under 10 seconds
