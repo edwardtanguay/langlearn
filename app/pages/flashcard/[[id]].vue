@@ -767,7 +767,7 @@ function markAction(actionTaken: string, newStatus?: string) {
       if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
 
       cardAnimState.value = 'entering'
-      setTimeout(() => { cardAnimState.value = 'idle' }, 320)
+      setTimeout(() => { cardAnimState.value = 'idle' }, 220)
     } else {
       // Learned, Parked, or Deleted: remove card from active batch
       const [removedCard] = testQueue.value.splice(currentQueueIndex.value, 1)
@@ -781,13 +781,13 @@ function markAction(actionTaken: string, newStatus?: string) {
         currentQueueIndex.value = 0
         if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
         cardAnimState.value = 'entering'
-        setTimeout(() => { cardAnimState.value = 'idle' }, 320)
+        setTimeout(() => { cardAnimState.value = 'idle' }, 220)
       } else {
         cardAnimState.value = 'idle'
         triggerBatchCompletion()
       }
     }
-  }, 270)
+  }, 200)
 
   $fetch(`/api/flashcards/${cardId}/action`, {
     method: 'POST',
@@ -1477,19 +1477,32 @@ onBeforeUnmount(() => {
 }
 
 @keyframes slideExitLeft {
-  from { transform: translateX(0);     opacity: 1; }
-  to   { transform: translateX(-110%); opacity: 0; }
+  0% {
+    transform: translateX(0) rotateZ(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-105%) rotateZ(-4deg) scale(0.94);
+    opacity: 0;
+  }
 }
 @keyframes slideEnterRight {
-  from { transform: translateX(110%);  opacity: 0; }
-  to   { transform: translateX(0);     opacity: 1; }
+  0% {
+    transform: translateX(105%) rotateZ(4deg) scale(0.94);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotateZ(0deg) scale(1);
+    opacity: 1;
+  }
 }
-.card-exit  {
-  animation: slideExitLeft 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+.card-exit {
+  animation: slideExitLeft 0.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   will-change: transform, opacity;
+  pointer-events: none;
 }
 .card-enter {
-  animation: slideEnterRight 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: slideEnterRight 0.22s cubic-bezier(0.2, 0.85, 0.4, 1.1) forwards;
   will-change: transform, opacity;
 }
 

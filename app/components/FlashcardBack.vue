@@ -143,13 +143,13 @@ const getTextClass = (text: string) => {
             v-html="renderBackTextWithHighlights(currentCard.back)"
             @click="handleTextClick"
           ></p>
-          <!-- Pronunciation display below the word (larger, brighter & animated awareness) -->
+          <!-- Pronunciation display below the word (clean monospace, no grey pill) -->
           <div v-if="currentCard.pronunciation && isFlipped && !isEditing" class="mt-4 pt-1 flex items-center justify-center">
             <div 
-              class="px-3.5 py-1.5 rounded-xl bg-white/15 border border-white/30 backdrop-blur-xs text-sm sm:text-base md:text-lg font-bold text-white tracking-wide shadow-md animate-pronounce-aware"
+              class="text-sm sm:text-base md:text-lg font-bold text-white tracking-wide"
               style="font-family: 'Courier New', Courier, monospace"
             >
-              <span class="text-amber-300 mr-1.5 font-extrabold">[</span>{{ currentCard.pronunciation }}<span class="text-amber-300 ml-1.5 font-extrabold">]</span>
+              <span class="text-amber-300 mr-1 font-extrabold">[</span>{{ currentCard.pronunciation }}<span class="text-amber-300 ml-1 font-extrabold">]</span>
             </div>
           </div>
         </div>

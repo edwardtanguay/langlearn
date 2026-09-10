@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { SpeakerWaveIcon, ArrowLeftIcon, CheckCircleIcon, ArrowPathIcon } from '@heroicons/vue/24/outline'
+import { SpeakerWaveIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - Pronunciation Practice',
@@ -101,9 +101,8 @@ const openTranslateAudio = (card: Flashcard, event: MouseEvent) => {
   window.open(url, '_blank')
 }
 
-const handleAction = async (action: 'LEARNED' | 'KEEP_TAKING') => {
-  if (!currentCard.value || isSubmittingAction.value) return
-  isSubmittingAction.value = true
+const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
+  if (!currentCard.value) return
 
   const cardId = currentCard.value.id
   const wasUntested = (currentCard.value.pronunciationTimesTaken ?? 0) === 0
@@ -121,38 +120,35 @@ const handleAction = async (action: 'LEARNED' | 'KEEP_TAKING') => {
     metrics.value.new = Math.max(0, metrics.value.new - 1)
   }
 
-  try {
-    await $fetch('/api/activities/pronunciation-action', {
-      method: 'POST',
-      body: { cardId, action }
-    })
-
-    // Advance to next card
-    if (action === 'LEARNED') {
-      // Remove learned card from active practice list
-      cards.value.splice(currentIndex.value, 1)
-      if (currentIndex.value >= cards.value.length) {
-        currentIndex.value = 0
-      }
-    } else {
-      // Rotate card to the back
-      const [card] = cards.value.splice(currentIndex.value, 1)
-      if (card) {
-        card.pronunciationTimesTaken = (card.pronunciationTimesTaken ?? 0) + 1
-        card.pronunciationStatus = 'LEARNING'
-        cards.value.push(card)
-      }
-      if (currentIndex.value >= cards.value.length) {
-        currentIndex.value = 0
-      }
+  // Advance immediately
+  if (action === 'LEARNED') {
+    // Remove learned card from active practice list
+    cards.value.splice(currentIndex.value, 1)
+    if (currentIndex.value >= cards.value.length) {
+      currentIndex.value = 0
     }
-
-    isRevealed.value = false
-  } catch (err) {
-    console.error('Failed to submit pronunciation action:', err)
-  } finally {
-    isSubmittingAction.value = false
+  } else {
+    // Rotate card to the back
+    const [card] = cards.value.splice(currentIndex.value, 1)
+    if (card) {
+      card.pronunciationTimesTaken = (card.pronunciationTimesTaken ?? 0) + 1
+      card.pronunciationStatus = 'LEARNING'
+      cards.value.push(card)
+    }
+    if (currentIndex.value >= cards.value.length) {
+      currentIndex.value = 0
+    }
   }
+
+  isRevealed.value = false
+
+  // Persist to server in background
+  $fetch('/api/activities/pronunciation-action', {
+    method: 'POST',
+    body: { cardId, action }
+  }).catch((err) => {
+    console.error('Failed to submit pronunciation action:', err)
+  })
 }
 </script>
 
@@ -264,128 +260,81 @@ const handleAction = async (action: 'LEARNED' | 'KEEP_TAKING') => {
             {{ currentCard.backLanguage?.toUpperCase() || 'FR' }}
           </span>
 
-          <!-- Subtle status indication of this pronunciation -->
-          <span class="text-[11px] font-mono tracking-wider uppercase text-white/50">
-            {{ currentCard.pronunciationStatus === 'LEARNED' ? 'Learned' : (currentCard.pronunciationTimesTaken ?? 0) > 0 ? 'Testing' : 'New' }}
+          <!-- Status indication of this pronunciation -->
+          <span 
+            class="text-[11px] font-mono tracking-wider uppercase font-bold"
+            :class="currentCard.pronunciationStatus === 'LEARNED' ? 'text-emerald-400' : (currentCard.pronunciationTimesTaken ?? 0) > 0 ? 'text-sky-400' : 'text-amber-300'"
+          >
+            {{ currentCard.pronunciationStatus === 'LEARNED' ? 'Learned' : (currentCard.pronunciationTimesTaken ?? 0) > 0 ? 'Taken' : 'New' }}
           </span>
         </div>
 
-        <!-- Target Phrase (French / Target Language) -->
-        <div class="my-auto py-4 space-y-2">
+        <!-- Target Phrase & Source Phrase -->
+        <div class="my-auto py-4">
           <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
             {{ stripAsterisks(currentCard.back) }}
           </h2>
-          <p class="text-xs sm:text-sm text-white/60 font-medium">
+          <p class="text-xs sm:text-sm text-white/40 italic font-normal mt-1">
             {{ currentCard.front }}
           </p>
         </div>
 
         <!-- Reveal / Pronunciation Area -->
         <div class="w-full">
-          <Transition name="fade-reveal" mode="out-in">
-            <!-- Unrevealed Button -->
-            <button
-              v-if="!isRevealed"
-              key="button"
-              @click="revealPronunciation"
-              class="w-full max-w-xs mx-auto py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <SpeakerWaveIcon class="w-4 h-4 text-emerald-400" />
-              <span>Reveal Pronunciation</span>
-            </button>
+          <!-- Unrevealed Button -->
+          <button
+            v-if="!isRevealed"
+            @click="revealPronunciation"
+            class="w-full max-w-xs mx-auto py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <SpeakerWaveIcon class="w-4 h-4 text-emerald-400" />
+            <span>Reveal Pronunciation</span>
+          </button>
 
-            <!-- Revealed Pronunciation and Audio Button -->
-            <div
-              v-else
-              key="revealed"
-              class="w-full max-w-md mx-auto p-3 rounded-2xl bg-black/40 border border-white/20 backdrop-blur-xs flex items-center justify-between gap-3 animate-pronounce-reveal"
-            >
-              <div class="flex-1 text-left pl-2">
-                <span class="text-sm sm:text-base font-bold font-mono text-white tracking-wider text-emerald-300 drop-shadow-md">
-                  [{{ currentCard.pronunciation }}]
-                </span>
-              </div>
-
-              <!-- Audio Link to Google Translate -->
-              <button
-                @click="openTranslateAudio(currentCard, $event)"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-white bg-white/15 hover:bg-white/25 active:bg-white/30 border border-white/20 transition-all cursor-pointer shrink-0"
-                title="Listen audio on Google Translate"
-              >
-                <SpeakerWaveIcon class="w-3.5 h-3.5 text-emerald-400" />
-                <span>Audio</span>
-              </button>
+          <!-- Revealed Pronunciation and Google Translate Button -->
+          <div
+            v-else
+            class="w-full max-w-md mx-auto p-3 rounded-2xl bg-black/40 border border-white/20 backdrop-blur-xs flex items-center justify-between gap-3"
+          >
+            <div class="flex-1 text-left pl-2">
+              <span class="text-sm sm:text-base font-bold font-mono text-white tracking-wider text-emerald-300 drop-shadow-md">
+                [{{ currentCard.pronunciation }}]
+              </span>
             </div>
-          </Transition>
+
+            <!-- Google Translate Button -->
+            <button
+              @click="openTranslateAudio(currentCard, $event)"
+              class="inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-semibold text-white bg-white/15 hover:bg-white/25 active:bg-white/30 border border-white/20 transition-all cursor-pointer shrink-0"
+              title="Listen on Google Translate"
+            >
+              <span>Google Translate</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Action Buttons [learned] and [keep taking] (Visible after reveal) -->
-      <Transition name="fade-actions">
-        <div v-if="isRevealed" class="grid grid-cols-2 gap-3 pt-1">
-          <!-- Keep Taking Button -->
-          <button
-            @click="handleAction('KEEP_TAKING')"
-            :disabled="isSubmittingAction"
-            class="py-3 px-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-          >
-            <ArrowPathIcon class="w-4 h-4" />
-            <span>Keep Taking</span>
-          </button>
+      <!-- Action Buttons [Learned] and [Keep Taking] (Visible immediately upon reveal) -->
+      <div v-if="isRevealed" class="grid grid-cols-2 gap-3 pt-1">
+        <!-- Learned Button (Left, Green) -->
+        <button
+          @click="handleAction('LEARNED')"
+          class="py-3 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center cursor-pointer"
+        >
+          <span>Learned</span>
+        </button>
 
-          <!-- Learned Button -->
-          <button
-            @click="handleAction('LEARNED')"
-            :disabled="isSubmittingAction"
-            class="py-3 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-          >
-            <CheckCircleIcon class="w-4 h-4" />
-            <span>Learned</span>
-          </button>
-        </div>
-      </Transition>
+        <!-- Keep Taking Button (Right, Blue) -->
+        <button
+          @click="handleAction('KEEP_TAKING')"
+          class="py-3 px-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center cursor-pointer"
+        >
+          <span>Keep Taking</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-@keyframes pronounceRevealKeyframe {
-  0% {
-    opacity: 0;
-    transform: scale(0.95) translateY(4px);
-  }
-  60% {
-    transform: scale(1.02);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.animate-pronounce-reveal {
-  animation: pronounceRevealKeyframe 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.fade-reveal-enter-active,
-.fade-reveal-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.fade-reveal-enter-from,
-.fade-reveal-leave-to {
-  opacity: 0;
-  transform: translateY(4px);
-}
-
-.fade-actions-enter-active,
-.fade-actions-leave-active {
-  transition: opacity 0.24s ease, transform 0.24s ease;
-}
-
-.fade-actions-enter-from,
-.fade-actions-leave-to {
-  opacity: 0;
-  transform: translateY(6px);
-}
 </style>
