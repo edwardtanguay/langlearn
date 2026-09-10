@@ -1352,10 +1352,10 @@ onBeforeUnmount(() => {
               </Transition>
             </div>
 
-            <!-- Nuanced info outside bottom of card: status (left) and import date (right) -->
+            <!-- Nuanced info outside bottom of card: import date (left) and status (right) -->
             <div v-if="!isLoadingQueue && currentCard && !isBatchComplete" class="w-full flex items-center justify-between px-3 -mt-2 text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
-              <span class="tracking-wider uppercase">{{ cardStatusLabel }}</span>
               <span class="tracking-wider uppercase">{{ formatImportDate(currentCard.createdAt) }}</span>
+              <span class="tracking-wider uppercase">{{ cardStatusLabel }}</span>
             </div>
 
             <!-- Single compact panel — visible when card is flipped and not editing -->
