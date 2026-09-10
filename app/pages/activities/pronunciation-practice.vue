@@ -327,7 +327,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
           <div
             @click="showSourceText = !showSourceText"
             class="tracking-tight leading-tight cursor-pointer select-none"
-            :class="showSourceText ? 'text-base font-normal text-gray-400 italic' : 'text-xl font-semibold text-white'"
+            :class="showSourceText ? 'text-lg font-normal text-gray-400 italic' : 'text-xl font-semibold text-white'"
             :title="showSourceText ? 'Click to show target phrase' : 'Click to show translation'"
           >
             {{ showSourceText ? stripAsterisks(currentCard.front) : stripAsterisks(currentCard.back) }}
@@ -335,12 +335,12 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         </div>
 
         <!-- Reveal / Pronunciation Area (Positioned halfway between phrase and bottom of card) -->
-        <div class="w-full mb-7">
+        <div class="w-full mb-7 h-12 flex items-center justify-center">
           <!-- Unrevealed Button -->
           <button
             v-if="!isRevealed"
             @click="revealPronunciation"
-            class="w-full max-w-xs mx-auto py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-xs flex items-center justify-center cursor-pointer"
+            class="w-full max-w-xs mx-auto h-11 px-4 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-xs flex items-center justify-center cursor-pointer"
           >
             <span>Reveal Pronunciation</span>
           </button>
@@ -348,7 +348,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
           <!-- Revealed Pronunciation -->
           <div
             v-else
-            class="w-full max-w-md mx-auto p-2.5 rounded-2xl bg-black/40 border border-white/20 backdrop-blur-xs flex items-center justify-center"
+            class="w-full max-w-md mx-auto h-11 px-4 rounded-2xl bg-black/40 border border-white/20 backdrop-blur-xs flex items-center justify-center"
           >
             <div 
               class="text-sm sm:text-base md:text-lg tracking-wide"
