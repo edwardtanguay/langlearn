@@ -143,6 +143,7 @@ onMounted(() => {
 })
 
 const revealPronunciation = () => {
+  if (showSourceText.value) return
   isRevealed.value = true
 }
 
@@ -339,8 +340,13 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
           <!-- Unrevealed Button -->
           <button
             v-if="!isRevealed"
+            :disabled="showSourceText"
             @click="revealPronunciation"
-            class="w-full max-w-xs mx-auto h-11 px-4 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase transition-all shadow-xs flex items-center justify-center cursor-pointer"
+            class="w-full max-w-xs mx-auto h-11 px-4 rounded-xl border font-semibold text-xs tracking-wider uppercase transition-all shadow-xs flex items-center justify-center"
+            :class="showSourceText 
+              ? 'opacity-30 cursor-not-allowed bg-white/5 border-white/10 text-white/40 select-none' 
+              : 'bg-white/10 hover:bg-white/20 active:bg-white/25 border-white/20 text-white cursor-pointer'"
+            :title="showSourceText ? 'Switch back to target language to reveal pronunciation' : 'Reveal Pronunciation'"
           >
             <span>Reveal Pronunciation</span>
           </button>
