@@ -45,7 +45,7 @@
                   :disabled="isSubmitting || feedbackMsg !== ''"
                   :class="form.type === 'BUGFIX'
                     ? 'bg-orange-800 text-white font-bold shadow-inner'
-                    : 'bg-orange-950/50 text-orange-300 hover:bg-orange-900/60 hover:text-white'"
+                    : 'bg-orange-950/50 text-orange-300'"
                   class="px-4 py-1.5 transition-colors focus:outline-none disabled:opacity-50 cursor-pointer"
                 >
                   Bug fix
@@ -56,7 +56,7 @@
                   :disabled="isSubmitting || feedbackMsg !== ''"
                   :class="form.type === 'FEATURE'
                     ? 'bg-emerald-800 text-white font-bold shadow-inner'
-                    : 'bg-emerald-950/50 text-emerald-300 hover:bg-emerald-900/60 hover:text-white'"
+                    : 'bg-emerald-950/50 text-emerald-300'"
                   class="px-4 py-1.5 transition-colors focus:outline-none disabled:opacity-50 cursor-pointer"
                 >
                   Feature

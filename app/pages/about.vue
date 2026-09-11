@@ -1343,7 +1343,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       </div>
 
       <!-- Toggle link for Future Versions in Admin Mode -->
-      <div v-if="!isLoading && isAdmin && adminEditMode && futureVersionsCount > 0" class="pt-1 -mb-3">
+      <div v-if="!isLoading && isAdmin && adminEditMode && futureVersionsCount > 0" class="pt-1 mb-3">
         <button
           type="button"
           @click="showFutureVersions = !showFutureVersions"
