@@ -26,12 +26,30 @@ const handleClickOutside = (event: MouseEvent) => {
   }
 }
 
+let midnightTimeout: ReturnType<typeof setTimeout> | null = null
+
+const scheduleMidnightRefresh = () => {
+  if (midnightTimeout) clearTimeout(midnightTimeout)
+  if (typeof window === 'undefined') return
+
+  const now = new Date()
+  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 1)
+  const msUntilMidnight = Math.max(1000, nextMidnight.getTime() - now.getTime())
+
+  midnightTimeout = setTimeout(() => {
+    fetchNavCardStats()
+    scheduleMidnightRefresh()
+  }, msUntilMidnight)
+}
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  scheduleMidnightRefresh()
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+  if (midnightTimeout) clearTimeout(midnightTimeout)
 })
 
 const colorMode = useColorMode()
@@ -70,8 +88,16 @@ const fetchUserData = async () => {
 const fetchNavCardStats = async () => {
   if (!loggedIn.value) return
   try {
-    const headers = useRequestHeaders(['cookie'])
-    const data = await $fetch<CardStats>('/api/flashcards/stats', { headers })
+    const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
+    const reqHeaders = useRequestHeaders(['cookie'])
+    const headers: Record<string, string> = {
+      ...reqHeaders,
+      ...(tz ? { 'x-client-timezone': tz } : {})
+    }
+    const data = await $fetch<CardStats>('/api/flashcards/stats', {
+      headers,
+      query: tz ? { tz } : undefined
+    })
     cardStats.value = data
   } catch (err: any) {
     if (err?.statusCode !== 401 && err?.status !== 401 && err?.response?.status !== 401) {

@@ -22,6 +22,9 @@ export default defineEventHandler(async (event) => {
         ownerId: dbUser.id,
         pronunciation: {
           not: null
+        },
+        status: {
+          not: 'DELETED'
         }
       },
       include: {

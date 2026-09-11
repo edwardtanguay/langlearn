@@ -232,8 +232,11 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-0.5">
           Learned
         </div>
-        <div class="text-2xl sm:text-3xl font-black font-mono text-emerald-700 dark:text-emerald-300">
-          {{ metrics.learned }}
+        <div
+          class="text-2xl sm:text-3xl font-black font-mono text-emerald-700 dark:text-emerald-300 transition-all duration-300"
+          :class="isLoading ? 'blur-[4px] opacity-40 select-none' : 'blur-none opacity-100'"
+        >
+          {{ isLoading ? '88' : metrics.learned }}
         </div>
         <div class="text-[10px] text-gray-400 dark:text-gray-500">
           pronunciations mastered
@@ -245,11 +248,14 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-0.5">
           Testing
         </div>
-        <div class="text-2xl sm:text-3xl font-black font-mono text-indigo-700 dark:text-indigo-300">
-          {{ metrics.taken }}
+        <div
+          class="text-2xl sm:text-3xl font-black font-mono text-indigo-700 dark:text-indigo-300 transition-all duration-300"
+          :class="isLoading ? 'blur-[4px] opacity-40 select-none' : 'blur-none opacity-100'"
+        >
+          {{ isLoading ? '88' : metrics.taken }}
         </div>
         <div class="text-[10px] text-gray-400 dark:text-gray-500">
-          tested >= 1 time
+          tested at least once
         </div>
       </div>
 
@@ -258,8 +264,11 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         <div class="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-0.5">
           New
         </div>
-        <div class="text-2xl sm:text-3xl font-black font-mono text-amber-700 dark:text-amber-300">
-          {{ metrics.new }}
+        <div
+          class="text-2xl sm:text-3xl font-black font-mono text-amber-700 dark:text-amber-300 transition-all duration-300"
+          :class="isLoading ? 'blur-[4px] opacity-40 select-none' : 'blur-none opacity-100'"
+        >
+          {{ isLoading ? '88' : metrics.new }}
         </div>
         <div class="text-[10px] text-gray-400 dark:text-gray-500">
           still need to be taken
@@ -330,7 +339,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
           <div
             @click="showSourceText = !showSourceText"
             class="tracking-tight leading-tight cursor-pointer select-none"
-            :class="showSourceText ? 'text-lg font-normal text-gray-400 italic' : 'text-xl font-semibold text-white'"
+            :class="showSourceText ? 'text-sm font-semibold text-gray-400 italic' : 'text-xl font-semibold text-white'"
             :title="showSourceText ? 'Click to show target phrase' : 'Click to show translation'"
           >
             {{ showSourceText ? stripAsterisks(currentCard.front) : stripAsterisks(currentCard.back) }}
@@ -359,10 +368,16 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
             class="w-full max-w-md mx-auto h-11 px-4 rounded-2xl bg-black/40 border border-white/20 backdrop-blur-xs flex items-center justify-center"
           >
             <div 
-              class="text-sm sm:text-base md:text-lg tracking-wide"
+              class="tracking-wide"
+              :class="(currentCard.pronunciation?.length ?? 0) > 20 ? 'text-xs sm:text-sm' : 'text-sm sm:text-base md:text-lg'"
               style="font-family: 'Courier New', Courier, monospace"
             >
-              <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold">{{ currentCard.pronunciation }}</span><span class="text-yellow-300/40 font-normal"> ]</span>
+              <template v-if="(currentCard.pronunciation?.length ?? 0) > 20">
+                <span class="text-yellow-300 font-bold">{{ currentCard.pronunciation }}</span>
+              </template>
+              <template v-else>
+                <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold">{{ currentCard.pronunciation }}</span><span class="text-yellow-300/40 font-normal"> ]</span>
+              </template>
             </div>
           </div>
         </div>

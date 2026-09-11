@@ -8,6 +8,8 @@ If you are asked to make a "miniapp", see /output/miniapps/agents.md"
 - make all UX interaction with APIs optimistic, i.e. show an immediate, positive response, changing the data on the frontend, and only reverting it if there is an error or exception from the server
 - any buttons that perform highly destructive actions, should be shown as dark red links, they should be hard to see and click, and they should always ask for confirmation before executing the action 
 - in edit/add forms, make ENTER mean SAVE
+- all activities ignore deleted cards
+- all values that are loaded from the database, are replaced with spinners or blurred out areas while the page loads and those values are not yet present
 
 # language colors reference
 
