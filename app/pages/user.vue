@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { ArrowRightOnRectangleIcon, TrashIcon, ExclamationTriangleIcon, SunIcon } from '@heroicons/vue/24/outline'
 
 useHead({
@@ -17,11 +17,25 @@ const auth = useAuth()
 const loggedIn = computed(() => isBypass.value ? true : (auth?.loggedIn ?? false))
 const user = computed(() => isBypass.value ? { given_name: 'Edward', family_name: 'Tanguay', email: 'edwardtanguay@gmail.com', picture: null } : (auth?.user ?? null))
 
-// Redirect if not logged in
+const siteTime = ref('')
+let siteTimeInterval: ReturnType<typeof setInterval> | null = null
+
+const updateSiteTime = () => {
+  const now = new Date()
+  siteTime.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+}
+
+// Redirect if not logged in & init site time
 onMounted(() => {
   if (!loggedIn.value) {
     navigateTo('/')
   }
+  updateSiteTime()
+  siteTimeInterval = setInterval(updateSiteTime, 1000)
+})
+
+onUnmounted(() => {
+  if (siteTimeInterval) clearInterval(siteTimeInterval)
 })
 
 // Fetch user's flashcards count
@@ -160,6 +174,10 @@ const handleLogout = () => {
             </h1>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
               {{ user.email || 'No email provided' }}
+            </p>
+            <p v-if="siteTime" class="text-xs text-indigo-600 dark:text-indigo-400 font-mono mt-1.5 flex items-center justify-center gap-1.5 font-medium">
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>Site time: {{ siteTime }}</span>
             </p>
           </div>
         </div>

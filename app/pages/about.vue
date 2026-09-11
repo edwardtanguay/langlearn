@@ -214,6 +214,12 @@ function compareSemVerDesc(v1: string, v2: string): number {
   return 0
 }
 
+const showFutureVersions = ref(false)
+
+const futureVersionsCount = computed(() => {
+  return versions.value.filter(v => v.status === 'FUTURE_VERSION').length
+})
+
 const displayedVersions = computed(() => {
   if (!adminEditMode.value) {
     // Admin mode OFF: show ONLY PUBLISHED versions with at least one item, descending by version number
@@ -223,12 +229,14 @@ const displayedVersions = computed(() => {
   }
 
   // Admin mode ON:
-  // 1. FUTURE versions in descending version order
+  // 1. FUTURE versions in descending version order (if showFutureVersions is true)
   // 2. INCOMING version (0.0.0)
   // 3. PUBLISHED and IN_PROGRESS versions in descending version order
-  const futureVers = versions.value
-    .filter(v => v.status === 'FUTURE_VERSION')
-    .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+  const futureVers = showFutureVersions.value
+    ? versions.value
+        .filter(v => v.status === 'FUTURE_VERSION')
+        .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+    : []
 
   const incomingVer = versions.value.filter(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
 
@@ -491,7 +499,8 @@ function getRelativeDateStr(dateStr: string | null | undefined): string {
   if (diffDays === 0) return '(today)'
   if (diffDays === 1) return '(yesterday)'
   if (diffDays > 1) return `(${diffDays} days ago)`
-  if (diffDays < 0) return `(in ${Math.abs(diffDays)} days)`
+  if (diffDays === -1) return '(tomorrow)'
+  if (diffDays < -1) return `(in ${Math.abs(diffDays)} days)`
   return ''
 }
 
@@ -1331,6 +1340,18 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
           class="w-full px-3 py-2 text-sm rounded-lg border transition-colors outline-none focus:outline-none focus:ring-0"
           :class="isSearchActive ? 'bg-gray-800 text-white border-orange-500 placeholder-orange-300/60' : 'bg-gray-50 dark:bg-gray-800/60 text-gray-900 dark:text-gray-300 border-gray-300 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500'"
         />
+      </div>
+
+      <!-- Toggle link for Future Versions in Admin Mode -->
+      <div v-if="!isLoading && isAdmin && adminEditMode && futureVersionsCount > 0" class="pt-1 mb-3">
+        <button
+          type="button"
+          @click="showFutureVersions = !showFutureVersions"
+          class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors cursor-pointer select-none"
+        >
+          <span class="text-amber-500 dark:text-amber-400">{{ showFutureVersions ? '▼' : '▶' }}</span>
+          <span>{{ showFutureVersions ? 'Hide future versions' : `Show future versions (${futureVersionsCount})` }}</span>
+        </button>
       </div>
 
       <div v-if="isLoading" class="text-center py-12 text-sm text-gray-500 font-mono">

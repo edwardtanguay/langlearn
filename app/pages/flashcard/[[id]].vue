@@ -1256,13 +1256,13 @@ onBeforeUnmount(() => {
             />
 
             <!-- Return to Pronunciation Activity Link (if navigated from pronunciation) -->
-            <div v-if="fromPronunciation" class="w-full flex items-center justify-start pb-1">
+            <div v-if="fromPronunciation" class="w-full flex items-center justify-end pb-1">
               <NuxtLink
                 :to="`/activities/pronunciation-practice${currentCard?.id ? '?cardId=' + currentCard.id : ''}`"
                 class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-950/80 dark:hover:bg-emerald-900 border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200 text-xs font-bold shadow-xs transition-all"
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 <span>return to pronunciation activity</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </NuxtLink>
             </div>
 
