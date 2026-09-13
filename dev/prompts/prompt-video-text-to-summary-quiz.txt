@@ -1,0 +1,611 @@
+Examine the following text and produce a summary and a quiz.
+
+The summary should be concise and capture the main points of the text.
+
+The quiz should be in the form of multiple choice questions, each with 4 possible answers.  There should be 10 questions in total.
+
+The questions should be challenging but not too difficult, and they should cover a range of topics from the text.
+
+The questions should be in the same language as the text.
+
+The summary should be in the same language as the text.
+
+Ignore the timestamps
+
+Create the summary and quiz in a simple html/css/js file in: dev\summary-quizzes
+
+---
+
+Courir est une activité qui rend heureux parce qu'elle agit à différents niveaux sur le plan physiologique.
+0:30
+30 Sekunden
+Elle libère des hormones et active des transmetteurs qui renforcent le système immunitaire et qui nous rendent plus fort, plus endurant.
+0:38
+38 Sekunden
+C'est pas étonnant si les Japonais par exemple ont développé des politiques publiques autour de la marche en forêt.
+0:45
+45 Sekunden
+Faire marcher les gens, c'est le meilleur moyen en fait de faire fonctionner le corps, faire fonctionner l'esprit et de détendre la société.
+0:53
+53 Sekunden
+On a même démontré que l'être humain est champion du monde en matière de course d'endurance.
+0:59
+59 Sekunden
+Aucun autre animal ne peut courir entre 40 et 100 km d'une seule traite.
+1:06
+1 Minute, 6 Sekunden
+Si l'être humain est fait pour la course de fond, je suis soit une extraterrestre, soit l'exception qui confirme la règle.
+1:13
+1 Minute, 13 Sekunden
+Comment une telle torture pourrait-elle me rendre heureuse ?
+1:18
+1 Minute, 18 Sekunden
+Mes muscles se contractent, mes articulations craquent et mes poumons vont exploser. Comment peut-on s'infliger ça ?
+1:25
+1 Minute, 25 Sekunden
+Je vais rencontrer deux personnes qui ont trouvé le bonheur en mettant un pied devant l'autre, chacune à leur manière et à leur rythme.
+1:32
+1 Minute, 32 Sekunden
+Mike Kratzer était créatif dans une agence de publicité. Pendant des années, il a mené une vie de noctambulle et mixé
+1:39
+1 Minute, 39 Sekunden
+dans les clubs, toujours entre l'ivresse et la gueule de bois.
+1:45
+1 Minute, 45 Sekunden
+Puis il a découvert la course à pied et il a appuyé sur pause. Depuis, il mène une vie de famille bien rangée.
+1:55
+1 Minute, 55 Sekunden
+Christine Turmer, elle est l'une des plus grandes voyageuses du monde. Elle a parcouru 10000 km à pied à travers l'Europe, l'Amérique, l'Australie et l'Asie.
+2:05
+2 Minuten, 5 Sekunden
+Après deux coups du sort, cette managuse de carrière a fait de la randonnée son métier.
+2:29
+2 Minuten, 29 Sekunden
+Allô ? Salut. Salut. Tu tiens la porte ? à tout de suite. C'est un club select ici ?
+2:37
+2 Minuten, 37 Sekunden
+Oui, le plus sélect de la rue. Bonjour. Salut.
+2:42
+2 Minuten, 42 Sekunden
+Ravi de te rencontrer. C'est tranquille ici.
+2:45
+2 Minuten, 45 Sekunden
+Oui, vous êtes ici depuis longtemps ? 6 ans.
+2:48
+2 Minuten, 48 Sekunden
+En ville, on commence à se sentir les trois.
+2:51
+2 Minuten, 51 Sekunden
+Alors, on a embarqué nos enfants et nos animaux divers et variés et on est parti à la campagne.
+2:56
+2 Minuten, 56 Sekunden
+Espèce de bobo. Oui, grave. Tu essayes de le cacher mais c'est raté. J'y arrive pas. Allez, entre.
+3:03
+3 Minuten, 3 Sekunden
+TR enfants et qu chiens 11 poules, des poules aussi, des lapins et des poissons.
+3:09
+3 Minuten, 9 Sekunden
+C'est une ferme en fait, on pourrait dire ça.
+3:15
+3 Minuten, 15 Sekunden
+Ici, en pleine nature, tu peux courir sans faim. C'est l'idéal, non ? Oui. Tu cours souvent ? Tous les jours.
+3:23
+3 Minuten, 23 Sekunden
+Tous les jours ? Mais juste une fois ? Non, parfois deux. Non, c'est pas vrai. Mais pourquoi ?
+3:31
+3 Minuten, 31 Sekunden
+Parce que j'ai la paix. C'est une sorte de fuite.
+3:38
+3 Minuten, 38 Sekunden
+Je dirais plutôt que je cours vers quelque chose.
+3:46
+3 Minuten, 46 Sekunden
+On peut se demander pourquoi on est si bon à la course, pourquoi l'évolution a fait de nous des animaux aussi endurants et c'est là qu'intervient le facteur de
+3:54
+3 Minuten, 54 Sekunden
+la chasse. Une antilope est plus rapide qu'un être humain, mais quand on la poursuit, elle va finir par être en surchauffe parce que la plupart des
+4:03
+4 Minuten, 3 Sekunden
+animaux qui ont de la fourrure n'ont pas de glande sudoripar comme nous. Donc à un moment, il va suffire qu'on la frappe avec une pierre et on va pouvoir manger
+4:12
+4 Minuten, 12 Sekunden
+sa chair et se nourrir de viande. Et c'est à partir du moment où la chasse se généralise qu'on observe un saut qualitatif dans la taille de notre cerveau.
+4:21
+4 Minuten, 21 Sekunden
+Nietzs disait qu'on pouvait en fait différencier les philosophes qui écrivaient en marchant et les philosophes qui écrivaient assis.
+4:25
+4 Minuten, 25 Sekunden
+Peut-être que quand on écrit assis dans sa chambre, on a envie de faire des systèmes qui est une forme de domination sur le monde. Alors que le philosophe qui marche Nietzsche comme Montagne
+4:34
+4 Minuten, 34 Sekunden
+comme d'ailleurs les philosophes antiques sont très éloignés de la notion de système et créent des philosophies qui sont beaucoup plus fluides. C'est
+4:41
+4 Minuten, 41 Sekunden
+quelque chose d'assez senti, de beaucoup plus profond à mon sens, mais qui risque parfois de s'égarer, de dire n'importe quoi, de revenir sur quelque chose et
+4:49
+4 Minuten, 49 Sekunden
+c'est pas grave. C'est le mouvement de la vie.
+5:14
+5 Minuten, 14 Sekunden
+Comment était ta vie avant la course à pied ? C'était sexe, drogue et rock and roll.
+5:19
+5 Minuten, 19 Sekunden
+Je travaill comme DJ dans les restaurants c'est le pire
+5:28
+5 Minuten, 28 Sekunden
+en fait toute ma vie tournait autour de l'alcool et de la drogue.
+5:34
+5 Minuten, 34 Sekunden
+Il y a une photo de cette époque où j'ai vraiment l'air complètement en vraque.
+5:40
+5 Minuten, 40 Sekunden
+C'est à peu près à ce moment-là que j'ai eu une sorte de déclic.
+5:44
+5 Minuten, 44 Sekunden
+Je me suis dit quand je vais bientôt avoir 30 ans, pour l'instant c'est l'éclate mais à un moment donné il va falloir que je fasse le ménage dans ma tête et savoir ce que je veux.
+5:56
+5 Minuten, 56 Sekunden
+Et cette prise de conscience m'a amené à changer d'environnement parce que la seule chose qui nous liait avec mon cercle de potes, c'était la
+6:04
+6 Minuten, 4 Sekunden
+consommation de substan et pas la musique ou quoi que ce soit. Ça fait mal ça. Oui, c'est douloureux.
+6:13
+6 Minuten, 13 Sekunden
+Tu dirais que la course à pied est ta nouvelle drogue ? C'est clair.
+6:19
+6 Minuten, 19 Sekunden
+On a le sentiment d'être au commande parce qu'on décide quand on va courir, où et combien de
+6:27
+6 Minuten, 27 Sekunden
+temps. Il y a des moments de grâce quand on court. Tout est fluide. On a une impression d'immense facilité.
+6:36
+6 Minuten, 36 Sekunden
+On se dit qu'on pourrait courir comme ça pendant 10 heures. C'est faux bien sûr, mais c'est ce qu'on ressent.
+6:47
+6 Minuten, 47 Sekunden
+Tu mets ton cerveau en veille en quelque sorte et tu n'as que des pensées subconscientes qui traversent l'esprit.
+6:55
+6 Minuten, 55 Sekunden
+Temps à autre, tu en attrapes une au vol et tu t'y attardes un peu. Mais la plupart ne font que passer.
+7:02
+7 Minuten, 2 Sekunden
+C'est un peu comme quand on est défoncé mais différemment.
+7:06
+7 Minuten, 6 Sekunden
+Une étude a montré que le bruit neuronal diminue à la suite d'une séance de course à pied et la réduction de ce
+7:13
+7 Minuten, 13 Sekunden
+bruit de fond permet au cerveau de fonctionner plus efficacement de façon plus synchronisée, de mieux réguler les stimulis.
+7:21
+7 Minuten, 21 Sekunden
+C'est moins le chaos dans la tête si on veut.
+7:24
+7 Minuten, 24 Sekunden
+Pour la personne, ça se traduit par une impression de détente et d'avoir mis de l'ordre dans ses pensées.
+7:32
+7 Minuten, 32 Sekunden
+On a ce qu'on appelle l'effet d'incubation.
+7:35
+7 Minuten, 35 Sekunden
+Par exemple, on est confronté à un problème ou une tâche difficile et on a beau se creuser la tête, on n'arrive pas à trouver de solution.
+7:43
+7 Minuten, 43 Sekunden
+On va donc laisser le sujet de côté un moment et compter sur notre subconscient pour le résoudre. Tout cela vient du champ de la psychologie cognitive et de
+7:52
+7 Minuten, 52 Sekunden
+recherche faites notamment sur les chimpanzés. Je pars faire quelque chose d'autre, un jogging par exemple et tout à coup, sans m'y attendre, je vais avoir l'illumination, la solution créative.
+8:03
+8 Minuten, 3 Sekunden
+Ça t'a permis de résoudre des problèmes concrets ? Il y a quelques semaines, j'ai été confronté pas vraiment à un problème, mais à une alternative.
+8:15
+8 Minuten, 15 Sekunden
+C'était dans le domaine professionnel.
+8:17
+8 Minuten, 17 Sekunden
+La question de savoir si je pouvais ou si je voulais me mettre à temps partiel et avoir une activité freelance à côté ou si j'allais quitter ce boulot et en chercher un autre.
+8:28
+8 Minuten, 28 Sekunden
+Et le fait de courir m'a permis de me débarrasser de cette réaction d'orgueil du genre j'en ai ma claque de tous ces cons et de pouvoir réfléchir à la
+8:36
+8 Minuten, 36 Sekunden
+situation de façon objective, d'identifier les problèmes et les paramètres à prendre en compte et de trouver une solution rationnelle.
+8:45
+8 Minuten, 45 Sekunden
+Malle super très pratique. Laisser mon subconscient
+8:55
+8 Minuten, 55 Sekunden
+travailler pour moi. Ce serait un vrai plus pour mon prochain livre par exemple.
+9:03
+9 Minuten, 3 Sekunden
+Mais devoir faire un footing pour que ça fonctionne, comment dire ? Peut-être qu'on peut aussi courir plus lentement, marcher en fait.
+9:12
+9 Minuten, 12 Sekunden
+Et quand on se balade dans un bel environnement, disons la montagne, les bords d'une rivière ou la campagne, on appelle ça randonné.
+9:22
+9 Minuten, 22 Sekunden
+Et c'est un petit pas de plus vers le bonheur.
+9:40
+9 Minuten, 40 Sekunden
+C'est drôle comme point de rendez-vous un cimetière. C'est pratique. Ça permet de remplir sa gourde avant de partir.
+9:47
+9 Minuten, 47 Sekunden
+Bonjour enchanté. Tu as ta gourde ?
+9:51
+9 Minuten, 51 Sekunden
+C'est pas bête ça. Il y a toujours de l'eau dans les cimetières.
+9:54
+9 Minuten, 54 Sekunden
+Oui, c'est pour ça que c'est un bon point de rendez-vous parce qu'il y a toujours un robinet dans les cimetières pour arroser les fleurs.
+10:12
+10 Minuten, 12 Sekunden
+J'ai oublié de regarder la météo avant de partir. Je suis sortie de chez moi comme ça. Je suis pas hyper bien préparé.
+10:31
+10 Minuten, 31 Sekunden
+Tu marches vite en général ? Non, très lentement. J'ai plutôt un pas tranquille comme maintenant.
+10:38
+10 Minuten, 38 Sekunden
+On a toute la journée devant nous.
+10:43
+10 Minuten, 43 Sekunden
+Bien sûr, la grande différence entre la course et la marche à pied, c'est la vitesse.
+10:48
+10 Minuten, 48 Sekunden
+Ce qu'on peut observer dans la population, c'est que les gens qui courent vont avoir tendance à outrepasser leur capacité physique, chose plus rare dans la marche ou la randonnée.
+10:57
+10 Minuten, 57 Sekunden
+C'est une activité qu'on va tenir beaucoup plus longtemps, à une intensité modérée.
+11:02
+11 Minuten, 2 Sekunden
+C'est très bénéfique parce qu'on bouge mais sans avoir l'impression de faire beaucoup d'efforts.
+11:10
+11 Minuten, 10 Sekunden
+Ça fait longtemps que l'homme cherche à aller vite. Et chercher la lenteur, c'est pas revenir aux temps anciens.
+11:17
+11 Minuten, 17 Sekunden
+C'est au contraire extrêmement moderne.
+11:19
+11 Minuten, 19 Sekunden
+C'est seulement aujourd'hui qu'on a le luxe d'expérimenter la lenteur. On n'est pas habitué à ça. Peut-être que notre cerveau même n'est pas fait pour ça
+11:28
+11 Minuten, 28 Sekunden
+parce qu'on a toujours envie euh de répondre aux sollicitations ou d'accélérer les choses. Et donc ça demande une certaine discipline.
+11:36
+11 Minuten, 36 Sekunden
+Je vois quel est l'intérêt de la chose. Ça ça me fait plaisir.
+11:49
+11 Minuten, 49 Sekunden
+En général, quand tu atteins un petit sommet comme celui-ci, tu prends le temps de profiter de la vue.
+11:55
+11 Minuten, 55 Sekunden
+La première chose que je fais, c'est de m'asseoir et regarder s'il y a du réseau. Non. Et ensuite, je bois et je mange. Le paysage. Je n'en ai pas grand-chose à faire.
+12:06
+12 Minuten, 6 Sekunden
+Pour moi, c'est la même chose de grimper sur le Rumelsberg avec ses 80 m de haut ou de me trouver dans les Alpes ou dans l'Himalaya qui sont beaucoup plus spectaculaire.
+12:16
+12 Minuten, 16 Sekunden
+Ça distrait du vrai but.
+12:18
+12 Minuten, 18 Sekunden
+Si tu randonnes pour voir des panoramas sublimes, tu risques de passer à côté du véritable bonheur de marcher.
+12:25
+12 Minuten, 25 Sekunden
+Quand tu pars en randonnée, qu'est-ce qui se passe dans ta tête ? À quoi tu penses ?
+12:30
+12 Minuten, 30 Sekunden
+90 % de mes réflexions tournent autour d'un seul sujet.
+12:34
+12 Minuten, 34 Sekunden
+C'est encore loin ? Non, la nourriture et les 10 % restants, j'en profite à fond.
+12:41
+12 Minuten, 41 Sekunden
+Mon moteur dans la randonnée, c'est le fait de laisser mon esprit vagabonder librement sans aucune contrainte.
+12:49
+12 Minuten, 49 Sekunden
+Je passe beaucoup de temps au téléphone avec des amis qui en sont ravis parce qu'on peut m'appeler ou m'envoyer des textos à 6h du matin pour me parler de peine de cœur ou de problèmes
+12:58
+12 Minuten, 58 Sekunden
+professionnels. Et non seulement j'ai le temps de les écouter, mais j'ai aussi l'esprit disponible pour les aider.
+13:04
+13 Minuten, 4 Sekunden
+Quand on marche, on n pas vraiment livresse de la vitesse. Qu'est-ce qui fait le charme de la lenteur ? On va prendre deux extrêmes. D'un côté, par exemple, la descente à ski. Ça, j'adore.
+13:18
+13 Minuten, 18 Sekunden
+Pendant les 5 minutes où tu dévales la pinte, tu as une grosse montée d'adrénaline.
+13:24
+13 Minuten, 24 Sekunden
+Ouais, génial. Ouais, mais c'est tout. 5 minutes.
+13:29
+13 Minuten, 29 Sekunden
+En randonné, tu n'as jamais de flash d'uphorie comme ça, mais tu ressens une sorte de béatitude constante.
+13:36
+13 Minuten, 36 Sekunden
+Pourquoi la randonnée rend heureux ? Parce qu'on atteint le bonheur avec peu.
+13:41
+13 Minuten, 41 Sekunden
+Tout ce que j'ai, c'est un sac de 5 kg avec de l'eau et de la nourriture. Donc, je réduis mes besoins au strict minimum.
+13:49
+13 Minuten, 49 Sekunden
+Une détoxe à la dopamine. Oui. Et tout à coup, tout ce qui est un peu mieux que l'ordinaire devient un luxe absolu. Tu
+13:58
+13 Minuten, 58 Sekunden
+as eu de la pluie pendant une semaine et soudain le soleil revient. C'est un bonheur immense, quelque chose d'inimaginable. Ou alors, tu t'accordes
+14:06
+14 Minuten, 6 Sekunden
+un jour de repos par semaine et cette nuit-là, tu ne la passes pas sur ton tapis de sol, mais au fond d'un lit moelleux à l'hôtel. Et tu prends ta
+14:14
+14 Minuten, 14 Sekunden
+première douche depuis des jours avec un savon qui sent bon. Et tu vois toute la crâ disparaître.
+14:21
+14 Minuten, 21 Sekunden
+Et aussi tu te débarrasses complètement de tes angoisses. Quand tu te rends comptes que tu te débrouille avec le strict minimum et avec 10 € de provision
+14:30
+14 Minuten, 30 Sekunden
+par jour pendant des mois, tu te sens libéré.
+14:34
+14 Minuten, 34 Sekunden
+Tu sais que même si tu es licencié, c'est pas grave, tu t'en tireras toujours. Ça permet de tout relativiser
+14:42
+14 Minuten, 42 Sekunden
+et tu acquieres une sorte de confiance, l'assurance que même si rien ne va plus, tu pourras toujours randonner. qui était donc j'ai traversé une partie de
+14:50
+14 Minuten, 50 Sekunden
+l'Europe pendant 5 mois en suivant l'itinéraire qui avait pratiqué Montaigne en 1580 quand il a fait son
+14:57
+14 Minuten, 57 Sekunden
+grand périple qui l'a mené à Rome. Bah la première expérience c'est celle du dépouillement mais ça tous les randonneurs connaissent ça. Ce dépouillement là il rentrait libre aussi
+15:06
+15 Minuten, 6 Sekunden
+et quand on rentre dans le confort euh on trouve totalement aberrant l'accumulation de choses qui se trouvent
+15:14
+15 Minuten, 14 Sekunden
+dans une maison dont on a besoin pour vivre aujourd'hui. clairement aujourd'hui je suis beaucoup plus disons
+15:21
+15 Minuten, 21 Sekunden
+simple et je me suis disons libéré d'énormément de besoins ou d'ambitions artificielles ou social ça c'est très
+15:28
+15 Minuten, 28 Sekunden
+clair et je pense que c'est c'est l'expérience des voyageurs habituellement
+15:36
+15 Minuten, 36 Sekunden
+je travaillais dans le redressement d'entrepris j'ai fait une belle carrière j'ai dirigé de grandes sociétés j'avais des voitures de fonction très chic et
+15:45
+15 Minuten, 45 Sekunden
+comme je gagnais bien ma Je me suis payé des vacances aux États-Unis. Je me trouvais dans un parc national, dans un camping et tout à
+15:52
+15 Minuten, 52 Sekunden
+coup, j'ai vu apparaître deux hurl berlus.
+15:56
+15 Minuten, 56 Sekunden
+Ils m'ont dit qu'il marchaient du Mexique au Canada et pendant toute la soirée, ils m'ont parlé de leur périple en mode ultra léger comme je le fais
+16:04
+16 Minuten, 4 Sekunden
+maintenant, de cette vie itinérante, du chemin, des rencontres et ça m'a complètement emballé.
+16:10
+16 Minuten, 10 Sekunden
+Et ensuite, le destin m'a donné deux coups de pieds aux fesses. D'abord, j'ai été viré de mon boulot avec perte et fracas. Qu'est-ce qui s'est passé ?
+16:19
+16 Minuten, 19 Sekunden
+C'est très simple. Quand une entreprise est redevenue saine, les gens qui font mon métier deviennent inutiles. Et pour que je comprenne bien l'enjeu, le vrai
+16:26
+16 Minuten, 26 Sekunden
+coup du sort est arrivé après. À l'époque, un bon ami qui avait exactement 10 ans de plus que moi a une attaque.
+16:34
+16 Minuten, 34 Sekunden
+Il ne pouvait plus parler ni marcher et il était à peine capable de déglir. Et à partir de ce moment-là, je ne pouvais plus éviter la grande question,
+16:42
+16 Minuten, 42 Sekunden
+c'est-à-dire qu'aurait fait mon ami si à mon âge, donc 10 ans plus jeune, il avait su ce qui allait lui arriver ?
+16:48
+16 Minuten, 48 Sekunden
+Est-ce qu'il aurait continué à travailler, à monter les échelons, à accumuler les marqueurs de la réussite sociale et de l'argent ? Ou aurait-il
+16:56
+16 Minuten, 56 Sekunden
+fait quelque chose de fou ? Alors, j'ai réservé mes vols et je suis parti randonné.
+17:14
+17 Minuten, 14 Sekunden
+Il existe une thérapie par la course à pied dont l'objectif est d'inciter les personnes souffrant de dépression à se remettre en mouvement.
+17:22
+17 Minuten, 22 Sekunden
+La reprise d'une activité physique et qu'on va pratiquer à plusieurs est souvent extrêmement difficile pour les dépressifs.
+17:29
+17 Minuten, 29 Sekunden
+Et la sérotonine va jouer un rôle crucial dans le processus.
+17:35
+17 Minuten, 35 Sekunden
+Très souvent, on observe des taux réduits de cette hormone chez les patients souffrant de dépression et on sait qu'on peut augmenter sa concentration dans le cerveau par un
+17:43
+17 Minuten, 43 Sekunden
+exercice aérobie, c'est-à-dire un effort d'endurance, d'intensité modérée.
+17:53
+17 Minuten, 53 Sekunden
+Oui, j'aurais bien besoin d'une petite injection de sérotonine de temps à autre. Dans les épisodes dépressifs, on a même plus la force de prendre une douche ou de se brosser les dents.
+18:02
+18 Minuten, 2 Sekunden
+Peut-être que le footing ou la randonnée peuvent être un exercice de persévérance ou de défi
+18:09
+18 Minuten, 9 Sekunden
+sur le mode oui, ça va vraiment mal mais ça va passer.
+18:41
+18 Minuten, 41 Sekunden
+Poulettes.
+18:43
+18 Minuten, 43 Sekunden
+Et oui, tout a commencé avec les poules rousses. Attention à la tête.
+18:53
+18 Minuten, 53 Sekunden
+C'est l'heure du picorage.
+18:55
+18 Minuten, 55 Sekunden
+Voilà, on est tranquille. Et comment on va se récompenser pour notre peine ? Avec une bière sans alcool, évidemment. Mais bien sûr.
+19:04
+19 Minuten, 4 Sekunden
+Parfait. Non. Santé.
+19:09
+19 Minuten, 9 Sekunden
+Est-ce qu'il y a des choses qui valent autant pour la course à pied que dans la vie ? Tu peux faire des parallèles bien sûr, il faut continuer à avancer.
+19:21
+19 Minuten, 21 Sekunden
+Par exemple, quand il se passe un truc crucial dans ta vie, moi je n'ai jamais vécu d'événements qu'il soit positif ou négatif qui font que la terre s'arrête de tourner.
+19:32
+19 Minuten, 32 Sekunden
+À l'adolescence, on nous inculque un peu ce mode de penser. Si tu ne fais pas ceci, ce sera terrible. Si tu ne cartonnes pas au lycée, ta vie est foutue.
+19:41
+19 Minuten, 41 Sekunden
+Et en prenant de l'âge, on relativise.
+19:44
+19 Minuten, 44 Sekunden
+On voit que l'existence est une succession de chemin et peu importe qu'il soit pire ou meilleur que d'autres, on continue toujours d'avancer.
+19:53
+19 Minuten, 53 Sekunden
+Et c'est vrai aussi pour la course à pied. Après chaque course, tu en as une autre.
+20:00
+20 Minuten
+Quand on court un 100 km, on peut vivre autant d'émotions en une journée qu'au cours de toute une existence.
+20:08
+20 Minuten, 8 Sekunden
+Et quand on le fait souvent, on sait qu'après un passage à vide, il y a toujours une reprise, un haut après un bas et que la plupart des événements
+20:16
+20 Minuten, 16 Sekunden
+négatifs contiennent en eux-mêmes quelque chose de positif.
+20:22
+20 Minuten, 22 Sekunden
+Est-ce qu'en course à pied, il y a des stratégies qui permettent de tenir et qui fonctionnent aussi dans la vie ? Oui.
+20:30
+20 Minuten, 30 Sekunden
+Respire à fond tout simplement.
+20:33
+20 Minuten, 33 Sekunden
+Quand on sent monter l'angoisse, il suffit d'inspirer comme ça.
+20:42
+20 Minuten, 42 Sekunden
+Et là, tout à coup, on se sent beaucoup moins stressé. En course à pied, c'est la même chose.
+20:50
+20 Minuten, 50 Sekunden
+Un copain à moi faisait le semi-marathon à Londres et il a commencé à avoir un point de côté.
+20:55
+20 Minuten, 55 Sekunden
+Je lui ai dit, "Respire à fond avec le ventre." Il suffit de le faire de façon très consciente pour que quelque chose change en nous.
+21:05
+21 Minuten, 5 Sekunden
+En tout cas, c'est mon expérience.
+21:09
+21 Minuten, 9 Sekunden
+Toutes les expériences qu'on peut accumuler, qu'elles soient positives ou négatives, vont servir à dessiner une image de soi-même, à se voir et à être capable de s'évaluer.
+21:21
+21 Minuten, 21 Sekunden
+Et bien entendu, le sport est un formidable outil pour cela.
+21:25
+21 Minuten, 25 Sekunden
+Il permet de se confronter à des conditions de forte pression, de tester sa réaction face à la douleur ou à une grosse tension musculaire et en même
+21:33
+21 Minuten, 33 Sekunden
+temps de vivre des instants de bonheur absolu, de satisfaction, de très grande facilité à faire les choses. Et ces
+21:41
+21 Minuten, 41 Sekunden
+expériences sont très précieuses pour nous et pour notre moi émotionnel.
+21:49
+21 Minuten, 49 Sekunden
+Là, tu vois la transition du vert au vert plus sombre puis au vert brûlé.
+21:54
+21 Minuten, 54 Sekunden
+grune
+22:04
+22 Minuten, 4 Sekunden
+jeattaque. Je peux
+22:11
+22 Minuten, 11 Sekunden
+Tu es très souvent seul. Est-ce que ça te dérange ou c'est ce que tu recherches ? Tu te sens seul parfois ? Non, je ne
+22:19
+22 Minuten, 19 Sekunden
+me sens jamais seule parce que j'apprécie vraiment ma compagnie.
+22:24
+22 Minuten, 24 Sekunden
+Ça peut paraître bête, mais je suis très sérieuse. Depuis que la randonnée est à la mode, on a l'impression qu'il suffit de faire un track pour résoudre tous ces problèmes.
+22:34
+22 Minuten, 34 Sekunden
+Mais si on marche pour se trouver soi-même, c'est perdu d'avance. En fait, il faut déjà bien s'entendre avec soi-même pour se supporter toute une
+22:41
+22 Minuten, 41 Sekunden
+randonnée. Et plus le chemin est long, plus il faut être en accord avec soi.
+22:46
+22 Minuten, 46 Sekunden
+Imagine quand il pleut en permanence, que tu manges mal. Oui. D'ailleurs, on fait quoi dans ces cas-là ? Je voulais te poser la question justement quand il pleut, qu'on en a marre ou qu'on se dit
+22:54
+22 Minuten, 54 Sekunden
+"Mais qu'est-ce que je fais là ?" Tu te réveilles le matin, il pleut des cordes et tu sais que l'itinéraire du jour est sans intérêt, il longe une route et là un bus s'arrête devant toi.
+23:06
+23 Minuten, 6 Sekunden
+Tu as deux possibilités. Tu peux monter dedans, tu sautes cette étape et à midi, tu te fais un bon resto au chaud. Dans ce cas, tu passeras sûrement une
+23:14
+23 Minuten, 14 Sekunden
+meilleure journée que moi parce que moi, je vais faire le chemin à pied, qu'il pleuve, qu'il vent ou qu'il neige.
+23:22
+23 Minuten, 22 Sekunden
+Mais le soir, c'est moi qui aurai l'avantage. Je serai dans ma tente à me dire chouette, j'en ai vraiment bavé mais je n'ai pas abandonné.
+23:31
+23 Minuten, 31 Sekunden
+Et ce genre de chos confiance en soi, ce qui amène des changements positifs dans la vie. Si tu abandonnes à la moindre difficulté ou que tu sautes une étape
+23:39
+23 Minuten, 39 Sekunden
+pour rentrer chez toi, tu n'iras jamais très loin. C'est le cadeau de la randonnée.
+23:45
+23 Minuten, 45 Sekunden
+Mais pour le recevoir, il faut se faire violence. Et pour toutes ces raisons, je trouve dommage qu'on croit que ces transformations intérieures ou ce
+23:53
+23 Minuten, 53 Sekunden
+bonheur proviennent de la nature. Parce qu'on peut alors se dire tiens, si j'avais beaucoup d'argent, je pourrais
+24:00
+24 Minuten
+aller dans un endroit merveilleux d'une beauté intacte. Le Costa Rica. Oui. ou la jungle où on sert un arbre dans ses
+24:07
+24 Minuten, 7 Sekunden
+bras et tout d'un coup la sagesse nous tombe du ciel. Donc on retrouve cette attitude de consommateur à laquelle on tentait justement d'échapper et on ne
+24:15
+24 Minuten, 15 Sekunden
+fait pas ces merveilleuses découvertes intérieures parce que pour ça il faut s'en donner la peine. Exactement. On a rien sans rien. Ah je savais que ça finirait comme ça.
+24:24
+24 Minuten, 24 Sekunden
+Moi je veux un bonheur gratuit. La dopamine direct. Tac tac. Constamment on doit faire des détours.
+24:29
+24 Minuten, 29 Sekunden
+Constamment. Il y a des trucs qui vont pas.
+24:32
+24 Minuten, 32 Sekunden
+constamment, on rate son étape, on va puis on finit ailleurs. Et si on commence à s'accrocher disons à son
+24:39
+24 Minuten, 39 Sekunden
+plan, alors là on arrête le voyage au bout d'une semaine. Si au contraire, on apprend encore une fois de manière assez
+24:46
+24 Minuten, 46 Sekunden
+stoïicienne à faire avec les circonstances adverses, prendre ça comme un jeu, c'est là qu'on gagne une forme de liberté qui n'est pas dans la
+24:55
+24 Minuten, 55 Sekunden
+maximisation des possibles. C'est l'idée du 20e siècle, qu'on peut aller partout, qu'on peut tout faire, qu'on peut tout acheter, qu'on peut tout découvrir, tout connaître, être informé de tout.
+25:07
+25 Minuten, 7 Sekunden
+Aujourd'hui, c'est tout l'inverse. C'est tellement, il y a tellement de contraintes qu'on doit apprendre une autre forme de liberté qui n'est pas la
+25:14
+25 Minuten, 14 Sekunden
+maximisation des possibles mais qui est l'idée qu'on peut se passer de énormément de choses.
+25:20
+25 Minuten, 20 Sekunden
+Je crois que si on accepte tout ce que le sport implique, la fatigue, les blessures, le temps qu'on doit y consacrer, c'est parce qu'on sait qu'au bout du
+25:29
+25 Minuten, 29 Sekunden
+compte, on va en tirer quelque chose de positif.
+25:33
+25 Minuten, 33 Sekunden
+Il y a quelque chose de très agréable dans cette sensation du dépassement de soi.
+25:40
+25 Minuten, 40 Sekunden
+C'est peut-être lié aux hormones. Des études ont montré que les endocanabinoïdes ou les endorphines par exemple diminuent
+25:47
+25 Minuten, 47 Sekunden
+la sensation de douleur et ce sont des hormones qui sont libérées notamment lors de la course à pied.
+25:59
+25 Minuten, 59 Sekunden
+C'est parti. Je suis à fond. Super !
+26:05
+26 Minuten, 5 Sekunden
+Et sous la pluie chouette !
+Mit Video synchronisieren
