@@ -3,6 +3,8 @@
 		- Je suis dans mon cours actuellement et les autres personnes ne parlent pas autant que moi. Mais le professeur Alexandre est très sympathique avec tout le monde. En ce moment, il cherche le mot « phocéen » parce qu'un étudiant a demandé ce que le mot veut dire. Et maintenant, il essaie d'expliquer le mot « prisé », ou je veux dire qu'il le prononce pour les autres étudiants. Puis, il demande si toutes les personnes dans la classe comprennent le vocabulaire. J'ai posé quelques questions de prononciation. La plupart de mes questions étaient sur les liaisons. 
 		- Maintenant je suis dans mon deuxième cours et il y a seulement les femmes et mois, alors la professeur et cinq étudiantes. Mais la professeur semble sympatique. Les autres étudiantes 
 - topics
+	- Parlez des différences qui existaient entre le système éducatif de votre époque à celui de vos filles ou celui de maintenant.
+	
 	- shopping-compare
 		- topic
 			- décrivez vos habitudes de shopping des 20 dernières années comparée à maintenant
@@ -524,6 +526,10 @@
 		- MONTAG
 			- ,,ausgeglichen [CW408-372H] 07:00-08:30 Französisch B1/B2: Segrestin, Adèle (La Rochelle, jung, unbeschwert), 14.09.-07.12.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=791220
+				- try: 791220@berlin.vhs.cloud (doesn't work)
+				- try: adele.segrestin@vhs.cloud
+					- cours CW408-372H : Französisch B1/B2 
+						- Bonjour Adèle, je suis inscrit à ce cours "Französisch B1/B2 - Konversation vor der Arbeit oder für Frühaufsteher*innen", mais je n'ai reçu aucune notification. Ce cours n'apparaît pas non plus dans mon espace VHS-Cloud. Pourtant, il commence ce matin à 7 h 00. Comment puis-je y participer ? Merci d'avance. Bien cordialement, Edward
 			- ,,ausgeglichen [FK4.F421] 18:00-19:30 Französisch B2 Conversation & littèrature & grammaire: Christine Belakhdar (69, intellectual, academic, Algeria, présentation), 14.09.-30.11.
 				- https://www.vhsit.berlin.de/VHSKURSE/BusinessPages/CourseDetail.aspx?id=799049
 		- DIENSTAG
