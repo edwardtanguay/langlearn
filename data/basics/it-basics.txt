@@ -1,0 +1,88 @@
+- numbers 1-100
+	- zero, uno, due, tre, quattro, cinque, sei, sette, otto, nove
+	- dieci, undici, dodici, tredici, quattordici, quindici, sedici, diciassette, diciotto, diciannove
+	- venti, ventuno, ventidue, ventitré, ventiquattro, venticinque, ventisei, ventisette, ventotto, ventinove
+	- trenta, trentuno, trentadue, trentatré, trentaquattro, trentacinque, trentasei, trentasette, trentotto, trentanove
+	- quaranta, quarantuno, quarantadue, quarantatré, quarantaquattro, quarantacinque, quarantasei, quarantasette, quarantotto, quarantanove
+	- cinquanta, cinquantuno, cinquantadue, cinquantatré, cinquantaquattro, cinquantacinque, cinquantasei, cinquantasette, cinquantotto, cinquantanove
+	- sessanta, sessantuno, sessantadue, sessantatré, sessantaquattro, sessantacinque, sessantasei, sessantasette, sessantotto, sessantanove
+	- settanta, settantuno, settantadue, settantatré, settantaquattro, settantacinque, settantasei, settantasette, settantotto, settantanove
+	- ottanta, ottantuno, ottantadue, ottantatré, ottantaquattro, ottantacinque, ottantasei, ottantasette, ottantotto, ottantanove
+	- novanta, novantuno, novantadue, novantatré, novantaquattro, novantacinque, novantasei, novantasette, novantotto, novantanove
+	- cento
+- pronunciation of letters
+	- a, bi, ci, di, e, effe, gi, acca, i, i lunga, cappa, elle, emme, enne, o, pi, cu, erre, esse, ti, u, vu, doppia vu, ics, ipsilon, zeta
+- weekdays
+	- lunedì, martedì, mercoledì, giovedì, venerdì, sabato, domenica
+- months
+	- gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre
+- time expressions
+	- è l'una
+	- è l'una e mezza
+	- è l'una e un quarto
+	- sono le due meno un quarto
+	- è l'una e dieci
+	- sono le due meno dieci
+	- è l'una e cinque
+	- sono le due meno cinque
+	- la mattina
+	- il pomeriggio
+	- la sera
+	- la notte
+	- a mezzanotte
+	- a mezzogiorno
+- greetings
+	- ciao, buongiorno, buon pomeriggio, buonasera, buonanotte, arrivederci, a più tardi
+- colors
+	- rosso, blu, giallo, verde, arancione, viola, rosa, marrone, nero, bianco, grigio
+- opposites
+	- grande/piccolo, caldo/freddo, buono/cattivo, veloce/lento, vecchio/nuovo, felice/triste, facile/difficile, ricco/povero, pesante/leggero, aperto/chiuso
+- question words
+	- chi, che cosa, dove, quando, perché, come, quale, quanti, quanto
+- family
+	- la madre, il padre, i genitori, la sorella, il fratello, il figlio, la figlia, la nonna, il nonno, la zia, lo zio, il cugino / la cugina, il marito, la moglie, il bambino / i bambini
+- jobs
+	- l'insegnante, il medico / la dottoressa, l'infermiere / l'infermiera, lo studente / la studentessa, l'ingegnere, il cameriere / la cameriera, il cuoco / la cuoca, l'autista, il commesso / la commessa, il poliziotto / la poliziotta, il pompiere, l'agricoltore / l'agricoltrice, l'impiegato / l'impiegata, disoccupato, in pensione
+- food and drink
+	- il pane, il riso, la pasta, la carne, il pollo, il pesce, l'uovo, il formaggio, la frutta, la mela, la banana, l'arancia, la verdura, la patata, il pomodoro, l'insalata, la zuppa, il panino, la pizza
+	- il latte, l'acqua, il succo, il caffè, il tè, la torta, il cioccolato, la colazione, il pranzo, la cena
+- clothes
+	- la maglietta, la camicia, i pantaloni, i jeans, la gonna, il vestito, la giacca, il cappotto, il maglione, le scarpe, gli stivali, i calzini, il cappello, la sciarpa, i guanti, la borsa
+- weather
+	- soleggiato, piovoso, nuvoloso, ventoso, nevoso, caldo, tiepido, freddo, fresco
+- seasons
+	- la primavera, l'estate, l'autunno, l'inverno
+- body
+	- la testa, i capelli, il viso, l'occhio, l'orecchio, il naso, la bocca, il dente / i denti, il braccio, la mano, il dito, la gamba, il piede / i piedi, la schiena, lo stomaco
+- house
+	- la casa, l'appartamento, la stanza, la camera da letto, il bagno, la cucina, il soggiorno, il giardino
+- furniture
+	- il letto, il tavolo, la sedia, il divano, la scrivania, l'armadio, il frigorifero, i fornelli, la finestra, la porta, il muro, il pavimento
+- places
+	- la scuola, l'ospedale, il supermercato, il negozio, la banca, l'ufficio postale, il ristorante, il bar, il cinema, il parco, il museo, la stazione, l'aeroporto, l'albergo, la biblioteca, la palestra
+- transport
+	- la macchina, l'autobus, il treno, l'aereo, la bicicletta / la bici, la moto, il taxi, la barca, la metropolitana, a piedi, in macchina / in autobus
+- directions 
+	- a sinistra, a destra, dritto, vicino a, di fronte a, tra, davanti a, dietro, vicino a, lontano da, al semaforo, girare a sinistra/a destra
+- routines
+	- alzarsi, fare colazione, andare al lavoro/a scuola, iniziare a lavorare, finire di lavorare, pranzare, andare a casa, guardare la TV, andare a letto, dormire
+- hobbies
+	- giocare a calcio/tennis, nuotare, correre, ballare, leggere, guardare film/la TV, ascoltare la musica, fare la spesa, incontrare gli amici, viaggiare, cucinare, giocare ai videogiochi
+- sports
+	- il calcio, il tennis, la pallacanestro, il nuoto, la corsa, il ciclismo, lo sci, lo yoga, la palestra
+- ordinals
+	- primo, secondo, terzo, quarto, quinto, sesto, settimo, ottavo, nono, decimo
+- countries 
+	- l'Inghilterra / inglese, gli Stati Uniti / americano, la Spagna / spagnolo, la Francia / francese, la Germania / tedesco, l'Italia / italiano, la Cina / cinese, il Giappone / giapponese, il Brasile / brasiliano, il Portogallo / portoghese, la Russia / russo, il Messico / messicano, il Canada / canadese, l'Australia / australiano, l'India / indiano, la Turchia / turco, la Polonia / polacco, la Grecia / greco, l'Egitto / egiziano, l'Argentina / argentino
+- emotions
+	- felice, triste, arrabbiato, stanco, affamato, assetato, annoiato, emozionato, preoccupato, nervoso, sorpreso, rilassato
+- adjectives
+	- bello, brutto, pulito, sporco, silenzioso, rumoroso, costoso, economico, interessante, noioso, importante, pericoloso, sicuro, amichevole, educato
+- frequency
+	- sempre, di solito, spesso, a volte, mai, ogni giorno, una volta alla settimana, due volte alla settimana, ogni mattina, nel fine settimana
+- tech
+	- il telefono, il computer, il portatile, il caricabatterie, la chiave, il portafoglio, l'ombrello, le cuffie, la macchina fotografica, il tablet
+- school
+	- l'inglese, la matematica, le scienze, la storia, la geografia, l'arte, la musica, la biologia, la chimica
+- animals
+	- il cane, il gatto, l'uccello, il pesce, il coniglio, il cavallo, il leone, la tigre, l'elefante, la scimmia
