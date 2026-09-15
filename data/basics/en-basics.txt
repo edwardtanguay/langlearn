@@ -48,3 +48,11 @@
 	- at night
 	- at midnight
 	- at noon
+- greetings
+	- hello, hi, good morning, good afternoon, good evening, good night, goodbye, bye, see you later
+- colors
+	- red, blue, yellow, green, orange, purple, pink, brown, black, white, gray
+- opposites
+	- big/small, hot/cold, good/bad, fast/slow, old/new, happy/sad, easy/difficult, rich/poor, heavy/light, open/closed
+- question words
+	- who, what, where, when, why, how, which, how many, how much
