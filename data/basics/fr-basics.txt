@@ -1,0 +1,88 @@
+- numbers 1-100
+	- zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf
+	- dix, onze, douze, treize, quatorze, quinze, seize, dix-sept, dix-huit, dix-neuf
+	- vingt, vingt et un, vingt-deux, vingt-trois, vingt-quatre, vingt-cinq, vingt-six, vingt-sept, vingt-huit, vingt-neuf
+	- trente, trente et un, trente-deux, trente-trois, trente-quatre, trente-cinq, trente-six, trente-sept, trente-huit, trente-neuf
+	- quarante, quarante et un, quarante-deux, quarante-trois, quarante-quatre, quarante-cinq, quarante-six, quarante-sept, quarante-huit, quarante-neuf
+	- cinquante, cinquante et un, cinquante-deux, cinquante-trois, cinquante-quatre, cinquante-cinq, cinquante-six, cinquante-sept, cinquante-huit, cinquante-neuf
+	- soixante, soixante et un, soixante-deux, soixante-trois, soixante-quatre, soixante-cinq, soixante-six, soixante-sept, soixante-huit, soixante-neuf
+	- soixante-dix, soixante et onze, soixante-douze, soixante-treize, soixante-quatorze, soixante-quinze, soixante-seize, soixante-dix-sept, soixante-dix-huit, soixante-dix-neuf
+	- quatre-vingts, quatre-vingt-un, quatre-vingt-deux, quatre-vingt-trois, quatre-vingt-quatre, quatre-vingt-cinq, quatre-vingt-six, quatre-vingt-sept, quatre-vingt-huit, quatre-vingt-neuf
+	- quatre-vingt-dix, quatre-vingt-onze, quatre-vingt-douze, quatre-vingt-treize, quatre-vingt-quatorze, quatre-vingt-quinze, quatre-vingt-seize, quatre-vingt-dix-sept, quatre-vingt-dix-huit, quatre-vingt-dix-neuf
+	- cent
+- pronunciation of letters
+	- a, bé, cé, dé, e, effe, gé, ache, i, ji, ka, elle, emme, enne, o, pé, ku, erre, esse, té, u, vé, double vé, ixe, i grec, zède
+- weekdays
+	- lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche
+- months
+	- janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre
+- time expressions
+	- il est une heure
+	- il est une heure et demie
+	- il est une heure et quart
+	- il est deux heures moins le quart
+	- il est une heure dix
+	- il est deux heures moins dix
+	- il est une heure cinq
+	- il est deux heures moins cinq
+	- le matin
+	- l'après-midi
+	- le soir
+	- la nuit
+	- à minuit
+	- à midi
+- greetings
+	- salut, bonjour, bon après-midi, bonsoir, bonne nuit, au revoir, à plus tard
+- colors
+	- rouge, bleu, jaune, vert, orange, violet, rose, marron, noir, blanc, gris
+- opposites
+	- grand/petit, chaud/froid, bon/mauvais, rapide/lent, vieux/neuf, heureux/triste, facile/difficile, riche/pauvre, lourd/léger, ouvert/fermé
+- question words
+	- qui, que/quoi, où, quand, pourquoi, comment, quel, combien, combien
+- family
+	- la mère, le père, les parents, la sœur, le frère, le fils, la fille, la grand-mère, le grand-père, la tante, l'oncle, le cousin / la cousine, le mari, la femme, l'enfant / les enfants
+- jobs
+	- le professeur / la professeure, le médecin, l'infirmier / l'infirmière, l'étudiant / l'étudiante, l'ingénieur / l'ingénieure, le serveur / la serveuse, le chef / la cheffe, le conducteur / la conductrice, le vendeur / la vendeuse, le policier / la policière, le pompier, l'agriculteur / l'agricultrice, l'employé de bureau / l'employée de bureau, au chômage, à la retraite
+- food and drink
+	- le pain, le riz, les pâtes, la viande, le poulet, le poisson, l'œuf, le fromage, le fruit, la pomme, la banane, l'orange, le légume, la pomme de terre, la tomate, la salade, la soupe, le sandwich, la pizza
+	- le lait, l'eau, le jus, le café, le thé, le gâteau, le chocolat, le petit-déjeuner, le déjeuner, le dîner
+- clothes
+	- le T-shirt, la chemise, le pantalon, le jean, la jupe, la robe, la veste, le manteau, le pull, les chaussures, les bottes, les chaussettes, le chapeau, l'écharpe, les gants, le sac
+- weather
+	- ensoleillé, pluvieux, nuageux, venteux, neigeux, chaud, tiède, froid, frais
+- seasons
+	- le printemps, l'été, l'automne, l'hiver
+- body
+	- la tête, les cheveux, le visage, l'œil, l'oreille, le nez, la bouche, la dent / les dents, le bras, la main, le doigt, la jambe, le pied / les pieds, le dos, l'estomac
+- house
+	- la maison, l'appartement, la pièce, la chambre, la salle de bain, la cuisine, le salon, le jardin
+- furniture
+	- le lit, la table, la chaise, le canapé, le bureau, l'armoire, le réfrigérateur, la cuisinière, la fenêtre, la porte, le mur, le sol
+- places
+	- l'école, l'hôpital, le supermarché, le magasin, la banque, la poste, le restaurant, le café, le cinéma, le parc, le musée, la gare, l'aéroport, l'hôtel, la bibliothèque, la salle de sport
+- transport
+	- la voiture, le bus, le train, l'avion, le vélo / la bicyclette, la moto, le taxi, le bateau, le métro, à pied, en voiture / en bus
+- directions 
+	- à gauche, à droite, tout droit, à côté de, en face de, entre, devant, derrière, près de, loin de, aux feux de circulation, tourner à gauche/à droite
+- routines
+	- se lever, prendre le petit-déjeuner, aller au travail/à l'école, commencer le travail, finir le travail, déjeuner, rentrer à la maison, regarder la télé, aller au lit, dormir
+- hobbies
+	- jouer au football/tennis, nager, courir, danser, lire, regarder des films/la télé, écouter de la musique, faire les courses, voir des amis, voyager, cuisiner, jouer à des jeux vidéo
+- sports
+	- le football, le tennis, le basket-ball, la natation, la course à pied, le cyclisme, le ski, le yoga, la gymnastique
+- ordinals
+	- premier, deuxième, troisième, quatrième, cinquième, sixième, septième, huitième, neuvième, dixième
+- countries 
+	- l'Angleterre / anglais, les États-Unis / américain, l'Espagne / espagnol, la France / français, l'Allemagne / allemand, l'Italie / italien, la Chine / chinois, le Japon / japonais, le Brésil / brésilien, le Portugal / portugais, la Russie / russe, le Mexique / mexicain, le Canada / canadien, l'Australie / australien, l'Inde / indien, la Turquie / turc, la Pologne / polonais, la Grèce / grec, l'Égypte / égyptien, l'Argentine / argentin
+- emotions
+	- heureux, triste, en colère, fatigué, affamé, assoiffé, ennuyé, enthousiaste, inquiet, nerveux, surpris, détendu
+- adjectives
+	- beau, laid, propre, sale, calme, bruyant, cher, bon marché, intéressant, ennuyeux, important, dangereux, sûr, sympathique, poli
+- frequency
+	- toujours, d'habitude, souvent, parfois, jamais, tous les jours, une fois par semaine, deux fois par semaine, tous les matins, le week-end
+- tech
+	- le téléphone, l'ordinateur, l'ordinateur portable, le chargeur, la clé, le portefeuille, le parapluie, les écouteurs, l'appareil photo, la tablette
+- school
+	- l'anglais, les mathématiques, les sciences, l'histoire, la géographie, les arts plastiques, la musique, la biologie, la chimie
+- animals
+	- le chien, le chat, l'oiseau, le poisson, le lapin, le cheval, le lion, le tigre, l'éléphant, le singe

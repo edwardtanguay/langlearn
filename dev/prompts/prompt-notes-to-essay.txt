@@ -1,0 +1,121 @@
+## convert outline-mode notes to essay
+
+- convert the following text that is in outline mode into an essay
+- do not use any lists, bullet points, or any other formatting
+- just write a flowing text that can be read as an essay
+- language is : French
+- linguistic level is : B2
+- length is around 500 words
+
+## output
+
+- save the text in: dev/essays/essay-shopping-comparison.html
+- note that the file name should match the content of the essay in English
+
+## outline text
+
+- aperçu de ma présentation
+	- le sujet d'aujourd'hui est
+		- décriver mes habitudes de shopping des 20 dernières années comparée à maintenant
+		- expliquer ce qui a changé, ce qui n'a pas changé et pourquoi
+	- comme d'habitude, j'ai un peu approfondi le sujet	
+		- afin de mettre en évidence des faits pertinents spécifiques
+	- je vais parler du shopping à Berlin il y a quarante et trente ans
+		- parce que les lois régissant les achats étaient plus strictes à l'époque
+			- c'était une grande différence par rapport à aujourd'hui
+		- je pense que c'est quelque chose qui est propre à l'Allemagne
+		- lorsque je voyage dans d'autres pays
+			- surtout dans les années 1990
+				- je suis souvent surpris de constater que les magasins restent ouverts plus longtemps
+			- mais même aujourd'hui en Allemagne, tous les magasins sont fermés le dimanche.
+				- je suis donc souvent surpris, lorsque je voyage en Italie ou en France, de voir que les magasins sont ouverts le dimanche
+		- souvent, quand les gens déménagent en Allemagne ou ils sont ici en vacances
+			- on les entend souvent dire : je voulais aller acheter quelque chose, mais pourquoi le magasin est-il fermé
+				- parce que c'est dimanche, et tous les magasins sont fermés le dimanche
+	- ensuite, j'évoquerai la façon dont les habitudes d'achat ont évolué pour moi et ma famille au cours des vingt dernières années
+- le concept de "Ladenschlussgesetz"
+	- "Loi sur les heures de fermeture des magasins"
+	- jusqu'en 1989
+		- les magasins n'étaient autorisés à ouvrir qu'aux horaires suivants
+			- du lundi au vendredi : 7:00 - 18:30
+			- samedi : 7:00 - 14:00
+		- en Allemagne de l'Est
+			- les lois n'étaient pas aussi strictes, mais il n'y avait pas grand-chose à acheter de toute façon
+			- ce qui est l'une des raisons pour lesquelles le pays s'est effondré en novembre 1989
+	- 1989 : le concept de "Langer Donnerstag" (ou "jeudi prolongé")
+		- en octobre 1989, le gouvernement a créé un concept appelé Langer Donnerstag
+			- à partir de ce moment-là, les magasins ont été autorisés à rester ouverts le jeudi jusqu'à 20 h 30
+			- je vivais et travaillais en Allemagne à l'époque, et je m'en souviens
+				- tout le monde attendait avec impatience le jeudi
+				- quand ils pouvaient aller au magasin pour acheter du lait et du pain jusqu'à "tard dans la soirée"
+			- je venais tout juste des États-Unis, où les magasins étaient ouverts pratiquement tout le temps
+				- par exemple, là où j'ai fait mes études, il y avait un magasin dans la rue qui était ouvert "24/7" (chaque heure de la journée, chaque jour de la semaine)
+					- je me souviens avoir demandé aux personnes où j'ai travaillé en Allemagne
+						- ne vaudrait-il pas mieux que les magasins soient ouverts plus souvent
+							- pour que nous puissions faire nos achats quand nous le souhaitons
+						- la réponse était souvent 
+							- "oui, mais alors les gens doivent travailler tard le soir, au lieu d'être chez eux avec leur famille"
+				- c'est là que j'ai commencé à comprendre la différence avec l'Amérique
+					- qui est une société de consommation
+					- où des lois sont élaborées plus ou moins en faveur des entreprises
+				- et l'Allemagne
+					- qui est une société fondée sur lois sociales
+					- ou les lois qui plus souvent élaborées en faveur du peuple ou de la classe ouvrière
+	- 1996 : une loi qui a assoupli les restrictions
+		- après octobre 1996 les magasins pourraient être ouverts
+			- du lundi au vendredi : 6:00 - 20:00
+			- samedi : 6:00 - 16:00
+	- de 1996 à aujourd'hui
+		- des modifications mineures de la loi qui en ont quelque peu assoupli la rigueur
+		- 2006 : l n'y a plus de loi fédérale
+			- chaque État peut réglementer lui-même les horaires d'ouverture
+			- Berlin et la plupart des États
+				- 0-24 du lundi au samedi
+			- Bayern et des États plus conservateurs du Sud
+				- 6-20 du lundi au samedi
+			- mais à Berlin
+				- la plupart des supermarchés ferment à 20 h ou 21 h
+				- il se trouve que nous habitons près d'un supermarché ouvert du lundi au vendredi de 7 h à minuit, et le samedi de 7 h à 23 h
+		- mais même en 2026, le dimanche en Allemagne, tous les magasins sont fermés
+			- il existe une exception à la loi 
+				- Reisebedarfgesetz (loi de fournitures de voyage)
+				- il existe des exceptions pour les zones touristiques
+					- notamment les gares
+					- donc, si nous avons besoin de lait un dimanche, nous faisons une longue marchejusqu'à la gare la plus proche d'ici pour en acheter
+				- mais tu ne peux acheter que les produits dont les touristes ont besoin
+					- journaux, magazines, livres, cartes, plans de ville
+					- produits du tabac
+					- fleurs coupées
+					- petites quantités d'articles de toilette et d'hygiène de voyage
+					- petites quantités de nourriture et de boissons
+			- cela peut donner lieu à des situations étranges
+				- par exemple à la gare principale, il y a de plus grands magasins qui vendent des articles dont la vente est interdite le dimanche
+					- ces magasins sont ouverts, mais ne peuvent vendre qu'une partie de leurs produits
+					- tu peux donc aller au magasin et acheter du lait et un cahier
+					- mais sur les étagères où se trouvent les bijoux, par example
+						- il y a un panneau indiquant qu'on ne peut pas les acheter le dimanche
+						- tu peux le toucher, mais tu ne peux pas l'acheter
+- différences personnelles dans les habitudes d'achat au cours des 20 dernières années
+	- 2016: beaucoup moins de viande
+		- l'une de nos filles est devenue végétarienne en 2016
+		- depuis lors, nous cuisinons beaucoup plus souvent uniquement avec des légumes
+		- au cours des cinq dernières années, vous pouvez acheter presque toutes sortes de « viandes » à base de légumes, de tofu ou de soja
+		- du poisson à la viande hachée, en passant par les steaks, le poulet, les saucisses, etc.
+			- d'après mon expérience, 70 % sont délicieux, tandis que 30 % ont un goût étrange
+			- donc, si vous savez quoi acheter, c'est un excellent substitut à la viande
+			- nous avons un petit appartement, donc nous n'aimons pas faire frire de la viande, car cela embaume tout l'appartement
+			- la viande végétale est beaucoup plus propre à cuisiner
+	- 2024: Régime au skyr
+		- ce n'est un secret pour personne : entre 50 et 60 ans, le métabolisme de ton corps change
+			- il est plus difficile de perdre du poids
+		- mais je voulais perdre du poids pour courir des marathons plus vite
+		- alors ma fille m'a fait découvrir les bols de Skyr
+			- Skyr
+			- fruits surgelés
+			- muesli au chocolat sans sucre
+			- flocons d'avoine
+			- cacahuètes
+		- ma femme et moi mangeons moins en général maintenant, donc nous achetons moins de nourriture
+			- je pense que c'est la plus grande différence entre aujourd'hui et il y a vingt ans
+
+

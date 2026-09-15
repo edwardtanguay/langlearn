@@ -5,7 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "pd": "cd cli/commands && tsx cmd-parse-data.ts",
+    "pd": "tsx cli/commands/cmd-parse-data.ts",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",

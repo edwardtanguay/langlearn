@@ -1,0 +1,88 @@
+- numbers 1-100
+	- cero, uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve
+	- diez, once, doce, trece, catorce, quince, dieciséis, diecisiete, dieciocho, diecinueve
+	- veinte, veintiuno, veintidós, veintitrés, veinticuatro, veinticinco, veintiséis, veintisiete, veintiocho, veintinueve
+	- treinta, treinta y uno, treinta y dos, treinta y tres, treinta y cuatro, treinta y cinco, treinta y seis, treinta y siete, treinta y ocho, treinta y nueve
+	- cuarenta, cuarenta y uno, cuarenta y dos, cuarenta y tres, cuarenta y cuatro, cuarenta y cinco, cuarenta y seis, cuarenta y siete, cuarenta y ocho, cuarenta y nueve
+	- cincuenta, cincuenta y uno, cincuenta y dos, cincuenta y tres, cincuenta y cuatro, cincuenta y cinco, cincuenta y seis, cincuenta y siete, cincuenta y ocho, cincuenta y nueve
+	- sesenta, sesenta y uno, sesenta y dos, sesenta y tres, sesenta y cuatro, sesenta y cinco, sesenta y seis, sesenta y siete, sesenta y ocho, sesenta y nueve
+	- setenta, setenta y uno, setenta y dos, setenta y tres, setenta y cuatro, setenta y cinco, setenta y seis, setenta y siete, setenta y ocho, setenta y nueve
+	- ochenta, ochenta y uno, ochenta y dos, ochenta y tres, ochenta y cuatro, ochenta y cinco, ochenta y seis, ochenta y siete, ochenta y ocho, ochenta y nueve
+	- noventa, noventa y uno, noventa y dos, noventa y tres, noventa y cuatro, noventa y cinco, noventa y seis, noventa y siete, noventa y ocho, noventa y nueve
+	- cien
+- pronunciation of letters
+	- a, be, ce, de, e, efe, ge, hache, i, jota, ka, ele, eme, ene, eñe, o, pe, cu, erre, ese, te, u, uve, uve doble, equis, i griega, zeta
+- weekdays
+	- lunes, martes, miércoles, jueves, viernes, sábado, domingo
+- months
+	- enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre
+- time expressions
+	- es la una
+	- es la una y media
+	- es la una y cuarto
+	- son las dos menos cuarto
+	- es la una y diez
+	- son las dos menos diez
+	- es la una y cinco
+	- son las dos menos cinco
+	- por la mañana
+	- por la tarde
+	- por la tarde / por la noche
+	- por la noche
+	- a medianoche
+	- al mediodía
+- greetings
+	- hola, buenos días, buenas tardes, buenas noches, buenas noches, adiós, hasta luego
+- colors
+	- rojo, azul, amarillo, verde, naranja, morado, rosa, marrón, negro, blanco, gris
+- opposites
+	- grande/pequeño, caliente/frío, bueno/malo, rápido/lento, viejo/nuevo, feliz/triste, fácil/difícil, rico/pobre, pesado/ligero, abierto/cerrado
+- question words
+	- quién, qué, dónde, cuándo, por qué, cómo, cuál, cuántos, cuánto
+- family
+	- la madre, el padre, los padres, la hermana, el hermano, el hijo, la hija, la abuela, el abuelo, la tía, el tío, el primo / la prima, el marido, la mujer, el niño / los niños
+- jobs
+	- el profesor / la profesora, el médico / la médica, el enfermero / la enfermera, el estudiante / la estudiante, el ingeniero / la ingeniera, el camarero / la camarera, el cocinero / la cocinera, el conductor / la conductora, el dependiente / la dependienta, el policía / la mujer policía, el bombero / la bombera, el agricultor / la agricultora, el oficinista / la oficinista, en paro, jubilado / jubilada
+- food and drink
+	- el pan, el arroz, la pasta, la carne, el pollo, el pescado, el huevo, el queso, la fruta, la manzana, el plátano, la naranja, la verdura, la patata, el tomate, la ensalada, la sopa, el sándwich, la pizza
+	- la leche, el agua, el zumo, el café, el té, el pastel, el chocolate, el desayuno, el almuerzo, la cena
+- clothes
+	- la camiseta, la camisa, los pantalones, los vaqueros, la falda, el vestido, la chaqueta, el abrigo, el jersey, los zapatos, las botas, los calcetines, el sombrero, la bufanda, los guantes, el bolso
+- weather
+	- soleado, lluvioso, nublado, ventoso, nevado, caluroso, cálido, frío, fresco
+- seasons
+	- la primavera, el verano, el otoño, el invierno
+- body
+	- la cabeza, el pelo, la cara, el ojo, la oreja, la nariz, la boca, el diente / los dientes, el brazo, la mano, el dedo, la pierna, el pie / los pies, la espalda, el estómago
+- house
+	- la casa, el piso / el apartamento, la habitación, el dormitorio, el cuarto de baño, la cocina, el salón, el jardín
+- furniture
+	- la cama, la mesa, la silla, el sofá, el escritorio, el armario, la nevera, la cocina, la ventana, la puerta, la pared, el suelo
+- places
+	- el colegio, el hospital, el supermercado, la tienda, el banco, la oficina de correos, el restaurante, la cafetería, el cine, el parque, el museo, la estación, el aeropuerto, el hotel, la biblioteca, el gimnasio
+- transport
+	- el coche, el autobús, el tren, el avión, la bicicleta / la bici, la moto, el taxi, el barco, el metro, a pie, en coche / en autobús
+- directions 
+	- a la izquierda, a la derecha, todo recto, al lado de, enfrente de, entre, delante de, detrás de, cerca de, lejos de, en el semáforo, girar a la izquierda/a la derecha
+- routines
+	- levantarse, desayunar, ir al trabajo/al colegio, empezar a trabajar, terminar de trabajar, comer, ir a casa, ver la televisión, ir a la cama, dormir
+- hobbies
+	- jugar al fútbol/tenis, nadar, correr, bailar, leer, ver películas/la televisión, escuchar música, ir de compras, quedar con amigos, viajar, cocinar, jugar a videojuegos
+- sports
+	- el fútbol, el tenis, el baloncesto, la natación, correr, el ciclismo, el esquí, el yoga, el gimnasio
+- ordinals
+	- primero, segundo, tercero, cuarto, quinto, sexto, séptimo, octavo, noveno, décimo
+- countries 
+	- Inglaterra / inglés, Estados Unidos / estadounidense, España / español, Francia / francés, Alemania / alemán, Italia / italiano, China / chino, Japón / japonés, Brasil / brasileño, Portugal / portugués, Rusia / ruso, México / mexicano, Canadá / canadiense, Australia / australiano, India / indio, Turquía / turco, Polonia / polaco, Grecia / griego, Egipto / egipcio, Argentina / argentino
+- emotions
+	- feliz, triste, enfadado, cansado, hambriento, sediento, aburrido, emocionado, preocupado, nervioso, sorprendido, relajado
+- adjectives
+	- bonito, feo, limpio, sucio, tranquilo, ruidoso, caro, barato, interesante, aburrido, importante, peligroso, seguro, amable, educado
+- frequency
+	- siempre, normalmente, a menudo, a veces, nunca, todos los días, una vez a la semana, dos veces a la semana, todas las mañanas, los fines de semana
+- tech
+	- el teléfono, el ordenador, el portátil, el cargador, la llave, la cartera, el paraguas, los auriculares, la cámara, la tableta
+- school
+	- el inglés, las matemáticas, las ciencias, la historia, la geografía, el arte, la música, la biología, la química
+- animals
+	- el perro, el gato, el pájaro, el pez, el conejo, el caballo, el león, el tigre, el elefante, el mono

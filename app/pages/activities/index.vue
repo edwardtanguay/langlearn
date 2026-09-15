@@ -8,6 +8,13 @@ useHead({
 
 const activities = [
   {
+    title: 'Language Basics',
+    path: '/activities/language-basics',
+    description: 'Interactive flashcards covering essential language basics across four languages.',
+    badge: 'Basics',
+    badgeColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/30'
+  },
+  {
     title: 'Pronunciation Practice',
     path: '/activities/pronunciation-practice',
     description: 'Test your pronunciation recall with phonetics reveal, independent progress tracking, and audio pronunciation.',

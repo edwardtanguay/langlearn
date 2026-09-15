@@ -1,0 +1,88 @@
+- numbers 1-100
+	- nul, een, twee, drie, vier, vijf, zes, zeven, acht, negen
+	- tien, elf, twaalf, dertien, veertien, vijftien, zestien, zeventien, achttien, negentien
+	- twintig, eenentwintig, tweeëntwintig, drieëntwintig, vierentwintig, vijfentwintig, zesentwintig, zevenentwintig, achtentwintig, negenentwintig
+	- dertig, eenendertig, tweeëndertig, drieëndertig, vierendertig, vijfendertig, zesendertig, zevenendertig, achtendertig, negenendertig
+	- veertig, eenenveertig, tweeënveertig, drieënveertig, vierenveertig, vijfenveertig, zesenveertig, zevenenveertig, achtenveertig, negenenveertig
+	- vijftig, eenenvijftig, tweeënvijftig, drieënvijftig, vierenvijftig, vijfenvijftig, zesenvijftig, zevenenvijftig, achtenvijftig, negenenvijftig
+	- zestig, eenenzestig, tweeënzestig, drieënzestig, vierenzestig, vijfenzestig, zesenzestig, zevenenzestig, achtenzestig, negenenzestig
+	- zeventig, eenenzeventig, tweeënzeventig, drieënzeventig, vierenzeventig, vijfenzeventig, zesenzeventig, zevenenzeventig, achtenzeventig, negenenzeventig
+	- tachtig, eenentachtig, tweeëntachtig, drieëntachtig, vierentachtig, vijfentachtig, zesentachtig, zevenentachtig, achtentachtig, negenentachtig
+	- negentig, eenennegentig, tweeënnegentig, drieënnegentig, vierennegentig, vijfennegentig, zesennegentig, zevenennegentig, achtennegentig, negenennegentig
+	- honderd
+- pronunciation of letters
+	- a, bee, see, dee, ee, ef, gee, ha, ie, jee, ka, el, em, en, oo, pee, kuu, er, es, tee, uu, vee, wee, iks, ij, zet
+- weekdays
+	- maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag
+- months
+	- januari, februari, maart, april, mei, juni, juli, augustus, september, oktober, november, december
+- time expressions
+	- het is één uur
+	- het is half twee
+	- het is kwart over één
+	- het is kwart voor twee
+	- het is tien over één
+	- het is tien voor twee
+	- het is vijf over één
+	- het is vijf voor twee
+	- 's ochtends
+	- 's middags
+	- 's avonds
+	- 's nachts
+	- om middernacht
+	- 's middags om twaalf uur
+- greetings
+	- hallo, goedemorgen, goedemiddag, goedenavond, goedenacht, tot ziens, tot later
+- colors
+	- rood, blauw, geel, groen, oranje, paars, roze, bruin, zwart, wit, grijs
+- opposites
+	- groot/klein, warm/koud, goed/slecht, snel/langzaam, oud/nieuw, blij/verdrietig, makkelijk/moeilijk, rijk/arm, zwaar/licht, open/gesloten
+- question words
+	- wie, wat, waar, wanneer, waarom, hoe, welk, hoeveel, hoeveel
+- family
+	- de moeder, de vader, de ouders, de zus, de broer, de zoon, de dochter, de oma, de opa, de tante, de oom, de neef / de nicht, de man, de vrouw, het kind / de kinderen
+- jobs
+	- de leraar / de lerares, de dokter, de verpleegkundige, de student / de studente, de ingenieur, de ober / de serveerster, de chef-kok, de chauffeur, de winkelbediende, de politieagent, de brandweerman, de boer / de boerin, de kantoormedewerker, werkloos, gepensioneerd
+- food and drink
+	- het brood, de rijst, de pasta, het vlees, de kip, de vis, het ei, de kaas, het fruit, de appel, de banaan, de sinaasappel, de groente, de aardappel, de tomaat, de salade, de soep, de sandwich, de pizza
+	- de melk, het water, het sap, de koffie, de thee, de taart, de chocolade, het ontbijt, de lunch, het avondeten
+- clothes
+	- het T-shirt, het overhemd, de broek, de spijkerbroek, de rok, de jurk, het jasje, de jas, de trui, de schoenen, de laarzen, de sokken, de hoed, de sjaal, de handschoenen, de tas
+- weather
+	- zonnig, regenachtig, bewolkt, winderig, sneeuwachtig, heet, warm, koud, koel
+- seasons
+	- de lente, de zomer, de herfst, de winter
+- body
+	- het hoofd, het haar, het gezicht, het oog, het oor, de neus, de mond, de tand / de tanden, de arm, de hand, de vinger, het been, de voet / de voeten, de rug, de maag
+- house
+	- het huis, het appartement, de kamer, de slaapkamer, de badkamer, de keuken, de woonkamer, de tuin
+- furniture
+	- het bed, de tafel, de stoel, de bank, het bureau, de kast, de koelkast, het fornuis, het raam, de deur, de muur, de vloer
+- places
+	- de school, het ziekenhuis, de supermarkt, de winkel, de bank, het postkantoor, het restaurant, het café, de bioscoop, het park, het museum, het station, het vliegveld, het hotel, de bibliotheek, de sportschool
+- transport
+	- de auto, de bus, de trein, het vliegtuig, de fiets, de motor, de taxi, de boot, de metro, te voet, met de auto / met de bus
+- directions 
+	- links, rechts, rechtdoor, naast, tegenover, tussen, voor, achter, dichtbij, ver van, bij de verkeerslichten, linksaf/rechtsaf slaan
+- routines
+	- opstaan, ontbijten, naar het werk/naar school gaan, beginnen met werken, stoppen met werken, lunchen, naar huis gaan, tv-kijken, naar bed gaan, slapen
+- hobbies
+	- voetballen/tennissen, zwemmen, hardlopen, dansen, lezen, films/tv kijken, naar muziek luisteren, winkelen, vrienden ontmoeten, reizen, koken, computerspelletjes spelen
+- sports
+	- het voetbal, het tennis, het basketbal, het zwemmen, het hardlopen, het wielrennen, het skiën, de yoga, de sportschool
+- ordinals
+	- eerste, tweede, derde, vierde, vijfde, zesde, zevende, achtste, negende, tiende
+- countries 
+	- Engeland / Engels, de Verenigde Staten / Amerikaans, Spanje / Spaans, Frankrijk / Frans, Duitsland / Duits, Italië / Italiaans, China / Chinees, Japan / Japans, Brazilië / Braziliaans, Portugal / Portugees, Rusland / Russisch, Mexico / Mexicaans, Canada / Canadees, Australië / Australisch, India / Indiaas, Turkije / Turks, Polen / Pools, Griekenland / Grieks, Egypte / Egyptisch, Argentinië / Argentijns
+- emotions
+	- blij, verdrietig, boos, moe, hongerig, dorstig, verveeld, enthousiast, bezorgd, nerveus, verrast, ontspannen
+- adjectives
+	- mooi, lelijk, schoon, vies, rustig, luidruchtig, duur, goedkoop, interessant, saai, belangrijk, gevaarlijk, veilig, vriendelijk, beleefd
+- frequency
+	- altijd, meestal, vaak, soms, nooit, elke dag, een keer per week, twee keer per week, elke ochtend, in het weekend
+- tech
+	- de telefoon, de computer, de laptop, de oplader, de sleutel, de portemonnee, de paraplu, de koptelefoon, de camera, de tablet
+- school
+	- het Engels, de wiskunde, de natuurwetenschappen, de geschiedenis, de aardrijkskunde, de kunst, de muziek, de biologie, de scheikunde
+- animals
+	- de hond, de kat, de vogel, de vis, het konijn, het paard, de leeuw, de tijger, de olifant, de aap

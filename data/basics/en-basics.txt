@@ -1,0 +1,88 @@
+- numbers 1-100
+	- zero, one, two, three, four, five, six, seven, eight, nine
+	- ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen
+	- twenty, twenty-one, twenty-two, twenty-three, twenty-four, twenty-five, twenty-six, twenty-seven, twenty-eight, twenty-nine
+	- thirty, thirty-one, thirty-two, thirty-three, thirty-four, thirty-five, thirty-six, thirty-seven, thirty-eight, thirty-nine
+	- forty, forty-one, forty-two, forty-three, forty-four, forty-five, forty-six, forty-seven, forty-eight, forty-nine
+	- fifty, fifty-one, fifty-two, fifty-three, fifty-four, fifty-five, fifty-six, fifty-seven, fifty-eight, fifty-nine
+	- sixty, sixty-one, sixty-two, sixty-three, sixty-four, sixty-five, sixty-six, sixty-seven, sixty-eight, sixty-nine
+	- seventy, seventy-one, seventy-two, seventy-three, seventy-four, seventy-five, seventy-six, seventy-seven, seventy-eight, seventy-nine
+	- eighty, eighty-one, eighty-two, eighty-three, eighty-four, eighty-five, eighty-six, eighty-seven, eighty-eight, eighty-nine
+	- ninety, ninety-one, ninety-two, ninety-three, ninety-four, ninety-five, ninety-six, ninety-seven, ninety-eight, ninety-nine
+	- one hundred
+- pronunciation of letters
+	- ay, bee, cee, dee, ee, ef, gee, aich, eye, jay, kay, el, em, en, oh, pee, kew, ar, ess, tee, yoo, vee, double-yoo, ex, why, zee
+- weekdays
+	- Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+- months
+	- January, February, March, April, May, June, July, August, September, October, November, December
+- time expressions
+	- it's one o'clock
+	- it's half past one
+	- it's quarter past one
+	- it's quarter to two
+	- it's ten past one
+	- it's ten to two
+	- it's five past one
+	- it's five to two
+	- in the morning
+	- in the afternoon
+	- in the evening
+	- at night
+	- at midnight
+	- at noon
+- greetings
+	- hello, good morning, good afternoon, good evening, good night, goodbye, see you later
+- colors
+	- red, blue, yellow, green, orange, purple, pink, brown, black, white, gray
+- opposites
+	- big/small, hot/cold, good/bad, fast/slow, old/new, happy/sad, easy/difficult, rich/poor, heavy/light, open/closed
+- question words
+	- who, what, where, when, why, how, which, how many, how much
+- family
+	- mother, father, parents, sister, brother, son, daughter, grandmother, grandfather, aunt, uncle, cousin, husband, wife, child/children
+- jobs
+	- teacher, doctor, nurse, student, engineer, waiter/waitress, chef, driver, shop assistant, police officer, firefighter, farmer, office worker, unemployed, retired
+- food and drink
+	- bread, rice, pasta, meat, chicken, fish, egg, cheese, fruit, apple, banana, orange, vegetable, potato, tomato, salad, soup, sandwich, pizza
+	- milk, water, juice, coffee, tea, cake, chocolate, breakfast, lunch, dinner
+- clothes
+	- T-shirt, shirt, trousers/pants, jeans, skirt, dress, jacket, coat, sweater, shoes, boots, socks, hat, scarf, gloves, bag
+- weather
+	- sunny, rainy, cloudy, windy, snowy, hot, warm, cold, cool
+- seasons
+	- spring, summer, autumn/fall, winter
+- body
+	- head, hair, face, eye, ear, nose, mouth, tooth/teeth, arm, hand, finger, leg, foot/feet, back, stomach
+- house
+	- house, flat/apartment, room, bedroom, bathroom, kitchen, living room, garden
+- furniture
+	- bed, table, chair, sofa, desk, cupboard, fridge, cooker/stove, window, door, wall, floor
+- places
+	- school, hospital, supermarket, shop, bank, post office, restaurant, café, cinema, park, museum, station, airport, hotel, library, gym
+- transport
+	- car, bus, train, plane, bicycle/bike, motorcycle, taxi, boat, metro/underground, on foot, by car / by bus
+- directions 
+	- left, right, straight on, next to, opposite, between, in front of, behind, near, far from, at the traffic lights, turn left/right
+- routines
+	- get up, have breakfast, go to work/school, start work, finish work, have lunch, go home, watch TV, go to bed, sleep
+- hobbies
+	- play football/tennis, swim, run, dance, read, watch films/TV, listen to music, go shopping, meet friends, travel, cook, play computer games
+- sports
+	- football, tennis, basketball, swimming, running, cycling, skiing, yoga, gym
+- ordinals
+	- first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth
+- countries 
+	- England/English, America/American, Spain/Spanish, France/French, Germany/German, Italy/Italian, China/Chinese, Japan/Japanese, Brazil/Brazilian, Portugal/Portuguese, Russia/Russian, Mexico/Mexican, Canada/Canadian, Australia/Australian, India/Indian, Turkey/Turkish, Poland/Polish, Greece/Greek, Egypt/Egyptian, Argentina/Argentinian
+- emotions
+	- happy, sad, angry, tired, hungry, thirsty, bored, excited, worried, nervous, surprised, relaxed
+- adjectives
+	- beautiful, ugly, clean, dirty, quiet, noisy, expensive, cheap, interesting, boring, important, dangerous, safe, friendly, polite
+- frequency
+	- always, usually, often, sometimes, never, every day, once a week, twice a week, every morning, at the weekend
+- tech
+	- phone, computer, laptop, charger, key, wallet, umbrella, headphones, camera, tablet
+- school
+	- English, maths, science, history, geography, art, music, biology, chemistry
+- animals
+	- dog, cat, bird, fish, rabbit, horse, lion, tiger, elephant, monkey

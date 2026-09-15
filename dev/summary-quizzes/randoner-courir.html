@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courir et Randonner : Pourquoi Bouger Rend Heureux — Résumé & Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-surface: #111827;
+      --bg-surface-elevated: #1a2234;
+      --bg-card: #141d2e;
+      --bg-card-hover: #19253c;
+      --border-subtle: #243046;
+      --border-focus: #10b981;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent-emerald: #10b981;
+      --accent-emerald-glow: rgba(16, 185, 129, 0.2);
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --accent-crimson: #ef4444;
+      --accent-crimson-glow: rgba(239, 68, 68, 0.2);
+      --accent-indigo: #6366f1;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --font-display: 'Outfit', sans-serif;
+      --font-ui: 'Plus Jakarta Sans', sans-serif;
+      --font-reading: 'Source Serif 4', Georgia, serif;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    ::selection {
+      background: rgba(16, 185, 129, 0.4);
+      color: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      line-height: 1.65;
+      min-height: 100vh;
+      padding: 2.5rem 1.25rem 5rem;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Top Navigation / Breadcrumb */
+    .top-badge-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .badge-teal {
+      background: rgba(20, 184, 166, 0.12);
+      color: var(--accent-teal);
+      border: 1px solid rgba(20, 184, 166, 0.3);
+    }
+
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-amber {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: 2.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 0.85rem;
+      background: linear-gradient(135deg, #ffffff 40%, #a7f3d0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Navigation Tab Controls */
+    .view-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .nav-btn {
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.75rem 1.6rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg-surface-elevated);
+      color: var(--text-primary);
+      border-color: var(--border-focus);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-emerald-glow);
+      color: var(--accent-emerald);
+      border-color: var(--accent-emerald);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Section Containers */
+    .section-block {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .section-block.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       SUMMARY SECTION STYLES
+       ============================================================ */
+    .summary-section-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .narrative-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .narrative-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-emerald), var(--accent-teal));
+    }
+
+    .narrative-card p {
+      font-family: var(--font-reading);
+      font-size: 1.12rem;
+      line-height: 1.8;
+      color: #e2e8f0;
+      margin-bottom: 1.2rem;
+    }
+
+    .narrative-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Thematic Pillars Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.75rem;
+    }
+
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .pillar-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .pillar-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      line-height: 1.35;
+    }
+
+    .pillar-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.9rem;
+    }
+
+    .pillar-card ul {
+      margin-top: auto;
+      padding-left: 1.2rem;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    /* Key Takeaway Cards */
+    .takeaways-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .takeaway-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      position: relative;
+    }
+
+    .takeaway-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-teal);
+      margin-bottom: 0.4rem;
+    }
+
+    .takeaway-box h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .takeaway-box p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       QUIZ SECTION STYLES
+       ============================================================ */
+    .quiz-sticky-header {
+      background: rgba(17, 24, 39, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .quiz-stats-group {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .score-value {
+      color: var(--accent-emerald);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-surface-elevated);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-emerald));
+      transition: width 0.3s ease;
+    }
+
+    .reset-btn {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .reset-btn:hover {
+      background: var(--bg-surface-elevated);
+      color: #ffffff;
+      border-color: var(--accent-amber);
+    }
+
+    /* Questions List */
+    .questions-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease;
+    }
+
+    .question-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .question-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.9rem;
+    }
+
+    .question-number {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-teal);
+    }
+
+    .question-topic {
+      font-size: 0.78rem;
+      background: var(--bg-surface-elevated);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .question-title {
+      font-family: var(--font-display);
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.45;
+      margin-bottom: 1.4rem;
+    }
+
+    /* Options List */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .option-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      position: relative;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    .option-btn:hover:not(.disabled) {
+      background: var(--bg-surface-elevated);
+      border-color: var(--border-focus);
+    }
+
+    .option-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--bg-surface-elevated);
+      color: var(--text-secondary);
+      font-weight: 700;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .option-text {
+      flex: 1;
+      line-height: 1.45;
+      padding-top: 1px;
+      -webkit-user-select: text;
+      user-select: text;
+      cursor: text;
+    }
+
+    /* Option States after selection */
+    .option-btn.disabled {
+      cursor: default;
+    }
+
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.15) !important;
+      border-color: var(--accent-emerald) !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 14px var(--accent-emerald-glow);
+    }
+
+    .option-btn.correct .option-letter {
+      background: var(--accent-emerald);
+      color: #090d16;
+      border-color: var(--accent-emerald);
+    }
+
+    .option-btn.incorrect {
+      background: rgba(239, 68, 68, 0.15) !important;
+      border-color: var(--accent-crimson) !important;
+      color: #fca5a5 !important;
+      box-shadow: 0 0 14px var(--accent-crimson-glow);
+    }
+
+    .option-btn.incorrect .option-letter {
+      background: var(--accent-crimson);
+      color: #ffffff;
+      border-color: var(--accent-crimson);
+    }
+
+    .option-btn.dimmed {
+      opacity: 0.45;
+    }
+
+    /* Explanation Box */
+    .explanation-box {
+      display: none;
+      background: var(--bg-surface-elevated);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.35rem;
+      margin-top: 1rem;
+      border-left: 4px solid var(--accent-teal);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .explanation-box.visible {
+      display: block;
+    }
+
+    .explanation-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .explanation-header.correct {
+      color: var(--accent-emerald);
+    }
+
+    .explanation-header.incorrect {
+      color: var(--accent-crimson);
+    }
+
+    .explanation-text {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+    }
+
+    /* Final Results Banner */
+    .results-banner {
+      display: none;
+      background: linear-gradient(145deg, #162238 0%, #111a2c 100%);
+      border: 2px solid var(--accent-emerald);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-top: 3rem;
+      box-shadow: var(--shadow-lg);
+      animation: fadeIn 0.4s ease;
+    }
+
+    .results-banner.visible {
+      display: block;
+    }
+
+    .results-title {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
+    }
+
+    .results-score-big {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--accent-emerald);
+      line-height: 1.1;
+      margin: 1rem 0;
+    }
+
+    .results-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto 1.75rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 640px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      .question-card {
+        padding: 1.35rem;
+      }
+      .quiz-sticky-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .quiz-stats-group {
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Top Badge Row -->
+    <div class="top-badge-wrapper">
+      <span class="badge badge-teal">🎧 Transcription Vidéo</span>
+      <span class="badge badge-emerald">Niveau B1 / B2</span>
+      <span class="badge badge-amber">Neurosciences & Philosophie</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <h1>Courir et Randonner</h1>
+      <p>Pourquoi bouger et chercher la lenteur rendent l'être humain plus fort, lucide et profondément heureux.</p>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="view-nav" aria-label="Sections principales">
+      <button class="nav-btn active" id="btn-tab-summary">
+        📄 Résumé & Analyse
+      </button>
+      <button class="nav-btn" id="btn-tab-quiz">
+        🎯 Quiz de Compréhension (10 Q)
+      </button>
+    </nav>
+
+    <!-- ============================================================
+         SECTION 1 : RÉSUMÉ & ANALYSE
+         ============================================================ -->
+    <section id="section-summary" class="section-block active">
+      
+      <!-- 1. Synthèse Narrative Globale -->
+      <h2 class="summary-section-title">✨ Synthèse Générale</h2>
+      <div class="narrative-card">
+        <p>
+          Ce reportage explore les fondements biologiques, psychologiques et philosophiques qui font de la marche et de la course à pied de puissants vecteurs de bonheur et d'équilibre. Façonné par des millions d'années d'évolution, l'être humain est un champion absolu d'endurance : grâce à l'absence de fourrure et à la présence de glandes sudoripares, nos ancêtres pratiquaient la chasse à l'épuisement, un tournant décisif qui a favorisé un saut qualitatif dans le développement du cerveau humain.
+        </p>
+        <p>
+          À travers les témoignages croisés de <strong>Mike Kratzer</strong>, ancien créatif publicitaire devenu adepte de l'ultra-fond pour surmonter les excès d'une vie festive, et de <strong>Christine Thürmer</strong>, ancienne cadre dirigeante devenue randonneuse au long cours après des ruptures de vie majeures, le document démontre que la pratique physique permet de réguler le bruit neuronal, d'activer l'effet d'incubation cognitive et d'apprendre la sobriété volontaire.
+        </p>
+        <p>
+          Loin d'être une simple quête de performance ou de paysages idylliques, la marche et la course incarnent une philosophie de vie stoïcienne : elles apprennent à accueillir l'adversité, à relativiser les crises quotidiennes et à s'émerveiller de la simplicité retrouvée.
+        </p>
+      </div>
+
+      <!-- 2. Piliers Thématiques -->
+      <h2 class="summary-section-title">🏛️ Les Trois Piliers Thématiques</h2>
+      <div class="pillars-grid">
+        
+        <!-- Pilier 1 -->
+        <div class="pillar-card">
+          <div class="pillar-icon">🧬</div>
+          <h3>1. Physiologie, Évolution & Cerveau</h3>
+          <p>
+            L'endurance est inscrite dans notre code génétique. La course stimule des neurotransmetteurs qui renforcent l'immunité et dissipent le stress.
+          </p>
+          <ul>
+            <li><strong>Chasse à l'épuisement :</strong> L'humain peut courir 40 à 100 km sans s'arrêter, surchauffant les proies pourvues de fourrure.</li>
+            <li><strong>Thérapie aérobie :</strong> L'effort d'endurance modérée stimule la sérotonine, les endorphines et les endocannabinoïdes contre la dépression.</li>
+            <li><strong>Philosophes marcheurs :</strong> Nietzsche soulignait la pensée fluide et vivante de Montaigne et des Anciens par rapport aux systèmes rigides conçus assis.</li>
+          </ul>
+        </div>
+
+        <!-- Pilier 2 -->
+        <div class="pillar-card">
+          <div class="pillar-icon">🏃‍♂️</div>
+          <h3>2. Course & Clarté Mentale (Mike Kratzer)</h3>
+          <p>
+            Après une jeunesse festive baignée dans les drogues et l'alcool, Mike a fait de la course quotidienne sa nouvelle drogue saine et structurante.
+          </p>
+          <ul>
+            <li><strong>Diminution du bruit neuronal :</strong> Le cerveau fonctionne de manière plus synchronisée et ordonnée après la course.</li>
+            <li><strong>Effet d'incubation :</strong> En laissant reposer un problème durant un jogging, le subconscient débloque des solutions créatives et rationnelles.</li>
+            <li><strong>Relativisation existentielle :</strong> Sur 100 km, on vit un cycle émotionnel complet ; chaque passage à vide est suivi d'une remontée.</li>
+          </ul>
+        </div>
+
+        <!-- Pilier 3 -->
+        <div class="pillar-card">
+          <div class="pillar-icon">🥾</div>
+          <h3>3. Randonnée & Sobriété Heureuse (Christine Thürmer)</h3>
+          <p>
+            Ancienne gestionnaire d'entreprises, Christine a parcouru plus de 10 000 km à pied suite à son licenciement et à l'attaque cérébrale subie par un ami.
+          </p>
+          <ul>
+            <li><strong>Détox à la dopamine :</strong> Vivre avec 5 kg de sac et 10 € de vivres par jour transforme un rayon de soleil ou une douche chaude en luxe inouï.</li>
+            <li><strong>Dépouillement matériel :</strong> Randonner libère des angoisses sociales et de l'accumulation matérielle superflue.</li>
+            <li><strong>Discipline et stoïcisme :</strong> Refuser d'abandonner sous la pluie forge une confiance en soi indestructible.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- 3. Enseignements Clés -->
+      <h2 class="summary-section-title">💡 Enseignements & Concepts Majeurs</h2>
+      <div class="takeaways-grid">
+        <div class="takeaway-box">
+          <div class="takeaway-tag">Neurosciences</div>
+          <h4>L'Effet d'Incubation</h4>
+          <p>Cesser de s'acharner intellectuellement sur une impasse et aller courir permet au subconscient de synthétiser une réponse objective.</p>
+        </div>
+        <div class="takeaway-box">
+          <div class="takeaway-tag">Minimalisme</div>
+          <h4>La Détox Dopaminergique</h4>
+          <p>Réduire ses besoins au strict minimum réinitialise le circuit de la récompense : le quotidien ordinaire devient source d'extase.</p>
+        </div>
+        <div class="takeaway-box">
+          <div class="takeaway-tag">Résilience</div>
+          <h4>L'Approche Stoïcienne</h4>
+          <p>Les intempéries et les détours imprévus ne sont pas des échecs mais des règles du jeu qui enseignent l'adaptabilité et la liberté intérieure.</p>
+        </div>
+        <div class="takeaway-box">
+          <div class="takeaway-tag">Santé Mentale</div>
+          <h4>La Respiration Ventrale</h4>
+          <p>Inspirer profondément avec le ventre désamorce immédiatement les bouffées d'angoisse et soulage les points de côté à l'effort.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         SECTION 2 : QUIZ DE COMPRÉHENSION (10 QUESTIONS)
+         ============================================================ -->
+    <section id="section-quiz" class="section-block">
+      
+      <!-- Top Sticky Quiz Status Header -->
+      <div class="quiz-sticky-header">
+        <div class="quiz-stats-group">
+          <div class="stat-pill">
+            <span>Score :</span>
+            <span class="stat-value score-value" id="score-counter">0 / 10</span>
+          </div>
+          <div class="stat-pill">
+            <span>Répondues :</span>
+            <span class="stat-value" id="answered-counter">0 / 10</span>
+          </div>
+        </div>
+        <button class="reset-btn" id="btn-reset-quiz">
+          🔄 Réinitialiser le quiz
+        </button>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="quiz-progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Questions Stack -->
+      <div class="questions-stack" id="questions-container">
+        <!-- Dynamically rendered by JavaScript -->
+      </div>
+
+      <!-- Results Summary Card (Shown when all 10 are answered) -->
+      <div class="results-banner" id="results-banner">
+        <div class="results-title" id="results-title">Quiz Terminé !</div>
+        <div class="results-score-big" id="results-score-text">0 / 10</div>
+        <p class="results-desc" id="results-feedback-text">Félicitations pour avoir complété le quiz.</p>
+        <button class="nav-btn active" id="btn-retry-quiz">
+          Recommencer le quiz
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Exercice pédagogique basé sur la vidéo documentaire « Randonner et Courir » • Conçu pour LangLearn</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // ============================================================
+    // DATA: 10 MULTIPLE CHOICE QUESTIONS
+    // ============================================================
+    const quizData = [
+      {
+        id: 1,
+        topic: "Évolution & Physiologie",
+        question: "Selon le texte, quelle caractéristique anatomique a permis à l'être humain de surclasser des animaux rapides comme l'antilope lors de la chasse à courre ?",
+        options: [
+          "Une fréquence cardiaque deux fois plus basse que celle de tous les herbivores",
+          "L'absence de fourrure épaisse et la présence de glandes sudoripares permettant d'éviter la surchauffe",
+          "Une capacité pulmonaire supérieure lui permettant de courir sans respirer",
+          "Des membres inférieurs proportionnellement trois fois plus longs que ceux des grands singes"
+        ],
+        correctIndex: 1,
+        explanation: "Contrairement aux animaux à fourrure qui surchauffent rapidement lorsqu'ils sont poursuivis, l'être humain régule sa température grâce à la transpiration (glandes sudoripares), lui permettant de chasser à l'épuisement."
+      },
+      {
+        id: 2,
+        topic: "Philosophie de la marche",
+        question: "Quelle différence majeure Friedrich Nietzsche établissait-il entre les philosophes qui écrivent assis et ceux qui écrivent en marchant ?",
+        options: [
+          "Les philosophes assis construisent des systèmes rigides de domination, alors que les marcheurs produisent une pensée fluide et vivante",
+          "Les philosophes marcheurs manquent de rigueur scientifique et s'égarent systématiquement",
+          "Les philosophes assis ont une meilleure longévité et transmettent des œuvres plus volumineuses",
+          "Les philosophes marcheurs refusent toute forme de doute méthodique"
+        ],
+        correctIndex: 0,
+        explanation: "Nietzsche et Montaigne incarnaient cette pensée en mouvement, éloignée des dogmes et des systèmes fermés que fabriquent ceux qui restent enfermés dans leur chambre."
+      },
+      {
+        id: 3,
+        topic: "Parcours de vie : Mike Kratzer",
+        question: "Quel déclic personnel a incité Mike Kratzer à rompre avec sa vie nocturne pour se consacrer à la course à pied ?",
+        options: [
+          "Une faillite financière brutale de son agence de communication",
+          "L'approche de ses 30 ans et la prise de conscience que son cercle d'amis n'était réuni que par la consommation d'alcool et de drogues",
+          "Un accident cardiaque survenu au milieu d'un set de DJ en restaurant",
+          "Une interdiction formelle délivrée par son médecin de famille"
+        ],
+        correctIndex: 1,
+        explanation: "À l'approche de la trentaine, Mike a compris que ses relations ne reposaient que sur les substances toxiques et a éprouvé le besoin vital de faire le ménage dans son esprit."
+      },
+      {
+        id: 4,
+        topic: "Neurosciences & Mental",
+        question: "Quel phénomène neurologique une séance de course à pied provoque-t-elle selon les études évoquées ?",
+        options: [
+          "Une augmentation fulgurante de la tension cérébrale et des ondes bêta",
+          "Une diminution du bruit neuronal, permettant au cerveau de fonctionner de façon plus synchronisée et de mieux réguler les stimuli",
+          "Une mise en sommeil immédiate des deux hémisphères cérébraux",
+          "Une destruction rapide des connexions synaptiques superflues"
+        ],
+        correctIndex: 1,
+        explanation: "La réduction de ce « bruit de fond neuronal » apporte un sentiment profond d'ordre mental, de fluidité cognitive et de sérénité."
+      },
+      {
+        id: 5,
+        topic: "Psychologie cognitive",
+        question: "En quoi consiste « l'effet d'incubation » dont témoigne Mike lors de ses séances d'entraînement ?",
+        options: [
+          "Réfléchir intensément en calquant chaque déduction logique sur son rythme de foulée",
+          "Laisser de côté un problème insoluble pendant le jogging pour permettre au subconscient de trouver la solution créative",
+          "S'isoler complètement du monde extérieur pendant 48 heures sans prononcer un mot",
+          "Répéter des mantras positifs afin de masquer les émotions négatives"
+        ],
+        correctIndex: 1,
+        explanation: "Issu de la psychologie cognitive, l'effet d'incubation montre que débrancher la réflexion active au profit d'un exercice aérobie permet au subconscient d'apporter l'illumination rationnelle."
+      },
+      {
+        id: 6,
+        topic: "Parcours de vie : Christine Thürmer",
+        question: "Quels sont les deux événements déclencheurs (les « coups du sort ») qui ont propulsé Christine Thürmer vers la randonnée itinérante ?",
+        options: [
+          "La perte soudaine de son logement et une rupture amoureuse douloureuse",
+          "Son licenciement professionnel et l'attaque cérébrale dévastatrice d'un ami proche plus âgé de dix ans",
+          "Une banqueroute personnelle et une blessure sportive invalidante",
+          "Une retraite anticipée volontaire et un voyage d'affaires aux États-Unis"
+        ],
+        correctIndex: 1,
+        explanation: "Après avoir redressé des sociétés puis été licenciée, l'accident vasculaire de son ami l'a confrontée à l'urgence de vivre pleinement plutôt que d'accumuler les marqueurs de réussite."
+      },
+      {
+        id: 7,
+        topic: "Minimalisme & Bonheur",
+        question: "Pourquoi Christine Thürmer qualifie-t-elle sa pratique de la grande randonnée de « détox à la dopamine » ?",
+        options: [
+          "Parce qu'elle s'interdit formellement toute conversation téléphonique pendant ses voyages",
+          "Parce qu'en réduisant ses possessions à 5 kg et 10 € de nourriture par jour, chaque petit confort élémentaire devient un luxe inouï",
+          "Parce qu'elle suit un jeûne intermittent strict tout au long de ses marches",
+          "Parce que l'altitude modifie directement la sécrétion des hormones du plaisir"
+        ],
+        correctIndex: 1,
+        explanation: "En abaissant ses besoins au strict minimum (eau, tapis de sol, vivres simples), un lit moelleux, un savon parfumé ou un rayon de soleil procurent une béatitude immense."
+      },
+      {
+        id: 8,
+        topic: "Pratique de la marche",
+        question: "Quelle est la réaction typique de Christine Thürmer lorsqu'elle atteint un sommet culminant ?",
+        options: [
+          "Elle médite face à l'horizon pendant de longues heures pour communier avec la nature",
+          "Elle prend immédiatement des photos panoramiques destinées à ses publications",
+          "Les paysages grandioses lui importent peu ; elle s'assied, vérifie le réseau téléphonique, puis boit et mange",
+          "Elle analyse les cartes topographiques pour accélérer l'étape suivante"
+        ],
+        correctIndex: 2,
+        explanation: "Christine explique que courir après des panoramas spectaculaires distrait du vrai but de la marche, qui réside dans l'état d'esprit intérieur et le vagabondage des pensées."
+      },
+      {
+        id: 9,
+        topic: "Santé mentale & Thérapie",
+        question: "Sur quel levier biochimique repose la thérapie par l'exercice aérobie prescrite aux personnes souffrant de dépression ?",
+        options: [
+          "L'effort d'endurance d'intensité modérée augmente la concentration de sérotonine dans le cerveau",
+          "L'élévation brutale du rythme cardiaque bloque définitivement la sécrétion de cortisol",
+          "L'acide lactique produit dans les muscles neutralise les récepteurs de l'angoisse",
+          "La déshydratation temporaire contraint le cerveau à inhiber les pensées anxieuses"
+        ],
+        correctIndex: 0,
+        explanation: "Chez les personnes souffrant d'épisodes dépressifs, l'activité d'endurance modérée stimule la sérotonine, hormone clé souvent présente en quantité réduite."
+      },
+      {
+        id: 10,
+        topic: "Résilience & Philosophie stoïcienne",
+        question: "Pourquoi Christine Thürmer choisit-elle de marcher sous une pluie battante plutôt que de prendre un bus qui passe devant elle ?",
+        options: [
+          "Pour respecter à la lettre les règlements stricts de sa fédération sportive",
+          "Parce que surmonter la pénibilité physique procure le soir venu la fierté de ne pas avoir capitulé, bâtissant une confiance en soi inébranlable",
+          "Parce qu'elle n'a jamais d'argent liquide sur elle en randonnée",
+          "Pour tester l'imperméabilité de ses vêtements de trekking ultra-légers"
+        ],
+        correctIndex: 1,
+        explanation: "Pour Christine, le véritable cadeau de la marche ne tombe pas du ciel : il s'obtient en se faisant violence face aux intempéries, ce qui forge une assurance transférable à toute sa vie."
+      }
+    ];
+
+    // ============================================================
+    // APPLICATION STATE
+    // ============================================================
+    let userAnswers = {}; // { questionId: selectedOptionIndex }
+    let score = 0;
+
+    // DOM Elements
+    const tabSummaryBtn = document.getElementById('btn-tab-summary');
+    const tabQuizBtn = document.getElementById('btn-tab-quiz');
+    const sectionSummary = document.getElementById('section-summary');
+    const sectionQuiz = document.getElementById('section-quiz');
+
+    const scoreCounter = document.getElementById('score-counter');
+    const answeredCounter = document.getElementById('answered-counter');
+    const quizProgressBar = document.getElementById('quiz-progress-bar');
+    const questionsContainer = document.getElementById('questions-container');
+    const resetBtn = document.getElementById('btn-reset-quiz');
+    const resultsBanner = document.getElementById('results-banner');
+    const resultsScoreText = document.getElementById('results-score-text');
+    const resultsFeedbackText = document.getElementById('results-feedback-text');
+    const retryQuizBtn = document.getElementById('btn-retry-quiz');
+
+    // Tab Switching
+    tabSummaryBtn.addEventListener('click', () => {
+      tabSummaryBtn.classList.add('active');
+      tabQuizBtn.classList.remove('active');
+      sectionSummary.classList.add('active');
+      sectionQuiz.classList.remove('active');
+    });
+
+    tabQuizBtn.addEventListener('click', () => {
+      tabQuizBtn.classList.add('active');
+      tabSummaryBtn.classList.remove('active');
+      sectionQuiz.classList.add('active');
+      sectionSummary.classList.remove('active');
+    });
+
+    // Option Letters A, B, C, D
+    const letters = ['A', 'B', 'C', 'D'];
+
+    // Render Questions
+    function renderQuiz() {
+      questionsContainer.innerHTML = '';
+      quizData.forEach((q, qIndex) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-card-${q.id}`;
+
+        const isAnswered = userAnswers.hasOwnProperty(q.id);
+        const selectedIdx = userAnswers[q.id];
+
+        let optionsHTML = '';
+        q.options.forEach((optText, optIdx) => {
+          let btnClass = 'option-btn';
+          if (isAnswered) {
+            btnClass += ' disabled';
+            if (optIdx === q.correctIndex) {
+              btnClass += ' correct';
+            } else if (optIdx === selectedIdx) {
+              btnClass += ' incorrect';
+            } else {
+              btnClass += ' dimmed';
+            }
+          }
+
+          optionsHTML += `
+            <div role="button" tabindex="0" class="${btnClass}" data-qid="${q.id}" data-oidx="${optIdx}">
+              <span class="option-letter">${letters[optIdx]}</span>
+              <span class="option-text">${optText}</span>
+            </div>
+          `;
+        });
+
+        // Explanation Box
+        let explanationHTML = '';
+        if (isAnswered) {
+          const isCorrect = (selectedIdx === q.correctIndex);
+          explanationHTML = `
+            <div class="explanation-box visible">
+              <div class="explanation-header ${isCorrect ? 'correct' : 'incorrect'}">
+                <span>${isCorrect ? '✅ Bonne réponse !' : '❌ Réponse incorrecte'}</span>
+              </div>
+              <p class="explanation-text">${q.explanation}</p>
+            </div>
+          `;
+        } else {
+          explanationHTML = `
+            <div class="explanation-box" id="explanation-${q.id}">
+              <div class="explanation-header" id="explanation-header-${q.id}"></div>
+              <p class="explanation-text" id="explanation-text-${q.id}"></p>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="question-meta">
+            <span class="question-number">Question ${qIndex + 1} / ${quizData.length}</span>
+            <span class="question-topic">${q.topic}</span>
+          </div>
+          <h3 class="question-title">${q.question}</h3>
+          <div class="options-grid" id="options-group-${q.id}">
+            ${optionsHTML}
+          </div>
+          ${explanationHTML}
+        `;
+
+        questionsContainer.appendChild(card);
+      });
+
+      attachOptionListeners();
+      updateScoreboard();
+    }
+
+    // Attach Click and Keyboard Events to options with text-selection protection
+    function attachOptionListeners() {
+      const optionButtons = questionsContainer.querySelectorAll('.option-btn:not(.disabled)');
+      optionButtons.forEach(button => {
+        let startX = 0;
+        let startY = 0;
+        let isMouseDown = false;
+
+        button.addEventListener('mousedown', (e) => {
+          startX = e.clientX;
+          startY = e.clientY;
+          isMouseDown = true;
+        });
+
+        button.addEventListener('click', (e) => {
+          // Ignore right-clicks or non-primary clicks
+          if (e.button && e.button !== 0) return;
+
+          // If the user has highlighted / selected text, DO NOT submit an answer!
+          const selection = window.getSelection();
+          if (selection && selection.toString().trim().length > 0) {
+            return;
+          }
+
+          // If the user dragged their cursor (e.g. mouse sweep to select or copy text), ignore click
+          if (isMouseDown) {
+            const dx = Math.abs(e.clientX - startX);
+            const dy = Math.abs(e.clientY - startY);
+            if (dx > 5 || dy > 5) {
+              return;
+            }
+          }
+
+          const target = e.currentTarget;
+          const qId = parseInt(target.getAttribute('data-qid'), 10);
+          const oIdx = parseInt(target.getAttribute('data-oidx'), 10);
+          handleAnswerSelect(qId, oIdx);
+        });
+
+        // Accessible keyboard selection (Enter or Space)
+        button.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const target = e.currentTarget;
+            const qId = parseInt(target.getAttribute('data-qid'), 10);
+            const oIdx = parseInt(target.getAttribute('data-oidx'), 10);
+            handleAnswerSelect(qId, oIdx);
+          }
+        });
+      });
+    }
+
+    // Handle Option Selection
+    function handleAnswerSelect(questionId, selectedIdx) {
+      if (userAnswers.hasOwnProperty(questionId)) return; // already answered
+
+      userAnswers[questionId] = selectedIdx;
+      const question = quizData.find(q => q.id === questionId);
+      const isCorrect = (selectedIdx === question.correctIndex);
+
+      if (isCorrect) {
+        score++;
+      }
+
+      // Update Card Elements
+      const card = document.getElementById(`q-card-${questionId}`);
+      const options = card.querySelectorAll('.option-btn');
+
+      options.forEach((optBtn, idx) => {
+        optBtn.classList.add('disabled');
+        if (idx === question.correctIndex) {
+          optBtn.classList.add('correct');
+        } else if (idx === selectedIdx) {
+          optBtn.classList.add('incorrect');
+        } else {
+          optBtn.classList.add('dimmed');
+        }
+      });
+
+      // Show Explanation Box
+      const expBox = document.getElementById(`explanation-${questionId}`);
+      const expHeader = document.getElementById(`explanation-header-${questionId}`);
+      const expText = document.getElementById(`explanation-text-${questionId}`);
+
+      if (expBox && expHeader && expText) {
+        expHeader.className = `explanation-header ${isCorrect ? 'correct' : 'incorrect'}`;
+        expHeader.innerHTML = isCorrect ? '<span>✅ Exactement !</span>' : '<span>❌ Réponse incorrecte</span>';
+        expText.textContent = question.explanation;
+        expBox.classList.add('visible');
+      }
+
+      updateScoreboard();
+      checkCompletion();
+    }
+
+    // Update Live Score & Progress
+    function updateScoreboard() {
+      const answeredCount = Object.keys(userAnswers).length;
+      scoreCounter.textContent = `${score} / ${quizData.length}`;
+      answeredCounter.textContent = `${answeredCount} / ${quizData.length}`;
+
+      const pct = (answeredCount / quizData.length) * 100;
+      quizProgressBar.style.width = `${pct}%`;
+    }
+
+    // Check If Quiz Completed
+    function checkCompletion() {
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount === quizData.length) {
+        resultsScoreText.textContent = `${score} / ${quizData.length}`;
+        let feedback = "";
+        if (score === 10) {
+          feedback = "🌟 Score parfait (10/10) ! Vous maîtrisez parfaitement l'ensemble des concepts scientifiques, biographiques et philosophiques du texte.";
+        } else if (score >= 8) {
+          feedback = "👏 Excellent résultat ! Vous avez une compréhension très fine des mécanismes physiologiques et de la philosophie de l'effort.";
+        } else if (score >= 6) {
+          feedback = "👍 Bon travail ! Les idées principales sont bien assimilées. N'hésitez pas à relire la synthèse pour affiner certains détails.";
+        } else {
+          feedback = "💡 Continuez vos efforts ! Prenez le temps de relire la synthèse narrative et les trois piliers thématiques pour consolider vos connaissances.";
+        }
+        resultsFeedbackText.textContent = feedback;
+        resultsBanner.classList.add('visible');
+        resultsBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    // Reset Quiz
+    function resetQuiz() {
+      userAnswers = {};
+      score = 0;
+      resultsBanner.classList.remove('visible');
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    resetBtn.addEventListener('click', resetQuiz);
+    retryQuizBtn.addEventListener('click', resetQuiz);
+
+    // Initial render
+    renderQuiz();
+  </script>
+</body>
+</html>
