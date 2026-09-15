@@ -56,12 +56,32 @@ const showResetConfirm = ref(false)
 // Current language color
 const currentColor = computed(() => languageColors[selectedLang.value] || '#333388')
 
+// Brighter color for percentage text and progress bar (French/Italian are too dark)
+const brightColor = computed(() => {
+  const base = currentColor.value
+  if (selectedLang.value === 'fr' || selectedLang.value === 'it') {
+    return `color-mix(in srgb, ${base} 70%, white)`
+  }
+  return base
+})
+
+// Brighter button-specific colors for French and Italian
+const buttonColors: Record<string, string> = {
+  fr: '#5566bb',
+  es: '#be185d',
+  it: '#2d8a2d',
+  nl: '#d97706',
+}
+const currentButtonColor = computed(() => buttonColors[selectedLang.value] || '#5566bb')
+
 // Set of item IDs currently revealed/learned for the current language
 const revealedSet = ref<Set<string>>(new Set())
 
 // Numbers blur state: tracks which number items are blurred vs clear
 const numberBlurState = ref<Map<string, 'clear' | 'blurred'>>(new Map())
 const numberTimers = ref<Map<string, ReturnType<typeof setTimeout>>>(new Map())
+const dropdownOpen = ref(false)
+const dropdownRef = ref<HTMLElement | null>(null)
 
 const storageKey = computed(() => `lang-basics-revealed-${selectedLang.value}`)
 
@@ -114,12 +134,25 @@ watch(selectedLang, () => {
   showResetConfirm.value = false
 })
 
+function selectLanguage(code: LangCode) {
+  selectedLang.value = code
+  dropdownOpen.value = false
+}
+
+function handleClickOutside(event: MouseEvent) {
+  if (dropdownRef.value && !dropdownRef.value.contains(event.target as Node)) {
+    dropdownOpen.value = false
+  }
+}
+
 onMounted(() => {
   loadSavedProgress()
+  document.addEventListener('click', handleClickOutside)
 })
 
 onUnmounted(() => {
   clearAllNumberTimers()
+  document.removeEventListener('click', handleClickOutside)
 })
 
 function clearAllNumberTimers() {
@@ -258,6 +291,12 @@ function isPronunciation(itemId: string): boolean {
   return getCategoryId(itemId) === 'pronunciation-of-letters'
 }
 
+// Get uppercase letter for pronunciation items (e.g. "pronunciation-of-letters-1" → "A")
+function getLetterForPronunciation(itemId: string): string {
+  const num = parseInt(itemId.replace('pronunciation-of-letters-', ''), 10)
+  return String.fromCharCode(64 + num)
+}
+
 // Check if a number item is blurred
 function isNumberBlurred(itemId: string): boolean {
   return numberBlurState.value.get(itemId) === 'blurred'
@@ -297,31 +336,47 @@ function isNumber(itemId: string): boolean {
         </p>
       </div>
 
-      <!-- Language Selector -->
+      <!-- Language Selector (Custom Dropdown) -->
       <div class="flex items-center gap-2 self-start md:self-end">
-        <label for="language-select" class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+        <label class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
           Language:
         </label>
-        <div class="relative">
-          <select
-            id="language-select"
-            v-model="selectedLang"
-            class="appearance-none text-white text-sm font-semibold py-2 pl-3 pr-8 rounded-xl border border-transparent shadow-xs focus:outline-hidden focus:ring-2 focus:ring-white/30 cursor-pointer transition-all"
+        <div ref="dropdownRef" class="relative">
+          <!-- Trigger button -->
+          <button
+            type="button"
+            @click.stop="dropdownOpen = !dropdownOpen"
+            class="flex items-center gap-2 text-white text-sm font-semibold py-2 pl-3 pr-8 rounded-xl border border-transparent shadow-xs cursor-pointer transition-all focus:outline-hidden focus:ring-2 focus:ring-white/30"
             :style="{ backgroundColor: currentColor }"
           >
-            <option v-for="lang in languages" :key="lang.code" :value="lang.code">
-              {{ lang.label }}
-            </option>
-          </select>
+            {{ activeLangLabel }}
+          </button>
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white/70">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': dropdownOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div>
+          <!-- Dropdown menu -->
+          <div
+            v-if="dropdownOpen"
+            class="absolute right-0 mt-1 w-40 rounded-xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+          >
+            <button
+              v-for="lang in languages"
+              :key="lang.code"
+              type="button"
+              @click.stop="selectLanguage(lang.code)"
+              class="w-full text-left px-3 py-2 text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer"
+              :style="{ backgroundColor: languageColors[lang.code] }"
+              :class="{ 'ring-2 ring-inset ring-white/40': lang.code === selectedLang }"
+            >
+              {{ lang.label }}
+            </button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Progress and Controls Bar -->
-    <div class="p-4 rounded-2xl bg-white dark:bg-[#182030] border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
+    <div class="p-4 rounded-2xl bg-white dark:bg-[#182030] border border-gray-200 dark:border-gray-800 shadow-xs space-y-4 sticky top-0 z-20">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <!-- Progress Summary -->
         <div class="flex items-center gap-3">
@@ -329,7 +384,7 @@ function isNumber(itemId: string): boolean {
             class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm"
             :style="{
               backgroundColor: `color-mix(in srgb, ${currentColor} 15%, transparent)`,
-              color: currentColor
+              color: brightColor
             }"
           >
             {{ progressPercentage }}%
@@ -382,7 +437,7 @@ function isNumber(itemId: string): boolean {
       <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2 overflow-hidden">
         <div
           class="h-2 rounded-full transition-all duration-300 ease-out"
-          :style="{ width: `${progressPercentage}%`, backgroundColor: currentColor }"
+          :style="{ width: `${progressPercentage}%`, backgroundColor: brightColor }"
         ></div>
       </div>
 
@@ -441,9 +496,9 @@ function isNumber(itemId: string): boolean {
               ? 'font-semibold shadow-xs'
               : 'bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300'"
             :style="revealedSet.has(item.id) ? {
-              backgroundColor: `color-mix(in srgb, ${currentColor} 15%, transparent)`,
-              color: `color-mix(in srgb, ${currentColor} 70%, white)`,
-              border: `1px solid color-mix(in srgb, ${currentColor} 40%, transparent)`,
+              backgroundColor: `color-mix(in srgb, ${currentButtonColor} 20%, transparent)`,
+              color: `color-mix(in srgb, ${currentButtonColor} 50%, white)`,
+              border: `1px solid color-mix(in srgb, ${currentButtonColor} 45%, transparent)`,
             } : undefined"
             :title="revealedSet.has(item.id) ? 'Click to show English' : `Click to show in ${activeLangLabel}`"
           >
@@ -454,12 +509,29 @@ function isNumber(itemId: string): boolean {
                 <span style="font-family: 'Courier New', Courier, monospace;">[{{ item[selectedLang] || item.en }}]</span>
               </template>
 
-              <!-- Numbers: show word with blur effect, no icons -->
+              <!-- Numbers: show word with blur effect, icons during clear period -->
               <template v-else-if="isNumber(item.id)">
                 <span
                   class="number-word-text"
                   :class="{ 'number-blurred': isNumberBlurred(item.id) }"
                 >{{ item[selectedLang] || item.en }}</span>
+                <!-- Star + Translate icons: visible only during 3-second clear period -->
+                <template v-if="!isNumberBlurred(item.id)">
+                  <span
+                    class="inline-flex items-center justify-center w-4 h-4 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+                    title="Search for 3 example sentences"
+                    @click="handleExampleSearch(item, $event)"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  </span>
+                  <span
+                    class="inline-flex items-center justify-center w-4 h-4 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+                    title="Look up in Google Translate"
+                    @click="handleGoogleTranslate(item, $event)"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                  </span>
+                </template>
               </template>
 
               <!-- All other categories: word + star + translate icons -->
@@ -486,7 +558,7 @@ function isNumber(itemId: string): boolean {
 
             <!-- Unrevealed: English faded out with light background -->
             <span v-else class="inline-block">
-              {{ item.en }}
+              {{ isPronunciation(item.id) ? getLetterForPronunciation(item.id) : item.en }}
             </span>
           </button>
         </div>
