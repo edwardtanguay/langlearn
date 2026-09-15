@@ -12,27 +12,10 @@
 	- one hundred
 - pronunciation of letters
 	- ay, bee, cee, dee, ee, ef, gee, aich, eye, jay, kay, el, em, en, oh, pee, kew, ar, ess, tee, yoo, vee, double-yoo, ex, why, zee
-- days of week
-	- Monday
-	- Tuesday
-	- Wednesday
-	- Thursday
-	- Friday
-	- Saturday
-	- Sunday
+- weekdays
+	- Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
 - months
-	- January
-	- February
-	- March
-	- April
-	- May
-	- June
-	- July
-	- August
-	- September
-	- October
-	- November
-	- December
+	- January, February, March, April, May, June, July, August, September, October, November, December
 - time expressions
 	- it's one o'clock
 	- it's half past one
@@ -49,7 +32,7 @@
 	- at midnight
 	- at noon
 - greetings
-	- hello, hi, good morning, good afternoon, good evening, good night, goodbye, bye, see you later
+	- hello, good morning, good afternoon, good evening, good night, goodbye, see you later
 - colors
 	- red, blue, yellow, green, orange, purple, pink, brown, black, white, gray
 - opposites
@@ -65,12 +48,41 @@
 	- milk, water, juice, coffee, tea, cake, chocolate, breakfast, lunch, dinner
 - clothes
 	- T-shirt, shirt, trousers/pants, jeans, skirt, dress, jacket, coat, sweater, shoes, boots, socks, hat, scarf, gloves, bag
-- weather and seasons
+- weather
 	- sunny, rainy, cloudy, windy, snowy, hot, warm, cold, cool
+- seasons
 	- spring, summer, autumn/fall, winter
-	- it's raining, it's sunny, what's the weather like?
-- body parts
+- body
 	- head, hair, face, eye, ear, nose, mouth, tooth/teeth, arm, hand, finger, leg, foot/feet, back, stomach
-- house and furniture
+- house
 	- house, flat/apartment, room, bedroom, bathroom, kitchen, living room, garden
+- furniture
 	- bed, table, chair, sofa, desk, cupboard, fridge, cooker/stove, window, door, wall, floor
+- places
+	- school, hospital, supermarket, shop, bank, post office, restaurant, café, cinema, park, museum, station, airport, hotel, library, gym
+- transport
+	- car, bus, train, plane, bicycle/bike, motorcycle, taxi, boat, metro/underground, on foot, by car / by bus
+- directions 
+	- left, right, straight on, next to, opposite, between, in front of, behind, near, far from, at the traffic lights, turn left/right
+- routines
+	- get up, have breakfast, go to work/school, start work, finish work, have lunch, go home, watch TV, go to bed, sleep
+- hobbies
+	- play football/tennis, swim, run, dance, read, watch films/TV, listen to music, go shopping, meet friends, travel, cook, play computer games
+- sports
+	- football, tennis, basketball, swimming, running, cycling, skiing, yoga, gym
+- ordinals
+	- first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth
+- countries 
+	- England/English, America/American, Spain/Spanish, France/French, Germany/German, Italy/Italian, China/Chinese, Japan/Japanese, Brazil/Brazilian, Portugal/Portuguese, Russia/Russian, Mexico/Mexican, Canada/Canadian, Australia/Australian, India/Indian, Turkey/Turkish, Poland/Polish, Greece/Greek, Egypt/Egyptian, Argentina/Argentinian
+- emotions
+	- happy, sad, angry, tired, hungry, thirsty, bored, excited, worried, nervous, surprised, relaxed
+- adjectives
+	- beautiful, ugly, clean, dirty, quiet, noisy, expensive, cheap, interesting, boring, important, dangerous, safe, friendly, polite
+- frequency
+	- always, usually, often, sometimes, never, every day, once a week, twice a week, every morning, at the weekend
+- tech
+	- phone, computer, laptop, charger, key, wallet, umbrella, headphones, camera, tablet
+- school
+	- English, maths, science, history, geography, art, music, biology, chemistry
+- animals
+	- dog, cat, bird, fish, rabbit, horse, lion, tiger, elephant, monkey
