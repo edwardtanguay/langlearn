@@ -56,3 +56,21 @@
 	- big/small, hot/cold, good/bad, fast/slow, old/new, happy/sad, easy/difficult, rich/poor, heavy/light, open/closed
 - question words
 	- who, what, where, when, why, how, which, how many, how much
+- family
+	- mother, father, parents, sister, brother, son, daughter, grandmother, grandfather, aunt, uncle, cousin, husband, wife, child/children
+- jobs
+	- teacher, doctor, nurse, student, engineer, waiter/waitress, chef, driver, shop assistant, police officer, firefighter, farmer, office worker, unemployed, retired
+- food and drink
+	- bread, rice, pasta, meat, chicken, fish, egg, cheese, fruit, apple, banana, orange, vegetable, potato, tomato, salad, soup, sandwich, pizza
+	- milk, water, juice, coffee, tea, cake, chocolate, breakfast, lunch, dinner
+- clothes
+	- T-shirt, shirt, trousers/pants, jeans, skirt, dress, jacket, coat, sweater, shoes, boots, socks, hat, scarf, gloves, bag
+- weather and seasons
+	- sunny, rainy, cloudy, windy, snowy, hot, warm, cold, cool
+	- spring, summer, autumn/fall, winter
+	- it's raining, it's sunny, what's the weather like?
+- body parts
+	- head, hair, face, eye, ear, nose, mouth, tooth/teeth, arm, hand, finger, leg, foot/feet, back, stomach
+- house and furniture
+	- house, flat/apartment, room, bedroom, bathroom, kitchen, living room, garden
+	- bed, table, chair, sofa, desk, cupboard, fridge, cooker/stove, window, door, wall, floor
