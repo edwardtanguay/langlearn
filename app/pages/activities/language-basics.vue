@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import rawBasicsData from '../../../data-parsed/basics.json'
 
 interface BasicItem {
@@ -18,13 +18,28 @@ interface BasicCategory {
 }
 
 const languages = [
-  { code: 'fr', label: 'French', flag: '🇫🇷' },
-  { code: 'es', label: 'Spanish', flag: '🇪🇸' },
-  { code: 'it', label: 'Italian', flag: '🇮🇹' },
-  { code: 'nl', label: 'Dutch', flag: '🇳🇱' }
+  { code: 'fr', label: 'French' },
+  { code: 'es', label: 'Spanish' },
+  { code: 'it', label: 'Italian' },
+  { code: 'nl', label: 'Dutch' }
 ] as const
 
 type LangCode = typeof languages[number]['code']
+
+// Language colors per agents.md
+const languageColors: Record<string, string> = {
+  fr: '#333388',
+  es: '#be185d',
+  it: '#194d19',
+  nl: '#d97706',
+}
+
+const languageNames: Record<string, string> = {
+  fr: 'french',
+  es: 'spanish',
+  it: 'italian',
+  nl: 'dutch',
+}
 
 useHead({
   title: 'LangLearn - Language Basics',
@@ -38,10 +53,22 @@ const selectedLang = ref<LangCode>('fr')
 const searchQuery = ref('')
 const showResetConfirm = ref(false)
 
+// Current language color
+const currentColor = computed(() => languageColors[selectedLang.value] || '#333388')
+
 // Set of item IDs currently revealed/learned for the current language
 const revealedSet = ref<Set<string>>(new Set())
 
+// Numbers blur state: tracks which number items are blurred vs clear
+const numberBlurState = ref<Map<string, 'clear' | 'blurred'>>(new Map())
+const numberTimers = ref<Map<string, ReturnType<typeof setTimeout>>>(new Map())
+
 const storageKey = computed(() => `lang-basics-revealed-${selectedLang.value}`)
+
+// Helper: extract category ID from item ID (e.g. "numbers-1-100-5" → "numbers-1-100")
+function getCategoryId(itemId: string): string {
+  return itemId.replace(/-\d+$/, '')
+}
 
 function loadSavedProgress() {
   if (import.meta.client) {
@@ -50,6 +77,14 @@ function loadSavedProgress() {
       if (saved) {
         const ids = JSON.parse(saved) as string[]
         revealedSet.value = new Set(ids)
+        // Restore blur state for any revealed number items
+        const newBlurState = new Map<string, 'clear' | 'blurred'>()
+        for (const id of ids) {
+          if (getCategoryId(id) === 'numbers-1-100') {
+            newBlurState.set(id, 'blurred')
+          }
+        }
+        numberBlurState.value = newBlurState
         return
       }
     } catch {
@@ -73,6 +108,8 @@ function saveProgress() {
 }
 
 watch(selectedLang, () => {
+  // Clear all number timers on language switch
+  clearAllNumberTimers()
   loadSavedProgress()
   showResetConfirm.value = false
 })
@@ -81,12 +118,45 @@ onMounted(() => {
   loadSavedProgress()
 })
 
+onUnmounted(() => {
+  clearAllNumberTimers()
+})
+
+function clearAllNumberTimers() {
+  for (const timer of numberTimers.value.values()) {
+    clearTimeout(timer)
+  }
+  numberTimers.value.clear()
+}
+
 function toggleWord(itemId: string) {
   const newSet = new Set(revealedSet.value)
+  const catId = getCategoryId(itemId)
+
   if (newSet.has(itemId)) {
     newSet.delete(itemId)
+    // Clean up number blur state
+    if (catId === 'numbers-1-100') {
+      numberBlurState.value.delete(itemId)
+      const timer = numberTimers.value.get(itemId)
+      if (timer) {
+        clearTimeout(timer)
+        numberTimers.value.delete(itemId)
+      }
+    }
   } else {
     newSet.add(itemId)
+    // Start blur timer for numbers
+    if (catId === 'numbers-1-100') {
+      numberBlurState.value.set(itemId, 'clear')
+      const timer = setTimeout(() => {
+        numberBlurState.value.set(itemId, 'blurred')
+        // Force reactivity by creating new Map
+        numberBlurState.value = new Map(numberBlurState.value)
+        numberTimers.value.delete(itemId)
+      }, 3000)
+      numberTimers.value.set(itemId, timer)
+    }
   }
   revealedSet.value = newSet
   saveProgress()
@@ -94,6 +164,8 @@ function toggleWord(itemId: string) {
 
 function resetAll() {
   revealedSet.value = new Set()
+  clearAllNumberTimers()
+  numberBlurState.value = new Map()
   if (import.meta.client) {
     try {
       localStorage.removeItem(storageKey.value)
@@ -149,6 +221,52 @@ const filteredCategories = computed(() => {
 const activeLangLabel = computed(() => {
   return languages.find(l => l.code === selectedLang.value)?.label || 'French'
 })
+
+// Action handlers for icons
+function handleExampleSearch(item: BasicItem, event: Event) {
+  event.stopPropagation()
+  const langName = languageNames[selectedLang.value] || 'french'
+  const targetWord = item[selectedLang.value] || item.en
+  const catId = getCategoryId(item.id)
+
+  let query: string
+  if (catId === 'opposites' && targetWord.includes('/')) {
+    const [word1, word2] = targetWord.split('/')
+    query = `create 3 ${langName} examples with both "${word1}" and "${word2}"`
+  } else {
+    query = `create 3 ${langName} examples with "${targetWord}"`
+  }
+
+  window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank')
+}
+
+function handleGoogleTranslate(item: BasicItem, event: Event) {
+  event.stopPropagation()
+  const targetWord = item[selectedLang.value] || item.en
+  const url = `https://translate.google.com/?sl=${selectedLang.value}&tl=en&text=${encodeURIComponent(targetWord)}&op=translate`
+  window.open(url, '_blank')
+}
+
+// Check if an item should show icons (not pronunciation, not numbers)
+function shouldShowIcons(itemId: string): boolean {
+  const catId = getCategoryId(itemId)
+  return catId !== 'pronunciation-of-letters' && catId !== 'numbers-1-100'
+}
+
+// Check if an item is a pronunciation item
+function isPronunciation(itemId: string): boolean {
+  return getCategoryId(itemId) === 'pronunciation-of-letters'
+}
+
+// Check if a number item is blurred
+function isNumberBlurred(itemId: string): boolean {
+  return numberBlurState.value.get(itemId) === 'blurred'
+}
+
+// Check if item is a number
+function isNumber(itemId: string): boolean {
+  return getCategoryId(itemId) === 'numbers-1-100'
+}
 </script>
 
 <template>
@@ -188,13 +306,14 @@ const activeLangLabel = computed(() => {
           <select
             id="language-select"
             v-model="selectedLang"
-            class="appearance-none bg-white dark:bg-[#182030] text-gray-900 dark:text-white text-sm font-semibold py-2 pl-3 pr-8 rounded-xl border border-gray-300 dark:border-gray-700/80 shadow-xs hover:border-amber-500/50 focus:outline-hidden focus:ring-2 focus:ring-amber-500/30 cursor-pointer transition-colors"
+            class="appearance-none text-white text-sm font-semibold py-2 pl-3 pr-8 rounded-xl border border-transparent shadow-xs focus:outline-hidden focus:ring-2 focus:ring-white/30 cursor-pointer transition-all"
+            :style="{ backgroundColor: currentColor }"
           >
             <option v-for="lang in languages" :key="lang.code" :value="lang.code">
-              {{ lang.flag }} {{ lang.label }}
+              {{ lang.label }}
             </option>
           </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white/70">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </div>
         </div>
@@ -206,7 +325,13 @@ const activeLangLabel = computed(() => {
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <!-- Progress Summary -->
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-sm">
+          <div
+            class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm"
+            :style="{
+              backgroundColor: `color-mix(in srgb, ${currentColor} 15%, transparent)`,
+              color: currentColor
+            }"
+          >
             {{ progressPercentage }}%
           </div>
           <div>
@@ -256,8 +381,8 @@ const activeLangLabel = computed(() => {
       <!-- Linear Progress Bar -->
       <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2 overflow-hidden">
         <div
-          class="bg-emerald-500 h-2 rounded-full transition-all duration-300 ease-out"
-          :style="{ width: `${progressPercentage}%` }"
+          class="h-2 rounded-full transition-all duration-300 ease-out"
+          :style="{ width: `${progressPercentage}%`, backgroundColor: currentColor }"
         ></div>
       </div>
 
@@ -313,16 +438,50 @@ const activeLangLabel = computed(() => {
             type="button"
             class="px-3 py-1.5 rounded-lg text-sm transition-all duration-150 cursor-pointer select-none text-left"
             :class="revealedSet.has(item.id)
-              ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-200 border border-emerald-500/40 font-semibold shadow-xs hover:bg-emerald-500/25'
+              ? 'font-semibold shadow-xs'
               : 'bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300'"
+            :style="revealedSet.has(item.id) ? {
+              backgroundColor: `color-mix(in srgb, ${currentColor} 15%, transparent)`,
+              color: `color-mix(in srgb, ${currentColor} 70%, white)`,
+              border: `1px solid color-mix(in srgb, ${currentColor} 40%, transparent)`,
+            } : undefined"
             :title="revealedSet.has(item.id) ? 'Click to show English' : `Click to show in ${activeLangLabel}`"
           >
             <!-- Revealed: Target Language -->
             <span v-if="revealedSet.has(item.id)" class="inline-flex items-center gap-1.5">
-              <span>{{ item[selectedLang] || item.en }}</span>
-              <span class="text-[10px] font-normal opacity-60 uppercase tracking-wider">
-                ({{ selectedLang }})
-              </span>
+              <!-- Pronunciation of Letters: bracketed monospace, no icons -->
+              <template v-if="isPronunciation(item.id)">
+                <span style="font-family: 'Courier New', Courier, monospace;">[{{ item[selectedLang] || item.en }}]</span>
+              </template>
+
+              <!-- Numbers: show word with blur effect, no icons -->
+              <template v-else-if="isNumber(item.id)">
+                <span
+                  class="number-word-text"
+                  :class="{ 'number-blurred': isNumberBlurred(item.id) }"
+                >{{ item[selectedLang] || item.en }}</span>
+              </template>
+
+              <!-- All other categories: word + star + translate icons -->
+              <template v-else>
+                <span>{{ item[selectedLang] || item.en }}</span>
+                <!-- Star icon: example sentences -->
+                <span
+                  class="inline-flex items-center justify-center w-4 h-4 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+                  title="Search for 3 example sentences"
+                  @click="handleExampleSearch(item, $event)"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </span>
+                <!-- Google Translate icon -->
+                <span
+                  class="inline-flex items-center justify-center w-4 h-4 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+                  title="Look up in Google Translate"
+                  @click="handleGoogleTranslate(item, $event)"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                </span>
+              </template>
             </span>
 
             <!-- Unrevealed: English faded out with light background -->
@@ -335,3 +494,15 @@ const activeLangLabel = computed(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.number-word-text {
+  transition: filter 0.5s ease-out;
+  filter: blur(0);
+}
+
+.number-blurred {
+  filter: blur(4px);
+  user-select: none;
+}
+</style>
