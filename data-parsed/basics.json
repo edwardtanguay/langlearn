@@ -1,0 +1,4082 @@
+[
+  {
+    "id": "numbers-1-100",
+    "title": "Numbers 1-100",
+    "items": [
+      {
+        "id": "numbers-1-100-1",
+        "en": "zero",
+        "fr": "zéro",
+        "es": "cero",
+        "it": "zero",
+        "nl": "nul"
+      },
+      {
+        "id": "numbers-1-100-2",
+        "en": "one",
+        "fr": "un",
+        "es": "uno",
+        "it": "uno",
+        "nl": "een"
+      },
+      {
+        "id": "numbers-1-100-3",
+        "en": "two",
+        "fr": "deux",
+        "es": "dos",
+        "it": "due",
+        "nl": "twee"
+      },
+      {
+        "id": "numbers-1-100-4",
+        "en": "three",
+        "fr": "trois",
+        "es": "tres",
+        "it": "tre",
+        "nl": "drie"
+      },
+      {
+        "id": "numbers-1-100-5",
+        "en": "four",
+        "fr": "quatre",
+        "es": "cuatro",
+        "it": "quattro",
+        "nl": "vier"
+      },
+      {
+        "id": "numbers-1-100-6",
+        "en": "five",
+        "fr": "cinq",
+        "es": "cinco",
+        "it": "cinque",
+        "nl": "vijf"
+      },
+      {
+        "id": "numbers-1-100-7",
+        "en": "six",
+        "fr": "six",
+        "es": "seis",
+        "it": "sei",
+        "nl": "zes"
+      },
+      {
+        "id": "numbers-1-100-8",
+        "en": "seven",
+        "fr": "sept",
+        "es": "siete",
+        "it": "sette",
+        "nl": "zeven"
+      },
+      {
+        "id": "numbers-1-100-9",
+        "en": "eight",
+        "fr": "huit",
+        "es": "ocho",
+        "it": "otto",
+        "nl": "acht"
+      },
+      {
+        "id": "numbers-1-100-10",
+        "en": "nine",
+        "fr": "neuf",
+        "es": "nueve",
+        "it": "nove",
+        "nl": "negen"
+      },
+      {
+        "id": "numbers-1-100-11",
+        "en": "ten",
+        "fr": "dix",
+        "es": "diez",
+        "it": "dieci",
+        "nl": "tien"
+      },
+      {
+        "id": "numbers-1-100-12",
+        "en": "eleven",
+        "fr": "onze",
+        "es": "once",
+        "it": "undici",
+        "nl": "elf"
+      },
+      {
+        "id": "numbers-1-100-13",
+        "en": "twelve",
+        "fr": "douze",
+        "es": "doce",
+        "it": "dodici",
+        "nl": "twaalf"
+      },
+      {
+        "id": "numbers-1-100-14",
+        "en": "thirteen",
+        "fr": "treize",
+        "es": "trece",
+        "it": "tredici",
+        "nl": "dertien"
+      },
+      {
+        "id": "numbers-1-100-15",
+        "en": "fourteen",
+        "fr": "quatorze",
+        "es": "catorce",
+        "it": "quattordici",
+        "nl": "veertien"
+      },
+      {
+        "id": "numbers-1-100-16",
+        "en": "fifteen",
+        "fr": "quinze",
+        "es": "quince",
+        "it": "quindici",
+        "nl": "vijftien"
+      },
+      {
+        "id": "numbers-1-100-17",
+        "en": "sixteen",
+        "fr": "seize",
+        "es": "dieciséis",
+        "it": "sedici",
+        "nl": "zestien"
+      },
+      {
+        "id": "numbers-1-100-18",
+        "en": "seventeen",
+        "fr": "dix-sept",
+        "es": "diecisiete",
+        "it": "diciassette",
+        "nl": "zeventien"
+      },
+      {
+        "id": "numbers-1-100-19",
+        "en": "eighteen",
+        "fr": "dix-huit",
+        "es": "dieciocho",
+        "it": "diciotto",
+        "nl": "achttien"
+      },
+      {
+        "id": "numbers-1-100-20",
+        "en": "nineteen",
+        "fr": "dix-neuf",
+        "es": "diecinueve",
+        "it": "diciannove",
+        "nl": "negentien"
+      },
+      {
+        "id": "numbers-1-100-21",
+        "en": "twenty",
+        "fr": "vingt",
+        "es": "veinte",
+        "it": "venti",
+        "nl": "twintig"
+      },
+      {
+        "id": "numbers-1-100-22",
+        "en": "twenty-one",
+        "fr": "vingt et un",
+        "es": "veintiuno",
+        "it": "ventuno",
+        "nl": "eenentwintig"
+      },
+      {
+        "id": "numbers-1-100-23",
+        "en": "twenty-two",
+        "fr": "vingt-deux",
+        "es": "veintidós",
+        "it": "ventidue",
+        "nl": "tweeëntwintig"
+      },
+      {
+        "id": "numbers-1-100-24",
+        "en": "twenty-three",
+        "fr": "vingt-trois",
+        "es": "veintitrés",
+        "it": "ventitré",
+        "nl": "drieëntwintig"
+      },
+      {
+        "id": "numbers-1-100-25",
+        "en": "twenty-four",
+        "fr": "vingt-quatre",
+        "es": "veinticuatro",
+        "it": "ventiquattro",
+        "nl": "vierentwintig"
+      },
+      {
+        "id": "numbers-1-100-26",
+        "en": "twenty-five",
+        "fr": "vingt-cinq",
+        "es": "veinticinco",
+        "it": "venticinque",
+        "nl": "vijfentwintig"
+      },
+      {
+        "id": "numbers-1-100-27",
+        "en": "twenty-six",
+        "fr": "vingt-six",
+        "es": "veintiséis",
+        "it": "ventisei",
+        "nl": "zesentwintig"
+      },
+      {
+        "id": "numbers-1-100-28",
+        "en": "twenty-seven",
+        "fr": "vingt-sept",
+        "es": "veintisiete",
+        "it": "ventisette",
+        "nl": "zevenentwintig"
+      },
+      {
+        "id": "numbers-1-100-29",
+        "en": "twenty-eight",
+        "fr": "vingt-huit",
+        "es": "veintiocho",
+        "it": "ventotto",
+        "nl": "achtentwintig"
+      },
+      {
+        "id": "numbers-1-100-30",
+        "en": "twenty-nine",
+        "fr": "vingt-neuf",
+        "es": "veintinueve",
+        "it": "ventinove",
+        "nl": "negenentwintig"
+      },
+      {
+        "id": "numbers-1-100-31",
+        "en": "thirty",
+        "fr": "trente",
+        "es": "treinta",
+        "it": "trenta",
+        "nl": "dertig"
+      },
+      {
+        "id": "numbers-1-100-32",
+        "en": "thirty-one",
+        "fr": "trente et un",
+        "es": "treinta y uno",
+        "it": "trentuno",
+        "nl": "eenendertig"
+      },
+      {
+        "id": "numbers-1-100-33",
+        "en": "thirty-two",
+        "fr": "trente-deux",
+        "es": "treinta y dos",
+        "it": "trentadue",
+        "nl": "tweeëndertig"
+      },
+      {
+        "id": "numbers-1-100-34",
+        "en": "thirty-three",
+        "fr": "trente-trois",
+        "es": "treinta y tres",
+        "it": "trentatré",
+        "nl": "drieëndertig"
+      },
+      {
+        "id": "numbers-1-100-35",
+        "en": "thirty-four",
+        "fr": "trente-quatre",
+        "es": "treinta y cuatro",
+        "it": "trentaquattro",
+        "nl": "vierendertig"
+      },
+      {
+        "id": "numbers-1-100-36",
+        "en": "thirty-five",
+        "fr": "trente-cinq",
+        "es": "treinta y cinco",
+        "it": "trentacinque",
+        "nl": "vijfendertig"
+      },
+      {
+        "id": "numbers-1-100-37",
+        "en": "thirty-six",
+        "fr": "trente-six",
+        "es": "treinta y seis",
+        "it": "trentasei",
+        "nl": "zesendertig"
+      },
+      {
+        "id": "numbers-1-100-38",
+        "en": "thirty-seven",
+        "fr": "trente-sept",
+        "es": "treinta y siete",
+        "it": "trentasette",
+        "nl": "zevenendertig"
+      },
+      {
+        "id": "numbers-1-100-39",
+        "en": "thirty-eight",
+        "fr": "trente-huit",
+        "es": "treinta y ocho",
+        "it": "trentotto",
+        "nl": "achtendertig"
+      },
+      {
+        "id": "numbers-1-100-40",
+        "en": "thirty-nine",
+        "fr": "trente-neuf",
+        "es": "treinta y nueve",
+        "it": "trentanove",
+        "nl": "negenendertig"
+      },
+      {
+        "id": "numbers-1-100-41",
+        "en": "forty",
+        "fr": "quarante",
+        "es": "cuarenta",
+        "it": "quaranta",
+        "nl": "veertig"
+      },
+      {
+        "id": "numbers-1-100-42",
+        "en": "forty-one",
+        "fr": "quarante et un",
+        "es": "cuarenta y uno",
+        "it": "quarantuno",
+        "nl": "eenenveertig"
+      },
+      {
+        "id": "numbers-1-100-43",
+        "en": "forty-two",
+        "fr": "quarante-deux",
+        "es": "cuarenta y dos",
+        "it": "quarantadue",
+        "nl": "tweeënveertig"
+      },
+      {
+        "id": "numbers-1-100-44",
+        "en": "forty-three",
+        "fr": "quarante-trois",
+        "es": "cuarenta y tres",
+        "it": "quarantatré",
+        "nl": "drieënveertig"
+      },
+      {
+        "id": "numbers-1-100-45",
+        "en": "forty-four",
+        "fr": "quarante-quatre",
+        "es": "cuarenta y cuatro",
+        "it": "quarantaquattro",
+        "nl": "vierenveertig"
+      },
+      {
+        "id": "numbers-1-100-46",
+        "en": "forty-five",
+        "fr": "quarante-cinq",
+        "es": "cuarenta y cinco",
+        "it": "quarantacinque",
+        "nl": "vijfenveertig"
+      },
+      {
+        "id": "numbers-1-100-47",
+        "en": "forty-six",
+        "fr": "quarante-six",
+        "es": "cuarenta y seis",
+        "it": "quarantasei",
+        "nl": "zesenveertig"
+      },
+      {
+        "id": "numbers-1-100-48",
+        "en": "forty-seven",
+        "fr": "quarante-sept",
+        "es": "cuarenta y siete",
+        "it": "quarantasette",
+        "nl": "zevenenveertig"
+      },
+      {
+        "id": "numbers-1-100-49",
+        "en": "forty-eight",
+        "fr": "quarante-huit",
+        "es": "cuarenta y ocho",
+        "it": "quarantotto",
+        "nl": "achtenveertig"
+      },
+      {
+        "id": "numbers-1-100-50",
+        "en": "forty-nine",
+        "fr": "quarante-neuf",
+        "es": "cuarenta y nueve",
+        "it": "quarantanove",
+        "nl": "negenenveertig"
+      },
+      {
+        "id": "numbers-1-100-51",
+        "en": "fifty",
+        "fr": "cinquante",
+        "es": "cincuenta",
+        "it": "cinquanta",
+        "nl": "vijftig"
+      },
+      {
+        "id": "numbers-1-100-52",
+        "en": "fifty-one",
+        "fr": "cinquante et un",
+        "es": "cincuenta y uno",
+        "it": "cinquantuno",
+        "nl": "eenenvijftig"
+      },
+      {
+        "id": "numbers-1-100-53",
+        "en": "fifty-two",
+        "fr": "cinquante-deux",
+        "es": "cincuenta y dos",
+        "it": "cinquantadue",
+        "nl": "tweeënvijftig"
+      },
+      {
+        "id": "numbers-1-100-54",
+        "en": "fifty-three",
+        "fr": "cinquante-trois",
+        "es": "cincuenta y tres",
+        "it": "cinquantatré",
+        "nl": "drieënvijftig"
+      },
+      {
+        "id": "numbers-1-100-55",
+        "en": "fifty-four",
+        "fr": "cinquante-quatre",
+        "es": "cincuenta y cuatro",
+        "it": "cinquantaquattro",
+        "nl": "vierenvijftig"
+      },
+      {
+        "id": "numbers-1-100-56",
+        "en": "fifty-five",
+        "fr": "cinquante-cinq",
+        "es": "cincuenta y cinco",
+        "it": "cinquantacinque",
+        "nl": "vijfenvijftig"
+      },
+      {
+        "id": "numbers-1-100-57",
+        "en": "fifty-six",
+        "fr": "cinquante-six",
+        "es": "cincuenta y seis",
+        "it": "cinquantasei",
+        "nl": "zesenvijftig"
+      },
+      {
+        "id": "numbers-1-100-58",
+        "en": "fifty-seven",
+        "fr": "cinquante-sept",
+        "es": "cincuenta y siete",
+        "it": "cinquantasette",
+        "nl": "zevenenvijftig"
+      },
+      {
+        "id": "numbers-1-100-59",
+        "en": "fifty-eight",
+        "fr": "cinquante-huit",
+        "es": "cincuenta y ocho",
+        "it": "cinquantotto",
+        "nl": "achtenvijftig"
+      },
+      {
+        "id": "numbers-1-100-60",
+        "en": "fifty-nine",
+        "fr": "cinquante-neuf",
+        "es": "cincuenta y nueve",
+        "it": "cinquantanove",
+        "nl": "negenenvijftig"
+      },
+      {
+        "id": "numbers-1-100-61",
+        "en": "sixty",
+        "fr": "soixante",
+        "es": "sesenta",
+        "it": "sessanta",
+        "nl": "zestig"
+      },
+      {
+        "id": "numbers-1-100-62",
+        "en": "sixty-one",
+        "fr": "soixante et un",
+        "es": "sesenta y uno",
+        "it": "sessantuno",
+        "nl": "eenenzestig"
+      },
+      {
+        "id": "numbers-1-100-63",
+        "en": "sixty-two",
+        "fr": "soixante-deux",
+        "es": "sesenta y dos",
+        "it": "sessantadue",
+        "nl": "tweeënzestig"
+      },
+      {
+        "id": "numbers-1-100-64",
+        "en": "sixty-three",
+        "fr": "soixante-trois",
+        "es": "sesenta y tres",
+        "it": "sessantatré",
+        "nl": "drieënzestig"
+      },
+      {
+        "id": "numbers-1-100-65",
+        "en": "sixty-four",
+        "fr": "soixante-quatre",
+        "es": "sesenta y cuatro",
+        "it": "sessantaquattro",
+        "nl": "vierenzestig"
+      },
+      {
+        "id": "numbers-1-100-66",
+        "en": "sixty-five",
+        "fr": "soixante-cinq",
+        "es": "sesenta y cinco",
+        "it": "sessantacinque",
+        "nl": "vijfenzestig"
+      },
+      {
+        "id": "numbers-1-100-67",
+        "en": "sixty-six",
+        "fr": "soixante-six",
+        "es": "sesenta y seis",
+        "it": "sessantasei",
+        "nl": "zesenzestig"
+      },
+      {
+        "id": "numbers-1-100-68",
+        "en": "sixty-seven",
+        "fr": "soixante-sept",
+        "es": "sesenta y siete",
+        "it": "sessantasette",
+        "nl": "zevenenzestig"
+      },
+      {
+        "id": "numbers-1-100-69",
+        "en": "sixty-eight",
+        "fr": "soixante-huit",
+        "es": "sesenta y ocho",
+        "it": "sessantotto",
+        "nl": "achtenzestig"
+      },
+      {
+        "id": "numbers-1-100-70",
+        "en": "sixty-nine",
+        "fr": "soixante-neuf",
+        "es": "sesenta y nueve",
+        "it": "sessantanove",
+        "nl": "negenenzestig"
+      },
+      {
+        "id": "numbers-1-100-71",
+        "en": "seventy",
+        "fr": "soixante-dix",
+        "es": "setenta",
+        "it": "settanta",
+        "nl": "zeventig"
+      },
+      {
+        "id": "numbers-1-100-72",
+        "en": "seventy-one",
+        "fr": "soixante et onze",
+        "es": "setenta y uno",
+        "it": "settantuno",
+        "nl": "eenenzeventig"
+      },
+      {
+        "id": "numbers-1-100-73",
+        "en": "seventy-two",
+        "fr": "soixante-douze",
+        "es": "setenta y dos",
+        "it": "settantadue",
+        "nl": "tweeënzeventig"
+      },
+      {
+        "id": "numbers-1-100-74",
+        "en": "seventy-three",
+        "fr": "soixante-treize",
+        "es": "setenta y tres",
+        "it": "settantatré",
+        "nl": "drieënzeventig"
+      },
+      {
+        "id": "numbers-1-100-75",
+        "en": "seventy-four",
+        "fr": "soixante-quatorze",
+        "es": "setenta y cuatro",
+        "it": "settantaquattro",
+        "nl": "vierenzeventig"
+      },
+      {
+        "id": "numbers-1-100-76",
+        "en": "seventy-five",
+        "fr": "soixante-quinze",
+        "es": "setenta y cinco",
+        "it": "settantacinque",
+        "nl": "vijfenzeventig"
+      },
+      {
+        "id": "numbers-1-100-77",
+        "en": "seventy-six",
+        "fr": "soixante-seize",
+        "es": "setenta y seis",
+        "it": "settantasei",
+        "nl": "zesenzeventig"
+      },
+      {
+        "id": "numbers-1-100-78",
+        "en": "seventy-seven",
+        "fr": "soixante-dix-sept",
+        "es": "setenta y siete",
+        "it": "settantasette",
+        "nl": "zevenenzeventig"
+      },
+      {
+        "id": "numbers-1-100-79",
+        "en": "seventy-eight",
+        "fr": "soixante-dix-huit",
+        "es": "setenta y ocho",
+        "it": "settantotto",
+        "nl": "achtenzeventig"
+      },
+      {
+        "id": "numbers-1-100-80",
+        "en": "seventy-nine",
+        "fr": "soixante-dix-neuf",
+        "es": "setenta y nueve",
+        "it": "settantanove",
+        "nl": "negenenzeventig"
+      },
+      {
+        "id": "numbers-1-100-81",
+        "en": "eighty",
+        "fr": "quatre-vingts",
+        "es": "ochenta",
+        "it": "ottanta",
+        "nl": "tachtig"
+      },
+      {
+        "id": "numbers-1-100-82",
+        "en": "eighty-one",
+        "fr": "quatre-vingt-un",
+        "es": "ochenta y uno",
+        "it": "ottantuno",
+        "nl": "eenentachtig"
+      },
+      {
+        "id": "numbers-1-100-83",
+        "en": "eighty-two",
+        "fr": "quatre-vingt-deux",
+        "es": "ochenta y dos",
+        "it": "ottantadue",
+        "nl": "tweeëntachtig"
+      },
+      {
+        "id": "numbers-1-100-84",
+        "en": "eighty-three",
+        "fr": "quatre-vingt-trois",
+        "es": "ochenta y tres",
+        "it": "ottantatré",
+        "nl": "drieëntachtig"
+      },
+      {
+        "id": "numbers-1-100-85",
+        "en": "eighty-four",
+        "fr": "quatre-vingt-quatre",
+        "es": "ochenta y cuatro",
+        "it": "ottantaquattro",
+        "nl": "vierentachtig"
+      },
+      {
+        "id": "numbers-1-100-86",
+        "en": "eighty-five",
+        "fr": "quatre-vingt-cinq",
+        "es": "ochenta y cinco",
+        "it": "ottantacinque",
+        "nl": "vijfentachtig"
+      },
+      {
+        "id": "numbers-1-100-87",
+        "en": "eighty-six",
+        "fr": "quatre-vingt-six",
+        "es": "ochenta y seis",
+        "it": "ottantasei",
+        "nl": "zesentachtig"
+      },
+      {
+        "id": "numbers-1-100-88",
+        "en": "eighty-seven",
+        "fr": "quatre-vingt-sept",
+        "es": "ochenta y siete",
+        "it": "ottantasette",
+        "nl": "zevenentachtig"
+      },
+      {
+        "id": "numbers-1-100-89",
+        "en": "eighty-eight",
+        "fr": "quatre-vingt-huit",
+        "es": "ochenta y ocho",
+        "it": "ottantotto",
+        "nl": "achtentachtig"
+      },
+      {
+        "id": "numbers-1-100-90",
+        "en": "eighty-nine",
+        "fr": "quatre-vingt-neuf",
+        "es": "ochenta y nueve",
+        "it": "ottantanove",
+        "nl": "negenentachtig"
+      },
+      {
+        "id": "numbers-1-100-91",
+        "en": "ninety",
+        "fr": "quatre-vingt-dix",
+        "es": "noventa",
+        "it": "novanta",
+        "nl": "negentig"
+      },
+      {
+        "id": "numbers-1-100-92",
+        "en": "ninety-one",
+        "fr": "quatre-vingt-onze",
+        "es": "noventa y uno",
+        "it": "novantuno",
+        "nl": "eenennegentig"
+      },
+      {
+        "id": "numbers-1-100-93",
+        "en": "ninety-two",
+        "fr": "quatre-vingt-douze",
+        "es": "noventa y dos",
+        "it": "novantadue",
+        "nl": "tweeënnegentig"
+      },
+      {
+        "id": "numbers-1-100-94",
+        "en": "ninety-three",
+        "fr": "quatre-vingt-treize",
+        "es": "noventa y tres",
+        "it": "novantatré",
+        "nl": "drieënnegentig"
+      },
+      {
+        "id": "numbers-1-100-95",
+        "en": "ninety-four",
+        "fr": "quatre-vingt-quatorze",
+        "es": "noventa y cuatro",
+        "it": "novantaquattro",
+        "nl": "vierennegentig"
+      },
+      {
+        "id": "numbers-1-100-96",
+        "en": "ninety-five",
+        "fr": "quatre-vingt-quinze",
+        "es": "noventa y cinco",
+        "it": "novantacinque",
+        "nl": "vijfennegentig"
+      },
+      {
+        "id": "numbers-1-100-97",
+        "en": "ninety-six",
+        "fr": "quatre-vingt-seize",
+        "es": "noventa y seis",
+        "it": "novantasei",
+        "nl": "zesennegentig"
+      },
+      {
+        "id": "numbers-1-100-98",
+        "en": "ninety-seven",
+        "fr": "quatre-vingt-dix-sept",
+        "es": "noventa y siete",
+        "it": "novantasette",
+        "nl": "zevenennegentig"
+      },
+      {
+        "id": "numbers-1-100-99",
+        "en": "ninety-eight",
+        "fr": "quatre-vingt-dix-huit",
+        "es": "noventa y ocho",
+        "it": "novantotto",
+        "nl": "achtennegentig"
+      },
+      {
+        "id": "numbers-1-100-100",
+        "en": "ninety-nine",
+        "fr": "quatre-vingt-dix-neuf",
+        "es": "noventa y nueve",
+        "it": "novantanove",
+        "nl": "negenennegentig"
+      },
+      {
+        "id": "numbers-1-100-101",
+        "en": "one hundred",
+        "fr": "cent",
+        "es": "cien",
+        "it": "cento",
+        "nl": "honderd"
+      }
+    ]
+  },
+  {
+    "id": "pronunciation-of-letters",
+    "title": "Pronunciation of Letters",
+    "items": [
+      {
+        "id": "pronunciation-of-letters-1",
+        "en": "ay",
+        "fr": "a",
+        "es": "a",
+        "it": "a",
+        "nl": "a"
+      },
+      {
+        "id": "pronunciation-of-letters-2",
+        "en": "bee",
+        "fr": "bé",
+        "es": "be",
+        "it": "bi",
+        "nl": "bee"
+      },
+      {
+        "id": "pronunciation-of-letters-3",
+        "en": "cee",
+        "fr": "cé",
+        "es": "ce",
+        "it": "ci",
+        "nl": "see"
+      },
+      {
+        "id": "pronunciation-of-letters-4",
+        "en": "dee",
+        "fr": "dé",
+        "es": "de",
+        "it": "di",
+        "nl": "dee"
+      },
+      {
+        "id": "pronunciation-of-letters-5",
+        "en": "ee",
+        "fr": "e",
+        "es": "e",
+        "it": "e",
+        "nl": "ee"
+      },
+      {
+        "id": "pronunciation-of-letters-6",
+        "en": "ef",
+        "fr": "effe",
+        "es": "efe",
+        "it": "effe",
+        "nl": "ef"
+      },
+      {
+        "id": "pronunciation-of-letters-7",
+        "en": "gee",
+        "fr": "gé",
+        "es": "ge",
+        "it": "gi",
+        "nl": "gee"
+      },
+      {
+        "id": "pronunciation-of-letters-8",
+        "en": "aich",
+        "fr": "ache",
+        "es": "hache",
+        "it": "acca",
+        "nl": "ha"
+      },
+      {
+        "id": "pronunciation-of-letters-9",
+        "en": "eye",
+        "fr": "i",
+        "es": "i",
+        "it": "i",
+        "nl": "ie"
+      },
+      {
+        "id": "pronunciation-of-letters-10",
+        "en": "jay",
+        "fr": "ji",
+        "es": "jota",
+        "it": "i lunga",
+        "nl": "jee"
+      },
+      {
+        "id": "pronunciation-of-letters-11",
+        "en": "kay",
+        "fr": "ka",
+        "es": "ka",
+        "it": "cappa",
+        "nl": "ka"
+      },
+      {
+        "id": "pronunciation-of-letters-12",
+        "en": "el",
+        "fr": "elle",
+        "es": "ele",
+        "it": "elle",
+        "nl": "el"
+      },
+      {
+        "id": "pronunciation-of-letters-13",
+        "en": "em",
+        "fr": "emme",
+        "es": "eme",
+        "it": "emme",
+        "nl": "em"
+      },
+      {
+        "id": "pronunciation-of-letters-14",
+        "en": "en",
+        "fr": "enne",
+        "es": "ene",
+        "it": "enne",
+        "nl": "en"
+      },
+      {
+        "id": "pronunciation-of-letters-15",
+        "en": "oh",
+        "fr": "o",
+        "es": "o",
+        "it": "o",
+        "nl": "oo"
+      },
+      {
+        "id": "pronunciation-of-letters-16",
+        "en": "pee",
+        "fr": "pé",
+        "es": "pe",
+        "it": "pi",
+        "nl": "pee"
+      },
+      {
+        "id": "pronunciation-of-letters-17",
+        "en": "kew",
+        "fr": "ku",
+        "es": "cu",
+        "it": "cu",
+        "nl": "kuu"
+      },
+      {
+        "id": "pronunciation-of-letters-18",
+        "en": "ar",
+        "fr": "erre",
+        "es": "erre",
+        "it": "erre",
+        "nl": "er"
+      },
+      {
+        "id": "pronunciation-of-letters-19",
+        "en": "ess",
+        "fr": "esse",
+        "es": "ese",
+        "it": "esse",
+        "nl": "es"
+      },
+      {
+        "id": "pronunciation-of-letters-20",
+        "en": "tee",
+        "fr": "té",
+        "es": "te",
+        "it": "ti",
+        "nl": "tee"
+      },
+      {
+        "id": "pronunciation-of-letters-21",
+        "en": "yoo",
+        "fr": "u",
+        "es": "u",
+        "it": "u",
+        "nl": "uu"
+      },
+      {
+        "id": "pronunciation-of-letters-22",
+        "en": "vee",
+        "fr": "vé",
+        "es": "uve",
+        "it": "vu",
+        "nl": "vee"
+      },
+      {
+        "id": "pronunciation-of-letters-23",
+        "en": "double-yoo",
+        "fr": "double vé",
+        "es": "uve doble",
+        "it": "doppia vu",
+        "nl": "wee"
+      },
+      {
+        "id": "pronunciation-of-letters-24",
+        "en": "ex",
+        "fr": "ixe",
+        "es": "equis",
+        "it": "ics",
+        "nl": "iks"
+      },
+      {
+        "id": "pronunciation-of-letters-25",
+        "en": "why",
+        "fr": "i grec",
+        "es": "i griega",
+        "it": "ipsilon",
+        "nl": "ij"
+      },
+      {
+        "id": "pronunciation-of-letters-26",
+        "en": "zee",
+        "fr": "zède",
+        "es": "zeta",
+        "it": "zeta",
+        "nl": "zet"
+      }
+    ]
+  },
+  {
+    "id": "weekdays",
+    "title": "Weekdays",
+    "items": [
+      {
+        "id": "weekdays-1",
+        "en": "Monday",
+        "fr": "lundi",
+        "es": "lunes",
+        "it": "lunedì",
+        "nl": "maandag"
+      },
+      {
+        "id": "weekdays-2",
+        "en": "Tuesday",
+        "fr": "mardi",
+        "es": "martes",
+        "it": "martedì",
+        "nl": "dinsdag"
+      },
+      {
+        "id": "weekdays-3",
+        "en": "Wednesday",
+        "fr": "mercredi",
+        "es": "miércoles",
+        "it": "mercoledì",
+        "nl": "woensdag"
+      },
+      {
+        "id": "weekdays-4",
+        "en": "Thursday",
+        "fr": "jeudi",
+        "es": "jueves",
+        "it": "giovedì",
+        "nl": "donderdag"
+      },
+      {
+        "id": "weekdays-5",
+        "en": "Friday",
+        "fr": "vendredi",
+        "es": "viernes",
+        "it": "venerdì",
+        "nl": "vrijdag"
+      },
+      {
+        "id": "weekdays-6",
+        "en": "Saturday",
+        "fr": "samedi",
+        "es": "sábado",
+        "it": "sabato",
+        "nl": "zaterdag"
+      },
+      {
+        "id": "weekdays-7",
+        "en": "Sunday",
+        "fr": "dimanche",
+        "es": "domingo",
+        "it": "domenica",
+        "nl": "zondag"
+      }
+    ]
+  },
+  {
+    "id": "months",
+    "title": "Months",
+    "items": [
+      {
+        "id": "months-1",
+        "en": "January",
+        "fr": "janvier",
+        "es": "enero",
+        "it": "gennaio",
+        "nl": "januari"
+      },
+      {
+        "id": "months-2",
+        "en": "February",
+        "fr": "février",
+        "es": "febrero",
+        "it": "febbraio",
+        "nl": "februari"
+      },
+      {
+        "id": "months-3",
+        "en": "March",
+        "fr": "mars",
+        "es": "marzo",
+        "it": "marzo",
+        "nl": "maart"
+      },
+      {
+        "id": "months-4",
+        "en": "April",
+        "fr": "avril",
+        "es": "abril",
+        "it": "aprile",
+        "nl": "april"
+      },
+      {
+        "id": "months-5",
+        "en": "May",
+        "fr": "mai",
+        "es": "mayo",
+        "it": "maggio",
+        "nl": "mei"
+      },
+      {
+        "id": "months-6",
+        "en": "June",
+        "fr": "juin",
+        "es": "junio",
+        "it": "giugno",
+        "nl": "juni"
+      },
+      {
+        "id": "months-7",
+        "en": "July",
+        "fr": "juillet",
+        "es": "julio",
+        "it": "luglio",
+        "nl": "juli"
+      },
+      {
+        "id": "months-8",
+        "en": "August",
+        "fr": "août",
+        "es": "agosto",
+        "it": "agosto",
+        "nl": "augustus"
+      },
+      {
+        "id": "months-9",
+        "en": "September",
+        "fr": "septembre",
+        "es": "septiembre",
+        "it": "settembre",
+        "nl": "september"
+      },
+      {
+        "id": "months-10",
+        "en": "October",
+        "fr": "octobre",
+        "es": "octubre",
+        "it": "ottobre",
+        "nl": "oktober"
+      },
+      {
+        "id": "months-11",
+        "en": "November",
+        "fr": "novembre",
+        "es": "noviembre",
+        "it": "novembre",
+        "nl": "november"
+      },
+      {
+        "id": "months-12",
+        "en": "December",
+        "fr": "décembre",
+        "es": "diciembre",
+        "it": "dicembre",
+        "nl": "december"
+      }
+    ]
+  },
+  {
+    "id": "time-expressions",
+    "title": "Time Expressions",
+    "items": [
+      {
+        "id": "time-expressions-1",
+        "en": "it's one o'clock",
+        "fr": "il est une heure",
+        "es": "es la una",
+        "it": "è l'una",
+        "nl": "het is één uur"
+      },
+      {
+        "id": "time-expressions-2",
+        "en": "it's half past one",
+        "fr": "il est une heure et demie",
+        "es": "es la una y media",
+        "it": "è l'una e mezza",
+        "nl": "het is half twee"
+      },
+      {
+        "id": "time-expressions-3",
+        "en": "it's quarter past one",
+        "fr": "il est une heure et quart",
+        "es": "es la una y cuarto",
+        "it": "è l'una e un quarto",
+        "nl": "het is kwart over één"
+      },
+      {
+        "id": "time-expressions-4",
+        "en": "it's quarter to two",
+        "fr": "il est deux heures moins le quart",
+        "es": "son las dos menos cuarto",
+        "it": "sono le due meno un quarto",
+        "nl": "het is kwart voor twee"
+      },
+      {
+        "id": "time-expressions-5",
+        "en": "it's ten past one",
+        "fr": "il est une heure dix",
+        "es": "es la una y diez",
+        "it": "è l'una e dieci",
+        "nl": "het is tien over één"
+      },
+      {
+        "id": "time-expressions-6",
+        "en": "it's ten to two",
+        "fr": "il est deux heures moins dix",
+        "es": "son las dos menos diez",
+        "it": "sono le due meno dieci",
+        "nl": "het is tien voor twee"
+      },
+      {
+        "id": "time-expressions-7",
+        "en": "it's five past one",
+        "fr": "il est une heure cinq",
+        "es": "es la una y cinco",
+        "it": "è l'una e cinque",
+        "nl": "het is vijf over één"
+      },
+      {
+        "id": "time-expressions-8",
+        "en": "it's five to two",
+        "fr": "il est deux heures moins cinq",
+        "es": "son las dos menos cinco",
+        "it": "sono le due meno cinque",
+        "nl": "het is vijf voor twee"
+      },
+      {
+        "id": "time-expressions-9",
+        "en": "in the morning",
+        "fr": "le matin",
+        "es": "por la mañana",
+        "it": "la mattina",
+        "nl": "'s ochtends"
+      },
+      {
+        "id": "time-expressions-10",
+        "en": "in the afternoon",
+        "fr": "l'après-midi",
+        "es": "por la tarde",
+        "it": "il pomeriggio",
+        "nl": "'s middags"
+      },
+      {
+        "id": "time-expressions-11",
+        "en": "in the evening",
+        "fr": "le soir",
+        "es": "por la tarde / por la noche",
+        "it": "la sera",
+        "nl": "'s avonds"
+      },
+      {
+        "id": "time-expressions-12",
+        "en": "at night",
+        "fr": "la nuit",
+        "es": "por la noche",
+        "it": "la notte",
+        "nl": "'s nachts"
+      },
+      {
+        "id": "time-expressions-13",
+        "en": "at midnight",
+        "fr": "à minuit",
+        "es": "a medianoche",
+        "it": "a mezzanotte",
+        "nl": "om middernacht"
+      },
+      {
+        "id": "time-expressions-14",
+        "en": "at noon",
+        "fr": "à midi",
+        "es": "al mediodía",
+        "it": "a mezzogiorno",
+        "nl": "'s middags om twaalf uur"
+      }
+    ]
+  },
+  {
+    "id": "greetings",
+    "title": "Greetings",
+    "items": [
+      {
+        "id": "greetings-1",
+        "en": "hello",
+        "fr": "salut",
+        "es": "hola",
+        "it": "ciao",
+        "nl": "hallo"
+      },
+      {
+        "id": "greetings-2",
+        "en": "good morning",
+        "fr": "bonjour",
+        "es": "buenos días",
+        "it": "buongiorno",
+        "nl": "goedemorgen"
+      },
+      {
+        "id": "greetings-3",
+        "en": "good afternoon",
+        "fr": "bon après-midi",
+        "es": "buenas tardes",
+        "it": "buon pomeriggio",
+        "nl": "goedemiddag"
+      },
+      {
+        "id": "greetings-4",
+        "en": "good evening",
+        "fr": "bonsoir",
+        "es": "buenas noches",
+        "it": "buonasera",
+        "nl": "goedenavond"
+      },
+      {
+        "id": "greetings-5",
+        "en": "good night",
+        "fr": "bonne nuit",
+        "es": "buenas noches",
+        "it": "buonanotte",
+        "nl": "goedenacht"
+      },
+      {
+        "id": "greetings-6",
+        "en": "goodbye",
+        "fr": "au revoir",
+        "es": "adiós",
+        "it": "arrivederci",
+        "nl": "tot ziens"
+      },
+      {
+        "id": "greetings-7",
+        "en": "see you later",
+        "fr": "à plus tard",
+        "es": "hasta luego",
+        "it": "a più tardi",
+        "nl": "tot later"
+      }
+    ]
+  },
+  {
+    "id": "colors",
+    "title": "Colors",
+    "items": [
+      {
+        "id": "colors-1",
+        "en": "red",
+        "fr": "rouge",
+        "es": "rojo",
+        "it": "rosso",
+        "nl": "rood"
+      },
+      {
+        "id": "colors-2",
+        "en": "blue",
+        "fr": "bleu",
+        "es": "azul",
+        "it": "blu",
+        "nl": "blauw"
+      },
+      {
+        "id": "colors-3",
+        "en": "yellow",
+        "fr": "jaune",
+        "es": "amarillo",
+        "it": "giallo",
+        "nl": "geel"
+      },
+      {
+        "id": "colors-4",
+        "en": "green",
+        "fr": "vert",
+        "es": "verde",
+        "it": "verde",
+        "nl": "groen"
+      },
+      {
+        "id": "colors-5",
+        "en": "orange",
+        "fr": "orange",
+        "es": "naranja",
+        "it": "arancione",
+        "nl": "oranje"
+      },
+      {
+        "id": "colors-6",
+        "en": "purple",
+        "fr": "violet",
+        "es": "morado",
+        "it": "viola",
+        "nl": "paars"
+      },
+      {
+        "id": "colors-7",
+        "en": "pink",
+        "fr": "rose",
+        "es": "rosa",
+        "it": "rosa",
+        "nl": "roze"
+      },
+      {
+        "id": "colors-8",
+        "en": "brown",
+        "fr": "marron",
+        "es": "marrón",
+        "it": "marrone",
+        "nl": "bruin"
+      },
+      {
+        "id": "colors-9",
+        "en": "black",
+        "fr": "noir",
+        "es": "negro",
+        "it": "nero",
+        "nl": "zwart"
+      },
+      {
+        "id": "colors-10",
+        "en": "white",
+        "fr": "blanc",
+        "es": "blanco",
+        "it": "bianco",
+        "nl": "wit"
+      },
+      {
+        "id": "colors-11",
+        "en": "gray",
+        "fr": "gris",
+        "es": "gris",
+        "it": "grigio",
+        "nl": "grijs"
+      }
+    ]
+  },
+  {
+    "id": "opposites",
+    "title": "Opposites",
+    "items": [
+      {
+        "id": "opposites-1",
+        "en": "big/small",
+        "fr": "grand/petit",
+        "es": "grande/pequeño",
+        "it": "grande/piccolo",
+        "nl": "groot/klein"
+      },
+      {
+        "id": "opposites-2",
+        "en": "hot/cold",
+        "fr": "chaud/froid",
+        "es": "caliente/frío",
+        "it": "caldo/freddo",
+        "nl": "warm/koud"
+      },
+      {
+        "id": "opposites-3",
+        "en": "good/bad",
+        "fr": "bon/mauvais",
+        "es": "bueno/malo",
+        "it": "buono/cattivo",
+        "nl": "goed/slecht"
+      },
+      {
+        "id": "opposites-4",
+        "en": "fast/slow",
+        "fr": "rapide/lent",
+        "es": "rápido/lento",
+        "it": "veloce/lento",
+        "nl": "snel/langzaam"
+      },
+      {
+        "id": "opposites-5",
+        "en": "old/new",
+        "fr": "vieux/neuf",
+        "es": "viejo/nuevo",
+        "it": "vecchio/nuovo",
+        "nl": "oud/nieuw"
+      },
+      {
+        "id": "opposites-6",
+        "en": "happy/sad",
+        "fr": "heureux/triste",
+        "es": "feliz/triste",
+        "it": "felice/triste",
+        "nl": "blij/verdrietig"
+      },
+      {
+        "id": "opposites-7",
+        "en": "easy/difficult",
+        "fr": "facile/difficile",
+        "es": "fácil/difícil",
+        "it": "facile/difficile",
+        "nl": "makkelijk/moeilijk"
+      },
+      {
+        "id": "opposites-8",
+        "en": "rich/poor",
+        "fr": "riche/pauvre",
+        "es": "rico/pobre",
+        "it": "ricco/povero",
+        "nl": "rijk/arm"
+      },
+      {
+        "id": "opposites-9",
+        "en": "heavy/light",
+        "fr": "lourd/léger",
+        "es": "pesado/ligero",
+        "it": "pesante/leggero",
+        "nl": "zwaar/licht"
+      },
+      {
+        "id": "opposites-10",
+        "en": "open/closed",
+        "fr": "ouvert/fermé",
+        "es": "abierto/cerrado",
+        "it": "aperto/chiuso",
+        "nl": "open/gesloten"
+      }
+    ]
+  },
+  {
+    "id": "question-words",
+    "title": "Question Words",
+    "items": [
+      {
+        "id": "question-words-1",
+        "en": "who",
+        "fr": "qui",
+        "es": "quién",
+        "it": "chi",
+        "nl": "wie"
+      },
+      {
+        "id": "question-words-2",
+        "en": "what",
+        "fr": "que/quoi",
+        "es": "qué",
+        "it": "che cosa",
+        "nl": "wat"
+      },
+      {
+        "id": "question-words-3",
+        "en": "where",
+        "fr": "où",
+        "es": "dónde",
+        "it": "dove",
+        "nl": "waar"
+      },
+      {
+        "id": "question-words-4",
+        "en": "when",
+        "fr": "quand",
+        "es": "cuándo",
+        "it": "quando",
+        "nl": "wanneer"
+      },
+      {
+        "id": "question-words-5",
+        "en": "why",
+        "fr": "pourquoi",
+        "es": "por qué",
+        "it": "perché",
+        "nl": "waarom"
+      },
+      {
+        "id": "question-words-6",
+        "en": "how",
+        "fr": "comment",
+        "es": "cómo",
+        "it": "come",
+        "nl": "hoe"
+      },
+      {
+        "id": "question-words-7",
+        "en": "which",
+        "fr": "quel",
+        "es": "cuál",
+        "it": "quale",
+        "nl": "welk"
+      },
+      {
+        "id": "question-words-8",
+        "en": "how many",
+        "fr": "combien",
+        "es": "cuántos",
+        "it": "quanti",
+        "nl": "hoeveel"
+      },
+      {
+        "id": "question-words-9",
+        "en": "how much",
+        "fr": "combien",
+        "es": "cuánto",
+        "it": "quanto",
+        "nl": "hoeveel"
+      }
+    ]
+  },
+  {
+    "id": "family",
+    "title": "Family",
+    "items": [
+      {
+        "id": "family-1",
+        "en": "mother",
+        "fr": "la mère",
+        "es": "la madre",
+        "it": "la madre",
+        "nl": "de moeder"
+      },
+      {
+        "id": "family-2",
+        "en": "father",
+        "fr": "le père",
+        "es": "el padre",
+        "it": "il padre",
+        "nl": "de vader"
+      },
+      {
+        "id": "family-3",
+        "en": "parents",
+        "fr": "les parents",
+        "es": "los padres",
+        "it": "i genitori",
+        "nl": "de ouders"
+      },
+      {
+        "id": "family-4",
+        "en": "sister",
+        "fr": "la sœur",
+        "es": "la hermana",
+        "it": "la sorella",
+        "nl": "de zus"
+      },
+      {
+        "id": "family-5",
+        "en": "brother",
+        "fr": "le frère",
+        "es": "el hermano",
+        "it": "il fratello",
+        "nl": "de broer"
+      },
+      {
+        "id": "family-6",
+        "en": "son",
+        "fr": "le fils",
+        "es": "el hijo",
+        "it": "il figlio",
+        "nl": "de zoon"
+      },
+      {
+        "id": "family-7",
+        "en": "daughter",
+        "fr": "la fille",
+        "es": "la hija",
+        "it": "la figlia",
+        "nl": "de dochter"
+      },
+      {
+        "id": "family-8",
+        "en": "grandmother",
+        "fr": "la grand-mère",
+        "es": "la abuela",
+        "it": "la nonna",
+        "nl": "de oma"
+      },
+      {
+        "id": "family-9",
+        "en": "grandfather",
+        "fr": "le grand-père",
+        "es": "el abuelo",
+        "it": "il nonno",
+        "nl": "de opa"
+      },
+      {
+        "id": "family-10",
+        "en": "aunt",
+        "fr": "la tante",
+        "es": "la tía",
+        "it": "la zia",
+        "nl": "de tante"
+      },
+      {
+        "id": "family-11",
+        "en": "uncle",
+        "fr": "l'oncle",
+        "es": "el tío",
+        "it": "lo zio",
+        "nl": "de oom"
+      },
+      {
+        "id": "family-12",
+        "en": "cousin",
+        "fr": "le cousin / la cousine",
+        "es": "el primo / la prima",
+        "it": "il cugino / la cugina",
+        "nl": "de neef / de nicht"
+      },
+      {
+        "id": "family-13",
+        "en": "husband",
+        "fr": "le mari",
+        "es": "el marido",
+        "it": "il marito",
+        "nl": "de man"
+      },
+      {
+        "id": "family-14",
+        "en": "wife",
+        "fr": "la femme",
+        "es": "la mujer",
+        "it": "la moglie",
+        "nl": "de vrouw"
+      },
+      {
+        "id": "family-15",
+        "en": "child/children",
+        "fr": "l'enfant / les enfants",
+        "es": "el niño / los niños",
+        "it": "il bambino / i bambini",
+        "nl": "het kind / de kinderen"
+      }
+    ]
+  },
+  {
+    "id": "jobs",
+    "title": "Jobs",
+    "items": [
+      {
+        "id": "jobs-1",
+        "en": "teacher",
+        "fr": "le professeur / la professeure",
+        "es": "el profesor / la profesora",
+        "it": "l'insegnante",
+        "nl": "de leraar / de lerares"
+      },
+      {
+        "id": "jobs-2",
+        "en": "doctor",
+        "fr": "le médecin",
+        "es": "el médico / la médica",
+        "it": "il medico / la dottoressa",
+        "nl": "de dokter"
+      },
+      {
+        "id": "jobs-3",
+        "en": "nurse",
+        "fr": "l'infirmier / l'infirmière",
+        "es": "el enfermero / la enfermera",
+        "it": "l'infermiere / l'infermiera",
+        "nl": "de verpleegkundige"
+      },
+      {
+        "id": "jobs-4",
+        "en": "student",
+        "fr": "l'étudiant / l'étudiante",
+        "es": "el estudiante / la estudiante",
+        "it": "lo studente / la studentessa",
+        "nl": "de student / de studente"
+      },
+      {
+        "id": "jobs-5",
+        "en": "engineer",
+        "fr": "l'ingénieur / l'ingénieure",
+        "es": "el ingeniero / la ingeniera",
+        "it": "l'ingegnere",
+        "nl": "de ingenieur"
+      },
+      {
+        "id": "jobs-6",
+        "en": "waiter/waitress",
+        "fr": "le serveur / la serveuse",
+        "es": "el camarero / la camarera",
+        "it": "il cameriere / la cameriera",
+        "nl": "de ober / de serveerster"
+      },
+      {
+        "id": "jobs-7",
+        "en": "chef",
+        "fr": "le chef / la cheffe",
+        "es": "el cocinero / la cocinera",
+        "it": "il cuoco / la cuoca",
+        "nl": "de chef-kok"
+      },
+      {
+        "id": "jobs-8",
+        "en": "driver",
+        "fr": "le conducteur / la conductrice",
+        "es": "el conductor / la conductora",
+        "it": "l'autista",
+        "nl": "de chauffeur"
+      },
+      {
+        "id": "jobs-9",
+        "en": "shop assistant",
+        "fr": "le vendeur / la vendeuse",
+        "es": "el dependiente / la dependienta",
+        "it": "il commesso / la commessa",
+        "nl": "de winkelbediende"
+      },
+      {
+        "id": "jobs-10",
+        "en": "police officer",
+        "fr": "le policier / la policière",
+        "es": "el policía / la mujer policía",
+        "it": "il poliziotto / la poliziotta",
+        "nl": "de politieagent"
+      },
+      {
+        "id": "jobs-11",
+        "en": "firefighter",
+        "fr": "le pompier",
+        "es": "el bombero / la bombera",
+        "it": "il pompiere",
+        "nl": "de brandweerman"
+      },
+      {
+        "id": "jobs-12",
+        "en": "farmer",
+        "fr": "l'agriculteur / l'agricultrice",
+        "es": "el agricultor / la agricultora",
+        "it": "l'agricoltore / l'agricoltrice",
+        "nl": "de boer / de boerin"
+      },
+      {
+        "id": "jobs-13",
+        "en": "office worker",
+        "fr": "l'employé de bureau / l'employée de bureau",
+        "es": "el oficinista / la oficinista",
+        "it": "l'impiegato / l'impiegata",
+        "nl": "de kantoormedewerker"
+      },
+      {
+        "id": "jobs-14",
+        "en": "unemployed",
+        "fr": "au chômage",
+        "es": "en paro",
+        "it": "disoccupato",
+        "nl": "werkloos"
+      },
+      {
+        "id": "jobs-15",
+        "en": "retired",
+        "fr": "à la retraite",
+        "es": "jubilado / jubilada",
+        "it": "in pensione",
+        "nl": "gepensioneerd"
+      }
+    ]
+  },
+  {
+    "id": "food-and-drink",
+    "title": "Food and Drink",
+    "items": [
+      {
+        "id": "food-and-drink-1",
+        "en": "bread",
+        "fr": "le pain",
+        "es": "el pan",
+        "it": "il pane",
+        "nl": "het brood"
+      },
+      {
+        "id": "food-and-drink-2",
+        "en": "rice",
+        "fr": "le riz",
+        "es": "el arroz",
+        "it": "il riso",
+        "nl": "de rijst"
+      },
+      {
+        "id": "food-and-drink-3",
+        "en": "pasta",
+        "fr": "les pâtes",
+        "es": "la pasta",
+        "it": "la pasta",
+        "nl": "de pasta"
+      },
+      {
+        "id": "food-and-drink-4",
+        "en": "meat",
+        "fr": "la viande",
+        "es": "la carne",
+        "it": "la carne",
+        "nl": "het vlees"
+      },
+      {
+        "id": "food-and-drink-5",
+        "en": "chicken",
+        "fr": "le poulet",
+        "es": "el pollo",
+        "it": "il pollo",
+        "nl": "de kip"
+      },
+      {
+        "id": "food-and-drink-6",
+        "en": "fish",
+        "fr": "le poisson",
+        "es": "el pescado",
+        "it": "il pesce",
+        "nl": "de vis"
+      },
+      {
+        "id": "food-and-drink-7",
+        "en": "egg",
+        "fr": "l'œuf",
+        "es": "el huevo",
+        "it": "l'uovo",
+        "nl": "het ei"
+      },
+      {
+        "id": "food-and-drink-8",
+        "en": "cheese",
+        "fr": "le fromage",
+        "es": "el queso",
+        "it": "il formaggio",
+        "nl": "de kaas"
+      },
+      {
+        "id": "food-and-drink-9",
+        "en": "fruit",
+        "fr": "le fruit",
+        "es": "la fruta",
+        "it": "la frutta",
+        "nl": "het fruit"
+      },
+      {
+        "id": "food-and-drink-10",
+        "en": "apple",
+        "fr": "la pomme",
+        "es": "la manzana",
+        "it": "la mela",
+        "nl": "de appel"
+      },
+      {
+        "id": "food-and-drink-11",
+        "en": "banana",
+        "fr": "la banane",
+        "es": "el plátano",
+        "it": "la banana",
+        "nl": "de banaan"
+      },
+      {
+        "id": "food-and-drink-12",
+        "en": "orange",
+        "fr": "l'orange",
+        "es": "la naranja",
+        "it": "l'arancia",
+        "nl": "de sinaasappel"
+      },
+      {
+        "id": "food-and-drink-13",
+        "en": "vegetable",
+        "fr": "le légume",
+        "es": "la verdura",
+        "it": "la verdura",
+        "nl": "de groente"
+      },
+      {
+        "id": "food-and-drink-14",
+        "en": "potato",
+        "fr": "la pomme de terre",
+        "es": "la patata",
+        "it": "la patata",
+        "nl": "de aardappel"
+      },
+      {
+        "id": "food-and-drink-15",
+        "en": "tomato",
+        "fr": "la tomate",
+        "es": "el tomate",
+        "it": "il pomodoro",
+        "nl": "de tomaat"
+      },
+      {
+        "id": "food-and-drink-16",
+        "en": "salad",
+        "fr": "la salade",
+        "es": "la ensalada",
+        "it": "l'insalata",
+        "nl": "de salade"
+      },
+      {
+        "id": "food-and-drink-17",
+        "en": "soup",
+        "fr": "la soupe",
+        "es": "la sopa",
+        "it": "la zuppa",
+        "nl": "de soep"
+      },
+      {
+        "id": "food-and-drink-18",
+        "en": "sandwich",
+        "fr": "le sandwich",
+        "es": "el sándwich",
+        "it": "il panino",
+        "nl": "de sandwich"
+      },
+      {
+        "id": "food-and-drink-19",
+        "en": "pizza",
+        "fr": "la pizza",
+        "es": "la pizza",
+        "it": "la pizza",
+        "nl": "de pizza"
+      },
+      {
+        "id": "food-and-drink-20",
+        "en": "milk",
+        "fr": "le lait",
+        "es": "la leche",
+        "it": "il latte",
+        "nl": "de melk"
+      },
+      {
+        "id": "food-and-drink-21",
+        "en": "water",
+        "fr": "l'eau",
+        "es": "el agua",
+        "it": "l'acqua",
+        "nl": "het water"
+      },
+      {
+        "id": "food-and-drink-22",
+        "en": "juice",
+        "fr": "le jus",
+        "es": "el zumo",
+        "it": "il succo",
+        "nl": "het sap"
+      },
+      {
+        "id": "food-and-drink-23",
+        "en": "coffee",
+        "fr": "le café",
+        "es": "el café",
+        "it": "il caffè",
+        "nl": "de koffie"
+      },
+      {
+        "id": "food-and-drink-24",
+        "en": "tea",
+        "fr": "le thé",
+        "es": "el té",
+        "it": "il tè",
+        "nl": "de thee"
+      },
+      {
+        "id": "food-and-drink-25",
+        "en": "cake",
+        "fr": "le gâteau",
+        "es": "el pastel",
+        "it": "la torta",
+        "nl": "de taart"
+      },
+      {
+        "id": "food-and-drink-26",
+        "en": "chocolate",
+        "fr": "le chocolat",
+        "es": "el chocolate",
+        "it": "il cioccolato",
+        "nl": "de chocolade"
+      },
+      {
+        "id": "food-and-drink-27",
+        "en": "breakfast",
+        "fr": "le petit-déjeuner",
+        "es": "el desayuno",
+        "it": "la colazione",
+        "nl": "het ontbijt"
+      },
+      {
+        "id": "food-and-drink-28",
+        "en": "lunch",
+        "fr": "le déjeuner",
+        "es": "el almuerzo",
+        "it": "il pranzo",
+        "nl": "de lunch"
+      },
+      {
+        "id": "food-and-drink-29",
+        "en": "dinner",
+        "fr": "le dîner",
+        "es": "la cena",
+        "it": "la cena",
+        "nl": "het avondeten"
+      }
+    ]
+  },
+  {
+    "id": "clothes",
+    "title": "Clothes",
+    "items": [
+      {
+        "id": "clothes-1",
+        "en": "T-shirt",
+        "fr": "le T-shirt",
+        "es": "la camiseta",
+        "it": "la maglietta",
+        "nl": "het T-shirt"
+      },
+      {
+        "id": "clothes-2",
+        "en": "shirt",
+        "fr": "la chemise",
+        "es": "la camisa",
+        "it": "la camicia",
+        "nl": "het overhemd"
+      },
+      {
+        "id": "clothes-3",
+        "en": "trousers/pants",
+        "fr": "le pantalon",
+        "es": "los pantalones",
+        "it": "i pantaloni",
+        "nl": "de broek"
+      },
+      {
+        "id": "clothes-4",
+        "en": "jeans",
+        "fr": "le jean",
+        "es": "los vaqueros",
+        "it": "i jeans",
+        "nl": "de spijkerbroek"
+      },
+      {
+        "id": "clothes-5",
+        "en": "skirt",
+        "fr": "la jupe",
+        "es": "la falda",
+        "it": "la gonna",
+        "nl": "de rok"
+      },
+      {
+        "id": "clothes-6",
+        "en": "dress",
+        "fr": "la robe",
+        "es": "el vestido",
+        "it": "il vestito",
+        "nl": "de jurk"
+      },
+      {
+        "id": "clothes-7",
+        "en": "jacket",
+        "fr": "la veste",
+        "es": "la chaqueta",
+        "it": "la giacca",
+        "nl": "het jasje"
+      },
+      {
+        "id": "clothes-8",
+        "en": "coat",
+        "fr": "le manteau",
+        "es": "el abrigo",
+        "it": "il cappotto",
+        "nl": "de jas"
+      },
+      {
+        "id": "clothes-9",
+        "en": "sweater",
+        "fr": "le pull",
+        "es": "el jersey",
+        "it": "il maglione",
+        "nl": "de trui"
+      },
+      {
+        "id": "clothes-10",
+        "en": "shoes",
+        "fr": "les chaussures",
+        "es": "los zapatos",
+        "it": "le scarpe",
+        "nl": "de schoenen"
+      },
+      {
+        "id": "clothes-11",
+        "en": "boots",
+        "fr": "les bottes",
+        "es": "las botas",
+        "it": "gli stivali",
+        "nl": "de laarzen"
+      },
+      {
+        "id": "clothes-12",
+        "en": "socks",
+        "fr": "les chaussettes",
+        "es": "los calcetines",
+        "it": "i calzini",
+        "nl": "de sokken"
+      },
+      {
+        "id": "clothes-13",
+        "en": "hat",
+        "fr": "le chapeau",
+        "es": "el sombrero",
+        "it": "il cappello",
+        "nl": "de hoed"
+      },
+      {
+        "id": "clothes-14",
+        "en": "scarf",
+        "fr": "l'écharpe",
+        "es": "la bufanda",
+        "it": "la sciarpa",
+        "nl": "de sjaal"
+      },
+      {
+        "id": "clothes-15",
+        "en": "gloves",
+        "fr": "les gants",
+        "es": "los guantes",
+        "it": "i guanti",
+        "nl": "de handschoenen"
+      },
+      {
+        "id": "clothes-16",
+        "en": "bag",
+        "fr": "le sac",
+        "es": "el bolso",
+        "it": "la borsa",
+        "nl": "de tas"
+      }
+    ]
+  },
+  {
+    "id": "weather",
+    "title": "Weather",
+    "items": [
+      {
+        "id": "weather-1",
+        "en": "sunny",
+        "fr": "ensoleillé",
+        "es": "soleado",
+        "it": "soleggiato",
+        "nl": "zonnig"
+      },
+      {
+        "id": "weather-2",
+        "en": "rainy",
+        "fr": "pluvieux",
+        "es": "lluvioso",
+        "it": "piovoso",
+        "nl": "regenachtig"
+      },
+      {
+        "id": "weather-3",
+        "en": "cloudy",
+        "fr": "nuageux",
+        "es": "nublado",
+        "it": "nuvoloso",
+        "nl": "bewolkt"
+      },
+      {
+        "id": "weather-4",
+        "en": "windy",
+        "fr": "venteux",
+        "es": "ventoso",
+        "it": "ventoso",
+        "nl": "winderig"
+      },
+      {
+        "id": "weather-5",
+        "en": "snowy",
+        "fr": "neigeux",
+        "es": "nevado",
+        "it": "nevoso",
+        "nl": "sneeuwachtig"
+      },
+      {
+        "id": "weather-6",
+        "en": "hot",
+        "fr": "chaud",
+        "es": "caluroso",
+        "it": "caldo",
+        "nl": "heet"
+      },
+      {
+        "id": "weather-7",
+        "en": "warm",
+        "fr": "tiède",
+        "es": "cálido",
+        "it": "tiepido",
+        "nl": "warm"
+      },
+      {
+        "id": "weather-8",
+        "en": "cold",
+        "fr": "froid",
+        "es": "frío",
+        "it": "freddo",
+        "nl": "koud"
+      },
+      {
+        "id": "weather-9",
+        "en": "cool",
+        "fr": "frais",
+        "es": "fresco",
+        "it": "fresco",
+        "nl": "koel"
+      }
+    ]
+  },
+  {
+    "id": "seasons",
+    "title": "Seasons",
+    "items": [
+      {
+        "id": "seasons-1",
+        "en": "spring",
+        "fr": "le printemps",
+        "es": "la primavera",
+        "it": "la primavera",
+        "nl": "de lente"
+      },
+      {
+        "id": "seasons-2",
+        "en": "summer",
+        "fr": "l'été",
+        "es": "el verano",
+        "it": "l'estate",
+        "nl": "de zomer"
+      },
+      {
+        "id": "seasons-3",
+        "en": "autumn/fall",
+        "fr": "l'automne",
+        "es": "el otoño",
+        "it": "l'autunno",
+        "nl": "de herfst"
+      },
+      {
+        "id": "seasons-4",
+        "en": "winter",
+        "fr": "l'hiver",
+        "es": "el invierno",
+        "it": "l'inverno",
+        "nl": "de winter"
+      }
+    ]
+  },
+  {
+    "id": "body",
+    "title": "Body",
+    "items": [
+      {
+        "id": "body-1",
+        "en": "head",
+        "fr": "la tête",
+        "es": "la cabeza",
+        "it": "la testa",
+        "nl": "het hoofd"
+      },
+      {
+        "id": "body-2",
+        "en": "hair",
+        "fr": "les cheveux",
+        "es": "el pelo",
+        "it": "i capelli",
+        "nl": "het haar"
+      },
+      {
+        "id": "body-3",
+        "en": "face",
+        "fr": "le visage",
+        "es": "la cara",
+        "it": "il viso",
+        "nl": "het gezicht"
+      },
+      {
+        "id": "body-4",
+        "en": "eye",
+        "fr": "l'œil",
+        "es": "el ojo",
+        "it": "l'occhio",
+        "nl": "het oog"
+      },
+      {
+        "id": "body-5",
+        "en": "ear",
+        "fr": "l'oreille",
+        "es": "la oreja",
+        "it": "l'orecchio",
+        "nl": "het oor"
+      },
+      {
+        "id": "body-6",
+        "en": "nose",
+        "fr": "le nez",
+        "es": "la nariz",
+        "it": "il naso",
+        "nl": "de neus"
+      },
+      {
+        "id": "body-7",
+        "en": "mouth",
+        "fr": "la bouche",
+        "es": "la boca",
+        "it": "la bocca",
+        "nl": "de mond"
+      },
+      {
+        "id": "body-8",
+        "en": "tooth/teeth",
+        "fr": "la dent / les dents",
+        "es": "el diente / los dientes",
+        "it": "il dente / i denti",
+        "nl": "de tand / de tanden"
+      },
+      {
+        "id": "body-9",
+        "en": "arm",
+        "fr": "le bras",
+        "es": "el brazo",
+        "it": "il braccio",
+        "nl": "de arm"
+      },
+      {
+        "id": "body-10",
+        "en": "hand",
+        "fr": "la main",
+        "es": "la mano",
+        "it": "la mano",
+        "nl": "de hand"
+      },
+      {
+        "id": "body-11",
+        "en": "finger",
+        "fr": "le doigt",
+        "es": "el dedo",
+        "it": "il dito",
+        "nl": "de vinger"
+      },
+      {
+        "id": "body-12",
+        "en": "leg",
+        "fr": "la jambe",
+        "es": "la pierna",
+        "it": "la gamba",
+        "nl": "het been"
+      },
+      {
+        "id": "body-13",
+        "en": "foot/feet",
+        "fr": "le pied / les pieds",
+        "es": "el pie / los pies",
+        "it": "il piede / i piedi",
+        "nl": "de voet / de voeten"
+      },
+      {
+        "id": "body-14",
+        "en": "back",
+        "fr": "le dos",
+        "es": "la espalda",
+        "it": "la schiena",
+        "nl": "de rug"
+      },
+      {
+        "id": "body-15",
+        "en": "stomach",
+        "fr": "l'estomac",
+        "es": "el estómago",
+        "it": "lo stomaco",
+        "nl": "de maag"
+      }
+    ]
+  },
+  {
+    "id": "house",
+    "title": "House",
+    "items": [
+      {
+        "id": "house-1",
+        "en": "house",
+        "fr": "la maison",
+        "es": "la casa",
+        "it": "la casa",
+        "nl": "het huis"
+      },
+      {
+        "id": "house-2",
+        "en": "flat/apartment",
+        "fr": "l'appartement",
+        "es": "el piso / el apartamento",
+        "it": "l'appartamento",
+        "nl": "het appartement"
+      },
+      {
+        "id": "house-3",
+        "en": "room",
+        "fr": "la pièce",
+        "es": "la habitación",
+        "it": "la stanza",
+        "nl": "de kamer"
+      },
+      {
+        "id": "house-4",
+        "en": "bedroom",
+        "fr": "la chambre",
+        "es": "el dormitorio",
+        "it": "la camera da letto",
+        "nl": "de slaapkamer"
+      },
+      {
+        "id": "house-5",
+        "en": "bathroom",
+        "fr": "la salle de bain",
+        "es": "el cuarto de baño",
+        "it": "il bagno",
+        "nl": "de badkamer"
+      },
+      {
+        "id": "house-6",
+        "en": "kitchen",
+        "fr": "la cuisine",
+        "es": "la cocina",
+        "it": "la cucina",
+        "nl": "de keuken"
+      },
+      {
+        "id": "house-7",
+        "en": "living room",
+        "fr": "le salon",
+        "es": "el salón",
+        "it": "il soggiorno",
+        "nl": "de woonkamer"
+      },
+      {
+        "id": "house-8",
+        "en": "garden",
+        "fr": "le jardin",
+        "es": "el jardín",
+        "it": "il giardino",
+        "nl": "de tuin"
+      }
+    ]
+  },
+  {
+    "id": "furniture",
+    "title": "Furniture",
+    "items": [
+      {
+        "id": "furniture-1",
+        "en": "bed",
+        "fr": "le lit",
+        "es": "la cama",
+        "it": "il letto",
+        "nl": "het bed"
+      },
+      {
+        "id": "furniture-2",
+        "en": "table",
+        "fr": "la table",
+        "es": "la mesa",
+        "it": "il tavolo",
+        "nl": "de tafel"
+      },
+      {
+        "id": "furniture-3",
+        "en": "chair",
+        "fr": "la chaise",
+        "es": "la silla",
+        "it": "la sedia",
+        "nl": "de stoel"
+      },
+      {
+        "id": "furniture-4",
+        "en": "sofa",
+        "fr": "le canapé",
+        "es": "el sofá",
+        "it": "il divano",
+        "nl": "de bank"
+      },
+      {
+        "id": "furniture-5",
+        "en": "desk",
+        "fr": "le bureau",
+        "es": "el escritorio",
+        "it": "la scrivania",
+        "nl": "het bureau"
+      },
+      {
+        "id": "furniture-6",
+        "en": "cupboard",
+        "fr": "l'armoire",
+        "es": "el armario",
+        "it": "l'armadio",
+        "nl": "de kast"
+      },
+      {
+        "id": "furniture-7",
+        "en": "fridge",
+        "fr": "le réfrigérateur",
+        "es": "la nevera",
+        "it": "il frigorifero",
+        "nl": "de koelkast"
+      },
+      {
+        "id": "furniture-8",
+        "en": "cooker/stove",
+        "fr": "la cuisinière",
+        "es": "la cocina",
+        "it": "i fornelli",
+        "nl": "het fornuis"
+      },
+      {
+        "id": "furniture-9",
+        "en": "window",
+        "fr": "la fenêtre",
+        "es": "la ventana",
+        "it": "la finestra",
+        "nl": "het raam"
+      },
+      {
+        "id": "furniture-10",
+        "en": "door",
+        "fr": "la porte",
+        "es": "la puerta",
+        "it": "la porta",
+        "nl": "de deur"
+      },
+      {
+        "id": "furniture-11",
+        "en": "wall",
+        "fr": "le mur",
+        "es": "la pared",
+        "it": "il muro",
+        "nl": "de muur"
+      },
+      {
+        "id": "furniture-12",
+        "en": "floor",
+        "fr": "le sol",
+        "es": "el suelo",
+        "it": "il pavimento",
+        "nl": "de vloer"
+      }
+    ]
+  },
+  {
+    "id": "places",
+    "title": "Places",
+    "items": [
+      {
+        "id": "places-1",
+        "en": "school",
+        "fr": "l'école",
+        "es": "el colegio",
+        "it": "la scuola",
+        "nl": "de school"
+      },
+      {
+        "id": "places-2",
+        "en": "hospital",
+        "fr": "l'hôpital",
+        "es": "el hospital",
+        "it": "l'ospedale",
+        "nl": "het ziekenhuis"
+      },
+      {
+        "id": "places-3",
+        "en": "supermarket",
+        "fr": "le supermarché",
+        "es": "el supermercado",
+        "it": "il supermercato",
+        "nl": "de supermarkt"
+      },
+      {
+        "id": "places-4",
+        "en": "shop",
+        "fr": "le magasin",
+        "es": "la tienda",
+        "it": "il negozio",
+        "nl": "de winkel"
+      },
+      {
+        "id": "places-5",
+        "en": "bank",
+        "fr": "la banque",
+        "es": "el banco",
+        "it": "la banca",
+        "nl": "de bank"
+      },
+      {
+        "id": "places-6",
+        "en": "post office",
+        "fr": "la poste",
+        "es": "la oficina de correos",
+        "it": "l'ufficio postale",
+        "nl": "het postkantoor"
+      },
+      {
+        "id": "places-7",
+        "en": "restaurant",
+        "fr": "le restaurant",
+        "es": "el restaurante",
+        "it": "il ristorante",
+        "nl": "het restaurant"
+      },
+      {
+        "id": "places-8",
+        "en": "café",
+        "fr": "le café",
+        "es": "la cafetería",
+        "it": "il bar",
+        "nl": "het café"
+      },
+      {
+        "id": "places-9",
+        "en": "cinema",
+        "fr": "le cinéma",
+        "es": "el cine",
+        "it": "il cinema",
+        "nl": "de bioscoop"
+      },
+      {
+        "id": "places-10",
+        "en": "park",
+        "fr": "le parc",
+        "es": "el parque",
+        "it": "il parco",
+        "nl": "het park"
+      },
+      {
+        "id": "places-11",
+        "en": "museum",
+        "fr": "le musée",
+        "es": "el museo",
+        "it": "il museo",
+        "nl": "het museum"
+      },
+      {
+        "id": "places-12",
+        "en": "station",
+        "fr": "la gare",
+        "es": "la estación",
+        "it": "la stazione",
+        "nl": "het station"
+      },
+      {
+        "id": "places-13",
+        "en": "airport",
+        "fr": "l'aéroport",
+        "es": "el aeropuerto",
+        "it": "l'aeroporto",
+        "nl": "het vliegveld"
+      },
+      {
+        "id": "places-14",
+        "en": "hotel",
+        "fr": "l'hôtel",
+        "es": "el hotel",
+        "it": "l'albergo",
+        "nl": "het hotel"
+      },
+      {
+        "id": "places-15",
+        "en": "library",
+        "fr": "la bibliothèque",
+        "es": "la biblioteca",
+        "it": "la biblioteca",
+        "nl": "de bibliotheek"
+      },
+      {
+        "id": "places-16",
+        "en": "gym",
+        "fr": "la salle de sport",
+        "es": "el gimnasio",
+        "it": "la palestra",
+        "nl": "de sportschool"
+      }
+    ]
+  },
+  {
+    "id": "transport",
+    "title": "Transport",
+    "items": [
+      {
+        "id": "transport-1",
+        "en": "car",
+        "fr": "la voiture",
+        "es": "el coche",
+        "it": "la macchina",
+        "nl": "de auto"
+      },
+      {
+        "id": "transport-2",
+        "en": "bus",
+        "fr": "le bus",
+        "es": "el autobús",
+        "it": "l'autobus",
+        "nl": "de bus"
+      },
+      {
+        "id": "transport-3",
+        "en": "train",
+        "fr": "le train",
+        "es": "el tren",
+        "it": "il treno",
+        "nl": "de trein"
+      },
+      {
+        "id": "transport-4",
+        "en": "plane",
+        "fr": "l'avion",
+        "es": "el avión",
+        "it": "l'aereo",
+        "nl": "het vliegtuig"
+      },
+      {
+        "id": "transport-5",
+        "en": "bicycle/bike",
+        "fr": "le vélo / la bicyclette",
+        "es": "la bicicleta / la bici",
+        "it": "la bicicletta / la bici",
+        "nl": "de fiets"
+      },
+      {
+        "id": "transport-6",
+        "en": "motorcycle",
+        "fr": "la moto",
+        "es": "la moto",
+        "it": "la moto",
+        "nl": "de motor"
+      },
+      {
+        "id": "transport-7",
+        "en": "taxi",
+        "fr": "le taxi",
+        "es": "el taxi",
+        "it": "il taxi",
+        "nl": "de taxi"
+      },
+      {
+        "id": "transport-8",
+        "en": "boat",
+        "fr": "le bateau",
+        "es": "el barco",
+        "it": "la barca",
+        "nl": "de boot"
+      },
+      {
+        "id": "transport-9",
+        "en": "metro/underground",
+        "fr": "le métro",
+        "es": "el metro",
+        "it": "la metropolitana",
+        "nl": "de metro"
+      },
+      {
+        "id": "transport-10",
+        "en": "on foot",
+        "fr": "à pied",
+        "es": "a pie",
+        "it": "a piedi",
+        "nl": "te voet"
+      },
+      {
+        "id": "transport-11",
+        "en": "by car / by bus",
+        "fr": "en voiture / en bus",
+        "es": "en coche / en autobús",
+        "it": "in macchina / in autobus",
+        "nl": "met de auto / met de bus"
+      }
+    ]
+  },
+  {
+    "id": "directions",
+    "title": "Directions",
+    "items": [
+      {
+        "id": "directions-1",
+        "en": "left",
+        "fr": "à gauche",
+        "es": "a la izquierda",
+        "it": "a sinistra",
+        "nl": "links"
+      },
+      {
+        "id": "directions-2",
+        "en": "right",
+        "fr": "à droite",
+        "es": "a la derecha",
+        "it": "a destra",
+        "nl": "rechts"
+      },
+      {
+        "id": "directions-3",
+        "en": "straight on",
+        "fr": "tout droit",
+        "es": "todo recto",
+        "it": "dritto",
+        "nl": "rechtdoor"
+      },
+      {
+        "id": "directions-4",
+        "en": "next to",
+        "fr": "à côté de",
+        "es": "al lado de",
+        "it": "vicino a",
+        "nl": "naast"
+      },
+      {
+        "id": "directions-5",
+        "en": "opposite",
+        "fr": "en face de",
+        "es": "enfrente de",
+        "it": "di fronte a",
+        "nl": "tegenover"
+      },
+      {
+        "id": "directions-6",
+        "en": "between",
+        "fr": "entre",
+        "es": "entre",
+        "it": "tra",
+        "nl": "tussen"
+      },
+      {
+        "id": "directions-7",
+        "en": "in front of",
+        "fr": "devant",
+        "es": "delante de",
+        "it": "davanti a",
+        "nl": "voor"
+      },
+      {
+        "id": "directions-8",
+        "en": "behind",
+        "fr": "derrière",
+        "es": "detrás de",
+        "it": "dietro",
+        "nl": "achter"
+      },
+      {
+        "id": "directions-9",
+        "en": "near",
+        "fr": "près de",
+        "es": "cerca de",
+        "it": "vicino a",
+        "nl": "dichtbij"
+      },
+      {
+        "id": "directions-10",
+        "en": "far from",
+        "fr": "loin de",
+        "es": "lejos de",
+        "it": "lontano da",
+        "nl": "ver van"
+      },
+      {
+        "id": "directions-11",
+        "en": "at the traffic lights",
+        "fr": "aux feux de circulation",
+        "es": "en el semáforo",
+        "it": "al semaforo",
+        "nl": "bij de verkeerslichten"
+      },
+      {
+        "id": "directions-12",
+        "en": "turn left/right",
+        "fr": "tourner à gauche/à droite",
+        "es": "girar a la izquierda/a la derecha",
+        "it": "girare a sinistra/a destra",
+        "nl": "linksaf/rechtsaf slaan"
+      }
+    ]
+  },
+  {
+    "id": "routines",
+    "title": "Routines",
+    "items": [
+      {
+        "id": "routines-1",
+        "en": "get up",
+        "fr": "se lever",
+        "es": "levantarse",
+        "it": "alzarsi",
+        "nl": "opstaan"
+      },
+      {
+        "id": "routines-2",
+        "en": "have breakfast",
+        "fr": "prendre le petit-déjeuner",
+        "es": "desayunar",
+        "it": "fare colazione",
+        "nl": "ontbijten"
+      },
+      {
+        "id": "routines-3",
+        "en": "go to work/school",
+        "fr": "aller au travail/à l'école",
+        "es": "ir al trabajo/al colegio",
+        "it": "andare al lavoro/a scuola",
+        "nl": "naar het werk/naar school gaan"
+      },
+      {
+        "id": "routines-4",
+        "en": "start work",
+        "fr": "commencer le travail",
+        "es": "empezar a trabajar",
+        "it": "iniziare a lavorare",
+        "nl": "beginnen met werken"
+      },
+      {
+        "id": "routines-5",
+        "en": "finish work",
+        "fr": "finir le travail",
+        "es": "terminar de trabajar",
+        "it": "finire di lavorare",
+        "nl": "stoppen met werken"
+      },
+      {
+        "id": "routines-6",
+        "en": "have lunch",
+        "fr": "déjeuner",
+        "es": "comer",
+        "it": "pranzare",
+        "nl": "lunchen"
+      },
+      {
+        "id": "routines-7",
+        "en": "go home",
+        "fr": "rentrer à la maison",
+        "es": "ir a casa",
+        "it": "andare a casa",
+        "nl": "naar huis gaan"
+      },
+      {
+        "id": "routines-8",
+        "en": "watch TV",
+        "fr": "regarder la télé",
+        "es": "ver la televisión",
+        "it": "guardare la TV",
+        "nl": "tv-kijken"
+      },
+      {
+        "id": "routines-9",
+        "en": "go to bed",
+        "fr": "aller au lit",
+        "es": "ir a la cama",
+        "it": "andare a letto",
+        "nl": "naar bed gaan"
+      },
+      {
+        "id": "routines-10",
+        "en": "sleep",
+        "fr": "dormir",
+        "es": "dormir",
+        "it": "dormire",
+        "nl": "slapen"
+      }
+    ]
+  },
+  {
+    "id": "hobbies",
+    "title": "Hobbies",
+    "items": [
+      {
+        "id": "hobbies-1",
+        "en": "play football/tennis",
+        "fr": "jouer au football/tennis",
+        "es": "jugar al fútbol/tenis",
+        "it": "giocare a calcio/tennis",
+        "nl": "voetballen/tennissen"
+      },
+      {
+        "id": "hobbies-2",
+        "en": "swim",
+        "fr": "nager",
+        "es": "nadar",
+        "it": "nuotare",
+        "nl": "zwemmen"
+      },
+      {
+        "id": "hobbies-3",
+        "en": "run",
+        "fr": "courir",
+        "es": "correr",
+        "it": "correre",
+        "nl": "hardlopen"
+      },
+      {
+        "id": "hobbies-4",
+        "en": "dance",
+        "fr": "danser",
+        "es": "bailar",
+        "it": "ballare",
+        "nl": "dansen"
+      },
+      {
+        "id": "hobbies-5",
+        "en": "read",
+        "fr": "lire",
+        "es": "leer",
+        "it": "leggere",
+        "nl": "lezen"
+      },
+      {
+        "id": "hobbies-6",
+        "en": "watch films/TV",
+        "fr": "regarder des films/la télé",
+        "es": "ver películas/la televisión",
+        "it": "guardare film/la TV",
+        "nl": "films/tv kijken"
+      },
+      {
+        "id": "hobbies-7",
+        "en": "listen to music",
+        "fr": "écouter de la musique",
+        "es": "escuchar música",
+        "it": "ascoltare la musica",
+        "nl": "naar muziek luisteren"
+      },
+      {
+        "id": "hobbies-8",
+        "en": "go shopping",
+        "fr": "faire les courses",
+        "es": "ir de compras",
+        "it": "fare la spesa",
+        "nl": "winkelen"
+      },
+      {
+        "id": "hobbies-9",
+        "en": "meet friends",
+        "fr": "voir des amis",
+        "es": "quedar con amigos",
+        "it": "incontrare gli amici",
+        "nl": "vrienden ontmoeten"
+      },
+      {
+        "id": "hobbies-10",
+        "en": "travel",
+        "fr": "voyager",
+        "es": "viajar",
+        "it": "viaggiare",
+        "nl": "reizen"
+      },
+      {
+        "id": "hobbies-11",
+        "en": "cook",
+        "fr": "cuisiner",
+        "es": "cocinar",
+        "it": "cucinare",
+        "nl": "koken"
+      },
+      {
+        "id": "hobbies-12",
+        "en": "play computer games",
+        "fr": "jouer à des jeux vidéo",
+        "es": "jugar a videojuegos",
+        "it": "giocare ai videogiochi",
+        "nl": "computerspelletjes spelen"
+      }
+    ]
+  },
+  {
+    "id": "sports",
+    "title": "Sports",
+    "items": [
+      {
+        "id": "sports-1",
+        "en": "football",
+        "fr": "le football",
+        "es": "el fútbol",
+        "it": "il calcio",
+        "nl": "het voetbal"
+      },
+      {
+        "id": "sports-2",
+        "en": "tennis",
+        "fr": "le tennis",
+        "es": "el tenis",
+        "it": "il tennis",
+        "nl": "het tennis"
+      },
+      {
+        "id": "sports-3",
+        "en": "basketball",
+        "fr": "le basket-ball",
+        "es": "el baloncesto",
+        "it": "la pallacanestro",
+        "nl": "het basketbal"
+      },
+      {
+        "id": "sports-4",
+        "en": "swimming",
+        "fr": "la natation",
+        "es": "la natación",
+        "it": "il nuoto",
+        "nl": "het zwemmen"
+      },
+      {
+        "id": "sports-5",
+        "en": "running",
+        "fr": "la course à pied",
+        "es": "correr",
+        "it": "la corsa",
+        "nl": "het hardlopen"
+      },
+      {
+        "id": "sports-6",
+        "en": "cycling",
+        "fr": "le cyclisme",
+        "es": "el ciclismo",
+        "it": "il ciclismo",
+        "nl": "het wielrennen"
+      },
+      {
+        "id": "sports-7",
+        "en": "skiing",
+        "fr": "le ski",
+        "es": "el esquí",
+        "it": "lo sci",
+        "nl": "het skiën"
+      },
+      {
+        "id": "sports-8",
+        "en": "yoga",
+        "fr": "le yoga",
+        "es": "el yoga",
+        "it": "lo yoga",
+        "nl": "de yoga"
+      },
+      {
+        "id": "sports-9",
+        "en": "gym",
+        "fr": "la gymnastique",
+        "es": "el gimnasio",
+        "it": "la palestra",
+        "nl": "de sportschool"
+      }
+    ]
+  },
+  {
+    "id": "ordinals",
+    "title": "Ordinals",
+    "items": [
+      {
+        "id": "ordinals-1",
+        "en": "first",
+        "fr": "premier",
+        "es": "primero",
+        "it": "primo",
+        "nl": "eerste"
+      },
+      {
+        "id": "ordinals-2",
+        "en": "second",
+        "fr": "deuxième",
+        "es": "segundo",
+        "it": "secondo",
+        "nl": "tweede"
+      },
+      {
+        "id": "ordinals-3",
+        "en": "third",
+        "fr": "troisième",
+        "es": "tercero",
+        "it": "terzo",
+        "nl": "derde"
+      },
+      {
+        "id": "ordinals-4",
+        "en": "fourth",
+        "fr": "quatrième",
+        "es": "cuarto",
+        "it": "quarto",
+        "nl": "vierde"
+      },
+      {
+        "id": "ordinals-5",
+        "en": "fifth",
+        "fr": "cinquième",
+        "es": "quinto",
+        "it": "quinto",
+        "nl": "vijfde"
+      },
+      {
+        "id": "ordinals-6",
+        "en": "sixth",
+        "fr": "sixième",
+        "es": "sexto",
+        "it": "sesto",
+        "nl": "zesde"
+      },
+      {
+        "id": "ordinals-7",
+        "en": "seventh",
+        "fr": "septième",
+        "es": "séptimo",
+        "it": "settimo",
+        "nl": "zevende"
+      },
+      {
+        "id": "ordinals-8",
+        "en": "eighth",
+        "fr": "huitième",
+        "es": "octavo",
+        "it": "ottavo",
+        "nl": "achtste"
+      },
+      {
+        "id": "ordinals-9",
+        "en": "ninth",
+        "fr": "neuvième",
+        "es": "noveno",
+        "it": "nono",
+        "nl": "negende"
+      },
+      {
+        "id": "ordinals-10",
+        "en": "tenth",
+        "fr": "dixième",
+        "es": "décimo",
+        "it": "decimo",
+        "nl": "tiende"
+      }
+    ]
+  },
+  {
+    "id": "countries",
+    "title": "Countries",
+    "items": [
+      {
+        "id": "countries-1",
+        "en": "England/English",
+        "fr": "l'Angleterre / anglais",
+        "es": "Inglaterra / inglés",
+        "it": "l'Inghilterra / inglese",
+        "nl": "Engeland / Engels"
+      },
+      {
+        "id": "countries-2",
+        "en": "America/American",
+        "fr": "les États-Unis / américain",
+        "es": "Estados Unidos / estadounidense",
+        "it": "gli Stati Uniti / americano",
+        "nl": "de Verenigde Staten / Amerikaans"
+      },
+      {
+        "id": "countries-3",
+        "en": "Spain/Spanish",
+        "fr": "l'Espagne / espagnol",
+        "es": "España / español",
+        "it": "la Spagna / spagnolo",
+        "nl": "Spanje / Spaans"
+      },
+      {
+        "id": "countries-4",
+        "en": "France/French",
+        "fr": "la France / français",
+        "es": "Francia / francés",
+        "it": "la Francia / francese",
+        "nl": "Frankrijk / Frans"
+      },
+      {
+        "id": "countries-5",
+        "en": "Germany/German",
+        "fr": "l'Allemagne / allemand",
+        "es": "Alemania / alemán",
+        "it": "la Germania / tedesco",
+        "nl": "Duitsland / Duits"
+      },
+      {
+        "id": "countries-6",
+        "en": "Italy/Italian",
+        "fr": "l'Italie / italien",
+        "es": "Italia / italiano",
+        "it": "l'Italia / italiano",
+        "nl": "Italië / Italiaans"
+      },
+      {
+        "id": "countries-7",
+        "en": "China/Chinese",
+        "fr": "la Chine / chinois",
+        "es": "China / chino",
+        "it": "la Cina / cinese",
+        "nl": "China / Chinees"
+      },
+      {
+        "id": "countries-8",
+        "en": "Japan/Japanese",
+        "fr": "le Japon / japonais",
+        "es": "Japón / japonés",
+        "it": "il Giappone / giapponese",
+        "nl": "Japan / Japans"
+      },
+      {
+        "id": "countries-9",
+        "en": "Brazil/Brazilian",
+        "fr": "le Brésil / brésilien",
+        "es": "Brasil / brasileño",
+        "it": "il Brasile / brasiliano",
+        "nl": "Brazilië / Braziliaans"
+      },
+      {
+        "id": "countries-10",
+        "en": "Portugal/Portuguese",
+        "fr": "le Portugal / portugais",
+        "es": "Portugal / portugués",
+        "it": "il Portogallo / portoghese",
+        "nl": "Portugal / Portugees"
+      },
+      {
+        "id": "countries-11",
+        "en": "Russia/Russian",
+        "fr": "la Russie / russe",
+        "es": "Rusia / ruso",
+        "it": "la Russia / russo",
+        "nl": "Rusland / Russisch"
+      },
+      {
+        "id": "countries-12",
+        "en": "Mexico/Mexican",
+        "fr": "le Mexique / mexicain",
+        "es": "México / mexicano",
+        "it": "il Messico / messicano",
+        "nl": "Mexico / Mexicaans"
+      },
+      {
+        "id": "countries-13",
+        "en": "Canada/Canadian",
+        "fr": "le Canada / canadien",
+        "es": "Canadá / canadiense",
+        "it": "il Canada / canadese",
+        "nl": "Canada / Canadees"
+      },
+      {
+        "id": "countries-14",
+        "en": "Australia/Australian",
+        "fr": "l'Australie / australien",
+        "es": "Australia / australiano",
+        "it": "l'Australia / australiano",
+        "nl": "Australië / Australisch"
+      },
+      {
+        "id": "countries-15",
+        "en": "India/Indian",
+        "fr": "l'Inde / indien",
+        "es": "India / indio",
+        "it": "l'India / indiano",
+        "nl": "India / Indiaas"
+      },
+      {
+        "id": "countries-16",
+        "en": "Turkey/Turkish",
+        "fr": "la Turquie / turc",
+        "es": "Turquía / turco",
+        "it": "la Turchia / turco",
+        "nl": "Turkije / Turks"
+      },
+      {
+        "id": "countries-17",
+        "en": "Poland/Polish",
+        "fr": "la Pologne / polonais",
+        "es": "Polonia / polaco",
+        "it": "la Polonia / polacco",
+        "nl": "Polen / Pools"
+      },
+      {
+        "id": "countries-18",
+        "en": "Greece/Greek",
+        "fr": "la Grèce / grec",
+        "es": "Grecia / griego",
+        "it": "la Grecia / greco",
+        "nl": "Griekenland / Grieks"
+      },
+      {
+        "id": "countries-19",
+        "en": "Egypt/Egyptian",
+        "fr": "l'Égypte / égyptien",
+        "es": "Egipto / egipcio",
+        "it": "l'Egitto / egiziano",
+        "nl": "Egypte / Egyptisch"
+      },
+      {
+        "id": "countries-20",
+        "en": "Argentina/Argentinian",
+        "fr": "l'Argentine / argentin",
+        "es": "Argentina / argentino",
+        "it": "l'Argentina / argentino",
+        "nl": "Argentinië / Argentijns"
+      }
+    ]
+  },
+  {
+    "id": "emotions",
+    "title": "Emotions",
+    "items": [
+      {
+        "id": "emotions-1",
+        "en": "happy",
+        "fr": "heureux",
+        "es": "feliz",
+        "it": "felice",
+        "nl": "blij"
+      },
+      {
+        "id": "emotions-2",
+        "en": "sad",
+        "fr": "triste",
+        "es": "triste",
+        "it": "triste",
+        "nl": "verdrietig"
+      },
+      {
+        "id": "emotions-3",
+        "en": "angry",
+        "fr": "en colère",
+        "es": "enfadado",
+        "it": "arrabbiato",
+        "nl": "boos"
+      },
+      {
+        "id": "emotions-4",
+        "en": "tired",
+        "fr": "fatigué",
+        "es": "cansado",
+        "it": "stanco",
+        "nl": "moe"
+      },
+      {
+        "id": "emotions-5",
+        "en": "hungry",
+        "fr": "affamé",
+        "es": "hambriento",
+        "it": "affamato",
+        "nl": "hongerig"
+      },
+      {
+        "id": "emotions-6",
+        "en": "thirsty",
+        "fr": "assoiffé",
+        "es": "sediento",
+        "it": "assetato",
+        "nl": "dorstig"
+      },
+      {
+        "id": "emotions-7",
+        "en": "bored",
+        "fr": "ennuyé",
+        "es": "aburrido",
+        "it": "annoiato",
+        "nl": "verveeld"
+      },
+      {
+        "id": "emotions-8",
+        "en": "excited",
+        "fr": "enthousiaste",
+        "es": "emocionado",
+        "it": "emozionato",
+        "nl": "enthousiast"
+      },
+      {
+        "id": "emotions-9",
+        "en": "worried",
+        "fr": "inquiet",
+        "es": "preocupado",
+        "it": "preoccupato",
+        "nl": "bezorgd"
+      },
+      {
+        "id": "emotions-10",
+        "en": "nervous",
+        "fr": "nerveux",
+        "es": "nervioso",
+        "it": "nervoso",
+        "nl": "nerveus"
+      },
+      {
+        "id": "emotions-11",
+        "en": "surprised",
+        "fr": "surpris",
+        "es": "sorprendido",
+        "it": "sorpreso",
+        "nl": "verrast"
+      },
+      {
+        "id": "emotions-12",
+        "en": "relaxed",
+        "fr": "détendu",
+        "es": "relajado",
+        "it": "rilassato",
+        "nl": "ontspannen"
+      }
+    ]
+  },
+  {
+    "id": "adjectives",
+    "title": "Adjectives",
+    "items": [
+      {
+        "id": "adjectives-1",
+        "en": "beautiful",
+        "fr": "beau",
+        "es": "bonito",
+        "it": "bello",
+        "nl": "mooi"
+      },
+      {
+        "id": "adjectives-2",
+        "en": "ugly",
+        "fr": "laid",
+        "es": "feo",
+        "it": "brutto",
+        "nl": "lelijk"
+      },
+      {
+        "id": "adjectives-3",
+        "en": "clean",
+        "fr": "propre",
+        "es": "limpio",
+        "it": "pulito",
+        "nl": "schoon"
+      },
+      {
+        "id": "adjectives-4",
+        "en": "dirty",
+        "fr": "sale",
+        "es": "sucio",
+        "it": "sporco",
+        "nl": "vies"
+      },
+      {
+        "id": "adjectives-5",
+        "en": "quiet",
+        "fr": "calme",
+        "es": "tranquilo",
+        "it": "silenzioso",
+        "nl": "rustig"
+      },
+      {
+        "id": "adjectives-6",
+        "en": "noisy",
+        "fr": "bruyant",
+        "es": "ruidoso",
+        "it": "rumoroso",
+        "nl": "luidruchtig"
+      },
+      {
+        "id": "adjectives-7",
+        "en": "expensive",
+        "fr": "cher",
+        "es": "caro",
+        "it": "costoso",
+        "nl": "duur"
+      },
+      {
+        "id": "adjectives-8",
+        "en": "cheap",
+        "fr": "bon marché",
+        "es": "barato",
+        "it": "economico",
+        "nl": "goedkoop"
+      },
+      {
+        "id": "adjectives-9",
+        "en": "interesting",
+        "fr": "intéressant",
+        "es": "interesante",
+        "it": "interessante",
+        "nl": "interessant"
+      },
+      {
+        "id": "adjectives-10",
+        "en": "boring",
+        "fr": "ennuyeux",
+        "es": "aburrido",
+        "it": "noioso",
+        "nl": "saai"
+      },
+      {
+        "id": "adjectives-11",
+        "en": "important",
+        "fr": "important",
+        "es": "importante",
+        "it": "importante",
+        "nl": "belangrijk"
+      },
+      {
+        "id": "adjectives-12",
+        "en": "dangerous",
+        "fr": "dangereux",
+        "es": "peligroso",
+        "it": "pericoloso",
+        "nl": "gevaarlijk"
+      },
+      {
+        "id": "adjectives-13",
+        "en": "safe",
+        "fr": "sûr",
+        "es": "seguro",
+        "it": "sicuro",
+        "nl": "veilig"
+      },
+      {
+        "id": "adjectives-14",
+        "en": "friendly",
+        "fr": "sympathique",
+        "es": "amable",
+        "it": "amichevole",
+        "nl": "vriendelijk"
+      },
+      {
+        "id": "adjectives-15",
+        "en": "polite",
+        "fr": "poli",
+        "es": "educado",
+        "it": "educato",
+        "nl": "beleefd"
+      }
+    ]
+  },
+  {
+    "id": "frequency",
+    "title": "Frequency",
+    "items": [
+      {
+        "id": "frequency-1",
+        "en": "always",
+        "fr": "toujours",
+        "es": "siempre",
+        "it": "sempre",
+        "nl": "altijd"
+      },
+      {
+        "id": "frequency-2",
+        "en": "usually",
+        "fr": "d'habitude",
+        "es": "normalmente",
+        "it": "di solito",
+        "nl": "meestal"
+      },
+      {
+        "id": "frequency-3",
+        "en": "often",
+        "fr": "souvent",
+        "es": "a menudo",
+        "it": "spesso",
+        "nl": "vaak"
+      },
+      {
+        "id": "frequency-4",
+        "en": "sometimes",
+        "fr": "parfois",
+        "es": "a veces",
+        "it": "a volte",
+        "nl": "soms"
+      },
+      {
+        "id": "frequency-5",
+        "en": "never",
+        "fr": "jamais",
+        "es": "nunca",
+        "it": "mai",
+        "nl": "nooit"
+      },
+      {
+        "id": "frequency-6",
+        "en": "every day",
+        "fr": "tous les jours",
+        "es": "todos los días",
+        "it": "ogni giorno",
+        "nl": "elke dag"
+      },
+      {
+        "id": "frequency-7",
+        "en": "once a week",
+        "fr": "une fois par semaine",
+        "es": "una vez a la semana",
+        "it": "una volta alla settimana",
+        "nl": "een keer per week"
+      },
+      {
+        "id": "frequency-8",
+        "en": "twice a week",
+        "fr": "deux fois par semaine",
+        "es": "dos veces a la semana",
+        "it": "due volte alla settimana",
+        "nl": "twee keer per week"
+      },
+      {
+        "id": "frequency-9",
+        "en": "every morning",
+        "fr": "tous les matins",
+        "es": "todas las mañanas",
+        "it": "ogni mattina",
+        "nl": "elke ochtend"
+      },
+      {
+        "id": "frequency-10",
+        "en": "at the weekend",
+        "fr": "le week-end",
+        "es": "los fines de semana",
+        "it": "nel fine settimana",
+        "nl": "in het weekend"
+      }
+    ]
+  },
+  {
+    "id": "tech",
+    "title": "Tech",
+    "items": [
+      {
+        "id": "tech-1",
+        "en": "phone",
+        "fr": "le téléphone",
+        "es": "el teléfono",
+        "it": "il telefono",
+        "nl": "de telefoon"
+      },
+      {
+        "id": "tech-2",
+        "en": "computer",
+        "fr": "l'ordinateur",
+        "es": "el ordenador",
+        "it": "il computer",
+        "nl": "de computer"
+      },
+      {
+        "id": "tech-3",
+        "en": "laptop",
+        "fr": "l'ordinateur portable",
+        "es": "el portátil",
+        "it": "il portatile",
+        "nl": "de laptop"
+      },
+      {
+        "id": "tech-4",
+        "en": "charger",
+        "fr": "le chargeur",
+        "es": "el cargador",
+        "it": "il caricabatterie",
+        "nl": "de oplader"
+      },
+      {
+        "id": "tech-5",
+        "en": "key",
+        "fr": "la clé",
+        "es": "la llave",
+        "it": "la chiave",
+        "nl": "de sleutel"
+      },
+      {
+        "id": "tech-6",
+        "en": "wallet",
+        "fr": "le portefeuille",
+        "es": "la cartera",
+        "it": "il portafoglio",
+        "nl": "de portemonnee"
+      },
+      {
+        "id": "tech-7",
+        "en": "umbrella",
+        "fr": "le parapluie",
+        "es": "el paraguas",
+        "it": "l'ombrello",
+        "nl": "de paraplu"
+      },
+      {
+        "id": "tech-8",
+        "en": "headphones",
+        "fr": "les écouteurs",
+        "es": "los auriculares",
+        "it": "le cuffie",
+        "nl": "de koptelefoon"
+      },
+      {
+        "id": "tech-9",
+        "en": "camera",
+        "fr": "l'appareil photo",
+        "es": "la cámara",
+        "it": "la macchina fotografica",
+        "nl": "de camera"
+      },
+      {
+        "id": "tech-10",
+        "en": "tablet",
+        "fr": "la tablette",
+        "es": "la tableta",
+        "it": "il tablet",
+        "nl": "de tablet"
+      }
+    ]
+  },
+  {
+    "id": "school",
+    "title": "School",
+    "items": [
+      {
+        "id": "school-1",
+        "en": "English",
+        "fr": "l'anglais",
+        "es": "el inglés",
+        "it": "l'inglese",
+        "nl": "het Engels"
+      },
+      {
+        "id": "school-2",
+        "en": "maths",
+        "fr": "les mathématiques",
+        "es": "las matemáticas",
+        "it": "la matematica",
+        "nl": "de wiskunde"
+      },
+      {
+        "id": "school-3",
+        "en": "science",
+        "fr": "les sciences",
+        "es": "las ciencias",
+        "it": "le scienze",
+        "nl": "de natuurwetenschappen"
+      },
+      {
+        "id": "school-4",
+        "en": "history",
+        "fr": "l'histoire",
+        "es": "la historia",
+        "it": "la storia",
+        "nl": "de geschiedenis"
+      },
+      {
+        "id": "school-5",
+        "en": "geography",
+        "fr": "la géographie",
+        "es": "la geografía",
+        "it": "la geografia",
+        "nl": "de aardrijkskunde"
+      },
+      {
+        "id": "school-6",
+        "en": "art",
+        "fr": "les arts plastiques",
+        "es": "el arte",
+        "it": "l'arte",
+        "nl": "de kunst"
+      },
+      {
+        "id": "school-7",
+        "en": "music",
+        "fr": "la musique",
+        "es": "la música",
+        "it": "la musica",
+        "nl": "de muziek"
+      },
+      {
+        "id": "school-8",
+        "en": "biology",
+        "fr": "la biologie",
+        "es": "la biología",
+        "it": "la biologia",
+        "nl": "de biologie"
+      },
+      {
+        "id": "school-9",
+        "en": "chemistry",
+        "fr": "la chimie",
+        "es": "la química",
+        "it": "la chimica",
+        "nl": "de scheikunde"
+      }
+    ]
+  },
+  {
+    "id": "animals",
+    "title": "Animals",
+    "items": [
+      {
+        "id": "animals-1",
+        "en": "dog",
+        "fr": "le chien",
+        "es": "el perro",
+        "it": "il cane",
+        "nl": "de hond"
+      },
+      {
+        "id": "animals-2",
+        "en": "cat",
+        "fr": "le chat",
+        "es": "el gato",
+        "it": "il gatto",
+        "nl": "de kat"
+      },
+      {
+        "id": "animals-3",
+        "en": "bird",
+        "fr": "l'oiseau",
+        "es": "el pájaro",
+        "it": "l'uccello",
+        "nl": "de vogel"
+      },
+      {
+        "id": "animals-4",
+        "en": "fish",
+        "fr": "le poisson",
+        "es": "el pez",
+        "it": "il pesce",
+        "nl": "de vis"
+      },
+      {
+        "id": "animals-5",
+        "en": "rabbit",
+        "fr": "le lapin",
+        "es": "el conejo",
+        "it": "il coniglio",
+        "nl": "het konijn"
+      },
+      {
+        "id": "animals-6",
+        "en": "horse",
+        "fr": "le cheval",
+        "es": "el caballo",
+        "it": "il cavallo",
+        "nl": "het paard"
+      },
+      {
+        "id": "animals-7",
+        "en": "lion",
+        "fr": "le lion",
+        "es": "el león",
+        "it": "il leone",
+        "nl": "de leeuw"
+      },
+      {
+        "id": "animals-8",
+        "en": "tiger",
+        "fr": "le tigre",
+        "es": "el tigre",
+        "it": "la tigre",
+        "nl": "de tijger"
+      },
+      {
+        "id": "animals-9",
+        "en": "elephant",
+        "fr": "l'éléphant",
+        "es": "el elefante",
+        "it": "l'elefante",
+        "nl": "de olifant"
+      },
+      {
+        "id": "animals-10",
+        "en": "monkey",
+        "fr": "le singe",
+        "es": "el mono",
+        "it": "la scimmia",
+        "nl": "de aap"
+      }
+    ]
+  }
+]
