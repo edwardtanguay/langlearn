@@ -89,6 +89,7 @@ const numberBlurState = ref<Map<string, 'clear' | 'blurred'>>(new Map())
 const numberTimers = ref<Map<string, ReturnType<typeof setTimeout>>>(new Map())
 const dropdownOpen = ref(false)
 const dropdownRef = ref<HTMLElement | null>(null)
+const searchInputRef = ref<HTMLInputElement | null>(null)
 
 // Sticky header scroll state
 const isScrolled = ref(false)
@@ -222,6 +223,7 @@ watch(searchQuery, (newVal, oldVal) => {
     if (oldVal && oldVal.trim()) {
       nextTick(() => {
         scrollToTop()
+        searchInputRef.value?.focus()
       })
     }
   }
@@ -232,11 +234,12 @@ function clearSearch() {
   searchQuery.value = ''
   searchTemporaryToggles.value.clear()
   openCategoryId.value = null
-  if (hadSearch) {
-    nextTick(() => {
+  nextTick(() => {
+    if (hadSearch) {
       scrollToTop()
-    })
-  }
+    }
+    searchInputRef.value?.focus()
+  })
 }
 
 function handleScroll() {
@@ -692,8 +695,8 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
             <button
               type="button"
               @click.stop="dropdownOpen = !dropdownOpen"
-              class="flex items-center justify-between gap-2 text-white text-sm font-bold py-1.5 px-3 rounded-xl border border-transparent shadow-xs cursor-pointer transition-all focus:outline-none"
-              :class="dropdownOpen ? 'w-[132px]' : 'w-auto'"
+              class="flex items-center justify-between gap-2 text-white text-sm font-bold py-1.5 px-3 border border-transparent cursor-pointer transition-all focus:outline-none"
+              :class="dropdownOpen ? 'w-[132px] rounded-t-xl rounded-b-none shadow-md' : 'w-auto rounded-xl shadow-xs'"
               :style="{ backgroundColor: currentColor }"
             >
               <span class="truncate">{{ activeLangLabel }}</span>
@@ -713,17 +716,17 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            <!-- Dropdown menu showing other languages with matching width -->
+            <!-- Dropdown menu showing other languages forming a seamless unit with top button -->
             <div
               v-if="dropdownOpen"
-              class="absolute left-0 mt-1 w-[132px] rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 z-50 bg-white dark:bg-gray-800"
+              class="absolute left-0 top-full mt-0 w-[132px] rounded-b-xl rounded-t-none overflow-hidden shadow-xl z-50"
             >
               <button
                 v-for="lang in dropdownLanguageOptions"
                 :key="lang.code"
                 type="button"
                 @click.stop="selectLanguage(lang.code)"
-                class="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer"
+                class="w-full flex items-center justify-between px-3 py-1.5 text-sm font-bold text-white transition-all hover:brightness-110 cursor-pointer border-t border-white/20"
                 :style="{ backgroundColor: languageColors[lang.code] }"
               >
                 <span class="truncate">{{ lang.label }}</span>
@@ -805,6 +808,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </div>
         <input
+          ref="searchInputRef"
           v-model="searchQuery"
           type="text"
           placeholder="Filter categories or words..."
@@ -812,6 +816,8 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
         />
         <button
           v-if="searchQuery"
+          type="button"
+          @mousedown.prevent
           @click="clearSearch"
           class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
         >
