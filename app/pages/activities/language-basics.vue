@@ -90,13 +90,11 @@ const currentButtonColor = computed(() => buttonColors[selectedLang.value] || '#
 // Set of item IDs currently learned for the current language
 const revealedSet = ref<Set<string>>(new Set())
 
-// Word pill 3-second learning timers & countdown state
+// Word pill learning & unlearning states
 const activeLearningWords = ref<Set<string>>(new Set())
-const activeLearningTimers = ref<Map<string, ReturnType<typeof setTimeout>>>(new Map())
 
 // Learned word pills clicked again: showing translation + '✕' unlearn button
 const activeUnlearnWords = ref<Set<string>>(new Set())
-const activeUnlearnTimers = ref<Map<string, ReturnType<typeof setTimeout>>>(new Map())
 
 // Stats loading state: blurs all numeric progress values until data is ready
 const isStatsLoading = ref(true)
@@ -143,33 +141,16 @@ function getCategoryId(itemId: string): string {
 }
 
 function clearAllTimers() {
-  for (const timer of activeLearningTimers.value.values()) {
-    clearTimeout(timer)
-  }
-  activeLearningTimers.value.clear()
   activeLearningWords.value.clear()
-
-  for (const timer of activeUnlearnTimers.value.values()) {
-    clearTimeout(timer)
-  }
-  activeUnlearnTimers.value.clear()
   activeUnlearnWords.value.clear()
 }
 
 function clearLearningTimer(itemId: string) {
-  const timer = activeLearningTimers.value.get(itemId)
-  if (timer) {
-    clearTimeout(timer)
-    activeLearningTimers.value.delete(itemId)
-  }
+  activeLearningWords.value.delete(itemId)
 }
 
 function clearUnlearnTimer(itemId: string) {
-  const timer = activeUnlearnTimers.value.get(itemId)
-  if (timer) {
-    clearTimeout(timer)
-    activeUnlearnTimers.value.delete(itemId)
-  }
+  activeUnlearnWords.value.delete(itemId)
 }
 
 async function loadSavedProgress() {
@@ -385,43 +366,31 @@ function toggleWord(itemId: string) {
   if (revealedSet.value.has(itemId)) {
     if (activeUnlearnWords.value.has(itemId)) {
       // Toggle unlearn view off if tapped again
-      clearUnlearnTimer(itemId)
       activeUnlearnWords.value.delete(itemId)
       activeUnlearnWords.value = new Set(activeUnlearnWords.value)
-      return
+    } else {
+      // Reveal target translation with '✕' unlearn button (stays open until clicked again or unlearned)
+      activeUnlearnWords.value.add(itemId)
+      activeUnlearnWords.value = new Set(activeUnlearnWords.value)
     }
-    // Reveal target translation with '✕' unlearn button for 3 seconds
-    activeUnlearnWords.value.add(itemId)
-    activeUnlearnWords.value = new Set(activeUnlearnWords.value)
-    clearUnlearnTimer(itemId)
-    const timer = setTimeout(() => {
-      activeUnlearnWords.value.delete(itemId)
-      activeUnlearnWords.value = new Set(activeUnlearnWords.value)
-      activeUnlearnTimers.value.delete(itemId)
-    }, 3000)
-    activeUnlearnTimers.value.set(itemId, timer)
     return
   }
 
   // Case 2: Word is unlearned
   if (activeLearningWords.value.has(itemId)) {
-    // Already in 3s window; finish learning immediately
-    finalizeWordLearned(itemId)
+    // Tapped again while revealed: close/revert without learning
+    activeLearningWords.value.delete(itemId)
+    activeLearningWords.value = new Set(activeLearningWords.value)
     return
   }
 
-  // Start 3-second learning window: displays target translation in bright language color
+  // Reveal target translation with '✓' learn button (stays open until clicked again or checked)
   activeLearningWords.value.add(itemId)
   activeLearningWords.value = new Set(activeLearningWords.value)
-  clearLearningTimer(itemId)
-  const timer = setTimeout(() => {
-    finalizeWordLearned(itemId)
-  }, 3000)
-  activeLearningTimers.value.set(itemId, timer)
 }
 
-function finalizeWordLearned(itemId: string) {
-  clearLearningTimer(itemId)
+function finalizeWordLearned(itemId: string, event?: Event) {
+  if (event) event.stopPropagation()
   activeLearningWords.value.delete(itemId)
   activeLearningWords.value = new Set(activeLearningWords.value)
 
@@ -442,7 +411,6 @@ function finalizeWordLearned(itemId: string) {
 
 function unlearnWord(itemId: string, event?: Event) {
   if (event) event.stopPropagation()
-  clearUnlearnTimer(itemId)
   activeUnlearnWords.value.delete(itemId)
   activeUnlearnWords.value = new Set(activeUnlearnWords.value)
 
@@ -842,11 +810,12 @@ function isWordLearned(itemId: string): boolean {
           type="button"
           @click="selectLanguage(lang.code)"
           class="py-2 px-3 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center justify-between transition-all cursor-pointer shadow-xs select-none"
+          :class="selectedLang === lang.code ? 'ring-1 ring-gray-400/50 dark:ring-gray-400/40' : ''"
           :style="{
             backgroundColor: languageColors[lang.code],
             opacity: selectedLang === lang.code ? 1 : 0.45,
             transform: selectedLang === lang.code ? 'scale(1.01)' : 'scale(1)',
-            boxShadow: selectedLang === lang.code ? '0 0 10px rgba(0,0,0,0.25)' : 'none'
+            boxShadow: selectedLang === lang.code ? '0 0 0 1px rgba(156, 163, 175, 0.45)' : 'none'
           }"
         >
           <span class="truncate">{{ lang.label }}</span>
@@ -1216,11 +1185,21 @@ function isWordLearned(itemId: string): boolean {
                     </span>
                   </template>
 
+                  <!-- '✓' learn button when active in learning mode (unlearned word revealed) -->
+                  <span
+                    v-if="activeLearningWords.has(item.id)"
+                    @click="finalizeWordLearned(item.id, $event)"
+                    class="ml-1 px-1 py-0.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold cursor-pointer transition-colors shrink-0 leading-none"
+                    title="Mark as learned"
+                  >
+                    ✓
+                  </span>
+
                   <!-- '✕' unlearn button when active in unlearn mode -->
                   <span
                     v-if="activeUnlearnWords.has(item.id)"
                     @click="unlearnWord(item.id, $event)"
-                    class="ml-1 px-1 py-0.5 rounded bg-red-600/80 hover:bg-red-600 text-white text-[11px] font-bold cursor-pointer transition-colors shrink-0"
+                    class="ml-1 px-1 py-0.5 rounded bg-red-600/80 hover:bg-red-600 text-white text-[11px] font-bold cursor-pointer transition-colors shrink-0 leading-none"
                     title="Mark as unlearned"
                   >
                     ✕
@@ -1245,14 +1224,8 @@ function isWordLearned(itemId: string): boolean {
             <!-- YouTube Videos Section at bottom of category -->
             <div
               v-if="cat.videos?.[selectedLang]?.length"
-              class="pt-3 border-t border-gray-100 dark:border-gray-800/80 space-y-2"
+              class="pt-3 border-t border-gray-100 dark:border-gray-800/80"
             >
-              <div class="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-red-600 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                <span>Videos</span>
-              </div>
               <div class="flex flex-wrap gap-2.5">
                 <a
                   v-for="(vid, vIdx) in cat.videos[selectedLang]"
@@ -1266,7 +1239,9 @@ function isWordLearned(itemId: string): boolean {
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                   </svg>
                   <span>{{ vid.title }}</span>
-                  <span class="text-[10px] opacity-60">↗</span>
+                  <svg class="w-3.5 h-3.5 text-red-600 dark:text-red-400 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                  </svg>
                 </a>
               </div>
             </div>

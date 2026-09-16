@@ -14,7 +14,7 @@
 	- cien
 - letters
 	- https://youtu.be/8m-pQniffZw?t=24; A-Z
-	- ah, bay, cay, day, ay, ayffeh, %eh, ah-chay, ee, %ohta, kah, elleh, emmeh, enneh, oh, pay, koo, erreh, esseh, tay, oo, vay, doh-blay-vay, eh-kees, ee-gray-gah , settah
+	- ah, bay, say, day, ay, ayffeh, %eh, ah-chay, ee, %ohta, kah, elleh, emmeh, enneh, oh, pay, koo, erreh, esseh, tay, oo, vay, doh-blay-vay, eh-kees, ee-gray-gah , settah
 - weekdays
 	- lunes, martes, miércoles, jueves, viernes, sábado, domingo
 - months
