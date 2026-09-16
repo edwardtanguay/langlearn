@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
         wordId: true,
         language: true,
         pronunciation: true,
+        isLearned: true,
         updatedAt: true
       }
     })

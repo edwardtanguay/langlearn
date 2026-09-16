@@ -232,6 +232,7 @@ exports.Prisma.BasicWordInfoScalarFieldEnum = {
   wordId: 'wordId',
   language: 'language',
   pronunciation: 'pronunciation',
+  isLearned: 'isLearned',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

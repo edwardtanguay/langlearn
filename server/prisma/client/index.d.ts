@@ -14561,6 +14561,7 @@ export namespace Prisma {
     wordId: string | null
     language: string | null
     pronunciation: string | null
+    isLearned: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14571,6 +14572,7 @@ export namespace Prisma {
     wordId: string | null
     language: string | null
     pronunciation: string | null
+    isLearned: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14581,6 +14583,7 @@ export namespace Prisma {
     wordId: number
     language: number
     pronunciation: number
+    isLearned: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -14593,6 +14596,7 @@ export namespace Prisma {
     wordId?: true
     language?: true
     pronunciation?: true
+    isLearned?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14603,6 +14607,7 @@ export namespace Prisma {
     wordId?: true
     language?: true
     pronunciation?: true
+    isLearned?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14613,6 +14618,7 @@ export namespace Prisma {
     wordId?: true
     language?: true
     pronunciation?: true
+    isLearned?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -14696,6 +14702,7 @@ export namespace Prisma {
     wordId: string
     language: string
     pronunciation: string | null
+    isLearned: boolean
     createdAt: Date
     updatedAt: Date
     _count: BasicWordInfoCountAggregateOutputType | null
@@ -14723,6 +14730,7 @@ export namespace Prisma {
     wordId?: boolean
     language?: boolean
     pronunciation?: boolean
+    isLearned?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14734,6 +14742,7 @@ export namespace Prisma {
     wordId?: boolean
     language?: boolean
     pronunciation?: boolean
+    isLearned?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14745,6 +14754,7 @@ export namespace Prisma {
     wordId?: boolean
     language?: boolean
     pronunciation?: boolean
+    isLearned?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -14756,11 +14766,12 @@ export namespace Prisma {
     wordId?: boolean
     language?: boolean
     pronunciation?: boolean
+    isLearned?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BasicWordInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordId" | "language" | "pronunciation" | "createdAt" | "updatedAt", ExtArgs["result"]["basicWordInfo"]>
+  export type BasicWordInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordId" | "language" | "pronunciation" | "isLearned" | "createdAt" | "updatedAt", ExtArgs["result"]["basicWordInfo"]>
   export type BasicWordInfoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -14782,6 +14793,7 @@ export namespace Prisma {
       wordId: string
       language: string
       pronunciation: string | null
+      isLearned: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["basicWordInfo"]>
@@ -15213,6 +15225,7 @@ export namespace Prisma {
     readonly wordId: FieldRef<"BasicWordInfo", 'String'>
     readonly language: FieldRef<"BasicWordInfo", 'String'>
     readonly pronunciation: FieldRef<"BasicWordInfo", 'String'>
+    readonly isLearned: FieldRef<"BasicWordInfo", 'Boolean'>
     readonly createdAt: FieldRef<"BasicWordInfo", 'DateTime'>
     readonly updatedAt: FieldRef<"BasicWordInfo", 'DateTime'>
   }
@@ -15791,6 +15804,7 @@ export namespace Prisma {
     wordId: 'wordId',
     language: 'language',
     pronunciation: 'pronunciation',
+    isLearned: 'isLearned',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16623,6 +16637,7 @@ export namespace Prisma {
     wordId?: StringFilter<"BasicWordInfo"> | string
     language?: StringFilter<"BasicWordInfo"> | string
     pronunciation?: StringNullableFilter<"BasicWordInfo"> | string | null
+    isLearned?: BoolFilter<"BasicWordInfo"> | boolean
     createdAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
     updatedAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -16634,6 +16649,7 @@ export namespace Prisma {
     wordId?: SortOrder
     language?: SortOrder
     pronunciation?: SortOrderInput | SortOrder
+    isLearned?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -16649,6 +16665,7 @@ export namespace Prisma {
     wordId?: StringFilter<"BasicWordInfo"> | string
     language?: StringFilter<"BasicWordInfo"> | string
     pronunciation?: StringNullableFilter<"BasicWordInfo"> | string | null
+    isLearned?: BoolFilter<"BasicWordInfo"> | boolean
     createdAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
     updatedAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -16660,6 +16677,7 @@ export namespace Prisma {
     wordId?: SortOrder
     language?: SortOrder
     pronunciation?: SortOrderInput | SortOrder
+    isLearned?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: BasicWordInfoCountOrderByAggregateInput
@@ -16676,6 +16694,7 @@ export namespace Prisma {
     wordId?: StringWithAggregatesFilter<"BasicWordInfo"> | string
     language?: StringWithAggregatesFilter<"BasicWordInfo"> | string
     pronunciation?: StringNullableWithAggregatesFilter<"BasicWordInfo"> | string | null
+    isLearned?: BoolWithAggregatesFilter<"BasicWordInfo"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"BasicWordInfo"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"BasicWordInfo"> | Date | string
   }
@@ -17485,6 +17504,7 @@ export namespace Prisma {
     wordId: string
     language: string
     pronunciation?: string | null
+    isLearned?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutBasicWordInfosInput
@@ -17496,6 +17516,7 @@ export namespace Prisma {
     wordId: string
     language: string
     pronunciation?: string | null
+    isLearned?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17505,6 +17526,7 @@ export namespace Prisma {
     wordId?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
     pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutBasicWordInfosNestedInput
@@ -17516,6 +17538,7 @@ export namespace Prisma {
     wordId?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
     pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17526,6 +17549,7 @@ export namespace Prisma {
     wordId: string
     language: string
     pronunciation?: string | null
+    isLearned?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17535,6 +17559,7 @@ export namespace Prisma {
     wordId?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
     pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17545,6 +17570,7 @@ export namespace Prisma {
     wordId?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
     pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18237,6 +18263,7 @@ export namespace Prisma {
     wordId?: SortOrder
     language?: SortOrder
     pronunciation?: SortOrder
+    isLearned?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18247,6 +18274,7 @@ export namespace Prisma {
     wordId?: SortOrder
     language?: SortOrder
     pronunciation?: SortOrder
+    isLearned?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18257,6 +18285,7 @@ export namespace Prisma {
     wordId?: SortOrder
     language?: SortOrder
     pronunciation?: SortOrder
+    isLearned?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19304,6 +19333,7 @@ export namespace Prisma {
     wordId: string
     language: string
     pronunciation?: string | null
+    isLearned?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19313,6 +19343,7 @@ export namespace Prisma {
     wordId: string
     language: string
     pronunciation?: string | null
+    isLearned?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19476,6 +19507,7 @@ export namespace Prisma {
     wordId?: StringFilter<"BasicWordInfo"> | string
     language?: StringFilter<"BasicWordInfo"> | string
     pronunciation?: StringNullableFilter<"BasicWordInfo"> | string | null
+    isLearned?: BoolFilter<"BasicWordInfo"> | boolean
     createdAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
     updatedAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
   }
@@ -20749,6 +20781,7 @@ export namespace Prisma {
     wordId: string
     language: string
     pronunciation?: string | null
+    isLearned?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20899,6 +20932,7 @@ export namespace Prisma {
     wordId?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
     pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20908,6 +20942,7 @@ export namespace Prisma {
     wordId?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
     pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20917,6 +20952,7 @@ export namespace Prisma {
     wordId?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
     pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

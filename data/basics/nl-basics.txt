@@ -12,7 +12,7 @@
 	- tachtig, eenentachtig, tweeëntachtig, drieëntachtig, vierentachtig, vijfentachtig, zesentachtig, zevenentachtig, achtentachtig, negenentachtig
 	- negentig, eenennegentig, tweeënnegentig, drieënnegentig, vierennegentig, vijfennegentig, zesennegentig, zevenennegentig, achtennegentig, negenennegentig
 	- honderd
-- pronunciation of letters
+- letters
 	- https://www.youtube.com/watch?v=YIf3ukVvFRM;A-Z
 	- https://youtu.be/YIf3ukVvFRM?t=64; A-Z snel
 	- ah, bay, say, day, ay, eff, %ay, hah, ee, yay, kah, ell, emm, enn, oh, pay, koo, air, ess, tay, oo, fay, vay, iks, ay, zed

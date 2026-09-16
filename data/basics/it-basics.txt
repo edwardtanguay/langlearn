@@ -11,7 +11,7 @@
 	- ottanta, ottantuno, ottantadue, ottantatré, ottantaquattro, ottantacinque, ottantasei, ottantasette, ottantotto, ottantanove
 	- novanta, novantuno, novantadue, novantatré, novantaquattro, novantacinque, novantasei, novantasette, novantotto, novantanove
 	- cento
-- pronunciation of letters
+- letters
 	- https://youtu.be/T7deYXBnmBE?t=11; A-Z
 	- ah, bee, chee, dee, eh, effe, gee, akka, ee, ee-loonga, kappa, elle, emme, enne, oh, pee, koo, erre, esse, tee, oo, voo, doppia-voh, eeks, ee-grekka, zeta
 - weekdays

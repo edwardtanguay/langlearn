@@ -811,221 +811,357 @@
         "it": "cento",
         "nl": "honderd"
       }
-    ]
+    ],
+    "videos": {
+      "fr": [
+        {
+          "url": "https://www.youtube.com/watch?v=AvHO3T7cyNI",
+          "title": "1-100"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=zsR5d29x8MM",
+          "title": "1-100 rapide"
+        }
+      ],
+      "es": [
+        {
+          "url": "https://www.youtube.com/watch?v=unbPV7l2_vI",
+          "title": "1-100 canción"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=mU2MRmL2C_c",
+          "title": "1-100 karaoke"
+        }
+      ],
+      "it": [
+        {
+          "url": "https://www.youtube.com/watch?v=o50lpnL5PBw",
+          "title": "1-10 canzone"
+        }
+      ],
+      "nl": [
+        {
+          "url": "https://www.youtube.com/watch?v=Gglzo9wlcTU",
+          "title": "1-100"
+        },
+        {
+          "url": "https://youtu.be/osXA2WJU9tg?t=22",
+          "title": "100-1"
+        }
+      ]
+    },
+    "links": {
+      "fr": [
+        {
+          "url": "https://www.youtube.com/watch?v=AvHO3T7cyNI",
+          "title": "1-100"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=zsR5d29x8MM",
+          "title": "1-100 rapide"
+        }
+      ],
+      "es": [
+        {
+          "url": "https://www.youtube.com/watch?v=unbPV7l2_vI",
+          "title": "1-100 canción"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=mU2MRmL2C_c",
+          "title": "1-100 karaoke"
+        }
+      ],
+      "it": [
+        {
+          "url": "https://www.youtube.com/watch?v=o50lpnL5PBw",
+          "title": "1-10 canzone"
+        }
+      ],
+      "nl": [
+        {
+          "url": "https://www.youtube.com/watch?v=Gglzo9wlcTU",
+          "title": "1-100"
+        },
+        {
+          "url": "https://youtu.be/osXA2WJU9tg?t=22",
+          "title": "100-1"
+        }
+      ]
+    }
   },
   {
-    "id": "pronunciation-of-letters",
-    "title": "Pronunciation of Letters",
+    "id": "letters",
+    "title": "Letters",
     "items": [
       {
-        "id": "pronunciation-of-letters-1",
+        "id": "letters-1",
         "en": "ay",
-        "fr": "a",
-        "es": "a",
-        "it": "a",
-        "nl": "a"
+        "fr": "ah",
+        "es": "ah",
+        "it": "ah",
+        "nl": "ah"
       },
       {
-        "id": "pronunciation-of-letters-2",
+        "id": "letters-2",
         "en": "bee",
-        "fr": "bé",
-        "es": "be",
-        "it": "bi",
-        "nl": "bee"
+        "fr": "bay",
+        "es": "bay",
+        "it": "bee",
+        "nl": "bay"
       },
       {
-        "id": "pronunciation-of-letters-3",
+        "id": "letters-3",
         "en": "cee",
-        "fr": "cé",
-        "es": "ce",
-        "it": "ci",
-        "nl": "see"
+        "fr": "say",
+        "es": "cay",
+        "it": "chee",
+        "nl": "say"
       },
       {
-        "id": "pronunciation-of-letters-4",
+        "id": "letters-4",
         "en": "dee",
-        "fr": "dé",
-        "es": "de",
-        "it": "di",
-        "nl": "dee"
+        "fr": "day",
+        "es": "day",
+        "it": "dee",
+        "nl": "day"
       },
       {
-        "id": "pronunciation-of-letters-5",
+        "id": "letters-5",
         "en": "ee",
-        "fr": "e",
-        "es": "e",
-        "it": "e",
+        "fr": "öh",
+        "es": "ay",
+        "it": "eh",
+        "nl": "ay"
+      },
+      {
+        "id": "letters-6",
+        "en": "ef",
+        "fr": "eff",
+        "es": "ayffeh",
+        "it": "effe",
+        "nl": "eff"
+      },
+      {
+        "id": "letters-7",
+        "en": "gee",
+        "fr": "zhay",
+        "es": "%eh",
+        "it": "gee",
+        "nl": "%ay"
+      },
+      {
+        "id": "letters-8",
+        "en": "aich",
+        "fr": "ahsh",
+        "es": "ah-chay",
+        "it": "akka",
+        "nl": "hah"
+      },
+      {
+        "id": "letters-9",
+        "en": "eye",
+        "fr": "ee",
+        "es": "ee",
+        "it": "ee",
         "nl": "ee"
       },
       {
-        "id": "pronunciation-of-letters-6",
-        "en": "ef",
-        "fr": "effe",
-        "es": "efe",
-        "it": "effe",
-        "nl": "ef"
-      },
-      {
-        "id": "pronunciation-of-letters-7",
-        "en": "gee",
-        "fr": "gé",
-        "es": "ge",
-        "it": "gi",
-        "nl": "gee"
-      },
-      {
-        "id": "pronunciation-of-letters-8",
-        "en": "aich",
-        "fr": "ache",
-        "es": "hache",
-        "it": "acca",
-        "nl": "ha"
-      },
-      {
-        "id": "pronunciation-of-letters-9",
-        "en": "eye",
-        "fr": "i",
-        "es": "i",
-        "it": "i",
-        "nl": "ie"
-      },
-      {
-        "id": "pronunciation-of-letters-10",
+        "id": "letters-10",
         "en": "jay",
-        "fr": "ji",
-        "es": "jota",
-        "it": "i lunga",
-        "nl": "jee"
+        "fr": "zhee",
+        "es": "%ohta",
+        "it": "ee-loonga",
+        "nl": "yay"
       },
       {
-        "id": "pronunciation-of-letters-11",
+        "id": "letters-11",
         "en": "kay",
-        "fr": "ka",
-        "es": "ka",
-        "it": "cappa",
-        "nl": "ka"
+        "fr": "kah",
+        "es": "kah",
+        "it": "kappa",
+        "nl": "kah"
       },
       {
-        "id": "pronunciation-of-letters-12",
+        "id": "letters-12",
         "en": "el",
-        "fr": "elle",
-        "es": "ele",
+        "fr": "ell",
+        "es": "elleh",
         "it": "elle",
-        "nl": "el"
+        "nl": "ell"
       },
       {
-        "id": "pronunciation-of-letters-13",
+        "id": "letters-13",
         "en": "em",
-        "fr": "emme",
-        "es": "eme",
+        "fr": "emm",
+        "es": "emmeh",
         "it": "emme",
-        "nl": "em"
+        "nl": "emm"
       },
       {
-        "id": "pronunciation-of-letters-14",
+        "id": "letters-14",
         "en": "en",
-        "fr": "enne",
-        "es": "ene",
+        "fr": "enn",
+        "es": "enneh",
         "it": "enne",
-        "nl": "en"
+        "nl": "enn"
       },
       {
-        "id": "pronunciation-of-letters-15",
+        "id": "letters-15",
         "en": "oh",
-        "fr": "o",
-        "es": "o",
-        "it": "o",
+        "fr": "oh",
+        "es": "oh",
+        "it": "oh",
+        "nl": "oh"
+      },
+      {
+        "id": "letters-16",
+        "en": "pee",
+        "fr": "pay",
+        "es": "pay",
+        "it": "pee",
+        "nl": "pay"
+      },
+      {
+        "id": "letters-17",
+        "en": "kew",
+        "fr": "küh",
+        "es": "koo",
+        "it": "koo",
+        "nl": "koo"
+      },
+      {
+        "id": "letters-18",
+        "en": "ar",
+        "fr": "air",
+        "es": "erreh",
+        "it": "erre",
+        "nl": "air"
+      },
+      {
+        "id": "letters-19",
+        "en": "ess",
+        "fr": "ess",
+        "es": "esseh",
+        "it": "esse",
+        "nl": "ess"
+      },
+      {
+        "id": "letters-20",
+        "en": "tee",
+        "fr": "tay",
+        "es": "tay",
+        "it": "tee",
+        "nl": "tay"
+      },
+      {
+        "id": "letters-21",
+        "en": "yoo",
+        "fr": "üh",
+        "es": "oo",
+        "it": "oo",
         "nl": "oo"
       },
       {
-        "id": "pronunciation-of-letters-16",
-        "en": "pee",
-        "fr": "pé",
-        "es": "pe",
-        "it": "pi",
-        "nl": "pee"
-      },
-      {
-        "id": "pronunciation-of-letters-17",
-        "en": "kew",
-        "fr": "ku",
-        "es": "cu",
-        "it": "cu",
-        "nl": "kuu"
-      },
-      {
-        "id": "pronunciation-of-letters-18",
-        "en": "ar",
-        "fr": "erre",
-        "es": "erre",
-        "it": "erre",
-        "nl": "er"
-      },
-      {
-        "id": "pronunciation-of-letters-19",
-        "en": "ess",
-        "fr": "esse",
-        "es": "ese",
-        "it": "esse",
-        "nl": "es"
-      },
-      {
-        "id": "pronunciation-of-letters-20",
-        "en": "tee",
-        "fr": "té",
-        "es": "te",
-        "it": "ti",
-        "nl": "tee"
-      },
-      {
-        "id": "pronunciation-of-letters-21",
-        "en": "yoo",
-        "fr": "u",
-        "es": "u",
-        "it": "u",
-        "nl": "uu"
-      },
-      {
-        "id": "pronunciation-of-letters-22",
+        "id": "letters-22",
         "en": "vee",
-        "fr": "vé",
-        "es": "uve",
-        "it": "vu",
-        "nl": "vee"
+        "fr": "vay",
+        "es": "vay",
+        "it": "voo",
+        "nl": "fay"
       },
       {
-        "id": "pronunciation-of-letters-23",
+        "id": "letters-23",
         "en": "double-yoo",
-        "fr": "double vé",
-        "es": "uve doble",
-        "it": "doppia vu",
-        "nl": "wee"
+        "fr": "doob-leh-vay",
+        "es": "doh-blay-vay",
+        "it": "doppia-voh",
+        "nl": "vay"
       },
       {
-        "id": "pronunciation-of-letters-24",
+        "id": "letters-24",
         "en": "ex",
-        "fr": "ixe",
-        "es": "equis",
-        "it": "ics",
+        "fr": "eecks",
+        "es": "eh-kees",
+        "it": "eeks",
         "nl": "iks"
       },
       {
-        "id": "pronunciation-of-letters-25",
+        "id": "letters-25",
         "en": "why",
-        "fr": "i grec",
-        "es": "i griega",
-        "it": "ipsilon",
-        "nl": "ij"
+        "fr": "ee-grek",
+        "es": "ee-gray-gah",
+        "it": "ee-grekka",
+        "nl": "ay"
       },
       {
-        "id": "pronunciation-of-letters-26",
+        "id": "letters-26",
         "en": "zee",
-        "fr": "zède",
-        "es": "zeta",
+        "fr": "zed",
+        "es": "settah",
         "it": "zeta",
-        "nl": "zet"
+        "nl": "zed"
       }
-    ]
+    ],
+    "videos": {
+      "fr": [
+        {
+          "url": "https://youtu.be/-7woR4auqso?t=23",
+          "title": "A-Z"
+        }
+      ],
+      "es": [
+        {
+          "url": "https://youtu.be/8m-pQniffZw?t=24",
+          "title": "A-Z"
+        }
+      ],
+      "it": [
+        {
+          "url": "https://youtu.be/T7deYXBnmBE?t=11",
+          "title": "A-Z"
+        }
+      ],
+      "nl": [
+        {
+          "url": "https://www.youtube.com/watch?v=YIf3ukVvFRM",
+          "title": "A-Z"
+        },
+        {
+          "url": "https://youtu.be/YIf3ukVvFRM?t=64",
+          "title": "A-Z snel"
+        }
+      ]
+    },
+    "links": {
+      "fr": [
+        {
+          "url": "https://youtu.be/-7woR4auqso?t=23",
+          "title": "A-Z"
+        }
+      ],
+      "es": [
+        {
+          "url": "https://youtu.be/8m-pQniffZw?t=24",
+          "title": "A-Z"
+        }
+      ],
+      "it": [
+        {
+          "url": "https://youtu.be/T7deYXBnmBE?t=11",
+          "title": "A-Z"
+        }
+      ],
+      "nl": [
+        {
+          "url": "https://www.youtube.com/watch?v=YIf3ukVvFRM",
+          "title": "A-Z"
+        },
+        {
+          "url": "https://youtu.be/YIf3ukVvFRM?t=64",
+          "title": "A-Z snel"
+        }
+      ]
+    }
   },
   {
     "id": "weekdays",

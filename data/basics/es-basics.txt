@@ -12,7 +12,7 @@
 	- ochenta, ochenta y uno, ochenta y dos, ochenta y tres, ochenta y cuatro, ochenta y cinco, ochenta y seis, ochenta y siete, ochenta y ocho, ochenta y nueve
 	- noventa, noventa y uno, noventa y dos, noventa y tres, noventa y cuatro, noventa y cinco, noventa y seis, noventa y siete, noventa y ocho, noventa y nueve
 	- cien
-- pronunciation of letters
+- letters
 	- https://youtu.be/8m-pQniffZw?t=24; A-Z
 	- ah, bay, cay, day, ay, ayffeh, %eh, ah-chay, ee, %ohta, kah, elleh, emmeh, enneh, oh, pay, koo, erreh, esseh, tay, oo, vay, doh-blay-vay, eh-kees, ee-gray-gah , settah
 - weekdays

@@ -12,7 +12,7 @@
 	- quatre-vingts, quatre-vingt-un, quatre-vingt-deux, quatre-vingt-trois, quatre-vingt-quatre, quatre-vingt-cinq, quatre-vingt-six, quatre-vingt-sept, quatre-vingt-huit, quatre-vingt-neuf
 	- quatre-vingt-dix, quatre-vingt-onze, quatre-vingt-douze, quatre-vingt-treize, quatre-vingt-quatorze, quatre-vingt-quinze, quatre-vingt-seize, quatre-vingt-dix-sept, quatre-vingt-dix-huit, quatre-vingt-dix-neuf
 	- cent
-- pronunciation of letters
+- letters
 	- https://youtu.be/-7woR4auqso?t=23; A-Z
 	- ah, bay, say, day, öh, eff, zhay, ahsh, ee, zhee, kah, ell, emm, enn, oh, pay, küh, air, ess, tay, üh, vay, doob-leh-vay, eecks, ee-grek, zed
 - weekdays
