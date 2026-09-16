@@ -1548,6 +1548,86 @@
         "es": "abierto/cerrado",
         "it": "aperto/chiuso",
         "nl": "open/gesloten"
+      },
+      {
+        "id": "opposites-11",
+        "en": "early/late",
+        "fr": "tôt/tard",
+        "es": "temprano/tarde",
+        "it": "presto/tardi",
+        "nl": "vroeg/laat"
+      },
+      {
+        "id": "opposites-12",
+        "en": "young/old",
+        "fr": "jeune/vieux",
+        "es": "joven/viejo",
+        "it": "giovane/vecchio",
+        "nl": "jong/oud"
+      },
+      {
+        "id": "opposites-13",
+        "en": "near/far",
+        "fr": "près/loin",
+        "es": "cerca/lejos",
+        "it": "vicino/lontano",
+        "nl": "dichtbij/ver"
+      },
+      {
+        "id": "opposites-14",
+        "en": "clean/dirty",
+        "fr": "propre/sale",
+        "es": "limpio/sucio",
+        "it": "pulito/sporco",
+        "nl": "schoon/vies"
+      },
+      {
+        "id": "opposites-15",
+        "en": "strong/weak",
+        "fr": "fort/faible",
+        "es": "fuerte/débil",
+        "it": "forte/debole",
+        "nl": "sterk/zwak"
+      },
+      {
+        "id": "opposites-16",
+        "en": "dark/light",
+        "fr": "sombre/clair",
+        "es": "oscuro/claro",
+        "it": "scuro/chiaro",
+        "nl": "donker/licht"
+      },
+      {
+        "id": "opposites-17",
+        "en": "quiet/noisy",
+        "fr": "calme/bruyant",
+        "es": "tranquilo/ruidoso",
+        "it": "silenzioso/rumoroso",
+        "nl": "rustig/lawaaiig"
+      },
+      {
+        "id": "opposites-18",
+        "en": "expensive/cheap",
+        "fr": "cher/bon marché",
+        "es": "caro/barato",
+        "it": "costoso/economico",
+        "nl": "duur/goedkoop"
+      },
+      {
+        "id": "opposites-19",
+        "en": "safe/dangerous",
+        "fr": "sûr/dangereux",
+        "es": "seguro/peligroso",
+        "it": "sicuro/pericoloso",
+        "nl": "veilig/gevaarlijk"
+      },
+      {
+        "id": "opposites-20",
+        "en": "empty/full",
+        "fr": "vide/plein",
+        "es": "vacío/lleno",
+        "it": "vuoto/pieno",
+        "nl": "leeg/vol"
       }
     ]
   },

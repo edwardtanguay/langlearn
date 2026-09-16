@@ -21,6 +21,7 @@ model User {
   activities         UserFlashcardActivity[]
   versionItems       VersionItem[]           @relation("UserVersionItems")
   mobileImports      MobileImport[]
+  basicWordInfos     BasicWordInfo[]
 }
 
 model Version {
@@ -146,4 +147,17 @@ model ChatbotPrompt {
   rank      Float    @default(2.5)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model BasicWordInfo {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordId        String
+  language      String
+  pronunciation String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, wordId, language])
 }

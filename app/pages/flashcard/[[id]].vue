@@ -1052,7 +1052,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div 
-    class="max-w-4xl mx-auto px-4 pt-0 pb-8 space-y-12 transition-all duration-300"
+    class="max-w-4xl mx-auto px-4 pt-0 pb-8 space-y-4 sm:space-y-8 transition-all duration-300"
   >
     <ClientOnly>
       <!-- Logged In: Flashcards View -->
@@ -1085,9 +1085,9 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- Active Practice Area -->
-        <div v-if="!isSearching" class="mt-4 flex flex-col items-center w-full min-h-[340px] justify-start pt-0">
+        <div v-if="!isSearching" class="mt-2 sm:mt-4 flex flex-col items-center w-full min-h-[290px] justify-start pt-0">
           
-          <div class="w-full max-w-lg space-y-4">
+          <div class="w-full max-w-lg space-y-2.5 sm:space-y-4">
             
             <NuxtLink 
               v-if="route.query.fromActivity && !isLoadingQueue && !isInitialLoading" 
@@ -1267,7 +1267,7 @@ onBeforeUnmount(() => {
             </div>
 
             <!-- Relative card wrapper of fixed height that crossfades loading state and card -->
-            <div class="relative w-full h-[256px]">
+            <div class="relative w-full h-[215px] sm:h-[256px]">
               <Transition name="fade-layout">
                 
                 <!-- Card Placeholder / Language Loader -->
@@ -1369,14 +1369,14 @@ onBeforeUnmount(() => {
             </div>
 
             <!-- Nuanced info outside bottom of card: import date (left) and status (right) -->
-            <div v-if="!isLoadingQueue && currentCard && !isBatchComplete" class="w-full flex items-center justify-between px-3 -mt-2 text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
+            <div v-if="!isLoadingQueue && currentCard && !isBatchComplete" class="w-full flex items-center justify-between px-3 -mt-1 text-[10px] sm:text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
               <span class="tracking-wider uppercase">{{ formatImportDate(currentCard.createdAt) }}</span>
               <span class="tracking-wider uppercase">{{ cardStatusLabel }}</span>
             </div>
 
             <!-- Single compact panel — visible when card is flipped and not editing -->
             <Transition name="fade-layout">
-              <div v-if="!isLoadingQueue && currentCard && isFlipped && !isEditing" class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-3 space-y-3">
+              <div v-if="!isLoadingQueue && currentCard && isFlipped && !isEditing" class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-2 sm:p-3 space-y-2 sm:space-y-3">
 
                 <!-- Rank Slider Section -->
                 <FlashcardRankSlider v-model="sliderValue" @save-rank="debouncedSaveRank" />

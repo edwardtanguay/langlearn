@@ -36,7 +36,7 @@
 - colors
 	- rood, blauw, geel, groen, oranje, paars, roze, bruin, zwart, wit, grijs
 - opposites
-	- groot/klein, warm/koud, goed/slecht, snel/langzaam, oud/nieuw, blij/verdrietig, makkelijk/moeilijk, rijk/arm, zwaar/licht, open/gesloten
+	- groot/klein, warm/koud, goed/slecht, snel/langzaam, oud/nieuw, blij/verdrietig, makkelijk/moeilijk, rijk/arm, zwaar/licht, open/gesloten, vroeg/laat, jong/oud, dichtbij/ver, schoon/vies, sterk/zwak, donker/licht, rustig/lawaaiig, duur/goedkoop, veilig/gevaarlijk, leeg/vol
 - question words
 	- wie, wat, waar, wanneer, waarom, hoe, welk, hoeveel, hoeveel
 - family

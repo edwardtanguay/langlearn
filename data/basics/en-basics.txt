@@ -36,7 +36,7 @@
 - colors
 	- red, blue, yellow, green, orange, purple, pink, brown, black, white, gray
 - opposites
-	- big/small, hot/cold, good/bad, fast/slow, old/new, happy/sad, easy/difficult, rich/poor, heavy/light, open/closed
+	- big/small, hot/cold, good/bad, fast/slow, old/new, happy/sad, easy/difficult, rich/poor, heavy/light, open/closed, early/late, young/old, near/far, clean/dirty, strong/weak, dark/light, quiet/noisy, expensive/cheap, safe/dangerous, empty/full
 - question words
 	- who, what, where, when, why, how, which, how many, how much
 - family
