@@ -720,9 +720,10 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
               <span
                 v-if="dropdownOpen"
                 class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90 shrink-0 text-center min-w-[38px] transition-all duration-300"
-                :class="isStatsLoading ? 'blur-[3px] opacity-40 select-none' : 'blur-none opacity-100'"
+                style="transition: opacity 0.3s ease, filter 0.3s ease;"
+                :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
               >
-                {{ isStatsLoading ? '--%' : `${allLangProgress[selectedLang]}%` }}
+                {{ isStatsLoading ? '0%' : `${allLangProgress[selectedLang]}%` }}
               </span>
               <svg
                 v-else
@@ -749,10 +750,11 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
               >
                 <span class="truncate">{{ lang.label }}</span>
                 <span
-                  class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90 shrink-0 text-center min-w-[38px] transition-all duration-300"
-                  :class="isStatsLoading ? 'blur-[3px] opacity-40 select-none' : 'blur-none opacity-100'"
+                  class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90 shrink-0 text-center min-w-[38px]"
+                  style="transition: opacity 0.3s ease, filter 0.3s ease;"
+                  :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
                 >
-                  {{ isStatsLoading ? '--%' : `${allLangProgress[lang.code]}%` }}
+                  {{ isStatsLoading ? '0%' : `${allLangProgress[lang.code]}%` }}
                 </span>
               </button>
             </div>
@@ -765,11 +767,12 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
         <div class="flex items-center gap-4">
           <!-- Large Percentage on Left, centered horizontally in allocated column -->
           <div
-            class="text-3xl sm:text-4xl font-black tracking-tight shrink-0 min-w-[75px] flex items-center justify-center text-center transition-all duration-300"
-            :class="isStatsLoading ? 'blur-[5px] opacity-40 select-none' : 'blur-none opacity-100'"
+            class="text-3xl sm:text-4xl font-black tracking-tight shrink-0 min-w-[75px] flex items-center justify-center text-center"
+            style="transition: opacity 0.3s ease, filter 0.3s ease;"
+            :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
             :style="{ color: brightColor }"
           >
-            {{ isStatsLoading ? '--%' : `${progressPercentage}%` }}
+            {{ isStatsLoading ? '0%' : `${progressPercentage}%` }}
           </div>
 
           <!-- Stats & Progress Controls on Right -->
@@ -777,10 +780,11 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
             <!-- Line 1: words learned count + Reset all words button -->
             <div class="flex items-center justify-between gap-2 flex-wrap">
               <div
-                class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 truncate transition-all duration-300"
-                :class="isStatsLoading ? 'blur-[3px] opacity-40 select-none' : 'blur-none opacity-100'"
+                class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 truncate"
+                style="transition: opacity 0.3s ease, filter 0.3s ease;"
+                :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
               >
-                {{ isStatsLoading ? `-- / ${totalWordsCount} words learned` : `${revealedCount} / ${totalWordsCount} words learned` }}
+                {{ isStatsLoading ? `0 / ${totalWordsCount} words learned` : `${revealedCount} / ${totalWordsCount} words learned` }}
               </div>
 
               <!-- Reset All Button / Confirmation -->
@@ -820,7 +824,8 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
             <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden">
               <div
                 class="h-2.5 rounded-full transition-all duration-300 ease-out"
-                :class="isStatsLoading ? 'opacity-40 blur-[2px]' : 'opacity-100 blur-none'"
+                style="transition: opacity 0.3s ease, filter 0.3s ease, width 0.3s ease-out;"
+                :class="isStatsLoading ? 'opacity-30 blur-[1px]' : 'opacity-100 blur-none'"
                 :style="{ width: isStatsLoading ? '0%' : `${progressPercentage}%`, backgroundColor: brightColor }"
               ></div>
             </div>
@@ -886,7 +891,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
             <!-- Learned percentage loading bar for this category (with corners, language color, centered % text) -->
             <div
               class="relative w-24 sm:w-28 h-5 bg-gray-200 dark:bg-gray-800 rounded-none overflow-hidden border border-gray-300/70 dark:border-gray-700/70 shrink-0"
-              :class="isStatsLoading ? 'opacity-40 blur-[2px]' : 'opacity-100 blur-none'"
+              :class="isStatsLoading ? 'opacity-30 blur-[1px]' : 'opacity-100 blur-none'"
               style="transition: opacity 0.3s ease, filter 0.3s ease;"
             >
               <div
@@ -897,7 +902,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
                 }"
               ></div>
               <div class="absolute inset-0 flex items-center justify-center text-[11px] font-extrabold text-gray-800 dark:text-gray-100 drop-shadow-xs pointer-events-none">
-                {{ isStatsLoading ? '--%' : `${getCategoryLearnedPercentage(cat)}%` }}
+                {{ isStatsLoading ? '0%' : `${getCategoryLearnedPercentage(cat)}%` }}
               </div>
             </div>
 
@@ -919,10 +924,11 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
           <!-- Sub-bar: Reset Category on the far right with 'Are you sure' step -->
           <div class="flex items-center justify-between pt-1">
             <span
-              class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider transition-all duration-300"
-              :class="isStatsLoading ? 'blur-[3px] opacity-40 select-none' : 'blur-none opacity-100'"
+              class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
+              style="transition: opacity 0.3s ease, filter 0.3s ease;"
+              :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
             >
-              {{ isStatsLoading ? `-- / ${cat.items.length} learned` : `${getCategoryLearnedCount(cat)} / ${cat.items.length} learned` }}
+              {{ isStatsLoading ? `0 / ${cat.items.length} learned` : `${getCategoryLearnedCount(cat)} / ${cat.items.length} learned` }}
             </span>
 
             <!-- Reset Category Controls -->
