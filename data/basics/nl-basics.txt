@@ -1,4 +1,6 @@
 - numbers 1-100
+	- https://www.youtube.com/watch?v=Gglzo9wlcTU;1-100
+	- https://youtu.be/osXA2WJU9tg?t=22;100-1
 	- nul, een, twee, drie, vier, vijf, zes, zeven, acht, negen
 	- tien, elf, twaalf, dertien, veertien, vijftien, zestien, zeventien, achttien, negentien
 	- twintig, eenentwintig, tweeëntwintig, drieëntwintig, vierentwintig, vijfentwintig, zesentwintig, zevenentwintig, achtentwintig, negenentwintig
@@ -11,7 +13,9 @@
 	- negentig, eenennegentig, tweeënnegentig, drieënnegentig, vierennegentig, vijfennegentig, zesennegentig, zevenennegentig, achtennegentig, negenennegentig
 	- honderd
 - pronunciation of letters
-	- a, bee, see, dee, ee, ef, gee, ha, ie, jee, ka, el, em, en, oo, pee, kuu, er, es, tee, uu, vee, wee, iks, ij, zet
+	- https://www.youtube.com/watch?v=YIf3ukVvFRM;A-Z
+	- https://youtu.be/YIf3ukVvFRM?t=64; A-Z snel
+	- ah, bay, say, day, ay, eff, %ay, hah, ee, yay, kah, ell, emm, enn, oh, pay, koo, air, ess, tay, oo, fay, vay, iks, ay, zed
 - weekdays
 	- maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag
 - months

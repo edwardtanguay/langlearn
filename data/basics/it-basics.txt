@@ -1,4 +1,5 @@
 - numbers 1-100
+	- https://www.youtube.com/watch?v=o50lpnL5PBw; 1-10 canzone
 	- zero, uno, due, tre, quattro, cinque, sei, sette, otto, nove
 	- dieci, undici, dodici, tredici, quattordici, quindici, sedici, diciassette, diciotto, diciannove
 	- venti, ventuno, ventidue, ventitré, ventiquattro, venticinque, ventisei, ventisette, ventotto, ventinove
@@ -11,7 +12,8 @@
 	- novanta, novantuno, novantadue, novantatré, novantaquattro, novantacinque, novantasei, novantasette, novantotto, novantanove
 	- cento
 - pronunciation of letters
-	- a, bi, ci, di, e, effe, gi, acca, i, i lunga, cappa, elle, emme, enne, o, pi, cu, erre, esse, ti, u, vu, doppia vu, ics, ipsilon, zeta
+	- https://youtu.be/T7deYXBnmBE?t=11; A-Z
+	- ah, bee, chee, dee, eh, effe, gee, akka, ee, ee-loonga, kappa, elle, emme, enne, oh, pee, koo, erre, esse, tee, oo, voo, doppia-voh, eeks, ee-grekka, zeta
 - weekdays
 	- lunedì, martedì, mercoledì, giovedì, venerdì, sabato, domenica
 - months

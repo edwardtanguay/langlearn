@@ -1,4 +1,6 @@
 - numbers 1-100
+	- https://www.youtube.com/watch?v=AvHO3T7cyNI; 1-100
+	- https://www.youtube.com/watch?v=zsR5d29x8MM; 1-100 rapide
 	- zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf
 	- dix, onze, douze, treize, quatorze, quinze, seize, dix-sept, dix-huit, dix-neuf
 	- vingt, vingt et un, vingt-deux, vingt-trois, vingt-quatre, vingt-cinq, vingt-six, vingt-sept, vingt-huit, vingt-neuf
@@ -11,7 +13,8 @@
 	- quatre-vingt-dix, quatre-vingt-onze, quatre-vingt-douze, quatre-vingt-treize, quatre-vingt-quatorze, quatre-vingt-quinze, quatre-vingt-seize, quatre-vingt-dix-sept, quatre-vingt-dix-huit, quatre-vingt-dix-neuf
 	- cent
 - pronunciation of letters
-	- a, bé, cé, dé, e, effe, gé, ache, i, ji, ka, elle, emme, enne, o, pé, ku, erre, esse, té, u, vé, double vé, ixe, i grec, zède
+	- https://youtu.be/-7woR4auqso?t=23; A-Z
+	- ah, bay, say, day, öh, eff, zhay, ahsh, ee, zhee, kah, ell, emm, enn, oh, pay, küh, air, ess, tay, üh, vay, doob-leh-vay, eecks, ee-grek, zed
 - weekdays
 	- lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche
 - months
