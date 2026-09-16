@@ -726,7 +726,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
                 :key="lang.code"
                 type="button"
                 @click.stop="selectLanguage(lang.code)"
-                class="w-full flex items-center justify-between px-3 py-1.5 text-sm font-bold text-white transition-all hover:brightness-110 cursor-pointer border-t border-white/20"
+                class="w-full flex items-center justify-between px-3 py-1.5 text-sm font-bold text-white transition-all hover:brightness-110 cursor-pointer"
                 :style="{ backgroundColor: languageColors[lang.code] }"
               >
                 <span class="truncate">{{ lang.label }}</span>
