@@ -809,13 +809,12 @@ function isWordLearned(itemId: string): boolean {
           :key="lang.code"
           type="button"
           @click="selectLanguage(lang.code)"
-          class="py-2 px-3 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center justify-between transition-all cursor-pointer shadow-xs select-none"
-          :class="selectedLang === lang.code ? 'ring-1 ring-gray-400/50 dark:ring-gray-400/40' : ''"
+          class="py-2 px-3 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center justify-between transition-all cursor-pointer shadow-xs select-none border"
+          :class="selectedLang === lang.code ? 'border-gray-400/60 dark:border-gray-400/50' : 'border-transparent'"
           :style="{
             backgroundColor: languageColors[lang.code],
             opacity: selectedLang === lang.code ? 1 : 0.45,
-            transform: selectedLang === lang.code ? 'scale(1.01)' : 'scale(1)',
-            boxShadow: selectedLang === lang.code ? '0 0 0 1px rgba(156, 163, 175, 0.45)' : 'none'
+            transform: selectedLang === lang.code ? 'scale(1.01)' : 'scale(1)'
           }"
         >
           <span class="truncate">{{ lang.label }}</span>
@@ -1112,21 +1111,13 @@ function isWordLearned(itemId: string): boolean {
                 type="button"
                 class="px-3 py-1.5 rounded-lg text-sm transition-all duration-150 cursor-pointer select-none text-left relative"
                 :class="[
-                  // STATE 1: Counting down in 3s learning window or unlearn view -> bright target translation
-                  (activeLearningWords.has(item.id) || activeUnlearnWords.has(item.id) || (searchQuery && isItemDisplayedRevealed(item)))
-                    ? 'font-semibold shadow-xs'
-                    : isWordLearned(item.id)
-                      // STATE 2: Learned/accomplished -> English with checkmark, dimmed language color, not bold
-                      ? 'font-normal shadow-xs'
-                      // STATE 3: Unlearned English pill
-                      : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300',
+                  // Learned word (and not in unlearn/revealed view): dimmed language color
+                  (isWordLearned(item.id) && !activeUnlearnWords.has(item.id))
+                    ? 'font-normal shadow-xs'
+                    : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300',
                   isItemFoundBySearch(item) ? 'shadow-[0_0_10px_rgba(217,119,6,0.6)] dark:shadow-[0_0_12px_rgba(255,255,255,0.85)]' : ''
                 ]"
-                :style="(activeLearningWords.has(item.id) || activeUnlearnWords.has(item.id) || (searchQuery && isItemDisplayedRevealed(item))) ? {
-                  backgroundColor: `color-mix(in srgb, ${currentButtonColor} 20%, transparent)`,
-                  color: `color-mix(in srgb, ${currentButtonColor} 50%, white)`,
-                  border: `1px solid color-mix(in srgb, ${currentButtonColor} 45%, transparent)`,
-                } : isWordLearned(item.id) ? {
+                :style="(isWordLearned(item.id) && !activeUnlearnWords.has(item.id)) ? {
                   backgroundColor: `color-mix(in srgb, ${currentButtonColor} 14%, transparent)`,
                   color: `color-mix(in srgb, ${currentButtonColor} 75%, white)`,
                   border: `1px solid color-mix(in srgb, ${currentButtonColor} 28%, transparent)`,
@@ -1185,24 +1176,28 @@ function isWordLearned(itemId: string): boolean {
                     </span>
                   </template>
 
-                  <!-- '✓' learn button when active in learning mode (unlearned word revealed) -->
+                  <!-- Small checkmark icon: mark as learned -->
                   <span
                     v-if="activeLearningWords.has(item.id)"
                     @click="finalizeWordLearned(item.id, $event)"
-                    class="ml-1 px-1 py-0.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold cursor-pointer transition-colors shrink-0 leading-none"
+                    class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 hover:text-emerald-500 transition-opacity cursor-pointer shrink-0"
                     title="Mark as learned"
                   >
-                    ✓
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
                   </span>
 
-                  <!-- '✕' unlearn button when active in unlearn mode -->
+                  <!-- Small '✕' icon: mark as unlearned -->
                   <span
                     v-if="activeUnlearnWords.has(item.id)"
                     @click="unlearnWord(item.id, $event)"
-                    class="ml-1 px-1 py-0.5 rounded bg-red-600/80 hover:bg-red-600 text-white text-[11px] font-bold cursor-pointer transition-colors shrink-0 leading-none"
+                    class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 hover:text-red-500 transition-opacity cursor-pointer shrink-0"
                     title="Mark as unlearned"
                   >
-                    ✕
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </span>
                 </span>
 
