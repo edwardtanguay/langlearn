@@ -208,18 +208,35 @@ watch(selectedLang, () => {
   resetCategoryConfirmId.value = null
 })
 
-// Watch search query: when returning to "no search", reset temporary toggles and close categories
-watch(searchQuery, (newVal) => {
+function scrollToTop() {
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+}
+
+// Watch search query: when returning to "no search", reset temporary toggles, close categories, and scroll to top
+watch(searchQuery, (newVal, oldVal) => {
   if (!newVal.trim()) {
     searchTemporaryToggles.value.clear()
     openCategoryId.value = null
+    if (oldVal && oldVal.trim()) {
+      nextTick(() => {
+        scrollToTop()
+      })
+    }
   }
 })
 
 function clearSearch() {
+  const hadSearch = searchQuery.value.trim().length > 0
   searchQuery.value = ''
   searchTemporaryToggles.value.clear()
   openCategoryId.value = null
+  if (hadSearch) {
+    nextTick(() => {
+      scrollToTop()
+    })
+  }
 }
 
 function handleScroll() {
@@ -668,34 +685,38 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
       <div class="flex items-center justify-between gap-3">
         <div class="flex items-center gap-2 flex-wrap">
           <h1 class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-            Learn language basics for:
+            Learn language basics:
           </h1>
-          <!-- Language Selector: collapses around word when closed, expands to w-44/w-48 with % when open -->
+          <!-- Language Selector: collapses around word when closed, expands to w-[132px] with % when open -->
           <div ref="dropdownRef" class="relative inline-block">
             <button
               type="button"
               @click.stop="dropdownOpen = !dropdownOpen"
               class="flex items-center justify-between gap-2 text-white text-sm font-bold py-1.5 px-3 rounded-xl border border-transparent shadow-xs cursor-pointer transition-all focus:outline-none"
-              :class="dropdownOpen ? 'w-44 sm:w-48' : 'w-auto'"
+              :class="dropdownOpen ? 'w-[132px]' : 'w-auto'"
               :style="{ backgroundColor: currentColor }"
             >
               <span class="truncate">{{ activeLangLabel }}</span>
-              <div class="flex items-center gap-1.5 shrink-0">
-                <span
-                  v-if="dropdownOpen"
-                  class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90"
-                >
-                  {{ allLangProgress[selectedLang] }}%
-                </span>
-                <svg class="w-4 h-4 transition-transform text-white/90" :class="{ 'rotate-180': dropdownOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
+              <span
+                v-if="dropdownOpen"
+                class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90 shrink-0 text-center min-w-[38px]"
+              >
+                {{ allLangProgress[selectedLang] }}%
+              </span>
+              <svg
+                v-else
+                class="w-4 h-4 text-white/90 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
             <!-- Dropdown menu showing other languages with matching width -->
             <div
               v-if="dropdownOpen"
-              class="absolute left-0 mt-1 w-44 sm:w-48 rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 z-50 bg-white dark:bg-gray-800"
+              class="absolute left-0 mt-1 w-[132px] rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 z-50 bg-white dark:bg-gray-800"
             >
               <button
                 v-for="lang in dropdownLanguageOptions"
@@ -705,8 +726,8 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
                 class="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer"
                 :style="{ backgroundColor: languageColors[lang.code] }"
               >
-                <span>{{ lang.label }}</span>
-                <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90">
+                <span class="truncate">{{ lang.label }}</span>
+                <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90 shrink-0 text-center min-w-[38px]">
                   {{ allLangProgress[lang.code] }}%
                 </span>
               </button>
@@ -860,7 +881,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
         </button>
 
         <!-- Accordion Content Area -->
-        <div v-if="isCategoryExpanded(cat.id)" class="px-4 pb-4 pt-1 border-t-2 border-gray-200 dark:border-gray-700 space-y-3">
+        <div v-if="isCategoryExpanded(cat.id)" class="px-4 pb-4 pt-1 border-t border-gray-200 dark:border-gray-700/80 space-y-3">
           <!-- Sub-bar: Reset Category on the far right with 'Are you sure' step -->
           <div class="flex items-center justify-between pt-1">
             <span class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
