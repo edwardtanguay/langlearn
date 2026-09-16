@@ -97,8 +97,6 @@ const pronunciationMap = ref<Map<string, string>>(new Map())
 const showPronunciationModal = ref(false)
 const activePronunciationItem = ref<BasicItem | null>(null)
 const pronunciationInput = ref('')
-const isSavingPronunciation = ref(false)
-const pronunciationSaveMessage = ref('')
 
 const storageKey = computed(() => `lang-basics-revealed-${selectedLang.value}`)
 const pronunciationStorageKey = computed(() => `lang-basics-pronunciation-${selectedLang.value}`)
@@ -142,6 +140,7 @@ function saveProgress() {
     } catch {
       // Ignore storage errors
     }
+    updateAllLangProgress()
   }
 }
 
@@ -196,6 +195,7 @@ watch(selectedLang, () => {
   clearAllNumberTimers()
   loadSavedProgress()
   loadPronunciations()
+  updateAllLangProgress()
   showResetConfirm.value = false
   resetCategoryConfirmId.value = null
 })
@@ -214,12 +214,14 @@ function handleClickOutside(event: MouseEvent) {
 onMounted(() => {
   loadSavedProgress()
   loadPronunciations()
+  updateAllLangProgress()
   document.addEventListener('click', handleClickOutside)
 })
 
 onUnmounted(() => {
   clearAllNumberTimers()
   document.removeEventListener('click', handleClickOutside)
+  if (toastTimeout) clearTimeout(toastTimeout)
 })
 
 function clearAllNumberTimers() {
@@ -273,6 +275,7 @@ function resetAll() {
       // Ignore storage errors
     }
   }
+  updateAllLangProgress()
   showResetConfirm.value = false
 }
 
@@ -312,6 +315,36 @@ const progressPercentage = computed(() => {
   if (totalWordsCount.value === 0) return 0
   return Math.round((revealedCount.value / totalWordsCount.value) * 100)
 })
+
+// Progress percentage across all languages
+const allLangProgress = ref<Record<LangCode, number>>({
+  fr: 0,
+  es: 0,
+  it: 0,
+  nl: 0
+})
+
+function updateAllLangProgress() {
+  if (import.meta.client && totalWordsCount.value > 0) {
+    for (const l of languages) {
+      if (l.code === selectedLang.value) {
+        allLangProgress.value[l.code] = progressPercentage.value
+      } else {
+        try {
+          const saved = localStorage.getItem(`lang-basics-revealed-${l.code}`)
+          if (saved) {
+            const ids = JSON.parse(saved) as string[]
+            allLangProgress.value[l.code] = Math.round((ids.length / totalWordsCount.value) * 100)
+          } else {
+            allLangProgress.value[l.code] = 0
+          }
+        } catch {
+          allLangProgress.value[l.code] = 0
+        }
+      }
+    }
+  }
+}
 
 // Filtered categories based on immediate search input
 const filteredCategories = computed(() => {
@@ -402,31 +435,19 @@ function handleGoogleTranslate(item: BasicItem, event: Event) {
   window.open(url, '_blank')
 }
 
-// Pronunciation modal handlers
-function openPronunciationModal(item: BasicItem, event: Event) {
-  event.stopPropagation()
-  activePronunciationItem.value = item
-  pronunciationInput.value = pronunciationMap.value.get(item.id) || ''
-  pronunciationSaveMessage.value = ''
-  showPronunciationModal.value = true
+// Toast notification for background operations
+const toastMessage = ref('')
+let toastTimeout: ReturnType<typeof setTimeout> | null = null
+
+function showToast(msg: string) {
+  toastMessage.value = msg
+  if (toastTimeout) clearTimeout(toastTimeout)
+  toastTimeout = setTimeout(() => {
+    toastMessage.value = ''
+  }, 4000)
 }
 
-async function savePronunciationTip() {
-  if (!activePronunciationItem.value) return
-  const item = activePronunciationItem.value
-  const note = pronunciationInput.value.trim()
-  isSavingPronunciation.value = true
-  pronunciationSaveMessage.value = ''
-
-  // 1. Optimistically update local map
-  if (note) {
-    pronunciationMap.value.set(item.id, note)
-  } else {
-    pronunciationMap.value.delete(item.id)
-  }
-  pronunciationMap.value = new Map(pronunciationMap.value)
-
-  // 2. Save to localStorage
+function savePronunciationToLocalStorage() {
   if (import.meta.client) {
     try {
       const obj: Record<string, string> = {}
@@ -436,8 +457,36 @@ async function savePronunciationTip() {
       // Ignore
     }
   }
+}
 
-  // 3. Persist to server database
+// Pronunciation modal handlers
+function openPronunciationModal(item: BasicItem, event: Event) {
+  event.stopPropagation()
+  activePronunciationItem.value = item
+  pronunciationInput.value = pronunciationMap.value.get(item.id) || ''
+  showPronunciationModal.value = true
+}
+
+async function savePronunciationTip() {
+  if (!activePronunciationItem.value) return
+  const item = activePronunciationItem.value
+  const note = pronunciationInput.value.trim()
+  const previousNote = pronunciationMap.value.get(item.id)
+
+  // 1. Optimistic and immediate close
+  showPronunciationModal.value = false
+  activePronunciationItem.value = null
+
+  // 2. Optimistically update local state & localStorage
+  if (note) {
+    pronunciationMap.value.set(item.id, note)
+  } else {
+    pronunciationMap.value.delete(item.id)
+  }
+  pronunciationMap.value = new Map(pronunciationMap.value)
+  savePronunciationToLocalStorage()
+
+  // 3. Save to server in the background
   try {
     await $fetch('/api/basics/word-info', {
       method: 'PUT',
@@ -448,14 +497,15 @@ async function savePronunciationTip() {
       }
     })
   } catch (err: any) {
-    // If unauthenticated or offline, note that it's saved locally
-    if (err?.statusCode === 401) {
-      pronunciationSaveMessage.value = 'Saved locally on this device.'
+    // If saving fails, rollback local state and notify user
+    if (previousNote !== undefined) {
+      pronunciationMap.value.set(item.id, previousNote)
+    } else {
+      pronunciationMap.value.delete(item.id)
     }
-  } finally {
-    isSavingPronunciation.value = false
-    showPronunciationModal.value = false
-    activePronunciationItem.value = null
+    pronunciationMap.value = new Map(pronunciationMap.value)
+    savePronunciationToLocalStorage()
+    showToast('Failed to save pronunciation note online. Reverted changes.')
   }
 }
 
@@ -485,67 +535,126 @@ function isNumberBlurred(itemId: string): boolean {
 function isNumber(itemId: string): boolean {
   return getCategoryId(itemId) === 'numbers-1-100'
 }
+
+// Search helpers
+function isItemFoundBySearch(item: BasicItem): boolean {
+  const q = searchQuery.value.trim().toLowerCase()
+  if (!q) return false
+  const enMatch = item.en.toLowerCase().includes(q)
+  const targetMatch = (item[selectedLang.value]?.toLowerCase() || '').includes(q)
+  return enMatch || targetMatch
+}
+
+function isCategoryFoundBySearch(cat: BasicCategory): boolean {
+  const q = searchQuery.value.trim().toLowerCase()
+  if (!q) return false
+  return cat.title.toLowerCase().includes(q)
+}
+
+// Determine if the item should currently be displayed as revealed (target language) or unrevealed (English)
+function isItemDisplayedRevealed(item: BasicItem): boolean {
+  const q = searchQuery.value.trim().toLowerCase()
+  if (!q) {
+    return revealedSet.value.has(item.id)
+  }
+
+  const enMatch = item.en.toLowerCase().includes(q)
+  const targetMatch = (item[selectedLang.value]?.toLowerCase() || '').includes(q)
+
+  // If matched on target language side while unrevealed, flip to revealed
+  if (targetMatch && !enMatch) {
+    return true
+  }
+  // If matched on English side while revealed, flip to unrevealed
+  if (enMatch && !targetMatch) {
+    return false
+  }
+  // If both match or neither matches directly (category match)
+  return revealedSet.value.has(item.id)
+}
+
+// Effectively blurred: unblurred if matched in search
+function isItemEffectivelyBlurred(itemId: string): boolean {
+  const q = searchQuery.value.trim().toLowerCase()
+  if (q) {
+    const catId = getCategoryId(itemId)
+    const cat = categories.find(c => c.id === catId)
+    const item = cat?.items.find(i => i.id === itemId)
+    if (item && isItemFoundBySearch(item)) {
+      return false
+    }
+  }
+  return isNumberBlurred(itemId)
+}
 </script>
 
 <template>
   <div class="max-w-5xl mx-auto px-4 py-4 space-y-6">
-    <!-- Top Navigation Link -->
-    <div>
-      <NuxtLink
-        to="/activities"
-        class="inline-flex items-center text-sm font-medium text-amber-600 dark:text-amber-400 hover:underline"
-      >
-        ← Back to Activities
-      </NuxtLink>
-    </div>
+    <!-- Sticky Header: from top navigation link down through search textbox -->
+    <div class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-2 pb-3 shadow-xs space-y-3 border-b border-gray-200/80 dark:border-gray-800/80 -mx-4 px-4">
+      <!-- Top Navigation Link inside sticky container -->
+      <div>
+        <NuxtLink
+          to="/activities"
+          class="inline-flex items-center text-sm font-medium text-amber-600 dark:text-amber-400 hover:underline"
+        >
+          ← Back to Activities
+        </NuxtLink>
+      </div>
 
-    <!-- Sticky Header: from title line down through search textbox -->
-    <div class="sticky top-0 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-2 pb-3 shadow-xs space-y-3 border-b border-gray-200/80 dark:border-gray-800/80 -mx-4 px-4">
       <!-- Title row: "Learn language basics for: " + language selector -->
       <div class="flex items-center justify-between gap-3">
         <div class="flex items-center gap-2 flex-wrap">
           <h1 class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
             Learn language basics for:
           </h1>
-          <!-- Language Selector (Custom Dropdown without outline, omitting active language) -->
+          <!-- Language Selector (Fixed width w-44 sm:w-48, showing current language percentage) -->
           <div ref="dropdownRef" class="relative inline-block">
             <button
               type="button"
               @click.stop="dropdownOpen = !dropdownOpen"
-              class="flex items-center gap-2 text-white text-sm font-bold py-1.5 pl-3 pr-8 rounded-xl border border-transparent shadow-xs cursor-pointer transition-all focus:outline-none"
+              class="w-44 sm:w-48 flex items-center justify-between gap-2 text-white text-sm font-bold py-1.5 px-3 rounded-xl border border-transparent shadow-xs cursor-pointer transition-all focus:outline-none"
               :style="{ backgroundColor: currentColor }"
             >
-              <span>{{ activeLangLabel }}</span>
+              <span class="truncate">{{ activeLangLabel }}</span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90">
+                  {{ allLangProgress[selectedLang] }}%
+                </span>
+                <svg class="w-4 h-4 transition-transform text-white/90" :class="{ 'rotate-180': dropdownOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </button>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white/80">
-              <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': dropdownOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-            </div>
-            <!-- Dropdown menu showing ONLY other languages -->
+            <!-- Dropdown menu showing other languages with matching width -->
             <div
               v-if="dropdownOpen"
-              class="absolute left-0 sm:right-0 sm:left-auto mt-1 w-36 rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 z-50 bg-white dark:bg-gray-800"
+              class="absolute left-0 sm:right-0 sm:left-auto mt-1 w-44 sm:w-48 rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 z-50 bg-white dark:bg-gray-800"
             >
               <button
                 v-for="lang in dropdownLanguageOptions"
                 :key="lang.code"
                 type="button"
                 @click.stop="selectLanguage(lang.code)"
-                class="w-full text-left px-3 py-2 text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer block"
+                class="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-white transition-all hover:brightness-110 cursor-pointer"
                 :style="{ backgroundColor: languageColors[lang.code] }"
               >
-                {{ lang.label }}
+                <span>{{ lang.label }}</span>
+                <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90">
+                  {{ allLangProgress[lang.code] }}%
+                </span>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Progress Panel: LARGE % on left, stats (Line 1: words + reset, Line 2: progress bar) on right -->
+      <!-- Progress Panel: LARGE % centered horizontally on left, stats on right -->
       <div class="p-3.5 rounded-2xl bg-gray-50 dark:bg-[#182030] border border-gray-200/90 dark:border-gray-800 shadow-xs">
         <div class="flex items-center gap-4">
-          <!-- Large Percentage on Left -->
+          <!-- Large Percentage on Left, centered horizontally in allocated column -->
           <div
-            class="text-3xl sm:text-4xl font-black tracking-tight shrink-0 min-w-[65px] text-left sm:text-center"
+            class="text-3xl sm:text-4xl font-black tracking-tight shrink-0 min-w-[75px] flex items-center justify-center text-center"
             :style="{ color: brightColor }"
           >
             {{ progressPercentage }}%
@@ -553,10 +662,10 @@ function isNumber(itemId: string): boolean {
 
           <!-- Stats & Progress Controls on Right -->
           <div class="flex-1 min-w-0 space-y-1.5">
-            <!-- Line 1: words revealed count + Reset all words button -->
+            <!-- Line 1: words learned count + Reset all words button -->
             <div class="flex items-center justify-between gap-2 flex-wrap">
               <div class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 truncate">
-                {{ revealedCount }} / {{ totalWordsCount }} words revealed
+                {{ revealedCount }} / {{ totalWordsCount }} words learned
               </div>
 
               <!-- Reset All Button / Confirmation -->
@@ -634,15 +743,18 @@ function isNumber(itemId: string): boolean {
       <div
         v-for="cat in filteredCategories"
         :key="cat.id"
-        class="rounded-xl border border-gray-200 dark:border-gray-800/90 bg-white dark:bg-[#151d2c] shadow-xs overflow-hidden transition-colors"
+        class="rounded-xl border border-gray-200 dark:border-gray-800/90 bg-white dark:bg-[#151d2c] overflow-hidden transition-all duration-200"
+        :class="isCategoryFoundBySearch(cat)
+          ? 'shadow-[0_0_14px_rgba(217,119,6,0.5)] dark:shadow-[0_0_16px_rgba(255,255,255,0.75)]'
+          : 'shadow-xs'"
       >
-        <!-- Accordion Header Button (Title left, % learned right) -->
+        <!-- Accordion Header Button (Title left, % learned loading bar right) -->
         <button
           type="button"
           @click="toggleCategory(cat.id)"
           class="w-full px-4 py-3.5 flex items-center justify-between text-left cursor-pointer hover:bg-gray-50 dark:hover:bg-[#192335] transition-colors select-none"
         >
-          <div class="flex items-center gap-2 min-w-0">
+          <div class="flex items-center gap-2 min-w-0 pr-2">
             <span class="text-sm font-bold text-gray-900 dark:text-white truncate">
               {{ cat.title }}
             </span>
@@ -652,16 +764,21 @@ function isNumber(itemId: string): boolean {
           </div>
 
           <div class="flex items-center gap-3 shrink-0">
-            <!-- Learned percentage badge for this category -->
-            <span
-              class="text-xs font-bold px-2 py-0.5 rounded-md"
-              :style="{
-                backgroundColor: `color-mix(in srgb, ${currentColor} 15%, transparent)`,
-                color: brightColor
-              }"
+            <!-- Learned percentage loading bar for this category (with corners, language color, centered % text) -->
+            <div
+              class="relative w-24 sm:w-28 h-5 bg-gray-200 dark:bg-gray-800 rounded-none overflow-hidden border border-gray-300/70 dark:border-gray-700/70 shrink-0"
             >
-              {{ getCategoryLearnedPercentage(cat) }}%
-            </span>
+              <div
+                class="h-full rounded-none transition-all duration-300 ease-out"
+                :style="{
+                  width: `${getCategoryLearnedPercentage(cat)}%`,
+                  backgroundColor: brightColor
+                }"
+              ></div>
+              <div class="absolute inset-0 flex items-center justify-center text-[11px] font-extrabold text-gray-800 dark:text-gray-100 drop-shadow-xs pointer-events-none">
+                {{ getCategoryLearnedPercentage(cat) }}%
+              </div>
+            </div>
 
             <!-- Accordion chevron indicator -->
             <svg
@@ -728,18 +845,21 @@ function isNumber(itemId: string): boolean {
               @click="toggleWord(item.id)"
               type="button"
               class="px-3 py-1.5 rounded-lg text-sm transition-all duration-150 cursor-pointer select-none text-left"
-              :class="revealedSet.has(item.id)
-                ? 'font-semibold shadow-xs'
-                : 'bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300'"
-              :style="revealedSet.has(item.id) ? {
+              :class="[
+                isItemDisplayedRevealed(item)
+                  ? 'font-semibold shadow-xs'
+                  : 'bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300',
+                isItemFoundBySearch(item) ? 'shadow-[0_0_10px_rgba(217,119,6,0.6)] dark:shadow-[0_0_12px_rgba(255,255,255,0.85)]' : ''
+              ]"
+              :style="isItemDisplayedRevealed(item) ? {
                 backgroundColor: `color-mix(in srgb, ${currentButtonColor} 20%, transparent)`,
                 color: `color-mix(in srgb, ${currentButtonColor} 50%, white)`,
                 border: `1px solid color-mix(in srgb, ${currentButtonColor} 45%, transparent)`,
               } : undefined"
-              :title="revealedSet.has(item.id) ? 'Click to show English' : `Click to show in ${activeLangLabel}`"
+              :title="isItemDisplayedRevealed(item) ? 'Click to show English' : `Click to show in ${activeLangLabel}`"
             >
               <!-- Revealed: Target Language -->
-              <span v-if="revealedSet.has(item.id)" class="inline-flex items-center gap-1.5">
+              <span v-if="isItemDisplayedRevealed(item)" class="inline-flex items-center gap-1.5">
                 <!-- Pronunciation of Letters: bracketed monospace, no extra icons -->
                 <template v-if="isPronunciation(item.id)">
                   <span style="font-family: 'Courier New', Courier, monospace;">[{{ item[selectedLang] || item.en }}]</span>
@@ -749,13 +869,17 @@ function isNumber(itemId: string): boolean {
                 <template v-else-if="isNumber(item.id)">
                   <span
                     class="inline-flex items-center gap-1.5 number-cell-content"
-                    :class="{ 'number-cell-blurred': isNumberBlurred(item.id) }"
+                    :class="{ 'number-cell-blurred': isItemEffectivelyBlurred(item.id) }"
                   >
                     <span>{{ item[selectedLang] || item.en }}</span>
-                    <!-- Star + Translate + Pronunciation icons (icons kept in DOM and blurred smoothly together) -->
+                    <!-- Pronunciation Note placed right after the word, before icons -->
+                    <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-85 font-normal ml-0.5">
+                      [{{ pronunciationMap.get(item.id) }}]
+                    </span>
+                    <!-- Star + Translate + Pronunciation icons -->
                     <span
                       class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity"
-                      :class="isNumberBlurred(item.id) ? 'pointer-events-none' : 'cursor-pointer'"
+                      :class="isItemEffectivelyBlurred(item.id) ? 'pointer-events-none' : 'cursor-pointer'"
                       title="Search for 3 example sentences"
                       @click="handleExampleSearch(item, $event)"
                     >
@@ -763,7 +887,7 @@ function isNumber(itemId: string): boolean {
                     </span>
                     <span
                       class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity"
-                      :class="isNumberBlurred(item.id) ? 'pointer-events-none' : 'cursor-pointer'"
+                      :class="isItemEffectivelyBlurred(item.id) ? 'pointer-events-none' : 'cursor-pointer'"
                       title="Look up in Google Translate"
                       @click="handleGoogleTranslate(item, $event)"
                     >
@@ -772,22 +896,22 @@ function isNumber(itemId: string): boolean {
                     <!-- Pronunciation 'P' button -->
                     <span
                       class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded"
-                      :class="isNumberBlurred(item.id) ? 'pointer-events-none' : 'cursor-pointer'"
+                      :class="isItemEffectivelyBlurred(item.id) ? 'pointer-events-none' : 'cursor-pointer'"
                       title="Add or edit pronunciation tip"
                       @click="openPronunciationModal(item, $event)"
                     >
                       P
                     </span>
-                    <!-- Bracketed Pronunciation Note -->
-                    <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-85 font-normal ml-0.5">
-                      [{{ pronunciationMap.get(item.id) }}]
-                    </span>
                   </span>
                 </template>
 
-                <!-- All other categories: word + star + translate + P icons + [pronunciation] -->
+                <!-- All other categories: word + pronunciation + star + translate + P icons -->
                 <template v-else>
                   <span>{{ item[selectedLang] || item.en }}</span>
+                  <!-- Pronunciation Note placed right after the word, before icons -->
+                  <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-85 font-normal ml-0.5">
+                    [{{ pronunciationMap.get(item.id) }}]
+                  </span>
                   <!-- Star icon: example sentences -->
                   <span
                     class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
@@ -811,10 +935,6 @@ function isNumber(itemId: string): boolean {
                     @click="openPronunciationModal(item, $event)"
                   >
                     P
-                  </span>
-                  <!-- Bracketed Pronunciation Note -->
-                  <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-85 font-normal ml-0.5">
-                    [{{ pronunciationMap.get(item.id) }}]
                   </span>
                 </template>
               </span>
@@ -862,7 +982,7 @@ function isNumber(itemId: string): boolean {
         <form @submit.prevent="savePronunciationTip" class="space-y-4">
           <div>
             <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
-              Pronunciation Note (will show in brackets [ ])
+              Pronunciation note will show in brackets [ ]
             </label>
             <input
               v-model="pronunciationInput"
@@ -871,10 +991,6 @@ function isNumber(itemId: string): boolean {
               class="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-[#121824] border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40"
               autofocus
             />
-          </div>
-
-          <div v-if="pronunciationSaveMessage" class="text-xs text-amber-600 dark:text-amber-400">
-            {{ pronunciationSaveMessage }}
           </div>
 
           <div class="flex items-center justify-end gap-2 pt-2">
@@ -887,15 +1003,31 @@ function isNumber(itemId: string): boolean {
             </button>
             <button
               type="submit"
-              :disabled="isSavingPronunciation"
-              class="px-4 py-1.5 text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+              class="px-4 py-1.5 text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-xs transition-colors cursor-pointer"
             >
-              {{ isSavingPronunciation ? 'Saving...' : 'Save' }}
+              Save
             </button>
           </div>
         </form>
       </div>
     </div>
+
+    <!-- Toast Notification -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="transform translate-y-2 opacity-0"
+      enter-to-class="transform translate-y-0 opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="transform translate-y-0 opacity-100"
+      leave-to-class="transform translate-y-2 opacity-0"
+    >
+      <div
+        v-if="toastMessage"
+        class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-xl shadow-xl bg-red-600 text-white text-xs font-semibold flex items-center gap-2"
+      >
+        <span>{{ toastMessage }}</span>
+      </div>
+    </Transition>
   </div>
 </template>
 
