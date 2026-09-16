@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import {
+  BookOpenIcon,
+  SpeakerWaveIcon,
+  SparklesIcon,
+  CursorArrowRaysIcon,
+  TagIcon
+} from '@heroicons/vue/24/outline'
+
 useHead({
   title: 'LangLearn - Activities',
   meta: [
@@ -11,36 +19,36 @@ const activities = [
     title: 'Language Basics',
     path: '/activities/language-basics',
     description: 'Interactive flashcards covering essential language basics across four languages.',
-    badge: 'Basics',
-    badgeColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/30'
+    icon: BookOpenIcon,
+    badgeColor: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-900/40'
   },
   {
     title: 'Pronunciation Practice',
     path: '/activities/pronunciation-practice',
     description: 'Test your pronunciation recall with phonetics reveal, independent progress tracking, and audio pronunciation.',
-    badge: 'Pronunciation',
-    badgeColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/30'
+    icon: SpeakerWaveIcon,
+    badgeColor: 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-200/60 dark:border-blue-900/40'
   },
   {
     title: 'Gemini Quiz Prompts',
     path: '/activities/gemini-quiz',
     description: 'Prompts to copy and paste into Gemini\u00A0AI to generate custom quizzes for specific vocabulary, grammar patterns, and CEFR levels.',
-    badge: 'Interactive Quiz',
-    badgeColor: 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/30'
+    icon: SparklesIcon,
+    badgeColor: 'bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 border-purple-200/60 dark:border-purple-900/40'
   },
   {
     title: 'Drag/Drop Highlighted Words',
     path: '/activities/starred-texts',
     description: 'Practice fill-in-the-blank activities using your flashcards with starred text (*target phrase*). Drag & drop to test recall.',
-    badge: 'Interactive',
-    badgeColor: 'bg-amber-500/10 text-amber-600 dark:text-amber-300 border-amber-500/30'
+    icon: CursorArrowRaysIcon,
+    badgeColor: 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-200/60 dark:border-amber-900/40'
   },
   {
     title: 'Learn à/de',
     path: '/activities/learn-a-de',
     description: 'Master prepositions by studying flashcards tagged with "à" and "de" with instant French reveal and quick flashcard editing.',
-    badge: 'Grammar',
-    badgeColor: 'bg-blue-500/10 text-blue-600 dark:text-blue-300 border-blue-500/30'
+    icon: TagIcon,
+    badgeColor: 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200/60 dark:border-rose-900/40'
   }
 ]
 </script>
@@ -52,31 +60,29 @@ const activities = [
       <p class="text-gray-600 dark:text-gray-400 mt-1">Choose an activity to practice your language skills and reinforce key vocabulary.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
       <NuxtLink
         v-for="act in activities"
         :key="act.path"
         :to="act.path"
-        class="p-6 rounded-2xl bg-white dark:bg-[#182030] border border-gray-300 dark:border-gray-700/80 shadow-sm hover:shadow-md hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all duration-200 group flex flex-col justify-between"
+        class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg hover:border-amber-500/70 dark:hover:border-amber-500/70 transition-all duration-200 group flex flex-col justify-start relative"
       >
-        <div>
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-tight">
-            {{ act.title }}
-          </h2>
-          <div class="-mt-4 mb-6">
-            <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider" :class="act.badgeColor">
-              {{ act.badge }}
-            </span>
+        <div class="flex items-start gap-3.5 mb-2.5">
+          <div
+            class="p-2.5 rounded-xl border shrink-0 transition-transform duration-200 group-hover:scale-105"
+            :class="act.badgeColor"
+          >
+            <component :is="act.icon" class="w-5 h-5" />
           </div>
-          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            {{ act.description }}
-          </p>
+          <div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-tight pt-1">
+              {{ act.title }}
+            </h2>
+          </div>
         </div>
-
-        <div class="mt-6 flex items-center text-xs font-semibold text-amber-600 dark:text-amber-400 group-hover:translate-x-1 transition-transform">
-          <span>Start activity</span>
-          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-[46px]">
+          {{ act.description }}
+        </p>
       </NuxtLink>
     </div>
   </div>

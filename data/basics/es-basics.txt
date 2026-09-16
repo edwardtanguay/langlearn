@@ -36,7 +36,7 @@
 - colors
 	- rojo, azul, amarillo, verde, naranja, morado, rosa, marrón, negro, blanco, gris
 - opposites
-	- grande/pequeño, caliente/frío, bueno/malo, rápido/lento, viejo/nuevo, feliz/triste, fácil/difícil, rico/pobre, pesado/ligero, abierto/cerrado
+	- grande/pequeño, caliente/frío, bueno/malo, rápido/lento, viejo/nuevo, feliz/triste, fácil/difícil, rico/pobre, pesado/ligero, abierto/cerrado, temprano/tarde, joven/viejo, cerca/lejos, limpio/sucio, fuerte/débil, oscuro/claro, tranquilo/ruidoso, caro/barato, seguro/peligroso, vacío/lleno
 - question words
 	- quién, qué, dónde, cuándo, por qué, cómo, cuál, cuántos, cuánto
 - family

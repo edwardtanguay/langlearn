@@ -226,6 +226,16 @@ exports.Prisma.ChatbotPromptScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BasicWordInfoScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  wordId: 'wordId',
+  language: 'language',
+  pronunciation: 'pronunciation',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -248,7 +258,8 @@ exports.Prisma.ModelName = {
   Tag: 'Tag',
   FlashcardTag: 'FlashcardTag',
   MobileImport: 'MobileImport',
-  ChatbotPrompt: 'ChatbotPrompt'
+  ChatbotPrompt: 'ChatbotPrompt',
+  BasicWordInfo: 'BasicWordInfo'
 };
 
 /**

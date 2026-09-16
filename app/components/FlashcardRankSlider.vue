@@ -7,7 +7,7 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="bg-gray-50 dark:bg-gray-950 p-4 rounded-xl border border-gray-100 dark:border-gray-800/60">
+  <div class="bg-gray-50 dark:bg-gray-950 p-2.5 sm:p-4 rounded-xl border border-gray-100 dark:border-gray-800/60">
     <input
       v-model.number="modelValue"
       @input="$emit('save-rank')"

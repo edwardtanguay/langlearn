@@ -10,6 +10,14 @@ If you are asked to make a "miniapp", see /output/miniapps/agents.md"
 - in edit/add forms, make ENTER mean SAVE
 - all activities ignore deleted cards
 - all values that are loaded from the database, are replaced with spinners or blurred out areas while the page loads and those values are not yet present
+- **blur-while-loading rule for numeric stats and progress**: any page that displays user progress statistics (counts, percentages, progress bars) must:
+  - use an `isStatsLoading` ref that starts as `true`
+  - show placeholder text (`--%` for percentages, `-- / N words learned` for counts) while loading — never show `0` or `0%`
+  - apply `blur-[4px] opacity-40 select-none` CSS classes to numeric text elements while loading
+  - apply `opacity-40 blur-[2px]` to progress bar fill elements, holding width at `0%` while loading
+  - use a 250ms minimum loading delay (via `setTimeout`) before clearing `isStatsLoading`, to prevent micro-flash from near-instant `localStorage` reads
+  - use `transition-all duration-300` on all blurred elements so they fade in smoothly once loaded
+  - re-trigger the blur (set `isStatsLoading = true`) whenever the user switches languages or contexts, not just on initial page load
 
 # language colors reference
 

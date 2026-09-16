@@ -68,6 +68,11 @@ export type MobileImport = $Result.DefaultSelection<Prisma.$MobileImportPayload>
  * 
  */
 export type ChatbotPrompt = $Result.DefaultSelection<Prisma.$ChatbotPromptPayload>
+/**
+ * Model BasicWordInfo
+ * 
+ */
+export type BasicWordInfo = $Result.DefaultSelection<Prisma.$BasicWordInfoPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -299,6 +304,16 @@ export class PrismaClient<
     * ```
     */
   get chatbotPrompt(): Prisma.ChatbotPromptDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.basicWordInfo`: Exposes CRUD operations for the **BasicWordInfo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BasicWordInfos
+    * const basicWordInfos = await prisma.basicWordInfo.findMany()
+    * ```
+    */
+  get basicWordInfo(): Prisma.BasicWordInfoDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -743,7 +758,8 @@ export namespace Prisma {
     Tag: 'Tag',
     FlashcardTag: 'FlashcardTag',
     MobileImport: 'MobileImport',
-    ChatbotPrompt: 'ChatbotPrompt'
+    ChatbotPrompt: 'ChatbotPrompt',
+    BasicWordInfo: 'BasicWordInfo'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -759,7 +775,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport" | "chatbotPrompt"
+      modelProps: "user" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport" | "chatbotPrompt" | "basicWordInfo"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1577,6 +1593,80 @@ export namespace Prisma {
           }
         }
       }
+      BasicWordInfo: {
+        payload: Prisma.$BasicWordInfoPayload<ExtArgs>
+        fields: Prisma.BasicWordInfoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BasicWordInfoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BasicWordInfoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>
+          }
+          findFirst: {
+            args: Prisma.BasicWordInfoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BasicWordInfoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>
+          }
+          findMany: {
+            args: Prisma.BasicWordInfoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>[]
+          }
+          create: {
+            args: Prisma.BasicWordInfoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>
+          }
+          createMany: {
+            args: Prisma.BasicWordInfoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BasicWordInfoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>[]
+          }
+          delete: {
+            args: Prisma.BasicWordInfoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>
+          }
+          update: {
+            args: Prisma.BasicWordInfoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>
+          }
+          deleteMany: {
+            args: Prisma.BasicWordInfoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BasicWordInfoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BasicWordInfoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>[]
+          }
+          upsert: {
+            args: Prisma.BasicWordInfoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BasicWordInfoPayload>
+          }
+          aggregate: {
+            args: Prisma.BasicWordInfoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBasicWordInfo>
+          }
+          groupBy: {
+            args: Prisma.BasicWordInfoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BasicWordInfoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BasicWordInfoCountArgs<ExtArgs>
+            result: $Utils.Optional<BasicWordInfoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1696,6 +1786,7 @@ export namespace Prisma {
     flashcardTag?: FlashcardTagOmit
     mobileImport?: MobileImportOmit
     chatbotPrompt?: ChatbotPromptOmit
+    basicWordInfo?: BasicWordInfoOmit
   }
 
   /* Types for Logging */
@@ -1780,6 +1871,7 @@ export namespace Prisma {
     activities: number
     versionItems: number
     mobileImports: number
+    basicWordInfos: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1787,6 +1879,7 @@ export namespace Prisma {
     activities?: boolean | UserCountOutputTypeCountActivitiesArgs
     versionItems?: boolean | UserCountOutputTypeCountVersionItemsArgs
     mobileImports?: boolean | UserCountOutputTypeCountMobileImportsArgs
+    basicWordInfos?: boolean | UserCountOutputTypeCountBasicWordInfosArgs
   }
 
   // Custom InputTypes
@@ -1826,6 +1919,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountMobileImportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MobileImportWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBasicWordInfosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BasicWordInfoWhereInput
   }
 
 
@@ -2218,6 +2318,7 @@ export namespace Prisma {
     activities?: boolean | User$activitiesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
     mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
+    basicWordInfos?: boolean | User$basicWordInfosArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2260,6 +2361,7 @@ export namespace Prisma {
     activities?: boolean | User$activitiesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
     mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
+    basicWordInfos?: boolean | User$basicWordInfosArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2272,6 +2374,7 @@ export namespace Prisma {
       activities: Prisma.$UserFlashcardActivityPayload<ExtArgs>[]
       versionItems: Prisma.$VersionItemPayload<ExtArgs>[]
       mobileImports: Prisma.$MobileImportPayload<ExtArgs>[]
+      basicWordInfos: Prisma.$BasicWordInfoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2680,6 +2783,7 @@ export namespace Prisma {
     activities<T extends User$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     versionItems<T extends User$versionItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$versionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mobileImports<T extends User$mobileImportsArgs<ExtArgs> = {}>(args?: Subset<T, User$mobileImportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    basicWordInfos<T extends User$basicWordInfosArgs<ExtArgs> = {}>(args?: Subset<T, User$basicWordInfosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3201,6 +3305,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MobileImportScalarFieldEnum | MobileImportScalarFieldEnum[]
+  }
+
+  /**
+   * User.basicWordInfos
+   */
+  export type User$basicWordInfosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    where?: BasicWordInfoWhereInput
+    orderBy?: BasicWordInfoOrderByWithRelationInput | BasicWordInfoOrderByWithRelationInput[]
+    cursor?: BasicWordInfoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BasicWordInfoScalarFieldEnum | BasicWordInfoScalarFieldEnum[]
   }
 
   /**
@@ -14418,6 +14546,1093 @@ export namespace Prisma {
 
 
   /**
+   * Model BasicWordInfo
+   */
+
+  export type AggregateBasicWordInfo = {
+    _count: BasicWordInfoCountAggregateOutputType | null
+    _min: BasicWordInfoMinAggregateOutputType | null
+    _max: BasicWordInfoMaxAggregateOutputType | null
+  }
+
+  export type BasicWordInfoMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    wordId: string | null
+    language: string | null
+    pronunciation: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BasicWordInfoMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    wordId: string | null
+    language: string | null
+    pronunciation: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BasicWordInfoCountAggregateOutputType = {
+    id: number
+    userId: number
+    wordId: number
+    language: number
+    pronunciation: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BasicWordInfoMinAggregateInputType = {
+    id?: true
+    userId?: true
+    wordId?: true
+    language?: true
+    pronunciation?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BasicWordInfoMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    wordId?: true
+    language?: true
+    pronunciation?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BasicWordInfoCountAggregateInputType = {
+    id?: true
+    userId?: true
+    wordId?: true
+    language?: true
+    pronunciation?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BasicWordInfoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BasicWordInfo to aggregate.
+     */
+    where?: BasicWordInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BasicWordInfos to fetch.
+     */
+    orderBy?: BasicWordInfoOrderByWithRelationInput | BasicWordInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BasicWordInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BasicWordInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BasicWordInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BasicWordInfos
+    **/
+    _count?: true | BasicWordInfoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BasicWordInfoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BasicWordInfoMaxAggregateInputType
+  }
+
+  export type GetBasicWordInfoAggregateType<T extends BasicWordInfoAggregateArgs> = {
+        [P in keyof T & keyof AggregateBasicWordInfo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBasicWordInfo[P]>
+      : GetScalarType<T[P], AggregateBasicWordInfo[P]>
+  }
+
+
+
+
+  export type BasicWordInfoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BasicWordInfoWhereInput
+    orderBy?: BasicWordInfoOrderByWithAggregationInput | BasicWordInfoOrderByWithAggregationInput[]
+    by: BasicWordInfoScalarFieldEnum[] | BasicWordInfoScalarFieldEnum
+    having?: BasicWordInfoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BasicWordInfoCountAggregateInputType | true
+    _min?: BasicWordInfoMinAggregateInputType
+    _max?: BasicWordInfoMaxAggregateInputType
+  }
+
+  export type BasicWordInfoGroupByOutputType = {
+    id: string
+    userId: string
+    wordId: string
+    language: string
+    pronunciation: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: BasicWordInfoCountAggregateOutputType | null
+    _min: BasicWordInfoMinAggregateOutputType | null
+    _max: BasicWordInfoMaxAggregateOutputType | null
+  }
+
+  type GetBasicWordInfoGroupByPayload<T extends BasicWordInfoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BasicWordInfoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BasicWordInfoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BasicWordInfoGroupByOutputType[P]>
+            : GetScalarType<T[P], BasicWordInfoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BasicWordInfoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    wordId?: boolean
+    language?: boolean
+    pronunciation?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["basicWordInfo"]>
+
+  export type BasicWordInfoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    wordId?: boolean
+    language?: boolean
+    pronunciation?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["basicWordInfo"]>
+
+  export type BasicWordInfoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    wordId?: boolean
+    language?: boolean
+    pronunciation?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["basicWordInfo"]>
+
+  export type BasicWordInfoSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    wordId?: boolean
+    language?: boolean
+    pronunciation?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BasicWordInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordId" | "language" | "pronunciation" | "createdAt" | "updatedAt", ExtArgs["result"]["basicWordInfo"]>
+  export type BasicWordInfoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BasicWordInfoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BasicWordInfoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $BasicWordInfoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BasicWordInfo"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      wordId: string
+      language: string
+      pronunciation: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["basicWordInfo"]>
+    composites: {}
+  }
+
+  type BasicWordInfoGetPayload<S extends boolean | null | undefined | BasicWordInfoDefaultArgs> = $Result.GetResult<Prisma.$BasicWordInfoPayload, S>
+
+  type BasicWordInfoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BasicWordInfoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BasicWordInfoCountAggregateInputType | true
+    }
+
+  export interface BasicWordInfoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BasicWordInfo'], meta: { name: 'BasicWordInfo' } }
+    /**
+     * Find zero or one BasicWordInfo that matches the filter.
+     * @param {BasicWordInfoFindUniqueArgs} args - Arguments to find a BasicWordInfo
+     * @example
+     * // Get one BasicWordInfo
+     * const basicWordInfo = await prisma.basicWordInfo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BasicWordInfoFindUniqueArgs>(args: SelectSubset<T, BasicWordInfoFindUniqueArgs<ExtArgs>>): Prisma__BasicWordInfoClient<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BasicWordInfo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BasicWordInfoFindUniqueOrThrowArgs} args - Arguments to find a BasicWordInfo
+     * @example
+     * // Get one BasicWordInfo
+     * const basicWordInfo = await prisma.basicWordInfo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BasicWordInfoFindUniqueOrThrowArgs>(args: SelectSubset<T, BasicWordInfoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BasicWordInfoClient<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BasicWordInfo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BasicWordInfoFindFirstArgs} args - Arguments to find a BasicWordInfo
+     * @example
+     * // Get one BasicWordInfo
+     * const basicWordInfo = await prisma.basicWordInfo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BasicWordInfoFindFirstArgs>(args?: SelectSubset<T, BasicWordInfoFindFirstArgs<ExtArgs>>): Prisma__BasicWordInfoClient<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BasicWordInfo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BasicWordInfoFindFirstOrThrowArgs} args - Arguments to find a BasicWordInfo
+     * @example
+     * // Get one BasicWordInfo
+     * const basicWordInfo = await prisma.basicWordInfo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BasicWordInfoFindFirstOrThrowArgs>(args?: SelectSubset<T, BasicWordInfoFindFirstOrThrowArgs<ExtArgs>>): Prisma__BasicWordInfoClient<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BasicWordInfos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BasicWordInfoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BasicWordInfos
+     * const basicWordInfos = await prisma.basicWordInfo.findMany()
+     * 
+     * // Get first 10 BasicWordInfos
+     * const basicWordInfos = await prisma.basicWordInfo.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const basicWordInfoWithIdOnly = await prisma.basicWordInfo.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BasicWordInfoFindManyArgs>(args?: SelectSubset<T, BasicWordInfoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BasicWordInfo.
+     * @param {BasicWordInfoCreateArgs} args - Arguments to create a BasicWordInfo.
+     * @example
+     * // Create one BasicWordInfo
+     * const BasicWordInfo = await prisma.basicWordInfo.create({
+     *   data: {
+     *     // ... data to create a BasicWordInfo
+     *   }
+     * })
+     * 
+     */
+    create<T extends BasicWordInfoCreateArgs>(args: SelectSubset<T, BasicWordInfoCreateArgs<ExtArgs>>): Prisma__BasicWordInfoClient<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BasicWordInfos.
+     * @param {BasicWordInfoCreateManyArgs} args - Arguments to create many BasicWordInfos.
+     * @example
+     * // Create many BasicWordInfos
+     * const basicWordInfo = await prisma.basicWordInfo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BasicWordInfoCreateManyArgs>(args?: SelectSubset<T, BasicWordInfoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BasicWordInfos and returns the data saved in the database.
+     * @param {BasicWordInfoCreateManyAndReturnArgs} args - Arguments to create many BasicWordInfos.
+     * @example
+     * // Create many BasicWordInfos
+     * const basicWordInfo = await prisma.basicWordInfo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BasicWordInfos and only return the `id`
+     * const basicWordInfoWithIdOnly = await prisma.basicWordInfo.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BasicWordInfoCreateManyAndReturnArgs>(args?: SelectSubset<T, BasicWordInfoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BasicWordInfo.
+     * @param {BasicWordInfoDeleteArgs} args - Arguments to delete one BasicWordInfo.
+     * @example
+     * // Delete one BasicWordInfo
+     * const BasicWordInfo = await prisma.basicWordInfo.delete({
+     *   where: {
+     *     // ... filter to delete one BasicWordInfo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BasicWordInfoDeleteArgs>(args: SelectSubset<T, BasicWordInfoDeleteArgs<ExtArgs>>): Prisma__BasicWordInfoClient<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BasicWordInfo.
+     * @param {BasicWordInfoUpdateArgs} args - Arguments to update one BasicWordInfo.
+     * @example
+     * // Update one BasicWordInfo
+     * const basicWordInfo = await prisma.basicWordInfo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BasicWordInfoUpdateArgs>(args: SelectSubset<T, BasicWordInfoUpdateArgs<ExtArgs>>): Prisma__BasicWordInfoClient<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BasicWordInfos.
+     * @param {BasicWordInfoDeleteManyArgs} args - Arguments to filter BasicWordInfos to delete.
+     * @example
+     * // Delete a few BasicWordInfos
+     * const { count } = await prisma.basicWordInfo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BasicWordInfoDeleteManyArgs>(args?: SelectSubset<T, BasicWordInfoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BasicWordInfos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BasicWordInfoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BasicWordInfos
+     * const basicWordInfo = await prisma.basicWordInfo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BasicWordInfoUpdateManyArgs>(args: SelectSubset<T, BasicWordInfoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BasicWordInfos and returns the data updated in the database.
+     * @param {BasicWordInfoUpdateManyAndReturnArgs} args - Arguments to update many BasicWordInfos.
+     * @example
+     * // Update many BasicWordInfos
+     * const basicWordInfo = await prisma.basicWordInfo.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BasicWordInfos and only return the `id`
+     * const basicWordInfoWithIdOnly = await prisma.basicWordInfo.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BasicWordInfoUpdateManyAndReturnArgs>(args: SelectSubset<T, BasicWordInfoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BasicWordInfo.
+     * @param {BasicWordInfoUpsertArgs} args - Arguments to update or create a BasicWordInfo.
+     * @example
+     * // Update or create a BasicWordInfo
+     * const basicWordInfo = await prisma.basicWordInfo.upsert({
+     *   create: {
+     *     // ... data to create a BasicWordInfo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BasicWordInfo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BasicWordInfoUpsertArgs>(args: SelectSubset<T, BasicWordInfoUpsertArgs<ExtArgs>>): Prisma__BasicWordInfoClient<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BasicWordInfos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BasicWordInfoCountArgs} args - Arguments to filter BasicWordInfos to count.
+     * @example
+     * // Count the number of BasicWordInfos
+     * const count = await prisma.basicWordInfo.count({
+     *   where: {
+     *     // ... the filter for the BasicWordInfos we want to count
+     *   }
+     * })
+    **/
+    count<T extends BasicWordInfoCountArgs>(
+      args?: Subset<T, BasicWordInfoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BasicWordInfoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BasicWordInfo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BasicWordInfoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BasicWordInfoAggregateArgs>(args: Subset<T, BasicWordInfoAggregateArgs>): Prisma.PrismaPromise<GetBasicWordInfoAggregateType<T>>
+
+    /**
+     * Group by BasicWordInfo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BasicWordInfoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BasicWordInfoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BasicWordInfoGroupByArgs['orderBy'] }
+        : { orderBy?: BasicWordInfoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BasicWordInfoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBasicWordInfoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BasicWordInfo model
+   */
+  readonly fields: BasicWordInfoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BasicWordInfo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BasicWordInfoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BasicWordInfo model
+   */
+  interface BasicWordInfoFieldRefs {
+    readonly id: FieldRef<"BasicWordInfo", 'String'>
+    readonly userId: FieldRef<"BasicWordInfo", 'String'>
+    readonly wordId: FieldRef<"BasicWordInfo", 'String'>
+    readonly language: FieldRef<"BasicWordInfo", 'String'>
+    readonly pronunciation: FieldRef<"BasicWordInfo", 'String'>
+    readonly createdAt: FieldRef<"BasicWordInfo", 'DateTime'>
+    readonly updatedAt: FieldRef<"BasicWordInfo", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BasicWordInfo findUnique
+   */
+  export type BasicWordInfoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which BasicWordInfo to fetch.
+     */
+    where: BasicWordInfoWhereUniqueInput
+  }
+
+  /**
+   * BasicWordInfo findUniqueOrThrow
+   */
+  export type BasicWordInfoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which BasicWordInfo to fetch.
+     */
+    where: BasicWordInfoWhereUniqueInput
+  }
+
+  /**
+   * BasicWordInfo findFirst
+   */
+  export type BasicWordInfoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which BasicWordInfo to fetch.
+     */
+    where?: BasicWordInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BasicWordInfos to fetch.
+     */
+    orderBy?: BasicWordInfoOrderByWithRelationInput | BasicWordInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BasicWordInfos.
+     */
+    cursor?: BasicWordInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BasicWordInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BasicWordInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BasicWordInfos.
+     */
+    distinct?: BasicWordInfoScalarFieldEnum | BasicWordInfoScalarFieldEnum[]
+  }
+
+  /**
+   * BasicWordInfo findFirstOrThrow
+   */
+  export type BasicWordInfoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which BasicWordInfo to fetch.
+     */
+    where?: BasicWordInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BasicWordInfos to fetch.
+     */
+    orderBy?: BasicWordInfoOrderByWithRelationInput | BasicWordInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BasicWordInfos.
+     */
+    cursor?: BasicWordInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BasicWordInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BasicWordInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BasicWordInfos.
+     */
+    distinct?: BasicWordInfoScalarFieldEnum | BasicWordInfoScalarFieldEnum[]
+  }
+
+  /**
+   * BasicWordInfo findMany
+   */
+  export type BasicWordInfoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which BasicWordInfos to fetch.
+     */
+    where?: BasicWordInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BasicWordInfos to fetch.
+     */
+    orderBy?: BasicWordInfoOrderByWithRelationInput | BasicWordInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BasicWordInfos.
+     */
+    cursor?: BasicWordInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BasicWordInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BasicWordInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BasicWordInfos.
+     */
+    distinct?: BasicWordInfoScalarFieldEnum | BasicWordInfoScalarFieldEnum[]
+  }
+
+  /**
+   * BasicWordInfo create
+   */
+  export type BasicWordInfoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BasicWordInfo.
+     */
+    data: XOR<BasicWordInfoCreateInput, BasicWordInfoUncheckedCreateInput>
+  }
+
+  /**
+   * BasicWordInfo createMany
+   */
+  export type BasicWordInfoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BasicWordInfos.
+     */
+    data: BasicWordInfoCreateManyInput | BasicWordInfoCreateManyInput[]
+  }
+
+  /**
+   * BasicWordInfo createManyAndReturn
+   */
+  export type BasicWordInfoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * The data used to create many BasicWordInfos.
+     */
+    data: BasicWordInfoCreateManyInput | BasicWordInfoCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BasicWordInfo update
+   */
+  export type BasicWordInfoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BasicWordInfo.
+     */
+    data: XOR<BasicWordInfoUpdateInput, BasicWordInfoUncheckedUpdateInput>
+    /**
+     * Choose, which BasicWordInfo to update.
+     */
+    where: BasicWordInfoWhereUniqueInput
+  }
+
+  /**
+   * BasicWordInfo updateMany
+   */
+  export type BasicWordInfoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BasicWordInfos.
+     */
+    data: XOR<BasicWordInfoUpdateManyMutationInput, BasicWordInfoUncheckedUpdateManyInput>
+    /**
+     * Filter which BasicWordInfos to update
+     */
+    where?: BasicWordInfoWhereInput
+    /**
+     * Limit how many BasicWordInfos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BasicWordInfo updateManyAndReturn
+   */
+  export type BasicWordInfoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * The data used to update BasicWordInfos.
+     */
+    data: XOR<BasicWordInfoUpdateManyMutationInput, BasicWordInfoUncheckedUpdateManyInput>
+    /**
+     * Filter which BasicWordInfos to update
+     */
+    where?: BasicWordInfoWhereInput
+    /**
+     * Limit how many BasicWordInfos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BasicWordInfo upsert
+   */
+  export type BasicWordInfoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BasicWordInfo to update in case it exists.
+     */
+    where: BasicWordInfoWhereUniqueInput
+    /**
+     * In case the BasicWordInfo found by the `where` argument doesn't exist, create a new BasicWordInfo with this data.
+     */
+    create: XOR<BasicWordInfoCreateInput, BasicWordInfoUncheckedCreateInput>
+    /**
+     * In case the BasicWordInfo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BasicWordInfoUpdateInput, BasicWordInfoUncheckedUpdateInput>
+  }
+
+  /**
+   * BasicWordInfo delete
+   */
+  export type BasicWordInfoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+    /**
+     * Filter which BasicWordInfo to delete.
+     */
+    where: BasicWordInfoWhereUniqueInput
+  }
+
+  /**
+   * BasicWordInfo deleteMany
+   */
+  export type BasicWordInfoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BasicWordInfos to delete
+     */
+    where?: BasicWordInfoWhereInput
+    /**
+     * Limit how many BasicWordInfos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BasicWordInfo without action
+   */
+  export type BasicWordInfoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BasicWordInfo
+     */
+    select?: BasicWordInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BasicWordInfo
+     */
+    omit?: BasicWordInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BasicWordInfoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14570,6 +15785,19 @@ export namespace Prisma {
   export type ChatbotPromptScalarFieldEnum = (typeof ChatbotPromptScalarFieldEnum)[keyof typeof ChatbotPromptScalarFieldEnum]
 
 
+  export const BasicWordInfoScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    wordId: 'wordId',
+    language: 'language',
+    pronunciation: 'pronunciation',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BasicWordInfoScalarFieldEnum = (typeof BasicWordInfoScalarFieldEnum)[keyof typeof BasicWordInfoScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -14645,6 +15873,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
     mobileImports?: MobileImportListRelationFilter
+    basicWordInfos?: BasicWordInfoListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -14660,6 +15889,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
     versionItems?: VersionItemOrderByRelationAggregateInput
     mobileImports?: MobileImportOrderByRelationAggregateInput
+    basicWordInfos?: BasicWordInfoOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -14678,6 +15908,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityListRelationFilter
     versionItems?: VersionItemListRelationFilter
     mobileImports?: MobileImportListRelationFilter
+    basicWordInfos?: BasicWordInfoListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -15383,6 +16614,72 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"ChatbotPrompt"> | Date | string
   }
 
+  export type BasicWordInfoWhereInput = {
+    AND?: BasicWordInfoWhereInput | BasicWordInfoWhereInput[]
+    OR?: BasicWordInfoWhereInput[]
+    NOT?: BasicWordInfoWhereInput | BasicWordInfoWhereInput[]
+    id?: StringFilter<"BasicWordInfo"> | string
+    userId?: StringFilter<"BasicWordInfo"> | string
+    wordId?: StringFilter<"BasicWordInfo"> | string
+    language?: StringFilter<"BasicWordInfo"> | string
+    pronunciation?: StringNullableFilter<"BasicWordInfo"> | string | null
+    createdAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
+    updatedAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type BasicWordInfoOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    wordId?: SortOrder
+    language?: SortOrder
+    pronunciation?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type BasicWordInfoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_wordId_language?: BasicWordInfoUserIdWordIdLanguageCompoundUniqueInput
+    AND?: BasicWordInfoWhereInput | BasicWordInfoWhereInput[]
+    OR?: BasicWordInfoWhereInput[]
+    NOT?: BasicWordInfoWhereInput | BasicWordInfoWhereInput[]
+    userId?: StringFilter<"BasicWordInfo"> | string
+    wordId?: StringFilter<"BasicWordInfo"> | string
+    language?: StringFilter<"BasicWordInfo"> | string
+    pronunciation?: StringNullableFilter<"BasicWordInfo"> | string | null
+    createdAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
+    updatedAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_wordId_language">
+
+  export type BasicWordInfoOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    wordId?: SortOrder
+    language?: SortOrder
+    pronunciation?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BasicWordInfoCountOrderByAggregateInput
+    _max?: BasicWordInfoMaxOrderByAggregateInput
+    _min?: BasicWordInfoMinOrderByAggregateInput
+  }
+
+  export type BasicWordInfoScalarWhereWithAggregatesInput = {
+    AND?: BasicWordInfoScalarWhereWithAggregatesInput | BasicWordInfoScalarWhereWithAggregatesInput[]
+    OR?: BasicWordInfoScalarWhereWithAggregatesInput[]
+    NOT?: BasicWordInfoScalarWhereWithAggregatesInput | BasicWordInfoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BasicWordInfo"> | string
+    userId?: StringWithAggregatesFilter<"BasicWordInfo"> | string
+    wordId?: StringWithAggregatesFilter<"BasicWordInfo"> | string
+    language?: StringWithAggregatesFilter<"BasicWordInfo"> | string
+    pronunciation?: StringNullableWithAggregatesFilter<"BasicWordInfo"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"BasicWordInfo"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"BasicWordInfo"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
@@ -15396,6 +16693,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -15411,6 +16709,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -15426,6 +16725,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -15441,6 +16741,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -16179,6 +17480,75 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BasicWordInfoCreateInput = {
+    id?: string
+    wordId: string
+    language: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBasicWordInfosInput
+  }
+
+  export type BasicWordInfoUncheckedCreateInput = {
+    id?: string
+    userId: string
+    wordId: string
+    language: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BasicWordInfoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    wordId?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBasicWordInfosNestedInput
+  }
+
+  export type BasicWordInfoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    wordId?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BasicWordInfoCreateManyInput = {
+    id?: string
+    userId: string
+    wordId: string
+    language: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BasicWordInfoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    wordId?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BasicWordInfoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    wordId?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -16228,6 +17598,12 @@ export namespace Prisma {
     none?: MobileImportWhereInput
   }
 
+  export type BasicWordInfoListRelationFilter = {
+    every?: BasicWordInfoWhereInput
+    some?: BasicWordInfoWhereInput
+    none?: BasicWordInfoWhereInput
+  }
+
   export type FlashcardOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -16241,6 +17617,10 @@ export namespace Prisma {
   }
 
   export type MobileImportOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BasicWordInfoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16845,6 +18225,42 @@ export namespace Prisma {
     rank?: SortOrder
   }
 
+  export type BasicWordInfoUserIdWordIdLanguageCompoundUniqueInput = {
+    userId: string
+    wordId: string
+    language: string
+  }
+
+  export type BasicWordInfoCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    wordId?: SortOrder
+    language?: SortOrder
+    pronunciation?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BasicWordInfoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    wordId?: SortOrder
+    language?: SortOrder
+    pronunciation?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BasicWordInfoMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    wordId?: SortOrder
+    language?: SortOrder
+    pronunciation?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type FlashcardCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -16873,6 +18289,13 @@ export namespace Prisma {
     connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
   }
 
+  export type BasicWordInfoCreateNestedManyWithoutUserInput = {
+    create?: XOR<BasicWordInfoCreateWithoutUserInput, BasicWordInfoUncheckedCreateWithoutUserInput> | BasicWordInfoCreateWithoutUserInput[] | BasicWordInfoUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BasicWordInfoCreateOrConnectWithoutUserInput | BasicWordInfoCreateOrConnectWithoutUserInput[]
+    createMany?: BasicWordInfoCreateManyUserInputEnvelope
+    connect?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+  }
+
   export type FlashcardUncheckedCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -16899,6 +18322,13 @@ export namespace Prisma {
     connectOrCreate?: MobileImportCreateOrConnectWithoutUserInput | MobileImportCreateOrConnectWithoutUserInput[]
     createMany?: MobileImportCreateManyUserInputEnvelope
     connect?: MobileImportWhereUniqueInput | MobileImportWhereUniqueInput[]
+  }
+
+  export type BasicWordInfoUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<BasicWordInfoCreateWithoutUserInput, BasicWordInfoUncheckedCreateWithoutUserInput> | BasicWordInfoCreateWithoutUserInput[] | BasicWordInfoUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BasicWordInfoCreateOrConnectWithoutUserInput | BasicWordInfoCreateOrConnectWithoutUserInput[]
+    createMany?: BasicWordInfoCreateManyUserInputEnvelope
+    connect?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -16969,6 +18399,20 @@ export namespace Prisma {
     deleteMany?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
   }
 
+  export type BasicWordInfoUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BasicWordInfoCreateWithoutUserInput, BasicWordInfoUncheckedCreateWithoutUserInput> | BasicWordInfoCreateWithoutUserInput[] | BasicWordInfoUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BasicWordInfoCreateOrConnectWithoutUserInput | BasicWordInfoCreateOrConnectWithoutUserInput[]
+    upsert?: BasicWordInfoUpsertWithWhereUniqueWithoutUserInput | BasicWordInfoUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BasicWordInfoCreateManyUserInputEnvelope
+    set?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+    disconnect?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+    delete?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+    connect?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+    update?: BasicWordInfoUpdateWithWhereUniqueWithoutUserInput | BasicWordInfoUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BasicWordInfoUpdateManyWithWhereWithoutUserInput | BasicWordInfoUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BasicWordInfoScalarWhereInput | BasicWordInfoScalarWhereInput[]
+  }
+
   export type FlashcardUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -17023,6 +18467,20 @@ export namespace Prisma {
     update?: MobileImportUpdateWithWhereUniqueWithoutUserInput | MobileImportUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: MobileImportUpdateManyWithWhereWithoutUserInput | MobileImportUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: MobileImportScalarWhereInput | MobileImportScalarWhereInput[]
+  }
+
+  export type BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BasicWordInfoCreateWithoutUserInput, BasicWordInfoUncheckedCreateWithoutUserInput> | BasicWordInfoCreateWithoutUserInput[] | BasicWordInfoUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BasicWordInfoCreateOrConnectWithoutUserInput | BasicWordInfoCreateOrConnectWithoutUserInput[]
+    upsert?: BasicWordInfoUpsertWithWhereUniqueWithoutUserInput | BasicWordInfoUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BasicWordInfoCreateManyUserInputEnvelope
+    set?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+    disconnect?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+    delete?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+    connect?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+    update?: BasicWordInfoUpdateWithWhereUniqueWithoutUserInput | BasicWordInfoUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BasicWordInfoUpdateManyWithWhereWithoutUserInput | BasicWordInfoUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BasicWordInfoScalarWhereInput | BasicWordInfoScalarWhereInput[]
   }
 
   export type VersionItemCreateNestedManyWithoutVersionInput = {
@@ -17505,6 +18963,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMobileImportsInput, UserUpdateWithoutMobileImportsInput>, UserUncheckedUpdateWithoutMobileImportsInput>
   }
 
+  export type UserCreateNestedOneWithoutBasicWordInfosInput = {
+    create?: XOR<UserCreateWithoutBasicWordInfosInput, UserUncheckedCreateWithoutBasicWordInfosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBasicWordInfosInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutBasicWordInfosNestedInput = {
+    create?: XOR<UserCreateWithoutBasicWordInfosInput, UserUncheckedCreateWithoutBasicWordInfosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBasicWordInfosInput
+    upsert?: UserUpsertWithoutBasicWordInfosInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBasicWordInfosInput, UserUpdateWithoutBasicWordInfosInput>, UserUncheckedUpdateWithoutBasicWordInfosInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -17827,6 +19299,33 @@ export namespace Prisma {
     data: MobileImportCreateManyUserInput | MobileImportCreateManyUserInput[]
   }
 
+  export type BasicWordInfoCreateWithoutUserInput = {
+    id?: string
+    wordId: string
+    language: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BasicWordInfoUncheckedCreateWithoutUserInput = {
+    id?: string
+    wordId: string
+    language: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BasicWordInfoCreateOrConnectWithoutUserInput = {
+    where: BasicWordInfoWhereUniqueInput
+    create: XOR<BasicWordInfoCreateWithoutUserInput, BasicWordInfoUncheckedCreateWithoutUserInput>
+  }
+
+  export type BasicWordInfoCreateManyUserInputEnvelope = {
+    data: BasicWordInfoCreateManyUserInput | BasicWordInfoCreateManyUserInput[]
+  }
+
   export type FlashcardUpsertWithWhereUniqueWithoutOwnerInput = {
     where: FlashcardWhereUniqueInput
     update: XOR<FlashcardUpdateWithoutOwnerInput, FlashcardUncheckedUpdateWithoutOwnerInput>
@@ -17950,6 +19449,35 @@ export namespace Prisma {
     userId?: StringFilter<"MobileImport"> | string
     mobileImportText?: StringFilter<"MobileImport"> | string
     whenImported?: DateTimeFilter<"MobileImport"> | Date | string
+  }
+
+  export type BasicWordInfoUpsertWithWhereUniqueWithoutUserInput = {
+    where: BasicWordInfoWhereUniqueInput
+    update: XOR<BasicWordInfoUpdateWithoutUserInput, BasicWordInfoUncheckedUpdateWithoutUserInput>
+    create: XOR<BasicWordInfoCreateWithoutUserInput, BasicWordInfoUncheckedCreateWithoutUserInput>
+  }
+
+  export type BasicWordInfoUpdateWithWhereUniqueWithoutUserInput = {
+    where: BasicWordInfoWhereUniqueInput
+    data: XOR<BasicWordInfoUpdateWithoutUserInput, BasicWordInfoUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BasicWordInfoUpdateManyWithWhereWithoutUserInput = {
+    where: BasicWordInfoScalarWhereInput
+    data: XOR<BasicWordInfoUpdateManyMutationInput, BasicWordInfoUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BasicWordInfoScalarWhereInput = {
+    AND?: BasicWordInfoScalarWhereInput | BasicWordInfoScalarWhereInput[]
+    OR?: BasicWordInfoScalarWhereInput[]
+    NOT?: BasicWordInfoScalarWhereInput | BasicWordInfoScalarWhereInput[]
+    id?: StringFilter<"BasicWordInfo"> | string
+    userId?: StringFilter<"BasicWordInfo"> | string
+    wordId?: StringFilter<"BasicWordInfo"> | string
+    language?: StringFilter<"BasicWordInfo"> | string
+    pronunciation?: StringNullableFilter<"BasicWordInfo"> | string | null
+    createdAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
+    updatedAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
   }
 
   export type VersionItemCreateWithoutVersionInput = {
@@ -18216,6 +19744,7 @@ export namespace Prisma {
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVersionItemsInput = {
@@ -18230,6 +19759,7 @@ export namespace Prisma {
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVersionItemsInput = {
@@ -18320,6 +19850,7 @@ export namespace Prisma {
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVersionItemsInput = {
@@ -18334,6 +19865,7 @@ export namespace Prisma {
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutFlashcardsInput = {
@@ -18348,6 +19880,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFlashcardsInput = {
@@ -18362,6 +19895,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFlashcardsInput = {
@@ -18534,6 +20068,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFlashcardsInput = {
@@ -18548,6 +20083,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutCopiesInput = {
@@ -18672,6 +20208,7 @@ export namespace Prisma {
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -18686,6 +20223,7 @@ export namespace Prisma {
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -18763,6 +20301,7 @@ export namespace Prisma {
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -18777,6 +20316,7 @@ export namespace Prisma {
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutActivitiesInput = {
@@ -19019,6 +20559,7 @@ export namespace Prisma {
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMobileImportsInput = {
@@ -19033,6 +20574,7 @@ export namespace Prisma {
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMobileImportsInput = {
@@ -19063,6 +20605,7 @@ export namespace Prisma {
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMobileImportsInput = {
@@ -19077,6 +20620,83 @@ export namespace Prisma {
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutBasicWordInfosInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    dailyTakeGoal?: number
+    testingGroupSize?: number
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBasicWordInfosInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    dailyTakeGoal?: number
+    testingGroupSize?: number
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBasicWordInfosInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBasicWordInfosInput, UserUncheckedCreateWithoutBasicWordInfosInput>
+  }
+
+  export type UserUpsertWithoutBasicWordInfosInput = {
+    update: XOR<UserUpdateWithoutBasicWordInfosInput, UserUncheckedUpdateWithoutBasicWordInfosInput>
+    create: XOR<UserCreateWithoutBasicWordInfosInput, UserUncheckedCreateWithoutBasicWordInfosInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBasicWordInfosInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBasicWordInfosInput, UserUncheckedUpdateWithoutBasicWordInfosInput>
+  }
+
+  export type UserUpdateWithoutBasicWordInfosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBasicWordInfosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardCreateManyOwnerInput = {
@@ -19122,6 +20742,15 @@ export namespace Prisma {
     id?: string
     mobileImportText: string
     whenImported?: Date | string
+  }
+
+  export type BasicWordInfoCreateManyUserInput = {
+    id?: string
+    wordId: string
+    language: string
+    pronunciation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type FlashcardUpdateWithoutOwnerInput = {
@@ -19263,6 +20892,33 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     mobileImportText?: StringFieldUpdateOperationsInput | string
     whenImported?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BasicWordInfoUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    wordId?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BasicWordInfoUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    wordId?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BasicWordInfoUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    wordId?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VersionItemCreateManyVersionInput = {

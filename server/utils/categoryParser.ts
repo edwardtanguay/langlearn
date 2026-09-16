@@ -47,13 +47,6 @@ export async function ensureDefaultCategories() {
         })
       }
     } else {
-      // Update rank if it's default
-      if (cat.title === 'Flashcard Page' || cat.title === 'Grammar Page') {
-        await prisma.versionCategory.update({
-          where: { id: existing.id },
-          data: { rank: cat.rank }
-        })
-      }
       if (cat.abbreviations.length > 0) {
         for (const abbr of cat.abbreviations) {
           const existingAbbr = await prisma.versionCategoryAbbreviation.findFirst({
