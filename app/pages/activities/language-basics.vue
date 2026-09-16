@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import rawBasicsData from '../../../data-parsed/basics.json'
 
 interface BasicItem {
@@ -90,6 +90,12 @@ const numberTimers = ref<Map<string, ReturnType<typeof setTimeout>>>(new Map())
 const dropdownOpen = ref(false)
 const dropdownRef = ref<HTMLElement | null>(null)
 
+// Sticky header scroll state
+const isScrolled = ref(false)
+
+// Temporary toggles during search mode (does not affect saved progress or counts)
+const searchTemporaryToggles = ref<Map<string, boolean>>(new Map())
+
 // Pronunciation Tips Map: itemId -> pronunciation string
 const pronunciationMap = ref<Map<string, string>>(new Map())
 
@@ -97,6 +103,7 @@ const pronunciationMap = ref<Map<string, string>>(new Map())
 const showPronunciationModal = ref(false)
 const activePronunciationItem = ref<BasicItem | null>(null)
 const pronunciationInput = ref('')
+const pronunciationInputRef = ref<HTMLInputElement | null>(null)
 
 const storageKey = computed(() => `lang-basics-revealed-${selectedLang.value}`)
 const pronunciationStorageKey = computed(() => `lang-basics-pronunciation-${selectedLang.value}`)
@@ -193,6 +200,7 @@ async function loadPronunciations() {
 watch(selectedLang, () => {
   // Clear all number timers on language switch
   clearAllNumberTimers()
+  openCategoryId.value = null
   loadSavedProgress()
   loadPronunciations()
   updateAllLangProgress()
@@ -200,9 +208,30 @@ watch(selectedLang, () => {
   resetCategoryConfirmId.value = null
 })
 
+// Watch search query: when returning to "no search", reset temporary toggles and close categories
+watch(searchQuery, (newVal) => {
+  if (!newVal.trim()) {
+    searchTemporaryToggles.value.clear()
+    openCategoryId.value = null
+  }
+})
+
+function clearSearch() {
+  searchQuery.value = ''
+  searchTemporaryToggles.value.clear()
+  openCategoryId.value = null
+}
+
+function handleScroll() {
+  if (import.meta.client) {
+    isScrolled.value = window.scrollY > 10
+  }
+}
+
 function selectLanguage(code: LangCode) {
   selectedLang.value = code
   dropdownOpen.value = false
+  openCategoryId.value = null
 }
 
 function handleClickOutside(event: MouseEvent) {
@@ -216,11 +245,18 @@ onMounted(() => {
   loadPronunciations()
   updateAllLangProgress()
   document.addEventListener('click', handleClickOutside)
+  if (import.meta.client) {
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+  }
 })
 
 onUnmounted(() => {
   clearAllNumberTimers()
   document.removeEventListener('click', handleClickOutside)
+  if (import.meta.client) {
+    window.removeEventListener('scroll', handleScroll)
+  }
   if (toastTimeout) clearTimeout(toastTimeout)
 })
 
@@ -232,6 +268,17 @@ function clearAllNumberTimers() {
 }
 
 function toggleWord(itemId: string) {
+  // In search mode, toggles are temporary: flips visual state without affecting progress or percentage
+  if (searchQuery.value.trim().length > 0) {
+    const allItems = categories.flatMap(c => c.items)
+    const item = allItems.find(i => i.id === itemId)
+    if (!item) return
+    const currentlyRevealed = isItemDisplayedRevealed(item)
+    searchTemporaryToggles.value.set(itemId, !currentlyRevealed)
+    searchTemporaryToggles.value = new Map(searchTemporaryToggles.value)
+    return
+  }
+
   const newSet = new Set(revealedSet.value)
   const catId = getCategoryId(itemId)
 
@@ -351,9 +398,12 @@ const filteredCategories = computed(() => {
   const q = searchQuery.value.trim().toLowerCase()
   if (!q) return categories
 
+  // Only search category titles if search query is 4 or more characters
+  const canSearchCategoryTitle = q.length >= 4
+
   return categories
     .map(cat => {
-      const titleMatches = cat.title.toLowerCase().includes(q)
+      const titleMatches = canSearchCategoryTitle && cat.title.toLowerCase().includes(q)
       if (titleMatches) return cat
 
       const matchingItems = cat.items.filter(item => {
@@ -465,6 +515,9 @@ function openPronunciationModal(item: BasicItem, event: Event) {
   activePronunciationItem.value = item
   pronunciationInput.value = pronunciationMap.value.get(item.id) || ''
   showPronunciationModal.value = true
+  nextTick(() => {
+    pronunciationInputRef.value?.focus()
+  })
 }
 
 async function savePronunciationTip() {
@@ -547,29 +600,33 @@ function isItemFoundBySearch(item: BasicItem): boolean {
 
 function isCategoryFoundBySearch(cat: BasicCategory): boolean {
   const q = searchQuery.value.trim().toLowerCase()
-  if (!q) return false
+  if (q.length < 4) return false
   return cat.title.toLowerCase().includes(q)
 }
 
 // Determine if the item should currently be displayed as revealed (target language) or unrevealed (English)
 function isItemDisplayedRevealed(item: BasicItem): boolean {
   const q = searchQuery.value.trim().toLowerCase()
-  if (!q) {
+  if (q) {
+    if (searchTemporaryToggles.value.has(item.id)) {
+      return searchTemporaryToggles.value.get(item.id)!
+    }
+
+    const enMatch = item.en.toLowerCase().includes(q)
+    const targetMatch = (item[selectedLang.value]?.toLowerCase() || '').includes(q)
+
+    // If matched on target language side while unrevealed, flip to revealed
+    if (targetMatch && !enMatch) {
+      return true
+    }
+    // If matched on English side while revealed, flip to unrevealed
+    if (enMatch && !targetMatch) {
+      return false
+    }
+    // If both match or neither matches directly (category match)
     return revealedSet.value.has(item.id)
   }
 
-  const enMatch = item.en.toLowerCase().includes(q)
-  const targetMatch = (item[selectedLang.value]?.toLowerCase() || '').includes(q)
-
-  // If matched on target language side while unrevealed, flip to revealed
-  if (targetMatch && !enMatch) {
-    return true
-  }
-  // If matched on English side while revealed, flip to unrevealed
-  if (enMatch && !targetMatch) {
-    return false
-  }
-  // If both match or neither matches directly (category match)
   return revealedSet.value.has(item.id)
 }
 
@@ -591,7 +648,12 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
 <template>
   <div class="max-w-5xl mx-auto px-4 py-4 space-y-6">
     <!-- Sticky Header: from top navigation link down through search textbox -->
-    <div class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-2 pb-3 shadow-xs space-y-3 border-b border-gray-200/80 dark:border-gray-800/80 -mx-4 px-4">
+    <div
+      class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-2 pb-3 space-y-3 -mx-4 px-4 transition-all duration-200"
+      :class="isScrolled
+        ? 'shadow-md border-b border-gray-300 dark:border-gray-700'
+        : 'shadow-xs border-b border-gray-200/80 dark:border-gray-800/80'"
+    >
       <!-- Top Navigation Link inside sticky container -->
       <div>
         <NuxtLink
@@ -608,17 +670,21 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
           <h1 class="text-xl sm:text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
             Learn language basics for:
           </h1>
-          <!-- Language Selector (Fixed width w-44 sm:w-48, showing current language percentage) -->
+          <!-- Language Selector: collapses around word when closed, expands to w-44/w-48 with % when open -->
           <div ref="dropdownRef" class="relative inline-block">
             <button
               type="button"
               @click.stop="dropdownOpen = !dropdownOpen"
-              class="w-44 sm:w-48 flex items-center justify-between gap-2 text-white text-sm font-bold py-1.5 px-3 rounded-xl border border-transparent shadow-xs cursor-pointer transition-all focus:outline-none"
+              class="flex items-center justify-between gap-2 text-white text-sm font-bold py-1.5 px-3 rounded-xl border border-transparent shadow-xs cursor-pointer transition-all focus:outline-none"
+              :class="dropdownOpen ? 'w-44 sm:w-48' : 'w-auto'"
               :style="{ backgroundColor: currentColor }"
             >
               <span class="truncate">{{ activeLangLabel }}</span>
               <div class="flex items-center gap-1.5 shrink-0">
-                <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90">
+                <span
+                  v-if="dropdownOpen"
+                  class="text-xs font-semibold px-1.5 py-0.5 rounded bg-black/20 text-white/90"
+                >
                   {{ allLangProgress[selectedLang] }}%
                 </span>
                 <svg class="w-4 h-4 transition-transform text-white/90" :class="{ 'rotate-180': dropdownOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -629,7 +695,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
             <!-- Dropdown menu showing other languages with matching width -->
             <div
               v-if="dropdownOpen"
-              class="absolute left-0 sm:right-0 sm:left-auto mt-1 w-44 sm:w-48 rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 z-50 bg-white dark:bg-gray-800"
+              class="absolute left-0 mt-1 w-44 sm:w-48 rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 z-50 bg-white dark:bg-gray-800"
             >
               <button
                 v-for="lang in dropdownLanguageOptions"
@@ -725,7 +791,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
         />
         <button
           v-if="searchQuery"
-          @click="searchQuery = ''"
+          @click="clearSearch"
           class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -752,7 +818,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
         <button
           type="button"
           @click="toggleCategory(cat.id)"
-          class="w-full px-4 py-3.5 flex items-center justify-between text-left cursor-pointer hover:bg-gray-50 dark:hover:bg-[#192335] transition-colors select-none"
+          class="w-full px-4 py-3.5 flex items-center justify-between text-left cursor-pointer bg-gray-50 dark:bg-[#192335] select-none"
         >
           <div class="flex items-center gap-2 min-w-0 pr-2">
             <span class="text-sm font-bold text-gray-900 dark:text-white truncate">
@@ -794,7 +860,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
         </button>
 
         <!-- Accordion Content Area -->
-        <div v-if="isCategoryExpanded(cat.id)" class="px-4 pb-4 pt-1 border-t border-gray-100 dark:border-gray-800/60 space-y-3">
+        <div v-if="isCategoryExpanded(cat.id)" class="px-4 pb-4 pt-1 border-t-2 border-gray-200 dark:border-gray-700 space-y-3">
           <!-- Sub-bar: Reset Category on the far right with 'Are you sure' step -->
           <div class="flex items-center justify-between pt-1">
             <span class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
@@ -873,7 +939,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
                   >
                     <span>{{ item[selectedLang] || item.en }}</span>
                     <!-- Pronunciation Note placed right after the word, before icons -->
-                    <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-85 font-normal ml-0.5">
+                    <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-60 font-normal ml-0.5">
                       [{{ pronunciationMap.get(item.id) }}]
                     </span>
                     <!-- Star + Translate + Pronunciation icons -->
@@ -909,7 +975,7 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
                 <template v-else>
                   <span>{{ item[selectedLang] || item.en }}</span>
                   <!-- Pronunciation Note placed right after the word, before icons -->
-                  <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-85 font-normal ml-0.5">
+                  <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-60 font-normal ml-0.5">
                     [{{ pronunciationMap.get(item.id) }}]
                   </span>
                   <!-- Star icon: example sentences -->
@@ -985,11 +1051,11 @@ function isItemEffectivelyBlurred(itemId: string): boolean {
               Pronunciation note will show in brackets [ ]
             </label>
             <input
+              ref="pronunciationInputRef"
               v-model="pronunciationInput"
               type="text"
               placeholder="e.g. bohn-zhoor or phonetic guide"
               class="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-[#121824] border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40"
-              autofocus
             />
           </div>
 
