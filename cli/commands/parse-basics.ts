@@ -15,15 +15,23 @@ export interface BasicItem {
   nl: string;
 }
 
+export interface CategoryVideo {
+  url: string;
+  title: string;
+}
+
 export interface BasicCategory {
   id: string;
   title: string;
   items: BasicItem[];
+  videos?: Record<string, CategoryVideo[]>;
+  links?: Record<string, CategoryVideo[]>;
 }
 
 interface ParsedFileCategory {
   name: string;
   items: string[];
+  videos: CategoryVideo[];
 }
 
 function formatCategoryTitle(raw: string): string {
@@ -55,12 +63,19 @@ function parseFile(filePath: string): ParsedFileCategory[] {
 
   for (const line of lines) {
     if (line.startsWith('- ')) {
-      currentCat = { name: line.slice(2).trim(), items: [] };
+      currentCat = { name: line.slice(2).trim(), items: [], videos: [] };
       categories.push(currentCat);
     } else if (line.startsWith('\t- ') && currentCat) {
       const row = line.slice(3).trim();
-      const parts = row.split(',').map(s => s.trim()).filter(Boolean);
-      currentCat.items.push(...parts);
+      if (row.startsWith('http://') || row.startsWith('https://') || row.includes('youtube.com') || row.includes('youtu.be')) {
+        const [urlPart, ...labelParts] = row.split(';');
+        const url = urlPart.trim();
+        const title = labelParts.join(';').trim() || url;
+        currentCat.videos.push({ url, title });
+      } else {
+        const parts = row.split(',').map(s => s.trim()).filter(Boolean);
+        currentCat.items.push(...parts);
+      }
     }
   }
 
@@ -96,7 +111,7 @@ export function parseBasics(): { categories: BasicCategory[]; totalWords: number
 
     let esItems = [...(esCat?.items || [])];
     // For letter pronunciation, exclude 'eñe' so Spanish aligns with the standard 26 A-Z letters
-    if (catId.includes('pronunciation-of-letters')) {
+    if (catId === 'letters' || catId.includes('pronunciation-of-letters')) {
       esItems = esItems.filter(item => item !== 'eñe');
     }
 
@@ -115,10 +130,18 @@ export function parseBasics(): { categories: BasicCategory[]; totalWords: number
       totalWords++;
     }
 
+    const videos: Record<string, CategoryVideo[]> = {};
+    if (enCat?.videos?.length) videos.en = enCat.videos;
+    if (frCat?.videos?.length) videos.fr = frCat.videos;
+    if (esCat?.videos?.length) videos.es = esCat.videos;
+    if (itCat?.videos?.length) videos.it = itCat.videos;
+    if (nlCat?.videos?.length) videos.nl = nlCat.videos;
+
     resultCategories.push({
       id: catId,
       title: catTitle,
-      items
+      items,
+      ...(Object.keys(videos).length > 0 ? { videos, links: videos } : {})
     });
   }
 

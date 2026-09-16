@@ -118,6 +118,15 @@ async function main() {
     }
   }
 
+  // Ensure isLearned column exists on BasicWordInfo table
+  try {
+    await client.execute('ALTER TABLE BasicWordInfo ADD COLUMN isLearned INTEGER DEFAULT 0;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
   client.close()
 }

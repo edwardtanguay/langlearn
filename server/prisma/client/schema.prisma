@@ -156,6 +156,7 @@ model BasicWordInfo {
   wordId        String
   language      String
   pronunciation String?
+  isLearned     Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

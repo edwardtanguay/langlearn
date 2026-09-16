@@ -1,4 +1,6 @@
 - numbers 1-100
+	- https://www.youtube.com/watch?v=unbPV7l2_vI; 1-100 canción 
+	- https://www.youtube.com/watch?v=mU2MRmL2C_c; 1-100 karaoke
 	- cero, uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve
 	- diez, once, doce, trece, catorce, quince, dieciséis, diecisiete, dieciocho, diecinueve
 	- veinte, veintiuno, veintidós, veintitrés, veinticuatro, veinticinco, veintiséis, veintisiete, veintiocho, veintinueve
@@ -10,8 +12,9 @@
 	- ochenta, ochenta y uno, ochenta y dos, ochenta y tres, ochenta y cuatro, ochenta y cinco, ochenta y seis, ochenta y siete, ochenta y ocho, ochenta y nueve
 	- noventa, noventa y uno, noventa y dos, noventa y tres, noventa y cuatro, noventa y cinco, noventa y seis, noventa y siete, noventa y ocho, noventa y nueve
 	- cien
-- pronunciation of letters
-	- a, be, ce, de, e, efe, ge, hache, i, jota, ka, ele, eme, ene, eñe, o, pe, cu, erre, ese, te, u, uve, uve doble, equis, i griega, zeta
+- letters
+	- https://youtu.be/8m-pQniffZw?t=24; A-Z
+	- ah, bay, say, day, ay, ayffeh, %eh, ah-chay, ee, %ohta, kah, elleh, emmeh, enneh, oh, pay, koo, erreh, esseh, tay, oo, vay, doh-blay-vay, eh-kees, ee-gray-gah , settah
 - weekdays
 	- lunes, martes, miércoles, jueves, viernes, sábado, domingo
 - months
