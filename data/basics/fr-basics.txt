@@ -1,4 +1,4 @@
-- numbers 1-100
+- numbers
 	- https://www.youtube.com/watch?v=AvHO3T7cyNI; 1-100
 	- https://www.youtube.com/watch?v=zsR5d29x8MM; 1-100 rapide
 	- zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf
@@ -15,6 +15,8 @@
 - letters
 	- https://youtu.be/-7woR4auqso?t=23; A-Z
 	- ah, bay, say, day, öh, eff, zhay, ahsh, ee, zhee, kah, ell, emm, enn, oh, pay, küh, air, ess, tay, üh, vay, doob-leh-vay, eecks, ee-grek, zed
+- question words
+	- qui, que/quoi, où, quand, pourquoi, comment, quel, combien, combien
 - weekdays
 	- lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche
 - months
@@ -40,8 +42,6 @@
 	- rouge, bleu, jaune, vert, orange, violet, rose, marron, noir, blanc, gris
 - opposites
 	- grand/petit, chaud/froid, bon/mauvais, rapide/lent, vieux/neuf, heureux/triste, facile/difficile, riche/pauvre, lourd/léger, ouvert/fermé, tôt/tard, jeune/vieux, près/loin, propre/sale, fort/faible, sombre/clair, calme/bruyant, cher/bon marché, sûr/dangereux, vide/plein
-- question words
-	- qui, que/quoi, où, quand, pourquoi, comment, quel, combien, combien
 - family
 	- la mère, le père, les parents, la sœur, le frère, le fils, la fille, la grand-mère, le grand-père, la tante, l'oncle, le cousin / la cousine, le mari, la femme, l'enfant / les enfants
 - jobs

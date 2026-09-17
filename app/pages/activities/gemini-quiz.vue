@@ -328,7 +328,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
   <div class="max-w-4xl mx-auto px-4 py-8 space-y-8">
     <!-- Top Navigation & Header -->
     <div class="flex items-center justify-between">
-      <NuxtLink to="/activities" class="text-sm font-semibold text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <NuxtLink to="/activities" class="text-sm font-semibold !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white opacity-50 hover:opacity-100 transition-all">
         ← Back to Activities
       </NuxtLink>
     </div>

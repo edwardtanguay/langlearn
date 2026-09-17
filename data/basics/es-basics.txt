@@ -1,4 +1,4 @@
-- numbers 1-100
+- numbers
 	- https://www.youtube.com/watch?v=unbPV7l2_vI; 1-100 canción 
 	- https://www.youtube.com/watch?v=mU2MRmL2C_c; 1-100 karaoke
 	- cero, uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve
@@ -15,6 +15,8 @@
 - letters
 	- https://youtu.be/8m-pQniffZw?t=24; A-Z
 	- ah, bay, say, day, ay, ayffeh, %eh, ah-chay, ee, %ohta, kah, elleh, emmeh, enneh, oh, pay, koo, erreh, esseh, tay, oo, vay, doh-blay-vay, eh-kees, ee-gray-gah , settah
+- question words
+	- quién, qué, dónde, cuándo, por qué, cómo, cuál, cuántos, cuánto
 - weekdays
 	- lunes, martes, miércoles, jueves, viernes, sábado, domingo
 - months
@@ -40,8 +42,6 @@
 	- rojo, azul, amarillo, verde, naranja, morado, rosa, marrón, negro, blanco, gris
 - opposites
 	- grande/pequeño, caliente/frío, bueno/malo, rápido/lento, viejo/nuevo, feliz/triste, fácil/difícil, rico/pobre, pesado/ligero, abierto/cerrado, temprano/tarde, joven/viejo, cerca/lejos, limpio/sucio, fuerte/débil, oscuro/claro, tranquilo/ruidoso, caro/barato, seguro/peligroso, vacío/lleno
-- question words
-	- quién, qué, dónde, cuándo, por qué, cómo, cuál, cuántos, cuánto
 - family
 	- la madre, el padre, los padres, la hermana, el hermano, el hijo, la hija, la abuela, el abuelo, la tía, el tío, el primo / la prima, el marido, la mujer, el niño / los niños
 - jobs
