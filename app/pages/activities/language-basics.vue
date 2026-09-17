@@ -115,12 +115,36 @@ const isScrolled = ref(false)
 // Temporary toggles during search mode (does not affect saved progress or counts)
 const searchTemporaryToggles = ref<Map<string, boolean>>(new Map())
 
-// Pronunciation Tips Map: itemId -> pronunciation string
-const pronunciationMap = ref<Map<string, string>>(new Map())
+// Backward-compatibility: normalize numbers IDs
+function normalizeWordId(id: string): string {
+  if (id.startsWith('numbers-1-100-')) {
+    return id.replace('numbers-1-100-', 'numbers-')
+  }
+  return id
+}
+
+// Pronunciation Tips Map per language: langCode -> (itemId -> pronunciation string)
+const allPronunciationsMap = ref<Record<LangCode, Map<string, string>>>({
+  fr: new Map(),
+  es: new Map(),
+  it: new Map(),
+  nl: new Map()
+})
+
+// Current language pronunciation tips map
+const pronunciationMap = computed(() => {
+  return allPronunciationsMap.value[selectedLang.value] || new Map()
+})
+
+function getPronunciation(itemId: string, langCode: LangCode): string {
+  const normId = normalizeWordId(itemId)
+  return allPronunciationsMap.value[langCode]?.get(normId) || ''
+}
 
 // Pronunciation Modal State
 const showPronunciationModal = ref(false)
 const activePronunciationItem = ref<BasicItem | null>(null)
+const activePronunciationLang = ref<LangCode>('fr')
 const pronunciationInput = ref('')
 const pronunciationInputRef = ref<HTMLInputElement | null>(null)
 
@@ -128,12 +152,44 @@ const pronunciationInputRef = ref<HTMLInputElement | null>(null)
 const showCrossLanguageModal = ref(false)
 const activeCrossLanguageItem = ref<BasicItem | null>(null)
 
+// All vocabulary words in order across all categories
+const allBasicsItems = computed<BasicItem[]>(() => {
+  return categories.flatMap(c => c.items)
+})
+
+function prevCrossLanguageWord() {
+  if (!activeCrossLanguageItem.value || allBasicsItems.value.length === 0) return
+  const idx = allBasicsItems.value.findIndex(i => i.id === activeCrossLanguageItem.value?.id)
+  const prevIdx = (idx - 1 + allBasicsItems.value.length) % allBasicsItems.value.length
+  activeCrossLanguageItem.value = allBasicsItems.value[prevIdx]
+}
+
+function nextCrossLanguageWord() {
+  if (!activeCrossLanguageItem.value || allBasicsItems.value.length === 0) return
+  const idx = allBasicsItems.value.findIndex(i => i.id === activeCrossLanguageItem.value?.id)
+  const nextIdx = (idx + 1) % allBasicsItems.value.length
+  activeCrossLanguageItem.value = allBasicsItems.value[nextIdx]
+}
+
+function handleKeyDown(e: KeyboardEvent) {
+  if (showCrossLanguageModal.value) {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault()
+      prevCrossLanguageWord()
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault()
+      nextCrossLanguageWord()
+    } else if (e.key === 'Escape' && !showPronunciationModal.value) {
+      showCrossLanguageModal.value = false
+    }
+  }
+}
+
 // Test Pronunciation Mode State
 const isTestPronunciationMode = ref(false)
 const testPronunciationRevealed = ref<Set<string>>(new Set())
 
 const storageKey = computed(() => `lang-basics-revealed-${selectedLang.value}`)
-const pronunciationStorageKey = computed(() => `lang-basics-pronunciation-${selectedLang.value}`)
 
 // Helper: extract category ID from item ID
 function getCategoryId(itemId: string): string {
@@ -153,6 +209,11 @@ function clearUnlearnTimer(itemId: string) {
   activeUnlearnWords.value.delete(itemId)
 }
 
+function isMobileDevice(): boolean {
+  if (!import.meta.client) return false
+  return window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches
+}
+
 async function loadSavedProgress() {
   // 1. Read from localStorage for immediate display
   if (import.meta.client) {
@@ -160,7 +221,7 @@ async function loadSavedProgress() {
       const saved = localStorage.getItem(storageKey.value)
       if (saved) {
         const ids = JSON.parse(saved) as string[]
-        revealedSet.value = new Set(ids)
+        revealedSet.value = new Set(ids.map(normalizeWordId))
       }
     } catch {
       // Ignore storage errors
@@ -176,7 +237,7 @@ async function loadSavedProgress() {
       const dbLearnedIds = new Set<string>()
       for (const it of data.items) {
         if (it.isLearned) {
-          dbLearnedIds.add(it.wordId)
+          dbLearnedIds.add(normalizeWordId(it.wordId))
         }
       }
 
@@ -226,50 +287,61 @@ function saveProgress() {
   }
 }
 
-// Load pronunciation tips from localStorage and server
+// Load pronunciation tips across all languages from localStorage and server
 async function loadPronunciations() {
-  const newMap = new Map<string, string>()
-
-  // 1. Read from localStorage for immediate display
+  // 1. Read from localStorage for all languages
   if (import.meta.client) {
-    try {
-      const localData = localStorage.getItem(pronunciationStorageKey.value)
-      if (localData) {
-        const parsed = JSON.parse(localData) as Record<string, string>
-        for (const [key, val] of Object.entries(parsed)) {
-          if (val) newMap.set(key, val)
+    for (const l of languages) {
+      const map = new Map<string, string>()
+      try {
+        const localData = localStorage.getItem(`lang-basics-pronunciation-${l.code}`)
+        if (localData) {
+          const parsed = JSON.parse(localData) as Record<string, string>
+          for (const [key, val] of Object.entries(parsed)) {
+            if (val) map.set(normalizeWordId(key), val)
+          }
         }
-      }
-    } catch {
-      // Ignore storage errors
+      } catch {}
+      allPronunciationsMap.value[l.code] = map
     }
   }
 
-  // 2. Fetch from database endpoint
+  // 2. Fetch from database endpoint for all languages
   try {
-    const data = await $fetch<{ items: Array<{ wordId: string; pronunciation: string | null }> }>(
-      `/api/basics/word-info?language=${selectedLang.value}`
+    const data = await $fetch<{ items: Array<{ wordId: string; language: string; pronunciation: string | null }> }>(
+      '/api/basics/word-info'
     )
     if (data?.items) {
       for (const it of data.items) {
-        if (it.pronunciation) {
-          newMap.set(it.wordId, it.pronunciation)
-        } else {
-          newMap.delete(it.wordId)
+        const lang = it.language as LangCode
+        if (allPronunciationsMap.value[lang]) {
+          const normId = normalizeWordId(it.wordId)
+          if (it.pronunciation) {
+            allPronunciationsMap.value[lang].set(normId, it.pronunciation)
+          } else {
+            allPronunciationsMap.value[lang].delete(normId)
+          }
         }
       }
-      // Sync merged back to localStorage
       if (import.meta.client) {
-        const obj: Record<string, string> = {}
-        newMap.forEach((v, k) => { obj[k] = v })
-        localStorage.setItem(pronunciationStorageKey.value, JSON.stringify(obj))
+        for (const l of languages) {
+          savePronunciationToLocalStorage(l.code)
+        }
       }
     }
   } catch {
     // If offline or unauthenticated, local map remains active
   }
+}
 
-  pronunciationMap.value = newMap
+function savePronunciationToLocalStorage(langCode: LangCode) {
+  if (import.meta.client) {
+    try {
+      const obj: Record<string, string> = {}
+      allPronunciationsMap.value[langCode]?.forEach((v, k) => { obj[k] = v })
+      localStorage.setItem(`lang-basics-pronunciation-${langCode}`, JSON.stringify(obj))
+    } catch {}
+  }
 }
 
 function scrollToTop() {
@@ -299,7 +371,9 @@ watch(searchQuery, (newVal, oldVal) => {
     if (oldVal && oldVal.trim()) {
       nextTick(() => {
         scrollToTop()
-        searchInputRef.value?.focus()
+        if (!isMobileDevice()) {
+          searchInputRef.value?.focus()
+        }
       })
     }
   }
@@ -314,7 +388,9 @@ function clearSearch() {
     if (hadSearch) {
       scrollToTop()
     }
-    searchInputRef.value?.focus()
+    if (!isMobileDevice()) {
+      searchInputRef.value?.focus()
+    }
   })
 }
 
@@ -337,6 +413,7 @@ onMounted(() => {
   updateAllLangProgress()
   if (import.meta.client) {
     window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('keydown', handleKeyDown)
     handleScroll()
   }
 })
@@ -346,6 +423,7 @@ onUnmounted(() => {
   if (statsLoadTimer) clearTimeout(statsLoadTimer)
   if (import.meta.client) {
     window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('keydown', handleKeyDown)
   }
   if (toastTimeout) clearTimeout(toastTimeout)
 })
@@ -611,10 +689,10 @@ const activeLangLabel = computed(() => {
 })
 
 // Action handlers for icons
-function handleExampleSearch(item: BasicItem, event: Event) {
+function handleExampleSearchForLang(item: BasicItem, langCode: LangCode, event: Event) {
   event.stopPropagation()
-  const langName = languageNames[selectedLang.value] || 'french'
-  const targetWord = item[selectedLang.value] || item.en
+  const langName = languageNames[langCode] || 'french'
+  const targetWord = item[langCode] || item.en
   const catId = getCategoryId(item.id)
 
   let query: string
@@ -628,11 +706,19 @@ function handleExampleSearch(item: BasicItem, event: Event) {
   window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank')
 }
 
-function handleGoogleTranslate(item: BasicItem, event: Event) {
+function handleGoogleTranslateForLang(item: BasicItem, langCode: LangCode, event: Event) {
   event.stopPropagation()
-  const targetWord = item[selectedLang.value] || item.en
-  const url = `https://translate.google.com/?sl=${selectedLang.value}&tl=en&text=${encodeURIComponent(targetWord)}&op=translate`
+  const targetWord = item[langCode] || item.en
+  const url = `https://translate.google.com/?sl=${langCode}&tl=en&text=${encodeURIComponent(targetWord)}&op=translate`
   window.open(url, '_blank')
+}
+
+function handleExampleSearch(item: BasicItem, event: Event) {
+  handleExampleSearchForLang(item, selectedLang.value, event)
+}
+
+function handleGoogleTranslate(item: BasicItem, event: Event) {
+  handleGoogleTranslateForLang(item, selectedLang.value, event)
 }
 
 // Toast notification for background operations
@@ -647,21 +733,12 @@ function showToast(msg: string) {
   }, 4000)
 }
 
-function savePronunciationToLocalStorage() {
-  if (import.meta.client) {
-    try {
-      const obj: Record<string, string> = {}
-      pronunciationMap.value.forEach((v, k) => { obj[k] = v })
-      localStorage.setItem(pronunciationStorageKey.value, JSON.stringify(obj))
-    } catch {}
-  }
-}
-
 // Pronunciation modal handlers
-function openPronunciationModal(item: BasicItem, event: Event) {
+function openPronunciationModal(item: BasicItem, event: Event, langCode?: LangCode) {
   event.stopPropagation()
   activePronunciationItem.value = item
-  pronunciationInput.value = pronunciationMap.value.get(item.id) || ''
+  activePronunciationLang.value = langCode || selectedLang.value
+  pronunciationInput.value = getPronunciation(item.id, activePronunciationLang.value)
   showPronunciationModal.value = true
   nextTick(() => {
     pronunciationInputRef.value?.focus()
@@ -678,37 +755,40 @@ function openCrossLanguageModal(item: BasicItem, event: Event) {
 async function savePronunciationTip() {
   if (!activePronunciationItem.value) return
   const item = activePronunciationItem.value
+  const targetLang = activePronunciationLang.value
   const note = pronunciationInput.value.trim()
-  const previousNote = pronunciationMap.value.get(item.id)
+  const normId = normalizeWordId(item.id)
+  const targetMap = allPronunciationsMap.value[targetLang]
+  const previousNote = targetMap?.get(normId)
 
   showPronunciationModal.value = false
   activePronunciationItem.value = null
 
   if (note) {
-    pronunciationMap.value.set(item.id, note)
+    targetMap?.set(normId, note)
   } else {
-    pronunciationMap.value.delete(item.id)
+    targetMap?.delete(normId)
   }
-  pronunciationMap.value = new Map(pronunciationMap.value)
-  savePronunciationToLocalStorage()
+  allPronunciationsMap.value[targetLang] = new Map(targetMap)
+  savePronunciationToLocalStorage(targetLang)
 
   try {
     await $fetch('/api/basics/word-info', {
       method: 'PUT',
       body: {
-        wordId: item.id,
-        language: selectedLang.value,
+        wordId: normId,
+        language: targetLang,
         pronunciation: note || null
       }
     })
   } catch {
     if (previousNote !== undefined) {
-      pronunciationMap.value.set(item.id, previousNote)
+      targetMap?.set(normId, previousNote)
     } else {
-      pronunciationMap.value.delete(item.id)
+      targetMap?.delete(normId)
     }
-    pronunciationMap.value = new Map(pronunciationMap.value)
-    savePronunciationToLocalStorage()
+    allPronunciationsMap.value[targetLang] = new Map(targetMap)
+    savePronunciationToLocalStorage(targetLang)
     showToast('Failed to save pronunciation note online. Reverted changes.')
   }
 }
@@ -777,10 +857,10 @@ function isWordLearned(itemId: string): boolean {
 </script>
 
 <template>
-  <div class="max-w-5xl mx-auto px-4 py-4 space-y-6">
+  <div class="max-w-5xl mx-auto px-4 py-4">
     <!-- Sticky Header -->
     <div
-      class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-2 pb-3 space-y-3 -mx-4 px-4 transition-all duration-200"
+      class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-2 pb-3.5 space-y-3 -mx-4 px-4 transition-all duration-200"
       :class="isScrolled
         ? 'shadow-md border-b border-gray-300 dark:border-gray-700'
         : 'shadow-xs border-b border-gray-200/80 dark:border-gray-800/80'"
@@ -789,7 +869,7 @@ function isWordLearned(itemId: string): boolean {
       <div>
         <NuxtLink
           to="/activities"
-          class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-200 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
+          class="inline-flex items-center text-sm font-medium text-gray-300 dark:text-gray-300 hover:text-white dark:hover:text-white transition-colors"
         >
           ← Back to Activities
         </NuxtLink>
@@ -838,7 +918,8 @@ function isWordLearned(itemId: string): boolean {
             {{ isStatsLoading ? `0 / ${totalWordsCount} ${activeLangLabel} words learned` : `${revealedCount} / ${totalWordsCount} ${activeLangLabel} words learned` }}
           </div>
 
-          <div class="flex items-center gap-2 shrink-0">
+          <!-- Desktop buttons (kept in progress panel) -->
+          <div class="hidden sm:flex items-center gap-2 shrink-0">
             <!-- Test Pronunciation button (to left of Reset all words) -->
             <button
               v-if="hasAnyPronunciationTips"
@@ -895,6 +976,54 @@ function isWordLearned(itemId: string): boolean {
         </div>
       </div>
 
+      <!-- Mobile Buttons: Test Pronunciation & Reset (after progress panel, before search box) -->
+      <div v-if="!isTestPronunciationMode" class="grid grid-cols-2 gap-2 sm:hidden w-full">
+        <button
+          v-if="hasAnyPronunciationTips"
+          type="button"
+          @click="toggleTestPronunciation"
+          class="w-full py-2 px-2.5 text-xs font-semibold rounded-xl border transition-all cursor-pointer text-center truncate"
+          :class="isTestPronunciationMode
+            ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
+            : 'border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-amber-600 dark:hover:text-amber-400'"
+        >
+          {{ isTestPronunciationMode ? 'Back to Categories' : 'Test Pronunciation' }}
+        </button>
+        <div v-else class="w-full"></div>
+
+        <!-- Reset button on mobile -->
+        <div v-if="!showResetConfirm" class="w-full">
+          <button
+            @click="showResetConfirm = true"
+            :disabled="revealedCount === 0"
+            class="w-full py-2 px-2.5 text-xs font-semibold rounded-xl border transition-all cursor-pointer text-center truncate"
+            :class="revealedCount === 0
+              ? 'border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed'
+              : 'border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-red-600 dark:hover:text-red-400'"
+            title="Reset all revealed words for current language"
+          >
+            Reset all words
+          </button>
+        </div>
+        <div v-else class="flex items-center justify-between gap-1 bg-red-50 dark:bg-red-950/40 p-1 rounded-xl border border-red-200 dark:border-red-900/50 text-xs w-full">
+          <span class="text-red-700 dark:text-red-300 font-medium pl-1 text-[11px] truncate">Reset all?</span>
+          <div class="flex items-center gap-1 shrink-0">
+            <button
+              @click="resetAll"
+              class="px-2 py-1 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors cursor-pointer text-xs"
+            >
+              Yes
+            </button>
+            <button
+              @click="showResetConfirm = false"
+              class="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors cursor-pointer text-xs"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Search Input -->
       <div v-if="!isTestPronunciationMode" class="relative w-full">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
@@ -905,7 +1034,7 @@ function isWordLearned(itemId: string): boolean {
           v-model="searchQuery"
           type="text"
           placeholder="Filter categories or words..."
-          class="w-full pl-9 pr-8 py-2 text-sm bg-gray-50 dark:bg-[#182030] text-gray-900 dark:text-white rounded-xl border border-gray-200 dark:border-gray-700/80 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500/50 transition-all"
+          class="w-full pl-9 pr-8 py-2 text-sm bg-gray-50 dark:bg-[#182030] text-gray-900 dark:text-white rounded-xl border border-gray-400/60 dark:border-gray-400/50 sm:border-gray-200 sm:dark:border-gray-700/80 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500/50 transition-all"
         />
         <button
           v-if="searchQuery"
@@ -920,7 +1049,7 @@ function isWordLearned(itemId: string): boolean {
     </div>
 
     <!-- VIEW 1: Test Pronunciation Mode -->
-    <div v-if="isTestPronunciationMode" class="space-y-4 pt-2">
+    <div v-if="isTestPronunciationMode" class="space-y-4 pt-3.5">
       <div class="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-800">
         <div class="flex items-center gap-2">
           <button
@@ -973,14 +1102,14 @@ function isWordLearned(itemId: string): boolean {
     </div>
 
     <!-- VIEW 2: Normal Categories View -->
-    <div v-else>
+    <div v-else class="pt-3.5">
       <!-- No search results -->
       <div v-if="filteredCategories.length === 0" class="text-center py-12 text-gray-500 dark:text-gray-400 text-sm">
         No categories or words match "<span class="font-semibold">{{ searchQuery }}</span>".
       </div>
 
       <!-- Categories List in Accordion Structure -->
-      <div v-else class="space-y-3 pt-2">
+      <div v-else class="space-y-3">
         <div
           v-for="cat in filteredCategories"
           :key="cat.id"
@@ -1111,13 +1240,13 @@ function isWordLearned(itemId: string): boolean {
                 type="button"
                 class="px-3 py-1.5 rounded-lg text-sm transition-all duration-150 cursor-pointer select-none text-left relative"
                 :class="[
-                  // Learned word (and not in unlearn/revealed view): dimmed language color
-                  (isWordLearned(item.id) && !activeUnlearnWords.has(item.id))
+                  // Learned word (whether showing English or flipped to target language): retain language color
+                  isWordLearned(item.id)
                     ? 'font-normal shadow-xs'
                     : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300',
                   isItemFoundBySearch(item) ? 'shadow-[0_0_10px_rgba(217,119,6,0.6)] dark:shadow-[0_0_12px_rgba(255,255,255,0.85)]' : ''
                 ]"
-                :style="(isWordLearned(item.id) && !activeUnlearnWords.has(item.id)) ? {
+                :style="isWordLearned(item.id) ? {
                   backgroundColor: `color-mix(in srgb, ${currentButtonColor} 14%, transparent)`,
                   color: `color-mix(in srgb, ${currentButtonColor} 75%, white)`,
                   border: `1px solid color-mix(in srgb, ${currentButtonColor} 28%, transparent)`,
@@ -1248,15 +1377,18 @@ function isWordLearned(itemId: string): boolean {
     <!-- Pronunciation Modal ("P" icon) -->
     <div
       v-if="showPronunciationModal && activePronunciationItem"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4"
+      class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4"
       @click.self="showPronunciationModal = false"
     >
       <div class="bg-white dark:bg-[#161f30] border border-gray-200 dark:border-gray-700/80 rounded-2xl p-5 w-full max-w-md shadow-2xl space-y-4">
         <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-3">
           <h3 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <span>Pronunciation Tip</span>
-            <span class="text-xs px-2 py-0.5 rounded font-mono font-normal uppercase" :style="{ backgroundColor: `color-mix(in srgb, ${currentColor} 20%, transparent)`, color: brightColor }">
-              {{ activeLangLabel }}
+            <span
+              class="text-xs px-2 py-0.5 rounded font-mono font-normal uppercase text-white shadow-xs"
+              :style="{ backgroundColor: languageColors[activePronunciationLang] }"
+            >
+              {{ languages.find(l => l.code === activePronunciationLang)?.label }}
             </span>
           </h3>
           <button
@@ -1270,7 +1402,7 @@ function isWordLearned(itemId: string): boolean {
         <div class="space-y-1.5">
           <div class="text-xs text-gray-500 dark:text-gray-400">Word:</div>
           <div class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <span>{{ activePronunciationItem[selectedLang] || activePronunciationItem.en }}</span>
+            <span>{{ activePronunciationItem[activePronunciationLang] || activePronunciationItem.en }}</span>
             <span class="text-xs font-normal text-gray-400">({{ activePronunciationItem.en }})</span>
           </div>
         </div>
@@ -1315,6 +1447,7 @@ function isWordLearned(itemId: string): boolean {
       @click.self="showCrossLanguageModal = false"
     >
       <div class="bg-white dark:bg-[#161f30] border border-gray-200 dark:border-gray-700/80 rounded-2xl p-5 w-full max-w-md shadow-2xl space-y-4">
+        <!-- Top Title Bar -->
         <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-3">
           <h3 class="text-base font-bold text-gray-900 dark:text-white">
             Multilingual Comparison
@@ -1327,35 +1460,111 @@ function isWordLearned(itemId: string): boolean {
           </button>
         </div>
 
-        <div class="space-y-1">
-          <div class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">English</div>
-          <div class="text-lg font-extrabold text-gray-900 dark:text-white">
-            {{ activeCrossLanguageItem.en }}
+        <!-- English Word Header with Scrolling Arrows on the Right -->
+        <div class="flex items-center justify-between gap-3 pt-1 pb-1">
+          <div class="space-y-0.5 min-w-0 flex-1">
+            <div class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">English</div>
+            <div class="text-lg font-extrabold text-gray-900 dark:text-white truncate">
+              {{ activeCrossLanguageItem.en }}
+            </div>
+          </div>
+
+          <!-- Arrow buttons: Right side for easy mobile reach -->
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button
+              type="button"
+              @click="prevCrossLanguageWord"
+              class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 cursor-pointer transition-colors shadow-xs"
+              title="Previous word (Left arrow)"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              @click="nextCrossLanguageWord"
+              class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 cursor-pointer transition-colors shadow-xs"
+              title="Next word (Right arrow)"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
           </div>
         </div>
 
+        <!-- 4 Language Rows -->
         <div class="space-y-2.5 pt-1">
           <div
             v-for="l in languages"
             :key="l.code"
-            class="flex items-center justify-between p-3 rounded-xl border"
+            class="flex items-center justify-between p-3 rounded-xl border gap-2"
             :style="{
               borderColor: `color-mix(in srgb, ${languageColors[l.code]} 40%, transparent)`,
               backgroundColor: `color-mix(in srgb, ${languageColors[l.code]} 10%, transparent)`
             }"
           >
+            <!-- Left: Language Tag -->
             <span
-              class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded text-white shadow-xs"
+              class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded text-white shadow-xs shrink-0"
               :style="{ backgroundColor: languageColors[l.code] }"
             >
               {{ l.label }}
             </span>
-            <span
-              class="text-base font-bold tracking-tight"
-              :style="{ color: `color-mix(in srgb, ${languageColors[l.code]} 55%, white)` }"
-            >
-              {{ activeCrossLanguageItem[l.code] || '—' }}
-            </span>
+
+            <!-- Right Side: [Icons] [Pronunciation Hint] [Word] -->
+            <div class="flex items-center gap-2 min-w-0 justify-end flex-1">
+              <!-- Action Icons (Star, Google Translate, P) to left of word and hint -->
+              <div class="flex items-center gap-1 shrink-0">
+                <!-- Star icon: example sentences -->
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center w-5 h-5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer text-gray-700 dark:text-gray-200"
+                  title="Search for 3 example sentences"
+                  @click="handleExampleSearchForLang(activeCrossLanguageItem, l.code, $event)"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </button>
+
+                <!-- Google Translate icon -->
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center w-5 h-5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer text-gray-700 dark:text-gray-200"
+                  title="Look up in Google Translate"
+                  @click="handleGoogleTranslateForLang(activeCrossLanguageItem, l.code, $event)"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                </button>
+
+                <!-- Pronunciation 'P' button -->
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer text-gray-700 dark:text-gray-200 hover:bg-black/10 dark:hover:bg-white/10"
+                  title="Add or edit pronunciation tip"
+                  @click="openPronunciationModal(activeCrossLanguageItem, $event, l.code)"
+                >
+                  P
+                </button>
+              </div>
+
+              <!-- Pronunciation Note in brackets (if exists for this language) -->
+              <span
+                v-if="getPronunciation(activeCrossLanguageItem.id, l.code)"
+                class="text-xs font-mono font-normal opacity-75 shrink-0"
+                :style="{ color: `color-mix(in srgb, ${languageColors[l.code]} 80%, white)` }"
+              >
+                [{{ getPronunciation(activeCrossLanguageItem.id, l.code) }}]
+              </span>
+
+              <!-- Translated word on the right -->
+              <span
+                class="text-base font-bold tracking-tight truncate"
+                :style="{ color: `color-mix(in srgb, ${languageColors[l.code]} 55%, white)` }"
+              >
+                {{ activeCrossLanguageItem[l.code] || '—' }}
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-- numbers 1-100
+- numbers
 	- https://www.youtube.com/watch?v=o50lpnL5PBw; 1-10 canzone
 	- zero, uno, due, tre, quattro, cinque, sei, sette, otto, nove
 	- dieci, undici, dodici, tredici, quattordici, quindici, sedici, diciassette, diciotto, diciannove
@@ -14,6 +14,8 @@
 - letters
 	- https://youtu.be/T7deYXBnmBE?t=11; A-Z
 	- ah, bee, chee, dee, eh, effe, gee, akka, ee, ee-loonga, kappa, elle, emme, enne, oh, pee, koo, erre, esse, tee, oo, voo, doppia-voh, eeks, ee-grekka, zeta
+- question words
+	- chi, che cosa, dove, quando, perché, come, quale, quanti, quanto
 - weekdays
 	- lunedì, martedì, mercoledì, giovedì, venerdì, sabato, domenica
 - months
@@ -39,8 +41,6 @@
 	- rosso, blu, giallo, verde, arancione, viola, rosa, marrone, nero, bianco, grigio
 - opposites
 	- grande/piccolo, caldo/freddo, buono/cattivo, veloce/lento, vecchio/nuovo, felice/triste, facile/difficile, ricco/povero, pesante/leggero, aperto/chiuso, presto/tardi, giovane/vecchio, vicino/lontano, pulito/sporco, forte/debole, scuro/chiaro, silenzioso/rumoroso, costoso/economico, sicuro/pericoloso, vuoto/pieno
-- question words
-	- chi, che cosa, dove, quando, perché, come, quale, quanti, quanto
 - family
 	- la madre, il padre, i genitori, la sorella, il fratello, il figlio, la figlia, la nonna, il nonno, la zia, lo zio, il cugino / la cugina, il marito, la moglie, il bambino / i bambini
 - jobs

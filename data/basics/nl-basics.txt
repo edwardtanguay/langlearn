@@ -1,4 +1,4 @@
-- numbers 1-100
+- numbers
 	- https://www.youtube.com/watch?v=Gglzo9wlcTU;1-100
 	- https://youtu.be/osXA2WJU9tg?t=22;100-1
 	- nul, een, twee, drie, vier, vijf, zes, zeven, acht, negen
@@ -16,6 +16,8 @@
 	- https://www.youtube.com/watch?v=YIf3ukVvFRM;A-Z
 	- https://youtu.be/YIf3ukVvFRM?t=64; A-Z snel
 	- ah, bay, say, day, ay, eff, %ay, hah, ee, yay, kah, ell, emm, enn, oh, pay, koo, air, ess, tay, oo, fay, vay, iks, ay, zed
+- question words
+	- wie, wat, waar, wanneer, waarom, hoe, welk, hoeveel, hoeveel
 - weekdays
 	- maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag
 - months
@@ -41,8 +43,6 @@
 	- rood, blauw, geel, groen, oranje, paars, roze, bruin, zwart, wit, grijs
 - opposites
 	- groot/klein, warm/koud, goed/slecht, snel/langzaam, oud/nieuw, blij/verdrietig, makkelijk/moeilijk, rijk/arm, zwaar/licht, open/gesloten, vroeg/laat, jong/oud, dichtbij/ver, schoon/vies, sterk/zwak, donker/licht, rustig/lawaaiig, duur/goedkoop, veilig/gevaarlijk, leeg/vol
-- question words
-	- wie, wat, waar, wanneer, waarom, hoe, welk, hoeveel, hoeveel
 - family
 	- de moeder, de vader, de ouders, de zus, de broer, de zoon, de dochter, de oma, de opa, de tante, de oom, de neef / de nicht, de man, de vrouw, het kind / de kinderen
 - jobs

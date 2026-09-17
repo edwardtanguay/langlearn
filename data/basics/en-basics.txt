@@ -1,4 +1,4 @@
-- numbers 1-100
+- numbers
 	- zero, one, two, three, four, five, six, seven, eight, nine
 	- ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen
 	- twenty, twenty-one, twenty-two, twenty-three, twenty-four, twenty-five, twenty-six, twenty-seven, twenty-eight, twenty-nine
@@ -12,6 +12,8 @@
 	- one hundred
 - letters
 	- ay, bee, cee, dee, ee, ef, gee, aich, eye, jay, kay, el, em, en, oh, pee, kew, ar, ess, tee, yoo, vee, double-yoo, ex, why, zee
+- question words
+	- who, what, where, when, why, how, which, how many, how much
 - weekdays
 	- Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
 - months
@@ -37,8 +39,6 @@
 	- red, blue, yellow, green, orange, purple, pink, brown, black, white, gray
 - opposites
 	- big/small, hot/cold, good/bad, fast/slow, old/new, happy/sad, easy/difficult, rich/poor, heavy/light, open/closed, early/late, young/old, near/far, clean/dirty, strong/weak, dark/light, quiet/noisy, expensive/cheap, safe/dangerous, empty/full
-- question words
-	- who, what, where, when, why, how, which, how many, how much
 - family
 	- mother, father, parents, sister, brother, son, daughter, grandmother, grandfather, aunt, uncle, cousin, husband, wife, child/children
 - jobs
