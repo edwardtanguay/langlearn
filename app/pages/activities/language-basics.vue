@@ -80,7 +80,7 @@ const brightColor = computed(() => {
 
 // Button-specific colors
 const buttonColors: Record<string, string> = {
-  fr: '#5566bb',
+  fr: '#3b82f6',
   es: '#e11d48',
   it: '#2d8a2d',
   nl: '#d97706',
@@ -178,6 +178,13 @@ function nextCrossLanguageWord() {
 }
 
 function handleKeyDown(e: KeyboardEvent) {
+  if (showPronunciationModal.value) {
+    if (e.key === 'Escape') {
+      showPronunciationModal.value = false
+    }
+    return
+  }
+
   if (showCrossLanguageModal.value) {
     if (e.key === 'ArrowLeft') {
       e.preventDefault()
@@ -185,7 +192,7 @@ function handleKeyDown(e: KeyboardEvent) {
     } else if (e.key === 'ArrowRight') {
       e.preventDefault()
       nextCrossLanguageWord()
-    } else if (e.key === 'Escape' && !showPronunciationModal.value) {
+    } else if (e.key === 'Escape') {
       showCrossLanguageModal.value = false
     }
   }
@@ -875,7 +882,7 @@ function isWordLearned(itemId: string): boolean {
       <div>
         <NuxtLink
           to="/activities"
-          class="inline-flex items-center text-sm font-medium text-gray-300 dark:text-gray-300 hover:text-white dark:hover:text-white transition-colors"
+          class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors"
         >
           ← Back to Activities
         </NuxtLink>
@@ -1056,21 +1063,15 @@ function isWordLearned(itemId: string): boolean {
 
     <!-- VIEW 1: Test Pronunciation Mode -->
     <div v-if="isTestPronunciationMode" class="space-y-4 pt-3.5">
-      <div class="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-800">
-        <div class="flex items-center gap-2">
-          <button
-            type="button"
-            @click="isTestPronunciationMode = false"
-            class="text-xs font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer inline-flex items-center gap-1"
-          >
-            ← Back to Categories
-          </button>
-          <span class="text-xs text-gray-300 dark:text-gray-600">|</span>
-          <span class="text-xs font-bold text-gray-800 dark:text-gray-200">
-            Test Pronunciation ({{ wordsWithPronunciation.length }} words with tips)
-          </span>
-        </div>
-        <span class="text-xs text-gray-400">Click word to reveal pronunciation</span>
+      <!-- Large Back to Categories button (3/4 width on mobile left-aligned, full width on desktop) -->
+      <div class="pb-1">
+        <button
+          type="button"
+          @click="isTestPronunciationMode = false"
+          class="w-3/4 sm:w-full py-2.5 px-4 rounded-xl font-bold text-sm text-white bg-amber-600 hover:bg-amber-700 dark:bg-amber-600 dark:hover:bg-amber-500 transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>← Back to Categories</span>
+        </button>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
@@ -1089,16 +1090,61 @@ function isWordLearned(itemId: string): boolean {
             </div>
           </div>
 
-          <div class="shrink-0 text-right min-w-[90px]">
-            <span
-              v-if="testPronunciationRevealed.has(item.id)"
-              class="text-xs font-mono font-bold px-2 py-1 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 inline-block"
-            >
-              [{{ pronunciationMap.get(item.id) }}]
-            </span>
+          <div class="shrink-0 flex items-center gap-2 justify-end">
+            <template v-if="testPronunciationRevealed.has(item.id)">
+              <!-- Action Icons (Star, Google Translate, P, C) side-by-side with stop propagation -->
+              <div class="flex items-center gap-1 shrink-0" @click.stop>
+                <!-- Star icon: example sentences -->
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center w-5 h-5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer text-gray-700 dark:text-gray-200"
+                  title="Search for 3 example sentences"
+                  @click="handleExampleSearch(item, $event)"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </button>
+
+                <!-- Google Translate icon -->
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center w-5 h-5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer text-gray-700 dark:text-gray-200"
+                  title="Look up in Google Translate"
+                  @click="handleGoogleTranslate(item, $event)"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                </button>
+
+                <!-- Pronunciation 'P' button -->
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer text-gray-700 dark:text-gray-200 hover:bg-black/10 dark:hover:bg-white/10"
+                  title="Add or edit pronunciation tip"
+                  @click="openPronunciationModal(item, $event)"
+                >
+                  P
+                </button>
+
+                <!-- Comparison 'C' button -->
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer text-gray-700 dark:text-gray-200 hover:bg-black/10 dark:hover:bg-white/10"
+                  title="Compare across all 4 languages"
+                  @click="openCrossLanguageModal(item, $event)"
+                >
+                  C
+                </button>
+              </div>
+
+              <!-- Pronunciation tag -->
+              <span
+                class="text-xs font-mono font-bold px-2 py-1 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 inline-block shrink-0"
+              >
+                [{{ pronunciationMap.get(item.id) }}]
+              </span>
+            </template>
             <span
               v-else
-              class="text-[11px] font-semibold text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 italic"
+              class="text-[11px] font-semibold text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 italic min-w-[90px] text-right"
             >
               Click to reveal
             </span>
@@ -1253,9 +1299,15 @@ function isWordLearned(itemId: string): boolean {
                   isItemFoundBySearch(item) ? 'shadow-[0_0_10px_rgba(217,119,6,0.6)] dark:shadow-[0_0_12px_rgba(255,255,255,0.85)]' : ''
                 ]"
                 :style="isWordLearned(item.id) ? {
-                  backgroundColor: `color-mix(in srgb, ${currentButtonColor} 14%, transparent)`,
-                  color: `color-mix(in srgb, ${currentButtonColor} 75%, white)`,
-                  border: `1px solid color-mix(in srgb, ${currentButtonColor} 28%, transparent)`,
+                  backgroundColor: selectedLang === 'fr'
+                    ? `color-mix(in srgb, ${currentButtonColor} 22%, transparent)`
+                    : `color-mix(in srgb, ${currentButtonColor} 14%, transparent)`,
+                  color: selectedLang === 'fr'
+                    ? `color-mix(in srgb, ${currentButtonColor} 85%, white)`
+                    : `color-mix(in srgb, ${currentButtonColor} 75%, white)`,
+                  border: selectedLang === 'fr'
+                    ? `1px solid color-mix(in srgb, ${currentButtonColor} 40%, transparent)`
+                    : `1px solid color-mix(in srgb, ${currentButtonColor} 28%, transparent)`,
                 } : undefined"
                 :title="isWordLearned(item.id) ? 'Learned word. Click to view translation / unlearn' : `Click to learn in ${activeLangLabel}`"
               >
@@ -1353,7 +1405,7 @@ function isWordLearned(itemId: string): boolean {
 
             <!-- YouTube Videos Section at bottom of category -->
             <div
-              v-if="cat.videos?.[selectedLang]?.length"
+              v-if="!searchQuery.trim() && cat.videos?.[selectedLang]?.length"
               class="pt-3 border-t border-gray-100 dark:border-gray-800/80"
             >
               <div class="flex flex-wrap gap-2.5">
