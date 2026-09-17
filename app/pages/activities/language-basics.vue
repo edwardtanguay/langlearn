@@ -161,14 +161,20 @@ function prevCrossLanguageWord() {
   if (!activeCrossLanguageItem.value || allBasicsItems.value.length === 0) return
   const idx = allBasicsItems.value.findIndex(i => i.id === activeCrossLanguageItem.value?.id)
   const prevIdx = (idx - 1 + allBasicsItems.value.length) % allBasicsItems.value.length
-  activeCrossLanguageItem.value = allBasicsItems.value[prevIdx]
+  const item = allBasicsItems.value[prevIdx]
+  if (item) {
+    activeCrossLanguageItem.value = item
+  }
 }
 
 function nextCrossLanguageWord() {
   if (!activeCrossLanguageItem.value || allBasicsItems.value.length === 0) return
   const idx = allBasicsItems.value.findIndex(i => i.id === activeCrossLanguageItem.value?.id)
   const nextIdx = (idx + 1) % allBasicsItems.value.length
-  activeCrossLanguageItem.value = allBasicsItems.value[nextIdx]
+  const item = allBasicsItems.value[nextIdx]
+  if (item) {
+    activeCrossLanguageItem.value = item
+  }
 }
 
 function handleKeyDown(e: KeyboardEvent) {
