@@ -882,7 +882,7 @@ function isWordLearned(itemId: string): boolean {
       <div>
         <NuxtLink
           to="/activities"
-          class="inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors"
+          class="inline-flex items-center text-sm font-medium !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white transition-colors"
         >
           ← Back to Activities
         </NuxtLink>
