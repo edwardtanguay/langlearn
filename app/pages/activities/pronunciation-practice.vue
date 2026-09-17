@@ -214,7 +214,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
     <div class="flex items-center justify-between">
       <NuxtLink
         to="/activities"
-        class="inline-flex items-center gap-1.5 text-xs font-semibold !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white transition-colors"
+        class="inline-flex items-center gap-1.5 text-xs font-semibold !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white opacity-50 hover:opacity-100 transition-all"
       >
         <ArrowLeftIcon class="w-4 h-4" />
         <span>Back to activities</span>

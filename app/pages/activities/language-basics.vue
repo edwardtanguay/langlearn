@@ -882,7 +882,7 @@ function isWordLearned(itemId: string): boolean {
       <div>
         <NuxtLink
           to="/activities"
-          class="inline-flex items-center text-sm font-medium !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white transition-colors"
+          class="inline-flex items-center text-sm font-medium !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white opacity-50 hover:opacity-100 transition-all"
         >
           ← Back to Activities
         </NuxtLink>
@@ -890,7 +890,7 @@ function isWordLearned(itemId: string): boolean {
 
       <!-- Centered Title on a line of its own in smaller font -->
       <div class="text-center pt-0.5 pb-0.5">
-        <h1 class="text-base sm:text-lg font-bold text-gray-800 dark:text-gray-200 tracking-tight">
+        <h1 class="w-[80%] mx-auto sm:w-auto text-xl sm:text-lg font-bold text-gray-800 dark:text-gray-200 tracking-tight">
           Learn Language Basics
         </h1>
       </div>
@@ -938,10 +938,7 @@ function isWordLearned(itemId: string): boolean {
               v-if="hasAnyPronunciationTips"
               type="button"
               @click="toggleTestPronunciation"
-              class="px-2.5 py-1 text-xs font-semibold rounded-lg border transition-all cursor-pointer"
-              :class="isTestPronunciationMode
-                ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
-                : 'border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-amber-600 dark:hover:text-amber-400'"
+              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
             >
               {{ isTestPronunciationMode ? 'Back to Categories' : 'Test Pronunciation' }}
             </button>
@@ -995,10 +992,7 @@ function isWordLearned(itemId: string): boolean {
           v-if="hasAnyPronunciationTips"
           type="button"
           @click="toggleTestPronunciation"
-          class="w-full py-2 px-2.5 text-xs font-semibold rounded-xl border transition-all cursor-pointer text-center truncate"
-          :class="isTestPronunciationMode
-            ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
-            : 'border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-amber-600 dark:hover:text-amber-400'"
+          class="w-full py-2 px-2.5 text-xs font-semibold rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer text-center truncate"
         >
           {{ isTestPronunciationMode ? 'Back to Categories' : 'Test Pronunciation' }}
         </button>
@@ -1068,7 +1062,7 @@ function isWordLearned(itemId: string): boolean {
         <button
           type="button"
           @click="isTestPronunciationMode = false"
-          class="w-3/4 sm:w-full py-2.5 px-4 rounded-xl font-bold text-sm text-white bg-amber-600 hover:bg-amber-700 dark:bg-amber-600 dark:hover:bg-amber-500 transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
+          class="w-3/4 sm:w-full py-2.5 px-4 rounded-xl font-semibold text-sm border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
         >
           <span>← Back to Categories</span>
         </button>
