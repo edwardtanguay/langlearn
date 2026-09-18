@@ -979,3 +979,7 @@
 - misunderstandings
 	- "était jambes?"
 		- et tes jambes?
+	- je suis enfant
+		- je suis à fond
+	- Est-ce que tu après?
+		- Est-ce que tu es prêt?
