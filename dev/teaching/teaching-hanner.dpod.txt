@@ -1,0 +1,113 @@
+2026-09-21
+
+I'm exited
+I'm excited
+Note: I exited the room. (I left the room)
+
+I'd like to run in two years my first marathon
+I'd like to run my first marathon in two years
+(sounds more natural)
+
+create webs
+create websites
+
+your salary can grow twice or more
+your salary can increase twice or more
+
+his job is build some dashboards
+his job is to build some dashboards
+
+it was six months before today
+yesterday it was six months ago
+!!!
+
+I give it to him and he try to check if it is correct
+I give it to him and he tries to check if it is correct
+
+it depends of the ticket
+it depends on the ticket
+ALSO: you can depend on me!
+
+you can build two tickets in two days
+you can finish two tickets in two days
+
+he had to write a code always
+he had to always write a code (before AI)
+
+the last 5K were horrible
+the last 5K was horrible
+BUT: the last five kilometers were horrible
+
+
+PRON:
+
+I have this three jobs
+I have these three jobs
+[THEEZ]
+
+I haven't every build it
+I haven't ever build it
+
+That is the word we are in
+That is the world we are in
+
+claude / cloud
+[klawd] / [klowd]
+
+but I bought a bot
+[uh] [ah] [ah]
+
+automony
+
+companies abroad
+[brawd]
+NOT[brawt]
+
+pig
+pick
+
+dod
+dot
+
+with colleegez
+colleagues
+[CALL-leegs]
+
+on site, on the side
+[SIGHT]   [SIGHD]
+
+log file
+lock file
+
+focus 
+[FOH-kus]
+not [fuckus]
+
+
+
+
+
+
+Yeah, Nuxt is a solid Frame, similar to but not as brittle as Next.
+
+OUR STACK: 
+Frontend: Nuxt/Next/Astro
+Backend: Payload (https://payloadcms.com)
+
+By the way, this is Vercel's relationship to Next and Nuxt:
+Next: Created and fully maintained by Vercel
+Nuxt: NuxtLabs (the company) was acquired by Vercel, but the open-source framework stays independent
+
+REGARDING SKILLS:
+/grill-me
+/brainstorming
+/teach
+/learn
+start with Matt Pocock: https://github.com/mattpocock/skills
+
+
+
+
+
+
+
