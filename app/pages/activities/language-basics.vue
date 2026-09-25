@@ -363,9 +363,30 @@ function scrollToTop() {
   }
 }
 
+// Numbers section tens filter
+const numbersTensOnly = ref(false)
+
+function getCategoryItems(cat: BasicCategory) {
+  if (cat.id === 'numbers' && numbersTensOnly.value) {
+    const tensIds = new Set([
+      'numbers-11',
+      'numbers-21',
+      'numbers-31',
+      'numbers-41',
+      'numbers-51',
+      'numbers-61',
+      'numbers-71',
+      'numbers-81',
+      'numbers-91',
+      'numbers-101'
+    ])
+    return cat.items.filter(item => tensIds.has(item.id))
+  }
+  return cat.items
+}
+
 watch(selectedLang, () => {
   clearAllTimers()
-  openCategoryId.value = null
   isTestPronunciationMode.value = false
   testPronunciationRevealed.value.clear()
   isStatsLoading.value = true
@@ -416,8 +437,6 @@ function handleScroll() {
 function selectLanguage(code: LangCode) {
   if (selectedLang.value === code) return
   selectedLang.value = code
-  openCategoryId.value = null
-  scrollToTop()
 }
 
 onMounted(() => {
@@ -1131,7 +1150,7 @@ function isWordLearned(itemId: string): boolean {
 
               <!-- Pronunciation tag -->
               <span
-                class="text-xs font-mono font-bold px-2 py-1 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 inline-block shrink-0"
+                class="text-xs font-mono font-bold px-2 py-1 rounded bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 inline-block shrink-0"
               >
                 [{{ pronunciationMap.get(item.id) }}]
               </span>
@@ -1185,61 +1204,38 @@ function isWordLearned(itemId: string): boolean {
             </div>
 
             <div class="flex items-center gap-3 shrink-0">
-              <!-- Visual indication when category is 100%: bold 100% and accomplished checkmark -->
-              <div
-                v-if="!isStatsLoading && getCategoryLearnedPercentage(cat) === 100"
-                class="flex items-center gap-1.5 px-2 py-0.5 rounded font-black text-xs shrink-0"
-                :style="{ color: brightColor }"
+              <span
+                class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full bg-gray-200/70 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                :style="getCategoryLearnedPercentage(cat) === 100 ? { color: brightColor, backgroundColor: `color-mix(in srgb, ${brightColor} 18%, transparent)` } : undefined"
               >
-                <span>100%</span>
-                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
-                </svg>
-              </div>
-
-              <!-- Learned percentage loading bar for this category (<100% or loading) -->
-              <div
-                v-else
-                class="relative w-24 sm:w-28 h-5 bg-gray-200 dark:bg-gray-800 rounded-none overflow-hidden border border-gray-300/70 dark:border-gray-700/70 shrink-0"
-                :class="isStatsLoading ? 'opacity-30 blur-[1px]' : 'opacity-100 blur-none'"
-                style="transition: opacity 0.3s ease, filter 0.3s ease;"
-              >
-                <div
-                  class="h-full rounded-none transition-all duration-300 ease-out"
-                  :style="{
-                    width: isStatsLoading ? '0%' : `${getCategoryLearnedPercentage(cat)}%`,
-                    backgroundColor: brightColor
-                  }"
-                ></div>
-                <div class="absolute inset-0 flex items-center justify-center text-[11px] font-extrabold text-gray-800 dark:text-gray-100 drop-shadow-xs pointer-events-none">
-                  {{ isStatsLoading ? '0%' : `${getCategoryLearnedPercentage(cat)}%` }}
-                </div>
-              </div>
-
-              <!-- Accordion chevron indicator -->
-              <svg
-                class="w-4 h-4 text-gray-400 transition-transform duration-200"
-                :class="{ 'rotate-180': isCategoryExpanded(cat.id) }"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
+                {{ isStatsLoading ? '0' : getCategoryLearnedCount(cat) }} of {{ cat.items.length }}
+              </span>
             </div>
           </button>
 
           <!-- Accordion Content Area -->
           <div v-if="isCategoryExpanded(cat.id)" class="px-4 pb-4 pt-1 border-t border-gray-200 dark:border-gray-700/80 space-y-3">
-            <!-- Sub-bar: Reset Category -->
-            <div class="flex items-center justify-between pt-1">
-              <span
-                class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
-                style="transition: opacity 0.3s ease, filter 0.3s ease;"
-                :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
-              >
-                {{ isStatsLoading ? `0 / ${cat.items.length} learned` : `${getCategoryLearnedCount(cat)} / ${cat.items.length} learned` }}
-              </span>
+            <!-- Sub-bar: Reset Category & Numbers Tens Toggle -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <div class="flex items-center gap-2">
+                <span
+                  class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
+                  style="transition: opacity 0.3s ease, filter 0.3s ease;"
+                  :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
+                >
+                  {{ isStatsLoading ? `0 / ${cat.items.length} learned` : `${getCategoryLearnedCount(cat)} / ${cat.items.length} learned` }}
+                </span>
+
+                <!-- Numbers tens toggle button -->
+                <button
+                  v-if="cat.id === 'numbers'"
+                  type="button"
+                  @click.stop="numbersTensOnly = !numbersTensOnly"
+                  class="ml-2 px-2 py-0.5 text-xs font-semibold rounded-md border border-amber-300 dark:border-amber-700/80 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all cursor-pointer"
+                >
+                  {{ numbersTensOnly ? 'Show all numbers' : 'Only tens positions' }}
+                </button>
+              </div>
 
               <!-- Reset Category Controls -->
               <div class="shrink-0">
@@ -1280,11 +1276,11 @@ function isWordLearned(itemId: string): boolean {
             <!-- Word Badges / Chips Cloud -->
             <div class="flex flex-wrap gap-2 pt-0.5">
               <button
-                v-for="item in cat.items"
+                v-for="item in getCategoryItems(cat)"
                 :key="item.id"
                 @click="toggleWord(item.id)"
                 type="button"
-                class="px-3 py-1.5 rounded-lg text-sm transition-all duration-150 cursor-pointer select-none text-left relative"
+                class="px-3 py-1.5 rounded-lg text-sm transition-all duration-150 cursor-pointer select-none text-left relative max-w-full break-words whitespace-normal leading-snug"
                 :class="[
                   // Learned word (whether showing English or flipped to target language): retain language color
                   isWordLearned(item.id)
@@ -1306,17 +1302,17 @@ function isWordLearned(itemId: string): boolean {
                 :title="isWordLearned(item.id) ? 'Learned word. Click to view translation / unlearn' : `Click to learn in ${activeLangLabel}`"
               >
                 <!-- CASE A: Active 3s Learning OR Unlearn click OR Search match: show target translation + icons -->
-                <span v-if="activeLearningWords.has(item.id) || activeUnlearnWords.has(item.id) || (searchQuery && isItemDisplayedRevealed(item))" class="inline-flex items-center gap-1.5">
+                <span v-if="activeLearningWords.has(item.id) || activeUnlearnWords.has(item.id) || (searchQuery && isItemDisplayedRevealed(item))" class="inline-flex items-center gap-1.5 flex-wrap">
                   <!-- Letters category -->
                   <template v-if="isPronunciation(item.id)">
-                    <span style="font-family: 'Courier New', Courier, monospace;">[{{ item[selectedLang] || item.en }}]</span>
+                    <span style="font-family: 'Courier New', Courier, monospace;" class="text-yellow-400 font-bold">[{{ item[selectedLang] || item.en }}]</span>
                   </template>
 
                   <!-- Standard category & Numbers -->
                   <template v-else>
-                    <span>{{ item[selectedLang] || item.en }}</span>
+                    <span class="break-words">{{ item[selectedLang] || item.en }}</span>
                     <!-- Pronunciation Note in brackets -->
-                    <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono opacity-60 font-normal ml-0.5">
+                    <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono text-yellow-400 font-bold ml-0.5">
                       [{{ pronunciationMap.get(item.id) }}]
                     </span>
 

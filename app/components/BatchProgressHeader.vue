@@ -6,6 +6,7 @@ export interface BatchSlot {
   slotIndex: number
   unsuccessfulCount: number
   status: 'untested' | 'testing' | 'learned' | 'parked' | 'deleted'
+  language?: string
 }
 
 const props = defineProps<{
@@ -13,6 +14,59 @@ const props = defineProps<{
   activeCardId?: string | null
   isBatchComplete?: boolean
 }>()
+
+const languageColors: Record<string, string> = {
+  fr: '#2563eb', // French = blue
+  it: '#16a34a', // Italian = green
+  es: '#dc2626', // Spanish = red
+  nl: '#ca8a04', // Dutch = yellow
+  pl: '#9ca3af', // Polish = gray
+  de: '#78350f', // German = brown
+  ru: '#4b5563',
+  is: '#0891b2',
+  da: '#9333ea',
+  el: '#ea580c'
+}
+
+function getSlotStyle(slot: BatchSlot) {
+  if (slot.status === 'parked' || slot.status === 'deleted') {
+    return {
+      backgroundColor: 'rgba(107, 114, 128, 0.25)',
+      borderColor: 'rgba(156, 163, 175, 0.4)',
+      color: '#9ca3af',
+      opacity: 0.5
+    }
+  }
+
+  const lang = (slot.language || 'fr').toLowerCase()
+  const color = languageColors[lang] || '#2563eb'
+
+  if (slot.status === 'learned') {
+    return {
+      backgroundColor: color,
+      borderColor: color,
+      color: '#ffffff',
+      opacity: 1
+    }
+  }
+
+  if (slot.unsuccessfulCount > 0) {
+    return {
+      backgroundColor: `color-mix(in srgb, ${color} 25%, transparent)`,
+      borderColor: color,
+      color: color,
+      opacity: 1
+    }
+  }
+
+  // Untested
+  return {
+    backgroundColor: `color-mix(in srgb, ${color} 15%, transparent)`,
+    borderColor: `color-mix(in srgb, ${color} 50%, transparent)`,
+    color: color,
+    opacity: 0.95
+  }
+}
 
 const totalCount = computed(() => props.slots.length)
 const testedCount = computed(() => props.slots.filter(s => s.status !== 'untested').length)
@@ -61,20 +115,12 @@ const percent = computed(() => {
       >
         <!-- The Pill Capsule -->
         <div
-          class="w-full h-8 rounded-lg flex items-center justify-center font-bold text-xs transition-all duration-200 select-none cursor-default"
+          class="w-full h-8 rounded-lg flex items-center justify-center font-bold text-xs transition-all duration-200 select-none cursor-default border"
+          :style="getSlotStyle(slot)"
           :class="[
             slot.id === activeCardId && !isBatchComplete
               ? 'ring-2 ring-indigo-600 dark:ring-indigo-400 ring-offset-2 dark:ring-offset-gray-900 shadow-md scale-105 z-10'
-              : 'border',
-            slot.status === 'learned'
-              ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800 shadow-xs'
-              : slot.status === 'parked'
-                ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-800'
-                : slot.status === 'deleted'
-                  ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border-rose-300 dark:border-rose-800'
-                  : slot.unsuccessfulCount > 0
-                    ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border-indigo-300 dark:border-indigo-800 font-mono'
-                    : 'bg-gray-50/80 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 border-dashed border-gray-300 dark:border-gray-700'
+              : ''
           ]"
           :title="`Card ${slot.slotIndex + 1}: ${
             slot.status === 'learned' 

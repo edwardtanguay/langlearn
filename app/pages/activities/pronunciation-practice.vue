@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { ArrowLeftIcon, ArrowPathIcon } from '@heroicons/vue/24/outline'
 
 useHead({
@@ -69,6 +69,37 @@ const currentCard = computed(() => {
   if (cards.value.length === 0) return null
   return cards.value[currentIndex.value] || null
 })
+
+const sliderValue = ref(2.5)
+let rankDebounceTimer: ReturnType<typeof setTimeout> | null = null
+
+watch(currentCard, (card) => {
+  if (card) {
+    sliderValue.value = card.rank ?? 2.5
+  }
+}, { immediate: true })
+
+function debouncedSaveRank() {
+  if (rankDebounceTimer) clearTimeout(rankDebounceTimer)
+  rankDebounceTimer = setTimeout(async () => {
+    if (!currentCard.value) return
+    const originalRank = currentCard.value.rank
+    const newRank = parseFloat(sliderValue.value.toFixed(5))
+    currentCard.value.rank = newRank
+    try {
+      await $fetch(`/api/flashcards/${currentCard.value.id}/rank`, {
+        method: 'PATCH',
+        body: { rank: newRank }
+      })
+    } catch (err) {
+      console.error('Failed to save rank:', err)
+      if (currentCard.value) {
+        currentCard.value.rank = originalRank
+        sliderValue.value = originalRank
+      }
+    }
+  }, 700)
+}
 
 function stripAsterisks(text: string): string {
   return text ? text.replace(/\*/g, '') : ''
@@ -416,6 +447,11 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
       <div class="w-full flex items-center justify-between px-3 -mt-2 text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
         <span class="tracking-wider uppercase">{{ formatImportDate(currentCard.createdAt) }}</span>
         <span class="tracking-wider uppercase">{{ cardStatusLabel(currentCard) }}</span>
+      </div>
+
+      <!-- Rank Slider (Visible upon reveal) -->
+      <div v-if="isRevealed">
+        <FlashcardRankSlider v-model="sliderValue" @save-rank="debouncedSaveRank" />
       </div>
 
       <!-- Action Buttons [Learned] and [Keep Testing] (Visible immediately upon reveal) -->

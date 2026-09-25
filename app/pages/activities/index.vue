@@ -16,6 +16,13 @@ useHead({
 
 const activities = [
   {
+    title: 'Correction Journal',
+    path: '/activities/correction-journal',
+    description: 'Interactive daily corrections. Reveal corrections, toggle correct/incorrect, and track mastery day by day.',
+    icon: BookOpenIcon,
+    badgeColor: 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-200/60 dark:border-amber-900/40'
+  },
+  {
     title: 'Language Basics',
     path: '/activities/language-basics',
     description: 'Interactive flashcards covering essential language basics across four languages.',
@@ -51,6 +58,23 @@ const activities = [
     badgeColor: 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200/60 dark:border-rose-900/40'
   }
 ]
+
+const copiedGermanQuiz = ref(false)
+const germanPromptText = 'Create a German grammar quiz testing adjective declension with definite and indefinite articles (weak vs. strong declension), specifically focusing on patterns like whether "Ich habe die ... Versionen implementiert" should use "optimierte" or "optimierten", with 8 interactive multiple-choice questions, detailed explanations of case, gender, and plurality rules, and practice sentences.'
+
+async function copyGermanPrompt() {
+  try {
+    if (navigator?.clipboard?.writeText) {
+      await navigator.clipboard.writeText(germanPromptText)
+      copiedGermanQuiz.value = true
+      setTimeout(() => {
+        copiedGermanQuiz.value = false
+      }, 3000)
+    }
+  } catch (err) {
+    console.error('Failed to copy to clipboard', err)
+  }
+}
 </script>
 
 <template>
@@ -58,6 +82,43 @@ const activities = [
     <div>
       <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Activities</h1>
       <p class="text-gray-600 dark:text-gray-400 mt-1">Choose an activity to practice your language skills and reinforce key vocabulary.</p>
+    </div>
+
+    <!-- Featured Gemini Quiz Link Banner -->
+    <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-purple-900/10 via-indigo-900/10 to-amber-900/10 border-2 border-purple-300/40 dark:border-purple-800/60 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="space-y-1.5">
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950/70 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+            German Grammar Quiz
+          </span>
+          <span class="text-xs text-gray-500 font-mono">optimierte vs. optimierten</span>
+        </div>
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+          "Ich habe die optimierten Versionen implementiert"
+        </h3>
+        <p class="text-xs text-gray-600 dark:text-gray-400 max-w-xl">
+          Test your grasp on whether to use "optimierte" or "optimierten" with Gemini AI. Includes rules, explanations, and practice questions.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2 self-stretch sm:self-auto shrink-0">
+        <a
+          href="https://gemini.google.com/app"
+          target="_blank"
+          @click="copyGermanPrompt"
+          class="flex-1 sm:flex-none px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <SparklesIcon class="w-4 h-4" />
+          <span>{{ copiedGermanQuiz ? 'Copied! Opening Gemini...' : 'Start Quiz on Gemini' }}</span>
+        </a>
+        <NuxtLink
+          to="/activities/gemini-quiz"
+          class="px-3 py-2.5 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-medium transition-colors"
+          title="View all quiz prompts"
+        >
+          All Prompts
+        </NuxtLink>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">

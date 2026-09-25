@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const threshold = dbUser.testingGroupSize || 10
+    const threshold = (dbUser.testingGroupSize && dbUser.testingGroupSize !== 10) ? dbUser.testingGroupSize : 7
 
     let strategyWhere: any = {
       ownerId: dbUser.id

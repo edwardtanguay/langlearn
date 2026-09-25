@@ -41,7 +41,7 @@
               <div class="inline-flex rounded-t-md overflow-hidden border-t border-l border-r border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-xs font-medium">
                 <button
                   type="button"
-                  @click="form.type = 'BUGFIX'"
+                  @click="selectType('BUGFIX')"
                   :disabled="isSubmitting || feedbackMsg !== ''"
                   :class="form.type === 'BUGFIX'
                     ? 'bg-orange-800 text-white font-bold shadow-inner'
@@ -52,7 +52,7 @@
                 </button>
                 <button
                   type="button"
-                  @click="form.type = 'FEATURE'"
+                  @click="selectType('FEATURE')"
                   :disabled="isSubmitting || feedbackMsg !== ''"
                   :class="form.type === 'FEATURE'
                     ? 'bg-emerald-800 text-white font-bold shadow-inner'
@@ -134,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from 'vue'
+import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { LightBulbIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
@@ -159,14 +159,42 @@ watch(() => route.path, () => {
   isOpen.value = false
 })
 
+const focusTextarea = () => {
+  nextTick(() => {
+    textareaRef.value?.focus()
+  })
+  setTimeout(() => {
+    textareaRef.value?.focus()
+  }, 50)
+}
+
 // Focus input box on drawer open & handle mutual exclusion with stats modal
 watch(isOpen, (newVal) => {
   if (newVal) {
     isStatsOpen.value = false // Mutual exclusion: close stats modal
     feedbackMsg.value = ''
-    nextTick(() => {
-      textareaRef.value?.focus()
-    })
+    focusTextarea()
+  }
+})
+
+const selectType = (type: 'BUGFIX' | 'FEATURE') => {
+  form.value.type = type
+  focusTextarea()
+}
+
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape' && isOpen.value) {
+    isOpen.value = false
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('keydown', handleKeyDown)
   }
 })
 

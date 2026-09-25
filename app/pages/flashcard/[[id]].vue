@@ -66,6 +66,7 @@ interface BatchSlot {
   slotIndex: number
   unsuccessfulCount: number
   status: 'untested' | 'testing' | 'learned' | 'parked' | 'deleted'
+  language?: string
 }
 
 interface BatchLanguageItem {
@@ -80,15 +81,37 @@ const selectedStrategy = ref<StrategyId>('last_imported')
 const selectedLanguage = ref<string>('all')
 const availableLanguages = ref<BatchLanguageItem[]>([])
 const isLoadingLanguages = ref(true)
-const userGroupSize = ref(10)
+const userGroupSize = ref(7)
 const totalAvailableMatching = ref(0)
 const learnedInBatchCount = ref(0)
-const totalInBatch = ref(10)
+const totalInBatch = ref(7)
 const isBatchComplete = ref(false)
-const autoAdvanceCountdown = ref(0)
-let autoAdvanceTimer: ReturnType<typeof setInterval> | null = null
 const lastCompletedBatchCardIds = ref<string[]>([])
 let activeBatchRequestId = 0
+
+// Random activities & Daily goal
+const allActivities = [
+  { title: 'Language Basics', path: '/activities/language-basics' },
+  { title: 'Pronunciation Practice', path: '/activities/pronunciation-practice' },
+  { title: 'Correction Journal', path: '/activities/correction-journal' },
+  { title: 'Drag/Drop Highlighted Words', path: '/activities/starred-texts' },
+  { title: 'Learn à/de', path: '/activities/learn-a-de' },
+  { title: 'Gemini Quiz Prompts', path: '/activities/gemini-quiz' }
+]
+const currentBatchRandomActivity = ref<{ title: string; path: string } | null>(null)
+const batchCompleteRandomActivities = ref<Array<{ title: string; path: string }>>([])
+const userDailyGoal = ref(50)
+
+function pickRandomActivitiesForBatch() {
+  const shuffled = [...allActivities].sort(() => Math.random() - 0.5)
+  currentBatchRandomActivity.value = shuffled[0] || null
+  batchCompleteRandomActivities.value = [shuffled[0]!, shuffled[1]!]
+}
+
+const hasReachedDailyGoal = computed(() => {
+  const reviewed = cardStats.value?.todayReviewedCount ?? 0
+  return reviewed >= userDailyGoal.value
+})
 
 const strategyOptions = [
   { id: 'last_imported', label: 'Newly imported untested' },
@@ -305,7 +328,7 @@ async function fetchBatchLanguages(reqId?: number) {
     if (thisReqId !== activeBatchRequestId) return
 
     availableLanguages.value = res.languages || []
-    if (res.threshold) userGroupSize.value = res.threshold
+    if (res.threshold) userGroupSize.value = res.threshold === 10 ? 7 : res.threshold
     totalAvailableMatching.value = res.totalAvailable || 0
 
     // If current selected language is not in available languages and not 'all', fallback to 'all'
@@ -329,11 +352,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
   const thisReqId = reqId ?? ++activeBatchRequestId
   isLoadingQueue.value = true
   isBatchComplete.value = false
-  if (autoAdvanceTimer) {
-    clearInterval(autoAdvanceTimer)
-    autoAdvanceTimer = null
-  }
-  autoAdvanceCountdown.value = 0
+  pickRandomActivitiesForBatch()
 
   const minDelay = new Promise(resolve => setTimeout(resolve, 150))
   try {
@@ -372,6 +391,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
           testQueue.value = [specificCard, ...otherCards]
           batchSlots.value = testQueue.value.map((c, i) => ({
             id: c.id,
+            language: c.backLanguage || c.frontLanguage || 'fr',
             slotIndex: i,
             unsuccessfulCount: 0,
             status: 'untested'
@@ -385,7 +405,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
           learnedInBatchCount.value = 0
           totalInBatch.value = testQueue.value.length
           sliderValue.value = specificCard.rank
-          if (testQueue.value.length > 0 && userGroupSize.value === 10) {
+          if (testQueue.value.length > 0 && userGroupSize.value === 7) {
             userGroupSize.value = testQueue.value.length
           }
           return
@@ -405,6 +425,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
     testQueue.value = results || []
     batchSlots.value = (results || []).map((c, i) => ({
       id: c.id,
+      language: c.backLanguage || c.frontLanguage || 'fr',
       slotIndex: i,
       unsuccessfulCount: 0,
       status: 'untested'
@@ -414,7 +435,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
     learnedInBatchCount.value = 0
     totalInBatch.value = results ? results.length : 0
 
-    if (results && results.length > 0 && userGroupSize.value === 10) {
+    if (results && results.length > 0 && userGroupSize.value === 7) {
       userGroupSize.value = results.length
     }
 
@@ -434,23 +455,10 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
 
 function triggerBatchCompletion() {
   isBatchComplete.value = true
-  autoAdvanceCountdown.value = 10
-  if (autoAdvanceTimer) clearInterval(autoAdvanceTimer)
-  autoAdvanceTimer = setInterval(() => {
-    if (autoAdvanceCountdown.value > 1) {
-      autoAdvanceCountdown.value--
-    } else {
-      startNextBatch()
-    }
-  }, 1000)
+  pickRandomActivitiesForBatch()
 }
 
 function startNextBatch() {
-  if (autoAdvanceTimer) {
-    clearInterval(autoAdvanceTimer)
-    autoAdvanceTimer = null
-  }
-  autoAdvanceCountdown.value = 0
   fetchBatch(true)
 }
 
@@ -944,7 +952,7 @@ async function handleSelectCard(card: Flashcard) {
     testQueue.value = [copyResult, ...testQueue.value.filter(c => c.id !== copyResult.id)]
     if (!batchSlots.value.some(s => s.id === copyResult.id)) {
       batchSlots.value = [
-        { id: copyResult.id, slotIndex: 0, unsuccessfulCount: 0, status: 'untested' as const },
+        { id: copyResult.id, language: copyResult.backLanguage || copyResult.frontLanguage || 'fr', slotIndex: 0, unsuccessfulCount: 0, status: 'untested' as const },
         ...batchSlots.value
       ].map((s, idx) => ({ ...s, slotIndex: idx }))
     }
@@ -1018,6 +1026,17 @@ watch(() => route.params.id, (newId) => {
   }
 })
 
+async function fetchUserSettings() {
+  try {
+    const data: any = await $fetch('/api/user/me')
+    if (data?.dailyTakeGoal) {
+      userDailyGoal.value = data.dailyTakeGoal
+    }
+  } catch {
+    userDailyGoal.value = 50
+  }
+}
+
 onMounted(async () => {
   window.addEventListener('keydown', handleGlobalKeyDown)
   document.addEventListener('click', handleClickOutsideDropdowns)
@@ -1025,6 +1044,7 @@ onMounted(async () => {
     try {
       const reqId = ++activeBatchRequestId
       await Promise.all([
+        fetchUserSettings(),
         fetchTags(),
         fetchCardStats(),
         fetchBatchLanguages(reqId),
@@ -1341,17 +1361,33 @@ onBeforeUnmount(() => {
                       You've learned all {{ totalInBatch }} cards in this batch.
                     </p>
                   </div>
-                  <div class="pt-1">
+                  <div class="pt-1 flex flex-col items-center gap-2.5 w-full max-w-xs">
                     <button
                       @click="startNextBatch"
-                      class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                      class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <span>Start Next {{ userGroupSize }} Cards</span>
-                      <span v-if="autoAdvanceCountdown > 0" class="text-[10px] bg-emerald-700/80 px-1.5 py-0.5 rounded-full font-mono">
-                        {{ autoAdvanceCountdown }}s
-                      </span>
+                      <span>Test next batch</span>
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </button>
+
+                    <!-- Two random activity buttons -->
+                    <div v-if="batchCompleteRandomActivities.length >= 2" class="w-full grid grid-cols-2 gap-2">
+                      <NuxtLink
+                        v-for="act in batchCompleteRandomActivities"
+                        :key="act.path"
+                        :to="act.path"
+                        class="py-2 px-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-xl text-[11px] transition-colors truncate text-center shadow-xs"
+                      >
+                        {{ act.title }}
+                      </NuxtLink>
+                    </div>
+
+                    <NuxtLink
+                      to="/activities"
+                      class="text-xs text-gray-500 dark:text-gray-400 hover:text-amber-500 underline transition-colors pt-0.5 cursor-pointer"
+                    >
+                      Activities
+                    </NuxtLink>
                   </div>
                 </div>
 
@@ -1451,6 +1487,20 @@ onBeforeUnmount(() => {
 
               </div>
             </Transition>
+
+            <!-- Random activity link after daily goal reached (e.g. 50 cards) -->
+            <div
+              v-if="hasReachedDailyGoal && currentBatchRandomActivity && !isBatchComplete"
+              class="w-full flex items-center justify-center pt-2 pb-1"
+            >
+              <NuxtLink
+                :to="currentBatchRandomActivity.path"
+                class="inline-flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-semibold hover:underline transition-colors py-1"
+              >
+                <span>Try activity: {{ currentBatchRandomActivity.title }}</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </NuxtLink>
+            </div>
 
           </div>
         </div>

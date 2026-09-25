@@ -1,0 +1,870 @@
+{
+  "days": [
+    {
+      "date": "2026-09-23",
+      "sections": [
+        {
+          "id": "2026-09-23-sec-1",
+          "day": "2026-09-23",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "C'est parfait, je suis flexible et je [puis;peux] bavarder de [toutes;tout les] sujets.\n\nJe trouve [cette;ce] format efficace aussi quand le prof et [elève;l'élève] n'ont pas beaucoup de temps [de;pour] préparer le cours :\n- [l'elève;l'élève] lit un texte à voix haute, avec des corrections si nécessaire\n- on discute [le;du] texte\n- [on discute après;puis on revient sur] les erreurs [qui;que] le professeur avait écrivé pendant la discussion\n\nJe suis moi aussi professeur d'anglais sur Preply depuis quelques semaines. J'ai [de nouveau mes premières elèves;récemment eu mes premiers élèves] et je cherche [les;des] méthodes efficaces et [plaisantes pour toutes;agréables pour tout le monde].\n\nCe serait peut-être aussi un sujet [que nous pouvons;dont nous pourrions] discuter. Tu as certainement les bonnes idées [de;sur] ce sujet.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "C'est parfait, je suis flexible et je "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-1",
+              "incorrect": "puis",
+              "correct": "peux"
+            },
+            {
+              "type": "text",
+              "text": " bavarder de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-2",
+              "incorrect": "toutes",
+              "correct": "tout les"
+            },
+            {
+              "type": "text",
+              "text": " sujets.\n\nJe trouve "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-3",
+              "incorrect": "cette",
+              "correct": "ce"
+            },
+            {
+              "type": "text",
+              "text": " format efficace aussi quand le prof et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-4",
+              "incorrect": "elève",
+              "correct": "l'élève"
+            },
+            {
+              "type": "text",
+              "text": " n'ont pas beaucoup de temps "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-5",
+              "incorrect": "de",
+              "correct": "pour"
+            },
+            {
+              "type": "text",
+              "text": " préparer le cours :\n- "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-6",
+              "incorrect": "l'elève",
+              "correct": "l'élève"
+            },
+            {
+              "type": "text",
+              "text": " lit un texte à voix haute, avec des corrections si nécessaire\n- on discute "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-7",
+              "incorrect": "le",
+              "correct": "du"
+            },
+            {
+              "type": "text",
+              "text": " texte\n- "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-8",
+              "incorrect": "on discute après",
+              "correct": "puis on revient sur"
+            },
+            {
+              "type": "text",
+              "text": " les erreurs "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-9",
+              "incorrect": "qui",
+              "correct": "que"
+            },
+            {
+              "type": "text",
+              "text": " le professeur avait écrivé pendant la discussion\n\nJe suis moi aussi professeur d'anglais sur Preply depuis quelques semaines. J'ai "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-10",
+              "incorrect": "de nouveau mes premières elèves",
+              "correct": "récemment eu mes premiers élèves"
+            },
+            {
+              "type": "text",
+              "text": " et je cherche "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-11",
+              "incorrect": "les",
+              "correct": "des"
+            },
+            {
+              "type": "text",
+              "text": " méthodes efficaces et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-12",
+              "incorrect": "plaisantes pour toutes",
+              "correct": "agréables pour tout le monde"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nCe serait peut-être aussi un sujet "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-13",
+              "incorrect": "que nous pouvons",
+              "correct": "dont nous pourrions"
+            },
+            {
+              "type": "text",
+              "text": " discuter. Tu as certainement les bonnes idées "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-1-fc-14",
+              "incorrect": "de",
+              "correct": "sur"
+            },
+            {
+              "type": "text",
+              "text": " ce sujet."
+            }
+          ],
+          "flashcardsCount": 14,
+          "wordCount": 115
+        },
+        {
+          "id": "2026-09-23-sec-2",
+          "day": "2026-09-23",
+          "sectionIndex": 2,
+          "language": "fr",
+          "rawText": "Mon nom est Edward, je habite à Berlin et en octobre je [courirai;courrai] le marathon à Dijon. [Je voudrais;J'aimerais] pouvoir parler avec les autres coureurs et en [genéral;général] pratiquer mon français [pour les jours;pendant les quelques jours] [que;où] je vais rester [là;là-bas], pour [une courte;de courtes] vacances.\n\nJ'ai un certificat B1, mais parfois, [c'est pour moi difficile de;j'ai du mal à] comprendre le français [orale;oral] avec toutes les [liasons;liaisons] et la vitesse [avec quel;à laquelle] on parle.\n\nPour moi, [serai;serait] mieux d'avoir un [cour;cours] entre lundi et vendredi, ou le weekend entre 22 h et minuit. Mes je vois maintenant que ton calendrier est presque [le contraire;l'inverse]. Peut-être que je [peux;pourrais] me [recontre;rencontrer] avec toi samedi matin, tôt, [comme;vers] 5 ou 6 [heure;heures].\n\nEst-ce que ton calendrier est toujours [ouvre;ouvert] seulement [sur le weekend;le week-end], ou est-ce temporaire ?",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Mon nom est Edward, je habite à Berlin et en octobre je "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-1",
+              "incorrect": "courirai",
+              "correct": "courrai"
+            },
+            {
+              "type": "text",
+              "text": " le marathon à Dijon. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-2",
+              "incorrect": "Je voudrais",
+              "correct": "J'aimerais"
+            },
+            {
+              "type": "text",
+              "text": " pouvoir parler avec les autres coureurs et en "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-3",
+              "incorrect": "genéral",
+              "correct": "général"
+            },
+            {
+              "type": "text",
+              "text": " pratiquer mon français "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-4",
+              "incorrect": "pour les jours",
+              "correct": "pendant les quelques jours"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-5",
+              "incorrect": "que",
+              "correct": "où"
+            },
+            {
+              "type": "text",
+              "text": " je vais rester "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-6",
+              "incorrect": "là",
+              "correct": "là-bas"
+            },
+            {
+              "type": "text",
+              "text": ", pour "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-7",
+              "incorrect": "une courte",
+              "correct": "de courtes"
+            },
+            {
+              "type": "text",
+              "text": " vacances.\n\nJ'ai un certificat B1, mais parfois, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-8",
+              "incorrect": "c'est pour moi difficile de",
+              "correct": "j'ai du mal à"
+            },
+            {
+              "type": "text",
+              "text": " comprendre le français "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-9",
+              "incorrect": "orale",
+              "correct": "oral"
+            },
+            {
+              "type": "text",
+              "text": " avec toutes les "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-10",
+              "incorrect": "liasons",
+              "correct": "liaisons"
+            },
+            {
+              "type": "text",
+              "text": " et la vitesse "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-11",
+              "incorrect": "avec quel",
+              "correct": "à laquelle"
+            },
+            {
+              "type": "text",
+              "text": " on parle.\n\nPour moi, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-12",
+              "incorrect": "serai",
+              "correct": "serait"
+            },
+            {
+              "type": "text",
+              "text": " mieux d'avoir un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-13",
+              "incorrect": "cour",
+              "correct": "cours"
+            },
+            {
+              "type": "text",
+              "text": " entre lundi et vendredi, ou le weekend entre 22 h et minuit. Mes je vois maintenant que ton calendrier est presque "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-14",
+              "incorrect": "le contraire",
+              "correct": "l'inverse"
+            },
+            {
+              "type": "text",
+              "text": ". Peut-être que je "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-15",
+              "incorrect": "peux",
+              "correct": "pourrais"
+            },
+            {
+              "type": "text",
+              "text": " me "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-16",
+              "incorrect": "recontre",
+              "correct": "rencontrer"
+            },
+            {
+              "type": "text",
+              "text": " avec toi samedi matin, tôt, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-17",
+              "incorrect": "comme",
+              "correct": "vers"
+            },
+            {
+              "type": "text",
+              "text": " 5 ou 6 "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-18",
+              "incorrect": "heure",
+              "correct": "heures"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nEst-ce que ton calendrier est toujours "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-19",
+              "incorrect": "ouvre",
+              "correct": "ouvert"
+            },
+            {
+              "type": "text",
+              "text": " seulement "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-2-fc-20",
+              "incorrect": "sur le weekend",
+              "correct": "le week-end"
+            },
+            {
+              "type": "text",
+              "text": ", ou est-ce temporaire ?"
+            }
+          ],
+          "flashcardsCount": 20,
+          "wordCount": 127
+        },
+        {
+          "id": "2026-09-23-sec-3",
+          "day": "2026-09-23",
+          "sectionIndex": 3,
+          "language": "fr",
+          "rawText": "Ça te va si on fait un cours demain à 23 h 30 ? Je peux seulement [les;des] cours tard [en;le] soir.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Ça te va si on fait un cours demain à 23 h 30 ? Je peux seulement "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-3-fc-1",
+              "incorrect": "les",
+              "correct": "des"
+            },
+            {
+              "type": "text",
+              "text": " cours tard "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-3-fc-2",
+              "incorrect": "en",
+              "correct": "le"
+            },
+            {
+              "type": "text",
+              "text": " soir."
+            }
+          ],
+          "flashcardsCount": 2,
+          "wordCount": 22
+        },
+        {
+          "id": "2026-09-23-sec-4",
+          "day": "2026-09-23",
+          "sectionIndex": 4,
+          "language": "fr",
+          "rawText": "Merci pour la réponse rapide.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Merci pour la réponse rapide."
+            }
+          ],
+          "flashcardsCount": 0,
+          "wordCount": 5
+        },
+        {
+          "id": "2026-09-23-sec-5",
+          "day": "2026-09-23",
+          "sectionIndex": 5,
+          "language": "fr",
+          "rawText": "Ce ne sera pas [de;un] problème. Qu'est-ce je doit faire ? Est-ce que tu vas le reprogrammer et [après je dois;je devrai ensuite] le confirmer ?",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Ce ne sera pas "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-5-fc-1",
+              "incorrect": "de",
+              "correct": "un"
+            },
+            {
+              "type": "text",
+              "text": " problème. Qu'est-ce je doit faire ? Est-ce que tu vas le reprogrammer et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-23-sec-5-fc-2",
+              "incorrect": "après je dois",
+              "correct": "je devrai ensuite"
+            },
+            {
+              "type": "text",
+              "text": " le confirmer ?"
+            }
+          ],
+          "flashcardsCount": 2,
+          "wordCount": 24
+        }
+      ],
+      "totalWords": 293,
+      "totalFlashcards": 38
+    },
+    {
+      "date": "2026-09-24",
+      "sections": [
+        {
+          "id": "2026-09-24-sec-1",
+          "day": "2026-09-24",
+          "sectionIndex": 1,
+          "language": "de",
+          "rawText": "Das hört sich gut an, 1:45 ist wirklich eine Top-Fit-Zeit für einen Halbmarathon, ich wünsche dir das Beste für die 3:45, ein Hammer-Ziel, ich kann mir die Geschwindikeit über 42km kaum vorstellen, meine Lungen und Beine würden nicht mitmachen!\n\nIch habe mich doch für einen 21km-Infiltration-Run entschieden. Ich muss ja noch ein paar Berlin-Marathon-Äpfel essen für die über 2000€, die ich über die Jahren für den Spaß ausgebegen habe.\n\nWann schätzst du ungefähr, dass du bei Kilometer 12 bist? Ich will dich überhaupt nicht aufhalten, lauf auf jeden Fall dein Tempo weiter! Aber das macht immer Spaß uns kurz zu sehen, fast schon eine jährliche Tradition inzwischen.\n\nUnd letztes Jahr lief plöztlich ein ehemaliger Mitarbeiter aus dem Jahr 2013 neben mir. Wannsinn wen man beim Berliner Marathon so trifft. Und die Atmosphäre ist wirklich einmalig. Wetter verspricht auch schön zu werden.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Das hört sich gut an, 1:45 ist wirklich eine Top-Fit-Zeit für einen Halbmarathon, ich wünsche dir das Beste für die 3:45, ein Hammer-Ziel, ich kann mir die Geschwindikeit über 42km kaum vorstellen, meine Lungen und Beine würden nicht mitmachen!\n\nIch habe mich doch für einen 21km-Infiltration-Run entschieden. Ich muss ja noch ein paar Berlin-Marathon-Äpfel essen für die über 2000€, die ich über die Jahren für den Spaß ausgebegen habe.\n\nWann schätzst du ungefähr, dass du bei Kilometer 12 bist? Ich will dich überhaupt nicht aufhalten, lauf auf jeden Fall dein Tempo weiter! Aber das macht immer Spaß uns kurz zu sehen, fast schon eine jährliche Tradition inzwischen.\n\nUnd letztes Jahr lief plöztlich ein ehemaliger Mitarbeiter aus dem Jahr 2013 neben mir. Wannsinn wen man beim Berliner Marathon so trifft. Und die Atmosphäre ist wirklich einmalig. Wetter verspricht auch schön zu werden."
+            }
+          ],
+          "flashcardsCount": 0,
+          "wordCount": 141
+        },
+        {
+          "id": "2026-09-24-sec-2",
+          "day": "2026-09-24",
+          "sectionIndex": 2,
+          "language": "fr",
+          "rawText": "[Écrit un summaire;Écris un résumé] de cinq à sept phrases pour chaque chapitre de ce livre.",
+          "bits": [
+            {
+              "type": "flashcard",
+              "id": "2026-09-24-sec-2-fc-1",
+              "incorrect": "Écrit un summaire",
+              "correct": "Écris un résumé"
+            },
+            {
+              "type": "text",
+              "text": " de cinq à sept phrases pour chaque chapitre de ce livre."
+            }
+          ],
+          "flashcardsCount": 1,
+          "wordCount": 14
+        }
+      ],
+      "totalWords": 155,
+      "totalFlashcards": 1
+    },
+    {
+      "date": "2026-09-25",
+      "sections": [
+        {
+          "id": "2026-09-25-sec-1",
+          "day": "2026-09-25",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "Merci pour la conversation [hier;d'hier], j'aime le fait que tu parle beaucoup [dans;pendant] la conversation et [avec une vitesse rapide;à une vitesse assez rapide]. C'est exactement le situation [réel;réelle] dans laquelle je doit pratiquer, je doit comprendre et [répond rapide;répondre rapidement]. Tes corrections de chaque error de pronunciation et de grammaire sont aussi très [efficace;efficaces]. [Laisson nous;Laissons-nous] continuer comme ça, mon objectif est la perfection.\n\nJ'ai déjà programmé un cour pour ce soir à [22:30;22 h 30], et je vais programmer les [suivi cours;cours suivants] :\n\n- lundi 28 septembre, 22 h\n- mardi 29 septembre, 22 h\n- mercredi 1er octobre, 21 h 30\n\nChaque fois que je programme [les cours avec un prof;un cours avec un professeur], je \"annule\" le contrat afin que Preply ne [peut;puisse] continuer [de charger mon PayPal;à débiter mon compte PayPal] sans que je le [sais;sache]. Alors [ne deviens pas misinterpreter;ne te méprends pas sur] les messages de \"annuler\".\n\nJe pars [vers Dijon en octobre 8;pour Dijon le 8 octobre], entre [octobre 1 et 8;le 1er et le 8 octobre], [je vais probablement avoir le temps;j'aurais probablement avoir le temps de prendre] [plus des cours;quelques cours supplémentaires], mais [je n'en sais pas encore;je ne sais pas encore exactement quand].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Merci pour la conversation "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-1",
+              "incorrect": "hier",
+              "correct": "d'hier"
+            },
+            {
+              "type": "text",
+              "text": ", j'aime le fait que tu parle beaucoup "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-2",
+              "incorrect": "dans",
+              "correct": "pendant"
+            },
+            {
+              "type": "text",
+              "text": " la conversation et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-3",
+              "incorrect": "avec une vitesse rapide",
+              "correct": "à une vitesse assez rapide"
+            },
+            {
+              "type": "text",
+              "text": ". C'est exactement le situation "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-4",
+              "incorrect": "réel",
+              "correct": "réelle"
+            },
+            {
+              "type": "text",
+              "text": " dans laquelle je doit pratiquer, je doit comprendre et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-5",
+              "incorrect": "répond rapide",
+              "correct": "répondre rapidement"
+            },
+            {
+              "type": "text",
+              "text": ". Tes corrections de chaque error de pronunciation et de grammaire sont aussi très "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-6",
+              "incorrect": "efficace",
+              "correct": "efficaces"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-7",
+              "incorrect": "Laisson nous",
+              "correct": "Laissons-nous"
+            },
+            {
+              "type": "text",
+              "text": " continuer comme ça, mon objectif est la perfection.\n\nJ'ai déjà programmé un cour pour ce soir à "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-8",
+              "incorrect": "22:30",
+              "correct": "22 h 30"
+            },
+            {
+              "type": "text",
+              "text": ", et je vais programmer les "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-9",
+              "incorrect": "suivi cours",
+              "correct": "cours suivants"
+            },
+            {
+              "type": "text",
+              "text": " :\n\n- lundi 28 septembre, 22 h\n- mardi 29 septembre, 22 h\n- mercredi 1er octobre, 21 h 30\n\nChaque fois que je programme "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-10",
+              "incorrect": "les cours avec un prof",
+              "correct": "un cours avec un professeur"
+            },
+            {
+              "type": "text",
+              "text": ", je \"annule\" le contrat afin que Preply ne "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-11",
+              "incorrect": "peut",
+              "correct": "puisse"
+            },
+            {
+              "type": "text",
+              "text": " continuer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-12",
+              "incorrect": "de charger mon PayPal",
+              "correct": "à débiter mon compte PayPal"
+            },
+            {
+              "type": "text",
+              "text": " sans que je le "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-13",
+              "incorrect": "sais",
+              "correct": "sache"
+            },
+            {
+              "type": "text",
+              "text": ". Alors "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-14",
+              "incorrect": "ne deviens pas misinterpreter",
+              "correct": "ne te méprends pas sur"
+            },
+            {
+              "type": "text",
+              "text": " les messages de \"annuler\".\n\nJe pars "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-15",
+              "incorrect": "vers Dijon en octobre 8",
+              "correct": "pour Dijon le 8 octobre"
+            },
+            {
+              "type": "text",
+              "text": ", entre "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-16",
+              "incorrect": "octobre 1 et 8",
+              "correct": "le 1er et le 8 octobre"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-17",
+              "incorrect": "je vais probablement avoir le temps",
+              "correct": "j'aurais probablement avoir le temps de prendre"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-18",
+              "incorrect": "plus des cours",
+              "correct": "quelques cours supplémentaires"
+            },
+            {
+              "type": "text",
+              "text": ", mais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-1-fc-19",
+              "incorrect": "je n'en sais pas encore",
+              "correct": "je ne sais pas encore exactement quand"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 19,
+          "wordCount": 171
+        },
+        {
+          "id": "2026-09-25-sec-2",
+          "day": "2026-09-25",
+          "sectionIndex": 2,
+          "language": "fr",
+          "rawText": "[Sorry;Désole], \"mercredi 1er octobre\" devait être \"mercredi 29 septembre\", mais mercredi ne marche pas pour toi.\n\n[Serais;Est-ce que] \"jeudi 1er octobre, 21 h 30\" [passer;pourrait te convenir] ?",
+          "bits": [
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-2-fc-1",
+              "incorrect": "Sorry",
+              "correct": "Désole"
+            },
+            {
+              "type": "text",
+              "text": ", \"mercredi 1er octobre\" devait être \"mercredi 29 septembre\", mais mercredi ne marche pas pour toi.\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-2-fc-2",
+              "incorrect": "Serais",
+              "correct": "Est-ce que"
+            },
+            {
+              "type": "text",
+              "text": " \"jeudi 1er octobre, 21 h 30\" "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-2-fc-3",
+              "incorrect": "passer",
+              "correct": "pourrait te convenir"
+            },
+            {
+              "type": "text",
+              "text": " ?"
+            }
+          ],
+          "flashcardsCount": 3,
+          "wordCount": 28
+        },
+        {
+          "id": "2026-09-25-sec-3",
+          "day": "2026-09-25",
+          "sectionIndex": 3,
+          "language": "fr",
+          "rawText": "Tu as raison, excuse-moi, je suis [nouveux;nouveau] sur le [platforme;plateforme] Preply. On doit simplement programmer les crénaux qui [son ouvres;sont ouverts].\n\nAlors, ça donne ceci : nous avons maintenant trois cours programmés pour la semaine prochaine.\n\nEt je vois aussi que l'abonnement [ne sera renouvé;ne sera pas renouvelé] [avant 23 octobre;avant le 23 octobre]. [Alors, je vais le laisser ouvres;Je vais donc le laisser ouvert] pour le moment, [pour;afin de] pouvoir programmer [plus de;d'autres] cours plus tard [jusqu'à;jusqu'au] 8 octobre.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Tu as raison, excuse-moi, je suis "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-1",
+              "incorrect": "nouveux",
+              "correct": "nouveau"
+            },
+            {
+              "type": "text",
+              "text": " sur le "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-2",
+              "incorrect": "platforme",
+              "correct": "plateforme"
+            },
+            {
+              "type": "text",
+              "text": " Preply. On doit simplement programmer les crénaux qui "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-3",
+              "incorrect": "son ouvres",
+              "correct": "sont ouverts"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nAlors, ça donne ceci : nous avons maintenant trois cours programmés pour la semaine prochaine.\n\nEt je vois aussi que l'abonnement "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-4",
+              "incorrect": "ne sera renouvé",
+              "correct": "ne sera pas renouvelé"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-5",
+              "incorrect": "avant 23 octobre",
+              "correct": "avant le 23 octobre"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-6",
+              "incorrect": "Alors, je vais le laisser ouvres",
+              "correct": "Je vais donc le laisser ouvert"
+            },
+            {
+              "type": "text",
+              "text": " pour le moment, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-7",
+              "incorrect": "pour",
+              "correct": "afin de"
+            },
+            {
+              "type": "text",
+              "text": " pouvoir programmer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-8",
+              "incorrect": "plus de",
+              "correct": "d'autres"
+            },
+            {
+              "type": "text",
+              "text": " cours plus tard "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-25-sec-3-fc-9",
+              "incorrect": "jusqu'à",
+              "correct": "jusqu'au"
+            },
+            {
+              "type": "text",
+              "text": " 8 octobre."
+            }
+          ],
+          "flashcardsCount": 9,
+          "wordCount": 69
+        }
+      ],
+      "totalWords": 268,
+      "totalFlashcards": 31
+    }
+  ],
+  "totalSections": 10,
+  "totalWords": 716,
+  "totalFlashcards": 70
+}

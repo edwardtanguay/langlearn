@@ -272,6 +272,13 @@ async function main() {
       {
         category: 'geminiQuizPrompts',
         language: 'de',
+        title: 'Adjective Endings: optimierte vs. optimierten',
+        prompt: 'Create a German grammar quiz testing adjective declension with definite and indefinite articles (weak vs. strong declension), specifically focusing on patterns like whether "Ich habe die ... Versionen implementiert" should use "optimierte" or "optimierten", with 8 interactive multiple-choice questions, detailed explanations of case, gender, and plurality rules, and practice sentences.',
+        rank: 0.5
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'de',
         title: 'German B1 topics',
         prompt: 'Create a German vocabulary and grammar quiz tailored for B1 level learners covering everyday conversation, modal verbs, and subclauses.',
         rank: 1.0

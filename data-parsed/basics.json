@@ -4294,5 +4294,171 @@
         "nl": "de aap"
       }
     ]
+  },
+  {
+    "id": "kitchen",
+    "title": "Kitchen",
+    "items": [
+      {
+        "id": "kitchen-1",
+        "en": "spoon",
+        "fr": "la cuillère",
+        "es": "la cuchara",
+        "it": "il cucchiaio",
+        "nl": "de lepel"
+      },
+      {
+        "id": "kitchen-2",
+        "en": "fork",
+        "fr": "la fourchette",
+        "es": "el tenedor",
+        "it": "la forchetta",
+        "nl": "de vork"
+      },
+      {
+        "id": "kitchen-3",
+        "en": "knife",
+        "fr": "le couteau",
+        "es": "el cuchillo",
+        "it": "il coltello",
+        "nl": "het mes"
+      },
+      {
+        "id": "kitchen-4",
+        "en": "plate",
+        "fr": "l'assiette",
+        "es": "el plato",
+        "it": "il piatto",
+        "nl": "het bord"
+      },
+      {
+        "id": "kitchen-5",
+        "en": "bowl",
+        "fr": "le bol",
+        "es": "el tazón",
+        "it": "la ciotola",
+        "nl": "de kom"
+      },
+      {
+        "id": "kitchen-6",
+        "en": "glass",
+        "fr": "le verre",
+        "es": "el vaso",
+        "it": "il bicchiere",
+        "nl": "het glas"
+      },
+      {
+        "id": "kitchen-7",
+        "en": "cup",
+        "fr": "la tasse",
+        "es": "la taza",
+        "it": "la tazza",
+        "nl": "het kopje"
+      },
+      {
+        "id": "kitchen-8",
+        "en": "pot",
+        "fr": "la casserole",
+        "es": "la olla",
+        "it": "la pentola",
+        "nl": "de pan"
+      },
+      {
+        "id": "kitchen-9",
+        "en": "frying pan",
+        "fr": "la poêle",
+        "es": "la sartén",
+        "it": "la padella",
+        "nl": "de koekenpan"
+      },
+      {
+        "id": "kitchen-10",
+        "en": "refrigerator",
+        "fr": "le réfrigérateur",
+        "es": "el refrigerador",
+        "it": "il frigorifero",
+        "nl": "de koelkast"
+      },
+      {
+        "id": "kitchen-11",
+        "en": "freezer",
+        "fr": "le congélateur",
+        "es": "el congelador",
+        "it": "il congelatore",
+        "nl": "de vriezer"
+      },
+      {
+        "id": "kitchen-12",
+        "en": "oven",
+        "fr": "le four",
+        "es": "el horno",
+        "it": "il forno",
+        "nl": "de oven"
+      },
+      {
+        "id": "kitchen-13",
+        "en": "stove",
+        "fr": "la cuisinière",
+        "es": "la estufa",
+        "it": "il fornello",
+        "nl": "het fornuis"
+      },
+      {
+        "id": "kitchen-14",
+        "en": "microwave",
+        "fr": "le micro-ondes",
+        "es": "el microondas",
+        "it": "il microonde",
+        "nl": "de magnetron"
+      },
+      {
+        "id": "kitchen-15",
+        "en": "sink",
+        "fr": "l'évier",
+        "es": "el fregadero",
+        "it": "il lavandino",
+        "nl": "de gootsteen"
+      },
+      {
+        "id": "kitchen-16",
+        "en": "dishwasher",
+        "fr": "le lave-vaisselle",
+        "es": "el lavavajillas",
+        "it": "la lavastoviglie",
+        "nl": "de vaatwasser"
+      },
+      {
+        "id": "kitchen-17",
+        "en": "cutting board",
+        "fr": "la planche à découper",
+        "es": "la tabla de cortar",
+        "it": "il tagliere",
+        "nl": "de snijplank"
+      },
+      {
+        "id": "kitchen-18",
+        "en": "napkin",
+        "fr": "la serviette",
+        "es": "la servilleta",
+        "it": "il tovagliolo",
+        "nl": "het servet"
+      },
+      {
+        "id": "kitchen-19",
+        "en": "bottle",
+        "fr": "la bouteille",
+        "es": "la botella",
+        "it": "la bottiglia",
+        "nl": "de fles"
+      },
+      {
+        "id": "kitchen-20",
+        "en": "kettle",
+        "fr": "la bouilloire",
+        "es": "la tetera",
+        "it": "il bollitore",
+        "nl": "de waterkoker"
+      }
+    ]
   }
 ]

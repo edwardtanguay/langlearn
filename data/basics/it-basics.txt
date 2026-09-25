@@ -88,3 +88,5 @@
 	- l'inglese, la matematica, le scienze, la storia, la geografia, l'arte, la musica, la biologia, la chimica
 - animals
 	- il cane, il gatto, l'uccello, il pesce, il coniglio, il cavallo, il leone, la tigre, l'elefante, la scimmia
+- kitchen
+	- il cucchiaio, la forchetta, il coltello, il piatto, la ciotola, il bicchiere, la tazza, la pentola, la padella, il frigorifero, il congelatore, il forno, il fornello, il microonde, il lavandino, la lavastoviglie, il tagliere, il tovagliolo, la bottiglia, il bollitore

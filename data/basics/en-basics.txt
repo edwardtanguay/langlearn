@@ -86,3 +86,5 @@
 	- English, maths, science, history, geography, art, music, biology, chemistry
 - animals
 	- dog, cat, bird, fish, rabbit, horse, lion, tiger, elephant, monkey
+- kitchen
+	- spoon, fork, knife, plate, bowl, glass, cup, pot, frying pan, refrigerator, freezer, oven, stove, microwave, sink, dishwasher, cutting board, napkin, bottle, kettle

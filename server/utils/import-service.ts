@@ -84,6 +84,12 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
     // Clean front text: remove "my friend," prefix and asterisks
     front = front.replace(/^my friend,\s*/i, '').replace(/\*/g, '').trim()
 
+    // If target phrase (back) is only one word, wrap it with asterisks so it's highlighted
+    const cleanBack = back.replace(/\*/g, '').trim()
+    if (cleanBack.length > 0 && !/\s/.test(cleanBack)) {
+      back = `*${cleanBack}*`
+    }
+
     if (!front || !back) {
       continue
     }

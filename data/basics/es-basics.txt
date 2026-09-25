@@ -89,3 +89,5 @@
 	- el inglés, las matemáticas, las ciencias, la historia, la geografía, el arte, la música, la biología, la química
 - animals
 	- el perro, el gato, el pájaro, el pez, el conejo, el caballo, el león, el tigre, el elefante, el mono
+- kitchen
+	- la cuchara, el tenedor, el cuchillo, el plato, el tazón, el vaso, la taza, la olla, la sartén, el refrigerador, el congelador, el horno, la estufa, el microondas, el fregadero, el lavavajillas, la tabla de cortar, la servilleta, la botella, la tetera

@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { inactivityMessage, dismissMessage } = useInactivityCheck()
+</script>
+
 <template>
   <div class="space-y-8 text-center py-12">
     <!-- Header Section -->
@@ -12,6 +16,20 @@
 
     <!-- Welcome Card -->
     <div class="bg-white dark:bg-gray-900 shadow-xl rounded-2xl border border-gray-100 dark:border-gray-800 p-4 sm:p-12 space-y-6">
+      <!-- Stale State Inactivity Alert -->
+      <div
+        v-if="inactivityMessage"
+        class="p-4 bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/80 rounded-xl text-amber-800 dark:text-amber-200 text-sm font-semibold flex items-center justify-between text-left gap-3"
+      >
+        <div class="flex items-center gap-2.5">
+          <svg class="w-5 h-5 shrink-0 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span>{{ inactivityMessage }}</span>
+        </div>
+        <button @click="dismissMessage" class="text-amber-600 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-100 font-bold px-1.5 cursor-pointer">✕</button>
+      </div>
+
       <div class="space-y-4">
         <p class="text-lg text-gray-900 dark:text-white max-w-md mx-auto text-center">
           Please log in with your account to view and practice your flashcards.
