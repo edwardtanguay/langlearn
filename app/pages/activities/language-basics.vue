@@ -1204,12 +1204,36 @@ function isWordLearned(itemId: string): boolean {
             </div>
 
             <div class="flex items-center gap-3 shrink-0">
-              <span
-                class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full bg-gray-200/70 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                :style="getCategoryLearnedPercentage(cat) === 100 ? { color: brightColor, backgroundColor: `color-mix(in srgb, ${brightColor} 18%, transparent)` } : undefined"
+              <!-- Visual indication when category is 100%: bold count and accomplished checkmark -->
+              <div
+                v-if="!isStatsLoading && getCategoryLearnedPercentage(cat) === 100"
+                class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-black text-xs font-mono shrink-0"
+                :style="{ color: brightColor, backgroundColor: `color-mix(in srgb, ${brightColor} 18%, transparent)` }"
               >
-                {{ isStatsLoading ? '0' : getCategoryLearnedCount(cat) }} of {{ cat.items.length }}
-              </span>
+                <span>{{ cat.items.length }} of {{ cat.items.length }}</span>
+                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                </svg>
+              </div>
+
+              <!-- Learned progress bar for this category (<100% or loading) -->
+              <div
+                v-else
+                class="relative w-24 sm:w-28 h-5 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden border border-gray-300/70 dark:border-gray-700/70 shrink-0"
+                :class="isStatsLoading ? 'opacity-30 blur-[1px]' : 'opacity-100 blur-none'"
+                style="transition: opacity 0.3s ease, filter 0.3s ease;"
+              >
+                <div
+                  class="h-full rounded-full transition-all duration-300 ease-out"
+                  :style="{
+                    width: isStatsLoading ? '0%' : `${getCategoryLearnedPercentage(cat)}%`,
+                    backgroundColor: `color-mix(in srgb, ${brightColor} 35%, transparent)`
+                  }"
+                ></div>
+                <div class="absolute inset-0 flex items-center justify-center text-[11px] font-mono font-bold text-gray-800 dark:text-gray-200 drop-shadow-xs pointer-events-none">
+                  {{ isStatsLoading ? '0' : getCategoryLearnedCount(cat) }} of {{ cat.items.length }}
+                </div>
+              </div>
             </div>
           </button>
 
@@ -1599,8 +1623,7 @@ function isWordLearned(itemId: string): boolean {
               <!-- Pronunciation Note in brackets (if exists for this language) -->
               <span
                 v-if="getPronunciation(activeCrossLanguageItem.id, l.code)"
-                class="text-xs font-mono font-normal opacity-75 shrink-0"
-                :style="{ color: `color-mix(in srgb, ${languageColors[l.code]} 80%, white)` }"
+                class="text-xs font-mono font-medium text-yellow-400 shrink-0"
               >
                 [{{ getPronunciation(activeCrossLanguageItem.id, l.code) }}]
               </span>

@@ -71,7 +71,7 @@ const totalLearnedCount = ref(0)
 // Active review state
 const activeSectionId = ref<string | null>(null)
 const toggledStates = ref<Record<string, boolean>>({}) // flashcardId -> true (shows correct) | false (shows incorrect)
-const clickedOnceSet = ref<Set<string>>(new Set()) // tracks flashcards clicked at least once
+const everTurnedGreenSet = ref<Set<string>>(new Set()) // tracks flashcards that turned green at least once
 const isSubmitting = ref(false)
 
 // UI controls
@@ -138,19 +138,40 @@ function pickInitialSection() {
 function selectSection(id: string) {
   activeSectionId.value = id
   toggledStates.value = {}
-  clickedOnceSet.value = new Set()
+  everTurnedGreenSet.value = new Set()
+}
+
+function handlePillClick(fcId: string) {
+  // If user selected text across the pill, don't trigger toggle
+  const sel = window.getSelection()?.toString()
+  if (sel && sel.trim().length > 0) {
+    return
+  }
+  toggleFlashcard(fcId)
 }
 
 function toggleFlashcard(fcId: string) {
   const current = !!toggledStates.value[fcId]
-  toggledStates.value[fcId] = !current
-  clickedOnceSet.value.add(fcId)
+  const next = !current
+  toggledStates.value[fcId] = next
+  if (next) {
+    everTurnedGreenSet.value.add(fcId)
+  }
 }
+
+const flashcardBits = computed<FlashcardBit[]>(() => {
+  if (!currentSection.value) return []
+  return currentSection.value.bits.filter((b): b is FlashcardBit => b.type === 'flashcard')
+})
 
 const canAdvance = computed(() => {
   if (!currentSection.value) return false
-  if (currentSection.value.flashcardsCount === 0) return true
-  return clickedOnceSet.value.size >= currentSection.value.flashcardsCount
+  if (flashcardBits.value.length === 0) return true
+  return flashcardBits.value.every(b => !!toggledStates.value[b.id])
+})
+
+const revealedCount = computed(() => {
+  return flashcardBits.value.filter(b => !!toggledStates.value[b.id]).length
 })
 
 async function handleAction(action: 'LEARNED' | 'KEEP_TESTING') {
@@ -197,13 +218,98 @@ async function handleAction(action: 'LEARNED' | 'KEEP_TESTING') {
   }
 }
 
-// Stats helper: last 7 days or all days
-const statsDays = computed(() => {
-  if (showAllStatsDays.value) {
-    return days.value
+// Format local date YYYY-MM-DD
+function formatIsoDate(d: Date): string {
+  const year = d.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+// Rolling last 7 consecutive calendar days ending on today
+const rollingLast7Days = computed(() => {
+  const result: Array<{
+    date: string
+    isToday: boolean
+    hasActivity: boolean
+    totalWords: number
+    learnedCount: number
+    sectionsCount: number
+  }> = []
+
+  const now = new Date()
+  const todayStr = formatIsoDate(now)
+
+  const dayMap = new Map<string, DayGroup>()
+  for (const d of days.value) {
+    dayMap.set(d.date, d)
   }
-  return days.value.slice(-7)
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date()
+    d.setDate(now.getDate() - i)
+    const dateStr = formatIsoDate(d)
+    const existing = dayMap.get(dateStr)
+
+    if (existing && existing.totalWords > 0) {
+      result.push({
+        date: dateStr,
+        isToday: dateStr === todayStr,
+        hasActivity: true,
+        totalWords: existing.totalWords,
+        learnedCount: existing.learnedCount,
+        sectionsCount: existing.sections.length
+      })
+    } else {
+      result.push({
+        date: dateStr,
+        isToday: dateStr === todayStr,
+        hasActivity: false,
+        totalWords: 0,
+        learnedCount: 0,
+        sectionsCount: 0
+      })
+    }
+  }
+
+  return result
 })
+
+// Stats display: rolling 7 days or all historical recorded days
+const displayStatsDays = computed(() => {
+  if (showAllStatsDays.value) {
+    const todayStr = formatIsoDate(new Date())
+    return days.value.map(d => ({
+      date: d.date,
+      isToday: d.date === todayStr,
+      hasActivity: d.totalWords > 0,
+      totalWords: d.totalWords,
+      learnedCount: d.learnedCount,
+      sectionsCount: d.sections.length
+    }))
+  }
+  return rollingLast7Days.value
+})
+
+// Dropdown options with (wordCount/flashcardsCount)
+const sectionSelectItems = computed(() => {
+  return queue.value.map(sec => ({
+    id: sec.id,
+    label: `${sec.day} — Section ${sec.sectionIndex} (${sec.language.toUpperCase()}) (${sec.wordCount}/${sec.flashcardsCount})${sec.isLearned ? ' ✓' : ''}`
+  }))
+})
+
+const currentSelectItem = computed(() => {
+  return sectionSelectItems.value.find(item => item.id === activeSectionId.value) || null
+})
+
+function onSelectSectionChange(val: any) {
+  if (!val) return
+  const id = typeof val === 'object' ? val.id : val
+  if (id) {
+    selectSection(id)
+  }
+}
 
 onMounted(() => {
   loadData()
@@ -292,7 +398,9 @@ onMounted(() => {
               {{ showAllStatsDays ? 'All Days Word Count & Progress' : 'Last 7 Days Activity' }}
             </h3>
           </div>
+          <!-- Show all / Show last 7 days link: only show if total days in history > 7 -->
           <button
+            v-if="days.length > 7"
             @click="showAllStatsDays = !showAllStatsDays"
             class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer"
           >
@@ -302,19 +410,45 @@ onMounted(() => {
 
         <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
           <div
-            v-for="d in statsDays"
+            v-for="d in displayStatsDays"
             :key="d.date"
-            class="p-3 rounded-xl bg-gray-50 dark:bg-gray-900/70 border border-gray-200 dark:border-gray-800 text-center space-y-1 transition-all hover:border-amber-400/50"
+            class="p-3 rounded-xl border text-center space-y-1 transition-all relative overflow-hidden"
+            :class="[
+              d.hasActivity 
+                ? 'bg-gray-50 dark:bg-gray-900/70 border-gray-200 dark:border-gray-800 hover:border-amber-400/50' 
+                : 'bg-gray-100/70 dark:bg-gray-900/40 border-gray-200/70 dark:border-gray-800/60 opacity-60 dark:opacity-50 grayscale',
+              d.isToday ? 'ring-2 ring-amber-500/80 border-amber-500' : ''
+            ]"
           >
+            <!-- Today badge -->
+            <div
+              v-if="d.isToday"
+              class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-amber-500 text-white inline-block mb-0.5 shadow-xs"
+            >
+              Today
+            </div>
+
             <div class="text-[11px] font-mono text-gray-400 dark:text-gray-500 font-semibold truncate">
               {{ d.date }}
             </div>
-            <div class="text-lg font-bold text-gray-900 dark:text-white">
-              {{ d.totalWords }} <span class="text-[10px] font-normal text-gray-400">words</span>
-            </div>
-            <div class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
-              {{ d.learnedCount }}/{{ d.sections.length }} learned
-            </div>
+
+            <template v-if="d.hasActivity">
+              <div class="text-lg font-bold text-gray-900 dark:text-white">
+                {{ d.totalWords }} <span class="text-[10px] font-normal text-gray-400">words</span>
+              </div>
+              <div class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                {{ d.learnedCount }}/{{ d.sectionsCount }} learned
+              </div>
+            </template>
+
+            <template v-else>
+              <div class="text-lg font-bold text-gray-400 dark:text-gray-500">
+                0 <span class="text-[10px] font-normal text-gray-400 dark:text-gray-500">words</span>
+              </div>
+              <div class="text-[11px] text-gray-400 dark:text-gray-500 font-semibold flex items-center justify-center">
+                <span>failed</span>
+              </div>
+            </template>
           </div>
         </div>
 
@@ -348,33 +482,25 @@ onMounted(() => {
     <div v-else class="space-y-4">
       <!-- Section Navigation Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-gray-900 p-3.5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-        <div class="flex items-center gap-2">
-          <!-- Section select dropdown -->
-          <div class="relative">
-            <select
-              :value="currentSection.id"
-              @change="selectSection(($event.target as HTMLSelectElement).value)"
-              class="appearance-none pl-3 pr-8 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-xs font-bold text-gray-800 dark:text-gray-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500"
-            >
-              <option
-                v-for="(sec, idx) in queue"
-                :key="sec.id"
-                :value="sec.id"
-              >
-                {{ sec.day }} — Section {{ sec.sectionIndex }} ({{ sec.language.toUpperCase() }}) {{ sec.isLearned ? '✓' : '' }}
-              </option>
-            </select>
-            <ChevronDownIcon class="w-4 h-4 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-          </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <!-- Nuxt UI Select Menu for clean desktop & mobile appearance -->
+          <USelectMenu
+            :items="sectionSelectItems"
+            :model-value="currentSelectItem"
+            @update:model-value="onSelectSectionChange"
+            label-key="label"
+            value-key="id"
+            class="w-64 sm:w-84 text-xs font-bold"
+          />
 
           <!-- Section count pill -->
-          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900/60">
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900/60 shrink-0">
             {{ currentSectionIndexInQueue + 1 }} of {{ queue.length }}
           </span>
 
           <span
             v-if="currentSection.isLearned"
-            class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 uppercase tracking-wider"
+            class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 uppercase tracking-wider shrink-0"
           >
             Learned
           </span>
@@ -389,32 +515,42 @@ onMounted(() => {
 
       <!-- Section Text Card -->
       <div class="p-6 sm:p-8 bg-white dark:bg-[#182030] rounded-3xl border-2 border-gray-200 dark:border-gray-800 shadow-md space-y-6">
-        <!-- Interactive Text Display -->
+        <!-- Interactive Text Display: User can select text smoothly across plain text and pills -->
         <div class="text-base sm:text-lg leading-relaxed text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
           <template v-for="(bit, bIdx) in currentSection.bits" :key="bIdx">
             <!-- Plain Text Segment -->
             <span v-if="bit.type === 'text'">{{ bit.text }}</span>
 
             <!-- Flashcard Interactive Pill -->
-            <button
+            <span
               v-else-if="bit.type === 'flashcard'"
-              type="button"
-              @click="toggleFlashcard(bit.id)"
+              role="button"
+              tabindex="0"
+              @click="handlePillClick(bit.id)"
+              @keydown.enter.prevent="toggleFlashcard(bit.id)"
+              @keydown.space.prevent="toggleFlashcard(bit.id)"
               :title="toggledStates[bit.id] ? 'Showing correct (click to show incorrect)' : 'Incorrect text (click to reveal correction)'"
-              class="inline-flex items-center mx-1 my-0.5 px-2 py-0.5 rounded-md font-bold transition-all duration-200 cursor-pointer shadow-xs border select-none group"
-              :class="toggledStates[bit.id]
-                ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:scale-105'
-                : 'bg-red-100 dark:bg-red-950/70 border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 line-through decoration-red-500 hover:scale-105'"
+              class="inline-flex items-center mx-1 my-0.5 px-1.5 py-0 rounded-md font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group"
+              :class="[
+                toggledStates[bit.id]
+                  ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:scale-105'
+                  : [
+                      'bg-red-100 dark:bg-red-950/70 text-red-700 dark:text-red-300 hover:scale-105',
+                      everTurnedGreenSet.has(bit.id)
+                        ? 'border-transparent'
+                        : 'border-red-400 dark:border-red-600'
+                    ]
+              ]"
             >
               <span>{{ toggledStates[bit.id] ? bit.correct : bit.incorrect }}</span>
-            </button>
+            </span>
           </template>
         </div>
 
         <!-- Hint or Completion Notice -->
         <div class="pt-4 border-t border-gray-100 dark:border-gray-800/80 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
           <span v-if="!canAdvance">
-            💡 Click each red error ({{ clickedOnceSet.size }}/{{ currentSection.flashcardsCount }}) to reveal the correction and unlock progress.
+            💡 Click each red error ({{ revealedCount }}/{{ currentSection.flashcardsCount }}) to reveal the correction. All pills must be correct to unlock progress.
           </span>
           <span v-else class="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
             <CheckCircleIcon class="w-4 h-4" />
@@ -422,7 +558,7 @@ onMounted(() => {
           </span>
         </div>
 
-        <!-- Action Buttons: Learned & Keep Testing -->
+        <!-- Action Buttons: Learned & Keep Testing (ONLY shows when ALL pills are turned to correct) -->
         <Transition
           enter-active-class="transition duration-300 ease-out"
           enter-from-class="opacity-0 translate-y-3"

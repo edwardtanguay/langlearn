@@ -134,21 +134,21 @@ async function main() {
           create: [
             {
               type: 'FEATURE',
-              status: 'IMPLEMENTED',
+              isTested: true,
               body: 'Core flashcard testing engine with priority rank algorithm',
               startedByUserId: user.id,
               orderWithinVersion: 1
             },
             {
               type: 'FEATURE',
-              status: 'IMPLEMENTED',
+              isTested: true,
               body: 'Web CSV file import tool with metadata parsing',
               startedByUserId: user.id,
               orderWithinVersion: 2
             },
             {
               type: 'FEATURE',
-              status: 'IMPLEMENTED',
+              isTested: true,
               body: 'Kinde Google OAuth authentication integration',
               startedByUserId: user.id,
               orderWithinVersion: 3
@@ -168,14 +168,14 @@ async function main() {
           create: [
             {
               type: 'FEATURE',
-              status: 'IMPLEMENTED',
+              isTested: true,
               body: 'Versioning, feature requests, and bug-fix tracking system',
               startedByUserId: user.id,
               orderWithinVersion: 1
             },
             {
               type: 'FEATURE',
-              status: 'IMPLEMENTED',
+              isTested: true,
               body: 'User role permissions (admin vs member) and daily import rate limits',
               startedByUserId: user.id,
               orderWithinVersion: 2
@@ -273,7 +273,7 @@ async function main() {
         category: 'geminiQuizPrompts',
         language: 'de',
         title: 'Adjective Endings: optimierte vs. optimierten',
-        prompt: 'Create a German grammar quiz testing adjective declension with definite and indefinite articles (weak vs. strong declension), specifically focusing on patterns like whether "Ich habe die ... Versionen implementiert" should use "optimierte" or "optimierten", with 8 interactive multiple-choice questions, detailed explanations of case, gender, and plurality rules, and practice sentences.',
+        prompt: 'Create a German grammar quiz testing adjective declension with definite and indefinite articles (weak vs. strong declension), specifically focusing on patterns like whether "Ich habe die ... Versionen implementiert" should use "optimierte" or "optimierten", with 10 interactive multiple-choice questions, detailed explanations of case, gender, and plurality rules, and practice sentences. The quiz should be 100% in German, no English.',
         rank: 0.5
       },
       {
