@@ -15800,6 +15800,7 @@ export namespace Prisma {
     isLearned: boolean | null
     timesTested: number | null
     lastTestedAt: Date | null
+    learnedFlashcardIds: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -15811,6 +15812,7 @@ export namespace Prisma {
     isLearned: boolean | null
     timesTested: number | null
     lastTestedAt: Date | null
+    learnedFlashcardIds: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -15822,6 +15824,7 @@ export namespace Prisma {
     isLearned: number
     timesTested: number
     lastTestedAt: number
+    learnedFlashcardIds: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -15843,6 +15846,7 @@ export namespace Prisma {
     isLearned?: true
     timesTested?: true
     lastTestedAt?: true
+    learnedFlashcardIds?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -15854,6 +15858,7 @@ export namespace Prisma {
     isLearned?: true
     timesTested?: true
     lastTestedAt?: true
+    learnedFlashcardIds?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -15865,6 +15870,7 @@ export namespace Prisma {
     isLearned?: true
     timesTested?: true
     lastTestedAt?: true
+    learnedFlashcardIds?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -15963,6 +15969,7 @@ export namespace Prisma {
     isLearned: boolean
     timesTested: number
     lastTestedAt: Date | null
+    learnedFlashcardIds: string
     createdAt: Date
     updatedAt: Date
     _count: UserCorrectionSectionCountAggregateOutputType | null
@@ -15993,6 +16000,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: boolean
     lastTestedAt?: boolean
+    learnedFlashcardIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -16005,6 +16013,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: boolean
     lastTestedAt?: boolean
+    learnedFlashcardIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -16017,6 +16026,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: boolean
     lastTestedAt?: boolean
+    learnedFlashcardIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -16029,11 +16039,12 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: boolean
     lastTestedAt?: boolean
+    learnedFlashcardIds?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserCorrectionSectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "sectionId" | "isLearned" | "timesTested" | "lastTestedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["userCorrectionSection"]>
+  export type UserCorrectionSectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "sectionId" | "isLearned" | "timesTested" | "lastTestedAt" | "learnedFlashcardIds" | "createdAt" | "updatedAt", ExtArgs["result"]["userCorrectionSection"]>
   export type UserCorrectionSectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -16056,6 +16067,7 @@ export namespace Prisma {
       isLearned: boolean
       timesTested: number
       lastTestedAt: Date | null
+      learnedFlashcardIds: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["userCorrectionSection"]>
@@ -16488,6 +16500,7 @@ export namespace Prisma {
     readonly isLearned: FieldRef<"UserCorrectionSection", 'Boolean'>
     readonly timesTested: FieldRef<"UserCorrectionSection", 'Int'>
     readonly lastTestedAt: FieldRef<"UserCorrectionSection", 'DateTime'>
+    readonly learnedFlashcardIds: FieldRef<"UserCorrectionSection", 'String'>
     readonly createdAt: FieldRef<"UserCorrectionSection", 'DateTime'>
     readonly updatedAt: FieldRef<"UserCorrectionSection", 'DateTime'>
   }
@@ -17081,6 +17094,7 @@ export namespace Prisma {
     isLearned: 'isLearned',
     timesTested: 'timesTested',
     lastTestedAt: 'lastTestedAt',
+    learnedFlashcardIds: 'learnedFlashcardIds',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -17988,6 +18002,7 @@ export namespace Prisma {
     isLearned?: BoolFilter<"UserCorrectionSection"> | boolean
     timesTested?: IntFilter<"UserCorrectionSection"> | number
     lastTestedAt?: DateTimeNullableFilter<"UserCorrectionSection"> | Date | string | null
+    learnedFlashcardIds?: StringFilter<"UserCorrectionSection"> | string
     createdAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
     updatedAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -18000,6 +18015,7 @@ export namespace Prisma {
     isLearned?: SortOrder
     timesTested?: SortOrder
     lastTestedAt?: SortOrderInput | SortOrder
+    learnedFlashcardIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -18016,6 +18032,7 @@ export namespace Prisma {
     isLearned?: BoolFilter<"UserCorrectionSection"> | boolean
     timesTested?: IntFilter<"UserCorrectionSection"> | number
     lastTestedAt?: DateTimeNullableFilter<"UserCorrectionSection"> | Date | string | null
+    learnedFlashcardIds?: StringFilter<"UserCorrectionSection"> | string
     createdAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
     updatedAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -18028,6 +18045,7 @@ export namespace Prisma {
     isLearned?: SortOrder
     timesTested?: SortOrder
     lastTestedAt?: SortOrderInput | SortOrder
+    learnedFlashcardIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCorrectionSectionCountOrderByAggregateInput
@@ -18047,6 +18065,7 @@ export namespace Prisma {
     isLearned?: BoolWithAggregatesFilter<"UserCorrectionSection"> | boolean
     timesTested?: IntWithAggregatesFilter<"UserCorrectionSection"> | number
     lastTestedAt?: DateTimeNullableWithAggregatesFilter<"UserCorrectionSection"> | Date | string | null
+    learnedFlashcardIds?: StringWithAggregatesFilter<"UserCorrectionSection"> | string
     createdAt?: DateTimeWithAggregatesFilter<"UserCorrectionSection"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"UserCorrectionSection"> | Date | string
   }
@@ -18937,6 +18956,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: number
     lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCorrectionSectionsInput
@@ -18949,6 +18969,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: number
     lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18959,6 +18980,7 @@ export namespace Prisma {
     isLearned?: BoolFieldUpdateOperationsInput | boolean
     timesTested?: IntFieldUpdateOperationsInput | number
     lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCorrectionSectionsNestedInput
@@ -18971,6 +18993,7 @@ export namespace Prisma {
     isLearned?: BoolFieldUpdateOperationsInput | boolean
     timesTested?: IntFieldUpdateOperationsInput | number
     lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18982,6 +19005,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: number
     lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18992,6 +19016,7 @@ export namespace Prisma {
     isLearned?: BoolFieldUpdateOperationsInput | boolean
     timesTested?: IntFieldUpdateOperationsInput | number
     lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19003,6 +19028,7 @@ export namespace Prisma {
     isLearned?: BoolFieldUpdateOperationsInput | boolean
     timesTested?: IntFieldUpdateOperationsInput | number
     lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19744,6 +19770,7 @@ export namespace Prisma {
     isLearned?: SortOrder
     timesTested?: SortOrder
     lastTestedAt?: SortOrder
+    learnedFlashcardIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19759,6 +19786,7 @@ export namespace Prisma {
     isLearned?: SortOrder
     timesTested?: SortOrder
     lastTestedAt?: SortOrder
+    learnedFlashcardIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19770,6 +19798,7 @@ export namespace Prisma {
     isLearned?: SortOrder
     timesTested?: SortOrder
     lastTestedAt?: SortOrder
+    learnedFlashcardIds?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -20907,6 +20936,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: number
     lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20917,6 +20947,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: number
     lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -21111,6 +21142,7 @@ export namespace Prisma {
     isLearned?: BoolFilter<"UserCorrectionSection"> | boolean
     timesTested?: IntFilter<"UserCorrectionSection"> | number
     lastTestedAt?: DateTimeNullableFilter<"UserCorrectionSection"> | Date | string | null
+    learnedFlashcardIds?: StringFilter<"UserCorrectionSection"> | string
     createdAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
     updatedAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
   }
@@ -22495,6 +22527,7 @@ export namespace Prisma {
     isLearned?: boolean
     timesTested?: number
     lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22676,6 +22709,7 @@ export namespace Prisma {
     isLearned?: BoolFieldUpdateOperationsInput | boolean
     timesTested?: IntFieldUpdateOperationsInput | number
     lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22686,6 +22720,7 @@ export namespace Prisma {
     isLearned?: BoolFieldUpdateOperationsInput | boolean
     timesTested?: IntFieldUpdateOperationsInput | number
     lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22696,6 +22731,7 @@ export namespace Prisma {
     isLearned?: BoolFieldUpdateOperationsInput | boolean
     timesTested?: IntFieldUpdateOperationsInput | number
     lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

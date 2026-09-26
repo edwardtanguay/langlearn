@@ -244,8 +244,8 @@ async function main() {
       {
         category: 'geminiQuizPrompts',
         language: 'fr',
-        title: 'tout, tous, toute, toutes',
-        prompt: 'Create a French grammar quiz testing the distinctions and usage of tout, tous, toute, and toutes with practice sentences.',
+        title: 'tout/toute/tous/toutes',
+        prompt: 'Create an interactive quiz on the subject of distinguishing and using tout, tous, toute, and toutes with practice sentences. Make the content of the quiz, including the instructions, entirely in French.',
         rank: 2.0
       },
       {
@@ -268,6 +268,20 @@ async function main() {
         title: 'passé composé vs passé simple',
         prompt: 'Create a French grammar quiz contrasting passé composé and passé simple usage in contextual sentences.',
         rank: 5.0
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'fr',
+        title: 'quel/quels/quelle/quelles/quelque/quelques',
+        prompt: 'Create an interactive quiz on the subject of distinguishing and using quel, quels, quelle, quelles, quelque, and quelques with practice sentences. Make the content of the quiz, including the instructions, entirely in French.',
+        rank: 6.0
+      },
+      {
+        category: 'geminiQuizPrompts',
+        language: 'fr',
+        title: 'technologie/technique',
+        prompt: 'Create an interactive quiz on the subject of distinguishing and using "technologie" vs "technique" in various contexts with practice sentences. Make the content of the quiz, including the instructions, entirely in French.',
+        rank: 7.0
       },
       {
         category: 'geminiQuizPrompts',

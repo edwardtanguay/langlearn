@@ -1208,9 +1208,9 @@ function isWordLearned(itemId: string): boolean {
               <div
                 v-if="!isStatsLoading && getCategoryLearnedPercentage(cat) === 100"
                 class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-black text-xs font-mono shrink-0"
-                :style="{ color: brightColor, backgroundColor: `color-mix(in srgb, ${brightColor} 18%, transparent)` }"
+                :style="{ backgroundColor: `color-mix(in srgb, ${brightColor} 18%, transparent)` }"
               >
-                <span>{{ cat.items.length }} of {{ cat.items.length }}</span>
+                <span class="text-yellow-500 dark:text-yellow-400">{{ cat.items.length }} of {{ cat.items.length }}</span>
                 <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                 </svg>
@@ -1230,7 +1230,7 @@ function isWordLearned(itemId: string): boolean {
                     backgroundColor: `color-mix(in srgb, ${brightColor} 35%, transparent)`
                   }"
                 ></div>
-                <div class="absolute inset-0 flex items-center justify-center text-[11px] font-mono font-bold text-gray-800 dark:text-gray-200 drop-shadow-xs pointer-events-none">
+                <div class="absolute inset-0 flex items-center justify-center text-[11px] font-mono font-bold text-yellow-500 dark:text-yellow-400 drop-shadow-xs pointer-events-none">
                   {{ isStatsLoading ? '0' : getCategoryLearnedCount(cat) }} of {{ cat.items.length }}
                 </div>
               </div>

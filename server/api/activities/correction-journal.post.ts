@@ -5,12 +5,12 @@ export default defineEventHandler(async (event) => {
   const user = await requireAuth(event)
   const body = await readBody(event)
 
-  const { sectionId, action } = body
+  const { sectionId, action, learnedFlashcardIds, isLearned } = body
 
-  if (!sectionId || !['LEARNED', 'KEEP_TESTING'].includes(action)) {
+  if (!sectionId) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'sectionId and valid action ("LEARNED" | "KEEP_TESTING") are required'
+      statusMessage: 'sectionId is required'
     })
   }
 
@@ -25,7 +25,18 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const isLearned = action === 'LEARNED'
+  let targetIsLearned: boolean | undefined = undefined
+  if (typeof isLearned === 'boolean') {
+    targetIsLearned = isLearned
+  } else if (action === 'LEARNED') {
+    targetIsLearned = true
+  } else if (action === 'KEEP_TESTING') {
+    targetIsLearned = false
+  }
+
+  const learnedJson = Array.isArray(learnedFlashcardIds)
+    ? JSON.stringify(learnedFlashcardIds)
+    : undefined
 
   const record = await prisma.userCorrectionSection.upsert({
     where: {
@@ -35,7 +46,8 @@ export default defineEventHandler(async (event) => {
       }
     },
     update: {
-      isLearned,
+      ...(targetIsLearned !== undefined ? { isLearned: targetIsLearned } : {}),
+      ...(learnedJson !== undefined ? { learnedFlashcardIds: learnedJson } : {}),
       timesTested: {
         increment: 1
       },
@@ -44,7 +56,8 @@ export default defineEventHandler(async (event) => {
     create: {
       userId: dbUser.id,
       sectionId,
-      isLearned,
+      isLearned: targetIsLearned ?? false,
+      learnedFlashcardIds: learnedJson ?? '[]',
       timesTested: 1,
       lastTestedAt: new Date()
     }
@@ -55,3 +68,4 @@ export default defineEventHandler(async (event) => {
     record
   }
 })
+

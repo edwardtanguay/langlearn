@@ -127,7 +127,17 @@ async function main() {
     }
   }
 
+  // Ensure learnedFlashcardIds column exists on UserCorrectionSection table
+  try {
+    await client.execute("ALTER TABLE UserCorrectionSection ADD COLUMN learnedFlashcardIds TEXT DEFAULT '[]';")
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
+
   client.close()
 }
 

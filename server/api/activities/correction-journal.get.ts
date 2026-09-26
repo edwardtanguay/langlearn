@@ -38,12 +38,21 @@ export default defineEventHandler(async (event) => {
     where: { userId: dbUser.id }
   })
 
-  const progressMap = new Map<string, { isLearned: boolean; timesTested: number; lastTestedAt: Date | null }>()
+  const progressMap = new Map<string, { isLearned: boolean; timesTested: number; lastTestedAt: Date | null; learnedFlashcardIds: string[] }>()
   for (const us of userSections) {
+    let ids: string[] = []
+    try {
+      if (us.learnedFlashcardIds) {
+        ids = JSON.parse(us.learnedFlashcardIds)
+      }
+    } catch {
+      ids = []
+    }
     progressMap.set(us.sectionId, {
       isLearned: us.isLearned,
       timesTested: us.timesTested,
-      lastTestedAt: us.lastTestedAt
+      lastTestedAt: us.lastTestedAt,
+      learnedFlashcardIds: ids
     })
   }
 
@@ -55,6 +64,7 @@ export default defineEventHandler(async (event) => {
       const prog = progressMap.get(s.id)
       const isLearned = prog ? prog.isLearned : false
       const timesTested = prog ? prog.timesTested : 0
+      const learnedFlashcardIds = prog ? prog.learnedFlashcardIds : []
       if (isLearned) {
         dayLearned++
         totalLearnedCount++
@@ -63,7 +73,8 @@ export default defineEventHandler(async (event) => {
         ...s,
         isLearned,
         timesTested,
-        lastTestedAt: prog?.lastTestedAt || null
+        lastTestedAt: prog?.lastTestedAt || null,
+        learnedFlashcardIds
       }
     })
 

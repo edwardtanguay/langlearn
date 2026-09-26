@@ -43,6 +43,7 @@ interface JournalSection {
   isLearned: boolean
   timesTested: number
   lastTestedAt?: string | null
+  learnedFlashcardIds?: string[]
 }
 
 interface DayGroup {
@@ -69,10 +70,15 @@ const totalFlashcards = ref(0)
 const totalLearnedCount = ref(0)
 
 // Active review state
-const activeSectionId = ref<string | null>(null)
+const activeSectionId = ref<string | undefined>(undefined)
 const toggledStates = ref<Record<string, boolean>>({}) // flashcardId -> true (shows correct) | false (shows incorrect)
 const everTurnedGreenSet = ref<Set<string>>(new Set()) // tracks flashcards that turned green at least once
-const isSubmitting = ref(false)
+
+// Helper to keep punctuation together with preceding words (non-breaking spaces before ?, !, :, ;)
+function formatFrenchText(text: string): string {
+  if (!text) return ''
+  return text.replace(/ ([?!:;])/g, '\u00A0$1')
+}
 
 // UI controls
 const showStats = ref(false)
@@ -139,6 +145,24 @@ function selectSection(id: string) {
   activeSectionId.value = id
   toggledStates.value = {}
   everTurnedGreenSet.value = new Set()
+
+  const sec = allSections.value.find(s => s.id === id)
+  if (sec) {
+    if (Array.isArray(sec.learnedFlashcardIds) && sec.learnedFlashcardIds.length > 0) {
+      for (const fcId of sec.learnedFlashcardIds) {
+        toggledStates.value[fcId] = true
+        everTurnedGreenSet.value.add(fcId)
+      }
+    } else if (sec.isLearned) {
+      // If marked learned, ensure all its flashcards are green
+      for (const b of sec.bits) {
+        if (b.type === 'flashcard') {
+          toggledStates.value[b.id] = true
+          everTurnedGreenSet.value.add(b.id)
+        }
+      }
+    }
+  }
 }
 
 function handlePillClick(fcId: string) {
@@ -150,12 +174,47 @@ function handlePillClick(fcId: string) {
   toggleFlashcard(fcId)
 }
 
-function toggleFlashcard(fcId: string) {
+async function toggleFlashcard(fcId: string) {
   const current = !!toggledStates.value[fcId]
   const next = !current
   toggledStates.value[fcId] = next
   if (next) {
     everTurnedGreenSet.value.add(fcId)
+  }
+
+  const sec = currentSection.value
+  if (!sec) return
+
+  const allFlashcards = sec.bits.filter((b): b is FlashcardBit => b.type === 'flashcard')
+  const currentLearnedIds = allFlashcards
+    .filter(b => !!toggledStates.value[b.id])
+    .map(b => b.id)
+
+  sec.learnedFlashcardIds = currentLearnedIds
+
+  const allGreen = allFlashcards.length > 0 && currentLearnedIds.length === allFlashcards.length
+
+  const wasLearned = sec.isLearned
+  if (allGreen && !wasLearned) {
+    sec.isLearned = true
+    totalLearnedCount.value++
+  } else if (!allGreen && wasLearned) {
+    sec.isLearned = false
+    totalLearnedCount.value = Math.max(0, totalLearnedCount.value - 1)
+  }
+
+  // Persist to database
+  try {
+    await $fetch('/api/activities/correction-journal', {
+      method: 'POST',
+      body: {
+        sectionId: sec.id,
+        learnedFlashcardIds: currentLearnedIds,
+        isLearned: sec.isLearned
+      }
+    })
+  } catch (err) {
+    console.error('Failed to sync flashcard state:', err)
   }
 }
 
@@ -173,50 +232,6 @@ const canAdvance = computed(() => {
 const revealedCount = computed(() => {
   return flashcardBits.value.filter(b => !!toggledStates.value[b.id]).length
 })
-
-async function handleAction(action: 'LEARNED' | 'KEEP_TESTING') {
-  if (!currentSection.value || isSubmitting.value) return
-  const sectionId = currentSection.value.id
-  isSubmitting.value = true
-
-  try {
-    await $fetch('/api/activities/correction-journal', {
-      method: 'POST',
-      body: { sectionId, action }
-    })
-
-    // Update local state
-    const sec = allSections.value.find(s => s.id === sectionId)
-    if (sec) {
-      if (action === 'LEARNED') {
-        if (!sec.isLearned) totalLearnedCount.value++
-        sec.isLearned = true
-      }
-      sec.timesTested++
-    }
-
-    // Determine next section
-    const currentIdx = queue.value.findIndex(s => s.id === sectionId)
-    if (action === 'KEEP_TESTING') {
-      // Advance to next unlearned section
-      const nextIdx = (currentIdx + 1) % queue.value.length
-      selectSection(queue.value[nextIdx]!.id)
-    } else {
-      // Action is LEARNED: advance to next item
-      const remaining = queue.value.filter(s => s.id !== sectionId && !s.isLearned)
-      if (remaining.length > 0) {
-        selectSection(remaining[0]!.id)
-      } else if (queue.value.length > 1) {
-        const nextIdx = (currentIdx + 1) % queue.value.length
-        selectSection(queue.value[nextIdx]!.id)
-      }
-    }
-  } catch (err) {
-    console.error('Failed to submit section action:', err)
-  } finally {
-    isSubmitting.value = false
-  }
-}
 
 // Format local date YYYY-MM-DD
 function formatIsoDate(d: Date): string {
@@ -295,12 +310,9 @@ const displayStatsDays = computed(() => {
 const sectionSelectItems = computed(() => {
   return queue.value.map(sec => ({
     id: sec.id,
+    isLearned: sec.isLearned,
     label: `${sec.day} — Section ${sec.sectionIndex} (${sec.language.toUpperCase()}) (${sec.wordCount}/${sec.flashcardsCount})${sec.isLearned ? ' ✓' : ''}`
   }))
-})
-
-const currentSelectItem = computed(() => {
-  return sectionSelectItems.value.find(item => item.id === activeSectionId.value) || null
 })
 
 function onSelectSectionChange(val: any) {
@@ -420,33 +432,26 @@ onMounted(() => {
               d.isToday ? 'ring-2 ring-amber-500/80 border-amber-500' : ''
             ]"
           >
-            <!-- Today badge -->
-            <div
-              v-if="d.isToday"
-              class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-amber-500 text-white inline-block mb-0.5 shadow-xs"
-            >
-              Today
-            </div>
-
-            <div class="text-[11px] font-mono text-gray-400 dark:text-gray-500 font-semibold truncate">
+            <!-- Date at top (a bit larger) -->
+            <div class="text-xs sm:text-sm font-mono text-gray-500 dark:text-gray-400 font-bold truncate">
               {{ d.date }}
             </div>
 
             <template v-if="d.hasActivity">
-              <div class="text-lg font-bold text-gray-900 dark:text-white">
-                {{ d.totalWords }} <span class="text-[10px] font-normal text-gray-400">words</span>
+              <div class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white leading-tight">
+                {{ d.totalWords }}
               </div>
-              <div class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
-                {{ d.learnedCount }}/{{ d.sectionsCount }} learned
+              <div class="text-xs text-gray-400 dark:text-gray-500 font-medium">
+                words
               </div>
             </template>
 
             <template v-else>
-              <div class="text-lg font-bold text-gray-400 dark:text-gray-500">
-                0 <span class="text-[10px] font-normal text-gray-400 dark:text-gray-500">words</span>
+              <div class="text-2xl sm:text-3xl font-extrabold text-gray-400 dark:text-gray-500 leading-tight">
+                0
               </div>
-              <div class="text-[11px] text-gray-400 dark:text-gray-500 font-semibold flex items-center justify-center">
-                <span>failed</span>
+              <div class="text-xs text-gray-400 dark:text-gray-500 font-semibold">
+                failed
               </div>
             </template>
           </div>
@@ -454,7 +459,6 @@ onMounted(() => {
 
         <div class="pt-2 border-t border-gray-100 dark:border-gray-800 flex flex-wrap items-center justify-between text-xs text-gray-500 dark:text-gray-400">
           <span>Total: <strong>{{ totalSections }}</strong> sections &bull; <strong>{{ totalWords }}</strong> words &bull; <strong>{{ totalFlashcards }}</strong> flashcards</span>
-          <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Overall Learned: {{ totalLearnedCount }} / {{ totalSections }}</span>
         </div>
       </div>
     </Transition>
@@ -486,15 +490,21 @@ onMounted(() => {
           <!-- Nuxt UI Select Menu for clean desktop & mobile appearance -->
           <USelectMenu
             :items="sectionSelectItems"
-            :model-value="currentSelectItem"
+            :model-value="activeSectionId"
             @update:model-value="onSelectSectionChange"
             label-key="label"
             value-key="id"
             class="w-64 sm:w-84 text-xs font-bold"
-          />
+          >
+            <template #item-label="{ item }">
+              <span :class="selectedFilter === 'all' && item.isLearned ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : ''">
+                {{ item.label }}
+              </span>
+            </template>
+          </USelectMenu>
 
-          <!-- Section count pill -->
-          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900/60 shrink-0">
+          <!-- Section count pill (permanently green) -->
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/60 shrink-0">
             {{ currentSectionIndexInQueue + 1 }} of {{ queue.length }}
           </span>
 
@@ -505,12 +515,6 @@ onMounted(() => {
             Learned
           </span>
         </div>
-
-        <div class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-3">
-          <span>{{ currentSection.wordCount }} words</span>
-          <span>&bull;</span>
-          <span>{{ currentSection.flashcardsCount }} flashcards</span>
-        </div>
       </div>
 
       <!-- Section Text Card -->
@@ -519,7 +523,7 @@ onMounted(() => {
         <div class="text-base sm:text-lg leading-relaxed text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
           <template v-for="(bit, bIdx) in currentSection.bits" :key="bIdx">
             <!-- Plain Text Segment -->
-            <span v-if="bit.type === 'text'">{{ bit.text }}</span>
+            <span v-if="bit.type === 'text'">{{ formatFrenchText(bit.text) }}</span>
 
             <!-- Flashcard Interactive Pill -->
             <span
@@ -533,59 +537,19 @@ onMounted(() => {
               class="inline-flex items-center mx-1 my-0.5 px-1.5 py-0 rounded-md font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group"
               :class="[
                 toggledStates[bit.id]
-                  ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:scale-105'
+                  ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:brightness-110 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/90'
                   : [
-                      'bg-red-100 dark:bg-red-950/70 text-red-700 dark:text-red-300 hover:scale-105',
+                      'bg-red-100 dark:bg-red-950/70 text-red-700 dark:text-red-300 hover:brightness-110 hover:bg-red-200/90 dark:hover:bg-red-900/90',
                       everTurnedGreenSet.has(bit.id)
                         ? 'border-transparent'
                         : 'border-red-400 dark:border-red-600'
                     ]
               ]"
             >
-              <span>{{ toggledStates[bit.id] ? bit.correct : bit.incorrect }}</span>
+              <span>{{ formatFrenchText(toggledStates[bit.id] ? bit.correct : bit.incorrect) }}</span>
             </span>
           </template>
         </div>
-
-        <!-- Hint or Completion Notice -->
-        <div class="pt-4 border-t border-gray-100 dark:border-gray-800/80 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-          <span v-if="!canAdvance">
-            💡 Click each red error ({{ revealedCount }}/{{ currentSection.flashcardsCount }}) to reveal the correction. All pills must be correct to unlock progress.
-          </span>
-          <span v-else class="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
-            <CheckCircleIcon class="w-4 h-4" />
-            All flashcards revealed! Choose whether you've learned this section or want to keep testing.
-          </span>
-        </div>
-
-        <!-- Action Buttons: Learned & Keep Testing (ONLY shows when ALL pills are turned to correct) -->
-        <Transition
-          enter-active-class="transition duration-300 ease-out"
-          enter-from-class="opacity-0 translate-y-3"
-          enter-to-class="opacity-100 translate-y-0"
-        >
-          <div v-if="canAdvance" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <!-- Learned Button -->
-            <button
-              @click="handleAction('LEARNED')"
-              :disabled="isSubmitting"
-              class="py-3 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 disabled:opacity-50 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:shadow-lg"
-            >
-              <CheckCircleIcon class="w-5 h-5" />
-              <span>Learned</span>
-            </button>
-
-            <!-- Keep Testing Button -->
-            <button
-              @click="handleAction('KEEP_TESTING')"
-              :disabled="isSubmitting"
-              class="py-3 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 disabled:opacity-50 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:shadow-lg"
-            >
-              <ArrowPathIcon class="w-5 h-5" />
-              <span>Keep testing</span>
-            </button>
-          </div>
-        </Transition>
       </div>
     </div>
   </div>

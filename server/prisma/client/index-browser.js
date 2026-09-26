@@ -244,6 +244,7 @@ exports.Prisma.UserCorrectionSectionScalarFieldEnum = {
   isLearned: 'isLearned',
   timesTested: 'timesTested',
   lastTestedAt: 'lastTestedAt',
+  learnedFlashcardIds: 'learnedFlashcardIds',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
