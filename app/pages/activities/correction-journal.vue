@@ -450,15 +450,11 @@ onMounted(() => {
               <div class="text-2xl sm:text-3xl font-extrabold text-gray-400 dark:text-gray-500 leading-tight">
                 0
               </div>
-              <div class="text-xs text-gray-400 dark:text-gray-500 font-semibold">
-                failed
+              <div class="text-xs text-gray-400 dark:text-gray-500 font-medium">
+                words
               </div>
             </template>
           </div>
-        </div>
-
-        <div class="pt-2 border-t border-gray-100 dark:border-gray-800 flex flex-wrap items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-          <span>Total: <strong>{{ totalSections }}</strong> sections &bull; <strong>{{ totalWords }}</strong> words &bull; <strong>{{ totalFlashcards }}</strong> flashcards</span>
         </div>
       </div>
     </Transition>
@@ -494,26 +490,17 @@ onMounted(() => {
             @update:model-value="onSelectSectionChange"
             label-key="label"
             value-key="id"
+            :ui="{
+              value: currentSection?.isLearned ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : ''
+            }"
             class="w-64 sm:w-84 text-xs font-bold"
           >
             <template #item-label="{ item }">
-              <span :class="selectedFilter === 'all' && item.isLearned ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : ''">
+              <span :class="item.isLearned ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : ''">
                 {{ item.label }}
               </span>
             </template>
           </USelectMenu>
-
-          <!-- Section count pill (permanently green) -->
-          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/60 shrink-0">
-            {{ currentSectionIndexInQueue + 1 }} of {{ queue.length }}
-          </span>
-
-          <span
-            v-if="currentSection.isLearned"
-            class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 uppercase tracking-wider shrink-0"
-          >
-            Learned
-          </span>
         </div>
       </div>
 

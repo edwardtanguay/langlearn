@@ -1207,10 +1207,9 @@ function isWordLearned(itemId: string): boolean {
               <!-- Visual indication when category is 100%: bold count and accomplished checkmark -->
               <div
                 v-if="!isStatsLoading && getCategoryLearnedPercentage(cat) === 100"
-                class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-black text-xs font-mono shrink-0"
-                :style="{ backgroundColor: `color-mix(in srgb, ${brightColor} 18%, transparent)` }"
+                class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-black text-xs font-mono shrink-0 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800/60"
               >
-                <span class="text-yellow-500 dark:text-yellow-400">{{ cat.items.length }} of {{ cat.items.length }}</span>
+                <span class="text-emerald-600 dark:text-emerald-400">{{ cat.items.length }} of {{ cat.items.length }}</span>
                 <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                 </svg>
