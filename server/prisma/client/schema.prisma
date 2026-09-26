@@ -22,6 +22,7 @@ model User {
   versionItems       VersionItem[]           @relation("UserVersionItems")
   mobileImports      MobileImport[]
   basicWordInfos     BasicWordInfo[]
+  correctionSections UserCorrectionSection[]
 }
 
 model Version {
@@ -161,4 +162,19 @@ model BasicWordInfo {
   updatedAt     DateTime @updatedAt
 
   @@unique([userId, wordId, language])
+}
+
+model UserCorrectionSection {
+  id                  String    @id @default(uuid())
+  userId              String
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sectionId           String
+  isLearned           Boolean   @default(false)
+  timesTested         Int       @default(0)
+  lastTestedAt        DateTime?
+  learnedFlashcardIds String    @default("[]")
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@unique([userId, sectionId])
 }

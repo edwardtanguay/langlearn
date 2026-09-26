@@ -183,52 +183,50 @@ const getTextClass = (text: string) => {
       </div>
 
       <!-- Edit form -->
-      <div v-else key="edit" class="absolute inset-0 p-4 flex flex-col justify-between" @click.stop>
-        <div class="flex-1 flex flex-col justify-center">
-          <div class="flex flex-col gap-2 w-full">
-            <textarea
-              ref="frontTextarea"
-              v-model="editFront"
-              @input="handleInput"
-              @keydown.enter.exact.prevent="$emit('save-edit')"
-              rows="1"
-              placeholder="Front"
-              class="text-sm bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/30 w-full resize-none h-[34px] max-h-[52px] overflow-y-auto"
-            />
-            <textarea
-              ref="backTextarea"
-              v-model="editBack"
-              @input="handleInput"
-              @keydown.enter.exact.prevent="$emit('save-edit')"
-              rows="1"
-              placeholder="Back"
-              class="text-sm bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/30 w-full resize-none h-[34px] max-h-[52px] overflow-y-auto"
-            />
-            <input
-              v-model="editPronunciation"
-              placeholder="Pronunciation (optional)"
-              @keydown.enter="$emit('save-edit')"
-              class="text-sm bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/30 w-full"
-            />
-            <input
-              v-model="editMemoryHook"
-              placeholder="Memory Link (optional)"
-              @keydown.enter="$emit('save-edit')"
-              class="text-sm bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/30 w-full"
-            />
-          </div>
+      <div v-else key="edit" class="absolute inset-0 p-2.5 sm:p-3.5 flex flex-col justify-between overflow-hidden" @click.stop>
+        <div class="flex-1 min-h-0 overflow-y-auto pr-0.5 space-y-1.5">
+          <textarea
+            ref="frontTextarea"
+            v-model="editFront"
+            @input="handleInput"
+            @keydown.enter.exact.prevent="$emit('save-edit')"
+            rows="1"
+            placeholder="Front"
+            class="text-xs sm:text-sm bg-white/5 border border-white/10 rounded-lg px-2.5 py-1 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/30 w-full resize-none h-[28px] sm:h-[32px] max-h-[48px] overflow-y-auto"
+          />
+          <textarea
+            ref="backTextarea"
+            v-model="editBack"
+            @input="handleInput"
+            @keydown.enter.exact.prevent="$emit('save-edit')"
+            rows="1"
+            placeholder="Back"
+            class="text-xs sm:text-sm bg-white/5 border border-white/10 rounded-lg px-2.5 py-1 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/30 w-full resize-none h-[28px] sm:h-[32px] max-h-[48px] overflow-y-auto"
+          />
+          <input
+            v-model="editPronunciation"
+            placeholder="Pronunciation (optional)"
+            @keydown.enter="$emit('save-edit')"
+            class="text-xs sm:text-sm bg-white/5 border border-white/10 rounded-lg px-2.5 py-1 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/30 w-full h-[28px] sm:h-[32px]"
+          />
+          <input
+            v-model="editMemoryHook"
+            placeholder="Memory Link (optional)"
+            @keydown.enter="$emit('save-edit')"
+            class="text-xs sm:text-sm bg-white/5 border border-white/10 rounded-lg px-2.5 py-1 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/30 w-full h-[28px] sm:h-[32px]"
+          />
         </div>
-        <div class="flex gap-2 mt-2">
+        <div class="flex gap-2 pt-1.5 shrink-0 z-10">
           <button
             @click.stop="$emit('cancel-edit')"
-            class="flex-1 py-1.5 bg-white/5 hover:bg-white/10 text-white/70 text-xs font-semibold rounded-lg transition-all"
+            class="flex-1 py-1.5 bg-white/10 hover:bg-white/15 text-white/90 text-xs font-semibold rounded-lg transition-all shadow-xs cursor-pointer"
           >
             Cancel
           </button>
           <button
             @click.stop="$emit('save-edit')"
             :disabled="isSavingEdit"
-            class="flex-1 py-1.5 bg-white hover:bg-white/90 disabled:opacity-50 text-neutral-900 text-xs font-bold rounded-lg transition-all"
+            class="flex-1 py-1.5 bg-white hover:bg-white/90 disabled:opacity-50 text-neutral-900 text-xs font-bold rounded-lg transition-all shadow-xs cursor-pointer"
           >
             {{ isSavingEdit ? 'Saving…' : 'Save' }}
           </button>

@@ -16,6 +16,13 @@ useHead({
 
 const activities = [
   {
+    title: 'Correction Journal',
+    path: '/activities/correction-journal',
+    description: 'Interactive daily corrections. Reveal corrections, toggle correct/incorrect, and track mastery day by day.',
+    icon: BookOpenIcon,
+    badgeColor: 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-200/60 dark:border-amber-900/40'
+  },
+  {
     title: 'Language Basics',
     path: '/activities/language-basics',
     description: 'Interactive flashcards covering essential language basics across four languages.',

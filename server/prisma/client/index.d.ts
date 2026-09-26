@@ -73,6 +73,11 @@ export type ChatbotPrompt = $Result.DefaultSelection<Prisma.$ChatbotPromptPayloa
  * 
  */
 export type BasicWordInfo = $Result.DefaultSelection<Prisma.$BasicWordInfoPayload>
+/**
+ * Model UserCorrectionSection
+ * 
+ */
+export type UserCorrectionSection = $Result.DefaultSelection<Prisma.$UserCorrectionSectionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -314,6 +319,16 @@ export class PrismaClient<
     * ```
     */
   get basicWordInfo(): Prisma.BasicWordInfoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userCorrectionSection`: Exposes CRUD operations for the **UserCorrectionSection** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserCorrectionSections
+    * const userCorrectionSections = await prisma.userCorrectionSection.findMany()
+    * ```
+    */
+  get userCorrectionSection(): Prisma.UserCorrectionSectionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -759,7 +774,8 @@ export namespace Prisma {
     FlashcardTag: 'FlashcardTag',
     MobileImport: 'MobileImport',
     ChatbotPrompt: 'ChatbotPrompt',
-    BasicWordInfo: 'BasicWordInfo'
+    BasicWordInfo: 'BasicWordInfo',
+    UserCorrectionSection: 'UserCorrectionSection'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -775,7 +791,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport" | "chatbotPrompt" | "basicWordInfo"
+      modelProps: "user" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport" | "chatbotPrompt" | "basicWordInfo" | "userCorrectionSection"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1667,6 +1683,80 @@ export namespace Prisma {
           }
         }
       }
+      UserCorrectionSection: {
+        payload: Prisma.$UserCorrectionSectionPayload<ExtArgs>
+        fields: Prisma.UserCorrectionSectionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserCorrectionSectionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserCorrectionSectionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>
+          }
+          findFirst: {
+            args: Prisma.UserCorrectionSectionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserCorrectionSectionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>
+          }
+          findMany: {
+            args: Prisma.UserCorrectionSectionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>[]
+          }
+          create: {
+            args: Prisma.UserCorrectionSectionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>
+          }
+          createMany: {
+            args: Prisma.UserCorrectionSectionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCorrectionSectionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>[]
+          }
+          delete: {
+            args: Prisma.UserCorrectionSectionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>
+          }
+          update: {
+            args: Prisma.UserCorrectionSectionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserCorrectionSectionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserCorrectionSectionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserCorrectionSectionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserCorrectionSectionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCorrectionSectionPayload>
+          }
+          aggregate: {
+            args: Prisma.UserCorrectionSectionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserCorrectionSection>
+          }
+          groupBy: {
+            args: Prisma.UserCorrectionSectionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserCorrectionSectionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCorrectionSectionCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCorrectionSectionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1787,6 +1877,7 @@ export namespace Prisma {
     mobileImport?: MobileImportOmit
     chatbotPrompt?: ChatbotPromptOmit
     basicWordInfo?: BasicWordInfoOmit
+    userCorrectionSection?: UserCorrectionSectionOmit
   }
 
   /* Types for Logging */
@@ -1872,6 +1963,7 @@ export namespace Prisma {
     versionItems: number
     mobileImports: number
     basicWordInfos: number
+    correctionSections: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1880,6 +1972,7 @@ export namespace Prisma {
     versionItems?: boolean | UserCountOutputTypeCountVersionItemsArgs
     mobileImports?: boolean | UserCountOutputTypeCountMobileImportsArgs
     basicWordInfos?: boolean | UserCountOutputTypeCountBasicWordInfosArgs
+    correctionSections?: boolean | UserCountOutputTypeCountCorrectionSectionsArgs
   }
 
   // Custom InputTypes
@@ -1926,6 +2019,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountBasicWordInfosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BasicWordInfoWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCorrectionSectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserCorrectionSectionWhereInput
   }
 
 
@@ -2319,6 +2419,7 @@ export namespace Prisma {
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
     mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     basicWordInfos?: boolean | User$basicWordInfosArgs<ExtArgs>
+    correctionSections?: boolean | User$correctionSectionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2362,6 +2463,7 @@ export namespace Prisma {
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
     mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     basicWordInfos?: boolean | User$basicWordInfosArgs<ExtArgs>
+    correctionSections?: boolean | User$correctionSectionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2375,6 +2477,7 @@ export namespace Prisma {
       versionItems: Prisma.$VersionItemPayload<ExtArgs>[]
       mobileImports: Prisma.$MobileImportPayload<ExtArgs>[]
       basicWordInfos: Prisma.$BasicWordInfoPayload<ExtArgs>[]
+      correctionSections: Prisma.$UserCorrectionSectionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2784,6 +2887,7 @@ export namespace Prisma {
     versionItems<T extends User$versionItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$versionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mobileImports<T extends User$mobileImportsArgs<ExtArgs> = {}>(args?: Subset<T, User$mobileImportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     basicWordInfos<T extends User$basicWordInfosArgs<ExtArgs> = {}>(args?: Subset<T, User$basicWordInfosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    correctionSections<T extends User$correctionSectionsArgs<ExtArgs> = {}>(args?: Subset<T, User$correctionSectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3329,6 +3433,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BasicWordInfoScalarFieldEnum | BasicWordInfoScalarFieldEnum[]
+  }
+
+  /**
+   * User.correctionSections
+   */
+  export type User$correctionSectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    where?: UserCorrectionSectionWhereInput
+    orderBy?: UserCorrectionSectionOrderByWithRelationInput | UserCorrectionSectionOrderByWithRelationInput[]
+    cursor?: UserCorrectionSectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserCorrectionSectionScalarFieldEnum | UserCorrectionSectionScalarFieldEnum[]
   }
 
   /**
@@ -15646,6 +15774,1153 @@ export namespace Prisma {
 
 
   /**
+   * Model UserCorrectionSection
+   */
+
+  export type AggregateUserCorrectionSection = {
+    _count: UserCorrectionSectionCountAggregateOutputType | null
+    _avg: UserCorrectionSectionAvgAggregateOutputType | null
+    _sum: UserCorrectionSectionSumAggregateOutputType | null
+    _min: UserCorrectionSectionMinAggregateOutputType | null
+    _max: UserCorrectionSectionMaxAggregateOutputType | null
+  }
+
+  export type UserCorrectionSectionAvgAggregateOutputType = {
+    timesTested: number | null
+  }
+
+  export type UserCorrectionSectionSumAggregateOutputType = {
+    timesTested: number | null
+  }
+
+  export type UserCorrectionSectionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    sectionId: string | null
+    isLearned: boolean | null
+    timesTested: number | null
+    lastTestedAt: Date | null
+    learnedFlashcardIds: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserCorrectionSectionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    sectionId: string | null
+    isLearned: boolean | null
+    timesTested: number | null
+    lastTestedAt: Date | null
+    learnedFlashcardIds: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserCorrectionSectionCountAggregateOutputType = {
+    id: number
+    userId: number
+    sectionId: number
+    isLearned: number
+    timesTested: number
+    lastTestedAt: number
+    learnedFlashcardIds: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserCorrectionSectionAvgAggregateInputType = {
+    timesTested?: true
+  }
+
+  export type UserCorrectionSectionSumAggregateInputType = {
+    timesTested?: true
+  }
+
+  export type UserCorrectionSectionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    sectionId?: true
+    isLearned?: true
+    timesTested?: true
+    lastTestedAt?: true
+    learnedFlashcardIds?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserCorrectionSectionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    sectionId?: true
+    isLearned?: true
+    timesTested?: true
+    lastTestedAt?: true
+    learnedFlashcardIds?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserCorrectionSectionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    sectionId?: true
+    isLearned?: true
+    timesTested?: true
+    lastTestedAt?: true
+    learnedFlashcardIds?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserCorrectionSectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserCorrectionSection to aggregate.
+     */
+    where?: UserCorrectionSectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCorrectionSections to fetch.
+     */
+    orderBy?: UserCorrectionSectionOrderByWithRelationInput | UserCorrectionSectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserCorrectionSectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCorrectionSections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCorrectionSections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserCorrectionSections
+    **/
+    _count?: true | UserCorrectionSectionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserCorrectionSectionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserCorrectionSectionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserCorrectionSectionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserCorrectionSectionMaxAggregateInputType
+  }
+
+  export type GetUserCorrectionSectionAggregateType<T extends UserCorrectionSectionAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserCorrectionSection]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserCorrectionSection[P]>
+      : GetScalarType<T[P], AggregateUserCorrectionSection[P]>
+  }
+
+
+
+
+  export type UserCorrectionSectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserCorrectionSectionWhereInput
+    orderBy?: UserCorrectionSectionOrderByWithAggregationInput | UserCorrectionSectionOrderByWithAggregationInput[]
+    by: UserCorrectionSectionScalarFieldEnum[] | UserCorrectionSectionScalarFieldEnum
+    having?: UserCorrectionSectionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCorrectionSectionCountAggregateInputType | true
+    _avg?: UserCorrectionSectionAvgAggregateInputType
+    _sum?: UserCorrectionSectionSumAggregateInputType
+    _min?: UserCorrectionSectionMinAggregateInputType
+    _max?: UserCorrectionSectionMaxAggregateInputType
+  }
+
+  export type UserCorrectionSectionGroupByOutputType = {
+    id: string
+    userId: string
+    sectionId: string
+    isLearned: boolean
+    timesTested: number
+    lastTestedAt: Date | null
+    learnedFlashcardIds: string
+    createdAt: Date
+    updatedAt: Date
+    _count: UserCorrectionSectionCountAggregateOutputType | null
+    _avg: UserCorrectionSectionAvgAggregateOutputType | null
+    _sum: UserCorrectionSectionSumAggregateOutputType | null
+    _min: UserCorrectionSectionMinAggregateOutputType | null
+    _max: UserCorrectionSectionMaxAggregateOutputType | null
+  }
+
+  type GetUserCorrectionSectionGroupByPayload<T extends UserCorrectionSectionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserCorrectionSectionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserCorrectionSectionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserCorrectionSectionGroupByOutputType[P]>
+            : GetScalarType<T[P], UserCorrectionSectionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserCorrectionSectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    sectionId?: boolean
+    isLearned?: boolean
+    timesTested?: boolean
+    lastTestedAt?: boolean
+    learnedFlashcardIds?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userCorrectionSection"]>
+
+  export type UserCorrectionSectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    sectionId?: boolean
+    isLearned?: boolean
+    timesTested?: boolean
+    lastTestedAt?: boolean
+    learnedFlashcardIds?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userCorrectionSection"]>
+
+  export type UserCorrectionSectionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    sectionId?: boolean
+    isLearned?: boolean
+    timesTested?: boolean
+    lastTestedAt?: boolean
+    learnedFlashcardIds?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userCorrectionSection"]>
+
+  export type UserCorrectionSectionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    sectionId?: boolean
+    isLearned?: boolean
+    timesTested?: boolean
+    lastTestedAt?: boolean
+    learnedFlashcardIds?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserCorrectionSectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "sectionId" | "isLearned" | "timesTested" | "lastTestedAt" | "learnedFlashcardIds" | "createdAt" | "updatedAt", ExtArgs["result"]["userCorrectionSection"]>
+  export type UserCorrectionSectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserCorrectionSectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserCorrectionSectionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserCorrectionSectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserCorrectionSection"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      sectionId: string
+      isLearned: boolean
+      timesTested: number
+      lastTestedAt: Date | null
+      learnedFlashcardIds: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userCorrectionSection"]>
+    composites: {}
+  }
+
+  type UserCorrectionSectionGetPayload<S extends boolean | null | undefined | UserCorrectionSectionDefaultArgs> = $Result.GetResult<Prisma.$UserCorrectionSectionPayload, S>
+
+  type UserCorrectionSectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserCorrectionSectionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCorrectionSectionCountAggregateInputType | true
+    }
+
+  export interface UserCorrectionSectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserCorrectionSection'], meta: { name: 'UserCorrectionSection' } }
+    /**
+     * Find zero or one UserCorrectionSection that matches the filter.
+     * @param {UserCorrectionSectionFindUniqueArgs} args - Arguments to find a UserCorrectionSection
+     * @example
+     * // Get one UserCorrectionSection
+     * const userCorrectionSection = await prisma.userCorrectionSection.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserCorrectionSectionFindUniqueArgs>(args: SelectSubset<T, UserCorrectionSectionFindUniqueArgs<ExtArgs>>): Prisma__UserCorrectionSectionClient<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserCorrectionSection that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserCorrectionSectionFindUniqueOrThrowArgs} args - Arguments to find a UserCorrectionSection
+     * @example
+     * // Get one UserCorrectionSection
+     * const userCorrectionSection = await prisma.userCorrectionSection.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserCorrectionSectionFindUniqueOrThrowArgs>(args: SelectSubset<T, UserCorrectionSectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserCorrectionSectionClient<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserCorrectionSection that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCorrectionSectionFindFirstArgs} args - Arguments to find a UserCorrectionSection
+     * @example
+     * // Get one UserCorrectionSection
+     * const userCorrectionSection = await prisma.userCorrectionSection.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserCorrectionSectionFindFirstArgs>(args?: SelectSubset<T, UserCorrectionSectionFindFirstArgs<ExtArgs>>): Prisma__UserCorrectionSectionClient<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserCorrectionSection that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCorrectionSectionFindFirstOrThrowArgs} args - Arguments to find a UserCorrectionSection
+     * @example
+     * // Get one UserCorrectionSection
+     * const userCorrectionSection = await prisma.userCorrectionSection.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserCorrectionSectionFindFirstOrThrowArgs>(args?: SelectSubset<T, UserCorrectionSectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserCorrectionSectionClient<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserCorrectionSections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCorrectionSectionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserCorrectionSections
+     * const userCorrectionSections = await prisma.userCorrectionSection.findMany()
+     * 
+     * // Get first 10 UserCorrectionSections
+     * const userCorrectionSections = await prisma.userCorrectionSection.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userCorrectionSectionWithIdOnly = await prisma.userCorrectionSection.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserCorrectionSectionFindManyArgs>(args?: SelectSubset<T, UserCorrectionSectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserCorrectionSection.
+     * @param {UserCorrectionSectionCreateArgs} args - Arguments to create a UserCorrectionSection.
+     * @example
+     * // Create one UserCorrectionSection
+     * const UserCorrectionSection = await prisma.userCorrectionSection.create({
+     *   data: {
+     *     // ... data to create a UserCorrectionSection
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCorrectionSectionCreateArgs>(args: SelectSubset<T, UserCorrectionSectionCreateArgs<ExtArgs>>): Prisma__UserCorrectionSectionClient<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserCorrectionSections.
+     * @param {UserCorrectionSectionCreateManyArgs} args - Arguments to create many UserCorrectionSections.
+     * @example
+     * // Create many UserCorrectionSections
+     * const userCorrectionSection = await prisma.userCorrectionSection.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCorrectionSectionCreateManyArgs>(args?: SelectSubset<T, UserCorrectionSectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserCorrectionSections and returns the data saved in the database.
+     * @param {UserCorrectionSectionCreateManyAndReturnArgs} args - Arguments to create many UserCorrectionSections.
+     * @example
+     * // Create many UserCorrectionSections
+     * const userCorrectionSection = await prisma.userCorrectionSection.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserCorrectionSections and only return the `id`
+     * const userCorrectionSectionWithIdOnly = await prisma.userCorrectionSection.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCorrectionSectionCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCorrectionSectionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserCorrectionSection.
+     * @param {UserCorrectionSectionDeleteArgs} args - Arguments to delete one UserCorrectionSection.
+     * @example
+     * // Delete one UserCorrectionSection
+     * const UserCorrectionSection = await prisma.userCorrectionSection.delete({
+     *   where: {
+     *     // ... filter to delete one UserCorrectionSection
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserCorrectionSectionDeleteArgs>(args: SelectSubset<T, UserCorrectionSectionDeleteArgs<ExtArgs>>): Prisma__UserCorrectionSectionClient<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserCorrectionSection.
+     * @param {UserCorrectionSectionUpdateArgs} args - Arguments to update one UserCorrectionSection.
+     * @example
+     * // Update one UserCorrectionSection
+     * const userCorrectionSection = await prisma.userCorrectionSection.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserCorrectionSectionUpdateArgs>(args: SelectSubset<T, UserCorrectionSectionUpdateArgs<ExtArgs>>): Prisma__UserCorrectionSectionClient<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserCorrectionSections.
+     * @param {UserCorrectionSectionDeleteManyArgs} args - Arguments to filter UserCorrectionSections to delete.
+     * @example
+     * // Delete a few UserCorrectionSections
+     * const { count } = await prisma.userCorrectionSection.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserCorrectionSectionDeleteManyArgs>(args?: SelectSubset<T, UserCorrectionSectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserCorrectionSections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCorrectionSectionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserCorrectionSections
+     * const userCorrectionSection = await prisma.userCorrectionSection.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserCorrectionSectionUpdateManyArgs>(args: SelectSubset<T, UserCorrectionSectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserCorrectionSections and returns the data updated in the database.
+     * @param {UserCorrectionSectionUpdateManyAndReturnArgs} args - Arguments to update many UserCorrectionSections.
+     * @example
+     * // Update many UserCorrectionSections
+     * const userCorrectionSection = await prisma.userCorrectionSection.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserCorrectionSections and only return the `id`
+     * const userCorrectionSectionWithIdOnly = await prisma.userCorrectionSection.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserCorrectionSectionUpdateManyAndReturnArgs>(args: SelectSubset<T, UserCorrectionSectionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserCorrectionSection.
+     * @param {UserCorrectionSectionUpsertArgs} args - Arguments to update or create a UserCorrectionSection.
+     * @example
+     * // Update or create a UserCorrectionSection
+     * const userCorrectionSection = await prisma.userCorrectionSection.upsert({
+     *   create: {
+     *     // ... data to create a UserCorrectionSection
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserCorrectionSection we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserCorrectionSectionUpsertArgs>(args: SelectSubset<T, UserCorrectionSectionUpsertArgs<ExtArgs>>): Prisma__UserCorrectionSectionClient<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserCorrectionSections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCorrectionSectionCountArgs} args - Arguments to filter UserCorrectionSections to count.
+     * @example
+     * // Count the number of UserCorrectionSections
+     * const count = await prisma.userCorrectionSection.count({
+     *   where: {
+     *     // ... the filter for the UserCorrectionSections we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCorrectionSectionCountArgs>(
+      args?: Subset<T, UserCorrectionSectionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCorrectionSectionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserCorrectionSection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCorrectionSectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserCorrectionSectionAggregateArgs>(args: Subset<T, UserCorrectionSectionAggregateArgs>): Prisma.PrismaPromise<GetUserCorrectionSectionAggregateType<T>>
+
+    /**
+     * Group by UserCorrectionSection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCorrectionSectionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserCorrectionSectionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserCorrectionSectionGroupByArgs['orderBy'] }
+        : { orderBy?: UserCorrectionSectionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserCorrectionSectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserCorrectionSectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserCorrectionSection model
+   */
+  readonly fields: UserCorrectionSectionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserCorrectionSection.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserCorrectionSectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserCorrectionSection model
+   */
+  interface UserCorrectionSectionFieldRefs {
+    readonly id: FieldRef<"UserCorrectionSection", 'String'>
+    readonly userId: FieldRef<"UserCorrectionSection", 'String'>
+    readonly sectionId: FieldRef<"UserCorrectionSection", 'String'>
+    readonly isLearned: FieldRef<"UserCorrectionSection", 'Boolean'>
+    readonly timesTested: FieldRef<"UserCorrectionSection", 'Int'>
+    readonly lastTestedAt: FieldRef<"UserCorrectionSection", 'DateTime'>
+    readonly learnedFlashcardIds: FieldRef<"UserCorrectionSection", 'String'>
+    readonly createdAt: FieldRef<"UserCorrectionSection", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserCorrectionSection", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserCorrectionSection findUnique
+   */
+  export type UserCorrectionSectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCorrectionSection to fetch.
+     */
+    where: UserCorrectionSectionWhereUniqueInput
+  }
+
+  /**
+   * UserCorrectionSection findUniqueOrThrow
+   */
+  export type UserCorrectionSectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCorrectionSection to fetch.
+     */
+    where: UserCorrectionSectionWhereUniqueInput
+  }
+
+  /**
+   * UserCorrectionSection findFirst
+   */
+  export type UserCorrectionSectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCorrectionSection to fetch.
+     */
+    where?: UserCorrectionSectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCorrectionSections to fetch.
+     */
+    orderBy?: UserCorrectionSectionOrderByWithRelationInput | UserCorrectionSectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserCorrectionSections.
+     */
+    cursor?: UserCorrectionSectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCorrectionSections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCorrectionSections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserCorrectionSections.
+     */
+    distinct?: UserCorrectionSectionScalarFieldEnum | UserCorrectionSectionScalarFieldEnum[]
+  }
+
+  /**
+   * UserCorrectionSection findFirstOrThrow
+   */
+  export type UserCorrectionSectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCorrectionSection to fetch.
+     */
+    where?: UserCorrectionSectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCorrectionSections to fetch.
+     */
+    orderBy?: UserCorrectionSectionOrderByWithRelationInput | UserCorrectionSectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserCorrectionSections.
+     */
+    cursor?: UserCorrectionSectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCorrectionSections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCorrectionSections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserCorrectionSections.
+     */
+    distinct?: UserCorrectionSectionScalarFieldEnum | UserCorrectionSectionScalarFieldEnum[]
+  }
+
+  /**
+   * UserCorrectionSection findMany
+   */
+  export type UserCorrectionSectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCorrectionSections to fetch.
+     */
+    where?: UserCorrectionSectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCorrectionSections to fetch.
+     */
+    orderBy?: UserCorrectionSectionOrderByWithRelationInput | UserCorrectionSectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserCorrectionSections.
+     */
+    cursor?: UserCorrectionSectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCorrectionSections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCorrectionSections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserCorrectionSections.
+     */
+    distinct?: UserCorrectionSectionScalarFieldEnum | UserCorrectionSectionScalarFieldEnum[]
+  }
+
+  /**
+   * UserCorrectionSection create
+   */
+  export type UserCorrectionSectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserCorrectionSection.
+     */
+    data: XOR<UserCorrectionSectionCreateInput, UserCorrectionSectionUncheckedCreateInput>
+  }
+
+  /**
+   * UserCorrectionSection createMany
+   */
+  export type UserCorrectionSectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserCorrectionSections.
+     */
+    data: UserCorrectionSectionCreateManyInput | UserCorrectionSectionCreateManyInput[]
+  }
+
+  /**
+   * UserCorrectionSection createManyAndReturn
+   */
+  export type UserCorrectionSectionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserCorrectionSections.
+     */
+    data: UserCorrectionSectionCreateManyInput | UserCorrectionSectionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserCorrectionSection update
+   */
+  export type UserCorrectionSectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserCorrectionSection.
+     */
+    data: XOR<UserCorrectionSectionUpdateInput, UserCorrectionSectionUncheckedUpdateInput>
+    /**
+     * Choose, which UserCorrectionSection to update.
+     */
+    where: UserCorrectionSectionWhereUniqueInput
+  }
+
+  /**
+   * UserCorrectionSection updateMany
+   */
+  export type UserCorrectionSectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserCorrectionSections.
+     */
+    data: XOR<UserCorrectionSectionUpdateManyMutationInput, UserCorrectionSectionUncheckedUpdateManyInput>
+    /**
+     * Filter which UserCorrectionSections to update
+     */
+    where?: UserCorrectionSectionWhereInput
+    /**
+     * Limit how many UserCorrectionSections to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserCorrectionSection updateManyAndReturn
+   */
+  export type UserCorrectionSectionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * The data used to update UserCorrectionSections.
+     */
+    data: XOR<UserCorrectionSectionUpdateManyMutationInput, UserCorrectionSectionUncheckedUpdateManyInput>
+    /**
+     * Filter which UserCorrectionSections to update
+     */
+    where?: UserCorrectionSectionWhereInput
+    /**
+     * Limit how many UserCorrectionSections to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserCorrectionSection upsert
+   */
+  export type UserCorrectionSectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserCorrectionSection to update in case it exists.
+     */
+    where: UserCorrectionSectionWhereUniqueInput
+    /**
+     * In case the UserCorrectionSection found by the `where` argument doesn't exist, create a new UserCorrectionSection with this data.
+     */
+    create: XOR<UserCorrectionSectionCreateInput, UserCorrectionSectionUncheckedCreateInput>
+    /**
+     * In case the UserCorrectionSection was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserCorrectionSectionUpdateInput, UserCorrectionSectionUncheckedUpdateInput>
+  }
+
+  /**
+   * UserCorrectionSection delete
+   */
+  export type UserCorrectionSectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+    /**
+     * Filter which UserCorrectionSection to delete.
+     */
+    where: UserCorrectionSectionWhereUniqueInput
+  }
+
+  /**
+   * UserCorrectionSection deleteMany
+   */
+  export type UserCorrectionSectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserCorrectionSections to delete
+     */
+    where?: UserCorrectionSectionWhereInput
+    /**
+     * Limit how many UserCorrectionSections to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserCorrectionSection without action
+   */
+  export type UserCorrectionSectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCorrectionSection
+     */
+    select?: UserCorrectionSectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCorrectionSection
+     */
+    omit?: UserCorrectionSectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCorrectionSectionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -15812,6 +17087,21 @@ export namespace Prisma {
   export type BasicWordInfoScalarFieldEnum = (typeof BasicWordInfoScalarFieldEnum)[keyof typeof BasicWordInfoScalarFieldEnum]
 
 
+  export const UserCorrectionSectionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    sectionId: 'sectionId',
+    isLearned: 'isLearned',
+    timesTested: 'timesTested',
+    lastTestedAt: 'lastTestedAt',
+    learnedFlashcardIds: 'learnedFlashcardIds',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserCorrectionSectionScalarFieldEnum = (typeof UserCorrectionSectionScalarFieldEnum)[keyof typeof UserCorrectionSectionScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -15888,6 +17178,7 @@ export namespace Prisma {
     versionItems?: VersionItemListRelationFilter
     mobileImports?: MobileImportListRelationFilter
     basicWordInfos?: BasicWordInfoListRelationFilter
+    correctionSections?: UserCorrectionSectionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -15904,6 +17195,7 @@ export namespace Prisma {
     versionItems?: VersionItemOrderByRelationAggregateInput
     mobileImports?: MobileImportOrderByRelationAggregateInput
     basicWordInfos?: BasicWordInfoOrderByRelationAggregateInput
+    correctionSections?: UserCorrectionSectionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -15923,6 +17215,7 @@ export namespace Prisma {
     versionItems?: VersionItemListRelationFilter
     mobileImports?: MobileImportListRelationFilter
     basicWordInfos?: BasicWordInfoListRelationFilter
+    correctionSections?: UserCorrectionSectionListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -16699,6 +17992,84 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"BasicWordInfo"> | Date | string
   }
 
+  export type UserCorrectionSectionWhereInput = {
+    AND?: UserCorrectionSectionWhereInput | UserCorrectionSectionWhereInput[]
+    OR?: UserCorrectionSectionWhereInput[]
+    NOT?: UserCorrectionSectionWhereInput | UserCorrectionSectionWhereInput[]
+    id?: StringFilter<"UserCorrectionSection"> | string
+    userId?: StringFilter<"UserCorrectionSection"> | string
+    sectionId?: StringFilter<"UserCorrectionSection"> | string
+    isLearned?: BoolFilter<"UserCorrectionSection"> | boolean
+    timesTested?: IntFilter<"UserCorrectionSection"> | number
+    lastTestedAt?: DateTimeNullableFilter<"UserCorrectionSection"> | Date | string | null
+    learnedFlashcardIds?: StringFilter<"UserCorrectionSection"> | string
+    createdAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
+    updatedAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserCorrectionSectionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sectionId?: SortOrder
+    isLearned?: SortOrder
+    timesTested?: SortOrder
+    lastTestedAt?: SortOrderInput | SortOrder
+    learnedFlashcardIds?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserCorrectionSectionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_sectionId?: UserCorrectionSectionUserIdSectionIdCompoundUniqueInput
+    AND?: UserCorrectionSectionWhereInput | UserCorrectionSectionWhereInput[]
+    OR?: UserCorrectionSectionWhereInput[]
+    NOT?: UserCorrectionSectionWhereInput | UserCorrectionSectionWhereInput[]
+    userId?: StringFilter<"UserCorrectionSection"> | string
+    sectionId?: StringFilter<"UserCorrectionSection"> | string
+    isLearned?: BoolFilter<"UserCorrectionSection"> | boolean
+    timesTested?: IntFilter<"UserCorrectionSection"> | number
+    lastTestedAt?: DateTimeNullableFilter<"UserCorrectionSection"> | Date | string | null
+    learnedFlashcardIds?: StringFilter<"UserCorrectionSection"> | string
+    createdAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
+    updatedAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_sectionId">
+
+  export type UserCorrectionSectionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sectionId?: SortOrder
+    isLearned?: SortOrder
+    timesTested?: SortOrder
+    lastTestedAt?: SortOrderInput | SortOrder
+    learnedFlashcardIds?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserCorrectionSectionCountOrderByAggregateInput
+    _avg?: UserCorrectionSectionAvgOrderByAggregateInput
+    _max?: UserCorrectionSectionMaxOrderByAggregateInput
+    _min?: UserCorrectionSectionMinOrderByAggregateInput
+    _sum?: UserCorrectionSectionSumOrderByAggregateInput
+  }
+
+  export type UserCorrectionSectionScalarWhereWithAggregatesInput = {
+    AND?: UserCorrectionSectionScalarWhereWithAggregatesInput | UserCorrectionSectionScalarWhereWithAggregatesInput[]
+    OR?: UserCorrectionSectionScalarWhereWithAggregatesInput[]
+    NOT?: UserCorrectionSectionScalarWhereWithAggregatesInput | UserCorrectionSectionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserCorrectionSection"> | string
+    userId?: StringWithAggregatesFilter<"UserCorrectionSection"> | string
+    sectionId?: StringWithAggregatesFilter<"UserCorrectionSection"> | string
+    isLearned?: BoolWithAggregatesFilter<"UserCorrectionSection"> | boolean
+    timesTested?: IntWithAggregatesFilter<"UserCorrectionSection"> | number
+    lastTestedAt?: DateTimeNullableWithAggregatesFilter<"UserCorrectionSection"> | Date | string | null
+    learnedFlashcardIds?: StringWithAggregatesFilter<"UserCorrectionSection"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"UserCorrectionSection"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserCorrectionSection"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
@@ -16713,6 +18084,7 @@ export namespace Prisma {
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -16729,6 +18101,7 @@ export namespace Prisma {
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -16745,6 +18118,7 @@ export namespace Prisma {
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -16761,6 +18135,7 @@ export namespace Prisma {
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -17575,6 +18950,89 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserCorrectionSectionCreateInput = {
+    id?: string
+    sectionId: string
+    isLearned?: boolean
+    timesTested?: number
+    lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCorrectionSectionsInput
+  }
+
+  export type UserCorrectionSectionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    sectionId: string
+    isLearned?: boolean
+    timesTested?: number
+    lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCorrectionSectionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    timesTested?: IntFieldUpdateOperationsInput | number
+    lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCorrectionSectionsNestedInput
+  }
+
+  export type UserCorrectionSectionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    timesTested?: IntFieldUpdateOperationsInput | number
+    lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCorrectionSectionCreateManyInput = {
+    id?: string
+    userId: string
+    sectionId: string
+    isLearned?: boolean
+    timesTested?: number
+    lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCorrectionSectionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    timesTested?: IntFieldUpdateOperationsInput | number
+    lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCorrectionSectionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    timesTested?: IntFieldUpdateOperationsInput | number
+    lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -17630,6 +19088,12 @@ export namespace Prisma {
     none?: BasicWordInfoWhereInput
   }
 
+  export type UserCorrectionSectionListRelationFilter = {
+    every?: UserCorrectionSectionWhereInput
+    some?: UserCorrectionSectionWhereInput
+    none?: UserCorrectionSectionWhereInput
+  }
+
   export type FlashcardOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -17647,6 +19111,10 @@ export namespace Prisma {
   }
 
   export type BasicWordInfoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCorrectionSectionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18290,6 +19758,55 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type UserCorrectionSectionUserIdSectionIdCompoundUniqueInput = {
+    userId: string
+    sectionId: string
+  }
+
+  export type UserCorrectionSectionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sectionId?: SortOrder
+    isLearned?: SortOrder
+    timesTested?: SortOrder
+    lastTestedAt?: SortOrder
+    learnedFlashcardIds?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserCorrectionSectionAvgOrderByAggregateInput = {
+    timesTested?: SortOrder
+  }
+
+  export type UserCorrectionSectionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sectionId?: SortOrder
+    isLearned?: SortOrder
+    timesTested?: SortOrder
+    lastTestedAt?: SortOrder
+    learnedFlashcardIds?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserCorrectionSectionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    sectionId?: SortOrder
+    isLearned?: SortOrder
+    timesTested?: SortOrder
+    lastTestedAt?: SortOrder
+    learnedFlashcardIds?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserCorrectionSectionSumOrderByAggregateInput = {
+    timesTested?: SortOrder
+  }
+
   export type FlashcardCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -18325,6 +19842,13 @@ export namespace Prisma {
     connect?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
   }
 
+  export type UserCorrectionSectionCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserCorrectionSectionCreateWithoutUserInput, UserCorrectionSectionUncheckedCreateWithoutUserInput> | UserCorrectionSectionCreateWithoutUserInput[] | UserCorrectionSectionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCorrectionSectionCreateOrConnectWithoutUserInput | UserCorrectionSectionCreateOrConnectWithoutUserInput[]
+    createMany?: UserCorrectionSectionCreateManyUserInputEnvelope
+    connect?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+  }
+
   export type FlashcardUncheckedCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -18358,6 +19882,13 @@ export namespace Prisma {
     connectOrCreate?: BasicWordInfoCreateOrConnectWithoutUserInput | BasicWordInfoCreateOrConnectWithoutUserInput[]
     createMany?: BasicWordInfoCreateManyUserInputEnvelope
     connect?: BasicWordInfoWhereUniqueInput | BasicWordInfoWhereUniqueInput[]
+  }
+
+  export type UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserCorrectionSectionCreateWithoutUserInput, UserCorrectionSectionUncheckedCreateWithoutUserInput> | UserCorrectionSectionCreateWithoutUserInput[] | UserCorrectionSectionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCorrectionSectionCreateOrConnectWithoutUserInput | UserCorrectionSectionCreateOrConnectWithoutUserInput[]
+    createMany?: UserCorrectionSectionCreateManyUserInputEnvelope
+    connect?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -18442,6 +19973,20 @@ export namespace Prisma {
     deleteMany?: BasicWordInfoScalarWhereInput | BasicWordInfoScalarWhereInput[]
   }
 
+  export type UserCorrectionSectionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserCorrectionSectionCreateWithoutUserInput, UserCorrectionSectionUncheckedCreateWithoutUserInput> | UserCorrectionSectionCreateWithoutUserInput[] | UserCorrectionSectionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCorrectionSectionCreateOrConnectWithoutUserInput | UserCorrectionSectionCreateOrConnectWithoutUserInput[]
+    upsert?: UserCorrectionSectionUpsertWithWhereUniqueWithoutUserInput | UserCorrectionSectionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserCorrectionSectionCreateManyUserInputEnvelope
+    set?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+    disconnect?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+    delete?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+    connect?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+    update?: UserCorrectionSectionUpdateWithWhereUniqueWithoutUserInput | UserCorrectionSectionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserCorrectionSectionUpdateManyWithWhereWithoutUserInput | UserCorrectionSectionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserCorrectionSectionScalarWhereInput | UserCorrectionSectionScalarWhereInput[]
+  }
+
   export type FlashcardUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -18510,6 +20055,20 @@ export namespace Prisma {
     update?: BasicWordInfoUpdateWithWhereUniqueWithoutUserInput | BasicWordInfoUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BasicWordInfoUpdateManyWithWhereWithoutUserInput | BasicWordInfoUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BasicWordInfoScalarWhereInput | BasicWordInfoScalarWhereInput[]
+  }
+
+  export type UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserCorrectionSectionCreateWithoutUserInput, UserCorrectionSectionUncheckedCreateWithoutUserInput> | UserCorrectionSectionCreateWithoutUserInput[] | UserCorrectionSectionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCorrectionSectionCreateOrConnectWithoutUserInput | UserCorrectionSectionCreateOrConnectWithoutUserInput[]
+    upsert?: UserCorrectionSectionUpsertWithWhereUniqueWithoutUserInput | UserCorrectionSectionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserCorrectionSectionCreateManyUserInputEnvelope
+    set?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+    disconnect?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+    delete?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+    connect?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+    update?: UserCorrectionSectionUpdateWithWhereUniqueWithoutUserInput | UserCorrectionSectionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserCorrectionSectionUpdateManyWithWhereWithoutUserInput | UserCorrectionSectionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserCorrectionSectionScalarWhereInput | UserCorrectionSectionScalarWhereInput[]
   }
 
   export type VersionItemCreateNestedManyWithoutVersionInput = {
@@ -19006,6 +20565,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBasicWordInfosInput, UserUpdateWithoutBasicWordInfosInput>, UserUncheckedUpdateWithoutBasicWordInfosInput>
   }
 
+  export type UserCreateNestedOneWithoutCorrectionSectionsInput = {
+    create?: XOR<UserCreateWithoutCorrectionSectionsInput, UserUncheckedCreateWithoutCorrectionSectionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCorrectionSectionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutCorrectionSectionsNestedInput = {
+    create?: XOR<UserCreateWithoutCorrectionSectionsInput, UserUncheckedCreateWithoutCorrectionSectionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCorrectionSectionsInput
+    upsert?: UserUpsertWithoutCorrectionSectionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCorrectionSectionsInput, UserUpdateWithoutCorrectionSectionsInput>, UserUncheckedUpdateWithoutCorrectionSectionsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -19357,6 +20930,37 @@ export namespace Prisma {
     data: BasicWordInfoCreateManyUserInput | BasicWordInfoCreateManyUserInput[]
   }
 
+  export type UserCorrectionSectionCreateWithoutUserInput = {
+    id?: string
+    sectionId: string
+    isLearned?: boolean
+    timesTested?: number
+    lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCorrectionSectionUncheckedCreateWithoutUserInput = {
+    id?: string
+    sectionId: string
+    isLearned?: boolean
+    timesTested?: number
+    lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCorrectionSectionCreateOrConnectWithoutUserInput = {
+    where: UserCorrectionSectionWhereUniqueInput
+    create: XOR<UserCorrectionSectionCreateWithoutUserInput, UserCorrectionSectionUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserCorrectionSectionCreateManyUserInputEnvelope = {
+    data: UserCorrectionSectionCreateManyUserInput | UserCorrectionSectionCreateManyUserInput[]
+  }
+
   export type FlashcardUpsertWithWhereUniqueWithoutOwnerInput = {
     where: FlashcardWhereUniqueInput
     update: XOR<FlashcardUpdateWithoutOwnerInput, FlashcardUncheckedUpdateWithoutOwnerInput>
@@ -19510,6 +21114,37 @@ export namespace Prisma {
     isLearned?: BoolFilter<"BasicWordInfo"> | boolean
     createdAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
     updatedAt?: DateTimeFilter<"BasicWordInfo"> | Date | string
+  }
+
+  export type UserCorrectionSectionUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserCorrectionSectionWhereUniqueInput
+    update: XOR<UserCorrectionSectionUpdateWithoutUserInput, UserCorrectionSectionUncheckedUpdateWithoutUserInput>
+    create: XOR<UserCorrectionSectionCreateWithoutUserInput, UserCorrectionSectionUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserCorrectionSectionUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserCorrectionSectionWhereUniqueInput
+    data: XOR<UserCorrectionSectionUpdateWithoutUserInput, UserCorrectionSectionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserCorrectionSectionUpdateManyWithWhereWithoutUserInput = {
+    where: UserCorrectionSectionScalarWhereInput
+    data: XOR<UserCorrectionSectionUpdateManyMutationInput, UserCorrectionSectionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserCorrectionSectionScalarWhereInput = {
+    AND?: UserCorrectionSectionScalarWhereInput | UserCorrectionSectionScalarWhereInput[]
+    OR?: UserCorrectionSectionScalarWhereInput[]
+    NOT?: UserCorrectionSectionScalarWhereInput | UserCorrectionSectionScalarWhereInput[]
+    id?: StringFilter<"UserCorrectionSection"> | string
+    userId?: StringFilter<"UserCorrectionSection"> | string
+    sectionId?: StringFilter<"UserCorrectionSection"> | string
+    isLearned?: BoolFilter<"UserCorrectionSection"> | boolean
+    timesTested?: IntFilter<"UserCorrectionSection"> | number
+    lastTestedAt?: DateTimeNullableFilter<"UserCorrectionSection"> | Date | string | null
+    learnedFlashcardIds?: StringFilter<"UserCorrectionSection"> | string
+    createdAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
+    updatedAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
   }
 
   export type VersionItemCreateWithoutVersionInput = {
@@ -19777,6 +21412,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVersionItemsInput = {
@@ -19792,6 +21428,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVersionItemsInput = {
@@ -19883,6 +21520,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVersionItemsInput = {
@@ -19898,6 +21536,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutFlashcardsInput = {
@@ -19913,6 +21552,7 @@ export namespace Prisma {
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFlashcardsInput = {
@@ -19928,6 +21568,7 @@ export namespace Prisma {
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFlashcardsInput = {
@@ -20101,6 +21742,7 @@ export namespace Prisma {
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFlashcardsInput = {
@@ -20116,6 +21758,7 @@ export namespace Prisma {
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutCopiesInput = {
@@ -20241,6 +21884,7 @@ export namespace Prisma {
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -20256,6 +21900,7 @@ export namespace Prisma {
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -20334,6 +21979,7 @@ export namespace Prisma {
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -20349,6 +21995,7 @@ export namespace Prisma {
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutActivitiesInput = {
@@ -20592,6 +22239,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMobileImportsInput = {
@@ -20607,6 +22255,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMobileImportsInput = {
@@ -20638,6 +22287,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMobileImportsInput = {
@@ -20653,6 +22303,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBasicWordInfosInput = {
@@ -20668,6 +22319,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBasicWordInfosInput = {
@@ -20683,6 +22335,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBasicWordInfosInput = {
@@ -20714,6 +22367,7 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBasicWordInfosInput = {
@@ -20729,6 +22383,87 @@ export namespace Prisma {
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutCorrectionSectionsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    dailyTakeGoal?: number
+    testingGroupSize?: number
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCorrectionSectionsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    minutesToTestAgain?: number
+    dailyTakeGoal?: number
+    testingGroupSize?: number
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCorrectionSectionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCorrectionSectionsInput, UserUncheckedCreateWithoutCorrectionSectionsInput>
+  }
+
+  export type UserUpsertWithoutCorrectionSectionsInput = {
+    update: XOR<UserUpdateWithoutCorrectionSectionsInput, UserUncheckedUpdateWithoutCorrectionSectionsInput>
+    create: XOR<UserCreateWithoutCorrectionSectionsInput, UserUncheckedCreateWithoutCorrectionSectionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCorrectionSectionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCorrectionSectionsInput, UserUncheckedUpdateWithoutCorrectionSectionsInput>
+  }
+
+  export type UserUpdateWithoutCorrectionSectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCorrectionSectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardCreateManyOwnerInput = {
@@ -20782,6 +22517,17 @@ export namespace Prisma {
     language: string
     pronunciation?: string | null
     isLearned?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCorrectionSectionCreateManyUserInput = {
+    id?: string
+    sectionId: string
+    isLearned?: boolean
+    timesTested?: number
+    lastTestedAt?: Date | string | null
+    learnedFlashcardIds?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20953,6 +22699,39 @@ export namespace Prisma {
     language?: StringFieldUpdateOperationsInput | string
     pronunciation?: NullableStringFieldUpdateOperationsInput | string | null
     isLearned?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCorrectionSectionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    timesTested?: IntFieldUpdateOperationsInput | number
+    lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCorrectionSectionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    timesTested?: IntFieldUpdateOperationsInput | number
+    lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCorrectionSectionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sectionId?: StringFieldUpdateOperationsInput | string
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    timesTested?: IntFieldUpdateOperationsInput | number
+    lastTestedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

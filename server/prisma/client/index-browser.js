@@ -237,6 +237,18 @@ exports.Prisma.BasicWordInfoScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserCorrectionSectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sectionId: 'sectionId',
+  isLearned: 'isLearned',
+  timesTested: 'timesTested',
+  lastTestedAt: 'lastTestedAt',
+  learnedFlashcardIds: 'learnedFlashcardIds',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -260,7 +272,8 @@ exports.Prisma.ModelName = {
   FlashcardTag: 'FlashcardTag',
   MobileImport: 'MobileImport',
   ChatbotPrompt: 'ChatbotPrompt',
-  BasicWordInfo: 'BasicWordInfo'
+  BasicWordInfo: 'BasicWordInfo',
+  UserCorrectionSection: 'UserCorrectionSection'
 };
 
 /**

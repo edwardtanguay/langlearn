@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const defaultLimit = dbUser.testingGroupSize || 10
+    const defaultLimit = (dbUser.testingGroupSize && dbUser.testingGroupSize !== 10) ? dbUser.testingGroupSize : 7
     const limitParam = parseInt(query.limit as string, 10)
     const limit = !isNaN(limitParam) && limitParam > 0 ? Math.min(limitParam, 50) : defaultLimit
 

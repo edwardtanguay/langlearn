@@ -137,11 +137,31 @@ function buildParsedRow(lang1: string, lang2: string, text1: string, text2: stri
   const tagsSet = new Set<string>([...(meta1.tags || []), ...(meta2.tags || [])])
   const tags = Array.from(tagsSet)
 
+  let text1Final = cleanText1
+  let text2Final = cleanText2
+
+  if (lang1.toLowerCase() === 'english') {
+    const clean = meta2.cleanText.replace(/\*/g, '').trim()
+    if (clean.length > 0 && !/\s/.test(clean)) {
+      text2Final = `*${clean}*`
+    }
+  } else if (lang2.toLowerCase() === 'english') {
+    const clean = meta1.cleanText.replace(/\*/g, '').trim()
+    if (clean.length > 0 && !/\s/.test(clean)) {
+      text1Final = `*${clean}*`
+    }
+  } else {
+    const clean = meta2.cleanText.replace(/\*/g, '').trim()
+    if (clean.length > 0 && !/\s/.test(clean)) {
+      text2Final = `*${clean}*`
+    }
+  }
+
   return {
     lang1,
     lang2,
-    text1: cleanText1,
-    text2: cleanText2,
+    text1: text1Final,
+    text2: text2Final,
     rank,
     pronunciation,
     memoryHook,

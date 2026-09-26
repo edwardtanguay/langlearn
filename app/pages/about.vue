@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon } from '@heroicons/vue/24/outline'
+import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'
 
 useHead({
@@ -280,11 +280,11 @@ const recentlyEditedItemId = ref<string | null>(null)
 function getVersionColorClass(status: string | undefined): string {
   if (!status) return ''
   if (status === 'FUTURE_VERSION') {
-    return 'bg-black/80 text-white font-semibold'
+    return 'bg-gray-500/15 text-gray-300 font-semibold'
   } else if (status === 'INCOMING' || status === 'PROPOSED_ITEMS' || status === '0.0.0') {
-    return 'bg-red-900/80 text-white font-semibold'
+    return 'bg-red-500/15 text-red-500 dark:text-red-400 font-semibold'
   } else if (status === 'IN_PROGRESS') {
-    return 'bg-amber-600/80 text-white font-semibold'
+    return 'bg-amber-500/15 text-amber-500 dark:text-amber-400 font-semibold'
   }
   return ''
 }
@@ -1202,6 +1202,30 @@ async function copyIssueMarkdown(ver: Version) {
   }
 }
 
+const copiedBranchVersionId = ref<string | null>(null)
+let copiedBranchTimeout: ReturnType<typeof setTimeout> | null = null
+
+function getBranchName(ver: Version): string {
+  const cleanDigits = ver.versionNumber.replace(/\./g, '')
+  return `version-${cleanDigits}`
+}
+
+async function copyBranchName(ver: Version) {
+  const branchName = getBranchName(ver)
+  try {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      await navigator.clipboard.writeText(branchName)
+    }
+    copiedBranchVersionId.value = ver.id
+    if (copiedBranchTimeout) clearTimeout(copiedBranchTimeout)
+    copiedBranchTimeout = setTimeout(() => {
+      copiedBranchVersionId.value = null
+    }, 2500)
+  } catch (err) {
+    console.error('Failed to copy branch name to clipboard', err)
+  }
+}
+
 // Item Rank Redistribution Handlers (UP / DOWN)
 async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: VersionItem[]) {
   const currentIndex = list.findIndex(i => i.id === item.id)
@@ -1388,8 +1412,8 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   </span>
                 </template>
 
-                <!-- Create issue markdown button for IN_PROGRESS versions in Admin mode -->
-                <div v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="inline-flex items-center ml-2">
+                <!-- Issue Markdown and Branch name buttons for IN_PROGRESS versions in Admin mode -->
+                <div v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="inline-flex items-center gap-1.5 ml-2">
                   <button
                     @click="copyIssueMarkdown(ver)"
                     title="Copy issue markdown to clipboard"
@@ -1397,7 +1421,17 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   >
                     <CheckIcon v-if="copiedVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <DocumentTextIcon v-else class="w-3.5 h-3.5" />
-                    <span>{{ copiedVersionId === ver.id ? 'Copied to clipboard!' : 'Create issue markdown' }}</span>
+                    <span>{{ copiedVersionId === ver.id ? 'Copied!' : 'Issue Markdown' }}</span>
+                  </button>
+
+                  <button
+                    @click="copyBranchName(ver)"
+                    title="Copy branch name to clipboard"
+                    class="px-2 py-0.5 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
+                  >
+                    <CheckIcon v-if="copiedBranchVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <ClipboardDocumentIcon v-else class="w-3.5 h-3.5" />
+                    <span>{{ copiedBranchVersionId === ver.id ? 'Copied!' : 'Branch name' }}</span>
                   </button>
                 </div>
               </div>
