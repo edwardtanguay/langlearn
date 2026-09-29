@@ -658,7 +658,7 @@ onMounted(() => {
       <!-- Section Text Card -->
       <div class="p-6 sm:p-8 bg-white dark:bg-[#182030] rounded-3xl border-2 border-gray-200 dark:border-gray-800 shadow-md space-y-6">
         <!-- Interactive Text Display: User can select text smoothly across plain text and pills -->
-        <div class="text-base sm:text-lg leading-[2.85rem] sm:leading-[3rem] text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
+        <div class="text-base sm:text-lg leading-[2rem] sm:leading-[2.2rem] text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
           <template v-for="(bit, bIdx) in currentSection.bits" :key="bIdx">
             <!-- Plain Text Segment -->
             <span v-if="bit.type === 'text'">{{ formatFrenchText(bit.text) }}</span>
@@ -671,7 +671,7 @@ onMounted(() => {
               @click="handlePillClick(bit.id)"
               @keydown.enter.prevent="toggleFlashcard(bit.id)"
               @keydown.space.prevent="toggleFlashcard(bit.id)"
-              class="inline-flex items-center mx-0.5 my-1 px-1 py-0 rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group align-baseline"
+              class="inline-flex items-center mx-0.5 my-0.5 px-1 pt-0 pb-[1px] leading-tight rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group align-baseline"
               :class="[
                 toggledStates[bit.id]
                   ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:brightness-110 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/90'
