@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
         language: true,
         pronunciation: true,
         isLearned: true,
+        rank: true,
         updatedAt: true
       }
     })

@@ -96,6 +96,15 @@ async function loadData() {
       totalFlashcards.value = res.totalFlashcards
       totalLearnedCount.value = res.totalLearnedCount
 
+      // Ensure zero-flashcard sections are immediately marked learned
+      for (const day of res.days) {
+        for (const sec of day.sections) {
+          if (sec.flashcardsCount === 0) {
+            sec.isLearned = true
+          }
+        }
+      }
+
       // Select initial active section
       pickInitialSection()
     }
@@ -118,11 +127,28 @@ const allSections = computed<JournalSection[]>(() => {
 // Queue of sections based on active filter
 const queue = computed<JournalSection[]>(() => {
   if (selectedFilter.value === 'unlearned') {
-    const unlearned = allSections.value.filter(s => !s.isLearned)
-    return unlearned.length > 0 ? unlearned : allSections.value
+    return allSections.value.filter(s => !s.isLearned)
   }
   return allSections.value
 })
+
+function setFilter(filter: 'all' | 'unlearned') {
+  selectedFilter.value = filter
+  if (filter === 'unlearned') {
+    const unlearned = allSections.value.filter(s => !s.isLearned)
+    if (!unlearned.some(s => s.id === activeSectionId.value)) {
+      if (unlearned.length > 0) {
+        selectSection(unlearned[0]!.id)
+      } else {
+        activeSectionId.value = undefined
+      }
+    }
+  } else {
+    if (!activeSectionId.value && allSections.value.length > 0) {
+      selectSection(allSections.value[0]!.id)
+    }
+  }
+}
 
 const currentSection = computed<JournalSection | null>(() => {
   if (!activeSectionId.value) return null
@@ -138,6 +164,39 @@ const currentSectionIndexInQueue = computed(() => {
 function pickInitialSection() {
   if (queue.value.length > 0) {
     selectSection(queue.value[0]!.id)
+  }
+}
+
+function goToNextSection() {
+  if (queue.value.length === 0) return
+  const currentIdx = queue.value.findIndex(s => s.id === activeSectionId.value)
+  const nextIdx = (currentIdx + 1) % queue.value.length
+  selectSection(queue.value[nextIdx]!.id)
+}
+
+async function resetCurrentSection() {
+  const sec = currentSection.value
+  if (!sec || sec.flashcardsCount === 0) return
+
+  toggledStates.value = {}
+  everTurnedGreenSet.value = new Set()
+  sec.learnedFlashcardIds = []
+  if (sec.isLearned) {
+    sec.isLearned = false
+    totalLearnedCount.value = Math.max(0, totalLearnedCount.value - 1)
+  }
+
+  try {
+    await $fetch('/api/activities/correction-journal', {
+      method: 'POST',
+      body: {
+        sectionId: sec.id,
+        learnedFlashcardIds: [],
+        isLearned: false
+      }
+    })
+  } catch (err) {
+    console.error('Failed to reset section flashcards:', err)
   }
 }
 
@@ -306,13 +365,30 @@ const displayStatsDays = computed(() => {
   return rollingLast7Days.value
 })
 
-// Dropdown options with (wordCount/flashcardsCount)
+function formatDropdownDate(dateStr: string): string {
+  if (!dateStr) return ''
+  const parts = dateStr.split('-').map(Number)
+  if (parts.length < 3 || isNaN(parts[0]!) || isNaN(parts[1]!) || isNaN(parts[2]!)) return dateStr
+  const dt = new Date(parts[0]!, parts[1]! - 1, parts[2]!)
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const dayName = days[dt.getDay()]
+  const monthName = months[dt.getMonth()]
+  return `${dayName} ${monthName} ${parts[2]}`
+}
+
+// Dropdown options strictly showing: "Tue Sep 29 ➔ 10 of 15 learned"
 const sectionSelectItems = computed(() => {
-  return queue.value.map(sec => ({
-    id: sec.id,
-    isLearned: sec.isLearned,
-    label: `${sec.day} — Section ${sec.sectionIndex} (${sec.language.toUpperCase()}) (${sec.wordCount}/${sec.flashcardsCount})${sec.isLearned ? ' ✓' : ''}`
-  }))
+  return queue.value.map(sec => {
+    const learned = sec.learnedFlashcardIds?.length ?? (sec.isLearned ? sec.flashcardsCount : 0)
+    const total = sec.flashcardsCount
+    const arrow = '➔'
+    return {
+      id: sec.id,
+      isLearned: sec.isLearned,
+      label: `${formatDropdownDate(sec.day)} ${arrow} ${learned} of ${total} learned`
+    }
+  })
 })
 
 function onSelectSectionChange(val: any) {
@@ -369,7 +445,7 @@ onMounted(() => {
         <!-- Filter toggle -->
         <div class="inline-flex rounded-xl p-0.5 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs">
           <button
-            @click="selectedFilter = 'unlearned'"
+            @click="setFilter('unlearned')"
             class="px-2.5 py-1.5 rounded-lg font-medium transition-all cursor-pointer"
             :class="selectedFilter === 'unlearned' 
               ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs font-bold' 
@@ -378,7 +454,7 @@ onMounted(() => {
             Unlearned
           </button>
           <button
-            @click="selectedFilter = 'all'"
+            @click="setFilter('all')"
             class="px-2.5 py-1.5 rounded-lg font-medium transition-all cursor-pointer"
             :class="selectedFilter === 'all' 
               ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs font-bold' 
@@ -472,7 +548,7 @@ onMounted(() => {
         You've completed all sections in this view. Switch to "All" to review previous sections or check back later!
       </p>
       <button
-        @click="selectedFilter = 'all'; pickInitialSection()"
+        @click="setFilter('all'); pickInitialSection()"
         class="mt-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
       >
         Review All Sections
@@ -512,7 +588,7 @@ onMounted(() => {
             <!-- Plain Text Segment -->
             <span v-if="bit.type === 'text'">{{ formatFrenchText(bit.text) }}</span>
 
-            <!-- Flashcard Interactive Pill -->
+            <!-- Flashcard Interactive Pill (No mouseover title, reduced spacing so it fits in sentences seamlessly) -->
             <span
               v-else-if="bit.type === 'flashcard'"
               role="button"
@@ -520,8 +596,7 @@ onMounted(() => {
               @click="handlePillClick(bit.id)"
               @keydown.enter.prevent="toggleFlashcard(bit.id)"
               @keydown.space.prevent="toggleFlashcard(bit.id)"
-              :title="toggledStates[bit.id] ? 'Showing correct (click to show incorrect)' : 'Incorrect text (click to reveal correction)'"
-              class="inline-flex items-center mx-1 my-0.5 px-1.5 py-0 rounded-md font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group"
+              class="inline-flex items-center mx-0.5 my-0 px-1 py-0 rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group"
               :class="[
                 toggledStates[bit.id]
                   ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:brightness-110 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/90'
@@ -536,6 +611,32 @@ onMounted(() => {
               <span>{{ formatFrenchText(toggledStates[bit.id] ? bit.correct : bit.incorrect) }}</span>
             </span>
           </template>
+        </div>
+
+        <!-- Card Footer Actions: Reset button (bottom-left) and Next button (bottom-right) -->
+        <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800/80">
+          <div>
+            <!-- Red Reset button: only shown on texts that have flashcards -->
+            <button
+              v-if="currentSection.flashcardsCount > 0"
+              @click="resetCurrentSection"
+              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              title="Reset all flashcards in this text to unlearned"
+            >
+              Reset
+            </button>
+          </div>
+          <div>
+            <!-- Yellow Next button: goes to next text, last goes to first -->
+            <button
+              @click="goToNextSection"
+              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-gray-900 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              title="Next text"
+            >
+              <span>Next</span>
+              <span class="text-sm font-bold">➔</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -60,7 +60,7 @@ onUnmounted(() => {
     </div>
 
     <NuxtLayout>
-      <NuxtPage />
+      <NuxtPage :page-key="route => route.fullPath" />
     </NuxtLayout>
   </UApp>
 </template>

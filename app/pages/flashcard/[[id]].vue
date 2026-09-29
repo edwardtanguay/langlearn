@@ -889,6 +889,25 @@ async function saveEdit() {
   }
 }
 
+async function handleUpdatePhrase(newPhrase: string) {
+  if (!currentCard.value) return
+  currentCard.value.back = newPhrase
+  editBack.value = newPhrase
+  try {
+    await $fetch(`/api/flashcards/${currentCard.value.id}`, {
+      method: 'PUT',
+      body: {
+        front: currentCard.value.front,
+        back: newPhrase,
+        pronunciation: currentCard.value.pronunciation,
+        memoryHook: currentCard.value.memoryHook
+      }
+    })
+  } catch (err) {
+    console.error('Failed to update flashcard phrase highlight:', err)
+  }
+}
+
 function submitNewTag() {
   const val = newTagValue.value.trim().toLowerCase()
   isAddingTag.value = false
@@ -1063,10 +1082,6 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleGlobalKeyDown)
   document.removeEventListener('click', handleClickOutsideDropdowns)
-  if (autoAdvanceTimer) {
-    clearInterval(autoAdvanceTimer)
-    autoAdvanceTimer = null
-  }
 })
 </script>
 
@@ -1418,7 +1433,7 @@ onBeforeUnmount(() => {
                 <FlashcardRankSlider v-model="sliderValue" @save-rank="debouncedSaveRank" />
 
                 <!-- Status buttons Section -->
-                <FlashcardStatusButtons @action="markAction" />
+                <FlashcardStatusButtons :phrase="currentCard?.back" @action="markAction" @update-phrase="handleUpdatePhrase" />
 
                 <!-- Action Buttons Box (3 examples, convert vous to tu & verb conjugation) -->
                 <div v-if="showExampleSentencesButton || isFrenchCardWithVous || verbMatch" class="bg-gray-50 dark:bg-gray-950 p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex flex-wrap gap-2 items-center justify-center">
