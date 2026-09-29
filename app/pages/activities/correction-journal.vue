@@ -375,6 +375,25 @@ function formatDropdownDate(dateStr: string): string {
   return `${dayName} ${monthName} ${parts[2]}`
 }
 
+// Standard language text colors per AGENTS.md with dark-mode contrast adaptations
+const languageTextColors: Record<string, string> = {
+  fr: 'text-[#333388] dark:text-blue-400',
+  es: 'text-[#be185d] dark:text-pink-400',
+  it: 'text-[#194d19] dark:text-emerald-400',
+  nl: 'text-[#d97706] dark:text-amber-400',
+  pl: 'text-gray-600 dark:text-gray-300',
+  de: 'text-[#7e4402] dark:text-amber-500',
+  ru: 'text-[#3f3f46] dark:text-zinc-400',
+  is: 'text-[#0891b2] dark:text-cyan-400',
+  da: 'text-[#7e22ce] dark:text-purple-400',
+  el: 'text-[#ea580c] dark:text-orange-400'
+}
+
+function getLanguageTextColor(langCode: string): string {
+  const code = (langCode || 'fr').toLowerCase()
+  return languageTextColors[code] || 'text-[#333388] dark:text-blue-400'
+}
+
 // Dropdown options showing: "Wed Sep 23 --> FR (2 unlearned)"
 const sectionSelectItems = computed(() => {
   return queue.value.map(sec => {
@@ -382,6 +401,7 @@ const sectionSelectItems = computed(() => {
     const total = sec.flashcardsCount
     const unlearned = Math.max(0, total - learned)
     const lang = (sec.language || 'fr').toUpperCase()
+    const langColorClass = getLanguageTextColor(sec.language)
     const dateFormatted = formatDropdownDate(sec.day)
     const isAllLearned = unlearned === 0
     const statusText = isAllLearned ? '(all learned)' : `(${unlearned} unlearned)`
@@ -390,6 +410,7 @@ const sectionSelectItems = computed(() => {
       isLearned: sec.isLearned,
       dateFormatted,
       lang,
+      langColorClass,
       learned,
       total,
       unlearned,
@@ -601,7 +622,7 @@ onMounted(() => {
             <template #default>
               <span v-if="currentSectionSelectItem" class="flex items-center gap-1.5 truncate">
                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ currentSectionSelectItem.dateFormatted }} --></span>
-                <span class="text-gray-900 dark:text-white font-bold">{{ currentSectionSelectItem.lang }}</span>
+                <span :class="['font-bold', currentSectionSelectItem.langColorClass]">{{ currentSectionSelectItem.lang }}</span>
                 <span
                   class="font-bold transition-all"
                   :class="currentSectionSelectItem.isAllLearned
@@ -615,7 +636,7 @@ onMounted(() => {
             <template #item-label="{ item }">
               <span class="flex items-center gap-1.5 py-0.5">
                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ item.dateFormatted }} --></span>
-                <span class="text-gray-900 dark:text-white font-bold">{{ item.lang }}</span>
+                <span :class="['font-bold', item.langColorClass]">{{ item.lang }}</span>
                 <span
                   class="text-[11px] font-bold transition-all"
                   :class="item.isAllLearned
@@ -633,7 +654,7 @@ onMounted(() => {
       <!-- Section Text Card -->
       <div class="p-6 sm:p-8 bg-white dark:bg-[#182030] rounded-3xl border-2 border-gray-200 dark:border-gray-800 shadow-md space-y-6">
         <!-- Interactive Text Display: User can select text smoothly across plain text and pills -->
-        <div class="text-base sm:text-lg leading-relaxed text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
+        <div class="text-base sm:text-lg leading-loose sm:leading-[2.2rem] text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
           <template v-for="(bit, bIdx) in currentSection.bits" :key="bIdx">
             <!-- Plain Text Segment -->
             <span v-if="bit.type === 'text'">{{ formatFrenchText(bit.text) }}</span>
@@ -672,7 +693,7 @@ onMounted(() => {
               class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/80 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
               title="Previous text"
             >
-              <span class="text-sm font-bold">⬅</span>
+              <span class="text-sm font-bold inline-block rotate-180">➔</span>
               <span>Previous</span>
             </button>
           </div>
