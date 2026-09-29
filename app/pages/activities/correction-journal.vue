@@ -165,6 +165,13 @@ function goToNextSection() {
   selectSection(queue.value[nextIdx]!.id)
 }
 
+function goToPreviousSection() {
+  if (queue.value.length === 0) return
+  const currentIdx = queue.value.findIndex(s => s.id === activeSectionId.value)
+  const prevIdx = (currentIdx - 1 + queue.value.length) % queue.value.length
+  selectSection(queue.value[prevIdx]!.id)
+}
+
 async function resetCurrentSection() {
   const sec = currentSection.value
   if (!sec || sec.flashcardsCount === 0) return
@@ -368,13 +375,16 @@ function formatDropdownDate(dateStr: string): string {
   return `${dayName} ${monthName} ${parts[2]}`
 }
 
-// Dropdown options showing: "Wed Sep 23 → (fr 14 of 14 learned)"
+// Dropdown options showing: "Wed Sep 23 --> FR (2 unlearned)"
 const sectionSelectItems = computed(() => {
   return queue.value.map(sec => {
     const learned = sec.learnedFlashcardIds?.length ?? (sec.isLearned ? sec.flashcardsCount : 0)
     const total = sec.flashcardsCount
-    const lang = sec.language || 'fr'
+    const unlearned = Math.max(0, total - learned)
+    const lang = (sec.language || 'fr').toUpperCase()
     const dateFormatted = formatDropdownDate(sec.day)
+    const isAllLearned = unlearned === 0
+    const statusText = isAllLearned ? '(all learned)' : `(${unlearned} unlearned)`
     return {
       id: sec.id,
       isLearned: sec.isLearned,
@@ -382,7 +392,11 @@ const sectionSelectItems = computed(() => {
       lang,
       learned,
       total,
-      label: `${dateFormatted} → (${lang} ${learned} of ${total} learned)`
+      unlearned,
+      isAllLearned,
+      statusText,
+      label: `${dateFormatted} --> ${lang} ${statusText}`,
+      class: sec.id === activeSectionId.value ? '!bg-gray-100 dark:!bg-gray-800' : ''
     }
   })
 })
@@ -525,7 +539,7 @@ onMounted(() => {
               d.hasActivity 
                 ? 'bg-gray-50 dark:bg-gray-900/70 border-gray-200 dark:border-gray-800 hover:border-amber-400/50' 
                 : 'bg-gray-100/70 dark:bg-gray-900/40 border-gray-200/70 dark:border-gray-800/60 opacity-80',
-              d.isToday ? 'ring-2 ring-amber-500/80 border-amber-500' : ''
+              d.isToday ? 'ring-2 ring-gray-900 border-gray-900 dark:ring-white dark:border-white' : ''
             ]"
           >
             <!-- Date at top (a bit larger) -->
@@ -570,7 +584,7 @@ onMounted(() => {
     <div v-else class="space-y-4">
       <!-- Section Navigation Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-gray-900 p-3.5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-        <div class="flex items-center gap-2 flex-wrap">
+        <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
           <!-- Nuxt UI Select Menu for clean desktop & mobile appearance -->
           <USelectMenu
             :items="sectionSelectItems"
@@ -578,31 +592,37 @@ onMounted(() => {
             @update:model-value="onSelectSectionChange"
             label-key="label"
             value-key="id"
-            class="w-72 sm:w-96 text-xs font-bold"
+            :ui="{
+              item: 'data-[state=checked]:!bg-gray-100 dark:data-[state=checked]:!bg-gray-800',
+              itemTrailing: 'hidden'
+            }"
+            class="w-full sm:w-96 text-xs font-bold"
           >
             <template #default>
               <span v-if="currentSectionSelectItem" class="flex items-center gap-1.5 truncate">
-                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ currentSectionSelectItem.dateFormatted }} →</span>
+                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ currentSectionSelectItem.dateFormatted }} --></span>
+                <span class="text-gray-900 dark:text-white font-bold">{{ currentSectionSelectItem.lang }}</span>
                 <span
-                  class="px-1.5 py-0.5 rounded font-bold border transition-all"
-                  :class="currentSectionSelectItem.isLearned
-                    ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
-                    : 'bg-red-100 dark:bg-red-950/70 border-red-400 dark:border-red-600 text-red-700 dark:text-red-300'"
+                  class="font-bold transition-all"
+                  :class="currentSectionSelectItem.isAllLearned
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : 'text-red-600 dark:text-red-400'"
                 >
-                  ({{ currentSectionSelectItem.lang }} {{ currentSectionSelectItem.learned }} of {{ currentSectionSelectItem.total }} learned)
+                  {{ currentSectionSelectItem.statusText }}
                 </span>
               </span>
             </template>
             <template #item-label="{ item }">
               <span class="flex items-center gap-1.5 py-0.5">
-                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ item.dateFormatted }} →</span>
+                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ item.dateFormatted }} --></span>
+                <span class="text-gray-900 dark:text-white font-bold">{{ item.lang }}</span>
                 <span
-                  class="px-1.5 py-0.5 rounded text-[11px] font-bold border transition-all"
-                  :class="item.isLearned
-                    ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
-                    : 'bg-red-100 dark:bg-red-950/70 border-red-400 dark:border-red-600 text-red-700 dark:text-red-300'"
+                  class="text-[11px] font-bold transition-all"
+                  :class="item.isAllLearned
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : 'text-red-600 dark:text-red-400'"
                 >
-                  ({{ item.lang }} {{ item.learned }} of {{ item.total }} learned)
+                  {{ item.statusText }}
                 </span>
               </span>
             </template>
@@ -643,10 +663,21 @@ onMounted(() => {
           </template>
         </div>
 
-        <!-- Card Footer Actions: Reset button (bottom-left) and Next button (bottom-right) -->
+        <!-- Card Footer Actions: Previous (left), Reset (middle), and Next (right) -->
         <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800/80">
           <div>
-            <!-- Gray outline-opacity Reset button: only shown on texts that have flashcards -->
+            <!-- Yellow Previous button: goes to previous text, wraps to last -->
+            <button
+              @click="goToPreviousSection"
+              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/80 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              title="Previous text"
+            >
+              <span class="text-sm font-bold">⬅</span>
+              <span>Previous</span>
+            </button>
+          </div>
+          <div>
+            <!-- Gray Reset button in the middle: only shown on texts that have flashcards -->
             <button
               v-if="currentSection.flashcardsCount > 0"
               @click="promptResetCurrentSection"
@@ -657,7 +688,7 @@ onMounted(() => {
             </button>
           </div>
           <div>
-            <!-- Yellow outline-opacity Next button: goes to next text, last goes to first -->
+            <!-- Yellow Next button: goes to next text, last goes to first -->
             <button
               @click="goToNextSection"
               class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/80 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"

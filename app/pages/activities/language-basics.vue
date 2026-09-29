@@ -538,7 +538,8 @@ const numbersGroups = computed<NumberGroup[]>(() => {
   const items = numCat.items
 
   return [
-    { label: '0 – 19', items: items.slice(0, 20) },
+    { label: '0-10', items: items.slice(0, 11) },
+    { label: '11-19', items: items.slice(11, 20) },
     { label: '20 – 29', items: items.slice(20, 30) },
     { label: '30 – 39', items: items.slice(30, 40) },
     { label: '40 – 49', items: items.slice(40, 50) },
@@ -572,8 +573,8 @@ function getCategoryItems(cat: BasicCategory) {
 
 watch(selectedLang, () => {
   clearAllTimers()
-  isTestPronunciationMode.value = false
   testPronunciationRevealed.value.clear()
+  resetAllOpenItems()
   numbersViewMode.value = 'default'
   isStatsLoading.value = true
   loadSavedProgress()
@@ -1095,13 +1096,6 @@ function isWordLearned(itemId: string): boolean {
         </NuxtLink>
       </div>
 
-      <!-- Centered Title on a line of its own in smaller font -->
-      <div class="text-center pt-0.5 pb-0.5">
-        <h1 class="w-[80%] mx-auto sm:w-auto text-xl sm:text-lg font-bold text-gray-800 dark:text-gray-200 tracking-tight">
-          Learn Language Basics
-        </h1>
-      </div>
-
       <!-- Full-width line of four buttons: French 3%, Spanish 12%, Italian 7%, Dutch 43% -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
         <button
@@ -1146,7 +1140,7 @@ function isWordLearned(itemId: string): boolean {
               type="button"
               @click="toggleTestPronunciation"
               class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
-              :class="{ 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400 font-bold': currentViewMode === 'pronunciation' }"
+              :class="{ 'bg-gray-200/90 dark:bg-gray-700/90 border-gray-400 dark:border-gray-500 text-gray-900 dark:text-white font-bold shadow-xs': currentViewMode === 'pronunciation' }"
             >
               Test Pronunciation
             </button>
@@ -1156,7 +1150,7 @@ function isWordLearned(itemId: string): boolean {
               type="button"
               @click="toggleTestRanked"
               class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
-              :class="{ 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400 font-bold': currentViewMode === 'ranked' }"
+              :class="{ 'bg-gray-200/90 dark:bg-gray-700/90 border-gray-400 dark:border-gray-500 text-gray-900 dark:text-white font-bold shadow-xs': currentViewMode === 'ranked' }"
             >
               Top 50
             </button>
@@ -1166,7 +1160,7 @@ function isWordLearned(itemId: string): boolean {
               type="button"
               @click="toggleTestUnlearned"
               class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
-              :class="{ 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400 font-bold': currentViewMode === 'unlearned' }"
+              :class="{ 'bg-gray-200/90 dark:bg-gray-700/90 border-gray-400 dark:border-gray-500 text-gray-900 dark:text-white font-bold shadow-xs': currentViewMode === 'unlearned' }"
             >
               Test Unlearned
             </button>
@@ -1603,13 +1597,13 @@ function isWordLearned(itemId: string): boolean {
             </div>
 
             <div class="flex items-center gap-3 shrink-0">
-              <!-- Visual indication when category is 100%: bold count and accomplished checkmark -->
+              <!-- Visual indication when category is 100%: bold count and accomplished checkmark with fixed width -->
               <div
                 v-if="!isStatsLoading && getCategoryLearnedPercentage(cat) === 100"
-                class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-black text-xs font-mono shrink-0 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800/60"
+                class="flex items-center justify-center gap-1.5 w-24 sm:w-28 h-5 rounded-full font-black text-[11px] font-mono shrink-0 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800/60"
               >
                 <span class="text-emerald-600 dark:text-emerald-400">{{ cat.items.length }} of {{ cat.items.length }}</span>
-                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                 </svg>
               </div>
@@ -1649,20 +1643,20 @@ function isWordLearned(itemId: string): boolean {
                   @click.stop="numbersViewMode = numbersViewMode === 'tens' ? 'default' : 'tens'"
                   class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
                   :class="numbersViewMode === 'tens'
-                    ? 'border-amber-500 bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold ring-1 ring-amber-500/30'
+                    ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
                     : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
                 >
-                  tens
+                  Show Tens
                 </button>
                 <button
                   type="button"
                   @click.stop="numbersViewMode = numbersViewMode === 'show-all' ? 'default' : 'show-all'"
                   class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
                   :class="numbersViewMode === 'show-all'
-                    ? 'border-amber-500 bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold ring-1 ring-amber-500/30'
+                    ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
                     : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
                 >
-                  show all
+                  Show All
                 </button>
               </div>
               <div v-else></div>
@@ -1710,9 +1704,8 @@ function isWordLearned(itemId: string): boolean {
                 :key="grp.label"
                 class="space-y-2 p-3 rounded-2xl bg-gray-50/70 dark:bg-[#131b28]/60 border border-gray-200/70 dark:border-gray-800/70"
               >
-                <div class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider pb-1 border-b border-gray-200/70 dark:border-gray-800/70 flex items-center justify-between">
+                <div class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider pb-1 border-b border-gray-200/70 dark:border-gray-800/70 flex items-center justify-between">
                   <span>Group {{ grp.label }}</span>
-                  <span class="text-[10px] text-gray-400 font-normal">({{ grp.items.length }} numbers)</span>
                 </div>
                 <div class="space-y-1.5 max-w-xl">
                   <div
