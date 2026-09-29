@@ -194,13 +194,160 @@ function handleKeyDown(e: KeyboardEvent) {
       nextCrossLanguageWord()
     } else if (e.key === 'Escape') {
       showCrossLanguageModal.value = false
+      showRankModal.value = false
     }
   }
 }
 
-// Test Pronunciation Mode State
-const isTestPronunciationMode = ref(false)
+// View modes: 'categories' | 'pronunciation' | 'ranked' | 'unlearned'
+const currentViewMode = ref<'categories' | 'pronunciation' | 'ranked' | 'unlearned'>('categories')
+const isTestPronunciationMode = computed({
+  get: () => currentViewMode.value === 'pronunciation',
+  set: (val: boolean) => { currentViewMode.value = val ? 'pronunciation' : 'categories' }
+})
+const isTestRankedMode = computed(() => currentViewMode.value === 'ranked')
+const isTestUnlearnedMode = computed(() => currentViewMode.value === 'unlearned')
 const testPronunciationRevealed = ref<Set<string>>(new Set())
+
+// Rank State & Baselines
+const allRanksMap = ref<Map<string, number>>(new Map())
+const showRankModal = ref(false)
+const activeRankItem = ref<BasicItem | null>(null)
+const rankSliderValue = ref<number>(2.5)
+
+const wordFrequencyBaselines: Record<string, number> = {
+  // Body: head ~3.0
+  'head': 3.0, 'eye': 3.0, 'hand': 3.0, 'face': 2.9, 'mouth': 2.9, 'arm': 2.8, 'leg': 2.8, 'foot/feet': 2.8, 'ear': 2.8, 'nose': 2.8,
+  // Essentials & Greetings ~3.0
+  'hello': 3.0, 'goodbye': 3.0, 'please': 3.0, 'thank you': 3.0, 'yes': 3.0, 'no': 3.0,
+  // Question words ~3.0
+  'what': 3.0, 'where': 3.0, 'when': 3.0, 'who': 3.0, 'why': 3.0, 'how': 3.0,
+  // Numbers ~2.8 - 3.0
+  'zero': 3.0, 'one': 3.0, 'two': 3.0, 'three': 3.0, 'four': 3.0, 'five': 3.0, 'six': 3.0, 'seven': 3.0, 'eight': 3.0, 'nine': 3.0, 'ten': 3.0,
+  // Common food & drink
+  'water': 3.0, 'bread': 2.9, 'coffee': 2.9, 'tea': 2.8, 'food': 2.9,
+  // Animals: tiger ~2.0, lion ~2.1, elephant ~2.0
+  'tiger': 2.0, 'lion': 2.1, 'elephant': 2.0, 'monkey': 2.1, 'horse': 2.4, 'fish': 2.6, 'dog': 2.8, 'cat': 2.7, 'bird': 2.6, 'rabbit': 2.3,
+  // Time & basics
+  'today': 3.0, 'tomorrow': 2.9, 'yesterday': 2.9, 'now': 3.0, 'good': 3.0, 'bad': 2.9, 'big': 2.9, 'small': 2.9
+}
+
+function getDefaultWordRank(item: BasicItem): number {
+  const enKey = item.en.toLowerCase().trim()
+  if (wordFrequencyBaselines[enKey] !== undefined) {
+    return wordFrequencyBaselines[enKey]!
+  }
+  const catId = getCategoryId(item.id)
+  if (['greetings', 'question-words'].includes(catId)) return 2.9
+  if (['numbers', 'weekdays', 'time-expressions', 'body'].includes(catId)) return 2.8
+  if (['food-and-drink', 'family', 'house', 'colors'].includes(catId)) return 2.6
+  if (['adjectives', 'routines', 'places', 'transport'].includes(catId)) return 2.5
+  if (['animals', 'sports', 'hobbies', 'countries'].includes(catId)) return 2.2
+  return 2.5
+}
+
+function getWordRank(itemId: string, item?: BasicItem): number {
+  const normId = normalizeWordId(itemId)
+  if (allRanksMap.value.has(normId)) {
+    return allRanksMap.value.get(normId)!
+  }
+  if (item) {
+    return getDefaultWordRank(item)
+  }
+  const found = categories.flatMap(c => c.items).find(i => normalizeWordId(i.id) === normId)
+  return found ? getDefaultWordRank(found) : 2.5
+}
+
+function openRankModal(item: BasicItem, event: Event) {
+  event.stopPropagation()
+  activeRankItem.value = item
+  rankSliderValue.value = getWordRank(item.id, item)
+  showRankModal.value = true
+}
+
+async function saveWordRank() {
+  if (!activeRankItem.value) return
+  const item = activeRankItem.value
+  const normId = normalizeWordId(item.id)
+  const val = Number(rankSliderValue.value.toFixed(1))
+  allRanksMap.value.set(normId, val)
+  allRanksMap.value = new Map(allRanksMap.value)
+  showRankModal.value = false
+  activeRankItem.value = null
+
+  if (import.meta.client) {
+    try {
+      const obj: Record<string, number> = {}
+      allRanksMap.value.forEach((v, k) => { obj[k] = v })
+      localStorage.setItem('lang-basics-ranks', JSON.stringify(obj))
+    } catch {}
+  }
+
+  try {
+    await $fetch('/api/basics/word-info', {
+      method: 'PUT',
+      body: {
+        wordId: normId,
+        language: selectedLang.value,
+        rank: val
+      }
+    })
+  } catch (err) {
+    console.error('Failed to save word rank:', err)
+  }
+}
+
+function loadRanksFromLocalStorage() {
+  if (import.meta.client) {
+    try {
+      const saved = localStorage.getItem('lang-basics-ranks')
+      if (saved) {
+        const obj = JSON.parse(saved)
+        for (const [k, v] of Object.entries(obj)) {
+          if (typeof v === 'number') {
+            allRanksMap.value.set(k, v)
+          }
+        }
+      }
+    } catch {}
+  }
+}
+
+const rankedItems = computed(() => {
+  const all = categories.flatMap(c => c.items)
+  return [...all].sort((a, b) => {
+    const rankA = getWordRank(a.id, a)
+    const rankB = getWordRank(b.id, b)
+    if (rankB !== rankA) return rankB - rankA
+    return a.en.localeCompare(b.en)
+  })
+})
+
+const unlearnedRankedItems = computed(() => {
+  return rankedItems.value.filter(item => !revealedSet.value.has(item.id))
+})
+
+const top50RankedItems = computed(() => {
+  return rankedItems.value.slice(0, 50)
+})
+
+function resetAllOpenItems() {
+  openCategoryId.value = null
+  activeLearningWords.value.clear()
+  activeUnlearnWords.value.clear()
+}
+
+function toggleTestRanked() {
+  resetAllOpenItems()
+  currentViewMode.value = currentViewMode.value === 'ranked' ? 'categories' : 'ranked'
+  scrollToTop()
+}
+
+function toggleTestUnlearned() {
+  resetAllOpenItems()
+  currentViewMode.value = currentViewMode.value === 'unlearned' ? 'categories' : 'unlearned'
+  scrollToTop()
+}
 
 const storageKey = computed(() => `lang-basics-revealed-${selectedLang.value}`)
 
@@ -321,14 +468,17 @@ async function loadPronunciations() {
 
   // 2. Fetch from database endpoint for all languages
   try {
-    const data = await $fetch<{ items: Array<{ wordId: string; language: string; pronunciation: string | null }> }>(
+    const data = await $fetch<{ items: Array<{ wordId: string; language: string; pronunciation: string | null; rank?: number | null }> }>(
       '/api/basics/word-info'
     )
     if (data?.items) {
       for (const it of data.items) {
+        const normId = normalizeWordId(it.wordId)
+        if (typeof it.rank === 'number') {
+          allRanksMap.value.set(normId, it.rank)
+        }
         const lang = it.language as LangCode
         if (allPronunciationsMap.value[lang]) {
-          const normId = normalizeWordId(it.wordId)
           if (it.pronunciation) {
             allPronunciationsMap.value[lang].set(normId, it.pronunciation)
           } else {
@@ -337,6 +487,11 @@ async function loadPronunciations() {
         }
       }
       if (import.meta.client) {
+        try {
+          const obj: Record<string, number> = {}
+          allRanksMap.value.forEach((v, k) => { obj[k] = v })
+          localStorage.setItem('lang-basics-ranks', JSON.stringify(obj))
+        } catch {}
         for (const l of languages) {
           savePronunciationToLocalStorage(l.code)
         }
@@ -363,11 +518,42 @@ function scrollToTop() {
   }
 }
 
-// Numbers section tens filter
-const numbersTensOnly = ref(false)
+// Numbers section view mode: 'default' | 'tens' | 'show-all'
+const numbersViewMode = ref<'default' | 'tens' | 'show-all'>('default')
+
+function getNumberDigit(id: string): number {
+  const norm = normalizeWordId(id)
+  const num = parseInt(norm.replace('numbers-', ''), 10)
+  return isNaN(num) ? 0 : num - 1
+}
+
+interface NumberGroup {
+  label: string
+  items: BasicItem[]
+}
+
+const numbersGroups = computed<NumberGroup[]>(() => {
+  const numCat = categories.find(c => c.id === 'numbers')
+  if (!numCat) return []
+  const items = numCat.items
+
+  return [
+    { label: '0-10', items: items.slice(0, 11) },
+    { label: '11-19', items: items.slice(11, 20) },
+    { label: '20 – 29', items: items.slice(20, 30) },
+    { label: '30 – 39', items: items.slice(30, 40) },
+    { label: '40 – 49', items: items.slice(40, 50) },
+    { label: '50 – 59', items: items.slice(50, 60) },
+    { label: '60 – 69', items: items.slice(60, 70) },
+    { label: '70 – 79', items: items.slice(70, 80) },
+    { label: '80 – 89', items: items.slice(80, 90) },
+    { label: '90 – 99', items: items.slice(90, 100) },
+    { label: '100', items: items.slice(100, 101) }
+  ]
+})
 
 function getCategoryItems(cat: BasicCategory) {
-  if (cat.id === 'numbers' && numbersTensOnly.value) {
+  if (cat.id === 'numbers' && numbersViewMode.value === 'tens') {
     const tensIds = new Set([
       'numbers-11',
       'numbers-21',
@@ -387,8 +573,9 @@ function getCategoryItems(cat: BasicCategory) {
 
 watch(selectedLang, () => {
   clearAllTimers()
-  isTestPronunciationMode.value = false
   testPronunciationRevealed.value.clear()
+  resetAllOpenItems()
+  numbersViewMode.value = 'default'
   isStatsLoading.value = true
   loadSavedProgress()
   loadPronunciations()
@@ -440,6 +627,7 @@ function selectLanguage(code: LangCode) {
 }
 
 onMounted(() => {
+  loadRanksFromLocalStorage()
   loadSavedProgress()
   loadPronunciations()
   updateAllLangProgress()
@@ -645,6 +833,7 @@ const hasAnyPronunciationTips = computed(() => {
 })
 
 function toggleTestPronunciation() {
+  resetAllOpenItems()
   isTestPronunciationMode.value = !isTestPronunciationMode.value
   testPronunciationRevealed.value.clear()
   scrollToTop()
@@ -907,13 +1096,6 @@ function isWordLearned(itemId: string): boolean {
         </NuxtLink>
       </div>
 
-      <!-- Centered Title on a line of its own in smaller font -->
-      <div class="text-center pt-0.5 pb-0.5">
-        <h1 class="w-[80%] mx-auto sm:w-auto text-xl sm:text-lg font-bold text-gray-800 dark:text-gray-200 tracking-tight">
-          Learn Language Basics
-        </h1>
-      </div>
-
       <!-- Full-width line of four buttons: French 3%, Spanish 12%, Italian 7%, Dutch 43% -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
         <button
@@ -952,14 +1134,35 @@ function isWordLearned(itemId: string): boolean {
 
           <!-- Desktop buttons (kept in progress panel) -->
           <div class="hidden sm:flex items-center gap-2 shrink-0">
-            <!-- Test Pronunciation button (to left of Reset all words) -->
+            <!-- Test Pronunciation button -->
             <button
               v-if="hasAnyPronunciationTips"
               type="button"
               @click="toggleTestPronunciation"
-              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
+              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
+              :class="{ 'bg-gray-200/90 dark:bg-gray-700/90 border-gray-400 dark:border-gray-500 text-gray-900 dark:text-white font-bold shadow-xs': currentViewMode === 'pronunciation' }"
             >
-              {{ isTestPronunciationMode ? 'Back to Categories' : 'Test Pronunciation' }}
+              Test Pronunciation
+            </button>
+
+            <!-- Top 50 button -->
+            <button
+              type="button"
+              @click="toggleTestRanked"
+              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
+              :class="{ 'bg-gray-200/90 dark:bg-gray-700/90 border-gray-400 dark:border-gray-500 text-gray-900 dark:text-white font-bold shadow-xs': currentViewMode === 'ranked' }"
+            >
+              Top 50
+            </button>
+
+            <!-- Test Unlearned button -->
+            <button
+              type="button"
+              @click="toggleTestUnlearned"
+              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
+              :class="{ 'bg-gray-200/90 dark:bg-gray-700/90 border-gray-400 dark:border-gray-500 text-gray-900 dark:text-white font-bold shadow-xs': currentViewMode === 'unlearned' }"
+            >
+              Test Unlearned
             </button>
 
             <!-- Reset All Button / Confirmation -->
@@ -1005,17 +1208,30 @@ function isWordLearned(itemId: string): boolean {
         </div>
       </div>
 
-      <!-- Mobile Buttons: Test Pronunciation & Reset (after progress panel, before search box) -->
-      <div v-if="!isTestPronunciationMode" class="grid grid-cols-2 gap-2 sm:hidden w-full">
+      <!-- Mobile Buttons: Test Pronunciation, Test Ranked, Test Unlearned & Reset -->
+      <div v-if="currentViewMode === 'categories'" class="grid grid-cols-2 sm:hidden gap-2 w-full">
         <button
           v-if="hasAnyPronunciationTips"
           type="button"
           @click="toggleTestPronunciation"
           class="w-full py-2 px-2.5 text-xs font-semibold rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer text-center truncate"
         >
-          {{ isTestPronunciationMode ? 'Back to Categories' : 'Test Pronunciation' }}
+          Test Pronunciation
         </button>
-        <div v-else class="w-full"></div>
+        <button
+          type="button"
+          @click="toggleTestRanked"
+          class="w-full py-2 px-2.5 text-xs font-semibold rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer text-center truncate"
+        >
+          Top 50
+        </button>
+        <button
+          type="button"
+          @click="toggleTestUnlearned"
+          class="w-full py-2 px-2.5 text-xs font-semibold rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer text-center truncate"
+        >
+          Test Unlearned
+        </button>
 
         <!-- Reset button on mobile -->
         <div v-if="!showResetConfirm" class="w-full">
@@ -1050,8 +1266,8 @@ function isWordLearned(itemId: string): boolean {
         </div>
       </div>
 
-      <!-- Search Input -->
-      <div v-if="!isTestPronunciationMode" class="relative w-full">
+      <!-- Search Input (only shown in categories mode) -->
+      <div v-if="currentViewMode === 'categories'" class="relative w-full">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </div>
@@ -1080,7 +1296,7 @@ function isWordLearned(itemId: string): boolean {
       <div class="pb-1">
         <button
           type="button"
-          @click="isTestPronunciationMode = false"
+          @click="currentViewMode = 'categories'; resetAllOpenItems()"
           class="w-3/4 sm:w-full py-2.5 px-4 rounded-xl font-semibold text-sm border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
         >
           <span>← Back to Categories</span>
@@ -1105,7 +1321,7 @@ function isWordLearned(itemId: string): boolean {
 
           <div class="shrink-0 flex items-center gap-2 justify-end">
             <template v-if="testPronunciationRevealed.has(item.id)">
-              <!-- Action Icons (Star, Google Translate, P, C) side-by-side with stop propagation -->
+              <!-- Action Icons (Star, Google Translate, P, C, R) side-by-side with stop propagation -->
               <div class="flex items-center gap-1 shrink-0" @click.stop>
                 <!-- Star icon: example sentences -->
                 <button
@@ -1146,6 +1362,16 @@ function isWordLearned(itemId: string): boolean {
                 >
                   C
                 </button>
+
+                <!-- Rank 'R' button -->
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer text-gray-700 dark:text-gray-200 hover:bg-black/10 dark:hover:bg-white/10"
+                  title="Set rank (0 - 5)"
+                  @click="openRankModal(item, $event)"
+                >
+                  R
+                </button>
               </div>
 
               <!-- Pronunciation tag -->
@@ -1166,7 +1392,174 @@ function isWordLearned(itemId: string): boolean {
       </div>
     </div>
 
-    <!-- VIEW 2: Normal Categories View -->
+    <!-- VIEW 2: Test Ranked & Test Unlearned Modes -->
+    <div v-else-if="currentViewMode === 'ranked' || currentViewMode === 'unlearned'" class="space-y-4 pt-3.5">
+      <!-- Top Bar: Back to Categories & Mode Title / Count -->
+      <div class="flex items-center justify-between gap-3">
+        <button
+          type="button"
+          @click="currentViewMode = 'categories'; resetAllOpenItems()"
+          class="py-2 px-4 rounded-xl font-semibold text-sm border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>← Back to Categories</span>
+        </button>
+
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400">
+          <span v-if="currentViewMode === 'ranked'">
+            Top 50 items
+          </span>
+          <span v-else>
+            {{ unlearnedRankedItems.length }} unlearned items
+          </span>
+        </div>
+      </div>
+
+      <!-- Centered Single-Column List of Items -->
+      <div class="max-w-lg mx-auto space-y-2.5">
+        <div
+          v-if="(currentViewMode === 'ranked' ? top50RankedItems : unlearnedRankedItems).length === 0"
+          class="text-center py-12 text-gray-500 dark:text-gray-400 text-sm"
+        >
+          <span v-if="currentViewMode === 'unlearned'">
+            🎉 All words have been learned!
+          </span>
+          <span v-else>
+            No words available.
+          </span>
+        </div>
+
+        <div
+          v-for="item in (currentViewMode === 'ranked' ? top50RankedItems : unlearnedRankedItems)"
+          :key="item.id"
+          class="flex items-center justify-center gap-2.5"
+        >
+          <!-- Word Badge / Chip, exactly functioning as in categories -->
+          <button
+            @click="toggleWord(item.id)"
+            type="button"
+            class="px-3 py-1.5 rounded-lg text-sm transition-all duration-150 cursor-pointer select-none text-left relative max-w-[80%] break-words whitespace-normal leading-snug"
+            :class="[
+              isWordLearned(item.id)
+                ? 'font-normal shadow-xs'
+                : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+            ]"
+            :style="isWordLearned(item.id) ? {
+              backgroundColor: selectedLang === 'fr'
+                ? `color-mix(in srgb, ${currentButtonColor} 22%, transparent)`
+                : `color-mix(in srgb, ${currentButtonColor} 14%, transparent)`,
+              color: selectedLang === 'fr'
+                ? `color-mix(in srgb, ${currentButtonColor} 85%, white)`
+                : `color-mix(in srgb, ${currentButtonColor} 75%, white)`,
+              border: selectedLang === 'fr'
+                ? `1px solid color-mix(in srgb, ${currentButtonColor} 40%, transparent)`
+                : `1px solid color-mix(in srgb, ${currentButtonColor} 28%, transparent)`,
+            } : undefined"
+            :title="isWordLearned(item.id) ? 'Learned word. Click to view translation / unlearn' : `Click to learn in ${activeLangLabel}`"
+          >
+            <!-- CASE A: Active 3s Learning OR Unlearn click: show target translation + icons -->
+            <span v-if="activeLearningWords.has(item.id) || activeUnlearnWords.has(item.id)" class="inline-flex items-center gap-1.5 flex-wrap">
+              <!-- Letters category -->
+              <template v-if="isPronunciation(item.id)">
+                <span style="font-family: 'Courier New', Courier, monospace;" class="text-yellow-400 font-bold">[{{ item[selectedLang] || item.en }}]</span>
+              </template>
+
+              <!-- Standard category & Numbers -->
+              <template v-else>
+                <span class="break-words">{{ item[selectedLang] || item.en }}</span>
+                <!-- Pronunciation Note in brackets -->
+                <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono text-yellow-400 font-bold ml-0.5">
+                  [{{ pronunciationMap.get(item.id) }}]
+                </span>
+
+                <!-- Star icon: example sentences -->
+                <span
+                  class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                  title="Search for 3 example sentences"
+                  @click="handleExampleSearch(item, $event)"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </span>
+
+                <!-- Google Translate icon -->
+                <span
+                  class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                  title="Look up in Google Translate"
+                  @click="handleGoogleTranslate(item, $event)"
+                >
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                </span>
+
+                <!-- Pronunciation 'P' button -->
+                <span
+                  class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                  title="Add or edit pronunciation tip"
+                  @click="openPronunciationModal(item, $event)"
+                >
+                  P
+                </span>
+
+                <!-- Comparison 'C' button -->
+                <span
+                  class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                  title="Compare across all 4 languages"
+                  @click="openCrossLanguageModal(item, $event)"
+                >
+                  C
+                </span>
+
+                <!-- Rank 'R' button -->
+                <span
+                  class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                  title="Set rank (0 - 5)"
+                  @click="openRankModal(item, $event)"
+                >
+                  R
+                </span>
+              </template>
+
+              <!-- Small checkmark icon: mark as learned -->
+              <span
+                v-if="activeLearningWords.has(item.id)"
+                @click="finalizeWordLearned(item.id, $event)"
+                class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 hover:text-emerald-500 transition-opacity cursor-pointer shrink-0"
+                title="Mark as learned"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+              </span>
+
+              <!-- Small '✕' icon: mark as unlearned -->
+              <span
+                v-if="activeUnlearnWords.has(item.id)"
+                @click="unlearnWord(item.id, $event)"
+                class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 hover:text-red-500 transition-opacity cursor-pointer shrink-0"
+                title="Mark as unlearned"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </span>
+            </span>
+
+            <!-- CASE B: Learned word -> English, dimmed language color, with checkmark icon -->
+            <span v-else-if="isWordLearned(item.id)" class="inline-flex items-center gap-1.5">
+              <span>{{ isPronunciation(item.id) ? getLetterForPronunciation(item.id) : item.en }}</span>
+              <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </span>
+
+            <!-- CASE C: Unlearned word -> English default -->
+            <span v-else class="inline-block">
+              {{ isPronunciation(item.id) ? getLetterForPronunciation(item.id) : item.en }}
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: Normal Categories View -->
     <div v-else class="pt-3.5">
       <!-- No search results -->
       <div v-if="filteredCategories.length === 0" class="text-center py-12 text-gray-500 dark:text-gray-400 text-sm">
@@ -1204,13 +1597,13 @@ function isWordLearned(itemId: string): boolean {
             </div>
 
             <div class="flex items-center gap-3 shrink-0">
-              <!-- Visual indication when category is 100%: bold count and accomplished checkmark -->
+              <!-- Visual indication when category is 100%: bold count and accomplished checkmark with fixed width -->
               <div
                 v-if="!isStatsLoading && getCategoryLearnedPercentage(cat) === 100"
-                class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-black text-xs font-mono shrink-0 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800/60"
+                class="flex items-center justify-center gap-1.5 w-24 sm:w-28 h-5 rounded-full font-black text-[11px] font-mono shrink-0 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800/60"
               >
                 <span class="text-emerald-600 dark:text-emerald-400">{{ cat.items.length }} of {{ cat.items.length }}</span>
-                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                 </svg>
               </div>
@@ -1229,7 +1622,10 @@ function isWordLearned(itemId: string): boolean {
                     backgroundColor: `color-mix(in srgb, ${brightColor} 35%, transparent)`
                   }"
                 ></div>
-                <div class="absolute inset-0 flex items-center justify-center text-[11px] font-mono font-bold text-yellow-500 dark:text-yellow-400 drop-shadow-xs pointer-events-none">
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-[11px] font-mono font-bold drop-shadow-xs pointer-events-none"
+                  :class="(isStatsLoading || getCategoryLearnedCount(cat) === 0) ? 'text-white' : 'text-yellow-500 dark:text-yellow-400'"
+                >
                   {{ isStatsLoading ? '0' : getCategoryLearnedCount(cat) }} of {{ cat.items.length }}
                 </div>
               </div>
@@ -1238,27 +1634,32 @@ function isWordLearned(itemId: string): boolean {
 
           <!-- Accordion Content Area -->
           <div v-if="isCategoryExpanded(cat.id)" class="px-4 pb-4 pt-1 border-t border-gray-200 dark:border-gray-700/80 space-y-3">
-            <!-- Sub-bar: Reset Category & Numbers Tens Toggle -->
+            <!-- Sub-bar: Reset Category & Numbers Toggles ("tens" and "show all") -->
             <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
-              <div class="flex items-center gap-2">
-                <span
-                  class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
-                  style="transition: opacity 0.3s ease, filter 0.3s ease;"
-                  :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
-                >
-                  {{ isStatsLoading ? `0 / ${cat.items.length} learned` : `${getCategoryLearnedCount(cat)} / ${cat.items.length} learned` }}
-                </span>
-
-                <!-- Numbers tens toggle button -->
+              <!-- Numbers Category Toggles -->
+              <div v-if="cat.id === 'numbers'" class="flex items-center gap-1.5">
                 <button
-                  v-if="cat.id === 'numbers'"
                   type="button"
-                  @click.stop="numbersTensOnly = !numbersTensOnly"
-                  class="ml-2 px-2 py-0.5 text-xs font-semibold rounded-md border border-amber-300 dark:border-amber-700/80 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all cursor-pointer"
+                  @click.stop="numbersViewMode = numbersViewMode === 'tens' ? 'default' : 'tens'"
+                  class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
+                  :class="numbersViewMode === 'tens'
+                    ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
+                    : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
                 >
-                  {{ numbersTensOnly ? 'Show all numbers' : 'Only tens positions' }}
+                  Show Tens
+                </button>
+                <button
+                  type="button"
+                  @click.stop="numbersViewMode = numbersViewMode === 'show-all' ? 'default' : 'show-all'"
+                  class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
+                  :class="numbersViewMode === 'show-all'
+                    ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
+                    : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                >
+                  Show All
                 </button>
               </div>
+              <div v-else></div>
 
               <!-- Reset Category Controls -->
               <div class="shrink-0">
@@ -1296,8 +1697,141 @@ function isWordLearned(itemId: string): boolean {
               </div>
             </div>
 
-            <!-- Word Badges / Chips Cloud -->
-            <div class="flex flex-wrap gap-2 pt-0.5">
+            <!-- Numbers Category "Show All" Grouped Two-Column View -->
+            <div v-if="cat.id === 'numbers' && numbersViewMode === 'show-all'" class="space-y-4 pt-1">
+              <div
+                v-for="grp in numbersGroups"
+                :key="grp.label"
+                class="space-y-2 p-3 rounded-2xl bg-gray-50/70 dark:bg-[#131b28]/60 border border-gray-200/70 dark:border-gray-800/70"
+              >
+                <div class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider pb-1 border-b border-gray-200/70 dark:border-gray-800/70 flex items-center justify-between">
+                  <span>Group {{ grp.label }}</span>
+                </div>
+                <div class="space-y-1.5 max-w-xl">
+                  <div
+                    v-for="item in grp.items"
+                    :key="item.id"
+                    class="flex items-center justify-between gap-3 px-3 py-1.5 rounded-xl border border-gray-200/70 dark:border-gray-800/80 bg-white dark:bg-[#182030] shadow-xs"
+                  >
+                    <!-- Left column: digit & English -->
+                    <div class="min-w-0 flex items-center gap-2 text-xs">
+                      <span class="w-8 h-5 flex items-center justify-center font-mono font-bold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 shrink-0 text-[11px]">
+                        {{ getNumberDigit(item.id) }}
+                      </span>
+                      <span class="font-medium text-gray-600 dark:text-gray-300 truncate">
+                        {{ item.en }}
+                      </span>
+                    </div>
+
+                    <!-- Right column: target language interactive pill -->
+                    <div class="shrink-0">
+                      <button
+                        @click="toggleWord(item.id)"
+                        type="button"
+                        class="px-2.5 py-1 rounded-lg text-xs transition-all duration-150 cursor-pointer select-none text-left relative max-w-full break-words whitespace-normal leading-snug"
+                        :class="[
+                          isWordLearned(item.id)
+                            ? 'font-normal shadow-xs'
+                            : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                        ]"
+                        :style="isWordLearned(item.id) ? {
+                          backgroundColor: selectedLang === 'fr'
+                            ? `color-mix(in srgb, ${currentButtonColor} 22%, transparent)`
+                            : `color-mix(in srgb, ${currentButtonColor} 14%, transparent)`,
+                          color: selectedLang === 'fr'
+                            ? `color-mix(in srgb, ${currentButtonColor} 85%, white)`
+                            : `color-mix(in srgb, ${currentButtonColor} 75%, white)`,
+                          border: selectedLang === 'fr'
+                            ? `1px solid color-mix(in srgb, ${currentButtonColor} 40%, transparent)`
+                            : `1px solid color-mix(in srgb, ${currentButtonColor} 28%, transparent)`,
+                        } : undefined"
+                        :title="isWordLearned(item.id) ? 'Learned word. Click to view translation / unlearn' : `Click to learn in ${activeLangLabel}`"
+                      >
+                        <!-- Active 3s Learning OR Unlearn click -->
+                        <span v-if="activeLearningWords.has(item.id) || activeUnlearnWords.has(item.id)" class="inline-flex items-center gap-1.5 flex-wrap">
+                          <span class="break-words font-semibold">{{ item[selectedLang] || item.en }}</span>
+                          <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono text-yellow-400 font-bold ml-0.5">
+                            [{{ pronunciationMap.get(item.id) }}]
+                          </span>
+                          <!-- Star icon: example sentences -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                            title="Search for 3 example sentences"
+                            @click="handleExampleSearch(item, $event)"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                          </span>
+                          <!-- Google Translate icon -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                            title="Look up in Google Translate"
+                            @click="handleGoogleTranslate(item, $event)"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                          </span>
+                          <!-- Pronunciation 'P' button -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                            title="Add or edit pronunciation tip"
+                            @click="openPronunciationModal(item, $event)"
+                          >
+                            P
+                          </span>
+                          <!-- Comparison 'C' button -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                            title="Compare across all 4 languages"
+                            @click="openCrossLanguageModal(item, $event)"
+                          >
+                            C
+                          </span>
+                          <!-- Rank 'R' button -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                            title="Set rank (0 - 5)"
+                            @click="openRankModal(item, $event)"
+                          >
+                            R
+                          </span>
+                          <!-- Checkmark icon -->
+                          <span
+                            v-if="activeLearningWords.has(item.id)"
+                            @click="finalizeWordLearned(item.id, $event)"
+                            class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 hover:text-emerald-500 transition-opacity cursor-pointer shrink-0"
+                            title="Mark as learned"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                          </span>
+                          <!-- '✕' icon -->
+                          <span
+                            v-if="activeUnlearnWords.has(item.id)"
+                            @click="unlearnWord(item.id, $event)"
+                            class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 hover:text-red-500 transition-opacity cursor-pointer shrink-0"
+                            title="Mark as unlearned"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                          </span>
+                        </span>
+                        <!-- Learned word -> target language text with checkmark -->
+                        <span v-else-if="isWordLearned(item.id)" class="inline-flex items-center gap-1.5 font-medium">
+                          <span>{{ item[selectedLang] || item.en }}</span>
+                          <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                          </svg>
+                        </span>
+                        <!-- Unlearned word -> target language text directly -->
+                        <span v-else class="inline-block font-medium">
+                          {{ item[selectedLang] || item.en }}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Standard Word Badges / Chips Cloud (when not in numbers show-all) -->
+            <div v-else class="flex flex-wrap gap-2 pt-0.5">
               <button
                 v-for="item in getCategoryItems(cat)"
                 :key="item.id"
@@ -1373,6 +1907,15 @@ function isWordLearned(itemId: string): boolean {
                       @click="openCrossLanguageModal(item, $event)"
                     >
                       C
+                    </span>
+
+                    <!-- Rank 'R' button -->
+                    <span
+                      class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                      title="Set rank (0 - 5)"
+                      @click="openRankModal(item, $event)"
+                    >
+                      R
                     </span>
                   </template>
 
@@ -1636,6 +2179,82 @@ function isWordLearned(itemId: string): boolean {
               </span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simple Rank Modal ("R" option) -->
+    <div
+      v-if="showRankModal && activeRankItem"
+      class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4"
+      @click.self="showRankModal = false"
+    >
+      <div class="bg-white dark:bg-[#161f30] border border-gray-200 dark:border-gray-700/80 rounded-2xl p-5 w-full max-w-sm shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-3">
+          <div class="flex items-center gap-2">
+            <h3 class="text-base font-bold text-gray-900 dark:text-white">
+              Word Rank
+            </h3>
+            <span class="text-xs px-2 py-0.5 rounded font-mono font-bold bg-amber-500/10 text-amber-500 dark:text-amber-400 border border-amber-500/30">
+              0 - 5
+            </span>
+          </div>
+          <button
+            @click="showRankModal = false"
+            class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-sm font-bold cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="text-center py-2 space-y-1">
+          <div class="text-lg font-bold text-gray-900 dark:text-white">
+            {{ activeRankItem.en }}
+          </div>
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
+            {{ activeRankItem[selectedLang] || '' }}
+          </div>
+          <div class="pt-2 text-3xl font-extrabold font-mono text-amber-500 dark:text-amber-400">
+            {{ rankSliderValue.toFixed(1) }}
+          </div>
+          <div class="text-xs text-gray-400 dark:text-gray-500">
+            Higher rank = more essential / frequent word
+          </div>
+        </div>
+
+        <!-- Slider (drag left/right from 0 to 5) -->
+        <div class="space-y-1.5 px-2">
+          <input
+            type="range"
+            min="0"
+            max="5"
+            step="0.1"
+            v-model.number="rankSliderValue"
+            class="w-full accent-amber-500 cursor-pointer"
+          />
+          <div class="flex justify-between text-[11px] font-mono text-gray-400">
+            <span>0.0</span>
+            <span>2.5</span>
+            <span>5.0</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+          <button
+            type="button"
+            @click="showRankModal = false"
+            class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            @click="saveWordRank"
+            class="px-4 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white transition-colors cursor-pointer shadow-xs"
+          >
+            Save Rank
+          </button>
         </div>
       </div>
     </div>

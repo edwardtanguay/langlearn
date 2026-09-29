@@ -13,17 +13,20 @@
 				- Marie
 					- sport
 					- jeune
+					- un air un peux triste
 				- Tanja
 					- paris, jurist en francais
+					- ouvre
 				- Christophe
 					- parle beaucoup
 				- Katrin
 					- comme Sana
 					- quatre enfins
 					- avec elle dans une groupe
-				- Qnja	
+				- Anja	
 					- un plus agée
 					- un bon français
+					- mobile
 				- Stefan
 					- il avait un problème avec le micro
 				- Ute 
@@ -31,6 +34,11 @@
 					- les lunettes
 				- Andrea
 					- Mobil
+					- voiture
+				- Monika
+					- cheveaux blanche
+					- B1
+					- a parlé de marathon
 			- 2026-09-21
 				- les vacances
 				- audio
@@ -58,6 +66,7 @@
 					- consultant fiscal
 					- 1x cour avec livre les pays des autres
 					- trois enfant
+					- elle m'a donné le lien pour le livre
 				- Laura
 					- quatrieme cours avec
 					- Bonn
@@ -67,6 +76,7 @@
 					- Berlin
 					- Jerusalem
 					- for peace
+					- elle est dans italie
 			- format de cours
 				- l'image de la semaine (chaque fois)
 				- caricature
@@ -77,6 +87,13 @@
 			- apris
 				- j'ai étudié de la philosophie
 				- le but est ttt
+			- 2026-09-28
+				- midnight sun run
+				- katla est rational
+				- nous avons
+				- me too movement
+			- 2026-10-28
+				- chapitre 2, 3, 4
 	- mardi 
 		- Konversation A2/B1: Alexandre Schuck
 			- les personnes
@@ -114,8 +131,12 @@
 				- devoirs de maison
 					- La place des adjectifs en français
 						- https://padlet.com/edber/conversation-b1-b2-es3a4f0g5wvhb24v
-					- les résolutions des présidents et présidents
 					- comment place::https://parlez-vous-french.com/la-place-des-adjectifs-en-francais/
+			- 2026-10-06
+				- devoirs
+					- https://padlet.com/edber/conversation-b1-b2-es3a4f0g5wvhb24v
+					- les résolutions des présidents et présidents
+					- photos "street 1" etc.
 
 - journal
 	- 2026-09-08

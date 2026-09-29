@@ -62,7 +62,8 @@ export default defineEventHandler(async (event) => {
     let dayLearned = 0
     const sections = d.sections.map((s: any) => {
       const prog = progressMap.get(s.id)
-      const isLearned = prog ? prog.isLearned : false
+      const isZeroFlashcards = (s.flashcardsCount === 0 || !s.bits?.some((b: any) => b.type === 'flashcard'))
+      const isLearned = isZeroFlashcards ? true : (prog ? prog.isLearned : false)
       const timesTested = prog ? prog.timesTested : 0
       const learnedFlashcardIds = prog ? prog.learnedFlashcardIds : []
       if (isLearned) {

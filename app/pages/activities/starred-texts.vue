@@ -121,13 +121,15 @@ const languageCardCountsSummary = computed(() => {
   return parts.join(', ')
 })
 
-function extractStarredText(text: string): { display: string; answer: string } | null {
+function extractStarredText(text: string): { display: string; answer: string; hasSurroundingContext: boolean } | null {
   if (!text) return null
   const match = text.match(/\*(.*?)\*/)
   if (!match || !match[1] || !match[1].trim()) return null
   const answer = match[1].trim()
   const display = text.replace(/\*(.*?)\*/, '_______')
-  return { display, answer }
+  const surrounding = text.replace(/\*(.*?)\*/, '').trim()
+  const hasSurroundingContext = surrounding.length > 0
+  return { display, answer, hasSurroundingContext }
 }
 
 function toggleShowFront(cardId: string) {
@@ -172,7 +174,10 @@ async function loadStarredCards() {
       $fetch<{ role: string }>('/api/user/me').catch(() => ({ role: 'member' }))
     ])
     isAdmin.value = me?.role === 'admin'
-    const validCards = cards.filter(c => extractStarredText(c.back) !== null)
+    const validCards = cards.filter(c => {
+      const parsed = extractStarredText(c.back)
+      return parsed !== null && parsed.hasSurroundingContext
+    })
     allStarredCards.value = validCards
     generateNewRound()
   } catch (err) {
@@ -230,7 +235,7 @@ function generateNewRound() {
 
   for (const card of sortedLangCards) {
     const parsed = extractStarredText(card.back)
-    if (parsed) {
+    if (parsed && parsed.hasSurroundingContext) {
       const normalizedAns = parsed.answer.trim().toLowerCase()
       if (!usedAnswers.has(normalizedAns)) {
         usedAnswers.add(normalizedAns)
@@ -491,6 +496,10 @@ onMounted(() => {
 
             <!-- Back text fill-in-the-blank mode -->
             <div v-else class="text-sm md:text-base font-medium text-gray-900 dark:text-white leading-relaxed flex-1">
+              <div v-if="!item.displayBack.replace('_______', '').trim()" class="text-xs text-gray-500 dark:text-gray-400 italic mb-1">
+                Prompt: {{ item.fullFront }}
+              </div>
+
               <span>{{ item.displayBack.split('_______')[0] }}</span>
 
               <!-- Drop target slot / placed answer pill -->

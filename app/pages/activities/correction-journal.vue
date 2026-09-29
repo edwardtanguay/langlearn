@@ -96,6 +96,15 @@ async function loadData() {
       totalFlashcards.value = res.totalFlashcards
       totalLearnedCount.value = res.totalLearnedCount
 
+      // Ensure zero-flashcard sections are immediately marked learned
+      for (const day of res.days) {
+        for (const sec of day.sections) {
+          if (sec.flashcardsCount === 0) {
+            sec.isLearned = true
+          }
+        }
+      }
+
       // Select initial active section
       pickInitialSection()
     }
@@ -118,11 +127,19 @@ const allSections = computed<JournalSection[]>(() => {
 // Queue of sections based on active filter
 const queue = computed<JournalSection[]>(() => {
   if (selectedFilter.value === 'unlearned') {
-    const unlearned = allSections.value.filter(s => !s.isLearned)
-    return unlearned.length > 0 ? unlearned : allSections.value
+    return allSections.value.filter(s => !s.isLearned)
   }
   return allSections.value
 })
+
+function setFilter(filter: 'all' | 'unlearned') {
+  selectedFilter.value = filter
+  if (queue.value.length > 0) {
+    selectSection(queue.value[0]!.id)
+  } else {
+    activeSectionId.value = undefined
+  }
+}
 
 const currentSection = computed<JournalSection | null>(() => {
   if (!activeSectionId.value) return null
@@ -138,6 +155,46 @@ const currentSectionIndexInQueue = computed(() => {
 function pickInitialSection() {
   if (queue.value.length > 0) {
     selectSection(queue.value[0]!.id)
+  }
+}
+
+function goToNextSection() {
+  if (queue.value.length === 0) return
+  const currentIdx = queue.value.findIndex(s => s.id === activeSectionId.value)
+  const nextIdx = (currentIdx + 1) % queue.value.length
+  selectSection(queue.value[nextIdx]!.id)
+}
+
+function goToPreviousSection() {
+  if (queue.value.length === 0) return
+  const currentIdx = queue.value.findIndex(s => s.id === activeSectionId.value)
+  const prevIdx = (currentIdx - 1 + queue.value.length) % queue.value.length
+  selectSection(queue.value[prevIdx]!.id)
+}
+
+async function resetCurrentSection() {
+  const sec = currentSection.value
+  if (!sec || sec.flashcardsCount === 0) return
+
+  toggledStates.value = {}
+  everTurnedGreenSet.value = new Set()
+  sec.learnedFlashcardIds = []
+  if (sec.isLearned) {
+    sec.isLearned = false
+    totalLearnedCount.value = Math.max(0, totalLearnedCount.value - 1)
+  }
+
+  try {
+    await $fetch('/api/activities/correction-journal', {
+      method: 'POST',
+      body: {
+        sectionId: sec.id,
+        learnedFlashcardIds: [],
+        isLearned: false
+      }
+    })
+  } catch (err) {
+    console.error('Failed to reset section flashcards:', err)
   }
 }
 
@@ -306,14 +363,88 @@ const displayStatsDays = computed(() => {
   return rollingLast7Days.value
 })
 
-// Dropdown options with (wordCount/flashcardsCount)
+function formatDropdownDate(dateStr: string): string {
+  if (!dateStr) return ''
+  const parts = dateStr.split('-').map(Number)
+  if (parts.length < 3 || isNaN(parts[0]!) || isNaN(parts[1]!) || isNaN(parts[2]!)) return dateStr
+  const dt = new Date(parts[0]!, parts[1]! - 1, parts[2]!)
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const dayName = days[dt.getDay()]
+  const monthName = months[dt.getMonth()]
+  return `${dayName} ${monthName} ${parts[2]}`
+}
+
+// Standard language text colors per AGENTS.md with dark-mode contrast adaptations
+const languageTextColors: Record<string, string> = {
+  fr: 'text-[#333388] dark:text-blue-400',
+  es: 'text-[#be185d] dark:text-pink-400',
+  it: 'text-[#194d19] dark:text-emerald-400',
+  nl: 'text-[#d97706] dark:text-amber-400',
+  pl: 'text-gray-600 dark:text-gray-300',
+  de: 'text-[#7e4402] dark:text-amber-500',
+  ru: 'text-[#3f3f46] dark:text-zinc-400',
+  is: 'text-[#0891b2] dark:text-cyan-400',
+  da: 'text-[#7e22ce] dark:text-purple-400',
+  el: 'text-[#ea580c] dark:text-orange-400'
+}
+
+function getLanguageTextColor(langCode: string): string {
+  const code = (langCode || 'fr').toLowerCase()
+  return languageTextColors[code] || 'text-[#333388] dark:text-blue-400'
+}
+
+// Dropdown options showing: "Wed Sep 23 --> FR --> (2 unlearned)"
 const sectionSelectItems = computed(() => {
-  return queue.value.map(sec => ({
-    id: sec.id,
-    isLearned: sec.isLearned,
-    label: `${sec.day} — Section ${sec.sectionIndex} (${sec.language.toUpperCase()}) (${sec.wordCount}/${sec.flashcardsCount})${sec.isLearned ? ' ✓' : ''}`
-  }))
+  return queue.value.map(sec => {
+    const learned = sec.learnedFlashcardIds?.length ?? (sec.isLearned ? sec.flashcardsCount : 0)
+    const total = sec.flashcardsCount
+    const unlearned = Math.max(0, total - learned)
+    const lang = (sec.language || 'fr').toUpperCase()
+    const langColorClass = getLanguageTextColor(sec.language)
+    const dateFormatted = formatDropdownDate(sec.day)
+    const isAllLearned = unlearned === 0
+    const statusText = isAllLearned ? '(all learned)' : `(${unlearned} unlearned)`
+    return {
+      id: sec.id,
+      isLearned: sec.isLearned,
+      dateFormatted,
+      lang,
+      langColorClass,
+      learned,
+      total,
+      unlearned,
+      isAllLearned,
+      statusText,
+      label: `${dateFormatted} → ${lang} → ${statusText}`,
+      class: sec.id === activeSectionId.value ? '!bg-gray-100 dark:!bg-gray-800' : ''
+    }
+  })
 })
+
+const currentSectionSelectItem = computed(() => {
+  return sectionSelectItems.value.find(item => item.id === activeSectionId.value) || null
+})
+
+// Reset modal state
+const showResetModal = ref(false)
+
+function promptResetCurrentSection() {
+  showResetModal.value = true
+}
+
+function confirmResetSection() {
+  showResetModal.value = false
+  resetCurrentSection()
+}
+
+// 7-day activity word count color: 100+ green, 50+ yellow, 1+ gray, 0 red
+function getWordCountColor(words: number): string {
+  if (words >= 100) return 'text-emerald-500 dark:text-emerald-400'
+  if (words >= 50) return 'text-amber-500 dark:text-amber-400'
+  if (words >= 1) return 'text-gray-500 dark:text-gray-400'
+  return 'text-red-500 dark:text-red-400'
+}
 
 function onSelectSectionChange(val: any) {
   if (!val) return
@@ -369,7 +500,7 @@ onMounted(() => {
         <!-- Filter toggle -->
         <div class="inline-flex rounded-xl p-0.5 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs">
           <button
-            @click="selectedFilter = 'unlearned'"
+            @click="setFilter('unlearned')"
             class="px-2.5 py-1.5 rounded-lg font-medium transition-all cursor-pointer"
             :class="selectedFilter === 'unlearned' 
               ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs font-bold' 
@@ -378,7 +509,7 @@ onMounted(() => {
             Unlearned
           </button>
           <button
-            @click="selectedFilter = 'all'"
+            @click="setFilter('all')"
             class="px-2.5 py-1.5 rounded-lg font-medium transition-all cursor-pointer"
             :class="selectedFilter === 'all' 
               ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs font-bold' 
@@ -428,8 +559,8 @@ onMounted(() => {
             :class="[
               d.hasActivity 
                 ? 'bg-gray-50 dark:bg-gray-900/70 border-gray-200 dark:border-gray-800 hover:border-amber-400/50' 
-                : 'bg-gray-100/70 dark:bg-gray-900/40 border-gray-200/70 dark:border-gray-800/60 opacity-60 dark:opacity-50 grayscale',
-              d.isToday ? 'ring-2 ring-amber-500/80 border-amber-500' : ''
+                : 'bg-gray-100/70 dark:bg-gray-900/40 border-gray-200/70 dark:border-gray-800/60 opacity-80',
+              d.isToday ? 'ring-2 ring-gray-900 border-gray-900 dark:ring-white dark:border-white' : ''
             ]"
           >
             <!-- Date at top (a bit larger) -->
@@ -437,23 +568,15 @@ onMounted(() => {
               {{ d.date }}
             </div>
 
-            <template v-if="d.hasActivity">
-              <div class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white leading-tight">
-                {{ d.totalWords }}
-              </div>
-              <div class="text-xs text-gray-400 dark:text-gray-500 font-medium">
-                words
-              </div>
-            </template>
-
-            <template v-else>
-              <div class="text-2xl sm:text-3xl font-extrabold text-gray-400 dark:text-gray-500 leading-tight">
-                0
-              </div>
-              <div class="text-xs text-gray-400 dark:text-gray-500 font-medium">
-                words
-              </div>
-            </template>
+            <div
+              class="text-2xl sm:text-3xl font-extrabold leading-tight"
+              :class="getWordCountColor(d.totalWords)"
+            >
+              {{ d.totalWords }}
+            </div>
+            <div class="text-xs text-gray-400 dark:text-gray-500 font-medium">
+              words
+            </div>
           </div>
         </div>
       </div>
@@ -472,7 +595,7 @@ onMounted(() => {
         You've completed all sections in this view. Switch to "All" to review previous sections or check back later!
       </p>
       <button
-        @click="selectedFilter = 'all'; pickInitialSection()"
+        @click="setFilter('all'); pickInitialSection()"
         class="mt-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
       >
         Review All Sections
@@ -482,7 +605,7 @@ onMounted(() => {
     <div v-else class="space-y-4">
       <!-- Section Navigation Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-gray-900 p-3.5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-        <div class="flex items-center gap-2 flex-wrap">
+        <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
           <!-- Nuxt UI Select Menu for clean desktop & mobile appearance -->
           <USelectMenu
             :items="sectionSelectItems"
@@ -491,13 +614,41 @@ onMounted(() => {
             label-key="label"
             value-key="id"
             :ui="{
-              value: currentSection?.isLearned ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : ''
+              item: 'data-[state=checked]:!bg-gray-100 dark:data-[state=checked]:!bg-gray-800',
+              itemTrailing: 'hidden'
             }"
-            class="w-64 sm:w-84 text-xs font-bold"
+            class="w-full sm:w-96 text-xs font-bold"
           >
+            <template #default>
+              <span v-if="currentSectionSelectItem" class="flex items-center gap-1.5 truncate">
+                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ currentSectionSelectItem.dateFormatted }}</span>
+                <ArrowRightIcon class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
+                <span :class="['font-bold', currentSectionSelectItem.langColorClass]">{{ currentSectionSelectItem.lang }}</span>
+                <ArrowRightIcon class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
+                <span
+                  class="font-bold transition-all"
+                  :class="currentSectionSelectItem.isAllLearned
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : 'text-red-600 dark:text-red-400'"
+                >
+                  {{ currentSectionSelectItem.statusText }}
+                </span>
+              </span>
+            </template>
             <template #item-label="{ item }">
-              <span :class="item.isLearned ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : ''">
-                {{ item.label }}
+              <span class="flex items-center gap-1.5 py-0.5">
+                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ item.dateFormatted }}</span>
+                <ArrowRightIcon class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
+                <span :class="['font-bold', item.langColorClass]">{{ item.lang }}</span>
+                <ArrowRightIcon class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
+                <span
+                  class="text-[11px] font-bold transition-all"
+                  :class="item.isAllLearned
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : 'text-red-600 dark:text-red-400'"
+                >
+                  {{ item.statusText }}
+                </span>
               </span>
             </template>
           </USelectMenu>
@@ -507,12 +658,12 @@ onMounted(() => {
       <!-- Section Text Card -->
       <div class="p-6 sm:p-8 bg-white dark:bg-[#182030] rounded-3xl border-2 border-gray-200 dark:border-gray-800 shadow-md space-y-6">
         <!-- Interactive Text Display: User can select text smoothly across plain text and pills -->
-        <div class="text-base sm:text-lg leading-relaxed text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
+        <div class="text-base sm:text-lg leading-[2rem] sm:leading-[2.2rem] text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
           <template v-for="(bit, bIdx) in currentSection.bits" :key="bIdx">
             <!-- Plain Text Segment -->
             <span v-if="bit.type === 'text'">{{ formatFrenchText(bit.text) }}</span>
 
-            <!-- Flashcard Interactive Pill -->
+            <!-- Flashcard Interactive Pill (No mouseover title, reduced spacing so it fits in sentences seamlessly) -->
             <span
               v-else-if="bit.type === 'flashcard'"
               role="button"
@@ -520,8 +671,7 @@ onMounted(() => {
               @click="handlePillClick(bit.id)"
               @keydown.enter.prevent="toggleFlashcard(bit.id)"
               @keydown.space.prevent="toggleFlashcard(bit.id)"
-              :title="toggledStates[bit.id] ? 'Showing correct (click to show incorrect)' : 'Incorrect text (click to reveal correction)'"
-              class="inline-flex items-center mx-1 my-0.5 px-1.5 py-0 rounded-md font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group"
+              class="inline-flex items-center mx-0.5 my-0.5 px-1 pt-0 pb-[1px] leading-tight rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group align-baseline"
               :class="[
                 toggledStates[bit.id]
                   ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:brightness-110 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/90'
@@ -536,6 +686,81 @@ onMounted(() => {
               <span>{{ formatFrenchText(toggledStates[bit.id] ? bit.correct : bit.incorrect) }}</span>
             </span>
           </template>
+        </div>
+
+        <!-- Card Footer Actions: Previous (left), Reset (middle), and Next (right) -->
+        <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800/80">
+          <div>
+            <!-- Yellow Previous button: goes to previous text, wraps to last -->
+            <button
+              @click="goToPreviousSection"
+              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/80 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              title="Previous text"
+            >
+              <span class="text-sm font-bold inline-block rotate-180">➔</span>
+              <span>Previous</span>
+            </button>
+          </div>
+          <div>
+            <!-- Gray Reset button in the middle: only shown on texts that have flashcards -->
+            <button
+              v-if="currentSection.flashcardsCount > 0"
+              @click="promptResetCurrentSection"
+              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-gray-100 hover:bg-gray-200/80 dark:bg-gray-800/60 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              title="Reset all flashcards in this text to unlearned"
+            >
+              Reset
+            </button>
+          </div>
+          <div>
+            <!-- Yellow Next button: goes to next text, last goes to first -->
+            <button
+              @click="goToNextSection"
+              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/80 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              title="Next text"
+            >
+              <span>Next</span>
+              <span class="text-sm font-bold">➔</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark Red Reset Confirmation Modal -->
+    <div
+      v-if="showResetModal"
+      class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4"
+      @click.self="showResetModal = false"
+    >
+      <div class="bg-white dark:bg-[#1a0f12] border-2 border-red-300 dark:border-red-900/80 rounded-2xl p-5 w-full max-w-sm shadow-2xl space-y-4">
+        <div class="flex items-center gap-2.5 text-red-600 dark:text-red-400 border-b border-red-100 dark:border-red-950/80 pb-3">
+          <div class="p-2 rounded-xl bg-red-100 dark:bg-red-950/80 text-red-600 dark:text-red-400">
+            <ArrowPathIcon class="w-5 h-5" />
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-gray-900 dark:text-white">Reset this text?</h3>
+            <p class="text-xs text-red-600 dark:text-red-400 font-medium">Are you sure?</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+          All flashcards in this text will be marked as unlearned so you can practice them again.
+        </p>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button
+            type="button"
+            @click="showResetModal = false"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            @click="confirmResetSection"
+            class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-red-600 hover:bg-red-700 active:bg-red-800 transition-colors shadow-xs cursor-pointer"
+          >
+            Reset Text
+          </button>
         </div>
       </div>
     </div>
