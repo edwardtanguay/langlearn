@@ -871,22 +871,878 @@
           "day": "2026-09-26",
           "sectionIndex": 1,
           "language": "de",
-          "rawText": "Wenn ich ChatGPT nach französischen Säzte frage, bekomme ich jetzt immer Beispiele, die mit Laufen, Marathons und Dijon zu tun haben.",
+          "rawText": "Wenn ich ChatGPT nach [französischen Säzte;französischen Sätzen] frage, bekomme ich jetzt immer Beispiele, die mit Laufen, Marathons und Dijon zu tun haben.",
           "bits": [
             {
               "type": "text",
-              "text": "Wenn ich ChatGPT nach französischen Säzte frage, bekomme ich jetzt immer Beispiele, die mit Laufen, Marathons und Dijon zu tun haben."
+              "text": "Wenn ich ChatGPT nach "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-26-sec-1-fc-1",
+              "incorrect": "französischen Säzte",
+              "correct": "französischen Sätzen"
+            },
+            {
+              "type": "text",
+              "text": " frage, bekomme ich jetzt immer Beispiele, die mit Laufen, Marathons und Dijon zu tun haben."
             }
           ],
-          "flashcardsCount": 0,
+          "flashcardsCount": 1,
           "wordCount": 21
         }
       ],
       "totalWords": 21,
-      "totalFlashcards": 0
+      "totalFlashcards": 1
+    },
+    {
+      "date": "2026-09-27",
+      "sections": [
+        {
+          "id": "2026-09-27-sec-1",
+          "day": "2026-09-27",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "En tout cas, [serait;ce serait] un grand plaisir pour moi de venir à Paris ! [Le octobre 14;Le 14 octobre] [est parfait;me convient parfaitement]. [Dit moi;Dis-moi] quand et où exactement, quand tu [connais;connaîtras] les détails.\n\nOui, mon entraînement [de marathon;pour le marathon] [va bien;se passe bien]. Aujourd'hui, j'ai [courru;couru] 21 km à travers Berlin dont 13 km avec les [courreurs;coureurs] de Berlin Marathon. [Le week-end prochaine;Le week-end prochain] [Hannah nous visitera;Hannah viendra nous rendre visite] et nous [courrerions;courrons] 10 km ensemble. Après ça, je serai prêt pour Dijon !\n\n[Une bonne semaine pour toi;Je te souhaite une bonne semaine].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "En tout cas, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-1",
+              "incorrect": "serait",
+              "correct": "ce serait"
+            },
+            {
+              "type": "text",
+              "text": " un grand plaisir pour moi de venir à Paris ! "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-2",
+              "incorrect": "Le octobre 14",
+              "correct": "Le 14 octobre"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-3",
+              "incorrect": "est parfait",
+              "correct": "me convient parfaitement"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-4",
+              "incorrect": "Dit moi",
+              "correct": "Dis-moi"
+            },
+            {
+              "type": "text",
+              "text": " quand et où exactement, quand tu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-5",
+              "incorrect": "connais",
+              "correct": "connaîtras"
+            },
+            {
+              "type": "text",
+              "text": " les détails.\n\nOui, mon entraînement "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-6",
+              "incorrect": "de marathon",
+              "correct": "pour le marathon"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-7",
+              "incorrect": "va bien",
+              "correct": "se passe bien"
+            },
+            {
+              "type": "text",
+              "text": ". Aujourd'hui, j'ai "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-8",
+              "incorrect": "courru",
+              "correct": "couru"
+            },
+            {
+              "type": "text",
+              "text": " 21 km à travers Berlin dont 13 km avec les "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-9",
+              "incorrect": "courreurs",
+              "correct": "coureurs"
+            },
+            {
+              "type": "text",
+              "text": " de Berlin Marathon. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-10",
+              "incorrect": "Le week-end prochaine",
+              "correct": "Le week-end prochain"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-11",
+              "incorrect": "Hannah nous visitera",
+              "correct": "Hannah viendra nous rendre visite"
+            },
+            {
+              "type": "text",
+              "text": " et nous "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-12",
+              "incorrect": "courrerions",
+              "correct": "courrons"
+            },
+            {
+              "type": "text",
+              "text": " 10 km ensemble. Après ça, je serai prêt pour Dijon !\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-1-fc-13",
+              "incorrect": "Une bonne semaine pour toi",
+              "correct": "Je te souhaite une bonne semaine"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 13,
+          "wordCount": 85
+        },
+        {
+          "id": "2026-09-27-sec-2",
+          "day": "2026-09-27",
+          "sectionIndex": 2,
+          "language": "de",
+          "rawText": "Ah cool, Mailand war eine nette Strecke, der Anfang und Ende sind sehr schön und historisch, von [17 bis 25 km;km 17 bis 25] [ein bisschen;geht es ein bisschen] außerhalb der Stadt, [aber insgesamt;aber insgesamt ist die Strecke] flach und schnell. Hannah und ich hatten im April ein bisschen zu viel Sonne an dem Tag, [aber 04.04.;aber der 04.04.] sollte in der Regel kühl sein, also perfekte Chancen für einen optimalen Marathon. Wenn du [einen Airbnb Unterkunft;eine Airbnb-Unterkunft] in Mailand suchst, kann ich [einen;dir eine] empfehlen, der Host Alessandro und ich sind seitdem Whatsapp-Freunde.\n\nJa, ich freue mich auf meinen [Geburtstags Marathon;Geburtstagsmarathon] und die freie Woche in Dijon. [Ich besuche auch in Paris;In Paris besuche ich außerdem] einen französischen Freund aus meiner 1993-94 Potsdamer-Uni-Zeit, wir haben [dort;damals dort] zusammen gewohnt. [Sonst;Ansonsten] habe ich einen Polyglot Club gefunden und eine Menge City- und [Museumtours;Museumtouren] [geplannt;geplant], um mein Französisch zu verbessern. Mein Airbnb ist [mit;bei] einer ehemaligen Französischlehrerin, die in Rente ist [also hat angeblich viel Zeit zu reden;une angeblich viel Zeit zum Reden hat]. [Ich werde wahrscheinlich die restliche Zeit;Die restliche Zeit werde ich wahrscheinlich] mit [Bourgogne Weinproben Veranstaltungen;Weinproben-Veranstaltungen in der Bourgogne] verbringen.\n\nNach Dijon werde ich mein Training auf Sparflamme [bringen;stellen] und meine [7 km Strecken;7-km-Strecken] 1x oder 2x pro Woche wieder [aufleben;aufleben lassen], um fit zu bleiben. Dann [ab Januar;Januar] geht's wieder los mit den kalten Läufen mitten im Winter.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Ah cool, Mailand war eine nette Strecke, der Anfang und Ende sind sehr schön und historisch, von "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-1",
+              "incorrect": "17 bis 25 km",
+              "correct": "km 17 bis 25"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-2",
+              "incorrect": "ein bisschen",
+              "correct": "geht es ein bisschen"
+            },
+            {
+              "type": "text",
+              "text": " außerhalb der Stadt, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-3",
+              "incorrect": "aber insgesamt",
+              "correct": "aber insgesamt ist die Strecke"
+            },
+            {
+              "type": "text",
+              "text": " flach und schnell. Hannah und ich hatten im April ein bisschen zu viel Sonne an dem Tag, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-4",
+              "incorrect": "aber 04.04.",
+              "correct": "aber der 04.04."
+            },
+            {
+              "type": "text",
+              "text": " sollte in der Regel kühl sein, also perfekte Chancen für einen optimalen Marathon. Wenn du "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-5",
+              "incorrect": "einen Airbnb Unterkunft",
+              "correct": "eine Airbnb-Unterkunft"
+            },
+            {
+              "type": "text",
+              "text": " in Mailand suchst, kann ich "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-6",
+              "incorrect": "einen",
+              "correct": "dir eine"
+            },
+            {
+              "type": "text",
+              "text": " empfehlen, der Host Alessandro und ich sind seitdem Whatsapp-Freunde.\n\nJa, ich freue mich auf meinen "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-7",
+              "incorrect": "Geburtstags Marathon",
+              "correct": "Geburtstagsmarathon"
+            },
+            {
+              "type": "text",
+              "text": " und die freie Woche in Dijon. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-8",
+              "incorrect": "Ich besuche auch in Paris",
+              "correct": "In Paris besuche ich außerdem"
+            },
+            {
+              "type": "text",
+              "text": " einen französischen Freund aus meiner 1993-94 Potsdamer-Uni-Zeit, wir haben "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-9",
+              "incorrect": "dort",
+              "correct": "damals dort"
+            },
+            {
+              "type": "text",
+              "text": " zusammen gewohnt. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-10",
+              "incorrect": "Sonst",
+              "correct": "Ansonsten"
+            },
+            {
+              "type": "text",
+              "text": " habe ich einen Polyglot Club gefunden und eine Menge City- und "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-11",
+              "incorrect": "Museumtours",
+              "correct": "Museumtouren"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-12",
+              "incorrect": "geplannt",
+              "correct": "geplant"
+            },
+            {
+              "type": "text",
+              "text": ", um mein Französisch zu verbessern. Mein Airbnb ist "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-13",
+              "incorrect": "mit",
+              "correct": "bei"
+            },
+            {
+              "type": "text",
+              "text": " einer ehemaligen Französischlehrerin, die in Rente ist "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-14",
+              "incorrect": "also hat angeblich viel Zeit zu reden",
+              "correct": "une angeblich viel Zeit zum Reden hat"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-15",
+              "incorrect": "Ich werde wahrscheinlich die restliche Zeit",
+              "correct": "Die restliche Zeit werde ich wahrscheinlich"
+            },
+            {
+              "type": "text",
+              "text": " mit "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-16",
+              "incorrect": "Bourgogne Weinproben Veranstaltungen",
+              "correct": "Weinproben-Veranstaltungen in der Bourgogne"
+            },
+            {
+              "type": "text",
+              "text": " verbringen.\n\nNach Dijon werde ich mein Training auf Sparflamme "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-17",
+              "incorrect": "bringen",
+              "correct": "stellen"
+            },
+            {
+              "type": "text",
+              "text": " und meine "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-18",
+              "incorrect": "7 km Strecken",
+              "correct": "7-km-Strecken"
+            },
+            {
+              "type": "text",
+              "text": " 1x oder 2x pro Woche wieder "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-19",
+              "incorrect": "aufleben",
+              "correct": "aufleben lassen"
+            },
+            {
+              "type": "text",
+              "text": ", um fit zu bleiben. Dann "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-27-sec-2-fc-20",
+              "incorrect": "ab Januar",
+              "correct": "Januar"
+            },
+            {
+              "type": "text",
+              "text": " geht's wieder los mit den kalten Läufen mitten im Winter."
+            }
+          ],
+          "flashcardsCount": 20,
+          "wordCount": 202
+        }
+      ],
+      "totalWords": 287,
+      "totalFlashcards": 33
+    },
+    {
+      "date": "2026-09-28",
+      "sections": [
+        {
+          "id": "2026-09-28-sec-1",
+          "day": "2026-09-28",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "Merci pour la conversation [interéssante;intéressante] sur le livre \"Un jour sans femme\" aujourd'hui, je hâte de le lire.\n\nLe livre que j'ai [commander de;commandé sur] Amazon a un texte très grand (taille 16) et il [a;fait] 450 pages ! [C'est le cas;Est-ce que c'est aussi le cas] avec les éditions que vous avez aussi ?\n\nJe voudrais [achèter;acheter] un [livre;édition] plus petit pour mon voyage à Dijon. Est-ce quelqu'un a un lien où je [peux;pourrais] acheter [cet;ce] livre avec une [taille;taille de texte] normale ?",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Merci pour la conversation "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-1",
+              "incorrect": "interéssante",
+              "correct": "intéressante"
+            },
+            {
+              "type": "text",
+              "text": " sur le livre \"Un jour sans femme\" aujourd'hui, je hâte de le lire.\n\nLe livre que j'ai "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-2",
+              "incorrect": "commander de",
+              "correct": "commandé sur"
+            },
+            {
+              "type": "text",
+              "text": " Amazon a un texte très grand (taille 16) et il "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-3",
+              "incorrect": "a",
+              "correct": "fait"
+            },
+            {
+              "type": "text",
+              "text": " 450 pages ! "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-4",
+              "incorrect": "C'est le cas",
+              "correct": "Est-ce que c'est aussi le cas"
+            },
+            {
+              "type": "text",
+              "text": " avec les éditions que vous avez aussi ?\n\nJe voudrais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-5",
+              "incorrect": "achèter",
+              "correct": "acheter"
+            },
+            {
+              "type": "text",
+              "text": " un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-6",
+              "incorrect": "livre",
+              "correct": "édition"
+            },
+            {
+              "type": "text",
+              "text": " plus petit pour mon voyage à Dijon. Est-ce quelqu'un a un lien où je "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-7",
+              "incorrect": "peux",
+              "correct": "pourrais"
+            },
+            {
+              "type": "text",
+              "text": " acheter "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-8",
+              "incorrect": "cet",
+              "correct": "ce"
+            },
+            {
+              "type": "text",
+              "text": " livre avec une "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-28-sec-1-fc-9",
+              "incorrect": "taille",
+              "correct": "taille de texte"
+            },
+            {
+              "type": "text",
+              "text": " normale ?"
+            }
+          ],
+          "flashcardsCount": 9,
+          "wordCount": 82
+        }
+      ],
+      "totalWords": 82,
+      "totalFlashcards": 9
+    },
+    {
+      "date": "2026-09-29",
+      "sections": [
+        {
+          "id": "2026-09-29-sec-1",
+          "day": "2026-09-29",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "Merci beaucoup encore pour [les;ces] cours efficaces, les petites corrections de [pronunciation;prononciation] [me aident;m'aident] beaucoup.\n\n[Pourrions nous;Pourrions-nous] [experimenter;expérimenter] un peu avec le format ? [Par exemples;Par exemple], au lieu [des questions;de poser des questions] de vocabulaire [après;après que] l'apprenant a lu [au voix haute le texte;le texte à voix haute], [des questions;pourrait-on poser des questions] de compréhension et d'opinion ?\n\n[Ici serait un;Voici un exemple de] prompt possible :\n\nRédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Merci beaucoup encore pour "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-1",
+              "incorrect": "les",
+              "correct": "ces"
+            },
+            {
+              "type": "text",
+              "text": " cours efficaces, les petites corrections de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-2",
+              "incorrect": "pronunciation",
+              "correct": "prononciation"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-3",
+              "incorrect": "me aident",
+              "correct": "m'aident"
+            },
+            {
+              "type": "text",
+              "text": " beaucoup.\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-4",
+              "incorrect": "Pourrions nous",
+              "correct": "Pourrions-nous"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-5",
+              "incorrect": "experimenter",
+              "correct": "expérimenter"
+            },
+            {
+              "type": "text",
+              "text": " un peu avec le format ? "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-6",
+              "incorrect": "Par exemples",
+              "correct": "Par exemple"
+            },
+            {
+              "type": "text",
+              "text": ", au lieu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-7",
+              "incorrect": "des questions",
+              "correct": "de poser des questions"
+            },
+            {
+              "type": "text",
+              "text": " de vocabulaire "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-8",
+              "incorrect": "après",
+              "correct": "après que"
+            },
+            {
+              "type": "text",
+              "text": " l'apprenant a lu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-9",
+              "incorrect": "au voix haute le texte",
+              "correct": "le texte à voix haute"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-10",
+              "incorrect": "des questions",
+              "correct": "pourrait-on poser des questions"
+            },
+            {
+              "type": "text",
+              "text": " de compréhension et d'opinion ?\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-1-fc-11",
+              "incorrect": "Ici serait un",
+              "correct": "Voici un exemple de"
+            },
+            {
+              "type": "text",
+              "text": " prompt possible :\n\nRédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet."
+            }
+          ],
+          "flashcardsCount": 11,
+          "wordCount": 127
+        },
+        {
+          "id": "2026-09-29-sec-2",
+          "day": "2026-09-29",
+          "sectionIndex": 2,
+          "language": "es",
+          "rawText": "Quiero [escriber;escribir] [anche;tambien] en español [pour que believo;porque credo] que [este noche;esta noche] [habero;hablaré] con Hanner y es [possible;posible] que [il;él] quiera hacer un [tandem;tándem] [anglais/espagnol;inglés/español].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Quiero "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-1",
+              "incorrect": "escriber",
+              "correct": "escribir"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-2",
+              "incorrect": "anche",
+              "correct": "tambien"
+            },
+            {
+              "type": "text",
+              "text": " en español "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-3",
+              "incorrect": "pour que believo",
+              "correct": "porque credo"
+            },
+            {
+              "type": "text",
+              "text": " que "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-4",
+              "incorrect": "este noche",
+              "correct": "esta noche"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-5",
+              "incorrect": "habero",
+              "correct": "hablaré"
+            },
+            {
+              "type": "text",
+              "text": " con Hanner y es "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-6",
+              "incorrect": "possible",
+              "correct": "posible"
+            },
+            {
+              "type": "text",
+              "text": " que "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-7",
+              "incorrect": "il",
+              "correct": "él"
+            },
+            {
+              "type": "text",
+              "text": " quiera hacer un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-8",
+              "incorrect": "tandem",
+              "correct": "tándem"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-2-fc-9",
+              "incorrect": "anglais/espagnol",
+              "correct": "inglés/español"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 9,
+          "wordCount": 23
+        },
+        {
+          "id": "2026-09-29-sec-3",
+          "day": "2026-09-29",
+          "sectionIndex": 3,
+          "language": "de",
+          "rawText": "vielen Dank für die Rechnung. Ich habe den QR-Code auf meinem Handy gescannt und wollte so bezahlen, aber in der [Bestätigungs-Nachricht;Bestätigungsnachricht] stand, dass mein Buch statt 14,45 Euro 1445,00 Euro kostet (!).\n\n[Also, ich habe;Deshalb habe ich] die Transaction natürlich nicht [weiter verfolgt;weiterverfolgt], und die 14,45 [per Hand;manuell] am Rechner per Paypal bezahlt.\n\nAber vielleicht wollen sie [schauen;nachschauen], warum das passiert ist.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "vielen Dank für die Rechnung. Ich habe den QR-Code auf meinem Handy gescannt und wollte so bezahlen, aber in der "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-3-fc-1",
+              "incorrect": "Bestätigungs-Nachricht",
+              "correct": "Bestätigungsnachricht"
+            },
+            {
+              "type": "text",
+              "text": " stand, dass mein Buch statt 14,45 Euro 1445,00 Euro kostet (!).\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-3-fc-2",
+              "incorrect": "Also, ich habe",
+              "correct": "Deshalb habe ich"
+            },
+            {
+              "type": "text",
+              "text": " die Transaction natürlich nicht "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-3-fc-3",
+              "incorrect": "weiter verfolgt",
+              "correct": "weiterverfolgt"
+            },
+            {
+              "type": "text",
+              "text": ", und die 14,45 "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-3-fc-4",
+              "incorrect": "per Hand",
+              "correct": "manuell"
+            },
+            {
+              "type": "text",
+              "text": " am Rechner per Paypal bezahlt.\n\nAber vielleicht wollen sie "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-3-fc-5",
+              "incorrect": "schauen",
+              "correct": "nachschauen"
+            },
+            {
+              "type": "text",
+              "text": ", warum das passiert ist."
+            }
+          ],
+          "flashcardsCount": 5,
+          "wordCount": 58
+        },
+        {
+          "id": "2026-09-29-sec-4",
+          "day": "2026-09-29",
+          "sectionIndex": 4,
+          "language": "es",
+          "rawText": "Ha corrido [tres vez el maraton;el maratón tres veces] [in Espagne;en España], y cade vez [ho apprendo;ha apprendido] español [par;durante] ocho meses [avantes de marathon;antes del maratón].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Ha corrido "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-4-fc-1",
+              "incorrect": "tres vez el maraton",
+              "correct": "el maratón tres veces"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-4-fc-2",
+              "incorrect": "in Espagne",
+              "correct": "en España"
+            },
+            {
+              "type": "text",
+              "text": ", y cade vez "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-4-fc-3",
+              "incorrect": "ho apprendo",
+              "correct": "ha apprendido"
+            },
+            {
+              "type": "text",
+              "text": " español "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-4-fc-4",
+              "incorrect": "par",
+              "correct": "durante"
+            },
+            {
+              "type": "text",
+              "text": " ocho meses "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-4-fc-5",
+              "incorrect": "avantes de marathon",
+              "correct": "antes del maratón"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 5,
+          "wordCount": 20
+        }
+      ],
+      "totalWords": 228,
+      "totalFlashcards": 30
     }
   ],
-  "totalSections": 11,
-  "totalWords": 737,
-  "totalFlashcards": 70
+  "totalSections": 18,
+  "totalWords": 1334,
+  "totalFlashcards": 143
 }

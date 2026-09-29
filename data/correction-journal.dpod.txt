@@ -63,5 +63,48 @@ Et je vois aussi que l'abonnement [ne sera renouvé;ne sera pas renouvelé] [ava
 ---
 2026-09-26
 ---de
-Wenn ich ChatGPT nach französischen Säzte frage, bekomme ich jetzt immer Beispiele, die mit Laufen, Marathons und Dijon zu tun haben.
+Wenn ich ChatGPT nach [französischen Säzte;französischen Sätzen] frage, bekomme ich jetzt immer Beispiele, die mit Laufen, Marathons und Dijon zu tun haben.
 ---
+2026-09-27
+---
+En tout cas, [serait;ce serait] un grand plaisir pour moi de venir à Paris ! [Le octobre 14;Le 14 octobre] [est parfait;me convient parfaitement]. [Dit moi;Dis-moi] quand et où exactement, quand tu [connais;connaîtras] les détails.
+
+Oui, mon entraînement [de marathon;pour le marathon] [va bien;se passe bien]. Aujourd'hui, j'ai [courru;couru] 21 km à travers Berlin dont 13 km avec les [courreurs;coureurs] de Berlin Marathon. [Le week-end prochaine;Le week-end prochain] [Hannah nous visitera;Hannah viendra nous rendre visite] et nous [courrerions;courrons] 10 km ensemble. Après ça, je serai prêt pour Dijon !
+
+[Une bonne semaine pour toi;Je te souhaite une bonne semaine].
+---de
+Ah cool, Mailand war eine nette Strecke, der Anfang und Ende sind sehr schön und historisch, von [17 bis 25 km;km 17 bis 25] [ein bisschen;geht es ein bisschen] außerhalb der Stadt, [aber insgesamt;aber insgesamt ist die Strecke] flach und schnell. Hannah und ich hatten im April ein bisschen zu viel Sonne an dem Tag, [aber 04.04.;aber der 04.04.] sollte in der Regel kühl sein, also perfekte Chancen für einen optimalen Marathon. Wenn du [einen Airbnb Unterkunft;eine Airbnb-Unterkunft] in Mailand suchst, kann ich [einen;dir eine] empfehlen, der Host Alessandro und ich sind seitdem Whatsapp-Freunde.
+
+Ja, ich freue mich auf meinen [Geburtstags Marathon;Geburtstagsmarathon] und die freie Woche in Dijon. [Ich besuche auch in Paris;In Paris besuche ich außerdem] einen französischen Freund aus meiner 1993-94 Potsdamer-Uni-Zeit, wir haben [dort;damals dort] zusammen gewohnt. [Sonst;Ansonsten] habe ich einen Polyglot Club gefunden und eine Menge City- und [Museumtours;Museumtouren] [geplannt;geplant], um mein Französisch zu verbessern. Mein Airbnb ist [mit;bei] einer ehemaligen Französischlehrerin, die in Rente ist [also hat angeblich viel Zeit zu reden;une angeblich viel Zeit zum Reden hat]. [Ich werde wahrscheinlich die restliche Zeit;Die restliche Zeit werde ich wahrscheinlich] mit [Bourgogne Weinproben Veranstaltungen;Weinproben-Veranstaltungen in der Bourgogne] verbringen.
+
+Nach Dijon werde ich mein Training auf Sparflamme [bringen;stellen] und meine [7 km Strecken;7-km-Strecken] 1x oder 2x pro Woche wieder [aufleben;aufleben lassen], um fit zu bleiben. Dann [ab Januar;Januar] geht's wieder los mit den kalten Läufen mitten im Winter.
+---
+2026-09-28
+---
+Merci pour la conversation [interéssante;intéressante] sur le livre "Un jour sans femme" aujourd'hui, je hâte de le lire. 
+
+Le livre que j'ai [commander de;commandé sur] Amazon a un texte très grand (taille 16) et il [a;fait] 450 pages ! [C'est le cas;Est-ce que c'est aussi le cas] avec les éditions que vous avez aussi ? 
+
+Je voudrais [achèter;acheter] un [livre;édition] plus petit pour mon voyage à Dijon. Est-ce quelqu'un a un lien où je [peux;pourrais] acheter [cet;ce] livre avec une [taille;taille de texte] normale ?
+---
+2026-09-29
+---
+Merci beaucoup encore pour [les;ces] cours efficaces, les petites corrections de [pronunciation;prononciation] [me aident;m'aident] beaucoup.
+
+[Pourrions nous;Pourrions-nous] [experimenter;expérimenter] un peu avec le format ? [Par exemples;Par exemple], au lieu [des questions;de poser des questions] de vocabulaire [après;après que] l'apprenant a lu [au voix haute le texte;le texte à voix haute], [des questions;pourrait-on poser des questions] de compréhension et d'opinion ?
+
+[Ici serait un;Voici un exemple de] prompt possible :
+
+Rédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet.
+---es
+Quiero [escriber;escribir] [anche;tambien] en español [pour que believo;porque credo] que [este noche;esta noche] [habero;hablaré] con Hanner y es [possible;posible] que [il;él] quiera hacer un [tandem;tándem] [anglais/espagnol;inglés/español].
+---de
+vielen Dank für die Rechnung. Ich habe den QR-Code auf meinem Handy gescannt und wollte so bezahlen, aber in der [Bestätigungs-Nachricht;Bestätigungsnachricht] stand, dass mein Buch statt 14,45 Euro 1445,00 Euro kostet (!).
+
+[Also, ich habe;Deshalb habe ich] die Transaction natürlich nicht [weiter verfolgt;weiterverfolgt], und die 14,45 [per Hand;manuell] am Rechner per Paypal bezahlt.
+
+Aber vielleicht wollen sie [schauen;nachschauen], warum das passiert ist. 
+---es
+Ha corrido [tres vez el maraton;el maratón tres veces] [in Espagne;en España], y cade vez [ho apprendo;ha apprendido] español [par;durante] ocho meses [avantes de marathon;antes del maratón].
+---
+
