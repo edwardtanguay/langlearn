@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onUnmounted } from 'vue'
 
 const props = withDefaults(defineProps<{
   phrase?: string
@@ -13,6 +13,27 @@ const emit = defineEmits<{
 }>()
 
 const isHighlighting = ref(false)
+const highlightContainerRef = ref<HTMLElement | null>(null)
+
+function handleClickOutside(event: MouseEvent) {
+  if (isHighlighting.value && highlightContainerRef.value && !highlightContainerRef.value.contains(event.target as Node)) {
+    isHighlighting.value = false
+  }
+}
+
+watch(isHighlighting, (val) => {
+  if (val) {
+    setTimeout(() => {
+      document.addEventListener('click', handleClickOutside)
+    }, 0)
+  } else {
+    document.removeEventListener('click', handleClickOutside)
+  }
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 
 // Reset highlighting state when card phrase changes (e.g. navigation)
 watch(() => props.phrase, (newVal, oldVal) => {
@@ -83,8 +104,8 @@ function toggleWordAt(index: number) {
       </button>
     </div>
 
-    <!-- Highlight words replacement row: 1, 2, 3... ok -->
-    <div v-else class="flex justify-center items-center gap-1.5 flex-wrap py-0.5">
+    <!-- Highlight words replacement row: 1, 2, 3... [back icon] -->
+    <div ref="highlightContainerRef" v-else class="flex justify-center items-center gap-1.5 flex-wrap py-0.5">
       <button
         v-for="(word, idx) in wordsList"
         :key="idx"
@@ -92,7 +113,7 @@ function toggleWordAt(index: number) {
         @click="toggleWordAt(idx)"
         class="min-w-[28px] h-7 px-2 text-xs font-bold rounded-lg border transition-all cursor-pointer shadow-xs"
         :class="isWordStarred(word)
-          ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-400 dark:border-amber-600 text-amber-800 dark:text-amber-300 ring-1 ring-amber-400'
+          ? 'bg-white dark:bg-white text-gray-950 dark:text-gray-950 border-gray-400 dark:border-white shadow-md ring-2 ring-gray-900/10 font-black'
           : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'"
       >
         {{ idx + 1 }}
@@ -100,9 +121,13 @@ function toggleWordAt(index: number) {
       <button
         type="button"
         @click="isHighlighting = false"
-        class="h-7 px-3 text-xs font-bold rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all cursor-pointer uppercase shadow-xs"
+        class="h-7 w-7 flex items-center justify-center rounded-lg border-0 bg-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200/60 dark:hover:bg-gray-800/80 transition-all cursor-pointer"
+        title="Done / Go back"
       >
-        ok
+        <!-- Return / Go back icon -->
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+        </svg>
       </button>
     </div>
   </div>

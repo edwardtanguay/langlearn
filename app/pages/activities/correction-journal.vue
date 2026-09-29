@@ -134,19 +134,10 @@ const queue = computed<JournalSection[]>(() => {
 
 function setFilter(filter: 'all' | 'unlearned') {
   selectedFilter.value = filter
-  if (filter === 'unlearned') {
-    const unlearned = allSections.value.filter(s => !s.isLearned)
-    if (!unlearned.some(s => s.id === activeSectionId.value)) {
-      if (unlearned.length > 0) {
-        selectSection(unlearned[0]!.id)
-      } else {
-        activeSectionId.value = undefined
-      }
-    }
+  if (queue.value.length > 0) {
+    selectSection(queue.value[0]!.id)
   } else {
-    if (!activeSectionId.value && allSections.value.length > 0) {
-      selectSection(allSections.value[0]!.id)
-    }
+    activeSectionId.value = undefined
   }
 }
 
@@ -377,19 +368,48 @@ function formatDropdownDate(dateStr: string): string {
   return `${dayName} ${monthName} ${parts[2]}`
 }
 
-// Dropdown options strictly showing: "Tue Sep 29 ➔ 10 of 15 learned"
+// Dropdown options showing: "Wed Sep 23 → (fr 14 of 14 learned)"
 const sectionSelectItems = computed(() => {
   return queue.value.map(sec => {
     const learned = sec.learnedFlashcardIds?.length ?? (sec.isLearned ? sec.flashcardsCount : 0)
     const total = sec.flashcardsCount
-    const arrow = '➔'
+    const lang = sec.language || 'fr'
+    const dateFormatted = formatDropdownDate(sec.day)
     return {
       id: sec.id,
       isLearned: sec.isLearned,
-      label: `${formatDropdownDate(sec.day)} ${arrow} ${learned} of ${total} learned`
+      dateFormatted,
+      lang,
+      learned,
+      total,
+      label: `${dateFormatted} → (${lang} ${learned} of ${total} learned)`
     }
   })
 })
+
+const currentSectionSelectItem = computed(() => {
+  return sectionSelectItems.value.find(item => item.id === activeSectionId.value) || null
+})
+
+// Reset modal state
+const showResetModal = ref(false)
+
+function promptResetCurrentSection() {
+  showResetModal.value = true
+}
+
+function confirmResetSection() {
+  showResetModal.value = false
+  resetCurrentSection()
+}
+
+// 7-day activity word count color: 100+ green, 50+ yellow, 1+ gray, 0 red
+function getWordCountColor(words: number): string {
+  if (words >= 100) return 'text-emerald-500 dark:text-emerald-400'
+  if (words >= 50) return 'text-amber-500 dark:text-amber-400'
+  if (words >= 1) return 'text-gray-500 dark:text-gray-400'
+  return 'text-red-500 dark:text-red-400'
+}
 
 function onSelectSectionChange(val: any) {
   if (!val) return
@@ -504,7 +524,7 @@ onMounted(() => {
             :class="[
               d.hasActivity 
                 ? 'bg-gray-50 dark:bg-gray-900/70 border-gray-200 dark:border-gray-800 hover:border-amber-400/50' 
-                : 'bg-gray-100/70 dark:bg-gray-900/40 border-gray-200/70 dark:border-gray-800/60 opacity-60 dark:opacity-50 grayscale',
+                : 'bg-gray-100/70 dark:bg-gray-900/40 border-gray-200/70 dark:border-gray-800/60 opacity-80',
               d.isToday ? 'ring-2 ring-amber-500/80 border-amber-500' : ''
             ]"
           >
@@ -513,23 +533,15 @@ onMounted(() => {
               {{ d.date }}
             </div>
 
-            <template v-if="d.hasActivity">
-              <div class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white leading-tight">
-                {{ d.totalWords }}
-              </div>
-              <div class="text-xs text-gray-400 dark:text-gray-500 font-medium">
-                words
-              </div>
-            </template>
-
-            <template v-else>
-              <div class="text-2xl sm:text-3xl font-extrabold text-gray-400 dark:text-gray-500 leading-tight">
-                0
-              </div>
-              <div class="text-xs text-gray-400 dark:text-gray-500 font-medium">
-                words
-              </div>
-            </template>
+            <div
+              class="text-2xl sm:text-3xl font-extrabold leading-tight"
+              :class="getWordCountColor(d.totalWords)"
+            >
+              {{ d.totalWords }}
+            </div>
+            <div class="text-xs text-gray-400 dark:text-gray-500 font-medium">
+              words
+            </div>
           </div>
         </div>
       </div>
@@ -566,14 +578,32 @@ onMounted(() => {
             @update:model-value="onSelectSectionChange"
             label-key="label"
             value-key="id"
-            :ui="{
-              value: currentSection?.isLearned ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : ''
-            }"
-            class="w-64 sm:w-84 text-xs font-bold"
+            class="w-72 sm:w-96 text-xs font-bold"
           >
+            <template #default>
+              <span v-if="currentSectionSelectItem" class="flex items-center gap-1.5 truncate">
+                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ currentSectionSelectItem.dateFormatted }} →</span>
+                <span
+                  class="px-1.5 py-0.5 rounded font-bold border transition-all"
+                  :class="currentSectionSelectItem.isLearned
+                    ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
+                    : 'bg-red-100 dark:bg-red-950/70 border-red-400 dark:border-red-600 text-red-700 dark:text-red-300'"
+                >
+                  ({{ currentSectionSelectItem.lang }} {{ currentSectionSelectItem.learned }} of {{ currentSectionSelectItem.total }} learned)
+                </span>
+              </span>
+            </template>
             <template #item-label="{ item }">
-              <span :class="item.isLearned ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : ''">
-                {{ item.label }}
+              <span class="flex items-center gap-1.5 py-0.5">
+                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ item.dateFormatted }} →</span>
+                <span
+                  class="px-1.5 py-0.5 rounded text-[11px] font-bold border transition-all"
+                  :class="item.isLearned
+                    ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
+                    : 'bg-red-100 dark:bg-red-950/70 border-red-400 dark:border-red-600 text-red-700 dark:text-red-300'"
+                >
+                  ({{ item.lang }} {{ item.learned }} of {{ item.total }} learned)
+                </span>
               </span>
             </template>
           </USelectMenu>
@@ -616,27 +646,65 @@ onMounted(() => {
         <!-- Card Footer Actions: Reset button (bottom-left) and Next button (bottom-right) -->
         <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800/80">
           <div>
-            <!-- Red Reset button: only shown on texts that have flashcards -->
+            <!-- Gray outline-opacity Reset button: only shown on texts that have flashcards -->
             <button
               v-if="currentSection.flashcardsCount > 0"
-              @click="resetCurrentSection"
-              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              @click="promptResetCurrentSection"
+              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-gray-100 hover:bg-gray-200/80 dark:bg-gray-800/60 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
               title="Reset all flashcards in this text to unlearned"
             >
               Reset
             </button>
           </div>
           <div>
-            <!-- Yellow Next button: goes to next text, last goes to first -->
+            <!-- Yellow outline-opacity Next button: goes to next text, last goes to first -->
             <button
               @click="goToNextSection"
-              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-gray-900 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/80 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
               title="Next text"
             >
               <span>Next</span>
               <span class="text-sm font-bold">➔</span>
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark Red Reset Confirmation Modal -->
+    <div
+      v-if="showResetModal"
+      class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4"
+      @click.self="showResetModal = false"
+    >
+      <div class="bg-white dark:bg-[#1a0f12] border-2 border-red-300 dark:border-red-900/80 rounded-2xl p-5 w-full max-w-sm shadow-2xl space-y-4">
+        <div class="flex items-center gap-2.5 text-red-600 dark:text-red-400 border-b border-red-100 dark:border-red-950/80 pb-3">
+          <div class="p-2 rounded-xl bg-red-100 dark:bg-red-950/80 text-red-600 dark:text-red-400">
+            <ArrowPathIcon class="w-5 h-5" />
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-gray-900 dark:text-white">Reset this text?</h3>
+            <p class="text-xs text-red-600 dark:text-red-400 font-medium">Are you sure?</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+          All flashcards in this text will be marked as unlearned so you can practice them again.
+        </p>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button
+            type="button"
+            @click="showResetModal = false"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            @click="confirmResetSection"
+            class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-red-600 hover:bg-red-700 active:bg-red-800 transition-colors shadow-xs cursor-pointer"
+          >
+            Reset Text
+          </button>
         </div>
       </div>
     </div>

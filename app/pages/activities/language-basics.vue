@@ -327,12 +327,24 @@ const unlearnedRankedItems = computed(() => {
   return rankedItems.value.filter(item => !revealedSet.value.has(item.id))
 })
 
+const top50RankedItems = computed(() => {
+  return rankedItems.value.slice(0, 50)
+})
+
+function resetAllOpenItems() {
+  openCategoryId.value = null
+  activeLearningWords.value.clear()
+  activeUnlearnWords.value.clear()
+}
+
 function toggleTestRanked() {
+  resetAllOpenItems()
   currentViewMode.value = currentViewMode.value === 'ranked' ? 'categories' : 'ranked'
   scrollToTop()
 }
 
 function toggleTestUnlearned() {
+  resetAllOpenItems()
   currentViewMode.value = currentViewMode.value === 'unlearned' ? 'categories' : 'unlearned'
   scrollToTop()
 }
@@ -506,11 +518,41 @@ function scrollToTop() {
   }
 }
 
-// Numbers section tens filter
-const numbersTensOnly = ref(false)
+// Numbers section view mode: 'default' | 'tens' | 'show-all'
+const numbersViewMode = ref<'default' | 'tens' | 'show-all'>('default')
+
+function getNumberDigit(id: string): number {
+  const norm = normalizeWordId(id)
+  const num = parseInt(norm.replace('numbers-', ''), 10)
+  return isNaN(num) ? 0 : num - 1
+}
+
+interface NumberGroup {
+  label: string
+  items: BasicItem[]
+}
+
+const numbersGroups = computed<NumberGroup[]>(() => {
+  const numCat = categories.find(c => c.id === 'numbers')
+  if (!numCat) return []
+  const items = numCat.items
+
+  return [
+    { label: '0 – 19', items: items.slice(0, 20) },
+    { label: '20 – 29', items: items.slice(20, 30) },
+    { label: '30 – 39', items: items.slice(30, 40) },
+    { label: '40 – 49', items: items.slice(40, 50) },
+    { label: '50 – 59', items: items.slice(50, 60) },
+    { label: '60 – 69', items: items.slice(60, 70) },
+    { label: '70 – 79', items: items.slice(70, 80) },
+    { label: '80 – 89', items: items.slice(80, 90) },
+    { label: '90 – 99', items: items.slice(90, 100) },
+    { label: '100', items: items.slice(100, 101) }
+  ]
+})
 
 function getCategoryItems(cat: BasicCategory) {
-  if (cat.id === 'numbers' && numbersTensOnly.value) {
+  if (cat.id === 'numbers' && numbersViewMode.value === 'tens') {
     const tensIds = new Set([
       'numbers-11',
       'numbers-21',
@@ -532,6 +574,7 @@ watch(selectedLang, () => {
   clearAllTimers()
   isTestPronunciationMode.value = false
   testPronunciationRevealed.value.clear()
+  numbersViewMode.value = 'default'
   isStatsLoading.value = true
   loadSavedProgress()
   loadPronunciations()
@@ -789,6 +832,7 @@ const hasAnyPronunciationTips = computed(() => {
 })
 
 function toggleTestPronunciation() {
+  resetAllOpenItems()
   isTestPronunciationMode.value = !isTestPronunciationMode.value
   testPronunciationRevealed.value.clear()
   scrollToTop()
@@ -1101,30 +1145,30 @@ function isWordLearned(itemId: string): boolean {
               v-if="hasAnyPronunciationTips"
               type="button"
               @click="toggleTestPronunciation"
-              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
+              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
               :class="{ 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400 font-bold': currentViewMode === 'pronunciation' }"
             >
-              {{ currentViewMode === 'pronunciation' ? 'Back to Categories' : 'Test Pronunciation' }}
+              Test Pronunciation
             </button>
 
-            <!-- Test Ranked button -->
+            <!-- Top 50 button -->
             <button
               type="button"
               @click="toggleTestRanked"
-              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
+              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
               :class="{ 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400 font-bold': currentViewMode === 'ranked' }"
             >
-              {{ currentViewMode === 'ranked' ? 'Back to Categories' : 'Test Ranked' }}
+              Top 50
             </button>
 
             <!-- Test Unlearned button -->
             <button
               type="button"
               @click="toggleTestUnlearned"
-              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer"
+              class="px-2.5 py-1 text-xs font-semibold rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
               :class="{ 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400 font-bold': currentViewMode === 'unlearned' }"
             >
-              {{ currentViewMode === 'unlearned' ? 'Back to Categories' : 'Test Unlearned' }}
+              Test Unlearned
             </button>
 
             <!-- Reset All Button / Confirmation -->
@@ -1185,7 +1229,7 @@ function isWordLearned(itemId: string): boolean {
           @click="toggleTestRanked"
           class="w-full py-2 px-2.5 text-xs font-semibold rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all cursor-pointer text-center truncate"
         >
-          Test Ranked
+          Top 50
         </button>
         <button
           type="button"
@@ -1258,7 +1302,7 @@ function isWordLearned(itemId: string): boolean {
       <div class="pb-1">
         <button
           type="button"
-          @click="currentViewMode = 'categories'"
+          @click="currentViewMode = 'categories'; resetAllOpenItems()"
           class="w-3/4 sm:w-full py-2.5 px-4 rounded-xl font-semibold text-sm border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
         >
           <span>← Back to Categories</span>
@@ -1360,7 +1404,7 @@ function isWordLearned(itemId: string): boolean {
       <div class="flex items-center justify-between gap-3">
         <button
           type="button"
-          @click="currentViewMode = 'categories'"
+          @click="currentViewMode = 'categories'; resetAllOpenItems()"
           class="py-2 px-4 rounded-xl font-semibold text-sm border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
         >
           <span>← Back to Categories</span>
@@ -1368,10 +1412,10 @@ function isWordLearned(itemId: string): boolean {
 
         <div class="text-xs font-semibold text-gray-500 dark:text-gray-400">
           <span v-if="currentViewMode === 'ranked'">
-            All {{ rankedItems.length }} items (highest rank first)
+            Top 50 items
           </span>
           <span v-else>
-            {{ unlearnedRankedItems.length }} unlearned items (highest rank first)
+            {{ unlearnedRankedItems.length }} unlearned items
           </span>
         </div>
       </div>
@@ -1379,7 +1423,7 @@ function isWordLearned(itemId: string): boolean {
       <!-- Centered Single-Column List of Items -->
       <div class="max-w-lg mx-auto space-y-2.5">
         <div
-          v-if="(currentViewMode === 'ranked' ? rankedItems : unlearnedRankedItems).length === 0"
+          v-if="(currentViewMode === 'ranked' ? top50RankedItems : unlearnedRankedItems).length === 0"
           class="text-center py-12 text-gray-500 dark:text-gray-400 text-sm"
         >
           <span v-if="currentViewMode === 'unlearned'">
@@ -1391,20 +1435,10 @@ function isWordLearned(itemId: string): boolean {
         </div>
 
         <div
-          v-for="item in (currentViewMode === 'ranked' ? rankedItems : unlearnedRankedItems)"
+          v-for="item in (currentViewMode === 'ranked' ? top50RankedItems : unlearnedRankedItems)"
           :key="item.id"
           class="flex items-center justify-center gap-2.5"
         >
-          <!-- Rank Badge button (clicking opens Rank modal) -->
-          <button
-            type="button"
-            @click="openRankModal(item, $event)"
-            class="px-2 py-1 rounded-md text-xs font-mono font-bold border cursor-pointer transition-all shrink-0 bg-amber-500/10 text-amber-500 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/20"
-            title="Click to change rank (0 - 5)"
-          >
-            {{ getWordRank(item.id, item).toFixed(1) }}
-          </button>
-
           <!-- Word Badge / Chip, exactly functioning as in categories -->
           <button
             @click="toggleWord(item.id)"
@@ -1606,27 +1640,32 @@ function isWordLearned(itemId: string): boolean {
 
           <!-- Accordion Content Area -->
           <div v-if="isCategoryExpanded(cat.id)" class="px-4 pb-4 pt-1 border-t border-gray-200 dark:border-gray-700/80 space-y-3">
-            <!-- Sub-bar: Reset Category & Numbers Tens Toggle -->
+            <!-- Sub-bar: Reset Category & Numbers Toggles ("tens" and "show all") -->
             <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
-              <div class="flex items-center gap-2">
-                <span
-                  class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider"
-                  style="transition: opacity 0.3s ease, filter 0.3s ease;"
-                  :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
-                >
-                  {{ isStatsLoading ? `0 / ${cat.items.length} learned` : `${getCategoryLearnedCount(cat)} / ${cat.items.length} learned` }}
-                </span>
-
-                <!-- Numbers tens toggle button -->
+              <!-- Numbers Category Toggles -->
+              <div v-if="cat.id === 'numbers'" class="flex items-center gap-1.5">
                 <button
-                  v-if="cat.id === 'numbers'"
                   type="button"
-                  @click.stop="numbersTensOnly = !numbersTensOnly"
-                  class="ml-2 px-2 py-0.5 text-xs font-semibold rounded-md border border-amber-300 dark:border-amber-700/80 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all cursor-pointer"
+                  @click.stop="numbersViewMode = numbersViewMode === 'tens' ? 'default' : 'tens'"
+                  class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
+                  :class="numbersViewMode === 'tens'
+                    ? 'border-amber-500 bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold ring-1 ring-amber-500/30'
+                    : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
                 >
-                  {{ numbersTensOnly ? 'Show all numbers' : 'Only tens positions' }}
+                  tens
+                </button>
+                <button
+                  type="button"
+                  @click.stop="numbersViewMode = numbersViewMode === 'show-all' ? 'default' : 'show-all'"
+                  class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
+                  :class="numbersViewMode === 'show-all'
+                    ? 'border-amber-500 bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold ring-1 ring-amber-500/30'
+                    : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                >
+                  show all
                 </button>
               </div>
+              <div v-else></div>
 
               <!-- Reset Category Controls -->
               <div class="shrink-0">
@@ -1664,8 +1703,142 @@ function isWordLearned(itemId: string): boolean {
               </div>
             </div>
 
-            <!-- Word Badges / Chips Cloud -->
-            <div class="flex flex-wrap gap-2 pt-0.5">
+            <!-- Numbers Category "Show All" Grouped Two-Column View -->
+            <div v-if="cat.id === 'numbers' && numbersViewMode === 'show-all'" class="space-y-4 pt-1">
+              <div
+                v-for="grp in numbersGroups"
+                :key="grp.label"
+                class="space-y-2 p-3 rounded-2xl bg-gray-50/70 dark:bg-[#131b28]/60 border border-gray-200/70 dark:border-gray-800/70"
+              >
+                <div class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider pb-1 border-b border-gray-200/70 dark:border-gray-800/70 flex items-center justify-between">
+                  <span>Group {{ grp.label }}</span>
+                  <span class="text-[10px] text-gray-400 font-normal">({{ grp.items.length }} numbers)</span>
+                </div>
+                <div class="space-y-1.5 max-w-xl">
+                  <div
+                    v-for="item in grp.items"
+                    :key="item.id"
+                    class="flex items-center justify-between gap-3 px-3 py-1.5 rounded-xl border border-gray-200/70 dark:border-gray-800/80 bg-white dark:bg-[#182030] shadow-xs"
+                  >
+                    <!-- Left column: digit & English -->
+                    <div class="min-w-0 flex items-center gap-2 text-xs">
+                      <span class="w-8 h-5 flex items-center justify-center font-mono font-bold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 shrink-0 text-[11px]">
+                        {{ getNumberDigit(item.id) }}
+                      </span>
+                      <span class="font-medium text-gray-600 dark:text-gray-300 truncate">
+                        {{ item.en }}
+                      </span>
+                    </div>
+
+                    <!-- Right column: target language interactive pill -->
+                    <div class="shrink-0">
+                      <button
+                        @click="toggleWord(item.id)"
+                        type="button"
+                        class="px-2.5 py-1 rounded-lg text-xs transition-all duration-150 cursor-pointer select-none text-left relative max-w-full break-words whitespace-normal leading-snug"
+                        :class="[
+                          isWordLearned(item.id)
+                            ? 'font-normal shadow-xs'
+                            : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                        ]"
+                        :style="isWordLearned(item.id) ? {
+                          backgroundColor: selectedLang === 'fr'
+                            ? `color-mix(in srgb, ${currentButtonColor} 22%, transparent)`
+                            : `color-mix(in srgb, ${currentButtonColor} 14%, transparent)`,
+                          color: selectedLang === 'fr'
+                            ? `color-mix(in srgb, ${currentButtonColor} 85%, white)`
+                            : `color-mix(in srgb, ${currentButtonColor} 75%, white)`,
+                          border: selectedLang === 'fr'
+                            ? `1px solid color-mix(in srgb, ${currentButtonColor} 40%, transparent)`
+                            : `1px solid color-mix(in srgb, ${currentButtonColor} 28%, transparent)`,
+                        } : undefined"
+                        :title="isWordLearned(item.id) ? 'Learned word. Click to view translation / unlearn' : `Click to learn in ${activeLangLabel}`"
+                      >
+                        <!-- Active 3s Learning OR Unlearn click -->
+                        <span v-if="activeLearningWords.has(item.id) || activeUnlearnWords.has(item.id)" class="inline-flex items-center gap-1.5 flex-wrap">
+                          <span class="break-words font-semibold">{{ item[selectedLang] || item.en }}</span>
+                          <span v-if="pronunciationMap.get(item.id)" class="text-xs font-mono text-yellow-400 font-bold ml-0.5">
+                            [{{ pronunciationMap.get(item.id) }}]
+                          </span>
+                          <!-- Star icon: example sentences -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                            title="Search for 3 example sentences"
+                            @click="handleExampleSearch(item, $event)"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                          </span>
+                          <!-- Google Translate icon -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                            title="Look up in Google Translate"
+                            @click="handleGoogleTranslate(item, $event)"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                          </span>
+                          <!-- Pronunciation 'P' button -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                            title="Add or edit pronunciation tip"
+                            @click="openPronunciationModal(item, $event)"
+                          >
+                            P
+                          </span>
+                          <!-- Comparison 'C' button -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                            title="Compare across all 4 languages"
+                            @click="openCrossLanguageModal(item, $event)"
+                          >
+                            C
+                          </span>
+                          <!-- Rank 'R' button -->
+                          <span
+                            class="inline-flex items-center justify-center w-4 h-4 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer"
+                            title="Set rank (0 - 5)"
+                            @click="openRankModal(item, $event)"
+                          >
+                            R
+                          </span>
+                          <!-- Checkmark icon -->
+                          <span
+                            v-if="activeLearningWords.has(item.id)"
+                            @click="finalizeWordLearned(item.id, $event)"
+                            class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 hover:text-emerald-500 transition-opacity cursor-pointer shrink-0"
+                            title="Mark as learned"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                          </span>
+                          <!-- '✕' icon -->
+                          <span
+                            v-if="activeUnlearnWords.has(item.id)"
+                            @click="unlearnWord(item.id, $event)"
+                            class="inline-flex items-center justify-center w-4 h-4 opacity-60 hover:opacity-100 hover:text-red-500 transition-opacity cursor-pointer shrink-0"
+                            title="Mark as unlearned"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                          </span>
+                        </span>
+                        <!-- Learned word -> target language text with checkmark -->
+                        <span v-else-if="isWordLearned(item.id)" class="inline-flex items-center gap-1.5 font-medium">
+                          <span>{{ item[selectedLang] || item.en }}</span>
+                          <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                          </svg>
+                        </span>
+                        <!-- Unlearned word -> target language text directly -->
+                        <span v-else class="inline-block font-medium">
+                          {{ item[selectedLang] || item.en }}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Standard Word Badges / Chips Cloud (when not in numbers show-all) -->
+            <div v-else class="flex flex-wrap gap-2 pt-0.5">
               <button
                 v-for="item in getCategoryItems(cat)"
                 :key="item.id"
