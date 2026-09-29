@@ -394,7 +394,7 @@ function getLanguageTextColor(langCode: string): string {
   return languageTextColors[code] || 'text-[#333388] dark:text-blue-400'
 }
 
-// Dropdown options showing: "Wed Sep 23 --> FR (2 unlearned)"
+// Dropdown options showing: "Wed Sep 23 --> FR --> (2 unlearned)"
 const sectionSelectItems = computed(() => {
   return queue.value.map(sec => {
     const learned = sec.learnedFlashcardIds?.length ?? (sec.isLearned ? sec.flashcardsCount : 0)
@@ -416,7 +416,7 @@ const sectionSelectItems = computed(() => {
       unlearned,
       isAllLearned,
       statusText,
-      label: `${dateFormatted} --> ${lang} ${statusText}`,
+      label: `${dateFormatted} → ${lang} → ${statusText}`,
       class: sec.id === activeSectionId.value ? '!bg-gray-100 dark:!bg-gray-800' : ''
     }
   })
@@ -621,8 +621,10 @@ onMounted(() => {
           >
             <template #default>
               <span v-if="currentSectionSelectItem" class="flex items-center gap-1.5 truncate">
-                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ currentSectionSelectItem.dateFormatted }} --></span>
+                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ currentSectionSelectItem.dateFormatted }}</span>
+                <ArrowRightIcon class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
                 <span :class="['font-bold', currentSectionSelectItem.langColorClass]">{{ currentSectionSelectItem.lang }}</span>
+                <ArrowRightIcon class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
                 <span
                   class="font-bold transition-all"
                   :class="currentSectionSelectItem.isAllLearned
@@ -635,8 +637,10 @@ onMounted(() => {
             </template>
             <template #item-label="{ item }">
               <span class="flex items-center gap-1.5 py-0.5">
-                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ item.dateFormatted }} --></span>
+                <span class="text-gray-700 dark:text-gray-300 font-medium">{{ item.dateFormatted }}</span>
+                <ArrowRightIcon class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
                 <span :class="['font-bold', item.langColorClass]">{{ item.lang }}</span>
+                <ArrowRightIcon class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 shrink-0" />
                 <span
                   class="text-[11px] font-bold transition-all"
                   :class="item.isAllLearned
@@ -654,7 +658,7 @@ onMounted(() => {
       <!-- Section Text Card -->
       <div class="p-6 sm:p-8 bg-white dark:bg-[#182030] rounded-3xl border-2 border-gray-200 dark:border-gray-800 shadow-md space-y-6">
         <!-- Interactive Text Display: User can select text smoothly across plain text and pills -->
-        <div class="text-base sm:text-lg leading-loose sm:leading-[2.2rem] text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
+        <div class="text-base sm:text-lg leading-[2.85rem] sm:leading-[3rem] text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
           <template v-for="(bit, bIdx) in currentSection.bits" :key="bIdx">
             <!-- Plain Text Segment -->
             <span v-if="bit.type === 'text'">{{ formatFrenchText(bit.text) }}</span>
@@ -667,7 +671,7 @@ onMounted(() => {
               @click="handlePillClick(bit.id)"
               @keydown.enter.prevent="toggleFlashcard(bit.id)"
               @keydown.space.prevent="toggleFlashcard(bit.id)"
-              class="inline-flex items-center mx-0.5 my-0 px-1 py-0 rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group"
+              class="inline-flex items-center mx-0.5 my-1 px-1 py-0 rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group align-baseline"
               :class="[
                 toggledStates[bit.id]
                   ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:brightness-110 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/90'
