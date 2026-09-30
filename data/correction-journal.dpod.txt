@@ -121,3 +121,11 @@ Tu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à
 
 [J'ai programmer;J'ai programmé] plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.
 ---
+Pour chaque [sujet titre;titre de sujet], ajoute les dates [approximate;approximatives]
+
+[Deplace tous les dates;Déplace toutes les dates] [vers le commence de titre;au debut du titre] et supprime [le numéro;les numéros]
+
+À la fin de chaque section, ajoute [trois très simple questions;trois questions très simple] de compréhension [du texte;sur le texte] de la section
+
+
+---
