@@ -1,4 +1,5 @@
-#### *v. VIe siècle av. J.-C. – Ve siècle*
+
+#### <span style="color: #ca8a04;">*v. VIe siècle av. J.-C. – Ve siècle*</span>
 ## Les origines antiques : du carrefour celte au castrum romain de Divio
 
 Bien avant que la cité ne porte son nom actuel, le territoire dijonnais constituait déjà un carrefour naturel particulièrement convoité. Situé quelque part entre le bassin rhodanien, les plaines du nord et l'axe fluvial de la Seine, ce plateau voyait converger marchands et voyageurs. On ne pouvait pas s'installer n'importe où dans cette contrée marécageuse, mais les confluences des rivières de l'Ouche et du Suzon offraient une position stratégique incontournable. À tout moment, les tribus gauloises locales, notamment les Lingons, devaient surveiller ces passages fluviaux et terrestres afin de sécuriser leur négoce. Pour n'importe qui traversant la Gaule de l'Est à cette époque lointaine, l'étape représentait quelque chose de vital pour le ravitaillement.
@@ -14,7 +15,8 @@ La vie quotidienne au sein de ce camp retranché mêlait traditions celtiques et
 > **Question :** *Quels types d'artisanat se sont développés grâce à la garnison permanente du camp ?*
 
 
-#### *v. IIe siècle – XIIe siècle*
+
+#### <span style="color: #ca8a04;">*v. IIe siècle – XIIe siècle*</span>
 ## L'évangélisation et l'aube médiévale : le martyre de saint Bénigne et la cité ecclésiale
 
 Au cours du bas Moyen Âge naissant, la mémoire spirituelle dijonnaise s'ancra profondément dans la légende de saint Bénigne. Venu d'Asie Mineure quelque part au IIe ou IIIe siècle pour évangéliser les populations gauloises, ce prêtre chrétien sillonna la région pour transmettre sa foi. À tout moment, les envoyés des autorités païennes surveillaient ses prêches avec suspicion, redoutant que son message ne bouleversât l'ordre établi. Arrêté et soumis à des supplices d'une cruauté inouïe, Bénigne refusa de renier ses croyances pour embrasser n'importe quoi d'autre. Son tombeau, situé à l'extérieur de l'enceinte primitive, devint rapidement un sanctuaire vénéré où que les fidèles pussent trouver refuge et consolation.
@@ -30,7 +32,8 @@ Cependant, la ville dut affronter de rudes épreuves, notamment un gigantesque i
 > **Question :** *Quel duc a accordé la charte de commune aux bourgeois dijonnais en 1183 ?*
 
 
-#### *1363 – 1404*
+
+#### <span style="color: #ca8a04;">*1363 – 1404*</span>
 ## L'avènement des ducs Valois : Philippe le Hardi et la magnificence ducale
 
 L'année 1363 marqua un tournant prodigieux dans la destinée dijonnaise lorsque le roi de France, Jean II le Bon, transmit le duché de Bourgogne à son plus jeune fils, Philippe le Hardi. Dès son accession, le prince manifesta l'ambition de transformer Dijon en une métropole digne des plus grandes cours européennes. Il était évident de toute façon que le duc ne voulait pas gouverner depuis n'importe où, mais bien depuis ce cœur historique reliant la Bourgogne aux riches cités flamandes. Quelquefois, les finances ducales semblaient au bord de la rupture face à l'immensité des dépenses somptuaires, mais le duc trouvait toujours quelque part les ressources nécessaires pour asseoir son prestige.
@@ -46,7 +49,8 @@ La vie à la cour dijonnaise devint un modèle de raffinement, attirant musicien
 > **Question :** *Vers quelle ville royale l'étiquette de la cour dijonnaise rivalisait-elle ?*
 
 
-#### *1404 – 1467*
+
+#### <span style="color: #ca8a04;">*1404 – 1467*</span>
 ## L'âge d'or et l'apogée bourguignonne : Jean sans Peur et Philippe le Bon
 
 Le successeur de Philippe le Hardi, Jean sans Peur, gouverna dans un climat de tensions extrêmes, partagé entre ses terres dijonnaises et les rivalités sanglantes du trône de France. Même si son regard était tourné vers Paris, Dijon demeurait le sanctuaire intime de son autorité, une place forte où personne ne pouvait menacer sa souveraineté d'une manière ou d'une autre. Quelquefois, le duc devait quitter ses appartements à tout moment pour déjouer un complot ou mobiliser ses troupes fidèles. De toute façon, son assassinat sur le pont de Montereau en 1419 traumatisa l'opinion bourguignonne et scella une rupture temporaire mais radicale avec la couronne capétienne.
@@ -62,7 +66,8 @@ La fondation du prestigieux ordre de la Toison d'Or illustra parfaitement cette 
 > **Question :** *Quel ordre prestigieux incarnait l'idéal chevaleresque sous le règne de Philippe le Bon ?*
 
 
-#### *1467 – 1513*
+
+#### <span style="color: #ca8a04;">*1467 – 1513*</span>
 ## La chute du Téméraire et l'intégration tumultueuse au royaume de France
 
 Le destin flamboyant de la Bourgogne ducale s'effondra brutalement avec le règne tumultueux de Charles le Téméraire. Poussé par un orgueil guerrier démesuré, ce prince rêvait de réunir ses territoires disparates en une couronne royale unifiée. À tout moment, ses armées étaient prêtes à fondre sur l'ennemi, n'écoutant aucun conseil de prudence ni n'importe qui prêchant la modération. Mais sa témérité se heurta à la ténacité des confédérés suisses et aux intrigues souterraines du roi de France Louis XI. En janvier 1477, Charles trouva la mort sous les murs glacés de Nancy, laissant son cadavre déchiqueté quelque part dans la neige, sans que personne ne sût au début où il avait péri.
@@ -78,7 +83,8 @@ Pour prouver leur loyauté et consolider leur nouveau statut dans le royaume, le
 > **Question :** *Quel gouverneur a réussi à négocier le départ des assiégeants suisses en 1513 ?*
 
 
-#### *XVIe – XVIIIe siècle*
+
+#### <span style="color: #ca8a04;">*XVIe – XVIIIe siècle*</span>
 ## L'époque moderne, le Parlement de Bourgogne et le rayonnement des Lumières
 
 Après son incorporation à la France, Dijon ne sombra nullement dans l'oubli mais se réinventa brillamment comme ville parlementaire et juridique. La création du Parlement de Bourgogne par Louis XI conféra à la cité une nouvelle aristocratie : la noblesse de robe. Ces magistrats et procureurs, instruits et fortunés, n'allaient pas habiter n'importe où ni construire n'importe quoi. Partout dans le centre ancien surgirent de magnifiques hôtels particuliers aux cours pavées et aux toitures de tuiles vernissées aux motifs géométriques polychromes. Où que le promeneur déambulât, de la rue Verrerie à la place Royale, le faste des juristes dijonnais sautait aux yeux.
@@ -94,7 +100,8 @@ La prospérité de cette élite éclairée permit l'essor d'une vie intellectuel
 > **Question :** *Sur quel sujet fiscal les magistrats du Parlement entraient-ils parfois en conflit avec le roi ?*
 
 
-#### *1789 – 1914*
+
+#### <span style="color: #ca8a04;">*1789 – 1914*</span>
 ## Du choc révolutionnaire à la révolution industrielle du XIXe siècle
 
 L'avènement de la Révolution française en 1789 bouleversa profondément les équilibres traditionnels de la société dijonnaise. La suppression des corporations et surtout la fermeture définitive du Parlement de Bourgogne privèrent la cité de son influence institutionnelle dominante. Partout, les couvents et les biens ecclésiastiques furent confisqués et vendus comme biens nationaux, transformant brutalement le paysage urbain. Les citoyens comprirent qu'ils ne pouvaient plus compter sur les anciennes rentes de justice et qu'il fallait, d'une manière ou d'une autre, trouver une nouvelle vocation économique. Nulle part la transition ne fut simple, mais la bourgeoisie marchande prit rapidement le relais de l'ancienne magistrature.
@@ -110,7 +117,8 @@ Parallèlement, la cité s'illustra par des avancées scientifiques et technique
 > **Question :** *Quel ingénieur a créé le premier réseau moderne d'eau potable à Dijon ?*
 
 
-#### *1914 – 1968*
+
+#### <span style="color: #ca8a04;">*1914 – 1968*</span>
 ## Les épreuves du XXe siècle : guerres, résistance et le magistère du chanoine Kir
 
 Le XXe siècle débuta dans l'épreuve déchirante de la Première Guerre mondiale, au cours de laquelle Dijon devint une base arrière logistique et sanitaire fondamentale. Les casernes locales mobilisèrent des dizaines de milliers d'hommes envoyés sur le front de l'Est, tandis que les hôpitaux de fortune accueillaient les blessés acheminés par voie ferrée. À tout moment, les familles redoutaient l'arrivée du facteur annonçant le deuil, car la guerre fauchait la jeunesse sans épargner personne. Mais c'est lors du second conflit mondial que la ville vécut ses heures les plus sombres, tombant sous le joug de l'occupant nazi dès le mois de juin 1940.
@@ -126,7 +134,8 @@ Une figure légendaire émergea de ce tumulte : le chanoine Félix Kir, homme d'
 > **Question :** *Quels deux éléments emblématiques de Dijon portent aujourd'hui le nom du chanoine Kir ?*
 
 
-#### *Du Moyen Âge à nos jours*
+
+#### <span style="color: #ca8a04;">*Du Moyen Âge à nos jours*</span>
 ## L'art de vivre dijonnais : gastronomie d'excellence, vignobles et patrimoine mondial
 
 Dijon s'est forgée une renommée planétaire grâce à une tradition gastronomique séculaire où la gourmandise est érigée en véritable art de vivre. Impossible de parler de la ville sans évoquer sa fameuse moutarde au verjus, dont la recette raffinée régale les tables depuis les banquets des ducs de Bourgogne. Si les usines de production industrielle ont parfois migré vers la périphérie, les boutiques historiques du centre attirent des passionnés venus d'absolument n'importe où sur le globe. De toute façon, la gastronomie bourguignonne ne tolère pas la médiocrité : n'importe qui s'attablant dans un bouchon dijonnais s'attend à déguster des œufs en meurette, un bœuf bourguignon ou un jambon persillé préparés selon les règles de l'art.
@@ -142,7 +151,8 @@ Pour célébrer et transmettre ce patrimoine exceptionnel, Dijon a inauguré en 
 > **Question :** *Quel complexe gastronomique et culturel majeur a été inauguré à Dijon en 2022 ?*
 
 
-#### *De 1968 à nos jours*
+
+#### <span style="color: #ca8a04;">*De 1968 à nos jours*</span>
 ## Dijon contemporaine : métropole écologique, effervescence culturelle et perspectives politiques
 
 À l'orée du XXIe siècle, Dijon a accompli une métamorphose urbaine spectaculaire, se positionnant comme un modèle pionnier de ville durable et apaisée. La réintroduction du tramway en 2012 et la piétonnisation massive du centre historique ont radicalement transformé la qualité de vie des habitants. Désormais, où que l'on circule au cœur de la ville, le bruit des moteurs a cédé la place aux flâneries sur les terrasses de la place de la Libération réaménagée par Jean-Michel Wilmotte. On ne traverse plus la ville n'importe comment ni n'importe où au détriment de l'environnement : le développement de l'écocité des maraîchers et le projet pionnier d'hydrogène vert prouvent que Dijon veut d'une manière ou d'une autre anticiper les défis climatiques de demain.
