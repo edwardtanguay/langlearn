@@ -125,7 +125,17 @@ Pour chaque [sujet titre;titre de sujet], ajoute les dates [approximate;approxim
 
 [Deplace tous les dates;Déplace toutes les dates] [vers le commence de titre;au debut du titre] et supprime [le numéro;les numéros]
 
-À la fin de chaque section, ajoute [trois très simple questions;trois questions très simple] de compréhension [du texte;sur le texte] de la section
+À la fin de chaque section, ajoute trois questions de compréhension très simples [du texte;sur le texte] de la section
 
+À la fin de chaque [paragraph;paragraphe], ajoute une question de compréhension très simple sur le paragraphe
 
+Avec [markdown syntaxe;le syntaxe Markdown], [fait les titres plus visible;rends les titres plus visibles] comme [titres de sections;de vraie titres de section], et [highlighte le question;mets les questions en évidence] [dans un façon;d'une manière claire]
+
+Est-ce qu'il [y a un possibilité;est possible] de [rendre;mettre] les dates comme [supertitres;des surtitres] [en haut de;au-dessus des] titres ?
+
+Est-ce qu'il est possible de modifier le couleur de surtitres [comme jaunes;par exemple en jaune] ou [de ajouter;d'ajouter] une ligne vide au-dessus [chaque surtitres;de chaque surtitre] ?
+
+Mets la question [pas après;non pas après,] mais avant [la paragraph;le paragraphe] qui se [concerne;rapporte]
+
+Oui, je suis s
 ---
