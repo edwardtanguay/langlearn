@@ -718,13 +718,13 @@
           "day": "2026-09-25",
           "sectionIndex": 2,
           "language": "fr",
-          "rawText": "[Sorry;Désole], \"mercredi 1er octobre\" devait être \"mercredi 29 septembre\", mais mercredi ne marche pas pour toi.\n\n[Serais;Est-ce que] \"jeudi 1er octobre, 21 h 30\" [passer;pourrait te convenir] ?",
+          "rawText": "[Sorry;Désolé], \"mercredi 1er octobre\" devait être \"mercredi 29 septembre\", mais mercredi ne marche pas pour toi.\n\n[Serais;Est-ce que] \"jeudi 1er octobre, 21 h 30\" [passer;pourrait te convenir] ?",
           "bits": [
             {
               "type": "flashcard",
               "id": "2026-09-25-sec-2-fc-1",
               "incorrect": "Sorry",
-              "correct": "Désole"
+              "correct": "Désolé"
             },
             {
               "type": "text",
@@ -1382,7 +1382,7 @@
           "day": "2026-09-29",
           "sectionIndex": 1,
           "language": "fr",
-          "rawText": "Merci beaucoup encore pour [les;ces] cours efficaces, les petites corrections de [pronunciation;prononciation] [me aident;m'aident] beaucoup.\n\n[Pourrions nous;Pourrions-nous] [experimenter;expérimenter] un peu avec le format ? [Par exemples;Par exemple], au lieu [des questions;de poser des questions] de vocabulaire [après;après que] l'apprenant a lu [au voix haute le texte;le texte à voix haute], [des questions;pourrait-on poser des questions] de compréhension et d'opinion ?\n\n[Ici serait un;Voici un exemple de] prompt possible :\n\nRédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet.",
+          "rawText": "Merci beaucoup encore pour [les;ces] cours efficaces, les petites corrections de [pronunciation;prononciation] [me aident;m'aident] beaucoup.\n\n[Pourrions nous;Pourrions-nous] [experimenter;expérimenter] un peu avec le format ? [Par exemples;Par exemple], au lieu [des questions;de poser des questions] de vocabulaire [après;après que] l'apprenant a lu [au voix haute le texte;le texte à voix haute], [des questions;pourrait-on poser des questions] de compréhension et d'opinion ?\n\n[Ici serait un;Voici un exemple de] prompt possible :",
           "bits": [
             {
               "type": "text",
@@ -1496,11 +1496,11 @@
             },
             {
               "type": "text",
-              "text": " prompt possible :\n\nRédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet."
+              "text": " prompt possible :"
             }
           ],
           "flashcardsCount": 11,
-          "wordCount": 127
+          "wordCount": 58
         },
         {
           "id": "2026-09-29-sec-2",
@@ -1736,13 +1736,375 @@
           ],
           "flashcardsCount": 5,
           "wordCount": 20
+        },
+        {
+          "id": "2026-09-29-sec-5",
+          "day": "2026-09-29",
+          "sectionIndex": 5,
+          "language": "fr",
+          "rawText": "Nous avons discuté [chapitres;des chapitres] 1 et 2, mais je crois que pour le semaine prochaine, [il été;on avait] dit [qu'on doit;de] lire le chapitre 2 encore et chapitre 3. Je veux lire 1-4 pour [attrapper;ratrapper mon retard].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Nous avons discuté "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-5-fc-1",
+              "incorrect": "chapitres",
+              "correct": "des chapitres"
+            },
+            {
+              "type": "text",
+              "text": " 1 et 2, mais je crois que pour le semaine prochaine, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-5-fc-2",
+              "incorrect": "il été",
+              "correct": "on avait"
+            },
+            {
+              "type": "text",
+              "text": " dit "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-5-fc-3",
+              "incorrect": "qu'on doit",
+              "correct": "de"
+            },
+            {
+              "type": "text",
+              "text": " lire le chapitre 2 encore et chapitre 3. Je veux lire 1-4 pour "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-5-fc-4",
+              "incorrect": "attrapper",
+              "correct": "ratrapper mon retard"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 4,
+          "wordCount": 36
         }
       ],
-      "totalWords": 228,
-      "totalFlashcards": 30
+      "totalWords": 195,
+      "totalFlashcards": 34
+    },
+    {
+      "date": "2026-09-30",
+      "sections": [
+        {
+          "id": "2026-09-30-sec-1",
+          "day": "2026-09-30",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "si [posible;possible] si voudrais reprogrammer ce cours [de 7 octobre;du 7 octobre] parce que je vais partir [vers;pour] Dijon [très tot de matin;très tot le matin] [le 8 octobre;du 8 octobre].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "si "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-1",
+              "incorrect": "posible",
+              "correct": "possible"
+            },
+            {
+              "type": "text",
+              "text": " si voudrais reprogrammer ce cours "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-2",
+              "incorrect": "de 7 octobre",
+              "correct": "du 7 octobre"
+            },
+            {
+              "type": "text",
+              "text": " parce que je vais partir "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-3",
+              "incorrect": "vers",
+              "correct": "pour"
+            },
+            {
+              "type": "text",
+              "text": " Dijon "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-4",
+              "incorrect": "très tot de matin",
+              "correct": "très tot le matin"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-5",
+              "incorrect": "le 8 octobre",
+              "correct": "du 8 octobre"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 5,
+          "wordCount": 24
+        },
+        {
+          "id": "2026-09-30-sec-2",
+          "day": "2026-09-30",
+          "sectionIndex": 2,
+          "language": "fr",
+          "rawText": "Voici un nouveau prompt pour un texte pour notre prochain cours. [N'hésites pas;N'hésite pas] [de le changer ou ajouter;à le modifier ou à ajouter] [l'autres thème grammaire;d'autres thèmes de grammaire] etc. si tu veux.\n\nJe doit surtout pratiquer [prononciation et discussion;la prononciation et la discussion]. Je crois que ma prononciation [s'améliorer;s'améliore] lentement (tes conseils son très utiles !) mais [j'ai besoin plus;j'ai besoin de plus] d'experience [pour discuter;pour pouvoir discuter] [sur n'importe quoi sujet;de n'importe quel sujet] avec [l'autres;d'autres] personnes : comprendre [tout que;tout ce que] l'autre personne dit et [répondre assez rapide;répondre assez rapidement] pour avoir une conversation [interessante;intéressante].\n\n[Serait cool;Ce serait cool] [si nous pouvons faire le lire;si nous pouvions commencer par une lecture] à voix haute [plus correction;avec des corrections], [et après ça simplement;puis simplement avoir] une conversation libre sur le sujet, etc.\n\nTu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à] tous [les sujets sur France;les sujets concernant la France] et la culture française, par exemple quelque chose [que t'aimes;que tu aimes], une ville, un région, [un custom fraicais;une coutume fraicaise] qui te plaît, etc.\n\n[J'ai programmer;J'ai programmé] plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Voici un nouveau prompt pour un texte pour notre prochain cours. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-1",
+              "incorrect": "N'hésites pas",
+              "correct": "N'hésite pas"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-2",
+              "incorrect": "de le changer ou ajouter",
+              "correct": "à le modifier ou à ajouter"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-3",
+              "incorrect": "l'autres thème grammaire",
+              "correct": "d'autres thèmes de grammaire"
+            },
+            {
+              "type": "text",
+              "text": " etc. si tu veux.\n\nJe doit surtout pratiquer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-4",
+              "incorrect": "prononciation et discussion",
+              "correct": "la prononciation et la discussion"
+            },
+            {
+              "type": "text",
+              "text": ". Je crois que ma prononciation "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-5",
+              "incorrect": "s'améliorer",
+              "correct": "s'améliore"
+            },
+            {
+              "type": "text",
+              "text": " lentement (tes conseils son très utiles !) mais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-6",
+              "incorrect": "j'ai besoin plus",
+              "correct": "j'ai besoin de plus"
+            },
+            {
+              "type": "text",
+              "text": " d'experience "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-7",
+              "incorrect": "pour discuter",
+              "correct": "pour pouvoir discuter"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-8",
+              "incorrect": "sur n'importe quoi sujet",
+              "correct": "de n'importe quel sujet"
+            },
+            {
+              "type": "text",
+              "text": " avec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-9",
+              "incorrect": "l'autres",
+              "correct": "d'autres"
+            },
+            {
+              "type": "text",
+              "text": " personnes : comprendre "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-10",
+              "incorrect": "tout que",
+              "correct": "tout ce que"
+            },
+            {
+              "type": "text",
+              "text": " l'autre personne dit et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-11",
+              "incorrect": "répondre assez rapide",
+              "correct": "répondre assez rapidement"
+            },
+            {
+              "type": "text",
+              "text": " pour avoir une conversation "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-12",
+              "incorrect": "interessante",
+              "correct": "intéressante"
+            },
+            {
+              "type": "text",
+              "text": ".\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-13",
+              "incorrect": "Serait cool",
+              "correct": "Ce serait cool"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-14",
+              "incorrect": "si nous pouvons faire le lire",
+              "correct": "si nous pouvions commencer par une lecture"
+            },
+            {
+              "type": "text",
+              "text": " à voix haute "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-15",
+              "incorrect": "plus correction",
+              "correct": "avec des corrections"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-16",
+              "incorrect": "et après ça simplement",
+              "correct": "puis simplement avoir"
+            },
+            {
+              "type": "text",
+              "text": " une conversation libre sur le sujet, etc.\n\nTu peux choisir un sujet pour le texte, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-17",
+              "incorrect": "je m'interessais sur",
+              "correct": "je m'intéresse à"
+            },
+            {
+              "type": "text",
+              "text": " tous "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-18",
+              "incorrect": "les sujets sur France",
+              "correct": "les sujets concernant la France"
+            },
+            {
+              "type": "text",
+              "text": " et la culture française, par exemple quelque chose "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-19",
+              "incorrect": "que t'aimes",
+              "correct": "que tu aimes"
+            },
+            {
+              "type": "text",
+              "text": ", une ville, un région, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-20",
+              "incorrect": "un custom fraicais",
+              "correct": "une coutume fraicaise"
+            },
+            {
+              "type": "text",
+              "text": " qui te plaît, etc.\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-21",
+              "incorrect": "J'ai programmer",
+              "correct": "J'ai programmé"
+            },
+            {
+              "type": "text",
+              "text": " plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-22",
+              "incorrect": "c'est presque le seuls crénaux",
+              "correct": "ce sont presque les seuls créneaux"
+            },
+            {
+              "type": "text",
+              "text": " disponibles dont je dispose actuellement."
+            }
+          ],
+          "flashcardsCount": 22,
+          "wordCount": 184
+        }
+      ],
+      "totalWords": 208,
+      "totalFlashcards": 27
     }
   ],
-  "totalSections": 18,
-  "totalWords": 1334,
-  "totalFlashcards": 143
+  "totalSections": 21,
+  "totalWords": 1509,
+  "totalFlashcards": 174
 }

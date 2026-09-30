@@ -94,8 +94,6 @@ Merci beaucoup encore pour [les;ces] cours efficaces, les petites corrections de
 [Pourrions nous;Pourrions-nous] [experimenter;expérimenter] un peu avec le format ? [Par exemples;Par exemple], au lieu [des questions;de poser des questions] de vocabulaire [après;après que] l'apprenant a lu [au voix haute le texte;le texte à voix haute], [des questions;pourrait-on poser des questions] de compréhension et d'opinion ?
 
 [Ici serait un;Voici un exemple de] prompt possible :
-
-Rédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet.
 ---es
 Quiero [escriber;escribir] [anche;tambien] en español [pour que believo;porque credo] que [este noche;esta noche] [habero;hablaré] con Hanner y es [possible;posible] que [il;él] quiera hacer un [tandem;tándem] [anglais/espagnol;inglés/español].
 ---de
@@ -109,4 +107,17 @@ Ha corrido [tres vez el maraton;el maratón tres veces] [in Espagne;en España],
 ---
 Nous avons discuté [chapitres;des chapitres] 1 et 2, mais je crois que pour le semaine prochaine, [il été;on avait] dit [qu'on doit;de] lire le chapitre 2 encore et chapitre 3. Je veux lire 1-4 pour [attrapper;ratrapper mon retard].
 ---
+2026-09-30
+---
+si [posible;possible] si voudrais reprogrammer ce cours [de 7 octobre;du 7 octobre] parce que je vais partir [vers;pour] Dijon [très tot de matin;très tot le matin] [le 8 octobre;du 8 octobre].
+---
+Voici un nouveau prompt pour un texte pour notre prochain cours. [N'hésites pas;N'hésite pas] [de le changer ou ajouter;à le modifier ou à ajouter] [l'autres thème grammaire;d'autres thèmes de grammaire] etc. si tu veux. 
 
+Je doit surtout pratiquer [prononciation et discussion;la prononciation et la discussion]. Je crois que ma prononciation [s'améliorer;s'améliore] lentement (tes conseils son très utiles !) mais [j'ai besoin plus;j'ai besoin de plus] d'experience [pour discuter;pour pouvoir discuter] [sur n'importe quoi sujet;de n'importe quel sujet] avec [l'autres;d'autres] personnes : comprendre [tout que;tout ce que] l'autre personne dit et [répondre assez rapide;répondre assez rapidement] pour avoir une conversation [interessante;intéressante]. 
+
+[Serait cool;Ce serait cool] [si nous pouvons faire le lire;si nous pouvions commencer par une lecture] à voix haute [plus correction;avec des corrections], [et après ça simplement;puis simplement avoir] une conversation libre sur le sujet, etc.
+
+Tu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à] tous [les sujets sur France;les sujets concernant la France] et la culture française, par exemple quelque chose [que t'aimes;que tu aimes], une ville, un région, [un custom fraicais;une coutume fraicaise] qui te plaît, etc.
+
+[J'ai programmer;J'ai programmé] plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.
+---
