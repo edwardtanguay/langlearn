@@ -1,4 +1,4 @@
-# History of Dijon
+# Histoire de Dijon
 
 #### <span style="color: #ca8a04;">*v. VIe siècle av. J.-C. – Ve siècle*</span>
 ## Les origines antiques : du carrefour celte au castrum romain de Divio
