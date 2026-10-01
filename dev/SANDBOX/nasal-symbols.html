@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>French Nasal Sounds – Visual Styling Sandbox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS VARIABLES
+       ========================================================================== */
+    :root {
+      /* Theme Backgrounds */
+      --bg-dark: #1e1b18;          /* Warm dark espresso from app */
+      --bg-card: #27231e;
+      --bg-card-subtle: #201c18;
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(234, 179, 8, 0.3);
+      
+      /* Base Yellow Text (User specified: text has to be yellow) */
+      --yellow-main: #facc15;      /* Vibrant gold */
+      --yellow-dim: #ca8a04;       /* Deep amber */
+      --yellow-bright: #fef08a;    /* Light lemon */
+      --text-yellow: var(--yellow-main);
+      
+      /* Neutral text for labels & descriptions */
+      --text-muted: #a8a29e;
+      --text-light: #f5f5f4;
+      --text-dim: #78716c;
+
+      /* Nasal Sound Family Harmonious Accents */
+      --nasal-an: #fb923c;   /* [ɑ̃] AN / EN (Warm Apricot / Amber Orange) */
+      --nasal-on: #f43f5e;   /* [ɔ̃] ON (Coral Rose) */
+      --nasal-in: #38bdf8;   /* [ɛ̃] IN / AIN / EIN (Sky / Aqua) */
+      --nasal-un: #a855f7;   /* [œ̃] UN (Lavender Purple) */
+
+      --font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'Courier Prime', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: var(--font-ui);
+      padding: 36px 20px 100px;
+      line-height: 1.6;
+      transition: background-color 0.25s ease;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       HEADER & CONTROL TOOLBAR
+       ========================================================================== */
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border-card);
+      padding-bottom: 24px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(250, 204, 21, 0.12);
+      color: var(--yellow-main);
+      border: 1px solid rgba(250, 204, 21, 0.3);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    h1 span.yellow-glow {
+      color: var(--yellow-main);
+      text-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 780px;
+      line-height: 1.6;
+    }
+
+    /* Sticky/Floating Control Bar */
+    .controls-toolbar {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      background: rgba(30, 27, 24, 0.92);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 14px 20px;
+      margin-bottom: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .control-label {
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-right: 4px;
+    }
+
+    .btn-toggle {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .btn-toggle.active {
+      background: var(--yellow-main);
+      color: #1a1600;
+      border-color: var(--yellow-main);
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+    }
+
+    /* ==========================================================================
+       KEY INSIGHT BOX
+       ========================================================================== */
+    .insight-box {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.08) 0%, rgba(202, 138, 4, 0.02) 100%);
+      border: 1px solid var(--border-accent);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .insight-icon {
+      font-size: 28px;
+      background: rgba(250, 204, 21, 0.15);
+      border-radius: 10px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .insight-content h3 {
+      color: var(--yellow-main);
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .insight-content p {
+      font-size: 14px;
+      color: #d6d3d1;
+      line-height: 1.6;
+    }
+
+    .sound-legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .sound-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sound-badge {
+      font-weight: 800;
+      font-size: 13px;
+      padding: 2px 7px;
+      border-radius: 5px;
+      color: #ffffff;
+    }
+
+    .sound-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .sound-desc strong {
+      color: #e7e5e4;
+    }
+
+    /* ==========================================================================
+       SECTION & CARD STYLES
+       ========================================================================== */
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 44px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(470px, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .grid-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card.recommended {
+      border: 1px solid rgba(250, 204, 21, 0.4);
+      background: linear-gradient(180deg, #2c2720 0%, #24201b 100%);
+    }
+
+    .card-rec-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: #ca8a04;
+      color: #141210;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .card-header {
+      margin-bottom: 16px;
+    }
+
+    .card-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--yellow-dim);
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .card-explanation {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Demo area inside card */
+    .demo-box {
+      background: var(--bg-card-subtle);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 14px 0;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* Words Row */
+    .words-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 16px 22px;
+      font-size: 23px;
+      font-weight: 600;
+      color: var(--text-yellow); /* MUST BE YELLOW */
+    }
+
+    .sentence-row {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-yellow);
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .pros-cons {
+      display: flex;
+      gap: 12px;
+    }
+    .pro { color: #4ade80; }
+    .con { color: #f87171; }
+
+    /* ==========================================================================
+       NASAL STYLING APPROACHES (THE VARIOUS SUGGESTIONS)
+       ========================================================================== */
+
+    /* --------------------------------------------------------------------------
+       APPROACH 1: Soft Translucent Light Pill (User Idea refined)
+       Light background behind the nasal letters, yellow text remains legible
+       -------------------------------------------------------------------------- */
+    .nasal-pill-soft {
+      background-color: rgba(255, 255, 255, 0.16);
+      padding: 1px 5px;
+      border-radius: 4px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+      transition: background-color 0.2s;
+    }
+    .nasal-pill-soft:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 2: High Contrast Inverse Capsule
+       Bright ivory/lemon capsule with dark charcoal letters inside
+       -------------------------------------------------------------------------- */
+    .nasal-capsule-inv {
+      background: #fef08a;
+      color: #1c1917 !important;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 5px;
+      margin: 0 1px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      display: inline-block;
+      line-height: 1.2;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 3: Highlighter Marker Under-Glow
+       Yellow text with a soft pastel/neon wash across the bottom half of letters
+       -------------------------------------------------------------------------- */
+    .nasal-marker {
+      background: linear-gradient(180deg, transparent 48%, rgba(255, 255, 255, 0.28) 48%);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 4: The Phonetic Wavy Tilde Underline (Elegantly hints at IPA ~)
+       Instead of obscure ɑ̃, learners recognize the ~ tilde under the letters!
+       -------------------------------------------------------------------------- */
+    .nasal-tilde-wave {
+      text-decoration: underline wavy rgba(255, 255, 255, 0.65);
+      text-underline-offset: 5px;
+      text-decoration-thickness: 1.5px;
+      transition: text-decoration-color 0.2s;
+    }
+    .nasal-tilde-wave:hover {
+      text-decoration-color: #ffffff;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 5: Modern Minimalist Border Accent (Bottom Bar)
+       Crisp 2.5px light solid bar underneath the nasal digraph/trigraph
+       -------------------------------------------------------------------------- */
+    .nasal-bar {
+      border-bottom: 2.5px solid rgba(255, 255, 255, 0.7);
+      padding-bottom: 1px;
+      border-radius: 1px;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 6: Sound-Family Colored Underline (Color Vowel System)
+       Different delicate color bar per nasal sound, keeping main text yellow!
+       -------------------------------------------------------------------------- */
+    .nasal-family-bar-an {
+      border-bottom: 3px solid var(--nasal-an);
+      padding-bottom: 1px;
+    }
+    .nasal-family-bar-on {
+      border-bottom: 3px solid var(--nasal-on);
+      padding-bottom: 1px;
+    }
+    .nasal-family-bar-in {
+      border-bottom: 3px solid var(--nasal-in);
+      padding-bottom: 1px;
+    }
+    .nasal-family-bar-un {
+      border-bottom: 3px solid var(--nasal-un);
+      padding-bottom: 1px;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 7: Sound-Family Translucent Glow Pill
+       Pill background color-coded to the sound family
+       -------------------------------------------------------------------------- */
+    .nasal-family-pill-an {
+      background: rgba(251, 146, 60, 0.22);
+      border: 1px solid rgba(251, 146, 60, 0.4);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .nasal-family-pill-on {
+      background: rgba(244, 63, 94, 0.22);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .nasal-family-pill-in {
+      background: rgba(56, 189, 248, 0.22);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .nasal-family-pill-un {
+      background: rgba(168, 85, 247, 0.22);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 8: Furigana / Micro-Ruby Annotation
+       Directly solves the "pain" vs "p(in)" dilemma!
+       Preserves the real French spelling "pain", while floating intuitive [in] above!
+       -------------------------------------------------------------------------- */
+    ruby.nasal-ruby {
+      ruby-position: over;
+    }
+    ruby.nasal-ruby rt {
+      font-size: 11px;
+      font-weight: 700;
+      color: #e2e8f0;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 0 4px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      letter-spacing: 0.04em;
+      transform: translateY(-2px);
+    }
+    ruby.nasal-ruby span.target {
+      text-decoration: underline dotted rgba(255, 255, 255, 0.4);
+      text-underline-offset: 3px;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 9: Floating Mini Diacritic Dot / Tilde Badge Above
+       -------------------------------------------------------------------------- */
+    .nasal-dot-above {
+      position: relative;
+      display: inline-block;
+    }
+    .nasal-dot-above::before {
+      content: '~';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      font-weight: 900;
+      color: #ffffff;
+      opacity: 0.85;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 10: Discrete Phonetic Subscript Cue
+       "pain₍ᵢₙ₎" without destroying the word like "p(in)"
+       -------------------------------------------------------------------------- */
+    .cue-sub {
+      font-size: 11px;
+      font-weight: 700;
+      vertical-align: sub;
+      background: rgba(255, 255, 255, 0.15);
+      color: #f1f5f9;
+      padding: 1px 4px;
+      border-radius: 3px;
+      margin-left: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      letter-spacing: 0.05em;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 11: Two-Tone Yellow Shift (Luminous Core)
+       Base yellow vs Brilliant Lemon Yellow with soft aura
+       -------------------------------------------------------------------------- */
+    .nasal-two-tone {
+      color: #ffffff;
+      text-shadow: 0 0 8px rgba(254, 240, 138, 0.8), 0 0 16px rgba(250, 204, 21, 0.4);
+      font-weight: 800;
+    }
+
+    /* --------------------------------------------------------------------------
+       APPROACH 12: Interactive Audio Click Word
+       Click to hear real French nasal pronunciation!
+       -------------------------------------------------------------------------- */
+    .clickable-word {
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.12s ease;
+    }
+    .clickable-word:hover {
+      transform: translateY(-1px);
+    }
+    .clickable-word:active {
+      transform: translateY(1px);
+    }
+
+    /* ==========================================================================
+       REAL-WORLD PARAGRAPH SHOWCASE
+       ========================================================================== */
+    .reading-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 28px;
+      margin-top: 24px;
+    }
+
+    .reading-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: rgba(250, 204, 21, 0.15);
+      color: var(--yellow-main);
+    }
+
+    .passage-content {
+      font-size: 19px;
+      line-height: 2.1;
+      color: var(--text-yellow);
+    }
+
+    /* ==========================================================================
+       COMPARISON TABLE
+       ========================================================================== */
+    .comparison-table-wrap {
+      overflow-x: auto;
+      margin-top: 24px;
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+    }
+
+    table.comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    table.comparison-table th {
+      background: #181512;
+      color: #e2e8f0;
+      font-weight: 700;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    table.comparison-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+
+    table.comparison-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .score-badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .score-high { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+    .score-mid { background: rgba(250, 204, 21, 0.2); color: #facc15; }
+    .score-low { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+
+    /* ==========================================================================
+       CODE COPY SNIPPETS
+       ========================================================================== */
+    .code-block {
+      background: #141210;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #f1f5f9;
+      margin-top: 10px;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .copy-btn:hover {
+      background: var(--yellow-main);
+      color: #1a1600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ========================================================================
+       HEADER
+       ======================================================================== -->
+  <header>
+    <div class="badge-pill">French Phonetics UI Lab</div>
+    <h1>Designing Nasal Sounds with <span class="yellow-glow">Yellow Text</span></h1>
+    <p class="subtitle">
+      Learners often struggle with cryptic IPA symbols like <code>ɑ̃</code>, <code>ɔ̃</code>, <code>ɛ̃</code>, <code>œ̃</code>.
+      Writing <code>s(an)s</code> and <code>p(in)</code> breaks authentic spelling (learners confuse <em>pain</em> with <em>pin</em>).
+      Here are practical visual designs to make nasal patterns intuitive while keeping the primary text <strong>yellow</strong>.
+    </p>
+  </header>
+
+  <!-- ========================================================================
+       LIVE CONTROLS TOOLBAR
+       ======================================================================== -->
+  <div class="controls-toolbar">
+    <!-- Theme Background Switcher -->
+    <div class="control-group">
+      <span class="control-label">Background:</span>
+      <button class="btn-toggle active" onclick="setBg('#1e1b18', this)">Espresso (App Default)</button>
+      <button class="btn-toggle" onclick="setBg('#0f172a', this)">Midnight Blue</button>
+      <button class="btn-toggle" onclick="setBg('#111111', this)">Onyx Black</button>
+      <button class="btn-toggle" onclick="setBg('#2d3748', this)">Slate Grey</button>
+    </div>
+
+    <!-- Yellow Hue Switcher -->
+    <div class="control-group">
+      <span class="control-label">Yellow Hue:</span>
+      <button class="btn-toggle active" onclick="setYellow('#facc15', this)">Gold (#facc15)</button>
+      <button class="btn-toggle" onclick="setYellow('#ca8a04', this)">Mustard (#ca8a04)</button>
+      <button class="btn-toggle" onclick="setYellow('#fef08a', this)">Lemon (#fef08a)</button>
+    </div>
+
+    <!-- Font Style -->
+    <div class="control-group">
+      <span class="control-label">Font:</span>
+      <button class="btn-toggle active" onclick="setFont('sans', this)">Sans-Serif</button>
+      <button class="btn-toggle" onclick="setFont('mono', this)">Typewriter (App)</button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       THE PEDAGOGICAL CHALLENGE / INSIGHT
+       ======================================================================== -->
+  <div class="insight-box">
+    <div class="insight-icon">💡</div>
+    <div class="insight-content">
+      <h3>The "Pain" vs "Pin" Problem & The 4 Nasal Sound Families</h3>
+      <p>
+        In French, spelling conveys meaning and grammar. Writing <code>p(in)</code> for <em>pain</em> (bread) creates confusion because <strong>pin</strong> (pine tree) is an actual French word!
+        A better system indicates <strong>which of the 4 nasal sounds</strong> is produced without mutilating the real French spelling:
+      </p>
+      <div class="sound-legend">
+        <div class="sound-item">
+          <span class="sound-badge" style="background: var(--nasal-an);">AN / EN</span>
+          <div class="sound-desc">
+            <strong>IPA [ɑ̃]</strong> · <em>sans, vent, temps</em>
+          </div>
+        </div>
+        <div class="sound-item">
+          <span class="sound-badge" style="background: var(--nasal-on);">ON / OM</span>
+          <div class="sound-desc">
+            <strong>IPA [ɔ̃]</strong> · <em>bon, pont, maison</em>
+          </div>
+        </div>
+        <div class="sound-item">
+          <span class="sound-badge" style="background: var(--nasal-in);">IN / AIN / EIN</span>
+          <div class="sound-desc">
+            <strong>IPA [ɛ̃]</strong> · <em>pain, vin, train, plein</em>
+          </div>
+        </div>
+        <div class="sound-item">
+          <span class="sound-badge" style="background: var(--nasal-un);">UN / UM</span>
+          <div class="sound-desc">
+            <strong>IPA [œ̃]</strong> · <em>un, brun, parfum</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       CATEGORY 1: BACKGROUND HIGHLIGHT & PILL VARIATIONS (User Idea)
+       ======================================================================== -->
+  <h2 class="section-title"><span>1.</span> Background Highlight & Pill Treatments</h2>
+  <p class="section-desc">Techniques using a light or translucent background behind the nasal letters while keeping the text yellow.</p>
+
+  <div class="grid-cards">
+
+    <!-- Style 1: Soft Translucent Pill (User's main idea) -->
+    <div class="card recommended">
+      <span class="card-rec-badge">User Idea ⭐ Balanced</span>
+      <div class="card-header">
+        <div class="card-num">Option 1A</div>
+        <h3 class="card-title">Translucent Ivory Pill</h3>
+        <p class="card-explanation">
+          A soft 16% opacity white/ivory rounded background behind the nasal letters (<code>an</code>, <code>on</code>, <code>ain</code>). Subtle, doesn't break reading flow, and the yellow letters stay visible.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-pill-soft">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-pill-soft">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-pill-soft">ain</span></span>
+          <span class="clickable-word" onclick="speak('temps')">t<span class="nasal-pill-soft">em</span>ps</span>
+          <span class="clickable-word" onclick="speak('un vin blanc')"><span class="nasal-pill-soft">un</span> v<span class="nasal-pill-soft">in</span> bl<span class="nasal-pill-soft">an</span>c</span>
+        </div>
+        <div class="sentence-row">
+          On mange du p<span class="nasal-pill-soft">ain</span> bl<span class="nasal-pill-soft">an</span>c s<span class="nasal-pill-soft">an</span>s att<span class="nasal-pill-soft">en</span>dre le b<span class="nasal-pill-soft">on</span> v<span class="nasal-pill-soft">in</span>.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Clean & modern</span>
+          <span class="pro">✔ Preserves spelling</span>
+          <span class="con">✖ Doesn't tell which sound for "ain"</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 2: Inverse Bright Capsule -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">Option 1B</div>
+        <h3 class="card-title">Inverse High-Contrast Capsule</h3>
+        <p class="card-explanation">
+          The nasal letters sit inside a bright lemon/ivory capsule with dark espresso text. Maximum instant pop, impossible to miss during vocabulary review.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-capsule-inv">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-capsule-inv">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-capsule-inv">ain</span></span>
+          <span class="clickable-word" onclick="speak('temps')">t<span class="nasal-capsule-inv">em</span>ps</span>
+          <span class="clickable-word" onclick="speak('vin')">v<span class="nasal-capsule-inv">in</span></span>
+        </div>
+        <div class="sentence-row">
+          C'est un b<span class="nasal-capsule-inv">on</span> p<span class="nasal-capsule-inv">ain</span> ch<span class="nasal-capsule-inv">an</span>t<span class="nasal-capsule-inv">an</span>t.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Highest visibility</span>
+          <span class="con">✖ Slightly loud for full paragraphs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 3: Highlighter Marker Under-Glow -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">Option 1C</div>
+        <h3 class="card-title">Highlighter Brush Stroke</h3>
+        <p class="card-explanation">
+          A soft white/translucent highlighter wash that covers only the lower half of the nasal letters like a study marker.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-marker">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-marker">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-marker">ain</span></span>
+          <span class="clickable-word" onclick="speak('maison')">mais<span class="nasal-marker">on</span></span>
+          <span class="clickable-word" onclick="speak('parfum')">parf<span class="nasal-marker">um</span></span>
+        </div>
+        <div class="sentence-row">
+          Il prend s<span class="nasal-marker">on</span> temps d<span class="nasal-marker">an</span>s le tr<span class="nasal-marker">ain</span>.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Organic book/study feel</span>
+          <span class="pro">✔ Very lightweight</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 4: Two-Tone Luminous Yellow -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">Option 1D</div>
+        <h3 class="card-title">Two-Tone Luminous Core</h3>
+        <p class="card-explanation">
+          No boxes at all. The base word is standard yellow, but the nasal sound glows in pure brilliant white/lemon with a soft aura.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-two-tone">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-two-tone">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-two-tone">ain</span></span>
+          <span class="clickable-word" onclick="speak('enfant')"><span class="nasal-two-tone">en</span>f<span class="nasal-two-tone">an</span>t</span>
+          <span class="clickable-word" onclick="speak('vin')">v<span class="nasal-two-tone">in</span></span>
+        </div>
+        <div class="sentence-row">
+          Un bon v<span class="nasal-two-tone">in</span> bl<span class="nasal-two-tone">an</span>c avec du p<span class="nasal-two-tone">ain</span>.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Zero background clutter</span>
+          <span class="con">✖ Less distinct on low brightness</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================================
+       CATEGORY 2: UNDERLINES & THE "NASAL TILDE" (No Boxes)
+       ======================================================================== -->
+  <h2 class="section-title"><span>2.</span> Underlines & The Phonetic "Tilde Wave"</h2>
+  <p class="section-desc">Instead of forcing users to learn IPA symbols like <code>ɑ̃</code>, borrow the tilde (~) diacritic as a natural visual cue.</p>
+
+  <div class="grid-cards">
+
+    <!-- Style 5: Tilde Wave Underline -->
+    <div class="card recommended">
+      <span class="card-rec-badge">⭐ Most Elegant</span>
+      <div class="card-header">
+        <div class="card-num">Option 2A</div>
+        <h3 class="card-title">Phonetic Tilde Wave Underline</h3>
+        <p class="card-explanation">
+          A wavy underline beneath the nasal letters. It echoes the phonetic tilde (~) that designates nasal vowels in linguistics, but stays completely unobtrusive.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-tilde-wave">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-tilde-wave">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-tilde-wave">ain</span></span>
+          <span class="clickable-word" onclick="speak('vent')">v<span class="nasal-tilde-wave">en</span>t</span>
+          <span class="clickable-word" onclick="speak('brun')">br<span class="nasal-tilde-wave">un</span></span>
+        </div>
+        <div class="sentence-row">
+          Des p<span class="nasal-tilde-wave">en</span>sées s<span class="nasal-tilde-wave">an</span>s f<span class="nasal-tilde-wave">in</span> d<span class="nasal-tilde-wave">an</span>s la mais<span class="nasal-tilde-wave">on</span>.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Intuitive mnemonic</span>
+          <span class="pro">✔ Pure typography</span>
+          <span class="pro">✔ Great for long reading</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 6: Modern Solid Underbar -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">Option 2B</div>
+        <h3 class="card-title">Clean Underbar Accent</h3>
+        <p class="card-explanation">
+          A crisp 2.5px light underbar right below the nasal letters. Modern, architectural, and very clean on dark backgrounds.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-bar">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-bar">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-bar">ain</span></span>
+          <span class="clickable-word" onclick="speak('monde')">m<span class="nasal-bar">on</span>de</span>
+          <span class="clickable-word" onclick="speak('fin')">f<span class="nasal-bar">in</span></span>
+        </div>
+        <div class="sentence-row">
+          Ch<span class="nasal-bar">an</span>ter une ch<span class="nasal-bar">an</span>s<span class="nasal-bar">on</span> au print<span class="nasal-bar">em</span>ps.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Minimal distraction</span>
+          <span class="con">✖ Doesn't differentiate sound families</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 7: Floating Mini Tilde Diacritic -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">Option 2C</div>
+        <h3 class="card-title">Floating Tilde Diacritic Above</h3>
+        <p class="card-explanation">
+          A micro tilde <code>~</code> floating directly above the vowel group. Treats nasalization like a French accent mark (é, è, ê).
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-dot-above">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-dot-above">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-dot-above">ain</span></span>
+          <span class="clickable-word" onclick="speak('temps')">t<span class="nasal-dot-above">em</span>ps</span>
+        </div>
+        <div class="sentence-row" style="padding-top: 18px;">
+          Un b<span class="nasal-dot-above">on</span> v<span class="nasal-dot-above">in</span> s<span class="nasal-dot-above">an</span>s le m<span class="nasal-dot-above">oin</span>dre bruit.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Physically points to the sound</span>
+          <span class="con">✖ Requires extra line-height</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 8: Subscript Sound Cue -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">Option 2D</div>
+        <h3 class="card-title">Subscript Phonetic Cue <sub>[in]</sub></h3>
+        <p class="card-explanation">
+          Instead of <code>p(in)</code>, keep the word whole and attach a mini subscript badge: <code>pain<sub class="cue-sub">in</sub></code>. The learner sees real spelling + sound key.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">sans<sub class="cue-sub">an</sub></span>
+          <span class="clickable-word" onclick="speak('bon')">bon<sub class="cue-sub">on</sub></span>
+          <span class="clickable-word" onclick="speak('pain')">pain<sub class="cue-sub">in</sub></span>
+          <span class="clickable-word" onclick="speak('temps')">temps<sub class="cue-sub">an</sub></span>
+        </div>
+        <div class="sentence-row">
+          Prendre le train<sub class="cue-sub">in</sub> vers Dijon<sub class="cue-sub">on</sub>.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Zero confusion between "pain" and "pin"</span>
+          <span class="pro">✔ 100% spelling integrity</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================================
+       CATEGORY 3: THE 4 NASAL COLOR FAMILIES (Color Vowel System)
+       ======================================================================== -->
+  <h2 class="section-title"><span>3.</span> The 4 Nasal Sound Families (Color-Coded)</h2>
+  <p class="section-desc">
+    French has 4 distinct nasal sounds. Since English speakers don't know IPA, assign each family an intuitive color accent while the main text remains yellow!
+  </p>
+
+  <div class="grid-cards">
+
+    <!-- Style 9: Color-Coded Underline Bars -->
+    <div class="card recommended">
+      <span class="card-rec-badge">⭐ Recommended System</span>
+      <div class="card-header">
+        <div class="card-num">Option 3A</div>
+        <h3 class="card-title">4-Family Color Underline Bars</h3>
+        <p class="card-explanation">
+          Main text remains yellow. Each nasal family receives a color bar:
+          <span style="color:var(--nasal-an); font-weight:700;">Orange (AN)</span>,
+          <span style="color:var(--nasal-on); font-weight:700;">Rose (ON)</span>,
+          <span style="color:var(--nasal-in); font-weight:700;">Sky Blue (IN/AIN)</span>,
+          <span style="color:var(--nasal-un); font-weight:700;">Purple (UN)</span>.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-family-bar-an">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-family-bar-on">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-family-bar-in">ain</span></span>
+          <span class="clickable-word" onclick="speak('un')"><span class="nasal-family-bar-un">un</span></span>
+          <span class="clickable-word" onclick="speak('temps')">t<span class="nasal-family-bar-an">em</span>ps</span>
+          <span class="clickable-word" onclick="speak('vin')">v<span class="nasal-family-bar-in">in</span></span>
+        </div>
+        <div class="sentence-row">
+          <span class="nasal-family-bar-un">Un</span> b<span class="nasal-family-bar-on">on</span> v<span class="nasal-family-bar-in">in</span> bl<span class="nasal-family-bar-an">an</span>c avec du p<span class="nasal-family-bar-in">ain</span> ch<span class="nasal-family-bar-an">au</span>d et du parf<span class="nasal-family-bar-un">um</span>.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Instantly groups "pain" & "vin" together</span>
+          <span class="pro">✔ Harmonizes with yellow</span>
+          <span class="pro">✔ No text modification</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 10: Color-Coded Translucent Pills -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">Option 3B</div>
+        <h3 class="card-title">4-Family Translucent Pills</h3>
+        <p class="card-explanation">
+          Combines the user's background highlight idea with the 4 color families. Soft tint behind the nasal letters, matching its sound class.
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')">s<span class="nasal-family-pill-an">an</span>s</span>
+          <span class="clickable-word" onclick="speak('bon')">b<span class="nasal-family-pill-on">on</span></span>
+          <span class="clickable-word" onclick="speak('pain')">p<span class="nasal-family-pill-in">ain</span></span>
+          <span class="clickable-word" onclick="speak('un')"><span class="nasal-family-pill-un">un</span></span>
+          <span class="clickable-word" onclick="speak('vent')">v<span class="nasal-family-pill-an">en</span>t</span>
+          <span class="clickable-word" onclick="speak('train')">tr<span class="nasal-family-pill-in">ain</span></span>
+        </div>
+        <div class="sentence-row">
+          <span class="nasal-family-pill-un">Un</span> m<span class="nasal-family-pill-an">at</span><span class="nasal-family-pill-in">in</span> s<span class="nasal-family-pill-an">an</span>s v<span class="nasal-family-pill-an">en</span>t, <span class="nasal-family-pill-on">on</span> pr<span class="nasal-family-pill-an">en</span>d le tr<span class="nasal-family-pill-in">ain</span>.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ High visual clarity</span>
+          <span class="pro">✔ Distinct sound identity</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================================
+       CATEGORY 4: SOLVING THE "PAIN" vs "PIN" DILEMMA (Furigana / Ruby)
+       ======================================================================== -->
+  <h2 class="section-title"><span>4.</span> Solving the "Pain" vs "Pin" Problem (Furigana / Ruby)</h2>
+  <p class="section-desc">
+    When a student sees <code>p(in)</code>, they might think the French word is spelled <code>pin</code>. 
+    Here is how to show pronunciation guidance above the word without corrupting the spelling.
+  </p>
+
+  <div class="grid-cards">
+
+    <!-- Style 11: Furigana / Ruby Annotation -->
+    <div class="card recommended">
+      <span class="card-rec-badge">⭐ Best for Vocab Lists</span>
+      <div class="card-header">
+        <div class="card-num">Option 4A</div>
+        <h3 class="card-title">Furigana / Micro-Ruby Annotation</h3>
+        <p class="card-explanation">
+          Uses native HTML <code>&lt;ruby&gt;</code> tags. The word <strong>pain</strong> remains spelled correctly, with a discreet pronunciation badge floating right above the nasal group.
+        </p>
+      </div>
+
+      <div class="demo-box" style="padding-top: 24px;">
+        <div class="words-row">
+          <span class="clickable-word" onclick="speak('sans')"><ruby class="nasal-ruby">s<span class="target">an</span>s<rt>an</rt></ruby></span>
+          <span class="clickable-word" onclick="speak('bon')"><ruby class="nasal-ruby">b<span class="target">on</span><rt>on</rt></ruby></span>
+          <span class="clickable-word" onclick="speak('pain')"><ruby class="nasal-ruby">p<span class="target">ain</span><rt>in</rt></ruby></span>
+          <span class="clickable-word" onclick="speak('temps')"><ruby class="nasal-ruby">t<span class="target">em</span>ps<rt>an</rt></ruby></span>
+          <span class="clickable-word" onclick="speak('plein')"><ruby class="nasal-ruby">pl<span class="target">ein</span><rt>in</rt></ruby></span>
+        </div>
+        <div class="sentence-row" style="padding-top: 20px; line-height: 2.4;">
+          Il prend du <ruby class="nasal-ruby">p<span class="target">ain</span><rt>in</rt></ruby> avec un <ruby class="nasal-ruby">b<span class="target">on</span><rt>on</rt></ruby> <ruby class="nasal-ruby">v<span class="target">in</span><rt>in</rt></ruby> <ruby class="nasal-ruby">bl<span class="target">an</span>c<rt>an</rt></ruby>.
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Teaches spelling & pronunciation simultaneously</span>
+          <span class="pro">✔ Standard HTML (&lt;ruby&gt;)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 12: Interactive Hover / Audio Flashcard -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">Option 4B</div>
+        <h3 class="card-title">Audio-Interactive Word (Click to Hear)</h3>
+        <p class="card-explanation">
+          Combines translucent highlight with instant browser French Speech synthesis. Click any word to hear a native French voice pronounce the nasal vowel!
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <div class="words-row">
+          <button class="btn-toggle" onclick="speak('sans')">🔊 s<span class="nasal-pill-soft">an</span>s</button>
+          <button class="btn-toggle" onclick="speak('bon')">🔊 b<span class="nasal-pill-soft">on</span></button>
+          <button class="btn-toggle" onclick="speak('pain')">🔊 p<span class="nasal-pill-soft">ain</span></button>
+          <button class="btn-toggle" onclick="speak('un vin blanc')">🔊 un vin blanc</button>
+        </div>
+        <div class="sentence-row">
+          <button class="btn-toggle" style="margin-top: 6px;" onclick="speak('C est un bon pain sans fin.')">🔊 Écouter la phrase entière</button>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="pros-cons">
+          <span class="pro">✔ Active auditory learning</span>
+          <span class="pro">✔ Uses browser SpeechSynthesis</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================================
+       REAL TEXT PASSAGE COMPARISON
+       ======================================================================== -->
+  <h2 class="section-title"><span>5.</span> Real-World Passage Comparison</h2>
+  <p class="section-desc">Test how each method feels in an authentic French paragraph (e.g. from the Dijon history / culinary notes).</p>
+
+  <div class="reading-box">
+    <div class="reading-tabs">
+      <button class="tab-btn active" onclick="switchPassage('translucent', this)">1. Translucent Pills</button>
+      <button class="tab-btn" onclick="switchPassage('tilde', this)">2. Tilde Wave Underline</button>
+      <button class="tab-btn" onclick="switchPassage('colorbars', this)">3. 4-Color Underlines</button>
+      <button class="tab-btn" onclick="switchPassage('ruby', this)">4. Ruby / Furigana</button>
+      <button class="tab-btn" onclick="switchPassage('plain', this)">5. Plain Yellow (Baseline)</button>
+    </div>
+
+    <!-- Passage Viewports -->
+    <div id="passage-view" class="passage-content">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <div style="margin-top: 20px; display: flex; gap: 10px; align-items: center;">
+      <button class="btn-toggle" onclick="readPassageAloud()">🔊 Écouter le paragraphe entier (Français)</button>
+      <span style="font-size: 12px; color: var(--text-dim);">Audio powered by Web Speech API</span>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       COMPARATIVE ANALYSIS MATRIX
+       ======================================================================== -->
+  <h2 class="section-title"><span>6.</span> Comparative Decision Matrix</h2>
+  <p class="section-desc">How each suggestion performs against key pedagogical and design criteria.</p>
+
+  <div class="comparison-table-wrap">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Style Option</th>
+          <th>Spelling Integrity</th>
+          <th>Distinction of Sound</th>
+          <th>Readability in Sentences</th>
+          <th>Best Used For...</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Current: s(an)s & p(in)</strong></td>
+          <td><span class="score-badge score-low">Poor (destroys 'pain')</span></td>
+          <td><span class="score-badge score-mid">Good</span></td>
+          <td><span class="score-badge score-low">Distracting parentheses</span></td>
+          <td>Quick personal notes only</td>
+          <td>Needs upgrade</td>
+        </tr>
+        <tr>
+          <td><strong>1A. Translucent Light Pill</strong></td>
+          <td><span class="score-badge score-high">100% Intact</span></td>
+          <td><span class="score-badge score-mid">Marks nasal position</span></td>
+          <td><span class="score-badge score-high">Very smooth</span></td>
+          <td>Interactive presentations & exercises</td>
+          <td><strong style="color:var(--yellow-main)">Top recommendation for highlight</strong></td>
+        </tr>
+        <tr>
+          <td><strong>2A. Tilde Wave Underline</strong></td>
+          <td><span class="score-badge score-high">100% Intact</span></td>
+          <td><span class="score-badge score-high">Symbolic (~ is nasal)</span></td>
+          <td><span class="score-badge score-high">Zero visual fatigue</span></td>
+          <td>Long reading passages & book notes</td>
+          <td><strong style="color:var(--yellow-main)">Top recommendation for text</strong></td>
+        </tr>
+        <tr>
+          <td><strong>3A. 4-Family Color Underlines</strong></td>
+          <td><span class="score-badge score-high">100% Intact</span></td>
+          <td><span class="score-badge score-high">Highest (color-coded)</span></td>
+          <td><span class="score-badge score-high">Excellent</span></td>
+          <td>Phonetics lessons & pronunciation guides</td>
+          <td><strong style="color:var(--yellow-main)">Top pedagogical tool</strong></td>
+        </tr>
+        <tr>
+          <td><strong>4A. Ruby / Furigana Above</strong></td>
+          <td><span class="score-badge score-high">100% Intact</span></td>
+          <td><span class="score-badge score-high">Explicit [in] cue</span></td>
+          <td><span class="score-badge score-mid">Increases line-height</span></td>
+          <td>Vocabulary cards & difficult word lists</td>
+          <td>Great for flashcards</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ========================================================================
+       READY-TO-COPY CODE SNIPPETS
+       ======================================================================== -->
+  <h2 class="section-title"><span>7.</span> Ready-to-Copy CSS & HTML Snippets</h2>
+  <p class="section-desc">Drop these directly into your markdown, HTML presentations, or Vue components.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(470px, 1fr)); gap: 20px;">
+    
+    <div>
+      <h3 style="color:#ffffff; font-size:15px; margin-bottom:6px;">Snippet A: Translucent Pill (User's Idea)</h3>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('code-pill')">Copy</button>
+<pre id="code-pill">/* CSS */
+.nasal {
+  background-color: rgba(255, 255, 255, 0.16);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+&lt;!-- HTML / Markdown --&gt;
+s&lt;span class="nasal"&gt;an&lt;/span&gt;s
+p&lt;span class="nasal"&gt;ain&lt;/span&gt;
+b&lt;span class="nasal"&gt;on&lt;/span&gt;</pre>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="color:#ffffff; font-size:15px; margin-bottom:6px;">Snippet B: 4-Color Underline System</h3>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('code-color')">Copy</button>
+<pre id="code-color">/* CSS */
+.n-an { border-bottom: 2.5px solid #fb923c; } /* [ɑ̃] Orange */
+.n-on { border-bottom: 2.5px solid #f43f5e; } /* [ɔ̃] Rose */
+.n-in { border-bottom: 2.5px solid #38bdf8; } /* [ɛ̃] Sky */
+.n-un { border-bottom: 2.5px solid #a855f7; } /* [œ̃] Violet */
+
+&lt;!-- HTML --&gt;
+s&lt;span class="n-an"&gt;an&lt;/span&gt;s
+p&lt;span class="n-in"&gt;ain&lt;/span&gt;
+b&lt;span class="n-on"&gt;on&lt;/span&gt;
+&lt;span class="n-un"&gt;un&lt;/span&gt;</pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==========================================================================
+     INTERACTIVE JAVASCRIPT CONTROLLERS
+     ========================================================================== -->
+<script>
+  // 1. Theme Background Controller
+  function setBg(color, btn) {
+    document.body.style.backgroundColor = color;
+    document.querySelectorAll('.controls-toolbar .control-group:nth-child(1) .btn-toggle').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // 2. Yellow Hue Controller
+  function setYellow(color, btn) {
+    document.documentElement.style.setProperty('--yellow-main', color);
+    document.documentElement.style.setProperty('--text-yellow', color);
+    document.querySelectorAll('.controls-toolbar .control-group:nth-child(2) .btn-toggle').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // 3. Font Switcher
+  function setFont(type, btn) {
+    if (type === 'mono') {
+      document.body.style.fontFamily = "var(--font-mono)";
+    } else {
+      document.body.style.fontFamily = "var(--font-ui)";
+    }
+    document.querySelectorAll('.controls-toolbar .control-group:nth-child(3) .btn-toggle').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // 4. Passage Switcher
+  const passageData = {
+    translucent: `Un b<span class="nasal-pill-soft">on</span> m<span class="nasal-pill-soft">at</span><span class="nasal-pill-soft">in</span> d'aut<span class="nasal-pill-soft">om</span>ne à Dij<span class="nasal-pill-soft">on</span>, <span class="nasal-pill-soft">on</span> pr<span class="nasal-pill-soft">en</span>d le tr<span class="nasal-pill-soft">ain</span> s<span class="nasal-pill-soft">an</span>s att<span class="nasal-pill-soft">en</span>dre. Sur le marché, les artis<span class="nasal-pill-soft">an</span>s v<span class="nasal-pill-soft">en</span>d<span class="nasal-pill-soft">en</span>t du p<span class="nasal-pill-soft">ain</span> chaud et du v<span class="nasal-pill-soft">in</span> bl<span class="nasal-pill-soft">an</span>c au parf<span class="nasal-pill-soft">um</span> délicat. Chasc<span class="nasal-pill-soft">un</span> prend s<span class="nasal-pill-soft">on</span> t<span class="nasal-pill-soft">em</span>ps pour savourer ce mom<span class="nasal-pill-soft">en</span>t.`,
+    
+    tilde: `Un b<span class="nasal-tilde-wave">on</span> mat<span class="nasal-tilde-wave">in</span> d'aut<span class="nasal-tilde-wave">om</span>ne à Dij<span class="nasal-tilde-wave">on</span>, <span class="nasal-tilde-wave">on</span> pr<span class="nasal-tilde-wave">en</span>d le tr<span class="nasal-tilde-wave">ain</span> s<span class="nasal-tilde-wave">an</span>s att<span class="nasal-tilde-wave">en</span>dre. Sur le marché, les artis<span class="nasal-tilde-wave">an</span>s v<span class="nasal-tilde-wave">en</span>d<span class="nasal-tilde-wave">en</span>t du p<span class="nasal-tilde-wave">ain</span> chaud et du v<span class="nasal-tilde-wave">in</span> bl<span class="nasal-tilde-wave">an</span>c au parf<span class="nasal-tilde-wave">um</span> délicat. Chasc<span class="nasal-tilde-wave">un</span> prend s<span class="nasal-tilde-wave">on</span> t<span class="nasal-tilde-wave">em</span>ps pour savourer ce mom<span class="nasal-tilde-wave">en</span>t.`,
+    
+    colorbars: `<span class="nasal-family-bar-un">Un</span> b<span class="nasal-family-bar-on">on</span> mat<span class="nasal-family-bar-in">in</span> d'aut<span class="nasal-family-bar-on">om</span>ne à Dij<span class="nasal-family-bar-on">on</span>, <span class="nasal-family-bar-on">on</span> pr<span class="nasal-family-bar-an">en</span>d le tr<span class="nasal-family-bar-in">ain</span> s<span class="nasal-family-bar-an">an</span>s att<span class="nasal-family-bar-an">en</span>dre. Sur le marché, les artis<span class="nasal-family-bar-an">an</span>s v<span class="nasal-family-bar-an">en</span>d<span class="nasal-family-bar-an">en</span>t du p<span class="nasal-family-bar-in">ain</span> chaud et du v<span class="nasal-family-bar-in">in</span> bl<span class="nasal-family-bar-an">an</span>c au parf<span class="nasal-family-bar-un">um</span> délicat. Chasc<span class="nasal-family-bar-un">un</span> prend s<span class="nasal-family-bar-on">on</span> t<span class="nasal-family-bar-an">em</span>ps pour savourer ce mom<span class="nasal-family-bar-an">en</span>t.`,
+    
+    ruby: `Un <ruby class="nasal-ruby">b<span class="target">on</span><rt>on</rt></ruby> matin à Dijon, <ruby class="nasal-ruby"><span class="target">on</span><rt>on</rt></ruby> prend le <ruby class="nasal-ruby">tr<span class="target">ain</span><rt>in</rt></ruby> <ruby class="nasal-ruby">s<span class="target">an</span>s<rt>an</rt></ruby> attendre. Sur le marché, les artisans vendent du <ruby class="nasal-ruby">p<span class="target">ain</span><rt>in</rt></ruby> chaud et du <ruby class="nasal-ruby">v<span class="target">in</span><rt>in</rt></ruby> <ruby class="nasal-ruby">bl<span class="target">an</span>c<rt>an</rt></ruby> au parfum délicat. Chacun prend son <ruby class="nasal-ruby">t<span class="target">em</span>ps<rt>an</rt></ruby> pour savourer.`,
+
+    plain: `Un bon matin d'automne à Dijon, on prend le train sans attendre. Sur le marché, les artisans vendent du pain chaud et du vin blanc au parfum délicat. Chacun prend son temps pour savourer ce moment.`
+  };
+
+  function switchPassage(mode, btn) {
+    document.getElementById('passage-view').innerHTML = passageData[mode];
+    document.querySelectorAll('.reading-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // Initialize passage
+  switchPassage('translucent', document.querySelector('.reading-tabs .tab-btn.active'));
+
+  // 5. Speech Synthesis (Pronounces French text)
+  function speak(text) {
+    if (!('speechSynthesis' in window)) {
+      alert("La synthèse vocale n'est pas supportée sur ce navigateur.");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function readPassageAloud() {
+    const text = "Un bon matin d'automne à Dijon, on prend le train sans attendre. Sur le marché, les artisans vendent du pain chaud et du vin blanc au parfum délicat. Chacun prend son temps pour savourer ce moment.";
+    speak(text);
+  }
+
+  // 6. Clipboard copy helper
+  function copySnippet(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Snippet copié dans le presse-papiers !");
+    });
+  }
+</script>
+
+</body>
+</html>
