@@ -1,0 +1,20 @@
+A	B	C	D
+1
+English	German	
+the token, the tokens
+der Token, die Token
+2
+English	French	
+I will arrive by train
+J'arriverai en train.
+3
+English	French	I was in a plane	
+J'étais dans un avion.
+4
+English	French	absolutely	absolument
+5
+English	French	many times	plusieurs fois
+6
+English	French	
+I have to walk through a narrow space
+Je dois passer par un passage étroit.

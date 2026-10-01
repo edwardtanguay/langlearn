@@ -85,6 +85,7 @@
       /* Ghost pill */
       display: inline-block;
       position: relative;
+      isolation: isolate;          /* scopes ::before z-index to this element */
       padding: 0 2px;
       background: transparent; /* background lives on ::before so we can trim the bottom */
 
@@ -99,7 +100,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      bottom: 4px;                              /* ← tweak this to taste */
+      bottom: 1px;                              /* ← tweak this to taste */
       background: rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       z-index: -1;

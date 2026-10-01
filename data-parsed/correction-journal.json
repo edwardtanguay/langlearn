@@ -513,7 +513,7 @@
           "day": "2026-09-25",
           "sectionIndex": 1,
           "language": "fr",
-          "rawText": "Merci pour la conversation [hier;d'hier], j'aime le fait que tu parle beaucoup [dans;pendant] la conversation et [avec une vitesse rapide;à une vitesse assez rapide]. C'est exactement le situation [réel;réelle] dans laquelle je doit pratiquer, je doit comprendre et [répond rapide;répondre rapidement]. Tes corrections de chaque error de pronunciation et de grammaire sont aussi très [efficace;efficaces]. [Laisson nous;Laissons-nous] continuer comme ça, mon objectif est la perfection.\n\nJ'ai déjà programmé un cour pour ce soir à [22:30;22 h 30], et je vais programmer les [suivi cours;cours suivants] :\n\n- lundi 28 septembre, 22 h\n- mardi 29 septembre, 22 h\n- mercredi 1er octobre, 21 h 30\n\nChaque fois que je programme [les cours avec un prof;un cours avec un professeur], je \"annule\" le contrat afin que Preply ne [peut;puisse] continuer [de charger mon PayPal;à débiter mon compte PayPal] sans que je le [sais;sache]. Alors [ne deviens pas misinterpreter;ne te méprends pas sur] les messages de \"annuler\".\n\nJe pars [vers Dijon en octobre 8;pour Dijon le 8 octobre], entre [octobre 1 et 8;le 1er et le 8 octobre], [je vais probablement avoir le temps;j'aurais probablement avoir le temps de prendre] [plus des cours;quelques cours supplémentaires], mais [je n'en sais pas encore;je ne sais pas encore exactement quand].",
+          "rawText": "Merci pour la conversation [hier;d'hier], j'aime le fait que tu parle beaucoup [dans;pendant] la conversation et [avec une vitesse rapide;à une vitesse assez rapide]. C'est exactement la situation [réel;réelle] dans laquelle je doit pratiquer, je doit comprendre et [répond rapide;répondre rapidement]. Tes corrections de chaque error de pronunciation et de grammaire sont aussi très [efficace;efficaces]. [Laisson nous;Laissons-nous] continuer comme ça, mon objectif est la perfection.\n\nJ'ai déjà programmé un cour pour ce soir à [22:30;22 h 30], et je vais programmer les [suivi cours;cours suivants] :\n\n- lundi 28 septembre, 22 h\n- mardi 29 septembre, 22 h\n- mercredi 1er octobre, 21 h 30\n\nChaque fois que je programme [les cours avec un prof;un cours avec un professeur], je \"annule\" le contrat afin que Preply ne [peut;puisse] continuer [de charger mon PayPal;à débiter mon compte PayPal] sans que je le [sais;sache]. Alors [ne deviens pas misinterpreter;ne te méprends pas sur] les messages de \"annuler\".\n\nJe pars [vers Dijon en octobre 8;pour Dijon le 8 octobre], entre [octobre 1 et 8;le 1er et le 8 octobre], [je vais probablement avoir le temps;j'aurais probablement avoir le temps de prendre] [plus des cours;quelques cours supplémentaires], mais [je n'en sais pas encore;je ne sais pas encore exactement quand].",
           "bits": [
             {
               "type": "text",
@@ -547,7 +547,7 @@
             },
             {
               "type": "text",
-              "text": ". C'est exactement le situation "
+              "text": ". C'est exactement la situation "
             },
             {
               "type": "flashcard",
@@ -2098,13 +2098,244 @@
           ],
           "flashcardsCount": 22,
           "wordCount": 184
+        },
+        {
+          "id": "2026-09-30-sec-3",
+          "day": "2026-09-30",
+          "sectionIndex": 3,
+          "language": "fr",
+          "rawText": "Pour chaque [sujet titre;titre de sujet], ajoute les dates [approximate;approximatives]\n\n[Deplace tous les dates;Déplace toutes les dates] [vers le commence de titre;au debut du titre] et supprime [le numéro;les numéros]\n\nÀ la fin de chaque section, ajoute trois questions de compréhension très simples [du texte;sur le texte] de la section\n\nÀ la fin de chaque [paragraph;paragraphe], ajoute une question de compréhension très simple sur le paragraphe\n\nAvec [markdown syntaxe;le syntaxe Markdown], [fait les titres plus visible;rends les titres plus visibles] comme [titres de sections;de vraie titres de section], et [highlighte le question;mets les questions en évidence] [dans un façon;d'une manière claire]\n\nEst-ce qu'il [y a un possibilité;est possible] de [rendre;mettre] les dates comme [supertitres;des surtitres] [en haut de;au-dessus des] titres ?\n\nEst-ce qu'il est possible de modifier le couleur de surtitres [comme jaunes;par exemple en jaune] ou [de ajouter;d'ajouter] une ligne vide au-dessus [chaque surtitres;de chaque surtitre] ?\n\nMets la question [pas après;non pas après,] mais avant [la paragraph;le paragraphe] qui se [concerne;rapporte]",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Pour chaque "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-1",
+              "incorrect": "sujet titre",
+              "correct": "titre de sujet"
+            },
+            {
+              "type": "text",
+              "text": ", ajoute les dates "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-2",
+              "incorrect": "approximate",
+              "correct": "approximatives"
+            },
+            {
+              "type": "text",
+              "text": "\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-3",
+              "incorrect": "Deplace tous les dates",
+              "correct": "Déplace toutes les dates"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-4",
+              "incorrect": "vers le commence de titre",
+              "correct": "au debut du titre"
+            },
+            {
+              "type": "text",
+              "text": " et supprime "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-5",
+              "incorrect": "le numéro",
+              "correct": "les numéros"
+            },
+            {
+              "type": "text",
+              "text": "\n\nÀ la fin de chaque section, ajoute trois questions de compréhension très simples "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-6",
+              "incorrect": "du texte",
+              "correct": "sur le texte"
+            },
+            {
+              "type": "text",
+              "text": " de la section\n\nÀ la fin de chaque "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-7",
+              "incorrect": "paragraph",
+              "correct": "paragraphe"
+            },
+            {
+              "type": "text",
+              "text": ", ajoute une question de compréhension très simple sur le paragraphe\n\nAvec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-8",
+              "incorrect": "markdown syntaxe",
+              "correct": "le syntaxe Markdown"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-9",
+              "incorrect": "fait les titres plus visible",
+              "correct": "rends les titres plus visibles"
+            },
+            {
+              "type": "text",
+              "text": " comme "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-10",
+              "incorrect": "titres de sections",
+              "correct": "de vraie titres de section"
+            },
+            {
+              "type": "text",
+              "text": ", et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-11",
+              "incorrect": "highlighte le question",
+              "correct": "mets les questions en évidence"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-12",
+              "incorrect": "dans un façon",
+              "correct": "d'une manière claire"
+            },
+            {
+              "type": "text",
+              "text": "\n\nEst-ce qu'il "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-13",
+              "incorrect": "y a un possibilité",
+              "correct": "est possible"
+            },
+            {
+              "type": "text",
+              "text": " de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-14",
+              "incorrect": "rendre",
+              "correct": "mettre"
+            },
+            {
+              "type": "text",
+              "text": " les dates comme "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-15",
+              "incorrect": "supertitres",
+              "correct": "des surtitres"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-16",
+              "incorrect": "en haut de",
+              "correct": "au-dessus des"
+            },
+            {
+              "type": "text",
+              "text": " titres ?\n\nEst-ce qu'il est possible de modifier le couleur de surtitres "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-17",
+              "incorrect": "comme jaunes",
+              "correct": "par exemple en jaune"
+            },
+            {
+              "type": "text",
+              "text": " ou "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-18",
+              "incorrect": "de ajouter",
+              "correct": "d'ajouter"
+            },
+            {
+              "type": "text",
+              "text": " une ligne vide au-dessus "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-19",
+              "incorrect": "chaque surtitres",
+              "correct": "de chaque surtitre"
+            },
+            {
+              "type": "text",
+              "text": " ?\n\nMets la question "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-20",
+              "incorrect": "pas après",
+              "correct": "non pas après,"
+            },
+            {
+              "type": "text",
+              "text": " mais avant "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-21",
+              "incorrect": "la paragraph",
+              "correct": "le paragraphe"
+            },
+            {
+              "type": "text",
+              "text": " qui se "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-22",
+              "incorrect": "concerne",
+              "correct": "rapporte"
+            }
+          ],
+          "flashcardsCount": 22,
+          "wordCount": 132
         }
       ],
-      "totalWords": 208,
-      "totalFlashcards": 27
+      "totalWords": 340,
+      "totalFlashcards": 49
     }
   ],
-  "totalSections": 21,
-  "totalWords": 1509,
-  "totalFlashcards": 174
+  "totalSections": 22,
+  "totalWords": 1641,
+  "totalFlashcards": 196
 }
