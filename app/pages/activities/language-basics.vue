@@ -574,7 +574,8 @@ function getCategoryItems(cat: BasicCategory) {
 watch(selectedLang, () => {
   clearAllTimers()
   testPronunciationRevealed.value.clear()
-  resetAllOpenItems()
+  activeLearningWords.value.clear()
+  activeUnlearnWords.value.clear()
   numbersViewMode.value = 'default'
   isStatsLoading.value = true
   loadSavedProgress()

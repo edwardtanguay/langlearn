@@ -151,9 +151,11 @@ const queue = computed<JournalSection[]>(() => {
 })
 
 function setFilter(filter: 'all' | 'unlearned') {
+  const current = allSections.value.find(s => s.id === activeSectionId.value)
+  const isCurrentUnlearned = !!current && !current.isLearned
+
   selectedFilter.value = filter
   if (filter === 'unlearned') {
-    const current = allSections.value.find(s => s.id === activeSectionId.value)
     if (current && current.isLearned) {
       const firstUnlearned = allSections.value.find(s => !s.isLearned)
       if (firstUnlearned) {
@@ -161,6 +163,11 @@ function setFilter(filter: 'all' | 'unlearned') {
       } else {
         activeSectionId.value = undefined
       }
+      return
+    }
+  } else if (filter === 'all' && isCurrentUnlearned) {
+    if (queue.value.length > 0) {
+      selectSection(queue.value[0]!.id)
       return
     }
   }
@@ -193,6 +200,9 @@ function pickInitialSection() {
 
 function goToNextSection() {
   if (queue.value.length === 0) return
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   const current = currentSection.value
   if (selectedFilter.value === 'unlearned' && current?.isLearned) {
     const remainingUnlearned = allSections.value.filter(s => !s.isLearned)
@@ -213,6 +223,9 @@ function goToNextSection() {
 
 function goToPreviousSection() {
   if (queue.value.length === 0) return
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   const current = currentSection.value
   if (selectedFilter.value === 'unlearned' && current?.isLearned) {
     const remainingUnlearned = allSections.value.filter(s => !s.isLearned)
@@ -463,7 +476,14 @@ const sectionSelectItems = computed(() => {
     const langColorClass = getLanguageTextColor(sec.language)
     const dateFormatted = formatDropdownDate(sec.day)
     const isAllLearned = unlearned === 0
-    const statusText = isAllLearned ? '(all learned)' : `(${unlearned} unlearned)`
+    let statusText: string
+    if (total === 0) {
+      statusText = '(no flashcards)'
+    } else if (isAllLearned) {
+      statusText = `(${total} learned)`
+    } else {
+      statusText = `(${unlearned} unlearned)`
+    }
     return {
       id: sec.id,
       isLearned: sec.isLearned,
