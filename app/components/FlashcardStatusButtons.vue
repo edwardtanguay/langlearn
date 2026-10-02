@@ -101,7 +101,7 @@ function toggleWordAt(index: number) {
           Delete
         </button>
         <button @click="isHighlighting = true"
-          class="px-3.5 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200/50 dark:bg-gray-900 dark:hover:bg-gray-800/60 text-gray-600 dark:text-gray-400 border border-gray-200/80 dark:border-gray-750 text-[10px] font-bold rounded-xl transition-all shadow-xs cursor-pointer">
+          class="px-3.5 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 border border-gray-200/80 dark:border-gray-750 text-[10px] font-bold rounded-xl transition-all shadow-xs cursor-pointer">
           Highlight words
         </button>
       </div>

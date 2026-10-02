@@ -571,14 +571,58 @@ function getCategoryItems(cat: BasicCategory) {
   return cat.items
 }
 
-watch(selectedLang, () => {
-  clearAllTimers()
+watch(selectedLang, async () => {
   testPronunciationRevealed.value.clear()
+
+  // Retain currently open card IDs across language switch
+  const openIds = new Set([...activeLearningWords.value, ...activeUnlearnWords.value])
   activeLearningWords.value.clear()
   activeUnlearnWords.value.clear()
+
   numbersViewMode.value = 'default'
   isStatsLoading.value = true
-  loadSavedProgress()
+
+  // Immediately read new language's progress from localStorage so UI updates synchronously without flicker
+  if (import.meta.client) {
+    try {
+      const saved = localStorage.getItem(storageKey.value)
+      if (saved) {
+        const ids = JSON.parse(saved) as string[]
+        revealedSet.value = new Set(ids.map(normalizeWordId))
+      } else {
+        revealedSet.value = new Set()
+      }
+    } catch {
+      revealedSet.value = new Set()
+    }
+  }
+
+  // Restore open status for cards in the new language based on their learned state
+  for (const id of openIds) {
+    if (revealedSet.value.has(id)) {
+      activeUnlearnWords.value.add(id)
+    } else {
+      activeLearningWords.value.add(id)
+    }
+  }
+  activeLearningWords.value = new Set(activeLearningWords.value)
+  activeUnlearnWords.value = new Set(activeUnlearnWords.value)
+
+  await loadSavedProgress()
+
+  // Re-verify open status against DB progress if any status changed
+  for (const id of openIds) {
+    if (revealedSet.value.has(id)) {
+      activeLearningWords.value.delete(id)
+      activeUnlearnWords.value.add(id)
+    } else {
+      activeUnlearnWords.value.delete(id)
+      activeLearningWords.value.add(id)
+    }
+  }
+  activeLearningWords.value = new Set(activeLearningWords.value)
+  activeUnlearnWords.value = new Set(activeUnlearnWords.value)
+
   loadPronunciations()
   updateAllLangProgress()
   showResetConfirm.value = false
@@ -1076,6 +1120,10 @@ function isItemDisplayedRevealed(item: BasicItem): boolean {
 function isWordLearned(itemId: string): boolean {
   return revealedSet.value.has(itemId)
 }
+
+function isFlashcardOpen(itemId: string): boolean {
+  return activeLearningWords.value.has(itemId) || activeUnlearnWords.value.has(itemId) || (!!searchQuery.value.trim() && searchTemporaryToggles.value.get(itemId) === true)
+}
 </script>
 
 <template>
@@ -1442,7 +1490,8 @@ function isWordLearned(itemId: string): boolean {
             :class="[
               isWordLearned(item.id)
                 ? 'font-normal shadow-xs'
-                : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300',
+              isFlashcardOpen(item.id) ? 'ring-2 ring-yellow-400 dark:ring-yellow-400/80 shadow-[0_0_8px_rgba(250,204,21,0.35)] z-10' : ''
             ]"
             :style="isWordLearned(item.id) ? {
               backgroundColor: selectedLang === 'fr'
@@ -1733,7 +1782,8 @@ function isWordLearned(itemId: string): boolean {
                         :class="[
                           isWordLearned(item.id)
                             ? 'font-normal shadow-xs'
-                            : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                            : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300',
+                          isFlashcardOpen(item.id) ? 'ring-2 ring-yellow-400 dark:ring-yellow-400/80 shadow-[0_0_8px_rgba(250,204,21,0.35)] z-10' : ''
                         ]"
                         :style="isWordLearned(item.id) ? {
                           backgroundColor: selectedLang === 'fr'
@@ -1844,7 +1894,8 @@ function isWordLearned(itemId: string): boolean {
                   isWordLearned(item.id)
                     ? 'font-normal shadow-xs'
                     : 'font-normal bg-gray-100/90 dark:bg-[#1a2233] text-gray-500 dark:text-gray-400 border border-gray-200/80 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300',
-                  isItemFoundBySearch(item) ? 'shadow-[0_0_10px_rgba(217,119,6,0.6)] dark:shadow-[0_0_12px_rgba(255,255,255,0.85)]' : ''
+                  isItemFoundBySearch(item) ? 'shadow-[0_0_10px_rgba(217,119,6,0.6)] dark:shadow-[0_0_12px_rgba(255,255,255,0.85)]' : '',
+                  isFlashcardOpen(item.id) ? 'ring-2 ring-yellow-400 dark:ring-yellow-400/80 shadow-[0_0_8px_rgba(250,204,21,0.35)] z-10' : ''
                 ]"
                 :style="isWordLearned(item.id) ? {
                   backgroundColor: selectedLang === 'fr'
