@@ -40,12 +40,18 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[]): 
 
   for (const row of rows) {
     if (!row.lang1 || !row.lang2 || !row.text1 || !row.text2) {
+      let reason = 'Missing language or text field'
+      if (!row.text2 && row.text1) {
+        reason = 'Incomplete card (missing back text)'
+      } else if (!row.text1 && row.text2) {
+        reason = 'Incomplete card (missing front text)'
+      }
       willNotImport.push({
         front: row.text1 || '(empty)',
         back: row.text2 || '(empty)',
         frontLanguage: row.lang1 || 'unknown',
         backLanguage: row.lang2 || 'unknown',
-        reason: 'Missing language or text field'
+        reason
       })
       continue
     }
@@ -217,7 +223,7 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
     })
   }
 
-  const skippedCards = willNotImport.map(c => ({ front: c.front, back: c.back, reason: c.reason, ...c }))
+  const skippedCards = willNotImport
 
   if (cardsToCreate.length > 0) {
     if (dbUser.role !== 'admin') {
