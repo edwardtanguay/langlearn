@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "npm run backup && npm run pd && nuxt dev",
     "pd": "tsx cli/commands/cmd-parse-data.ts",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

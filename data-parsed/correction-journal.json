@@ -513,7 +513,7 @@
           "day": "2026-09-25",
           "sectionIndex": 1,
           "language": "fr",
-          "rawText": "Merci pour la conversation [hier;d'hier], j'aime le fait que tu parle beaucoup [dans;pendant] la conversation et [avec une vitesse rapide;à une vitesse assez rapide]. C'est exactement le situation [réel;réelle] dans laquelle je doit pratiquer, je doit comprendre et [répond rapide;répondre rapidement]. Tes corrections de chaque error de pronunciation et de grammaire sont aussi très [efficace;efficaces]. [Laisson nous;Laissons-nous] continuer comme ça, mon objectif est la perfection.\n\nJ'ai déjà programmé un cour pour ce soir à [22:30;22 h 30], et je vais programmer les [suivi cours;cours suivants] :\n\n- lundi 28 septembre, 22 h\n- mardi 29 septembre, 22 h\n- mercredi 1er octobre, 21 h 30\n\nChaque fois que je programme [les cours avec un prof;un cours avec un professeur], je \"annule\" le contrat afin que Preply ne [peut;puisse] continuer [de charger mon PayPal;à débiter mon compte PayPal] sans que je le [sais;sache]. Alors [ne deviens pas misinterpreter;ne te méprends pas sur] les messages de \"annuler\".\n\nJe pars [vers Dijon en octobre 8;pour Dijon le 8 octobre], entre [octobre 1 et 8;le 1er et le 8 octobre], [je vais probablement avoir le temps;j'aurais probablement avoir le temps de prendre] [plus des cours;quelques cours supplémentaires], mais [je n'en sais pas encore;je ne sais pas encore exactement quand].",
+          "rawText": "Merci pour la conversation [hier;d'hier], j'aime le fait que tu parle beaucoup [dans;pendant] la conversation et [avec une vitesse rapide;à une vitesse assez rapide]. C'est exactement la situation [réel;réelle] dans laquelle je doit pratiquer, je doit comprendre et [répond rapide;répondre rapidement]. Tes corrections de chaque error de pronunciation et de grammaire sont aussi très [efficace;efficaces]. [Laisson nous;Laissons-nous] continuer comme ça, mon objectif est la perfection.\n\nJ'ai déjà programmé un cour pour ce soir à [22:30;22 h 30], et je vais programmer les [suivi cours;cours suivants] :\n\n- lundi 28 septembre, 22 h\n- mardi 29 septembre, 22 h\n- mercredi 1er octobre, 21 h 30\n\nChaque fois que je programme [les cours avec un prof;un cours avec un professeur], je \"annule\" le contrat afin que Preply ne [peut;puisse] continuer [de charger mon PayPal;à débiter mon compte PayPal] sans que je le [sais;sache]. Alors [ne deviens pas misinterpreter;ne te méprends pas sur] les messages de \"annuler\".\n\nJe pars [vers Dijon en octobre 8;pour Dijon le 8 octobre], entre [octobre 1 et 8;le 1er et le 8 octobre], [je vais probablement avoir le temps;j'aurais probablement avoir le temps de prendre] [plus des cours;quelques cours supplémentaires], mais [je n'en sais pas encore;je ne sais pas encore exactement quand].",
           "bits": [
             {
               "type": "text",
@@ -547,7 +547,7 @@
             },
             {
               "type": "text",
-              "text": ". C'est exactement le situation "
+              "text": ". C'est exactement la situation "
             },
             {
               "type": "flashcard",
@@ -718,13 +718,13 @@
           "day": "2026-09-25",
           "sectionIndex": 2,
           "language": "fr",
-          "rawText": "[Sorry;Désole], \"mercredi 1er octobre\" devait être \"mercredi 29 septembre\", mais mercredi ne marche pas pour toi.\n\n[Serais;Est-ce que] \"jeudi 1er octobre, 21 h 30\" [passer;pourrait te convenir] ?",
+          "rawText": "[Sorry;Désolé], \"mercredi 1er octobre\" devait être \"mercredi 29 septembre\", mais mercredi ne marche pas pour toi.\n\n[Serais;Est-ce que] \"jeudi 1er octobre, 21 h 30\" [passer;pourrait te convenir] ?",
           "bits": [
             {
               "type": "flashcard",
               "id": "2026-09-25-sec-2-fc-1",
               "incorrect": "Sorry",
-              "correct": "Désole"
+              "correct": "Désolé"
             },
             {
               "type": "text",
@@ -1048,7 +1048,7 @@
           "day": "2026-09-27",
           "sectionIndex": 2,
           "language": "de",
-          "rawText": "Ah cool, Mailand war eine nette Strecke, der Anfang und Ende sind sehr schön und historisch, von [17 bis 25 km;km 17 bis 25] [ein bisschen;geht es ein bisschen] außerhalb der Stadt, [aber insgesamt;aber insgesamt ist die Strecke] flach und schnell. Hannah und ich hatten im April ein bisschen zu viel Sonne an dem Tag, [aber 04.04.;aber der 04.04.] sollte in der Regel kühl sein, also perfekte Chancen für einen optimalen Marathon. Wenn du [einen Airbnb Unterkunft;eine Airbnb-Unterkunft] in Mailand suchst, kann ich [einen;dir eine] empfehlen, der Host Alessandro und ich sind seitdem Whatsapp-Freunde.\n\nJa, ich freue mich auf meinen [Geburtstags Marathon;Geburtstagsmarathon] und die freie Woche in Dijon. [Ich besuche auch in Paris;In Paris besuche ich außerdem] einen französischen Freund aus meiner 1993-94 Potsdamer-Uni-Zeit, wir haben [dort;damals dort] zusammen gewohnt. [Sonst;Ansonsten] habe ich einen Polyglot Club gefunden und eine Menge City- und [Museumtours;Museumtouren] [geplannt;geplant], um mein Französisch zu verbessern. Mein Airbnb ist [mit;bei] einer ehemaligen Französischlehrerin, die in Rente ist [also hat angeblich viel Zeit zu reden;une angeblich viel Zeit zum Reden hat]. [Ich werde wahrscheinlich die restliche Zeit;Die restliche Zeit werde ich wahrscheinlich] mit [Bourgogne Weinproben Veranstaltungen;Weinproben-Veranstaltungen in der Bourgogne] verbringen.\n\nNach Dijon werde ich mein Training auf Sparflamme [bringen;stellen] und meine [7 km Strecken;7-km-Strecken] 1x oder 2x pro Woche wieder [aufleben;aufleben lassen], um fit zu bleiben. Dann [ab Januar;Januar] geht's wieder los mit den kalten Läufen mitten im Winter.",
+          "rawText": "Ah cool, Mailand war eine nette Strecke, der Anfang und Ende sind sehr schön und historisch, von [17 bis 25 km;km 17 bis 25] [ein bisschen;geht es ein bisschen] außerhalb der Stadt, [aber insgesamt;aber insgesamt ist die Strecke] flach und schnell. Hannah und ich hatten im April ein bisschen zu viel Sonne an dem Tag, [aber 04.04.;aber der 04.04.] sollte in der Regel kühl sein, also perfekte Chancen für einen optimalen Marathon. Wenn du [einen Airbnb Unterkunft;eine Airbnb-Unterkunft] in Mailand suchst, kann ich [einen;dir eine] empfehlen, der Host Alessandro und ich sind seitdem Whatsapp-Freunde.\n\nJa, ich freue mich auf meinen [Geburtstags Marathon;Geburtstagsmarathon] und die freie Woche in Dijon. [Ich besuche auch in Paris;In Paris besuche ich außerdem] einen französischen Freund aus meiner 1993-94 Potsdamer-Uni-Zeit, wir haben [dort;damals dort] zusammen gewohnt. [Sonst;Ansonsten] habe ich einen Polyglot Club gefunden und eine Menge City- und [Museumtours;Museumtouren] [geplannt;geplant], um mein Französisch zu verbessern. Mein Airbnb ist [mit;bei] einer ehemaligen Französischlehrerin, die in Rente ist [also hat angeblich viel Zeit zu reden;und angeblich viel Zeit zum Reden hat]. [Ich werde wahrscheinlich die restliche Zeit;Die restliche Zeit werde ich wahrscheinlich] mit [Bourgogne Weinproben Veranstaltungen;Weinproben-Veranstaltungen in der Bourgogne] verbringen.\n\nNach Dijon werde ich mein Training auf Sparflamme [bringen;stellen] und meine [7 km Strecken;7-km-Strecken] 1x oder 2x pro Woche wieder [aufleben;aufleben lassen], um fit zu bleiben. Dann [ab Januar;Januar] geht's wieder los mit den kalten Läufen mitten im Winter.",
           "bits": [
             {
               "type": "text",
@@ -1188,7 +1188,7 @@
               "type": "flashcard",
               "id": "2026-09-27-sec-2-fc-14",
               "incorrect": "also hat angeblich viel Zeit zu reden",
-              "correct": "une angeblich viel Zeit zum Reden hat"
+              "correct": "und angeblich viel Zeit zum Reden hat"
             },
             {
               "type": "text",
@@ -1382,7 +1382,7 @@
           "day": "2026-09-29",
           "sectionIndex": 1,
           "language": "fr",
-          "rawText": "Merci beaucoup encore pour [les;ces] cours efficaces, les petites corrections de [pronunciation;prononciation] [me aident;m'aident] beaucoup.\n\n[Pourrions nous;Pourrions-nous] [experimenter;expérimenter] un peu avec le format ? [Par exemples;Par exemple], au lieu [des questions;de poser des questions] de vocabulaire [après;après que] l'apprenant a lu [au voix haute le texte;le texte à voix haute], [des questions;pourrait-on poser des questions] de compréhension et d'opinion ?\n\n[Ici serait un;Voici un exemple de] prompt possible :\n\nRédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet.",
+          "rawText": "Merci beaucoup encore pour [les;ces] cours efficaces, les petites corrections de [pronunciation;prononciation] [me aident;m'aident] beaucoup.\n\n[Pourrions nous;Pourrions-nous] [experimenter;expérimenter] un peu avec le format ? [Par exemples;Par exemple], au lieu [des questions;de poser des questions] de vocabulaire [après;après que] l'apprenant a lu [au voix haute le texte;le texte à voix haute], [des questions;pourrait-on poser des questions] de compréhension et d'opinion ?\n\n[Ici serait un;Voici un exemple de] prompt possible :",
           "bits": [
             {
               "type": "text",
@@ -1496,11 +1496,11 @@
             },
             {
               "type": "text",
-              "text": " prompt possible :\n\nRédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet."
+              "text": " prompt possible :"
             }
           ],
           "flashcardsCount": 11,
-          "wordCount": 127
+          "wordCount": 58
         },
         {
           "id": "2026-09-29-sec-2",
@@ -1736,13 +1736,606 @@
           ],
           "flashcardsCount": 5,
           "wordCount": 20
+        },
+        {
+          "id": "2026-09-29-sec-5",
+          "day": "2026-09-29",
+          "sectionIndex": 5,
+          "language": "fr",
+          "rawText": "Nous avons discuté [chapitres;des chapitres] 1 et 2, mais je crois que pour le semaine prochaine, [il été;on avait] dit [qu'on doit;de] lire le chapitre 2 encore et chapitre 3. Je veux lire 1-4 pour [attrapper;ratrapper mon retard].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Nous avons discuté "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-5-fc-1",
+              "incorrect": "chapitres",
+              "correct": "des chapitres"
+            },
+            {
+              "type": "text",
+              "text": " 1 et 2, mais je crois que pour le semaine prochaine, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-5-fc-2",
+              "incorrect": "il été",
+              "correct": "on avait"
+            },
+            {
+              "type": "text",
+              "text": " dit "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-5-fc-3",
+              "incorrect": "qu'on doit",
+              "correct": "de"
+            },
+            {
+              "type": "text",
+              "text": " lire le chapitre 2 encore et chapitre 3. Je veux lire 1-4 pour "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-29-sec-5-fc-4",
+              "incorrect": "attrapper",
+              "correct": "ratrapper mon retard"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 4,
+          "wordCount": 36
         }
       ],
-      "totalWords": 228,
-      "totalFlashcards": 30
+      "totalWords": 195,
+      "totalFlashcards": 34
+    },
+    {
+      "date": "2026-09-30",
+      "sections": [
+        {
+          "id": "2026-09-30-sec-1",
+          "day": "2026-09-30",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "si [posible;possible] si voudrais reprogrammer ce cours [de 7 octobre;du 7 octobre] parce que je vais partir [vers;pour] Dijon [très tot de matin;très tot le matin] [le 8 octobre;du 8 octobre].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "si "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-1",
+              "incorrect": "posible",
+              "correct": "possible"
+            },
+            {
+              "type": "text",
+              "text": " si voudrais reprogrammer ce cours "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-2",
+              "incorrect": "de 7 octobre",
+              "correct": "du 7 octobre"
+            },
+            {
+              "type": "text",
+              "text": " parce que je vais partir "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-3",
+              "incorrect": "vers",
+              "correct": "pour"
+            },
+            {
+              "type": "text",
+              "text": " Dijon "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-4",
+              "incorrect": "très tot de matin",
+              "correct": "très tot le matin"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-1-fc-5",
+              "incorrect": "le 8 octobre",
+              "correct": "du 8 octobre"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 5,
+          "wordCount": 24
+        },
+        {
+          "id": "2026-09-30-sec-2",
+          "day": "2026-09-30",
+          "sectionIndex": 2,
+          "language": "fr",
+          "rawText": "Voici un nouveau prompt pour un texte pour notre prochain cours. [N'hésites pas;N'hésite pas] [de le changer ou ajouter;à le modifier ou à ajouter] [l'autres thème grammaire;d'autres thèmes de grammaire] etc. si tu veux.\n\nJe doit surtout pratiquer [prononciation et discussion;la prononciation et la discussion]. Je crois que ma prononciation [s'améliorer;s'améliore] lentement (tes conseils son très utiles !) mais [j'ai besoin plus;j'ai besoin de plus] d'experience [pour discuter;pour pouvoir discuter] [sur n'importe quoi sujet;de n'importe quel sujet] avec [l'autres;d'autres] personnes : comprendre [tout que;tout ce que] l'autre personne dit et [répondre assez rapide;répondre assez rapidement] pour avoir une conversation [interessante;intéressante].\n\n[Serait cool;Ce serait cool] [si nous pouvons faire le lire;si nous pouvions commencer par une lecture] à voix haute [plus correction;avec des corrections], [et après ça simplement;puis simplement avoir] une conversation libre sur le sujet, etc.\n\nTu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à] tous [les sujets sur France;les sujets concernant la France] et la culture française, par exemple quelque chose [que t'aimes;que tu aimes], une ville, un région, [un custom fraicais;une coutume fraicaise] qui te plaît, etc.\n\n[J'ai programmer;J'ai programmé] plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Voici un nouveau prompt pour un texte pour notre prochain cours. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-1",
+              "incorrect": "N'hésites pas",
+              "correct": "N'hésite pas"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-2",
+              "incorrect": "de le changer ou ajouter",
+              "correct": "à le modifier ou à ajouter"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-3",
+              "incorrect": "l'autres thème grammaire",
+              "correct": "d'autres thèmes de grammaire"
+            },
+            {
+              "type": "text",
+              "text": " etc. si tu veux.\n\nJe doit surtout pratiquer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-4",
+              "incorrect": "prononciation et discussion",
+              "correct": "la prononciation et la discussion"
+            },
+            {
+              "type": "text",
+              "text": ". Je crois que ma prononciation "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-5",
+              "incorrect": "s'améliorer",
+              "correct": "s'améliore"
+            },
+            {
+              "type": "text",
+              "text": " lentement (tes conseils son très utiles !) mais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-6",
+              "incorrect": "j'ai besoin plus",
+              "correct": "j'ai besoin de plus"
+            },
+            {
+              "type": "text",
+              "text": " d'experience "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-7",
+              "incorrect": "pour discuter",
+              "correct": "pour pouvoir discuter"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-8",
+              "incorrect": "sur n'importe quoi sujet",
+              "correct": "de n'importe quel sujet"
+            },
+            {
+              "type": "text",
+              "text": " avec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-9",
+              "incorrect": "l'autres",
+              "correct": "d'autres"
+            },
+            {
+              "type": "text",
+              "text": " personnes : comprendre "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-10",
+              "incorrect": "tout que",
+              "correct": "tout ce que"
+            },
+            {
+              "type": "text",
+              "text": " l'autre personne dit et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-11",
+              "incorrect": "répondre assez rapide",
+              "correct": "répondre assez rapidement"
+            },
+            {
+              "type": "text",
+              "text": " pour avoir une conversation "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-12",
+              "incorrect": "interessante",
+              "correct": "intéressante"
+            },
+            {
+              "type": "text",
+              "text": ".\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-13",
+              "incorrect": "Serait cool",
+              "correct": "Ce serait cool"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-14",
+              "incorrect": "si nous pouvons faire le lire",
+              "correct": "si nous pouvions commencer par une lecture"
+            },
+            {
+              "type": "text",
+              "text": " à voix haute "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-15",
+              "incorrect": "plus correction",
+              "correct": "avec des corrections"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-16",
+              "incorrect": "et après ça simplement",
+              "correct": "puis simplement avoir"
+            },
+            {
+              "type": "text",
+              "text": " une conversation libre sur le sujet, etc.\n\nTu peux choisir un sujet pour le texte, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-17",
+              "incorrect": "je m'interessais sur",
+              "correct": "je m'intéresse à"
+            },
+            {
+              "type": "text",
+              "text": " tous "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-18",
+              "incorrect": "les sujets sur France",
+              "correct": "les sujets concernant la France"
+            },
+            {
+              "type": "text",
+              "text": " et la culture française, par exemple quelque chose "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-19",
+              "incorrect": "que t'aimes",
+              "correct": "que tu aimes"
+            },
+            {
+              "type": "text",
+              "text": ", une ville, un région, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-20",
+              "incorrect": "un custom fraicais",
+              "correct": "une coutume fraicaise"
+            },
+            {
+              "type": "text",
+              "text": " qui te plaît, etc.\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-21",
+              "incorrect": "J'ai programmer",
+              "correct": "J'ai programmé"
+            },
+            {
+              "type": "text",
+              "text": " plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-2-fc-22",
+              "incorrect": "c'est presque le seuls crénaux",
+              "correct": "ce sont presque les seuls créneaux"
+            },
+            {
+              "type": "text",
+              "text": " disponibles dont je dispose actuellement."
+            }
+          ],
+          "flashcardsCount": 22,
+          "wordCount": 184
+        },
+        {
+          "id": "2026-09-30-sec-3",
+          "day": "2026-09-30",
+          "sectionIndex": 3,
+          "language": "fr",
+          "rawText": "Pour chaque [sujet titre;titre de sujet], ajoute les dates [approximate;approximatives]\n\n[Deplace tous les dates;Déplace toutes les dates] [vers le commence de titre;au debut du titre] et supprime [le numéro;les numéros]\n\nÀ la fin de chaque section, ajoute trois questions de compréhension très simples [du texte;sur le texte] de la section\n\nÀ la fin de chaque [paragraph;paragraphe], ajoute une question de compréhension très simple sur le paragraphe\n\nAvec [markdown syntaxe;le syntaxe Markdown], [fait les titres plus visible;rends les titres plus visibles] comme [titres de sections;de vraie titres de section], et [highlighte le question;mets les questions en évidence] [dans un façon;d'une manière claire]\n\nEst-ce qu'il [y a un possibilité;est possible] de [rendre;mettre] les dates comme [supertitres;des surtitres] [en haut de;au-dessus des] titres ?\n\nEst-ce qu'il est possible de modifier le couleur de surtitres [comme jaunes;par exemple en jaune] ou [de ajouter;d'ajouter] une ligne vide au-dessus [chaque surtitres;de chaque surtitre] ?\n\nMets la question [pas après;non pas après,] mais avant [la paragraph;le paragraphe] qui se [concerne;rapporte]",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Pour chaque "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-1",
+              "incorrect": "sujet titre",
+              "correct": "titre de sujet"
+            },
+            {
+              "type": "text",
+              "text": ", ajoute les dates "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-2",
+              "incorrect": "approximate",
+              "correct": "approximatives"
+            },
+            {
+              "type": "text",
+              "text": "\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-3",
+              "incorrect": "Deplace tous les dates",
+              "correct": "Déplace toutes les dates"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-4",
+              "incorrect": "vers le commence de titre",
+              "correct": "au debut du titre"
+            },
+            {
+              "type": "text",
+              "text": " et supprime "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-5",
+              "incorrect": "le numéro",
+              "correct": "les numéros"
+            },
+            {
+              "type": "text",
+              "text": "\n\nÀ la fin de chaque section, ajoute trois questions de compréhension très simples "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-6",
+              "incorrect": "du texte",
+              "correct": "sur le texte"
+            },
+            {
+              "type": "text",
+              "text": " de la section\n\nÀ la fin de chaque "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-7",
+              "incorrect": "paragraph",
+              "correct": "paragraphe"
+            },
+            {
+              "type": "text",
+              "text": ", ajoute une question de compréhension très simple sur le paragraphe\n\nAvec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-8",
+              "incorrect": "markdown syntaxe",
+              "correct": "le syntaxe Markdown"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-9",
+              "incorrect": "fait les titres plus visible",
+              "correct": "rends les titres plus visibles"
+            },
+            {
+              "type": "text",
+              "text": " comme "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-10",
+              "incorrect": "titres de sections",
+              "correct": "de vraie titres de section"
+            },
+            {
+              "type": "text",
+              "text": ", et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-11",
+              "incorrect": "highlighte le question",
+              "correct": "mets les questions en évidence"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-12",
+              "incorrect": "dans un façon",
+              "correct": "d'une manière claire"
+            },
+            {
+              "type": "text",
+              "text": "\n\nEst-ce qu'il "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-13",
+              "incorrect": "y a un possibilité",
+              "correct": "est possible"
+            },
+            {
+              "type": "text",
+              "text": " de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-14",
+              "incorrect": "rendre",
+              "correct": "mettre"
+            },
+            {
+              "type": "text",
+              "text": " les dates comme "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-15",
+              "incorrect": "supertitres",
+              "correct": "des surtitres"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-16",
+              "incorrect": "en haut de",
+              "correct": "au-dessus des"
+            },
+            {
+              "type": "text",
+              "text": " titres ?\n\nEst-ce qu'il est possible de modifier le couleur de surtitres "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-17",
+              "incorrect": "comme jaunes",
+              "correct": "par exemple en jaune"
+            },
+            {
+              "type": "text",
+              "text": " ou "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-18",
+              "incorrect": "de ajouter",
+              "correct": "d'ajouter"
+            },
+            {
+              "type": "text",
+              "text": " une ligne vide au-dessus "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-19",
+              "incorrect": "chaque surtitres",
+              "correct": "de chaque surtitre"
+            },
+            {
+              "type": "text",
+              "text": " ?\n\nMets la question "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-20",
+              "incorrect": "pas après",
+              "correct": "non pas après,"
+            },
+            {
+              "type": "text",
+              "text": " mais avant "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-21",
+              "incorrect": "la paragraph",
+              "correct": "le paragraphe"
+            },
+            {
+              "type": "text",
+              "text": " qui se "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-09-30-sec-3-fc-22",
+              "incorrect": "concerne",
+              "correct": "rapporte"
+            }
+          ],
+          "flashcardsCount": 22,
+          "wordCount": 132
+        }
+      ],
+      "totalWords": 340,
+      "totalFlashcards": 49
     }
   ],
-  "totalSections": 18,
-  "totalWords": 1334,
-  "totalFlashcards": 143
+  "totalSections": 22,
+  "totalWords": 1641,
+  "totalFlashcards": 196
 }

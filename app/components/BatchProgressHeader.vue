@@ -28,6 +28,11 @@ const languageColors: Record<string, string> = {
   el: '#ea580c'
 }
 
+function getLanguageColor(lang?: string): string {
+  const code = (lang || 'fr').toLowerCase()
+  return languageColors[code] || '#2563eb'
+}
+
 function getSlotStyle(slot: BatchSlot) {
   if (slot.status === 'parked' || slot.status === 'deleted') {
     return {
@@ -38,8 +43,7 @@ function getSlotStyle(slot: BatchSlot) {
     }
   }
 
-  const lang = (slot.language || 'fr').toLowerCase()
-  const color = languageColors[lang] || '#2563eb'
+  const color = getLanguageColor(slot.language)
 
   if (slot.status === 'learned') {
     return {
@@ -153,8 +157,12 @@ const percent = computed(() => {
           <!-- Deleted State -->
           <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-rose-600 dark:text-rose-400">✕</span>
 
-          <!-- Unsuccessful fail count (blue / keep testing) -->
-          <span v-else-if="slot.unsuccessfulCount > 0" class="text-xs font-mono font-bold leading-none text-indigo-600 dark:text-indigo-400">
+          <!-- Unsuccessful fail count (color of the language) -->
+          <span
+            v-else-if="slot.unsuccessfulCount > 0"
+            class="text-xs font-mono font-bold leading-none"
+            :style="{ color: getLanguageColor(slot.language) }"
+          >
             {{ slot.unsuccessfulCount }}
           </span>
 

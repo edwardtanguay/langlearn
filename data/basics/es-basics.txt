@@ -91,3 +91,5 @@
 	- el perro, el gato, el pájaro, el pez, el conejo, el caballo, el león, el tigre, el elefante, el mono
 - kitchen
 	- la cuchara, el tenedor, el cuchillo, el plato, el tazón, el vaso, la taza, la olla, la sartén, el refrigerador, el congelador, el horno, la estufa, el microondas, el fregadero, el lavavajillas, la tabla de cortar, la servilleta, la botella, la tetera
+- office
+	- el clip, la grapadora, las tijeras, la carpeta, el bolígrafo, el lápiz, el teclado, el ratón, el escritorio, el monitor, la impresora, el cuaderno, la goma de borrar, la cinta adhesiva, el subrayador, el sobre, el calendario, la calculadora, el maletín, las notas adhesivas

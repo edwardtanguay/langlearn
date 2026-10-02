@@ -100,4 +100,20 @@ html.sun-mode .opacity-60,
 html.sun-mode .opacity-75,
 html.sun-mode .opacity-85 {
   opacity: 1 !important;
+}
+
+/* French Phonetic Nasal Styling (Ghost Pill Edition from nasal-styling-v2.html) */
+.nasal {
+  color: #fef9c3 !important;
+  font-style: italic !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 5px rgba(245, 158, 11, 0.4);
+  letter-spacing: 0.02em;
+  display: inline-block;
+  padding: 0 2px 0 0;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.2);
+  vertical-align: baseline;
+  line-height: inherit;
+  margin-block: -1px;
 }

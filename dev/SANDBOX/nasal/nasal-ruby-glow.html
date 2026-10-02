@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>French Nasal Sounds – Variant D In-Word Glow & Floating Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS VARIABLES
+       ========================================================================== */
+    :root {
+      /* Warm dark espresso background from the app */
+      --bg-dark: #1e1b18;
+      --bg-card: #27231e;
+      --bg-card-subtle: #201c18;
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(234, 179, 8, 0.3);
+
+      /* Primary Yellow Text */
+      --yellow-main: #facc15;
+      --yellow-dim: #ca8a04;
+      --yellow-bright: #fef08a;
+      --text-yellow: var(--yellow-main);
+
+      /* Variant D Color-Coded Sound Families */
+      --nasal-an: #fb923c;   /* [ɑ̃] AN / EN (Warm Apricot / Amber Orange) */
+      --nasal-on: #f43f5e;   /* [ɔ̃] ON (Coral Rose) */
+      --nasal-in: #38bdf8;   /* [ɛ̃] IN / AIN / EIN (Sky Aqua) */
+      --nasal-un: #c084fc;   /* [œ̃] UN (Lavender Purple) */
+
+      --text-muted: #a8a29e;
+      --text-light: #f5f5f4;
+      --text-dim: #78716c;
+
+      --font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'Courier Prime', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: var(--font-ui);
+      padding: 40px 20px 120px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       HEADER & OVERVIEW
+       ========================================================================== */
+    header {
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border-card);
+      padding-bottom: 24px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(250, 204, 21, 0.12);
+      color: var(--yellow-main);
+      border: 1px solid rgba(250, 204, 21, 0.3);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    h1 span.yellow-glow {
+      color: var(--yellow-main);
+      text-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 820px;
+      line-height: 1.65;
+    }
+
+    .subtitle strong {
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       STICKY CONTROLS TOOLBAR
+       ========================================================================== */
+    .controls-toolbar {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      background: rgba(30, 27, 24, 0.94);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 14px 20px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .control-label {
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-right: 4px;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-toggle {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 6px 13px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .btn-toggle.active {
+      background: var(--yellow-main);
+      color: #1a1600;
+      border-color: var(--yellow-main);
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+    }
+
+    /* ==========================================================================
+       LEGEND BAR (THE 4 NASAL FAMILIES)
+       ========================================================================== */
+    .sound-legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .legend-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    .legend-badge {
+      font-weight: 800;
+      font-size: 14px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      color: #141210;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-an { background: var(--nasal-an); }
+    .badge-on { background: var(--nasal-on); color: #ffffff; }
+    .badge-in { background: var(--nasal-in); }
+    .badge-un { background: var(--nasal-un); color: #ffffff; }
+
+    .legend-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .legend-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .legend-examples {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       CORE NASAL RUBY TYPOGRAPHY & BASELINE ALIGNMENT
+       ========================================================================== */
+
+    /* Ensure ruby baseline aligns exactly with the surrounding yellow text */
+    ruby.nasal-ruby {
+      display: inline-ruby;
+      ruby-position: over;
+      ruby-align: center;
+      vertical-align: baseline;
+      line-height: inherit;
+    }
+
+    /* The in-word glowing letters: sits precisely on the word baseline */
+    ruby.nasal-ruby > .glow {
+      display: inline;
+      vertical-align: baseline;
+      font-weight: 800;
+    }
+
+    /* The small letters above: floats cleanly over the lit letters */
+    ruby.nasal-ruby > rt {
+      display: ruby-text;
+      font-size: 0.52em;
+      font-weight: 800;
+      line-height: 1;
+      text-align: center;
+      user-select: none;
+      font-family: var(--font-ui);
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      transform: translateY(-2px);
+      transition: all 0.2s ease;
+    }
+
+    /* --------------------------------------------------------------------------
+       STYLE 1: Bare Floating Letters (Default mode)
+       Clean, minimal furigana-style floating text in the sound family color
+       -------------------------------------------------------------------------- */
+    body.mode-bare ruby.nasal-ruby > rt {
+      background: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    /* --------------------------------------------------------------------------
+       STYLE 2: Dark Micro-Capsule Badge Mode
+       Crisp translucent dark pill badge with colored text inside
+       -------------------------------------------------------------------------- */
+    body.mode-capsule ruby.nasal-ruby > rt {
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 4px;
+      padding: 1px 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+      transform: translateY(-3px);
+    }
+
+    /* ==========================================================================
+       VARIANT D COLOR ENCODING (Orange, Rose, Sky, Violet)
+       ========================================================================== */
+
+    /* Sound Family 1: AN / EN / EM / AM [ɑ̃] -> Orange */
+    .nasal-an > .glow {
+      color: #fff7ed;
+      text-shadow: 0 0 8px rgba(251, 146, 60, 0.9), 0 0 16px rgba(251, 146, 60, 0.55);
+    }
+    .nasal-an > rt {
+      color: var(--nasal-an);
+    }
+    body.mode-capsule .nasal-an > rt {
+      border-color: rgba(251, 146, 60, 0.4);
+    }
+
+    /* Sound Family 2: ON / OM [ɔ̃] -> Coral Rose */
+    .nasal-on > .glow {
+      color: #fff1f2;
+      text-shadow: 0 0 8px rgba(244, 63, 94, 0.9), 0 0 16px rgba(244, 63, 94, 0.55);
+    }
+    .nasal-on > rt {
+      color: var(--nasal-on);
+    }
+    body.mode-capsule .nasal-on > rt {
+      border-color: rgba(244, 63, 94, 0.4);
+    }
+
+    /* Sound Family 3: IN / AIN / EIN / AIM [ɛ̃] -> Sky Aqua */
+    .nasal-in > .glow {
+      color: #f0f9ff;
+      text-shadow: 0 0 8px rgba(56, 189, 248, 0.9), 0 0 16px rgba(56, 189, 248, 0.55);
+    }
+    .nasal-in > rt {
+      color: var(--nasal-in);
+    }
+    body.mode-capsule .nasal-in > rt {
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    /* Sound Family 4: UN / UM [œ̃] -> Lavender Violet */
+    .nasal-un > .glow {
+      color: #faf5ff;
+      text-shadow: 0 0 8px rgba(192, 132, 252, 0.9), 0 0 16px rgba(192, 132, 252, 0.55);
+    }
+    .nasal-un > rt {
+      color: var(--nasal-un);
+    }
+    body.mode-capsule .nasal-un > rt {
+      border-color: rgba(192, 132, 252, 0.4);
+    }
+
+    /* ==========================================================================
+       CONTAINERS & PRESENTATION CARDS
+       ========================================================================== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Display box for words and sentences */
+    .demo-surface {
+      background: var(--bg-card-subtle);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 26px 24px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Word line */
+    .words-display {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 24px 30px;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-yellow);
+      line-height: 2;
+    }
+
+    .word-unit {
+      display: inline-flex;
+      align-items: baseline;
+      letter-spacing: -0.01em;
+    }
+
+    /* Sentence line */
+    .sentence-display {
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--text-yellow);
+      line-height: 2.4;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-top: 18px;
+    }
+
+    /* Full reading passage */
+    .passage-surface {
+      background: var(--bg-card-subtle);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 30px;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 2.5;
+      color: var(--text-yellow);
+      letter-spacing: 0.01em;
+    }
+
+    .passage-surface p + p {
+      margin-top: 20px;
+    }
+
+    .callout-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .callout-highlight {
+      color: var(--yellow-dim);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="mode-bare">
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="badge-pill">French Phonetics Lab · Refined Architecture</div>
+    <h1>Variant D: <span class="yellow-glow">In-Word Lit Letters</span> + Upper Notes</h1>
+    <p class="subtitle">
+      The lit characters remain <strong>anchored directly in the French word</strong> on the yellow text baseline (as in Option 1D),
+      while the small phonetic sound guides float seamlessly overhead.
+      All lit letters and their corresponding notes are color-coded in <strong>Variant D's 4 sound families</strong>:
+      <span style="color:var(--nasal-an); font-weight:700;">Orange (an)</span>,
+      <span style="color:var(--nasal-on); font-weight:700;">Rose (on)</span>,
+      <span style="color:var(--nasal-in); font-weight:700;">Sky (in)</span>, and
+      <span style="color:var(--nasal-un); font-weight:700;">Violet (un)</span>.
+    </p>
+  </header>
+
+  <!-- Interactive Controls Toolbar -->
+  <div class="controls-toolbar">
+    <!-- Note Style Switcher -->
+    <div class="control-group">
+      <span class="control-label">Note Style:</span>
+      <button class="btn-toggle active" id="btn-bare" onclick="setNoteStyle('bare')">Bare Floating Text</button>
+      <button class="btn-toggle" id="btn-capsule" onclick="setNoteStyle('capsule')">Micro-Capsule Badge</button>
+    </div>
+
+    <!-- Theme Background Switcher -->
+    <div class="control-group">
+      <span class="control-label">Background:</span>
+      <button class="btn-toggle active" onclick="setBg('#1e1b18', this)">Espresso (App)</button>
+      <button class="btn-toggle" onclick="setBg('#0f172a', this)">Midnight Blue</button>
+      <button class="btn-toggle" onclick="setBg('#111111', this)">Onyx Black</button>
+      <button class="btn-toggle" onclick="setBg('#2d3748', this)">Slate Grey</button>
+    </div>
+
+    <!-- Font Family Switcher -->
+    <div class="control-group">
+      <span class="control-label">Font:</span>
+      <button class="btn-toggle active" onclick="setFont('sans', this)">Sans-Serif</button>
+      <button class="btn-toggle" onclick="setFont('mono', this)">Typewriter (App)</button>
+    </div>
+  </div>
+
+  <!-- Sound Family Legend Cards -->
+  <div class="sound-legend">
+    <div class="legend-card">
+      <span class="legend-badge badge-an">an</span>
+      <div class="legend-details">
+        <span class="legend-name">AN / EN / EM / AM [ɑ̃]</span>
+        <span class="legend-examples">sans, temps, enfant</span>
+      </div>
+    </div>
+
+    <div class="legend-card">
+      <span class="legend-badge badge-on">on</span>
+      <div class="legend-details">
+        <span class="legend-name">ON / OM [ɔ̃]</span>
+        <span class="legend-examples">bon, pont, maison</span>
+      </div>
+    </div>
+
+    <div class="legend-card">
+      <span class="legend-badge badge-in">in</span>
+      <div class="legend-details">
+        <span class="legend-name">IN / AIN / EIN [ɛ̃]</span>
+        <span class="legend-examples">pain, vin, train, plein</span>
+      </div>
+    </div>
+
+    <div class="legend-card">
+      <span class="legend-badge badge-un">un</span>
+      <div class="legend-details">
+        <span class="legend-name">UN / UM [œ̃]</span>
+        <span class="legend-examples">un, brun, parfum</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: Isolated Words & Single Sentences -->
+  <div class="card">
+    <div class="card-title-group">
+      <h2 class="card-title">1. Isolated Vocabulary & Sentences</h2>
+      <span class="callout-highlight">Base text: Yellow · Lit letters: In-line glow</span>
+    </div>
+    <p class="card-subtitle">
+      Notice how the glowing letters (<code>an</code>, <code>on</code>, <code>ain</code>, <code>in</code>, <code>em</code>, <code>un</code>)
+      sit seamlessly inside the yellow word without dropping down.
+    </p>
+
+    <div class="demo-surface">
+      <!-- Vocabulary Words Row -->
+      <div class="words-display">
+        <span class="word-unit">s<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>s</span>
+        <span class="word-unit">b<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby></span>
+        <span class="word-unit">p<ruby class="nasal-ruby nasal-in"><span class="glow">ain</span><rt>in</rt></ruby></span>
+        <span class="word-unit">v<ruby class="nasal-ruby nasal-in"><span class="glow">in</span><rt>in</rt></ruby></span>
+        <span class="word-unit">t<ruby class="nasal-ruby nasal-an"><span class="glow">em</span><rt>an</rt></ruby>ps</span>
+        <span class="word-unit"><ruby class="nasal-ruby nasal-un"><span class="glow">un</span><rt>un</rt></ruby></span>
+        <span class="word-unit"><ruby class="nasal-ruby nasal-an"><span class="glow">en</span><rt>an</rt></ruby>f<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>t</span>
+        <span class="word-unit">mais<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby></span>
+        <span class="word-unit">tr<ruby class="nasal-ruby nasal-in"><span class="glow">ain</span><rt>in</rt></ruby></span>
+        <span class="word-unit">parf<ruby class="nasal-ruby nasal-un"><span class="glow">um</span><rt>un</rt></ruby></span>
+      </div>
+
+      <!-- Sample Sentence 1 -->
+      <div class="sentence-display">
+        <ruby class="nasal-ruby nasal-un"><span class="glow">Un</span><rt>un</rt></ruby> b<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby> v<ruby class="nasal-ruby nasal-in"><span class="glow">in</span><rt>in</rt></ruby> bl<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>c avec du p<ruby class="nasal-ruby nasal-in"><span class="glow">ain</span><rt>in</rt></ruby> f<ruby class="nasal-ruby nasal-in"><span class="glow">in</span><rt>in</rt></ruby> et du parf<ruby class="nasal-ruby nasal-un"><span class="glow">um</span><rt>un</rt></ruby>.
+      </div>
+
+      <!-- Sample Sentence 2 -->
+      <div class="sentence-display" style="border-top: none; padding-top: 0;">
+        Prendre un b<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby> p<ruby class="nasal-ruby nasal-in"><span class="glow">ain</span><rt>in</rt></ruby> s<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>s att<ruby class="nasal-ruby nasal-an"><span class="glow">en</span><rt>an</rt></ruby>dre le tr<ruby class="nasal-ruby nasal-in"><span class="glow">ain</span><rt>in</rt></ruby>.
+      </div>
+    </div>
+
+    <div class="callout-footer">
+      <span>✨ Alignment: Zero vertical drop · Perfectly continuous word spelling</span>
+      <span class="callout-highlight">Toggle Note Style above to test Bare vs Micro-Capsule</span>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Authentic Reading Passage (Dijon History) -->
+  <div class="card">
+    <div class="card-title-group">
+      <h2 class="card-title">2. Authentic Reading Passage (Les Origines de Divio)</h2>
+      <span class="callout-highlight">Excerpt from History of Dijon</span>
+    </div>
+    <p class="card-subtitle">
+      Demonstrating the reading rhythm in connected French prose. Base text flows naturally in yellow while nasal indicators provide effortless pronunciation guidance without causing cognitive distraction.
+    </p>
+
+    <div class="passage-surface">
+      <p>
+        Bi<ruby class="nasal-ruby nasal-in"><span class="glow">en</span><rt>in</rt></ruby> av<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>t que la cité ne porte s<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby> nom actuel, 
+        le territoire dij<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby>nais constituait déjà 
+        <ruby class="nasal-ruby nasal-un"><span class="glow">un</span><rt>un</rt></ruby> carrefour naturel particulièrem<ruby class="nasal-ruby nasal-an"><span class="glow">en</span><rt>an</rt></ruby>t convoité. 
+        Situé quelque part <ruby class="nasal-ruby nasal-an"><span class="glow">en</span><rt>an</rt></ruby>tre le bass<ruby class="nasal-ruby nasal-in"><span class="glow">in</span><rt>in</rt></ruby> rhodani<ruby class="nasal-ruby nasal-in"><span class="glow">en</span><rt>in</rt></ruby>, 
+        les plaines du nord et l'axe fluvial de la Seine, 
+        ce plateau voyait c<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby>verger march<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>ds et voyageurs.
+      </p>
+      <p>
+        <ruby class="nasal-ruby nasal-on"><span class="glow">On</span><rt>on</rt></ruby> ne pouvait pas s'installer n'importe où d<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>s cette contrée marécageuse, 
+        mais la c<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby>flu<ruby class="nasal-ruby nasal-an"><span class="glow">en</span><rt>an</rt></ruby>ce des rivières offrait une positi<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby> stratégique 
+        <ruby class="nasal-ruby nasal-in"><span class="glow">in</span><rt>in</rt></ruby>c<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby>tournable. 
+        À tout mom<ruby class="nasal-ruby nasal-an"><span class="glow">en</span><rt>an</rt></ruby>t, les march<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>ds trouvaient du p<ruby class="nasal-ruby nasal-in"><span class="glow">ain</span><rt>in</rt></ruby> 
+        et du b<ruby class="nasal-ruby nasal-on"><span class="glow">on</span><rt>on</rt></ruby> v<ruby class="nasal-ruby nasal-in"><span class="glow">in</span><rt>in</rt></ruby> s<ruby class="nasal-ruby nasal-an"><span class="glow">an</span><rt>an</rt></ruby>s att<ruby class="nasal-ruby nasal-an"><span class="glow">en</span><rt>an</rt></ruby>dre.
+      </p>
+    </div>
+
+    <div class="callout-footer">
+      <span>📖 Pedagogical effect: Distinguishes homophones (pain vs pin) while highlighting sound invariants</span>
+      <span class="callout-highlight">All 4 nasal families represented</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Interactive Toolbar Scripts -->
+<script>
+  // Toggle Note Style (Bare Floating Text vs Micro-Capsule Badge)
+  function setNoteStyle(style) {
+    if (style === 'bare') {
+      document.body.classList.remove('mode-capsule');
+      document.body.classList.add('mode-bare');
+      document.getElementById('btn-bare').classList.add('active');
+      document.getElementById('btn-capsule').classList.remove('active');
+    } else {
+      document.body.classList.remove('mode-bare');
+      document.body.classList.add('mode-capsule');
+      document.getElementById('btn-capsule').classList.add('active');
+      document.getElementById('btn-bare').classList.remove('active');
+    }
+  }
+
+  // Toggle Background Theme
+  function setBg(color, btn) {
+    document.body.style.backgroundColor = color;
+    btn.parentElement.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // Toggle Font Family
+  function setFont(fontType, btn) {
+    if (fontType === 'mono') {
+      document.body.style.fontFamily = "var(--font-mono)";
+    } else {
+      document.body.style.fontFamily = "var(--font-ui)";
+    }
+    btn.parentElement.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

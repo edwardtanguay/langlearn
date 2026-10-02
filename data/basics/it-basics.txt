@@ -90,3 +90,5 @@
 	- il cane, il gatto, l'uccello, il pesce, il coniglio, il cavallo, il leone, la tigre, l'elefante, la scimmia
 - kitchen
 	- il cucchiaio, la forchetta, il coltello, il piatto, la ciotola, il bicchiere, la tazza, la pentola, la padella, il frigorifero, il congelatore, il forno, il fornello, il microonde, il lavandino, la lavastoviglie, il tagliere, il tovagliolo, la bottiglia, il bollitore
+- office
+	- la graffetta, la cucitrice, le forbici, la cartella, la penna, la matita, la tastiera, il mouse, la scrivania, il monitor, la stampante, il quaderno, la gomma, il nastro adesivo, l'evidenziatore, la busta, il calendario, la calcolatrice, la valigetta, i foglietti adesivi

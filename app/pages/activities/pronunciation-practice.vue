@@ -404,10 +404,10 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
               style="font-family: 'Courier New', Courier, monospace"
             >
               <template v-if="(currentCard.pronunciation?.length ?? 0) > 20">
-                <span class="text-yellow-300 font-bold">{{ currentCard.pronunciation }}</span>
+                <span class="text-yellow-300 font-bold" v-html="formatPronunciationHtml(currentCard.pronunciation)"></span>
               </template>
               <template v-else>
-                <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold">{{ currentCard.pronunciation }}</span><span class="text-yellow-300/40 font-normal"> ]</span>
+                <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold" v-html="formatPronunciationHtml(currentCard.pronunciation)"></span><span class="text-yellow-300/40 font-normal"> ]</span>
               </template>
             </div>
           </div>

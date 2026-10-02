@@ -80,6 +80,24 @@ function formatFrenchText(text: string): string {
   return text.replace(/ ([?!:;])/g, '\u00A0$1')
 }
 
+// Ensure copied text across flashcards contains no unexpected newlines and normal spaces
+function handleTextCopy(event: ClipboardEvent) {
+  const selection = window.getSelection()
+  if (!selection || selection.rangeCount === 0) return
+  const rawText = selection.toString()
+  if (!rawText) return
+
+  const clean = rawText
+    .replace(/\r?\n+/g, ' ')
+    .replace(/[ \t\u00A0]+/g, ' ')
+    .trim()
+
+  if (event.clipboardData) {
+    event.clipboardData.setData('text/plain', clean)
+    event.preventDefault()
+  }
+}
+
 // UI controls
 const showStats = ref(false)
 const showAllStatsDays = ref(false)
@@ -124,18 +142,40 @@ const allSections = computed<JournalSection[]>(() => {
   return list
 })
 
-// Queue of sections based on active filter
+// Queue of sections based on active filter (keeps active section visible even if completed until navigating away)
 const queue = computed<JournalSection[]>(() => {
   if (selectedFilter.value === 'unlearned') {
-    return allSections.value.filter(s => !s.isLearned)
+    return allSections.value.filter(s => !s.isLearned || s.id === activeSectionId.value)
   }
   return allSections.value
 })
 
 function setFilter(filter: 'all' | 'unlearned') {
+  const current = allSections.value.find(s => s.id === activeSectionId.value)
+  const isCurrentUnlearned = !!current && !current.isLearned
+
   selectedFilter.value = filter
+  if (filter === 'unlearned') {
+    if (current && current.isLearned) {
+      const firstUnlearned = allSections.value.find(s => !s.isLearned)
+      if (firstUnlearned) {
+        selectSection(firstUnlearned.id)
+      } else {
+        activeSectionId.value = undefined
+      }
+      return
+    }
+  } else if (filter === 'all' && isCurrentUnlearned) {
+    if (queue.value.length > 0) {
+      selectSection(queue.value[0]!.id)
+      return
+    }
+  }
+
   if (queue.value.length > 0) {
-    selectSection(queue.value[0]!.id)
+    if (!activeSectionId.value || !queue.value.some(s => s.id === activeSectionId.value)) {
+      selectSection(queue.value[0]!.id)
+    }
   } else {
     activeSectionId.value = undefined
   }
@@ -160,6 +200,22 @@ function pickInitialSection() {
 
 function goToNextSection() {
   if (queue.value.length === 0) return
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  const current = currentSection.value
+  if (selectedFilter.value === 'unlearned' && current?.isLearned) {
+    const remainingUnlearned = allSections.value.filter(s => !s.isLearned)
+    if (remainingUnlearned.length === 0) {
+      activeSectionId.value = undefined
+      return
+    }
+    const allIdx = allSections.value.findIndex(s => s.id === current.id)
+    const nextUnlearned = allSections.value.slice(allIdx + 1).find(s => !s.isLearned) || remainingUnlearned[0]!
+    selectSection(nextUnlearned.id)
+    return
+  }
+
   const currentIdx = queue.value.findIndex(s => s.id === activeSectionId.value)
   const nextIdx = (currentIdx + 1) % queue.value.length
   selectSection(queue.value[nextIdx]!.id)
@@ -167,6 +223,22 @@ function goToNextSection() {
 
 function goToPreviousSection() {
   if (queue.value.length === 0) return
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  const current = currentSection.value
+  if (selectedFilter.value === 'unlearned' && current?.isLearned) {
+    const remainingUnlearned = allSections.value.filter(s => !s.isLearned)
+    if (remainingUnlearned.length === 0) {
+      activeSectionId.value = undefined
+      return
+    }
+    const allIdx = allSections.value.findIndex(s => s.id === current.id)
+    const prevUnlearned = allSections.value.slice(0, allIdx).reverse().find(s => !s.isLearned) || remainingUnlearned[remainingUnlearned.length - 1]!
+    selectSection(prevUnlearned.id)
+    return
+  }
+
   const currentIdx = queue.value.findIndex(s => s.id === activeSectionId.value)
   const prevIdx = (currentIdx - 1 + queue.value.length) % queue.value.length
   selectSection(queue.value[prevIdx]!.id)
@@ -404,7 +476,14 @@ const sectionSelectItems = computed(() => {
     const langColorClass = getLanguageTextColor(sec.language)
     const dateFormatted = formatDropdownDate(sec.day)
     const isAllLearned = unlearned === 0
-    const statusText = isAllLearned ? '(all learned)' : `(${unlearned} unlearned)`
+    let statusText: string
+    if (total === 0) {
+      statusText = '(no flashcards)'
+    } else if (isAllLearned) {
+      statusText = `(${total} learned)`
+    } else {
+      statusText = `(${unlearned} unlearned)`
+    }
     return {
       id: sec.id,
       isLearned: sec.isLearned,
@@ -483,8 +562,8 @@ onMounted(() => {
         </p>
       </div>
 
-      <!-- Action buttons in header -->
-      <div class="flex items-center gap-2 self-start sm:self-auto">
+      <!-- Action buttons in header: on mobile, Stats on left and Unlearned/All on right -->
+      <div class="flex items-center justify-between w-full sm:w-auto sm:justify-start gap-2 self-start sm:self-auto">
         <!-- Stats Toggle Button -->
         <button
           @click="showStats = !showStats"
@@ -501,10 +580,10 @@ onMounted(() => {
         <div class="inline-flex rounded-xl p-0.5 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs">
           <button
             @click="setFilter('unlearned')"
-            class="px-2.5 py-1.5 rounded-lg font-medium transition-all cursor-pointer"
+            class="px-2.5 py-1.5 rounded-lg transition-all cursor-pointer"
             :class="selectedFilter === 'unlearned' 
-              ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs font-bold' 
-              : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'"
+              ? 'bg-white dark:bg-gray-700 text-red-600 dark:text-red-400 shadow-xs font-bold' 
+              : 'text-red-400/80 dark:text-red-400/70 hover:text-red-600 dark:hover:text-red-300 font-medium'"
           >
             Unlearned
           </button>
@@ -656,9 +735,15 @@ onMounted(() => {
       </div>
 
       <!-- Section Text Card -->
-      <div class="p-6 sm:p-8 bg-white dark:bg-[#182030] rounded-3xl border-2 border-gray-200 dark:border-gray-800 shadow-md space-y-6">
+      <div
+        class="p-6 sm:p-8 bg-white dark:bg-[#182030] rounded-3xl shadow-md space-y-6 transition-colors duration-200"
+        :class="canAdvance ? 'border-2 border-emerald-500/80 dark:border-emerald-500/80' : 'border-2 border-gray-200 dark:border-gray-800'"
+      >
         <!-- Interactive Text Display: User can select text smoothly across plain text and pills -->
-        <div class="text-base sm:text-lg leading-[2rem] sm:leading-[2.2rem] text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text">
+        <div
+          @copy="handleTextCopy"
+          class="text-base sm:text-lg leading-[2rem] sm:leading-[2.2rem] text-gray-800 dark:text-gray-200 font-sans whitespace-pre-wrap select-text"
+        >
           <template v-for="(bit, bIdx) in currentSection.bits" :key="bIdx">
             <!-- Plain Text Segment -->
             <span v-if="bit.type === 'text'">{{ formatFrenchText(bit.text) }}</span>
@@ -671,7 +756,7 @@ onMounted(() => {
               @click="handlePillClick(bit.id)"
               @keydown.enter.prevent="toggleFlashcard(bit.id)"
               @keydown.space.prevent="toggleFlashcard(bit.id)"
-              class="inline-flex items-center mx-0.5 my-0.5 px-1 pt-0 pb-[1px] leading-tight rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text group align-baseline"
+              class="inline mx-0.5 px-1 pt-0 pb-[1px] leading-tight rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text align-baseline"
               :class="[
                 toggledStates[bit.id]
                   ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:brightness-110 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/90'
@@ -682,9 +767,7 @@ onMounted(() => {
                         : 'border-red-400 dark:border-red-600'
                     ]
               ]"
-            >
-              <span>{{ formatFrenchText(toggledStates[bit.id] ? bit.correct : bit.incorrect) }}</span>
-            </span>
+            >{{ formatFrenchText(toggledStates[bit.id] ? bit.correct : bit.incorrect) }}</span>
           </template>
         </div>
 

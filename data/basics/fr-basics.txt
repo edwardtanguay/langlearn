@@ -91,3 +91,5 @@
 	- le chien, le chat, l'oiseau, le poisson, le lapin, le cheval, le lion, le tigre, l'éléphant, le singe
 - kitchen
 	- la cuillère, la fourchette, le couteau, l'assiette, le bol, le verre, la tasse, la casserole, la poêle, le réfrigérateur, le congélateur, le four, la cuisinière, le micro-ondes, l'évier, le lave-vaisselle, la planche à découper, la serviette, la bouteille, la bouilloire
+- office
+	- le trombone, l'agrafeuse, les ciseaux, le dossier, le stylo, le crayon, le clavier, la souris, le bureau, le moniteur, l'imprimante, le carnet, la gomme, le ruban adhésif, le surligneur, l'enveloppe, le calendrier, la calculatrice, la mallette, les notes adhésives

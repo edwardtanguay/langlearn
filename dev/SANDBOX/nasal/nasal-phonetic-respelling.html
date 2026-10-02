@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>French Phonetic Respellings – Glowing Italic Nasal Symbols</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS VARIABLES
+       ========================================================================== */
+    :root {
+      /* Warm dark espresso app background */
+      --bg-dark: #1e1b18;
+      --bg-card: #27231e;
+      --bg-card-subtle: #201c18;
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(234, 179, 8, 0.3);
+
+      /* Primary Yellow Text */
+      --yellow-main: #facc15;
+      --yellow-dim: #ca8a04;
+      --yellow-bright: #fef08a;
+      --text-yellow: var(--yellow-main);
+
+      /* Old muted comparison color */
+      --old-parentheses: #94a3b8;
+      --old-nasal: #f1f5f9;
+
+      /* UI Text */
+      --text-muted: #a8a29e;
+      --text-light: #f5f5f4;
+      --text-dim: #78716c;
+
+      --font-mono: 'Courier Prime', Courier, monospace;
+      --font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: var(--font-mono); /* Default to App Typewriter */
+      font-size: 17px;
+      line-height: 1.6;
+      padding: 40px 20px 120px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       HEADER
+       ========================================================================== */
+    header {
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border-card);
+      padding-bottom: 24px;
+      font-family: var(--font-ui);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(250, 204, 21, 0.12);
+      color: var(--yellow-main);
+      border: 1px solid rgba(250, 204, 21, 0.3);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    h1 span.yellow-glow {
+      color: var(--yellow-main);
+      text-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 820px;
+      line-height: 1.65;
+    }
+
+    .subtitle strong {
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       STICKY CONTROLS TOOLBAR
+       ========================================================================== */
+    .controls-toolbar {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      background: rgba(30, 27, 24, 0.94);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 12px 18px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      font-family: var(--font-ui);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .control-label {
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-right: 4px;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-toggle {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 6px 13px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: var(--font-ui);
+    }
+
+    .btn-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .btn-toggle.active {
+      background: var(--yellow-main);
+      color: #1a1600;
+      border-color: var(--yellow-main);
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+    }
+
+    /* ==========================================================================
+       BEFORE / AFTER HERO BANNER
+       ========================================================================== */
+    .hero-compare {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    @media (max-width: 720px) {
+      .hero-compare {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-label.old {
+      color: #f87171;
+    }
+
+    .hero-label.new {
+      color: #4ade80;
+    }
+
+    .hero-phrase-box {
+      background: var(--bg-card-subtle);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 16px 20px;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .french-cue {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .french-cue strong {
+      color: #ffffff;
+    }
+
+    .hero-phonetic-old {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-yellow);
+      letter-spacing: 0.02em;
+    }
+
+    .hero-phonetic-old .old-nasal-paren {
+      color: var(--old-parentheses);
+      font-weight: 700;
+    }
+
+    .hero-phonetic-new {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-yellow);
+      letter-spacing: 0.02em;
+    }
+
+    /* ==========================================================================
+       THE CORE STYLE: PURE GLOWING WHITE & ITALIC NASAL SYMBOLS
+       Same size as the other letters, fully inline
+       ========================================================================== */
+    .nasal {
+      color: #ffffff !important;
+      font-style: italic !important;
+      font-weight: 700 !important;
+      text-shadow: 0 0 7px rgba(255, 255, 255, 0.9),
+                   0 0 16px rgba(254, 240, 138, 0.55);
+      letter-spacing: 0.02em;
+      padding: 0 1px;
+    }
+
+    /* ==========================================================================
+       COMPARISON CARDS GRID
+       ========================================================================== */
+    .section-title {
+      font-family: var(--font-ui);
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+
+    @media (max-width: 600px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 10px;
+    }
+
+    .card-french {
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .card-translation {
+      font-family: var(--font-ui);
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .card-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .row-old {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(248, 113, 113, 0.15);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .row-new {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .row-meta {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .row-meta.old { color: #f87171; }
+    .row-meta.new { color: #4ade80; }
+
+    .phonetic-old {
+      font-size: 19px;
+      color: var(--text-yellow);
+      letter-spacing: 0.02em;
+    }
+
+    .phonetic-old span.paren {
+      color: var(--old-parentheses);
+      font-weight: 700;
+    }
+
+    .phonetic-new {
+      font-size: 21px;
+      color: var(--text-yellow);
+      letter-spacing: 0.02em;
+    }
+
+    /* ==========================================================================
+       FULL CONNECTED DIALOGUE / PASSAGE SECTION
+       ========================================================================== */
+    .passage-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .passage-header {
+      font-family: var(--font-ui);
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 14px;
+    }
+
+    .passage-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .passage-subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .passage-compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    @media (max-width: 760px) {
+      .passage-compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .passage-column {
+      background: var(--bg-card-subtle);
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .col-title {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .col-title.old { color: #f87171; }
+    .col-title.new { color: #4ade80; }
+
+    .passage-text {
+      font-size: 17px;
+      line-height: 2.1;
+      color: var(--text-yellow);
+    }
+
+    .dialogue-speaker {
+      color: #ffffff;
+      font-weight: 700;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .passage-footer {
+      font-family: var(--font-ui);
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12px;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body id="page-body">
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="badge-pill">French Pronunciation Respellings · Visual Architecture</div>
+    <h1>Phonetic Nasal Symbols: <span class="yellow-glow">Glowing White & Italic</span></h1>
+    <p class="subtitle">
+      Eliminates visual noise from parenthesized nasal notation like <code>say-t(in)-por-t(an)</code>.
+      The entire phonetic transcription flows smoothly in <strong>yellow text</strong>, while the 4 nasal sounds (<code>in</code>, <code>an</code>, <code>on</code>, <code>un</code>)
+      are immediately recognizable as <strong>glowing white and italic</strong> at normal letter size.
+    </p>
+  </header>
+
+  <!-- Sticky Controls Toolbar -->
+  <div class="controls-toolbar">
+    <!-- Font Family Switcher -->
+    <div class="control-group">
+      <span class="control-label">Font:</span>
+      <button class="btn-toggle active" id="btn-mono" onclick="setFont('mono', this)">Typewriter Monospace (App)</button>
+      <button class="btn-toggle" id="btn-sans" onclick="setFont('sans', this)">Sans-Serif</button>
+    </div>
+
+    <!-- Theme Background Switcher -->
+    <div class="control-group">
+      <span class="control-label">Background:</span>
+      <button class="btn-toggle active" onclick="setBg('#1e1b18', this)">Espresso (App)</button>
+      <button class="btn-toggle" onclick="setBg('#0f172a', this)">Midnight Blue</button>
+      <button class="btn-toggle" onclick="setBg('#111111', this)">Onyx Black</button>
+      <button class="btn-toggle" onclick="setBg('#2d3748', this)">Slate Grey</button>
+    </div>
+  </div>
+
+  <!-- Hero Before / After: User's Example -->
+  <div class="hero-compare">
+    <!-- Old Style -->
+    <div class="hero-side">
+      <div class="hero-label old">❌ Old Style (Cluttered Parentheses)</div>
+      <div class="hero-phrase-box">
+        <div class="french-cue">French: <strong>c'est important</strong></div>
+        <div class="hero-phonetic-old">
+          say-t<span class="old-nasal-paren">(in)</span>-por-t<span class="old-nasal-paren">(an)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Style -->
+    <div class="hero-side">
+      <div class="hero-label new">✔ New Style (Glowing White & Italic)</div>
+      <div class="hero-phrase-box">
+        <div class="french-cue">French: <strong>c'est important</strong></div>
+        <div class="hero-phonetic-new">
+          say-t<span class="nasal">in</span>-por-t<span class="nasal">an</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: Common Phrases Comparison Cards -->
+  <h2 class="section-title">1. Common Phrases & Word Combinations</h2>
+  <p class="section-desc">Side-by-side comparison of the old parenthesized transcription vs the new glowing italic symbols.</p>
+
+  <div class="cards-grid">
+
+    <!-- Card 1: c'est important -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-french">c'est important</div>
+        <div class="card-translation">it is important</div>
+      </div>
+      <div class="card-rows">
+        <div class="row-old">
+          <span class="row-meta old">Old: Parenthesized</span>
+          <div class="phonetic-old">say-t<span class="paren">(in)</span>-por-t<span class="paren">(an)</span></div>
+        </div>
+        <div class="row-new">
+          <span class="row-meta new">New: Glowing Italic</span>
+          <div class="phonetic-new">say-t<span class="nasal">in</span>-por-t<span class="nasal">an</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: un bon vin blanc -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-french">un bon vin blanc</div>
+        <div class="card-translation">a good white wine (all 4 nasals)</div>
+      </div>
+      <div class="card-rows">
+        <div class="row-old">
+          <span class="row-meta old">Old: Parenthesized</span>
+          <div class="phonetic-old"><span class="paren">(un)</span>-b<span class="paren">(on)</span>-v<span class="paren">(in)</span>-bl<span class="paren">(an)</span></div>
+        </div>
+        <div class="row-new">
+          <span class="row-meta new">New: Glowing Italic</span>
+          <div class="phonetic-new"><span class="nasal">un</span>-b<span class="nasal">on</span>-v<span class="nasal">in</span>-bl<span class="nasal">an</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: prendre son temps -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-french">prendre son temps</div>
+        <div class="card-translation">take one's time</div>
+      </div>
+      <div class="card-rows">
+        <div class="row-old">
+          <span class="row-meta old">Old: Parenthesized</span>
+          <div class="phonetic-old">pr<span class="paren">(an)</span>-dreuh-s<span class="paren">(on)</span>-t<span class="paren">(an)</span></div>
+        </div>
+        <div class="row-new">
+          <span class="row-meta new">New: Glowing Italic</span>
+          <div class="phonetic-new">pr<span class="nasal">an</span>-dreuh-s<span class="nasal">on</span>-t<span class="nasal">an</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: sans attendre le train -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-french">sans attendre le train</div>
+        <div class="card-translation">without waiting for the train</div>
+      </div>
+      <div class="card-rows">
+        <div class="row-old">
+          <span class="row-meta old">Old: Parenthesized</span>
+          <div class="phonetic-old">s<span class="paren">(an)</span>-za-t<span class="paren">(an)</span>-dreuh-leuh-tr<span class="paren">(in)</span></div>
+        </div>
+        <div class="row-new">
+          <span class="row-meta new">New: Glowing Italic</span>
+          <div class="phonetic-new">s<span class="nasal">an</span>-za-t<span class="nasal">an</span>-dreuh-leuh-tr<span class="nasal">in</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: du pain et du vin -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-french">du pain et du vin</div>
+        <div class="card-translation">bread and wine</div>
+      </div>
+      <div class="card-rows">
+        <div class="row-old">
+          <span class="row-meta old">Old: Parenthesized</span>
+          <div class="phonetic-old">doo-p<span class="paren">(in)</span>-ay-doo-v<span class="paren">(in)</span></div>
+        </div>
+        <div class="row-new">
+          <span class="row-meta new">New: Glowing Italic</span>
+          <div class="phonetic-new">doo-p<span class="nasal">in</span>-ay-doo-v<span class="nasal">in</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: un parfum délicieux -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-french">un parfum délicieux</div>
+        <div class="card-translation">a delicious perfume</div>
+      </div>
+      <div class="card-rows">
+        <div class="row-old">
+          <span class="row-meta old">Old: Parenthesized</span>
+          <div class="phonetic-old"><span class="paren">(un)</span>-par-f<span class="paren">(un)</span>-day-lee-syeuh</div>
+        </div>
+        <div class="row-new">
+          <span class="row-meta new">New: Glowing Italic</span>
+          <div class="phonetic-new"><span class="nasal">un</span>-par-f<span class="nasal">un</span>-day-lee-syeuh</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7: bien entendu -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-french">bien entendu</div>
+        <div class="card-translation">of course / naturally</div>
+      </div>
+      <div class="card-rows">
+        <div class="row-old">
+          <span class="row-meta old">Old: Parenthesized</span>
+          <div class="phonetic-old">by<span class="paren">(in)</span>-n<span class="paren">(an)</span>-t<span class="paren">(an)</span>-doo</div>
+        </div>
+        <div class="row-new">
+          <span class="row-meta new">New: Glowing Italic</span>
+          <div class="phonetic-new">by<span class="nasal">in</span>-n<span class="nasal">an</span>-t<span class="nasal">an</span>-doo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 8: comment allez-vous ? -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-french">comment allez-vous ?</div>
+        <div class="card-translation">how are you?</div>
+      </div>
+      <div class="card-rows">
+        <div class="row-old">
+          <span class="row-meta old">Old: Parenthesized</span>
+          <div class="phonetic-old">ko-m<span class="paren">(an)</span>-ta-lay-voo ?</div>
+        </div>
+        <div class="row-new">
+          <span class="row-meta new">New: Glowing Italic</span>
+          <div class="phonetic-new">ko-m<span class="nasal">an</span>-ta-lay-voo ?</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECTION 2: Connected Dialogue Passage -->
+  <div class="passage-card">
+    <div class="passage-header">
+      <h2 class="passage-title">2. Connected Speech Dialogue</h2>
+      <p class="passage-subtitle">
+        Observe how reading speed and eye comfort improve dramatically when the parentheses are replaced by inline white glowing italics.
+      </p>
+    </div>
+
+    <div class="passage-compare-grid">
+      <!-- Old Style Column -->
+      <div class="passage-column">
+        <div class="col-title old">Old: Parenthesized (Cluttered)</div>
+        <div class="passage-text">
+          <p><span class="dialogue-speaker">A:</span> B<span class="paren">(on)</span>-zhoor ! Est-ce keuh seuh tr<span class="paren">(in)</span> va à Dij<span class="paren">(on)</span> ?</p>
+          <p><span class="dialogue-speaker">B:</span> Wee, b<span class="paren">(in)</span>-zeur ! Il par d<span class="paren">(an)</span> d<span class="paren">(in)</span> mee-noot.</p>
+          <p><span class="dialogue-speaker">A:</span> Par-fay ! C'est trèz <span class="paren">(in)</span>-por-t<span class="paren">(an)</span> poor mwah d'ar-ree-vay à t<span class="paren">(an)</span>.</p>
+          <p><span class="dialogue-speaker">B:</span> Pr<span class="paren">(an)</span>-nay <span class="paren">(un)</span> b<span class="paren">(on)</span> kay-fyay <span class="paren">(an)</span> a-t<span class="paren">(an)</span>-d<span class="paren">(an)</span> !</p>
+        </div>
+      </div>
+
+      <!-- New Style Column -->
+      <div class="passage-column">
+        <div class="col-title new">New: Glowing White & Italic (Effortless)</div>
+        <div class="passage-text">
+          <p><span class="dialogue-speaker">A:</span> B<span class="nasal">on</span>-zhoor ! Est-ce keuh seuh tr<span class="nasal">in</span> va à Dij<span class="nasal">on</span> ?</p>
+          <p><span class="dialogue-speaker">B:</span> Wee, b<span class="nasal">in</span>-zeur ! Il par d<span class="nasal">an</span> d<span class="nasal">in</span> mee-noot.</p>
+          <p><span class="dialogue-speaker">A:</span> Par-fay ! C'est trèz <span class="nasal">in</span>-por-t<span class="nasal">an</span> poor mwah d'ar-ree-vay à t<span class="nasal">an</span>.</p>
+          <p><span class="dialogue-speaker">B:</span> Pr<span class="nasal">an</span>-nay <span class="nasal">un</span> b<span class="nasal">on</span> kay-fyay <span class="nasal">an</span> a-t<span class="nasal">an</span>-d<span class="nasal">an</span> !</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="passage-footer">
+      <span>💡 Typography: Yellow base text retains warmth; glowing white italics catch the eye without stuttering</span>
+      <span style="color:var(--yellow-dim); font-weight:600;">Full letter size preserved</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Interactive Toolbar Scripts -->
+<script>
+  // Toggle Font Family
+  function setFont(fontType, btn) {
+    const body = document.getElementById('page-body');
+    if (fontType === 'sans') {
+      body.style.fontFamily = "var(--font-ui)";
+    } else {
+      body.style.fontFamily = "var(--font-mono)";
+    }
+    btn.parentElement.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // Toggle Background Theme
+  function setBg(color, btn) {
+    document.getElementById('page-body').style.backgroundColor = color;
+    btn.parentElement.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

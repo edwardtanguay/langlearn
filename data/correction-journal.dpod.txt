@@ -39,7 +39,7 @@ Und letztes Jahr lief plöztlich ein ehemaliger Mitarbeiter aus dem Jahr 2013 ne
 ---
 2026-09-25
 ---
-Merci pour la conversation [hier;d'hier], j'aime le fait que tu parle beaucoup [dans;pendant] la conversation et [avec une vitesse rapide;à une vitesse assez rapide]. C'est exactement le situation [réel;réelle] dans laquelle je doit pratiquer, je doit comprendre et [répond rapide;répondre rapidement]. Tes corrections de chaque error de pronunciation et de grammaire sont aussi très [efficace;efficaces]. [Laisson nous;Laissons-nous] continuer comme ça, mon objectif est la perfection.
+Merci pour la conversation [hier;d'hier], j'aime le fait que tu parle beaucoup [dans;pendant] la conversation et [avec une vitesse rapide;à une vitesse assez rapide]. C'est exactement la situation [réel;réelle] dans laquelle je doit pratiquer, je doit comprendre et [répond rapide;répondre rapidement]. Tes corrections de chaque error de pronunciation et de grammaire sont aussi très [efficace;efficaces]. [Laisson nous;Laissons-nous] continuer comme ça, mon objectif est la perfection.
 
 J'ai déjà programmé un cour pour ce soir à [22:30;22 h 30], et je vais programmer les [suivi cours;cours suivants] :
 
@@ -75,7 +75,7 @@ Oui, mon entraînement [de marathon;pour le marathon] [va bien;se passe bien]. A
 ---de
 Ah cool, Mailand war eine nette Strecke, der Anfang und Ende sind sehr schön und historisch, von [17 bis 25 km;km 17 bis 25] [ein bisschen;geht es ein bisschen] außerhalb der Stadt, [aber insgesamt;aber insgesamt ist die Strecke] flach und schnell. Hannah und ich hatten im April ein bisschen zu viel Sonne an dem Tag, [aber 04.04.;aber der 04.04.] sollte in der Regel kühl sein, also perfekte Chancen für einen optimalen Marathon. Wenn du [einen Airbnb Unterkunft;eine Airbnb-Unterkunft] in Mailand suchst, kann ich [einen;dir eine] empfehlen, der Host Alessandro und ich sind seitdem Whatsapp-Freunde.
 
-Ja, ich freue mich auf meinen [Geburtstags Marathon;Geburtstagsmarathon] und die freie Woche in Dijon. [Ich besuche auch in Paris;In Paris besuche ich außerdem] einen französischen Freund aus meiner 1993-94 Potsdamer-Uni-Zeit, wir haben [dort;damals dort] zusammen gewohnt. [Sonst;Ansonsten] habe ich einen Polyglot Club gefunden und eine Menge City- und [Museumtours;Museumtouren] [geplannt;geplant], um mein Französisch zu verbessern. Mein Airbnb ist [mit;bei] einer ehemaligen Französischlehrerin, die in Rente ist [also hat angeblich viel Zeit zu reden;une angeblich viel Zeit zum Reden hat]. [Ich werde wahrscheinlich die restliche Zeit;Die restliche Zeit werde ich wahrscheinlich] mit [Bourgogne Weinproben Veranstaltungen;Weinproben-Veranstaltungen in der Bourgogne] verbringen.
+Ja, ich freue mich auf meinen [Geburtstags Marathon;Geburtstagsmarathon] und die freie Woche in Dijon. [Ich besuche auch in Paris;In Paris besuche ich außerdem] einen französischen Freund aus meiner 1993-94 Potsdamer-Uni-Zeit, wir haben [dort;damals dort] zusammen gewohnt. [Sonst;Ansonsten] habe ich einen Polyglot Club gefunden und eine Menge City- und [Museumtours;Museumtouren] [geplannt;geplant], um mein Französisch zu verbessern. Mein Airbnb ist [mit;bei] einer ehemaligen Französischlehrerin, die in Rente ist [also hat angeblich viel Zeit zu reden;und angeblich viel Zeit zum Reden hat]. [Ich werde wahrscheinlich die restliche Zeit;Die restliche Zeit werde ich wahrscheinlich] mit [Bourgogne Weinproben Veranstaltungen;Weinproben-Veranstaltungen in der Bourgogne] verbringen.
 
 Nach Dijon werde ich mein Training auf Sparflamme [bringen;stellen] und meine [7 km Strecken;7-km-Strecken] 1x oder 2x pro Woche wieder [aufleben;aufleben lassen], um fit zu bleiben. Dann [ab Januar;Januar] geht's wieder los mit den kalten Läufen mitten im Winter.
 ---
@@ -94,8 +94,6 @@ Merci beaucoup encore pour [les;ces] cours efficaces, les petites corrections de
 [Pourrions nous;Pourrions-nous] [experimenter;expérimenter] un peu avec le format ? [Par exemples;Par exemple], au lieu [des questions;de poser des questions] de vocabulaire [après;après que] l'apprenant a lu [au voix haute le texte;le texte à voix haute], [des questions;pourrait-on poser des questions] de compréhension et d'opinion ?
 
 [Ici serait un;Voici un exemple de] prompt possible :
-
-Rédige un texte de 500 mots en français (niveau B1) sur l'évolution du métier de développeur face à l'intelligence artificielle. Utilise le mot « plus » dans des contextes où sa prononciation diffère. À la fin du texte, élabore 5 questions de compréhension commençant par « comment » ou « pourquoi » pour tester la connaissance des termes les plus complexes, ainsi que 5 questions d'opinion sur le sujet.
 ---es
 Quiero [escriber;escribir] [anche;tambien] en español [pour que believo;porque credo] que [este noche;esta noche] [habero;hablaré] con Hanner y es [possible;posible] que [il;él] quiera hacer un [tandem;tándem] [anglais/espagnol;inglés/español].
 ---de
@@ -109,4 +107,32 @@ Ha corrido [tres vez el maraton;el maratón tres veces] [in Espagne;en España],
 ---
 Nous avons discuté [chapitres;des chapitres] 1 et 2, mais je crois que pour le semaine prochaine, [il été;on avait] dit [qu'on doit;de] lire le chapitre 2 encore et chapitre 3. Je veux lire 1-4 pour [attrapper;ratrapper mon retard].
 ---
+2026-09-30
+---
+si [posible;possible] si voudrais reprogrammer ce cours [de 7 octobre;du 7 octobre] parce que je vais partir [vers;pour] Dijon [très tot de matin;très tot le matin] [le 8 octobre;du 8 octobre].
+---
+Voici un nouveau prompt pour un texte pour notre prochain cours. [N'hésites pas;N'hésite pas] [de le changer ou ajouter;à le modifier ou à ajouter] [l'autres thème grammaire;d'autres thèmes de grammaire] etc. si tu veux. 
 
+Je doit surtout pratiquer [prononciation et discussion;la prononciation et la discussion]. Je crois que ma prononciation [s'améliorer;s'améliore] lentement (tes conseils son très utiles !) mais [j'ai besoin plus;j'ai besoin de plus] d'experience [pour discuter;pour pouvoir discuter] [sur n'importe quoi sujet;de n'importe quel sujet] avec [l'autres;d'autres] personnes : comprendre [tout que;tout ce que] l'autre personne dit et [répondre assez rapide;répondre assez rapidement] pour avoir une conversation [interessante;intéressante]. 
+
+[Serait cool;Ce serait cool] [si nous pouvons faire le lire;si nous pouvions commencer par une lecture] à voix haute [plus correction;avec des corrections], [et après ça simplement;puis simplement avoir] une conversation libre sur le sujet, etc.
+
+Tu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à] tous [les sujets sur France;les sujets concernant la France] et la culture française, par exemple quelque chose [que t'aimes;que tu aimes], une ville, un région, [un custom fraicais;une coutume fraicaise] qui te plaît, etc.
+
+[J'ai programmer;J'ai programmé] plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.
+---
+Pour chaque [sujet titre;titre de sujet], ajoute les dates [approximate;approximatives]
+
+[Deplace tous les dates;Déplace toutes les dates] [vers le commence de titre;au debut du titre] et supprime [le numéro;les numéros]
+
+À la fin de chaque section, ajoute trois questions de compréhension très simples [du texte;sur le texte] de la section
+
+À la fin de chaque [paragraph;paragraphe], ajoute une question de compréhension très simple sur le paragraphe
+
+Avec [markdown syntaxe;le syntaxe Markdown], [fait les titres plus visible;rends les titres plus visibles] comme [titres de sections;de vraie titres de section], et [highlighte le question;mets les questions en évidence] [dans un façon;d'une manière claire]
+
+Est-ce qu'il [y a un possibilité;est possible] de [rendre;mettre] les dates comme [supertitres;des surtitres] [en haut de;au-dessus des] titres ?
+
+Est-ce qu'il est possible de modifier le couleur de surtitres [comme jaunes;par exemple en jaune] ou [de ajouter;d'ajouter] une ligne vide au-dessus [chaque surtitres;de chaque surtitre] ?
+
+Mets la question [pas après;non pas après,] mais avant [la paragraph;le paragraphe] qui se [concerne;rapporte]

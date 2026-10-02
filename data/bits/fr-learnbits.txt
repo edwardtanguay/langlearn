@@ -84,9 +84,9 @@
 				- Littérature (si nous lison un livre par exemple)
 				- Texte guidé grammaire
 				- Un jour sans femme
-			- apris
-				- j'ai étudié de la philosophie
-				- le but est ttt
+			- LIVRE: Un jour sans femme
+				- Prologue
+					- (see
 			- 2026-09-28
 				- midnight sun run
 				- katla est rational

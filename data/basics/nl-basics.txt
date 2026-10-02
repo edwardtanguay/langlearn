@@ -92,3 +92,5 @@
 	- de hond, de kat, de vogel, de vis, het konijn, het paard, de leeuw, de tijger, de olifant, de aap
 - kitchen
 	- de lepel, de vork, het mes, het bord, de kom, het glas, het kopje, de pan, de koekenpan, de koelkast, de vriezer, de oven, het fornuis, de magnetron, de gootsteen, de vaatwasser, de snijplank, het servet, de fles, de waterkoker
+- office
+	- de paperclip, de nietmachine, de schaar, de map, de pen, het potlood, het toetsenbord, de muis, het bureau, het scherm, de printer, het notitieboekje, het gummetje, het plakband, de markeerstift, de envelop, de kalender, de rekenmachine, de aktetas, de plakbriefjes
