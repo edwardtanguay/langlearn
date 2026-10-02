@@ -4460,5 +4460,171 @@
         "nl": "de waterkoker"
       }
     ]
+  },
+  {
+    "id": "office",
+    "title": "Office",
+    "items": [
+      {
+        "id": "office-1",
+        "en": "paper clip",
+        "fr": "le trombone",
+        "es": "el clip",
+        "it": "la graffetta",
+        "nl": "de paperclip"
+      },
+      {
+        "id": "office-2",
+        "en": "stapler",
+        "fr": "l'agrafeuse",
+        "es": "la grapadora",
+        "it": "la cucitrice",
+        "nl": "de nietmachine"
+      },
+      {
+        "id": "office-3",
+        "en": "scissors",
+        "fr": "les ciseaux",
+        "es": "las tijeras",
+        "it": "le forbici",
+        "nl": "de schaar"
+      },
+      {
+        "id": "office-4",
+        "en": "folder",
+        "fr": "le dossier",
+        "es": "la carpeta",
+        "it": "la cartella",
+        "nl": "de map"
+      },
+      {
+        "id": "office-5",
+        "en": "pen",
+        "fr": "le stylo",
+        "es": "el bolígrafo",
+        "it": "la penna",
+        "nl": "de pen"
+      },
+      {
+        "id": "office-6",
+        "en": "pencil",
+        "fr": "le crayon",
+        "es": "el lápiz",
+        "it": "la matita",
+        "nl": "het potlood"
+      },
+      {
+        "id": "office-7",
+        "en": "keyboard",
+        "fr": "le clavier",
+        "es": "el teclado",
+        "it": "la tastiera",
+        "nl": "het toetsenbord"
+      },
+      {
+        "id": "office-8",
+        "en": "mouse",
+        "fr": "la souris",
+        "es": "el ratón",
+        "it": "il mouse",
+        "nl": "de muis"
+      },
+      {
+        "id": "office-9",
+        "en": "desk",
+        "fr": "le bureau",
+        "es": "el escritorio",
+        "it": "la scrivania",
+        "nl": "het bureau"
+      },
+      {
+        "id": "office-10",
+        "en": "monitor",
+        "fr": "le moniteur",
+        "es": "el monitor",
+        "it": "il monitor",
+        "nl": "het scherm"
+      },
+      {
+        "id": "office-11",
+        "en": "printer",
+        "fr": "l'imprimante",
+        "es": "la impresora",
+        "it": "la stampante",
+        "nl": "de printer"
+      },
+      {
+        "id": "office-12",
+        "en": "notebook",
+        "fr": "le carnet",
+        "es": "el cuaderno",
+        "it": "il quaderno",
+        "nl": "het notitieboekje"
+      },
+      {
+        "id": "office-13",
+        "en": "eraser",
+        "fr": "la gomme",
+        "es": "la goma de borrar",
+        "it": "la gomma",
+        "nl": "het gummetje"
+      },
+      {
+        "id": "office-14",
+        "en": "tape",
+        "fr": "le ruban adhésif",
+        "es": "la cinta adhesiva",
+        "it": "il nastro adesivo",
+        "nl": "het plakband"
+      },
+      {
+        "id": "office-15",
+        "en": "highlighter",
+        "fr": "le surligneur",
+        "es": "el subrayador",
+        "it": "l'evidenziatore",
+        "nl": "de markeerstift"
+      },
+      {
+        "id": "office-16",
+        "en": "envelope",
+        "fr": "l'enveloppe",
+        "es": "el sobre",
+        "it": "la busta",
+        "nl": "de envelop"
+      },
+      {
+        "id": "office-17",
+        "en": "calendar",
+        "fr": "le calendrier",
+        "es": "el calendario",
+        "it": "il calendario",
+        "nl": "de kalender"
+      },
+      {
+        "id": "office-18",
+        "en": "calculator",
+        "fr": "la calculatrice",
+        "es": "la calculadora",
+        "it": "la calcolatrice",
+        "nl": "de rekenmachine"
+      },
+      {
+        "id": "office-19",
+        "en": "briefcase",
+        "fr": "la mallette",
+        "es": "el maletín",
+        "it": "la valigetta",
+        "nl": "de aktetas"
+      },
+      {
+        "id": "office-20",
+        "en": "sticky notes",
+        "fr": "les notes adhésives",
+        "es": "las notas adhesivas",
+        "it": "i foglietti adesivi",
+        "nl": "de plakbriefjes"
+      }
+    ]
   }
 ]

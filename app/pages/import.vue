@@ -40,8 +40,30 @@ const importError = ref<string | null>(null)
 const isMobile = ref(false)
 const mobileInputText = ref('')
 const isSubmittingMobile = ref(false)
+const isConfirmingMobile = ref(false)
 const mobileImportResult = ref<{ id: string; userId: string; mobileImportText: string; whenImported: string } | null>(null)
 const mobileImportError = ref<string | null>(null)
+
+interface PreviewCardItem {
+  front: string
+  back: string
+  frontLanguage: string
+  backLanguage: string
+  pronunciation?: string | null
+  memoryHook?: string | null
+  rank?: number | null
+  tags?: string[]
+  reason?: string
+}
+
+interface MobilePreviewData {
+  preview: boolean
+  totalParsed: number
+  willNotImport: PreviewCardItem[]
+  willImport: PreviewCardItem[]
+}
+
+const mobilePreviewResult = ref<MobilePreviewData | null>(null)
 
 const checkMobile = () => {
   if (typeof window !== 'undefined') {
@@ -49,9 +71,28 @@ const checkMobile = () => {
   }
 }
 
-const handleMobileImport = async () => {
+const handleMobileImportPreview = async () => {
   if (!mobileInputText.value.trim() || isSubmittingMobile.value) return
   isSubmittingMobile.value = true
+  mobileImportError.value = null
+
+  try {
+    const res = await $fetch<MobilePreviewData>('/api/import/mobile', {
+      method: 'POST',
+      body: { mobileImportText: mobileInputText.value, preview: true }
+    })
+    mobilePreviewResult.value = res
+  } catch (err: any) {
+    console.error('Failed mobile import preview:', err)
+    mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to parse import text.'
+  } finally {
+    isSubmittingMobile.value = false
+  }
+}
+
+const handleConfirmMobileImport = async () => {
+  if (!mobileInputText.value.trim() || isConfirmingMobile.value) return
+  isConfirmingMobile.value = true
   mobileImportError.value = null
 
   try {
@@ -60,13 +101,19 @@ const handleMobileImport = async () => {
       body: { mobileImportText: mobileInputText.value }
     })
     mobileInputText.value = ''
+    mobilePreviewResult.value = null
     await navigateTo('/flashcard')
   } catch (err: any) {
-    console.error('Failed mobile import:', err)
+    console.error('Failed mobile import confirmation:', err)
     mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to submit mobile import.'
   } finally {
-    isSubmittingMobile.value = false
+    isConfirmingMobile.value = false
   }
+}
+
+const cancelMobilePreview = () => {
+  mobilePreviewResult.value = null
+  mobileImportError.value = null
 }
 
 
@@ -178,30 +225,214 @@ async function handleImport() {
       <div v-if="loggedIn" class="mt-8 flex flex-col items-center w-full min-h-[340px] justify-start pt-2">
         <!-- Mobile View (completely different page view) -->
         <div v-if="isMobile" class="w-full max-w-lg space-y-6">
-          <div class="space-y-2">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mobile Import</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Paste text below to import into your account.</p>
+          <!-- State 1: Input form (when not previewing) -->
+          <div v-if="!mobilePreviewResult" class="space-y-4">
+            <div class="space-y-2">
+              <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mobile Import</h1>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Paste text below to import into your account.</p>
+            </div>
+
+            <div class="space-y-4">
+              <textarea
+                v-model="mobileInputText"
+                rows="10"
+                placeholder="Paste text here..."
+                class="w-full p-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-2xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
+              ></textarea>
+
+              <button
+                @click="handleMobileImportPreview"
+                :disabled="!mobileInputText.trim() || isSubmittingMobile"
+                class="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span v-if="isSubmittingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span>{{ isSubmittingMobile ? 'Analyzing cards...' : 'Import' }}</span>
+              </button>
+
+              <div v-if="mobileImportError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
+                {{ mobileImportError }}
+              </div>
+            </div>
           </div>
 
-          <div class="space-y-4">
-            <textarea
-              v-model="mobileInputText"
-              rows="10"
-              placeholder="Paste text here..."
-              class="w-full p-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-2xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
-            ></textarea>
-
-            <button
-              @click="handleMobileImport"
-              :disabled="!mobileInputText.trim() || isSubmittingMobile"
-              class="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span v-if="isSubmittingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-              <span>Import</span>
-            </button>
+          <!-- State 2: Preview Screen (after clicking Import) -->
+          <div v-else class="space-y-6">
+            <div class="flex items-center justify-between gap-2 border-b border-gray-200 dark:border-gray-800 pb-3">
+              <div>
+                <h1 class="text-xl font-extrabold text-gray-900 dark:text-white">Import Preview</h1>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  {{ mobilePreviewResult.totalParsed }} {{ mobilePreviewResult.totalParsed === 1 ? 'card' : 'cards' }} found:
+                  <span class="text-rose-600 dark:text-rose-400 font-semibold">{{ mobilePreviewResult.willNotImport.length }} skipped</span>,
+                  <span class="text-emerald-600 dark:text-emerald-400 font-semibold">{{ mobilePreviewResult.willImport.length }} ready to import</span>
+                </p>
+              </div>
+              <button
+                @click="cancelMobilePreview"
+                type="button"
+                class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+              >
+                Edit Text
+              </button>
+            </div>
 
             <div v-if="mobileImportError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
               {{ mobileImportError }}
+            </div>
+
+            <!-- (1) Cards that WILL NOT be imported -->
+            <div v-if="mobilePreviewResult.willNotImport.length > 0" class="space-y-3">
+              <div class="flex items-center justify-between">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                  Will NOT be imported ({{ mobilePreviewResult.willNotImport.length }})
+                </h2>
+              </div>
+
+              <div class="space-y-2.5">
+                <div
+                  v-for="(card, idx) in mobilePreviewResult.willNotImport"
+                  :key="idx"
+                  class="p-3.5 bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 rounded-2xl space-y-2 text-xs shadow-xs"
+                >
+                  <!-- Reason banner -->
+                  <div class="flex items-center gap-1.5 text-rose-700 dark:text-rose-300 font-semibold">
+                    <span class="px-2 py-0.5 rounded-md bg-rose-100 dark:bg-rose-900/50 text-[11px] font-bold">
+                      Reason
+                    </span>
+                    <span>{{ card.reason }}</span>
+                  </div>
+
+                  <!-- Details grid -->
+                  <div class="space-y-1 text-gray-700 dark:text-gray-300">
+                    <div v-if="card.frontLanguage || card.backLanguage" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Language:</span>
+                      <span class="font-semibold uppercase">{{ card.frontLanguage || '—' }} → {{ card.backLanguage || '—' }}</span>
+                    </div>
+
+                    <div v-if="card.front" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Front:</span>
+                      <span class="font-semibold text-gray-900 dark:text-white">{{ card.front }}</span>
+                    </div>
+
+                    <div v-if="card.back" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Back:</span>
+                      <span class="font-semibold text-gray-900 dark:text-white">{{ card.back }}</span>
+                    </div>
+
+                    <div v-if="card.pronunciation" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Pronunciation:</span>
+                      <span class="font-mono text-yellow-600 dark:text-yellow-400 font-medium">[{{ card.pronunciation }}]</span>
+                    </div>
+
+                    <div v-if="card.rank !== undefined && card.rank !== null" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Rank:</span>
+                      <span class="font-mono">{{ card.rank }}</span>
+                    </div>
+
+                    <div v-if="card.tags && card.tags.length > 0" class="flex gap-2 items-center">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Tags:</span>
+                      <div class="flex flex-wrap gap-1">
+                        <span v-for="t in card.tags" :key="t" class="px-1.5 py-0.5 rounded bg-gray-200 dark:bg-gray-800 text-[10px] font-mono font-bold">
+                          #{{ t }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div v-if="card.memoryHook" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Memory Hook:</span>
+                      <span class="italic text-gray-600 dark:text-gray-400">{{ card.memoryHook }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- (2) Cards that WILL be imported -->
+            <div v-if="mobilePreviewResult.willImport.length > 0" class="space-y-3">
+              <div class="flex items-center justify-between">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Will be imported ({{ mobilePreviewResult.willImport.length }})
+                </h2>
+              </div>
+
+              <div class="space-y-2.5">
+                <div
+                  v-for="(card, idx) in mobilePreviewResult.willImport"
+                  :key="idx"
+                  class="p-3.5 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/50 rounded-2xl space-y-2 text-xs shadow-xs"
+                >
+                  <!-- Ready badge -->
+                  <div class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-semibold">
+                    <span class="px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/50 text-[11px] font-bold">
+                      ✓ Ready to import
+                    </span>
+                  </div>
+
+                  <!-- Details grid -->
+                  <div class="space-y-1 text-gray-700 dark:text-gray-300">
+                    <div v-if="card.frontLanguage || card.backLanguage" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Language:</span>
+                      <span class="font-semibold uppercase">{{ card.frontLanguage || '—' }} → {{ card.backLanguage || '—' }}</span>
+                    </div>
+
+                    <div v-if="card.front" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Front:</span>
+                      <span class="font-semibold text-gray-900 dark:text-white">{{ card.front }}</span>
+                    </div>
+
+                    <div v-if="card.back" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Back:</span>
+                      <span class="font-semibold text-gray-900 dark:text-white">{{ card.back }}</span>
+                    </div>
+
+                    <div v-if="card.pronunciation" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Pronunciation:</span>
+                      <span class="font-mono text-yellow-600 dark:text-yellow-400 font-medium">[{{ card.pronunciation }}]</span>
+                    </div>
+
+                    <div v-if="card.rank !== undefined && card.rank !== null" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Rank:</span>
+                      <span class="font-mono">{{ card.rank }}</span>
+                    </div>
+
+                    <div v-if="card.tags && card.tags.length > 0" class="flex gap-2 items-center">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Tags:</span>
+                      <div class="flex flex-wrap gap-1">
+                        <span v-for="t in card.tags" :key="t" class="px-1.5 py-0.5 rounded bg-gray-200 dark:bg-gray-800 text-[10px] font-mono font-bold">
+                          #{{ t }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div v-if="card.memoryHook" class="flex gap-2">
+                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Memory Hook:</span>
+                      <span class="italic text-gray-600 dark:text-gray-400">{{ card.memoryHook }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Confirm Action Buttons -->
+            <div class="pt-2 space-y-2">
+              <button
+                v-if="mobilePreviewResult.willImport.length > 0"
+                @click="handleConfirmMobileImport"
+                :disabled="isConfirmingMobile"
+                class="w-full py-3 px-6 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span v-if="isConfirmingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span>Confirm Import ({{ mobilePreviewResult.willImport.length }} {{ mobilePreviewResult.willImport.length === 1 ? 'card' : 'cards' }})</span>
+              </button>
+
+              <button
+                @click="cancelMobilePreview"
+                type="button"
+                class="w-full py-2.5 px-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-xl text-xs transition-colors cursor-pointer text-center"
+              >
+                Cancel and edit text
+              </button>
             </div>
           </div>
         </div>

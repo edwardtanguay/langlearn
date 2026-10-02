@@ -1,7 +1,7 @@
 import { prisma } from '../../utils/prisma'
 import { requireAuth } from '../../utils/auth'
 import { parseImportText } from '../../utils/import-parser'
-import { processImportRows } from '../../utils/import-service'
+import { processImportRows, analyzeImportRows } from '../../utils/import-service'
 
 function formatDate(d: Date): string {
   const pad = (n: number) => n.toString().padStart(2, '0')
@@ -36,15 +36,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // 1. Save mobile import record
-  const record = await prisma.mobileImport.create({
-    data: {
-      userId: dbUser.id,
-      mobileImportText: body.mobileImportText
-    }
-  })
-
-  // 2. Parse import text into structured card rows using unified parser
+  // Parse import text into structured card rows using unified parser
   const parsedRows = parseImportText(body.mobileImportText)
   if (parsedRows.length === 0) {
     throw createError({
@@ -53,7 +45,39 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // 3. Process import rows (creates flashcards, skips duplicates)
+  // If preview requested, return dry-run analysis without persisting
+  if (body.preview) {
+    const existingCards = await prisma.flashcard.findMany({
+      where: {
+        ownerId: dbUser.id,
+        status: { not: 'DELETED' }
+      },
+      select: { front: true, back: true }
+    })
+    const existingSet = new Set<string>()
+    for (const card of existingCards) {
+      existingSet.add(`${card.front.trim().toLowerCase()}|${card.back.trim().toLowerCase()}`)
+    }
+
+    const { willImport, willNotImport } = analyzeImportRows(existingSet, parsedRows)
+
+    return {
+      preview: true,
+      totalParsed: parsedRows.length,
+      willNotImport,
+      willImport
+    }
+  }
+
+  // 1. Save mobile import record
+  const record = await prisma.mobileImport.create({
+    data: {
+      userId: dbUser.id,
+      mobileImportText: body.mobileImportText
+    }
+  })
+
+  // 2. Process import rows (creates flashcards, skips duplicates)
   try {
     const importResult = await processImportRows(dbUser.id, parsedRows)
     return {

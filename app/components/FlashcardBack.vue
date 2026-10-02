@@ -149,7 +149,7 @@ const getTextClass = (text: string) => {
               class="text-sm sm:text-base md:text-lg tracking-wide"
               style="font-family: 'Courier New', Courier, monospace"
             >
-              <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold">{{ currentCard.pronunciation }}</span><span class="text-yellow-300/40 font-normal"> ]</span>
+              <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold" v-html="formatPronunciationHtml(currentCard.pronunciation)"></span><span class="text-yellow-300/40 font-normal"> ]</span>
             </div>
           </div>
         </div>

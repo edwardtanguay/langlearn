@@ -15,40 +15,38 @@ function mapLanguage(lang: string): string {
   return l.substring(0, 2)
 }
 
-export async function processImportRows(userId: string, rows: ParsedRow[]) {
-  const dbUser = await prisma.user.findUnique({
-    where: { id: userId }
-  })
+export interface CardDetail {
+  front: string
+  back: string
+  frontLanguage: string
+  backLanguage: string
+  pronunciation?: string | null
+  memoryHook?: string | null
+  rank?: number | null
+  tags?: string[]
+}
 
-  if (!dbUser) {
-    throw new Error('User not found')
-  }
+export interface SkippedCardDetail extends CardDetail {
+  reason: string
+}
 
-  const existingCards = await prisma.flashcard.findMany({
-    where: {
-      ownerId: dbUser.id,
-      status: {
-        not: 'DELETED'
-      }
-    },
-    select: {
-      front: true,
-      back: true
-    }
-  })
-
-  const existingSet = new Set<string>()
-  for (const card of existingCards) {
-    existingSet.add(`${card.front.trim().toLowerCase()}|${card.back.trim().toLowerCase()}`)
-  }
-
+export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[]): {
+  willImport: CardDetail[]
+  willNotImport: SkippedCardDetail[]
+} {
   const payloadSet = new Set<string>()
-  const cardsToCreate: any[] = []
-  const activitiesToCreate: any[] = []
-  const skippedCards: Array<{ front: string; back: string }> = []
+  const willImport: CardDetail[] = []
+  const willNotImport: SkippedCardDetail[] = []
 
   for (const row of rows) {
     if (!row.lang1 || !row.lang2 || !row.text1 || !row.text2) {
+      willNotImport.push({
+        front: row.text1 || '(empty)',
+        back: row.text2 || '(empty)',
+        frontLanguage: row.lang1 || 'unknown',
+        backLanguage: row.lang2 || 'unknown',
+        reason: 'Missing language or text field'
+      })
       continue
     }
 
@@ -78,6 +76,13 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
     }
 
     if (!front || !back) {
+      willNotImport.push({
+        front: front || row.text1 || '(empty)',
+        back: back || row.text2 || '(empty)',
+        frontLanguage: frontLanguage || row.lang1,
+        backLanguage: backLanguage || row.lang2,
+        reason: 'Empty text after parsing metadata'
+      })
       continue
     }
 
@@ -91,18 +96,13 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
     }
 
     if (!front || !back) {
-      continue
-    }
-
-    if (front.trim().toLowerCase() === back.trim().toLowerCase()) {
-      skippedCards.push({ front, back })
-      continue
-    }
-
-    const key = `${front.trim().toLowerCase()}|${back.trim().toLowerCase()}`
-
-    if (existingSet.has(key) || payloadSet.has(key)) {
-      skippedCards.push({ front, back })
+      willNotImport.push({
+        front: front || '(empty)',
+        back: back || '(empty)',
+        frontLanguage,
+        backLanguage,
+        reason: 'Empty text after formatting'
+      })
       continue
     }
 
@@ -116,20 +116,96 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
     const memoryHook = row.memoryHook || meta1.memoryHook || meta2.memoryHook || null
     const rank = row.rank ?? meta1.rank ?? meta2.rank ?? calculateOptimalRank(front)
 
-    const flashcardId = crypto.randomUUID()
-
-    cardsToCreate.push({
-      id: flashcardId,
-      ownerId: dbUser.id,
+    const cardInfo: CardDetail = {
       front,
       back,
       frontLanguage,
       backLanguage,
       pronunciation,
       memoryHook,
-      status: 'LEARNING',
       rank,
-      tagsToAttach: rowTags
+      tags: rowTags
+    }
+
+    if (front.trim().toLowerCase() === back.trim().toLowerCase()) {
+      willNotImport.push({
+        ...cardInfo,
+        reason: 'Front and back are identical'
+      })
+      continue
+    }
+
+    const key = `${front.trim().toLowerCase()}|${back.trim().toLowerCase()}`
+
+    if (existingSet.has(key)) {
+      willNotImport.push({
+        ...cardInfo,
+        reason: 'Already exists in your cards database (duplicate)'
+      })
+      continue
+    }
+
+    if (payloadSet.has(key)) {
+      willNotImport.push({
+        ...cardInfo,
+        reason: 'Duplicate entry in this import batch'
+      })
+      continue
+    }
+
+    payloadSet.add(key)
+    willImport.push(cardInfo)
+  }
+
+  return { willImport, willNotImport }
+}
+
+export async function processImportRows(userId: string, rows: ParsedRow[]) {
+  const dbUser = await prisma.user.findUnique({
+    where: { id: userId }
+  })
+
+  if (!dbUser) {
+    throw new Error('User not found')
+  }
+
+  const existingCards = await prisma.flashcard.findMany({
+    where: {
+      ownerId: dbUser.id,
+      status: {
+        not: 'DELETED'
+      }
+    },
+    select: {
+      front: true,
+      back: true
+    }
+  })
+
+  const existingSet = new Set<string>()
+  for (const card of existingCards) {
+    existingSet.add(`${card.front.trim().toLowerCase()}|${card.back.trim().toLowerCase()}`)
+  }
+
+  const { willImport, willNotImport } = analyzeImportRows(existingSet, rows)
+
+  const cardsToCreate: any[] = []
+  const activitiesToCreate: any[] = []
+
+  for (const card of willImport) {
+    const flashcardId = crypto.randomUUID()
+    cardsToCreate.push({
+      id: flashcardId,
+      ownerId: dbUser.id,
+      front: card.front,
+      back: card.back,
+      frontLanguage: card.frontLanguage,
+      backLanguage: card.backLanguage,
+      pronunciation: card.pronunciation || null,
+      memoryHook: card.memoryHook || null,
+      status: 'LEARNING',
+      rank: card.rank ?? calculateOptimalRank(card.front),
+      tagsToAttach: card.tags || []
     })
 
     activitiesToCreate.push({
@@ -140,6 +216,8 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
       actionDetails: 'Imported from text/CSV'
     })
   }
+
+  const skippedCards = willNotImport.map(c => ({ front: c.front, back: c.back, reason: c.reason, ...c }))
 
   if (cardsToCreate.length > 0) {
     if (dbUser.role !== 'admin') {

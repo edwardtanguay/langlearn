@@ -88,3 +88,5 @@
 	- dog, cat, bird, fish, rabbit, horse, lion, tiger, elephant, monkey
 - kitchen
 	- spoon, fork, knife, plate, bowl, glass, cup, pot, frying pan, refrigerator, freezer, oven, stove, microwave, sink, dishwasher, cutting board, napkin, bottle, kettle
+- office
+	- paper clip, stapler, scissors, folder, pen, pencil, keyboard, mouse, desk, monitor, printer, notebook, eraser, tape, highlighter, envelope, calendar, calculator, briefcase, sticky notes

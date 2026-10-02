@@ -625,7 +625,13 @@ const backWordCount = computed(() => {
   return exampleTargetText.value.split(/\s+/).filter(Boolean).length
 })
 
+const hasMarkedWord = computed(() => {
+  const back = currentCard.value?.back || ''
+  return /\*[^*]+\*/.test(back)
+})
+
 const showExampleSentencesButton = computed(() => {
+  if (hasMarkedWord.value) return false
   return (backWordCount.value >= 1 && backWordCount.value <= 2) || (frontWordCount.value >= 1 && frontWordCount.value <= 2)
 })
 

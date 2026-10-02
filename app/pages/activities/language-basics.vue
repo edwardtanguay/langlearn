@@ -2167,7 +2167,7 @@ function isWordLearned(itemId: string): boolean {
                 v-if="getPronunciation(activeCrossLanguageItem.id, l.code)"
                 class="text-xs font-mono font-medium text-yellow-400 shrink-0"
               >
-                [{{ getPronunciation(activeCrossLanguageItem.id, l.code) }}]
+                [<span v-html="formatPronunciationHtml(getPronunciation(activeCrossLanguageItem.id, l.code))"></span>]
               </span>
 
               <!-- Translated word on the right -->
