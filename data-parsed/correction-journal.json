@@ -2333,9 +2333,272 @@
       ],
       "totalWords": 340,
       "totalFlashcards": 49
+    },
+    {
+      "date": "2026-10-02",
+      "sections": [
+        {
+          "id": "2026-10-02-sec-1",
+          "day": "2026-10-02",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "Merci pour l'article. Ce n'est pas facile de croir que le marathon commence [presque en une semaine;dans presque une semaine]. [J'ai;Je n'ai] jamais couru un marathon à travers [les paysage du vins;les paysages viticoles], et je crois que ce sera [mon première marathon;mon premier marathon] où le départ et l'arrivée de la course [est tant près;seront aussi proches] de mon Airbnb.\n\nJ'avais une question [de la transportation publique;sur les transports en commun] à Dijon : [c'est;est-ce qu'il est] possible [d'achèter;d'acheter] un billet pour une semaine [pour touts;qui permet d'utiliser] [les busses;les bus], trams, scooters et vélos ? [J'ai recherché un peu;J'ai fait quelques recherches] [sur la website;sur la site] de [Office;l'Office] de Tourisme, mais ce n'est pas très [claire;clair]. Je vais demander [là quand j'arrive;sur place quand j'arriverai], mais [peut-être c'est;c'est peut-être] une question [que tu as souvent été demander;qu'on t'a souvent posée].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Merci pour l'article. Ce n'est pas facile de croir que le marathon commence "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-1",
+              "incorrect": "presque en une semaine",
+              "correct": "dans presque une semaine"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-2",
+              "incorrect": "J'ai",
+              "correct": "Je n'ai"
+            },
+            {
+              "type": "text",
+              "text": " jamais couru un marathon à travers "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-3",
+              "incorrect": "les paysage du vins",
+              "correct": "les paysages viticoles"
+            },
+            {
+              "type": "text",
+              "text": ", et je crois que ce sera "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-4",
+              "incorrect": "mon première marathon",
+              "correct": "mon premier marathon"
+            },
+            {
+              "type": "text",
+              "text": " où le départ et l'arrivée de la course "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-5",
+              "incorrect": "est tant près",
+              "correct": "seront aussi proches"
+            },
+            {
+              "type": "text",
+              "text": " de mon Airbnb.\n\nJ'avais une question "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-6",
+              "incorrect": "de la transportation publique",
+              "correct": "sur les transports en commun"
+            },
+            {
+              "type": "text",
+              "text": " à Dijon : "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-7",
+              "incorrect": "c'est",
+              "correct": "est-ce qu'il est"
+            },
+            {
+              "type": "text",
+              "text": " possible "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-8",
+              "incorrect": "d'achèter",
+              "correct": "d'acheter"
+            },
+            {
+              "type": "text",
+              "text": " un billet pour une semaine "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-9",
+              "incorrect": "pour touts",
+              "correct": "qui permet d'utiliser"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-10",
+              "incorrect": "les busses",
+              "correct": "les bus"
+            },
+            {
+              "type": "text",
+              "text": ", trams, scooters et vélos ? "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-11",
+              "incorrect": "J'ai recherché un peu",
+              "correct": "J'ai fait quelques recherches"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-12",
+              "incorrect": "sur la website",
+              "correct": "sur la site"
+            },
+            {
+              "type": "text",
+              "text": " de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-13",
+              "incorrect": "Office",
+              "correct": "l'Office"
+            },
+            {
+              "type": "text",
+              "text": " de Tourisme, mais ce n'est pas très "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-14",
+              "incorrect": "claire",
+              "correct": "clair"
+            },
+            {
+              "type": "text",
+              "text": ". Je vais demander "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-15",
+              "incorrect": "là quand j'arrive",
+              "correct": "sur place quand j'arriverai"
+            },
+            {
+              "type": "text",
+              "text": ", mais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-16",
+              "incorrect": "peut-être c'est",
+              "correct": "c'est peut-être"
+            },
+            {
+              "type": "text",
+              "text": " une question "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-1-fc-17",
+              "incorrect": "que tu as souvent été demander",
+              "correct": "qu'on t'a souvent posée"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 17,
+          "wordCount": 115
+        },
+        {
+          "id": "2026-10-02-sec-2",
+          "day": "2026-10-02",
+          "sectionIndex": 2,
+          "language": "fr",
+          "rawText": "[Je l'ai essaié;J'ai essayé de le] reprogrammer mais j'ai reçu le message : \"Ce cours ne peut pas être reprogrammé car le préavis est trop court\". Mais ce n'est pas [de;un] problème. Notre prochain cours est lundi. Si tu [n'as pas;ne peux pas y] assister, [dis-moi;dis-le-moi] au moins 12 heures [en avance;à l'avance] et je [le peux;pourrai le] reprogrammer. J'espère que tu te sentiras bientôt mieux.",
+          "bits": [
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-2-fc-1",
+              "incorrect": "Je l'ai essaié",
+              "correct": "J'ai essayé de le"
+            },
+            {
+              "type": "text",
+              "text": " reprogrammer mais j'ai reçu le message : \"Ce cours ne peut pas être reprogrammé car le préavis est trop court\". Mais ce n'est pas "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-2-fc-2",
+              "incorrect": "de",
+              "correct": "un"
+            },
+            {
+              "type": "text",
+              "text": " problème. Notre prochain cours est lundi. Si tu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-2-fc-3",
+              "incorrect": "n'as pas",
+              "correct": "ne peux pas y"
+            },
+            {
+              "type": "text",
+              "text": " assister, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-2-fc-4",
+              "incorrect": "dis-moi",
+              "correct": "dis-le-moi"
+            },
+            {
+              "type": "text",
+              "text": " au moins 12 heures "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-2-fc-5",
+              "incorrect": "en avance",
+              "correct": "à l'avance"
+            },
+            {
+              "type": "text",
+              "text": " et je "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-2-fc-6",
+              "incorrect": "le peux",
+              "correct": "pourrai le"
+            },
+            {
+              "type": "text",
+              "text": " reprogrammer. J'espère que tu te sentiras bientôt mieux."
+            }
+          ],
+          "flashcardsCount": 6,
+          "wordCount": 61
+        }
+      ],
+      "totalWords": 176,
+      "totalFlashcards": 23
     }
   ],
-  "totalSections": 22,
-  "totalWords": 1641,
-  "totalFlashcards": 196
+  "totalSections": 24,
+  "totalWords": 1817,
+  "totalFlashcards": 219
 }
