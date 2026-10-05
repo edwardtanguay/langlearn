@@ -10,15 +10,6 @@
 			- les personnes
 				- Adèle
 					- prof
-				- Marie
-					- sport
-					- jeune
-					- un air un peux triste
-				- Tanja
-					- paris, jurist en francais
-					- ouvre
-				- Christophe
-					- parle beaucoup
 				- Katrin
 					- comme Sana
 					- quatre enfins
@@ -27,25 +18,38 @@
 					- un plus agée
 					- un bon français
 					- mobile
-				- Stefan
-					- il avait un problème avec le micro
 				- Ute 
 					- comme Rose
 					- les lunettes
-				- Andrea
-					- Mobil
-					- voiture
+				- Tanja
+					- paris, jurist en francais
+					- ouvre
 				- Monika
 					- cheveaux blanche
 					- B1
 					- a parlé de marathon
+				- Andrea
+					- Mobil
+					- voiture
+				- Marie
+					- sport
+					- jeune
+					- un air un peux triste
+				- Christophe
+					- parle beaucoup
+					- 2026-10-05 n
+				- Stefan
+					- il avait un problème avec le micro
 			- 2026-09-21
 				- les vacances
 				- audio
 			- 2026-09-28
 				- consulte les informations sur le site
 				- sport; ltmb; competitions
-				- Relancez l'audio de la dernière fois, learn2020.
+				- Relancez l'audio de la dernière fois, learn2020
+			- 2026-10-05
+				- https://www.youtube.com/watch?v=n_WgLN_cHYM
+				- 
 		- Französisch B2 Conversation & littèrature & grammaire
 			- prof
 				- Christine Belakhdar

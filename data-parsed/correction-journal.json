@@ -2592,13 +2592,124 @@
           ],
           "flashcardsCount": 6,
           "wordCount": 61
+        },
+        {
+          "id": "2026-10-02-sec-3",
+          "day": "2026-10-02",
+          "sectionIndex": 3,
+          "language": "fr",
+          "rawText": "Bonjour Geneviève,\n\nMerci beaucoup pour toutes les information. [Ces passent parfait;Ça tombe parfaitement bien] car [aujour'dui;aujourd'hui] j'ai enfins le temps d'organisier ma semaine à Dijon.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Bonjour Geneviève,\n\nMerci beaucoup pour toutes les information. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-3-fc-1",
+              "incorrect": "Ces passent parfait",
+              "correct": "Ça tombe parfaitement bien"
+            },
+            {
+              "type": "text",
+              "text": " car "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-3-fc-2",
+              "incorrect": "aujour'dui",
+              "correct": "aujourd'hui"
+            },
+            {
+              "type": "text",
+              "text": " j'ai enfins le temps d'organisier ma semaine à Dijon."
+            }
+          ],
+          "flashcardsCount": 2,
+          "wordCount": 23
+        },
+        {
+          "id": "2026-10-02-sec-4",
+          "day": "2026-10-02",
+          "sectionIndex": 4,
+          "language": "de",
+          "rawText": "Heute habe ich meinen letzten Trainingslauf absolviert, also [ich bin;bin ich] bereit, und mein Airbnb liegt nur 100 m [entfernt vom Start und Ziel; vom Start und Ziel entfernt].\n\nJa, lassen wir nochmal [Hohen Neuendorf; in Hohen Neuendorf] zusammenlaufen, das ist eine gute Idee. Ich kann nicht versprechen, dass wir wieder [zu vier anschienen;zu viert erscheinen] wie letztes Mal, aber der Termin steht schon in meinem Kalender.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Heute habe ich meinen letzten Trainingslauf absolviert, also "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-4-fc-1",
+              "incorrect": "ich bin",
+              "correct": "bin ich"
+            },
+            {
+              "type": "text",
+              "text": " bereit, und mein Airbnb liegt nur 100 m "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-4-fc-2",
+              "incorrect": "entfernt vom Start und Ziel",
+              "correct": "vom Start und Ziel entfernt"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nJa, lassen wir nochmal "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-4-fc-3",
+              "incorrect": "Hohen Neuendorf",
+              "correct": "in Hohen Neuendorf"
+            },
+            {
+              "type": "text",
+              "text": " zusammenlaufen, das ist eine gute Idee. Ich kann nicht versprechen, dass wir wieder "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-4-fc-4",
+              "incorrect": "zu vier anschienen",
+              "correct": "zu viert erscheinen"
+            },
+            {
+              "type": "text",
+              "text": " wie letztes Mal, aber der Termin steht schon in meinem Kalender."
+            }
+          ],
+          "flashcardsCount": 4,
+          "wordCount": 57
+        },
+        {
+          "id": "2026-10-02-sec-5",
+          "day": "2026-10-02",
+          "sectionIndex": 5,
+          "language": "fr",
+          "rawText": "Leo und ich sind schon am 08.11. für den Hohen Neuendorf Herbstlauf verabredet, [als 1. Jahr Kennenlernenstag sozusagen;sozusagen als 1-Jahr-Kennenlern-Jubiläum]",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Leo und ich sind schon am 08.11. für den Hohen Neuendorf Herbstlauf verabredet, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-02-sec-5-fc-1",
+              "incorrect": "als 1. Jahr Kennenlernenstag sozusagen",
+              "correct": "sozusagen als 1-Jahr-Kennenlern-Jubiläum"
+            }
+          ],
+          "flashcardsCount": 1,
+          "wordCount": 16
         }
       ],
-      "totalWords": 176,
-      "totalFlashcards": 23
+      "totalWords": 272,
+      "totalFlashcards": 30
     }
   ],
-  "totalSections": 24,
-  "totalWords": 1817,
-  "totalFlashcards": 219
+  "totalSections": 27,
+  "totalWords": 1913,
+  "totalFlashcards": 226
 }
