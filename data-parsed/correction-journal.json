@@ -2527,7 +2527,7 @@
           "day": "2026-10-02",
           "sectionIndex": 2,
           "language": "fr",
-          "rawText": "[Je l'ai essaié;J'ai essayé de le] reprogrammer mais j'ai reçu le message : \"Ce cours ne peut pas être reprogrammé car le préavis est trop court\". Mais ce n'est pas [de;un] problème. Notre prochain cours est lundi. Si tu [n'as pas;ne peux pas y] assister, [dis-moi;dis-le-moi] au moins 12 heures [en avance;à l'avance] et je [le peux;pourrai le] reprogrammer. J'espère que tu te sentiras bientôt mieux.",
+          "rawText": "[Je l'ai essaié;J'ai essayé de le] reprogrammer mais j'ai reçu le message : \"Ce cours ne peut pas être reprogrammé car le préavis est trop court\". Mais ce n'est pas [de;un] problème. Notre prochain cours est lundi. Si tu [n'as pas;ne peux pas y] assister, [dis-moi;dis-le-moi] au moins 12 heures [en avance;à l'avance] et je [le peux;pourrai le] reprogrammer. J'espère que tu te sentiras bientôt mieux.---de\nHeute habe ich meinen letzten Trainingslauf absolviert, also [ich bin;bin ich] bereit, und mein Airbnb liegt nur 100 m [entfernt vom Start und Ziel; vom Start und Ziel entfernt].\n\nJa, lassen wir nochmal [Hohen Neuendorf; in Hohen Neuendorf] zusammenlaufen, das ist eine gute Idee. Ich kann nicht versprechen, dass wir wieder [zu vier anschienen;zu viert erscheinen] wie letztes Mal, aber der Termin steht schon in meinem Kalender.",
           "bits": [
             {
               "type": "flashcard",
@@ -2587,61 +2587,11 @@
             },
             {
               "type": "text",
-              "text": " reprogrammer. J'espère que tu te sentiras bientôt mieux."
-            }
-          ],
-          "flashcardsCount": 6,
-          "wordCount": 61
-        },
-        {
-          "id": "2026-10-02-sec-3",
-          "day": "2026-10-02",
-          "sectionIndex": 3,
-          "language": "fr",
-          "rawText": "Bonjour Geneviève,\n\nMerci beaucoup pour toutes les information. [Ces passent parfait;Ça tombe parfaitement bien] car [aujour'dui;aujourd'hui] j'ai enfins le temps d'organisier ma semaine à Dijon.",
-          "bits": [
-            {
-              "type": "text",
-              "text": "Bonjour Geneviève,\n\nMerci beaucoup pour toutes les information. "
+              "text": " reprogrammer. J'espère que tu te sentiras bientôt mieux.---de\nHeute habe ich meinen letzten Trainingslauf absolviert, also "
             },
             {
               "type": "flashcard",
-              "id": "2026-10-02-sec-3-fc-1",
-              "incorrect": "Ces passent parfait",
-              "correct": "Ça tombe parfaitement bien"
-            },
-            {
-              "type": "text",
-              "text": " car "
-            },
-            {
-              "type": "flashcard",
-              "id": "2026-10-02-sec-3-fc-2",
-              "incorrect": "aujour'dui",
-              "correct": "aujourd'hui"
-            },
-            {
-              "type": "text",
-              "text": " j'ai enfins le temps d'organisier ma semaine à Dijon."
-            }
-          ],
-          "flashcardsCount": 2,
-          "wordCount": 23
-        },
-        {
-          "id": "2026-10-02-sec-4",
-          "day": "2026-10-02",
-          "sectionIndex": 4,
-          "language": "de",
-          "rawText": "Heute habe ich meinen letzten Trainingslauf absolviert, also [ich bin;bin ich] bereit, und mein Airbnb liegt nur 100 m [entfernt vom Start und Ziel; vom Start und Ziel entfernt].\n\nJa, lassen wir nochmal [Hohen Neuendorf; in Hohen Neuendorf] zusammenlaufen, das ist eine gute Idee. Ich kann nicht versprechen, dass wir wieder [zu vier anschienen;zu viert erscheinen] wie letztes Mal, aber der Termin steht schon in meinem Kalender.",
-          "bits": [
-            {
-              "type": "text",
-              "text": "Heute habe ich meinen letzten Trainingslauf absolviert, also "
-            },
-            {
-              "type": "flashcard",
-              "id": "2026-10-02-sec-4-fc-1",
+              "id": "2026-10-02-sec-2-fc-7",
               "incorrect": "ich bin",
               "correct": "bin ich"
             },
@@ -2651,7 +2601,7 @@
             },
             {
               "type": "flashcard",
-              "id": "2026-10-02-sec-4-fc-2",
+              "id": "2026-10-02-sec-2-fc-8",
               "incorrect": "entfernt vom Start und Ziel",
               "correct": "vom Start und Ziel entfernt"
             },
@@ -2661,7 +2611,7 @@
             },
             {
               "type": "flashcard",
-              "id": "2026-10-02-sec-4-fc-3",
+              "id": "2026-10-02-sec-2-fc-9",
               "incorrect": "Hohen Neuendorf",
               "correct": "in Hohen Neuendorf"
             },
@@ -2671,7 +2621,7 @@
             },
             {
               "type": "flashcard",
-              "id": "2026-10-02-sec-4-fc-4",
+              "id": "2026-10-02-sec-2-fc-10",
               "incorrect": "zu vier anschienen",
               "correct": "zu viert erscheinen"
             },
@@ -2680,13 +2630,13 @@
               "text": " wie letztes Mal, aber der Termin steht schon in meinem Kalender."
             }
           ],
-          "flashcardsCount": 4,
-          "wordCount": 57
+          "flashcardsCount": 10,
+          "wordCount": 118
         },
         {
-          "id": "2026-10-02-sec-5",
+          "id": "2026-10-02-sec-3",
           "day": "2026-10-02",
-          "sectionIndex": 5,
+          "sectionIndex": 3,
           "language": "fr",
           "rawText": "Leo und ich sind schon am 08.11. für den Hohen Neuendorf Herbstlauf verabredet, [als 1. Jahr Kennenlernenstag sozusagen;sozusagen als 1-Jahr-Kennenlern-Jubiläum]",
           "bits": [
@@ -2696,7 +2646,7 @@
             },
             {
               "type": "flashcard",
-              "id": "2026-10-02-sec-5-fc-1",
+              "id": "2026-10-02-sec-3-fc-1",
               "incorrect": "als 1. Jahr Kennenlernenstag sozusagen",
               "correct": "sozusagen als 1-Jahr-Kennenlern-Jubiläum"
             }
@@ -2705,11 +2655,637 @@
           "wordCount": 16
         }
       ],
-      "totalWords": 272,
-      "totalFlashcards": 30
+      "totalWords": 249,
+      "totalFlashcards": 28
+    },
+    {
+      "date": "2026-10-05",
+      "sections": [
+        {
+          "id": "2026-10-05-sec-1",
+          "day": "2026-10-05",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "[Dans le dernier temps;Dernièrement,] j'ai experimenté avec [des formats different;différents formats] [des exercises et textes;d'exercices et de textes] pour mes cours [à Preply;sur Preply]. J'utilise maintenant le même [IA-agent;agent d'IA] que j'utilise pour programmer [les;mes] applications comme [developper;développeur] et ça marche bien. Par exemple, les \"textes\" ne sont pas seulement [les textes;des textes] [mais les;mais plutôt de \"petites [sites de;pages] web interactives\".\n\nVoici un exemple. J'ai demandé [mon agent;à mon agent] d'IA de créer une [site;page] avec 20 choses [de voir et faire;à voir et à faire] à Dijon avec une description, trois questions [compréhension;de compréhension] interactives [de multiple-choice;à choix multiples], [et après ça;puis] une question [opinion de ce sujet en géneral;d'opinion sur le sujet en général].\n\nhttps://dijon26-three.vercel.app/dijon\n\nSi tu veux, nous pouvons l'utiliser ce soir et continuer avec la question \"06/20 La Cité de la Gastronomie et du Vin\".\n\nEt dis-moi si tu [as l'interesse;es intéressée] [de créer;par la création de] ce type d'exercise [interactives;interactifs] pour tes [éleves;élèves]. Aujourd'hui avec l'IA, c'est en tout cas possible, [aussi;même] pour les [gens;personnes] sans [experience;expérience] [de developpeur;en développement], et [il y a les;il existe des] services [libre;gratuits] où on peut publier les [site;sites] en ligne.",
+          "bits": [
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-1",
+              "incorrect": "Dans le dernier temps",
+              "correct": "Dernièrement,"
+            },
+            {
+              "type": "text",
+              "text": " j'ai experimenté avec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-2",
+              "incorrect": "des formats different",
+              "correct": "différents formats"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-3",
+              "incorrect": "des exercises et textes",
+              "correct": "d'exercices et de textes"
+            },
+            {
+              "type": "text",
+              "text": " pour mes cours "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-4",
+              "incorrect": "à Preply",
+              "correct": "sur Preply"
+            },
+            {
+              "type": "text",
+              "text": ". J'utilise maintenant le même "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-5",
+              "incorrect": "IA-agent",
+              "correct": "agent d'IA"
+            },
+            {
+              "type": "text",
+              "text": " que j'utilise pour programmer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-6",
+              "incorrect": "les",
+              "correct": "mes"
+            },
+            {
+              "type": "text",
+              "text": " applications comme "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-7",
+              "incorrect": "developper",
+              "correct": "développeur"
+            },
+            {
+              "type": "text",
+              "text": " et ça marche bien. Par exemple, les \"textes\" ne sont pas seulement "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-8",
+              "incorrect": "les textes",
+              "correct": "des textes"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-9",
+              "incorrect": "mais les",
+              "correct": "mais plutôt de \"petites [sites de;pages"
+            },
+            {
+              "type": "text",
+              "text": " web interactives\".\n\nVoici un exemple. J'ai demandé "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-10",
+              "incorrect": "mon agent",
+              "correct": "à mon agent"
+            },
+            {
+              "type": "text",
+              "text": " d'IA de créer une "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-11",
+              "incorrect": "site",
+              "correct": "page"
+            },
+            {
+              "type": "text",
+              "text": " avec 20 choses "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-12",
+              "incorrect": "de voir et faire",
+              "correct": "à voir et à faire"
+            },
+            {
+              "type": "text",
+              "text": " à Dijon avec une description, trois questions "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-13",
+              "incorrect": "compréhension",
+              "correct": "de compréhension"
+            },
+            {
+              "type": "text",
+              "text": " interactives "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-14",
+              "incorrect": "de multiple-choice",
+              "correct": "à choix multiples"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-15",
+              "incorrect": "et après ça",
+              "correct": "puis"
+            },
+            {
+              "type": "text",
+              "text": " une question "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-16",
+              "incorrect": "opinion de ce sujet en géneral",
+              "correct": "d'opinion sur le sujet en général"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nhttps://dijon26-three.vercel.app/dijon\n\nSi tu veux, nous pouvons l'utiliser ce soir et continuer avec la question \"06/20 La Cité de la Gastronomie et du Vin\".\n\nEt dis-moi si tu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-17",
+              "incorrect": "as l'interesse",
+              "correct": "es intéressée"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-18",
+              "incorrect": "de créer",
+              "correct": "par la création de"
+            },
+            {
+              "type": "text",
+              "text": " ce type d'exercise "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-19",
+              "incorrect": "interactives",
+              "correct": "interactifs"
+            },
+            {
+              "type": "text",
+              "text": " pour tes "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-20",
+              "incorrect": "éleves",
+              "correct": "élèves"
+            },
+            {
+              "type": "text",
+              "text": ". Aujourd'hui avec l'IA, c'est en tout cas possible, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-21",
+              "incorrect": "aussi",
+              "correct": "même"
+            },
+            {
+              "type": "text",
+              "text": " pour les "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-22",
+              "incorrect": "gens",
+              "correct": "personnes"
+            },
+            {
+              "type": "text",
+              "text": " sans "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-23",
+              "incorrect": "experience",
+              "correct": "expérience"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-24",
+              "incorrect": "de developpeur",
+              "correct": "en développement"
+            },
+            {
+              "type": "text",
+              "text": ", et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-25",
+              "incorrect": "il y a les",
+              "correct": "il existe des"
+            },
+            {
+              "type": "text",
+              "text": " services "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-26",
+              "incorrect": "libre",
+              "correct": "gratuits"
+            },
+            {
+              "type": "text",
+              "text": " où on peut publier les "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-05-sec-1-fc-27",
+              "incorrect": "site",
+              "correct": "sites"
+            },
+            {
+              "type": "text",
+              "text": " en ligne."
+            }
+          ],
+          "flashcardsCount": 27,
+          "wordCount": 164
+        }
+      ],
+      "totalWords": 164,
+      "totalFlashcards": 27
+    },
+    {
+      "date": "2026-10-06",
+      "sections": [
+        {
+          "id": "2026-10-06-sec-1",
+          "day": "2026-10-06",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "[Ces passent parfait;Ça tombe parfaitement bien] car [aujour'dui;aujourd'hui] j'ai enfins le temps d'organisier ma semaine à Dijon.\n\n\nBonjour Geneviève,\n\nMerci beaucoup pour toutes les [information;informations].\n\nDésolé [que je n'ai pas plus rapide répondu;de ne pas avoir répondu plus rapidement], mais j'ai beaucoup [faire;à faire] avec mon travail et pour préparer [pour mon voyage;mon voyage] cette semaine.\n\nJeudi, j'arriverai 16 h à la gare. Merci pour les infos [avec;concernant] la navette, c'est utile [de savoir;à savoir]. Mais mon plan est [d'avoir seulement un;de n'avoir qu'un] sac à dos et je voudrais faire une promenade à travers Dijon, je pense que ce serait une bonne [exercise;exercice] pour les jambes après dix heures [voyage;de voyage] ! Mais je vais suivre votre [astuce de;conseil et] demander [les informations;des informations] à l'agence DiviaMobilités, merci, c'est une [bon idée;bonne idée].\n\nEt oui, je pense [aussi, ce;aussi que ce] n'est pas [necessaire;nécessaire] d'utiliser les bus et [tram;les trams] pour visiter les [plus populaires endroits à Dijon centre ville;endroits les plus populaires du centre-ville de Dijon]. Mais j'ai un autre raison d'utiliser les bus et [trams;les trams] : ma femme et moi [planifier;prévoyons] un voyage de [randonner;randonnée] en France pour l'été 2027. Nous avons [fait;déjà fait] quelques voyages de [randonner;randonnée] dans les Alpes et maintenant, [chercher;nous cherchons] un endroit [pas trop haute;moins montagneux], mais avec [les;de] petites collines, etc. peut-être [Dijon/Bourgogne;dans la région de Dijon ou en Bourgogne].\n\nJ'ai achèté un livre \"Le Grand Dijon à pied\" avec 34 promenades et randonnées autour de Dijon, par exemple à Daix, Talant, Chenôve, Marsannay-la-Côte, etc. et je voudrais faire [un peu;un peu de] reconnaissance [de la;du] paysage autour de Dijon.\n\nEt vendredi je doit chercher mon dossard de marathon à Quetigny. [Je crois un bus ou tram;Je pense que le bus ou le tram] serait [le mieux façon;le meilleur moyen] de transport pour [ça;y aller].",
+          "bits": [
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-1",
+              "incorrect": "Ces passent parfait",
+              "correct": "Ça tombe parfaitement bien"
+            },
+            {
+              "type": "text",
+              "text": " car "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-2",
+              "incorrect": "aujour'dui",
+              "correct": "aujourd'hui"
+            },
+            {
+              "type": "text",
+              "text": " j'ai enfins le temps d'organisier ma semaine à Dijon.\n\n\nBonjour Geneviève,\n\nMerci beaucoup pour toutes les "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-3",
+              "incorrect": "information",
+              "correct": "informations"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nDésolé "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-4",
+              "incorrect": "que je n'ai pas plus rapide répondu",
+              "correct": "de ne pas avoir répondu plus rapidement"
+            },
+            {
+              "type": "text",
+              "text": ", mais j'ai beaucoup "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-5",
+              "incorrect": "faire",
+              "correct": "à faire"
+            },
+            {
+              "type": "text",
+              "text": " avec mon travail et pour préparer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-6",
+              "incorrect": "pour mon voyage",
+              "correct": "mon voyage"
+            },
+            {
+              "type": "text",
+              "text": " cette semaine.\n\nJeudi, j'arriverai 16 h à la gare. Merci pour les infos "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-7",
+              "incorrect": "avec",
+              "correct": "concernant"
+            },
+            {
+              "type": "text",
+              "text": " la navette, c'est utile "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-8",
+              "incorrect": "de savoir",
+              "correct": "à savoir"
+            },
+            {
+              "type": "text",
+              "text": ". Mais mon plan est "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-9",
+              "incorrect": "d'avoir seulement un",
+              "correct": "de n'avoir qu'un"
+            },
+            {
+              "type": "text",
+              "text": " sac à dos et je voudrais faire une promenade à travers Dijon, je pense que ce serait une bonne "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-10",
+              "incorrect": "exercise",
+              "correct": "exercice"
+            },
+            {
+              "type": "text",
+              "text": " pour les jambes après dix heures "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-11",
+              "incorrect": "voyage",
+              "correct": "de voyage"
+            },
+            {
+              "type": "text",
+              "text": " ! Mais je vais suivre votre "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-12",
+              "incorrect": "astuce de",
+              "correct": "conseil et"
+            },
+            {
+              "type": "text",
+              "text": " demander "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-13",
+              "incorrect": "les informations",
+              "correct": "des informations"
+            },
+            {
+              "type": "text",
+              "text": " à l'agence DiviaMobilités, merci, c'est une "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-14",
+              "incorrect": "bon idée",
+              "correct": "bonne idée"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nEt oui, je pense "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-15",
+              "incorrect": "aussi, ce",
+              "correct": "aussi que ce"
+            },
+            {
+              "type": "text",
+              "text": " n'est pas "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-16",
+              "incorrect": "necessaire",
+              "correct": "nécessaire"
+            },
+            {
+              "type": "text",
+              "text": " d'utiliser les bus et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-17",
+              "incorrect": "tram",
+              "correct": "les trams"
+            },
+            {
+              "type": "text",
+              "text": " pour visiter les "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-18",
+              "incorrect": "plus populaires endroits à Dijon centre ville",
+              "correct": "endroits les plus populaires du centre-ville de Dijon"
+            },
+            {
+              "type": "text",
+              "text": ". Mais j'ai un autre raison d'utiliser les bus et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-19",
+              "incorrect": "trams",
+              "correct": "les trams"
+            },
+            {
+              "type": "text",
+              "text": " : ma femme et moi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-20",
+              "incorrect": "planifier",
+              "correct": "prévoyons"
+            },
+            {
+              "type": "text",
+              "text": " un voyage de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-21",
+              "incorrect": "randonner",
+              "correct": "randonnée"
+            },
+            {
+              "type": "text",
+              "text": " en France pour l'été 2027. Nous avons "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-22",
+              "incorrect": "fait",
+              "correct": "déjà fait"
+            },
+            {
+              "type": "text",
+              "text": " quelques voyages de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-23",
+              "incorrect": "randonner",
+              "correct": "randonnée"
+            },
+            {
+              "type": "text",
+              "text": " dans les Alpes et maintenant, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-24",
+              "incorrect": "chercher",
+              "correct": "nous cherchons"
+            },
+            {
+              "type": "text",
+              "text": " un endroit "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-25",
+              "incorrect": "pas trop haute",
+              "correct": "moins montagneux"
+            },
+            {
+              "type": "text",
+              "text": ", mais avec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-26",
+              "incorrect": "les",
+              "correct": "de"
+            },
+            {
+              "type": "text",
+              "text": " petites collines, etc. peut-être "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-27",
+              "incorrect": "Dijon/Bourgogne",
+              "correct": "dans la région de Dijon ou en Bourgogne"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nJ'ai achèté un livre \"Le Grand Dijon à pied\" avec 34 promenades et randonnées autour de Dijon, par exemple à Daix, Talant, Chenôve, Marsannay-la-Côte, etc. et je voudrais faire "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-28",
+              "incorrect": "un peu",
+              "correct": "un peu de"
+            },
+            {
+              "type": "text",
+              "text": " reconnaissance "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-29",
+              "incorrect": "de la",
+              "correct": "du"
+            },
+            {
+              "type": "text",
+              "text": " paysage autour de Dijon.\n\nEt vendredi je doit chercher mon dossard de marathon à Quetigny. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-30",
+              "incorrect": "Je crois un bus ou tram",
+              "correct": "Je pense que le bus ou le tram"
+            },
+            {
+              "type": "text",
+              "text": " serait "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-31",
+              "incorrect": "le mieux façon",
+              "correct": "le meilleur moyen"
+            },
+            {
+              "type": "text",
+              "text": " de transport pour "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-1-fc-32",
+              "incorrect": "ça",
+              "correct": "y aller"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 32,
+          "wordCount": 271
+        }
+      ],
+      "totalWords": 271,
+      "totalFlashcards": 32
     }
   ],
   "totalSections": 27,
-  "totalWords": 1913,
-  "totalFlashcards": 226
+  "totalWords": 2325,
+  "totalFlashcards": 283
 }
