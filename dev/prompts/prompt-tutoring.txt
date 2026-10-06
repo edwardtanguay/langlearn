@@ -4,4 +4,7 @@ Create an HTML/CSS/JavaScript file called index.html in the folder dev\info-site
 - one the questions, remove the large number on the left and put it simply in the text of the questions, this will free up room
 - after an questions has been answered, allow the user to collapse it so that only the word and definition is showing, e.g. "pavé - Gros bloc de pierre taillée qui recouvre la chaussée d'une rue ancienne." so that it frees up space for the user to drag/drop
 
-
+- on the questions, remove the numbers 1-5 completely
+- change réduire and développer buttons to small, simple open/close icons
+- keep everything smaller/compacter on the questions since if the area goes over a screen, the drag/dropping is difficult, e.g. put the "drop area" simply the size of a word at the end of the definition, not on its own line
+- also remove the "— " when collapse
