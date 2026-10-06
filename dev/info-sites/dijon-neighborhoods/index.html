@@ -20,14 +20,11 @@
       --text-muted: #334155;
       --text-light: #64748b;
       
-      --accent-burgundy: #991b1b;
-      --accent-burgundy-hover: #7f1d1d;
-      --accent-burgundy-soft: #fef2f2;
-      --accent-burgundy-border: #fecaca;
-      
-      --accent-amber: #b45309;
-      --accent-amber-soft: #fffbeb;
-      --accent-amber-border: #fde68a;
+      --accent-blue: #2563eb;
+      --accent-blue-hover: #1d4ed8;
+      --accent-blue-soft: #eff6ff;
+      --accent-blue-border: #bfdbfe;
+      --accent-blue-chip: #3b82f6;
       
       --success-green: #15803d;
       --success-green-soft: #f0fdf4;
@@ -70,8 +67,8 @@
     }
 
     ::selection {
-      background-color: #fde68a;
-      color: #78350f;
+      background-color: #bfdbfe;
+      color: #1e3a8a;
     }
 
     /* BARRE DE NAVIGATION SUPÉRIEURE FIXE */
@@ -107,7 +104,7 @@
     }
 
     .brand-pill {
-      background: var(--accent-burgundy);
+      background: var(--accent-blue);
       color: #ffffff;
       padding: 0.2rem 0.6rem;
       border-radius: var(--radius-sm);
@@ -137,21 +134,43 @@
     }
 
     .section-select:focus {
-      border-color: var(--accent-burgundy);
-      box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.15);
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     .global-score-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: var(--accent-amber-soft);
-      border: 1px solid var(--accent-amber-border);
-      color: var(--accent-amber);
+      background: var(--accent-blue-soft);
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
       font-weight: 700;
       font-size: 0.85rem;
       padding: 0.35rem 0.75rem;
       border-radius: 9999px;
+    }
+
+    .btn-reset-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset-all:hover {
+      background: var(--accent-blue-soft);
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
     }
 
     /* EN-TÊTE DU SITE */
@@ -171,9 +190,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--accent-burgundy-soft);
-      border: 1px solid var(--accent-burgundy-border);
-      color: var(--accent-burgundy);
+      background: var(--accent-blue-soft);
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
       padding: 0.35rem 1rem;
       border-radius: 9999px;
       font-weight: 700;
@@ -193,7 +212,7 @@
     }
 
     .site-hero h1 span {
-      color: var(--accent-burgundy);
+      color: var(--accent-blue);
     }
 
     .hero-lead {
@@ -271,7 +290,7 @@
     }
 
     .badge-num {
-      background: var(--accent-burgundy);
+      background: var(--accent-blue);
       color: #ffffff;
       font-size: 0.8rem;
       font-weight: 800;
@@ -330,7 +349,7 @@
     }
 
     .exercise-icon {
-      color: var(--accent-burgundy);
+      color: var(--accent-blue);
       margin-top: 2px;
       display: flex;
     }
@@ -356,7 +375,7 @@
     .exercise-score {
       font-size: 0.85rem;
       font-weight: 700;
-      color: var(--accent-burgundy);
+      color: var(--accent-blue);
       background: #ffffff;
       border: 1px solid var(--border-strong);
       padding: 0.25rem 0.65rem;
@@ -417,8 +436,8 @@
       display: inline-flex;
       align-items: center;
       background: #ffffff;
-      border: 1.5px solid var(--accent-amber);
-      color: #92400e;
+      border: 1.5px solid var(--accent-blue-chip);
+      color: #1e40af;
       font-size: 0.92rem;
       font-weight: 700;
       padding: 0.4rem 0.85rem;
@@ -426,13 +445,14 @@
       cursor: grab;
       user-select: text; /* PERMET AUSSI DE COPIER LE MOT */
       transition: all 0.18s ease;
-      box-shadow: 0 1px 3px rgba(180, 83, 9, 0.1);
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
     }
 
     .word-chip:hover {
-      background: var(--accent-amber-soft);
+      background: var(--accent-blue-soft);
+      border-color: var(--accent-blue-hover);
       transform: translateY(-1px);
-      box-shadow: 0 3px 8px rgba(180, 83, 9, 0.2);
+      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.2);
     }
 
     .word-chip:active {
@@ -440,10 +460,10 @@
     }
 
     .word-chip.is-selected {
-      background: #fef08a;
-      border-color: #854d0e;
-      color: #713f12;
-      box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.4);
+      background: #dbeafe;
+      border-color: var(--accent-blue);
+      color: #1e3a8a;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
       transform: scale(1.04);
     }
 
@@ -451,7 +471,7 @@
       display: none;
     }
 
-    /* GRILLE DES DÉFINITIONS */
+    /* GRILLE DES DÉFINITIONS & COLLAPSE */
     .definitions-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -463,10 +483,9 @@
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
       padding: 0.85rem 1rem;
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 0.85rem;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
       transition: all 0.2s ease;
     }
 
@@ -475,34 +494,85 @@
       border-color: var(--success-green-border);
     }
 
-    .def-num {
-      font-weight: 800;
-      font-size: 0.85rem;
-      color: var(--text-light);
-      background: var(--bg-surface);
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
+    .def-card.is-matched.is-collapsed {
+      padding: 0.55rem 0.9rem;
+      background: #f0fdf4;
+    }
+
+    .def-card-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-    }
-
-    .def-card.is-matched .def-num {
-      background: var(--success-green);
-      color: #ffffff;
-    }
-
-    .def-content {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
+      justify-content: space-between;
+      gap: 0.75rem;
     }
 
     .def-text {
       font-size: 0.95rem;
       color: var(--text-main);
       line-height: 1.45;
+      flex: 1;
+    }
+
+    .def-idx {
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-right: 0.35rem;
+    }
+
+    .collapsed-summary {
+      display: none;
+    }
+
+    .def-card.is-matched.is-collapsed .collapsed-summary {
+      display: inline;
+    }
+
+    .matched-word-label {
+      color: var(--success-green);
+      font-weight: 800;
+      background: #ffffff;
+      border: 1px solid var(--success-green-border);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      margin-right: 0.3rem;
+    }
+
+    .btn-toggle-collapse {
+      display: none;
+      align-items: center;
+      gap: 0.3rem;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .def-card.is-matched .btn-toggle-collapse {
+      display: inline-flex;
+    }
+
+    .btn-toggle-collapse:hover {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .def-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .def-card.is-matched.is-collapsed .def-card-body {
+      display: none;
     }
 
     .def-dropzone {
@@ -518,13 +588,13 @@
     }
 
     .def-dropzone:hover {
-      border-color: var(--accent-amber);
-      background: var(--accent-amber-soft);
+      border-color: var(--accent-blue);
+      background: var(--accent-blue-soft);
     }
 
     .def-dropzone.drag-hover {
-      border-color: var(--accent-burgundy);
-      background: var(--accent-burgundy-soft);
+      border-color: var(--accent-blue-hover);
+      background: #dbeafe;
       transform: scale(1.01);
     }
 
@@ -566,7 +636,7 @@
       margin-top: 0.65rem;
       background: #ffffff;
       border: 1px solid var(--border-subtle);
-      border-left: 3.5px solid var(--accent-amber);
+      border-left: 3.5px solid var(--accent-blue);
       border-radius: var(--radius-sm);
       padding: 0.65rem 0.85rem;
       box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
@@ -595,7 +665,7 @@
       gap: 0.35rem;
       font-size: 0.78rem;
       font-weight: 700;
-      color: var(--accent-amber);
+      color: var(--accent-blue);
       text-transform: uppercase;
       letter-spacing: 0.04em;
       margin-bottom: 0.35rem;
@@ -610,10 +680,10 @@
     }
 
     .example-quote strong {
-      color: var(--accent-burgundy);
+      color: var(--accent-blue-hover);
       font-weight: 700;
       font-style: normal;
-      background: var(--accent-amber-soft);
+      background: var(--accent-blue-soft);
       padding: 0 0.25rem;
       border-radius: 3px;
     }
@@ -657,9 +727,9 @@
       gap: 0.4rem;
       font-size: 0.85rem;
       font-weight: 700;
-      color: var(--accent-burgundy);
-      background: var(--accent-burgundy-soft);
-      border: 1px solid var(--accent-burgundy-border);
+      color: var(--accent-blue);
+      background: var(--accent-blue-soft);
+      border: 1px solid var(--accent-blue-border);
       padding: 0.25rem 0.75rem;
       border-radius: 9999px;
     }
@@ -672,7 +742,7 @@
 
     .reading-body {
       background: #ffffff;
-      border-left: 4px solid var(--accent-burgundy);
+      border-left: 4px solid var(--accent-blue);
       padding: 1.25rem 1.5rem;
       border-radius: 0 var(--radius-md) var(--radius-md) 0;
       box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
@@ -692,10 +762,10 @@
 
     /* MOT DE VOCABULAIRE SOULIGNÉ DANS LE TEXTE */
     .vocab-word {
-      border-bottom: 2px dashed var(--accent-amber);
+      border-bottom: 2px dashed #3b82f6;
       font-weight: 600;
-      color: #78350f;
-      background: #fffbeb;
+      color: #1d4ed8;
+      background: #eff6ff;
       padding: 0.05rem 0.25rem;
       border-radius: 3px;
       cursor: help;
@@ -704,7 +774,7 @@
     }
 
     .vocab-word:hover {
-      background: #fde68a;
+      background: #dbeafe;
     }
 
     /* TOOLTIP NATIF AMÉLIORÉ */
@@ -746,7 +816,7 @@
     }
 
     .discussion-icon {
-      color: var(--accent-burgundy);
+      color: var(--accent-blue);
       display: flex;
       margin-top: 2px;
     }
@@ -765,58 +835,14 @@
     .discussion-question {
       font-size: 1.08rem;
       font-weight: 600;
-      color: var(--accent-burgundy);
+      color: var(--accent-blue);
       background: #ffffff;
-      border: 1px solid var(--accent-burgundy-border);
+      border: 1px solid var(--accent-blue-border);
       padding: 1.1rem 1.25rem;
       border-radius: var(--radius-md);
       line-height: 1.6;
-      margin-bottom: 1rem;
+      margin-bottom: 0;
       font-style: italic;
-    }
-
-    .notes-details {
-      margin-top: 0.75rem;
-    }
-
-    .notes-summary {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      user-select: none;
-      padding: 0.3rem 0;
-    }
-
-    .notes-summary:hover {
-      color: var(--text-main);
-    }
-
-    .notes-box {
-      margin-top: 0.6rem;
-    }
-
-    .notes-textarea {
-      width: 100%;
-      min-height: 85px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      padding: 0.75rem;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-md);
-      background: #ffffff;
-      color: var(--text-main);
-      resize: vertical;
-      line-height: 1.5;
-      outline: none;
-    }
-
-    .notes-textarea:focus {
-      border-color: var(--accent-burgundy);
-      box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.1);
     }
 
     /* BOUTON HAUT DE PAGE */
@@ -849,7 +875,7 @@
     .btn-back-to-top:hover {
       opacity: 1;
       transform: translateY(-3px);
-      background: var(--accent-burgundy);
+      background: var(--accent-blue);
     }
 
     /* PIED DE PAGE */
@@ -892,6 +918,11 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
           <span id="global-score-text">0 / 100 mots</span>
         </div>
+
+        <button type="button" class="btn-reset-all" onclick="resetAllExercises()" title="Réinitialiser tous les 20 exercices">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          Réinitialiser tout
+        </button>
       </div>
     </div>
   </header>
@@ -984,9 +1015,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="effervescence">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Grande animation, activité intense et joyeuse dans un lieu.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">effervescence</strong> — </span><strong class="def-idx">1.</strong> Grande animation, activité intense et joyeuse dans un lieu.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="effervescence" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1001,9 +1039,16 @@
             </div>
             
             <div class="def-card" data-target="pavé">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Gros bloc de pierre taillée qui recouvre la chaussée d'une rue ancienne.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">pavé</strong> — </span><strong class="def-idx">2.</strong> Gros bloc de pierre taillée qui recouvre la chaussée d'une rue ancienne.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="pavé" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1018,9 +1063,16 @@
             </div>
             
             <div class="def-card" data-target="flâner">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Se promener lentement sans but précis, pour le plaisir d'observer.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">flâner</strong> — </span><strong class="def-idx">3.</strong> Se promener lentement sans but précis, pour le plaisir d'observer.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="flâner" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1035,9 +1087,16 @@
             </div>
             
             <div class="def-card" data-target="demeure">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Grande et belle maison d'habitation, souvent ancienne et élégante.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">demeure</strong> — </span><strong class="def-idx">4.</strong> Grande et belle maison d'habitation, souvent ancienne et élégante.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="demeure" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1052,9 +1111,16 @@
             </div>
             
             <div class="def-card" data-target="commerces de bouche">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Magasins qui vendent des produits alimentaires fins et artisanaux.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">commerces de bouche</strong> — </span><strong class="def-idx">5.</strong> Magasins qui vendent des produits alimentaires fins et artisanaux.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="commerces de bouche" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1104,15 +1170,6 @@
             <div class="discussion-question">
               « Aimeriez-vous vivre dans un centre-ville historique piétonnier très animé au quotidien, ou préférez-vous la tranquillité d'un quartier sans touristes ni terrasses de café bruyantes sous vos fenêtres ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-1" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -1158,9 +1215,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="huppé">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Se dit d'un quartier ou d'un milieu social très chic, riche et prestigieux.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">huppé</strong> — </span><strong class="def-idx">1.</strong> Se dit d'un quartier ou d'un milieu social très chic, riche et prestigieux.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="huppé" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1175,9 +1239,16 @@
             </div>
             
             <div class="def-card" data-target="demeure bourgeoise">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Vaste maison élégante et de grand confort appartenant à une famille aisée.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">demeure bourgeoise</strong> — </span><strong class="def-idx">2.</strong> Vaste maison élégante et de grand confort appartenant à une famille aisée.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="demeure bourgeoise" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1192,9 +1263,16 @@
             </div>
             
             <div class="def-card" data-target="ombragé">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Qui est abrité du soleil par les feuilles et les branches d'arbres touffus.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">ombragé</strong> — </span><strong class="def-idx">3.</strong> Qui est abrité du soleil par les feuilles et les branches d'arbres touffus.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="ombragé" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1209,9 +1287,16 @@
             </div>
             
             <div class="def-card" data-target="quiétude">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">État de tranquillité paisible, de calme absolu et de sérénité profonde.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">quiétude</strong> — </span><strong class="def-idx">4.</strong> État de tranquillité paisible, de calme absolu et de sérénité profonde.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="quiétude" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1226,9 +1311,16 @@
             </div>
             
             <div class="def-card" data-target="coté">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Qui a une grande valeur marchande ou une excellente réputation sur le marché immobilier.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">coté</strong> — </span><strong class="def-idx">5.</strong> Qui a une grande valeur marchande ou une excellente réputation sur le marché immobilier.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="coté" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1278,15 +1370,6 @@
             <div class="discussion-question">
               « Selon vous, les quartiers très aisés comme Montchapet manquent-ils parfois de vie et de mixité sociale, ou représentent-ils le modèle parfait de l'habitat urbain paisible ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-2" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -1332,9 +1415,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="cossu">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Qui témoigne d'une grande aisance financière, luxueux et confortable.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">cossu</strong> — </span><strong class="def-idx">1.</strong> Qui témoigne d'une grande aisance financière, luxueux et confortable.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="cossu" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1349,9 +1439,16 @@
             </div>
             
             <div class="def-card" data-target="immeuble de maître">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Bâtiment d'habitation élégant construit en pierre noble pour les classes aisées.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">immeuble de maître</strong> — </span><strong class="def-idx">2.</strong> Bâtiment d'habitation élégant construit en pierre noble pour les classes aisées.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="immeuble de maître" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1366,9 +1463,16 @@
             </div>
             
             <div class="def-card" data-target="parquet">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Revêtement de sol intérieur composé de lames de bois assemblées avec soin.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">parquet</strong> — </span><strong class="def-idx">3.</strong> Revêtement de sol intérieur composé de lames de bois assemblées avec soin.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="parquet" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1383,9 +1487,16 @@
             </div>
             
             <div class="def-card" data-target="moulure">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Ornement décoratif en relief sculpté sur les plafonds, corniches ou boiseries.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">moulure</strong> — </span><strong class="def-idx">4.</strong> Ornement décoratif en relief sculpté sur les plafonds, corniches ou boiseries.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="moulure" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1400,9 +1511,16 @@
             </div>
             
             <div class="def-card" data-target="balcon filant">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Long balcon continu en fer forgé qui s'étend sur toute la façade d'un étage.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">balcon filant</strong> — </span><strong class="def-idx">5.</strong> Long balcon continu en fer forgé qui s'étend sur toute la façade d'un étage.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="balcon filant" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1452,15 +1570,6 @@
             <div class="discussion-question">
               « Seriez-vous prêt à payer un loyer nettement plus élevé pour vivre dans un appartement historique plein de cachet (parquet ancien et moulures) plutôt que dans un logement contemporain ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-3" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -1506,9 +1615,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="cours">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Grande avenue urbaine large, droite et ornée de rangées d'arbres majestueux.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">cours</strong> — </span><strong class="def-idx">1.</strong> Grande avenue urbaine large, droite et ornée de rangées d'arbres majestueux.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="cours" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1523,9 +1639,16 @@
             </div>
             
             <div class="def-card" data-target="flânerie">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Promenade lente et détendue sans destination précise pour admirer les alentours.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">flânerie</strong> — </span><strong class="def-idx">2.</strong> Promenade lente et détendue sans destination précise pour admirer les alentours.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="flânerie" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1540,9 +1663,16 @@
             </div>
             
             <div class="def-card" data-target="joggeur">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Personne qui pratique la course à pied régulière pour sa santé ou sa forme.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">joggeur</strong> — </span><strong class="def-idx">3.</strong> Personne qui pratique la course à pied régulière pour sa santé ou sa forme.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="joggeur" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1557,9 +1687,16 @@
             </div>
             
             <div class="def-card" data-target="alignement">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Disposition de plusieurs éléments (comme des platanes) sur une même ligne droite.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">alignement</strong> — </span><strong class="def-idx">4.</strong> Disposition de plusieurs éléments (comme des platanes) sur une même ligne droite.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="alignement" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1574,9 +1711,16 @@
             </div>
             
             <div class="def-card" data-target="villa">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Grande maison individuelle de plaisance entourée d'un vaste jardin privé.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">villa</strong> — </span><strong class="def-idx">5.</strong> Grande maison individuelle de plaisance entourée d'un vaste jardin privé.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="villa" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1626,15 +1770,6 @@
             <div class="discussion-question">
               « Pensez-vous qu'une grande promenade arborée comme les Allées du Parc suffit à rendre une ville agréable, ou faut-il multiplier les petits jardins de poche dans chaque rue ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-4" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -1680,9 +1815,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="mitoyenneté">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">État de deux habitations ou propriétés qui se touchent par un mur mitoyen commun.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">mitoyenneté</strong> — </span><strong class="def-idx">1.</strong> État de deux habitations ou propriétés qui se touchent par un mur mitoyen commun.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="mitoyenneté" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1697,9 +1839,16 @@
             </div>
             
             <div class="def-card" data-target="pavillon">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Maison individuelle d'habitation de taille moyenne avec un jardinet attenant.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">pavillon</strong> — </span><strong class="def-idx">2.</strong> Maison individuelle d'habitation de taille moyenne avec un jardinet attenant.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="pavillon" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1714,9 +1863,16 @@
             </div>
             
             <div class="def-card" data-target="verdoyant">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Riche en végétation saine, grands arbres, pelouses et jardins fleuris.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">verdoyant</strong> — </span><strong class="def-idx">3.</strong> Riche en végétation saine, grands arbres, pelouses et jardins fleuris.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="verdoyant" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1731,9 +1887,16 @@
             </div>
             
             <div class="def-card" data-target="paisible">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Calme, tranquille, sans bruit agressif ni agitation perturbatrice.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">paisible</strong> — </span><strong class="def-idx">4.</strong> Calme, tranquille, sans bruit agressif ni agitation perturbatrice.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="paisible" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1748,9 +1911,16 @@
             </div>
             
             <div class="def-card" data-target="commerce de proximité">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Boutique de quartier facilement accessible à pied pour les achats de chaque jour.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">commerce de proximité</strong> — </span><strong class="def-idx">5.</strong> Boutique de quartier facilement accessible à pied pour les achats de chaque jour.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="commerce de proximité" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1800,15 +1970,6 @@
             <div class="discussion-question">
               « Quels sont pour vous les critères indispensables pour qu'un quartier soit idéal pour élever des enfants : la proximité des parcs, la sécurité des rues ou la réputation des écoles ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-5" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -1854,9 +2015,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="pans de bois">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Poutres en bois apparentes formant l'ossature extérieure d'une maison ancienne (colombages).</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">pans de bois</strong> — </span><strong class="def-idx">1.</strong> Poutres en bois apparentes formant l'ossature extérieure d'une maison ancienne (colombages).
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="pans de bois" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1871,9 +2039,16 @@
             </div>
             
             <div class="def-card" data-target="pittoresque">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Qui séduit le regard par son originalité, son authenticité et sa beauté singulière.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">pittoresque</strong> — </span><strong class="def-idx">2.</strong> Qui séduit le regard par son originalité, son authenticité et sa beauté singulière.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="pittoresque" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1888,9 +2063,16 @@
             </div>
             
             <div class="def-card" data-target="antiquaire">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Professionnel qui achète, restaure et vend des objets ou meubles d'art anciens.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">antiquaire</strong> — </span><strong class="def-idx">3.</strong> Professionnel qui achète, restaure et vend des objets ou meubles d'art anciens.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="antiquaire" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1905,9 +2087,16 @@
             </div>
             
             <div class="def-card" data-target="ruelle">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Rue très étroite et intime typique des villes d'époque médiévale.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">ruelle</strong> — </span><strong class="def-idx">4.</strong> Rue très étroite et intime typique des villes d'époque médiévale.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="ruelle" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1922,9 +2111,16 @@
             </div>
             
             <div class="def-card" data-target="atelier">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Espace de travail manuel et de création pour un artiste ou un artisan d'art.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">atelier</strong> — </span><strong class="def-idx">5.</strong> Espace de travail manuel et de création pour un artiste ou un artisan d'art.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="atelier" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -1974,15 +2170,6 @@
             <div class="discussion-question">
               « Accepteriez-vous les contraintes d'un logement médiéval historique (faible lumière, planchers penchés, manque d'isolation) en échange du charme authentique d'une ruelle à pans de bois ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-6" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -2028,9 +2215,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="kiosque à musique">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Petite construction circulaire ouverte dans un jardin où jouaient autrefois les fanfares.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">kiosque à musique</strong> — </span><strong class="def-idx">1.</strong> Petite construction circulaire ouverte dans un jardin où jouaient autrefois les fanfares.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="kiosque à musique" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2045,9 +2239,16 @@
             </div>
             
             <div class="def-card" data-target="bassin">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Grande pièce d'eau décorative artificielle ornée d'un puissant jet d'eau au centre d'un square.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">bassin</strong> — </span><strong class="def-idx">2.</strong> Grande pièce d'eau décorative artificielle ornée d'un puissant jet d'eau au centre d'un square.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="bassin" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2062,9 +2263,16 @@
             </div>
             
             <div class="def-card" data-target="ombrage">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Ombre fraîche et protectrice dispensée par les feuilles d'arbres touffus en été.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">ombrage</strong> — </span><strong class="def-idx">3.</strong> Ombre fraîche et protectrice dispensée par les feuilles d'arbres touffus en été.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="ombrage" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2079,9 +2287,16 @@
             </div>
             
             <div class="def-card" data-target="bourgeois">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Qui appartient aux classes moyennes ou supérieures confortablement établies.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">bourgeois</strong> — </span><strong class="def-idx">4.</strong> Qui appartient aux classes moyennes ou supérieures confortablement établies.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="bourgeois" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2096,9 +2311,16 @@
             </div>
             
             <div class="def-card" data-target="artère">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Avenue ou voie de communication principale traversant une zone urbaine active.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">artère</strong> — </span><strong class="def-idx">5.</strong> Avenue ou voie de communication principale traversant une zone urbaine active.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="artère" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2148,15 +2370,6 @@
             <div class="discussion-question">
               « Trouvez-vous que les grandes places rondes avec fontaines et cafés favorisent davantage le sentiment d'appartenance à un quartier que les longues rues commerçantes rectilignes ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-7" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -2202,9 +2415,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="pôle multimodal">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Lieu de correspondance où se rencontrent plusieurs réseaux de transport (tramway, bus, vélos).</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">pôle multimodal</strong> — </span><strong class="def-idx">1.</strong> Lieu de correspondance où se rencontrent plusieurs réseaux de transport (tramway, bus, vélos).
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="pôle multimodal" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2219,9 +2439,16 @@
             </div>
             
             <div class="def-card" data-target="effervescence">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Mouvement tumultueux, intense et continu d'une foule en activité dans un quartier.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">effervescence</strong> — </span><strong class="def-idx">2.</strong> Mouvement tumultueux, intense et continu d'une foule en activité dans un quartier.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="effervescence" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2236,9 +2463,16 @@
             </div>
             
             <div class="def-card" data-target="nocturne">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Qui se passe pendant la nuit ou qui touche aux sorties tardives en ville.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">nocturne</strong> — </span><strong class="def-idx">3.</strong> Qui se passe pendant la nuit ou qui touche aux sorties tardives en ville.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="nocturne" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2253,9 +2487,16 @@
             </div>
             
             <div class="def-card" data-target="cosmopolite">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Qui réunit et mélange des personnes de nombreuses nationalités et origines culturelles.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">cosmopolite</strong> — </span><strong class="def-idx">4.</strong> Qui réunit et mélange des personnes de nombreuses nationalités et origines culturelles.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="cosmopolite" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2270,9 +2511,16 @@
             </div>
             
             <div class="def-card" data-target="nuisance sonore">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Bruit répétitif ou excessif qui dérange le repos et la tranquillité des résidents.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">nuisance sonore</strong> — </span><strong class="def-idx">5.</strong> Bruit répétitif ou excessif qui dérange le repos et la tranquillité des résidents.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="nuisance sonore" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2322,15 +2570,6 @@
             <div class="discussion-question">
               « Jusqu'à quel point le dynamisme des bars et des transports en commun compense-t-il les nuisances sonores nocturnes pour un habitant en centre-ville ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-8" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -2376,9 +2615,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="résidence universitaire">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Grand immeuble d'État destiné au logement des étudiants à un tarif modéré.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">résidence universitaire</strong> — </span><strong class="def-idx">1.</strong> Grand immeuble d'État destiné au logement des étudiants à un tarif modéré.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="résidence universitaire" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2393,9 +2639,16 @@
             </div>
             
             <div class="def-card" data-target="studette">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Très petit logement meublé d'une seule pièce compacte destiné à une personne.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">studette</strong> — </span><strong class="def-idx">2.</strong> Très petit logement meublé d'une seule pièce compacte destiné à une personne.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="studette" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2410,9 +2663,16 @@
             </div>
             
             <div class="def-card" data-target="amphithéâtre">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Grande salle de cours en gradins dans une faculté ou grande école d'enseignement supérieur.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">amphithéâtre</strong> — </span><strong class="def-idx">3.</strong> Grande salle de cours en gradins dans une faculté ou grande école d'enseignement supérieur.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="amphithéâtre" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2427,9 +2687,16 @@
             </div>
             
             <div class="def-card" data-target="effervescence">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Agitation vive, enthousiaste et dynamique d'une population nombreuse et active.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">effervescence</strong> — </span><strong class="def-idx">4.</strong> Agitation vive, enthousiaste et dynamique d'une population nombreuse et active.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="effervescence" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2444,9 +2711,16 @@
             </div>
             
             <div class="def-card" data-target="rythme scolaire">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Alternance annuelle entre les périodes intenses d'études et le vide des congés.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">rythme scolaire</strong> — </span><strong class="def-idx">5.</strong> Alternance annuelle entre les périodes intenses d'études et le vide des congés.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="rythme scolaire" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2496,15 +2770,6 @@
             <div class="discussion-question">
               « Aimeriez-vous habiter dans un quartier majoritairement peuplé d'étudiants pour son énergie et ses loyers modérés, même s'il devient très désert durant les vacances d'été ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-9" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -2550,9 +2815,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="péniche">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Bateau fluvial à fond plat servant au transport de fret ou aménagé en habitation flottante.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">péniche</strong> — </span><strong class="def-idx">1.</strong> Bateau fluvial à fond plat servant au transport de fret ou aménagé en habitation flottante.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="péniche" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2567,9 +2839,16 @@
             </div>
             
             <div class="def-card" data-target="bassin fluvial">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Grand plan d'eau aménagé pour accueillir les bateaux et péniches le long d'un canal.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">bassin fluvial</strong> — </span><strong class="def-idx">2.</strong> Grand plan d'eau aménagé pour accueillir les bateaux et péniches le long d'un canal.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="bassin fluvial" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2584,9 +2863,16 @@
             </div>
             
             <div class="def-card" data-target="berges">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Bords de terre ou de pierre aménagés qui longent une rivière ou un canal.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">berges</strong> — </span><strong class="def-idx">3.</strong> Bords de terre ou de pierre aménagés qui longent une rivière ou un canal.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="berges" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2601,9 +2887,16 @@
             </div>
             
             <div class="def-card" data-target="reconversion">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Transformation complète d'un ancien site industriel ou logistique vers un usage résidentiel moderne.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">reconversion</strong> — </span><strong class="def-idx">4.</strong> Transformation complète d'un ancien site industriel ou logistique vers un usage résidentiel moderne.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="reconversion" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2618,9 +2911,16 @@
             </div>
             
             <div class="def-card" data-target="écluse">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Ouvrage hydraulique équipé de portes permettant aux embarcations de franchir une dénivellation d'eau.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">écluse</strong> — </span><strong class="def-idx">5.</strong> Ouvrage hydraulique équipé de portes permettant aux embarcations de franchir une dénivellation d'eau.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="écluse" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2670,15 +2970,6 @@
             <div class="discussion-question">
               « Pensez-vous que la transformation des anciens quartiers portuaires ou industriels en zones résidentielles chics fait perdre à une ville son authenticité historique ouvrière ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-10" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -2724,9 +3015,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="grand ensemble">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Vaste quartier urbain constitué d'immeubles collectifs et de barres d'habitation construits dans les années 1950-1970.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">grand ensemble</strong> — </span><strong class="def-idx">1.</strong> Vaste quartier urbain constitué d'immeubles collectifs et de barres d'habitation construits dans les années 1950-1970.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="grand ensemble" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2741,9 +3039,16 @@
             </div>
             
             <div class="def-card" data-target="rénovation urbaine">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Programme public visant à démolir, reconstruire et embellir les quartiers d'habitat social dégradés.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">rénovation urbaine</strong> — </span><strong class="def-idx">2.</strong> Programme public visant à démolir, reconstruire et embellir les quartiers d'habitat social dégradés.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="rénovation urbaine" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2758,9 +3063,16 @@
             </div>
             
             <div class="def-card" data-target="marché cosmopolite">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Grand marché alimentaire où se côtoient produits, saveurs et commerçants de toutes les cultures du monde.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">marché cosmopolite</strong> — </span><strong class="def-idx">3.</strong> Grand marché alimentaire où se côtoient produits, saveurs et commerçants de toutes les cultures du monde.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="marché cosmopolite" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2775,9 +3087,16 @@
             </div>
             
             <div class="def-card" data-target="associatif">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Qui concerne les associations citoyennes, d'entraide ou de loisirs animées par des bénévoles.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">associatif</strong> — </span><strong class="def-idx">4.</strong> Qui concerne les associations citoyennes, d'entraide ou de loisirs animées par des bénévoles.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="associatif" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2792,9 +3111,16 @@
             </div>
             
             <div class="def-card" data-target="précarité">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Situation d'instabilité financière ou sociale marquée par de faibles revenus et le manque de sécurité d'emploi.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">précarité</strong> — </span><strong class="def-idx">5.</strong> Situation d'instabilité financière ou sociale marquée par de faibles revenus et le manque de sécurité d'emploi.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="précarité" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2844,15 +3170,6 @@
             <div class="discussion-question">
               « Pensez-vous que les programmes de rénovation urbaine (démolition de tours, tramway, nouveaux parcs) réussissent réellement à changer l'image et l'avenir des grands quartiers populaires ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-11" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -2898,9 +3215,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="barre d'immeubles">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Très long bâtiment d'habitation rectangulaire de plusieurs étages, typique des années 1960-1970.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">barre d'immeubles</strong> — </span><strong class="def-idx">1.</strong> Très long bâtiment d'habitation rectangulaire de plusieurs étages, typique des années 1960-1970.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="barre d'immeubles" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2915,9 +3239,16 @@
             </div>
             
             <div class="def-card" data-target="mixité sociale">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Cohabitation harmonieuse de personnes de conditions sociales et économiques variées dans un même espace.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">mixité sociale</strong> — </span><strong class="def-idx">2.</strong> Cohabitation harmonieuse de personnes de conditions sociales et économiques variées dans un même espace.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="mixité sociale" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2932,9 +3263,16 @@
             </div>
             
             <div class="def-card" data-target="espace vert">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Zone de nature, pelouses ou jardins publics entretenus au milieu des constructions urbaines.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">espace vert</strong> — </span><strong class="def-idx">3.</strong> Zone de nature, pelouses ou jardins publics entretenus au milieu des constructions urbaines.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="espace vert" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2949,9 +3287,16 @@
             </div>
             
             <div class="def-card" data-target="plan d'eau">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Étendue d'eau stagnante ou aménagée, comme un lac ou un bassin de loisirs.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">plan d'eau</strong> — </span><strong class="def-idx">4.</strong> Étendue d'eau stagnante ou aménagée, comme un lac ou un bassin de loisirs.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="plan d'eau" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -2966,9 +3311,16 @@
             </div>
             
             <div class="def-card" data-target="isolé">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Séparé des autres quartiers, difficile d'accès ou situé à l'écart des grands axes.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">isolé</strong> — </span><strong class="def-idx">5.</strong> Séparé des autres quartiers, difficile d'accès ou situé à l'écart des grands axes.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="isolé" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3018,15 +3370,6 @@
             <div class="discussion-question">
               « Le fait d'avoir un immense lac et de vastes espaces naturels au pied de son immeuble compense-t-il la densité et l'esthétique imposante des grandes barres de béton des années 1970 ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-12" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -3072,9 +3415,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="pressoir">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Grand appareil ou machine traditionnelle servant à écraser le raisin pour extraire le jus de vin.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">pressoir</strong> — </span><strong class="def-idx">1.</strong> Grand appareil ou machine traditionnelle servant à écraser le raisin pour extraire le jus de vin.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="pressoir" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3089,9 +3439,16 @@
             </div>
             
             <div class="def-card" data-target="contraste">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Opposition frappante et très visible entre deux réalités ou deux ambiances différentes.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">contraste</strong> — </span><strong class="def-idx">2.</strong> Opposition frappante et très visible entre deux réalités ou deux ambiances différentes.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="contraste" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3106,9 +3463,16 @@
             </div>
             
             <div class="def-card" data-target="pavillonnaire">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Composé principalement de maisons individuelles avec jardin privé dans un quartier calme.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">pavillonnaire</strong> — </span><strong class="def-idx">3.</strong> Composé principalement de maisons individuelles avec jardin privé dans un quartier calme.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="pavillonnaire" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3123,9 +3487,16 @@
             </div>
             
             <div class="def-card" data-target="tissu urbain">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Organisation et agencement des rues, des places et des constructions dans une ville.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">tissu urbain</strong> — </span><strong class="def-idx">4.</strong> Organisation et agencement des rues, des places et des constructions dans une ville.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="tissu urbain" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3140,9 +3511,16 @@
             </div>
             
             <div class="def-card" data-target="convivialité">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Esprit de partage agréable et relation facile et bienveillante entre habitants.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">convivialité</strong> — </span><strong class="def-idx">5.</strong> Esprit de partage agréable et relation facile et bienveillante entre habitants.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="convivialité" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3192,15 +3570,6 @@
             <div class="discussion-question">
               « Comment une même commune peut-elle faire cohabiter harmonieusement un vieux village viticole très favorisé et une vaste cité ouvrière populaire sans créer de rupture sociale ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-13" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -3246,9 +3615,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="zone commerciale">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Vaste espace regroupant des hypermarchés, des centres commerciaux et de grandes enseignes.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">zone commerciale</strong> — </span><strong class="def-idx">1.</strong> Vaste espace regroupant des hypermarchés, des centres commerciaux et de grandes enseignes.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="zone commerciale" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3263,9 +3639,16 @@
             </div>
             
             <div class="def-card" data-target="périurbain">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Situé dans la périphérie d'une grande agglomération, entre la ville dense et la campagne.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">périurbain</strong> — </span><strong class="def-idx">2.</strong> Situé dans la périphérie d'une grande agglomération, entre la ville dense et la campagne.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="périurbain" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3280,9 +3663,16 @@
             </div>
             
             <div class="def-card" data-target="lotissement">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Ensemble de parcelles de terrain issues d'une même division pour construire des maisons individuelles.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">lotissement</strong> — </span><strong class="def-idx">3.</strong> Ensemble de parcelles de terrain issues d'une même division pour construire des maisons individuelles.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="lotissement" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3297,9 +3687,16 @@
             </div>
             
             <div class="def-card" data-target="allée piétonne">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Chemin aménagé réservé exclusivement aux promeneurs et fermé à la circulation automobile.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">allée piétonne</strong> — </span><strong class="def-idx">4.</strong> Chemin aménagé réservé exclusivement aux promeneurs et fermé à la circulation automobile.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="allée piétonne" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3314,9 +3711,16 @@
             </div>
             
             <div class="def-card" data-target="tranquillité">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Calme profond, absence de tapage ou d'agitation perturbatrice.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">tranquillité</strong> — </span><strong class="def-idx">5.</strong> Calme profond, absence de tapage ou d'agitation perturbatrice.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="tranquillité" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3366,15 +3770,6 @@
             <div class="discussion-question">
               « Préféreriez-vous vivre dans une commune pavillonnaire calme avec jardin privé reliée par tramway, quitte à être tout proche d'une immense zone commerciale très fréquentée ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-14" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -3420,9 +3815,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="passé industriel">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Histoire économique marquée par la présence d'usines métallurgiques et d'ateliers de fabrication.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">passé industriel</strong> — </span><strong class="def-idx">1.</strong> Histoire économique marquée par la présence d'usines métallurgiques et d'ateliers de fabrication.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="passé industriel" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3437,9 +3839,16 @@
             </div>
             
             <div class="def-card" data-target="base aérienne">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Site militaire spécialement équipé de pistes d'atterrissage, de hangars et de casernes pour l'aviation.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">base aérienne</strong> — </span><strong class="def-idx">2.</strong> Site militaire spécialement équipé de pistes d'atterrissage, de hangars et de casernes pour l'aviation.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="base aérienne" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3454,9 +3863,16 @@
             </div>
             
             <div class="def-card" data-target="ouvrier">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Travailleur manuel exerçant dans l'industrie, le bâtiment ou les ateliers mécaniques.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">ouvrier</strong> — </span><strong class="def-idx">3.</strong> Travailleur manuel exerçant dans l'industrie, le bâtiment ou les ateliers mécaniques.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="ouvrier" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3471,9 +3887,16 @@
             </div>
             
             <div class="def-card" data-target="solidaire">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Uni par un sentiment fort d'entraide fraternelle, de loyauté et de soutien collectif.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">solidaire</strong> — </span><strong class="def-idx">4.</strong> Uni par un sentiment fort d'entraide fraternelle, de loyauté et de soutien collectif.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="solidaire" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3488,9 +3911,16 @@
             </div>
             
             <div class="def-card" data-target="reconversion">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Adaptation complète d'anciens sites fermés vers de nouvelles activités économiques civiles.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">reconversion</strong> — </span><strong class="def-idx">5.</strong> Adaptation complète d'anciens sites fermés vers de nouvelles activités économiques civiles.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="reconversion" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3540,15 +3970,6 @@
             <div class="discussion-question">
               « Pensez-vous que les anciennes villes industrielles ou militaires conservent un esprit de solidarité et de chaleur humaine plus fort que les banlieues résidentielles bourgeoises ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-15" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -3594,9 +4015,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="perché">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Situé sur une butte ou un sommet élevé dominant la plaine environnante.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">perché</strong> — </span><strong class="def-idx">1.</strong> Situé sur une butte ou un sommet élevé dominant la plaine environnante.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="perché" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3611,9 +4039,16 @@
             </div>
             
             <div class="def-card" data-target="panorama">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Vue très large et dégagée sur un vaste paysage ou une ville vue d'en haut.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">panorama</strong> — </span><strong class="def-idx">2.</strong> Vue très large et dégagée sur un vaste paysage ou une ville vue d'en haut.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="panorama" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3628,9 +4063,16 @@
             </div>
             
             <div class="def-card" data-target="rempart">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Muraille fortifiée en pierre destinée autrefois à défendre une cité contre les ennemis.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">rempart</strong> — </span><strong class="def-idx">3.</strong> Muraille fortifiée en pierre destinée autrefois à défendre une cité contre les ennemis.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="rempart" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3645,9 +4087,16 @@
             </div>
             
             <div class="def-card" data-target="ruelle de pierre">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Petite rue ancienne pavée ou encadrée de murs en pierres calcaires de Bourgogne.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">ruelle de pierre</strong> — </span><strong class="def-idx">4.</strong> Petite rue ancienne pavée ou encadrée de murs en pierres calcaires de Bourgogne.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="ruelle de pierre" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3662,9 +4111,16 @@
             </div>
             
             <div class="def-card" data-target="belvédère">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Point de vue élevé spécialement aménagé pour contempler un paysage remarquable.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">belvédère</strong> — </span><strong class="def-idx">5.</strong> Point de vue élevé spécialement aménagé pour contempler un paysage remarquable.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="belvédère" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3714,15 +4170,6 @@
             <div class="discussion-question">
               « Préféreriez-vous vivre dans un village historique perché avec une vue panoramique grandiose, malgré les rues très en pente et la nécessité d'utiliser la voiture pour faire vos courses ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-16" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -3768,9 +4215,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="huppé">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Très chic, sélectif, réservé aux couches sociales les plus riches et prestigieuses.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">huppé</strong> — </span><strong class="def-idx">1.</strong> Très chic, sélectif, réservé aux couches sociales les plus riches et prestigieuses.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="huppé" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3785,9 +4239,16 @@
             </div>
             
             <div class="def-card" data-target="colline">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Petite élévation de terrain aux pentes douces dominant une zone urbaine.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">colline</strong> — </span><strong class="def-idx">2.</strong> Petite élévation de terrain aux pentes douces dominant une zone urbaine.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="colline" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3802,9 +4263,16 @@
             </div>
             
             <div class="def-card" data-target="cadre idyllique">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Environnement enchanteur, harmonieux, beau et paisible comme un rêve de carte postale.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">cadre idyllique</strong> — </span><strong class="def-idx">3.</strong> Environnement enchanteur, harmonieux, beau et paisible comme un rêve de carte postale.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="cadre idyllique" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3819,9 +4287,16 @@
             </div>
             
             <div class="def-card" data-target="maison de maître">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Belle demeure patricienne construite en pierre noble avec de vastes pièces de réception.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">maison de maître</strong> — </span><strong class="def-idx">4.</strong> Belle demeure patricienne construite en pierre noble avec de vastes pièces de réception.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="maison de maître" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3836,9 +4311,16 @@
             </div>
             
             <div class="def-card" data-target="quiétude">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">État de tranquillité profonde, repos de l'esprit à l'abri du bruit et de l'agitation.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">quiétude</strong> — </span><strong class="def-idx">5.</strong> État de tranquillité profonde, repos de l'esprit à l'abri du bruit et de l'agitation.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="quiétude" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3888,15 +4370,6 @@
             <div class="discussion-question">
               « Une commune très huppée comme Fontaine-lès-Dijon ne risque-t-elle pas de devenir une sorte de « bulle dorée » fermée sur elle-même et coupée des réalités populaires du reste de la métropole ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-17" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -3942,9 +4415,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="coteau">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Pente ou colline inclinée bien exposée au soleil, propice à la culture des vignes fines.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">coteau</strong> — </span><strong class="def-idx">1.</strong> Pente ou colline inclinée bien exposée au soleil, propice à la culture des vignes fines.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="coteau" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3959,9 +4439,16 @@
             </div>
             
             <div class="def-card" data-target="vigneron">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Producteur qui cultive la vigne et élabore son propre vin artisanal dans ses caves.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">vigneron</strong> — </span><strong class="def-idx">2.</strong> Producteur qui cultive la vigne et élabore son propre vin artisanal dans ses caves.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="vigneron" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3976,9 +4463,16 @@
             </div>
             
             <div class="def-card" data-target="maison vigneronne">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Demeure traditionnelle en pierre avec cave sous la maison et escalier extérieur montant à l'habitation.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">maison vigneronne</strong> — </span><strong class="def-idx">3.</strong> Demeure traditionnelle en pierre avec cave sous la maison et escalier extérieur montant à l'habitation.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="maison vigneronne" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -3993,9 +4487,16 @@
             </div>
             
             <div class="def-card" data-target="dégustation">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Action de goûter un vin ou un aliment avec attention pour en analyser les saveurs subtiles.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">dégustation</strong> — </span><strong class="def-idx">4.</strong> Action de goûter un vin ou un aliment avec attention pour en analyser les saveurs subtiles.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="dégustation" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4010,9 +4511,16 @@
             </div>
             
             <div class="def-card" data-target="terroir">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Ensemble des facteurs géologiques, climatiques et humains donnant à un vin sa typicité singulière.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">terroir</strong> — </span><strong class="def-idx">5.</strong> Ensemble des facteurs géologiques, climatiques et humains donnant à un vin sa typicité singulière.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="terroir" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4062,15 +4570,6 @@
             <div class="discussion-question">
               « Aimeriez-vous habiter dans un village viticole traditionnel où le rythme de vie et les odeurs changent au moment des vendanges, plutôt que dans un quartier urbain classique ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-18" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -4116,9 +4615,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="bourg">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Gros village de campagne disposant de services essentiels, d'une mairie et d'artisans locaux.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">bourg</strong> — </span><strong class="def-idx">1.</strong> Gros village de campagne disposant de services essentiels, d'une mairie et d'artisans locaux.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="bourg" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4133,9 +4639,16 @@
             </div>
             
             <div class="def-card" data-target="périurbain">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Situé à la campagne immédiate tout en dépendant directement des emplois d'une grande ville.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">périurbain</strong> — </span><strong class="def-idx">2.</strong> Situé à la campagne immédiate tout en dépendant directement des emplois d'une grande ville.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="périurbain" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4150,9 +4663,16 @@
             </div>
             
             <div class="def-card" data-target="quiétude">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Calme profond, absence de bruit gênant et sérénité de l'environnement au quotidien.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">quiétude</strong> — </span><strong class="def-idx">3.</strong> Calme profond, absence de bruit gênant et sérénité de l'environnement au quotidien.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="quiétude" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4167,9 +4687,16 @@
             </div>
             
             <div class="def-card" data-target="propriétaire">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Personne qui détient un bien immobilier ou une maison en titre légal complet.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">propriétaire</strong> — </span><strong class="def-idx">4.</strong> Personne qui détient un bien immobilier ou une maison en titre légal complet.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="propriétaire" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4184,9 +4711,16 @@
             </div>
             
             <div class="def-card" data-target="voisinage">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Ensemble des personnes qui habitent à proximité les unes des autres dans un quartier.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">voisinage</strong> — </span><strong class="def-idx">5.</strong> Ensemble des personnes qui habitent à proximité les unes des autres dans un quartier.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="voisinage" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4236,15 +4770,6 @@
             <div class="discussion-question">
               « Êtes-vous prêt à accepter une forte dépendance à la voiture au quotidien pour pouvoir profiter du calme absolu et du grand jardin d'un village périurbain comme Ahuy ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-19" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -4290,9 +4815,16 @@
             <div class="definitions-grid">
               
             <div class="def-card" data-target="encaissé">
-              <div class="def-num">1</div>
-              <div class="def-content">
-                <div class="def-text">Resserré et profond entre deux collines abruptes dans le fond d'une vallée étroite.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">encaissé</strong> — </span><strong class="def-idx">1.</strong> Resserré et profond entre deux collines abruptes dans le fond d'une vallée étroite.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="encaissé" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4307,9 +4839,16 @@
             </div>
             
             <div class="def-card" data-target="cheminot">
-              <div class="def-num">2</div>
-              <div class="def-content">
-                <div class="def-text">Employé travaillant pour les chemins de fer nationaux ou la traction ferroviaire.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">cheminot</strong> — </span><strong class="def-idx">2.</strong> Employé travaillant pour les chemins de fer nationaux ou la traction ferroviaire.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="cheminot" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4324,9 +4863,16 @@
             </div>
             
             <div class="def-card" data-target="vallée">
-              <div class="def-num">3</div>
-              <div class="def-content">
-                <div class="def-text">Espace géographique allongé et creusé par un cours d'eau entre deux versants de collines.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">vallée</strong> — </span><strong class="def-idx">3.</strong> Espace géographique allongé et creusé par un cours d'eau entre deux versants de collines.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="vallée" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4341,9 +4887,16 @@
             </div>
             
             <div class="def-card" data-target="verdoyant">
-              <div class="def-num">4</div>
-              <div class="def-content">
-                <div class="def-text">Couvert d'une végétation abondante, d'arbres feuillus et de prairies vertes fraîches.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">verdoyant</strong> — </span><strong class="def-idx">4.</strong> Couvert d'une végétation abondante, d'arbres feuillus et de prairies vertes fraîches.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="verdoyant" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4358,9 +4911,16 @@
             </div>
             
             <div class="def-card" data-target="rustique">
-              <div class="def-num">5</div>
-              <div class="def-content">
-                <div class="def-text">Simple, naturel, un peu brut et campagnard sans luxe sophistiqué.</div>
+              <div class="def-card-header">
+                <div class="def-text">
+                  <span class="collapsed-summary"><strong class="matched-word-label">rustique</strong> — </span><strong class="def-idx">5.</strong> Simple, naturel, un peu brut et campagnard sans luxe sophistiqué.
+                </div>
+                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(this)" title="Réduire cette carte pour gagner de la place" aria-label="Réduire ou développer la carte">
+                  <span class="toggle-icon">−</span>
+                  <span class="toggle-text">Réduire</span>
+                </button>
+              </div>
+              <div class="def-card-body">
                 <div class="def-dropzone" data-target="rustique" tabindex="0">
                   <span class="drop-placeholder">Déposer le mot ici</span>
                 </div>
@@ -4410,15 +4970,6 @@
             <div class="discussion-question">
               « Le charme naturel et la fraîcheur d'un village encaissé dans une vallée valent-ils la peine, malgré un ensoleillement réduit pendant les mois d'hiver ? »
             </div>
-            <details class="notes-details">
-              <summary class="notes-summary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                Ouvrir un espace de notes pour cette discussion
-              </summary>
-              <div class="notes-box">
-                <textarea class="notes-textarea" id="notes-20" placeholder="Notez ici les idées d'arguments, le vocabulaire partagé ou vos réponses communes..."></textarea>
-              </div>
-            </details>
           </div>
         </article>
         
@@ -4437,17 +4988,84 @@
     </div>
   </footer>
 
-  <!-- SCRIPT LOGIQUE INTERACTIVE : DRAG & DROP + TAP-TO-PLACE + SAUVEGARDE -->
+  <!-- SCRIPT LOGIQUE INTERACTIVE : DRAG & DROP + TAP-TO-PLACE + LOCALSTORAGE -->
   <script>
     // ÉTAT GLOBAL DE L'APPLICATION
     let selectedChip = null;
-    let globalSolvedCount = 0;
     const TOTAL_ITEMS = 100;
+    const STORAGE_KEY = 'dijon_neighborhoods_progress';
 
-    // SAUVEGARDE & RESTAURATION DES NOTES DANS LOCALSTORAGE / SESSION
+    // GESTION DU STOCKAGE LOCAL (LOCALSTORAGE)
+    function getStoredProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveMatchToStorage(sectionId, targetWord) {
+      const progress = getStoredProgress();
+      if (!progress[sectionId]) {
+        progress[sectionId] = [];
+      }
+      if (!progress[sectionId].includes(targetWord)) {
+        progress[sectionId].push(targetWord);
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {}
+    }
+
+    function clearSectionStorage(sectionId) {
+      const progress = getStoredProgress();
+      delete progress[sectionId];
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {}
+    }
+
+    function restoreProgressFromStorage() {
+      const progress = getStoredProgress();
+      Object.keys(progress).forEach(secId => {
+        const words = progress[secId];
+        const exercise = document.getElementById(`exercise-${secId}`);
+        if (!exercise) return;
+
+        words.forEach(word => {
+          const card = exercise.querySelector(`.def-card[data-target="${word}"]`);
+          if (card) {
+            card.classList.add('is-matched');
+            const dropzone = card.querySelector('.def-dropzone');
+            if (dropzone) {
+              dropzone.innerHTML = `
+                <span class="placed-word">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  ${word}
+                </span>
+              `;
+            }
+          }
+
+          const bank = document.getElementById(`bank-${secId}`);
+          if (bank) {
+            const chip = bank.querySelector(`.word-chip[data-word="${word}"]`);
+            if (chip) {
+              chip.classList.add('is-placed');
+            }
+          }
+        });
+
+        updateSectionScore(secId);
+      });
+
+      updateGlobalScore();
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       initExercises();
-      initNotes();
+      restoreProgressFromStorage();
       initScrollSpy();
     });
 
@@ -4491,7 +5109,6 @@
       e.dataTransfer.setData('text/plain', this.dataset.word);
       e.dataTransfer.setData('source-section', this.closest('.exercise-box').dataset.section);
       this.classList.add('is-dragging');
-      // Unselect any click-selected chip
       if (selectedChip) {
         selectedChip.classList.remove('is-selected');
         selectedChip = null;
@@ -4586,6 +5203,9 @@
           selectedChip = null;
         }
 
+        // Sauvegarder dans LocalStorage
+        saveMatchToStorage(sectionId, targetWord);
+
         // Mise à jour des scores
         updateSectionScore(sectionId);
         updateGlobalScore();
@@ -4606,6 +5226,7 @@
     // MISE À JOUR DU SCORE DE SECTION
     function updateSectionScore(sectionId) {
       const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
       const matchedCount = exercise.querySelectorAll('.def-card.is-matched').length;
       const scoreBadge = document.getElementById(`score-${sectionId}`);
       if (scoreBadge) {
@@ -4631,17 +5252,45 @@
       }
     }
 
-    // RÉINITIALISATION D'UNE SECTION
-    function resetExercise(sectionId) {
+    // TOGGLE RÉDUIRE / DÉVELOPPER UNE CARTE RÉSOLUE
+    function toggleCardCollapse(btn) {
+      const card = btn.closest('.def-card');
+      if (!card) return;
+      const isCollapsed = card.classList.toggle('is-collapsed');
+      const icon = btn.querySelector('.toggle-icon');
+      const text = btn.querySelector('.toggle-text');
+      if (isCollapsed) {
+        if (icon) icon.textContent = '+';
+        if (text) text.textContent = 'Développer';
+        btn.title = 'Développer cette carte';
+      } else {
+        if (icon) icon.textContent = '−';
+        if (text) text.textContent = 'Réduire';
+        btn.title = 'Réduire cette carte pour gagner de la place';
+      }
+    }
+
+    // RÉINITIALISATION D'UNE SEULE SECTION
+    function resetExercise(sectionId, clearStorage = true) {
       const exercise = document.getElementById(`exercise-${sectionId}`);
       if (!exercise) return;
 
       const cards = exercise.querySelectorAll('.def-card');
       cards.forEach(card => {
-        card.classList.remove('is-matched');
+        card.classList.remove('is-matched', 'is-collapsed');
         const dropzone = card.querySelector('.def-dropzone');
-        dropzone.innerHTML = `<span class="drop-placeholder">Déposer le mot ici</span>`;
-        dropzone.classList.remove('shake-error', 'drag-hover');
+        if (dropzone) {
+          dropzone.innerHTML = `<span class="drop-placeholder">Déposer le mot ici</span>`;
+          dropzone.classList.remove('shake-error', 'drag-hover');
+        }
+        const toggleBtn = card.querySelector('.btn-toggle-collapse');
+        if (toggleBtn) {
+          const icon = toggleBtn.querySelector('.toggle-icon');
+          const text = toggleBtn.querySelector('.toggle-text');
+          if (icon) icon.textContent = '−';
+          if (text) text.textContent = 'Réduire';
+          toggleBtn.title = 'Réduire cette carte pour gagner de la place';
+        }
       });
 
       const chips = exercise.querySelectorAll('.word-chip');
@@ -4653,8 +5302,26 @@
         selectedChip = null;
       }
 
+      if (clearStorage) {
+        clearSectionStorage(sectionId);
+      }
+
       updateSectionScore(sectionId);
       updateGlobalScore();
+    }
+
+    // RÉINITIALISER TOUS LES EXERCICES (BOUTON GLOBAL)
+    function resetAllExercises() {
+      if (window.confirm("Voulez-vous vraiment réinitialiser tous les exercices de la page ?")) {
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch (e) {}
+
+        for (let i = 1; i <= 20; i++) {
+          resetExercise(i, false);
+        }
+        updateGlobalScore();
+      }
     }
 
     // GESTION DU SCROLL ET DU BOUTON TOP
@@ -4666,25 +5333,6 @@
         } else {
           btnTop.classList.remove('is-visible');
         }
-      });
-    }
-
-    // PERSISTANCE LOCALE DES NOTES DE DISCUSSION
-    function initNotes() {
-      const textareas = document.querySelectorAll('.notes-textarea');
-      textareas.forEach(ta => {
-        const id = ta.id;
-        const saved = localStorage.getItem(`langlearn_dijon_${id}`);
-        if (saved) {
-          ta.value = saved;
-          // Open details if notes were already taken
-          const details = ta.closest('.notes-details');
-          if (details) details.open = true;
-        }
-
-        ta.addEventListener('input', () => {
-          localStorage.setItem(`langlearn_dijon_${id}`, ta.value);
-        });
       });
     }
   </script>
