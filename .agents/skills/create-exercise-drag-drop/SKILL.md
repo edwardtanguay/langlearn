@@ -1,11 +1,11 @@
 ---
 name: create-exercise-drag-drop
-description: Create a standalone language learning exercise web page under dev/info-sites/ featuring drag-and-drop vocabulary matching, CEFR-graded reading texts, and discussion prompts modeled after dijon-neighborhoods. Use when the user runs /create-exercise-drag-drop or asks to create a drag-and-drop vocabulary exercise site.
+description: Create a standalone language learning exercise web page under dev/info-sites/ featuring drag-and-drop vocabulary matching, CEFR-graded reading texts, and discussion prompts modeled after dijon-neighborhoods. Uses a /grill-me interview to align on content and design before generation. Use when the user runs /create-exercise-drag-drop or asks to create a drag-and-drop vocabulary exercise site.
 ---
 
 # Create Drag & Drop Exercise Site Workflow
 
-This skill generates a complete, self-contained interactive language learning website in `dev/info-sites/<slug>/index.html` modeled on the layout, interaction design, and pedagogical structure of `dev/info-sites/dijon-neighborhoods/index.html`.
+This skill generates a complete, self-contained interactive language learning website in `dev/info-sites/<slug>/index.html` modeled on the layout, interaction design, and pedagogical structure of `dev/info-sites/dijon-neighborhoods/index.html`. It incorporates the `/grill-me` skill to conduct an interactive interview to lock down pedagogical choices, section breakdowns, and aesthetics before generating the page.
 
 ---
 
@@ -37,7 +37,27 @@ Every invocation requires two parameters:
 
 ---
 
-## 3. Pedagogical Content Specifications
+## 3. Grilling Phase (`/grill-me`)
+
+Before generating any code or content, run a grilling interview following the `/grill-me` (and `grilling`) skill discipline to resolve all pedagogical, structural, and design decisions with the user.
+
+### Grilling Rules:
+- **Relentless Interview**: Interview the user about the exercise scope, content structure, and design until reaching a shared understanding. Walk down each branch of the decision tree, resolving dependencies between decisions one-by-one.
+- **One Question at a Time**: Ask questions strictly **one at a time**, waiting for feedback on each question before proceeding. Never ask multiple questions at once.
+- **Provide Recommended Answers**: For each question, provide a recommended answer so decisions can be made swiftly.
+- **Look Up Facts, Ask Decisions**: If a fact can be found in the filesystem or existing sites, look it up rather than asking. Put all decisions to the user.
+- **Hard Gate**: Do NOT proceed to writing HTML, scripts, or content until the user confirms a shared understanding has been reached.
+
+### Decision Points to Grill:
+1. **Section Count & Breakdown**: Confirm the exact number of sections (typically 5 to 8) and propose specific thematic titles/subtopics for each section.
+2. **Vocabulary & Level Calibration**: Confirm the lexical focus, register, and difficulty suited to the CEFR level, identifying any particular domain vocabulary to feature.
+3. **Reading Text Tone & Format**: Confirm narrative or editorial style (e.g., cultural overview, city guides, personal reflections, historical vignettes).
+4. **Visual & Color Theme**: Propose topic-harmonized accent palette colors (e.g., warm terracotta, emerald green, Mediterranean azure, burgundy).
+5. **Discussion Prompts**: Align on the style and focus of the discussion questions (e.g., conversational prompts, analytical debate, personal experiences).
+
+---
+
+## 4. Pedagogical Content Specifications
 
 Generate **5 to 8 thematic sections** (or the specific count requested by the user) appropriate for the topic and graded to the specified CEFR level:
 
@@ -66,7 +86,7 @@ Generate **5 to 8 thematic sections** (or the specific count requested by the us
 
 ---
 
-## 4. UI Design & Styling Specifications
+## 5. UI Design & Styling Specifications
 
 Follow the clean, modern editorial design system from `dijon-neighborhoods`:
 
@@ -89,7 +109,7 @@ Follow the clean, modern editorial design system from `dijon-neighborhoods`:
 
 ---
 
-## 5. Interactive Mechanics Specifications
+## 6. Interactive Mechanics Specifications
 
 Implement vanilla JavaScript providing the complete interaction suite from `dijon-neighborhoods`:
 
@@ -112,7 +132,7 @@ Implement vanilla JavaScript providing the complete interaction suite from `dijo
 
 ---
 
-## 6. Execution & Output Delivery
+## 7. Execution & Output Delivery
 
 1. Write the complete, standalone file to:
    `c:\edward\projects\apps\langlearn\dev\info-sites\<slug>\index.html`
