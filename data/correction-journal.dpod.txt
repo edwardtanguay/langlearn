@@ -164,8 +164,7 @@ Et dis-moi si tu [as l'interesse;es intéressée] [de créer;par la création de
 ---
 2026-10-06
 ---
- [Ces passent parfait;Ça tombe parfaitement bien] car [aujour'dui;aujourd'hui] j'ai enfins le temps d'organisier ma semaine à Dijon.
- 
+[Ces passent parfait;Ça tombe parfaitement bien] car [aujour'dui;aujourd'hui] j'ai enfins le temps d'organisier ma semaine à Dijon. 
  
 Bonjour Geneviève,
 
@@ -180,4 +179,9 @@ Et oui, je pense [aussi, ce;aussi que ce] n'est pas [necessaire;nécessaire] d'u
 J'ai achèté un livre "Le Grand Dijon à pied" avec 34 promenades et randonnées autour de Dijon, par exemple à Daix, Talant, Chenôve, Marsannay-la-Côte, etc. et je voudrais faire [un peu;un peu de] reconnaissance [de la;du] paysage autour de Dijon.
 
 Et vendredi je doit chercher mon dossard de marathon à Quetigny. [Je crois un bus ou tram;Je pense que le bus ou le tram] serait [le mieux façon;le meilleur moyen] de transport pour [ça;y aller].
+---
+j'ai experimenté un peu plus avec [le format d'exercises;les formats d'exercices] que je peux créer avec l'IA. [Peut-être;Peut-être que] nous pouvons utiliser [cette nouvelle exercise;ce nouvel exercice] pour ce soir. [Le sujet et;Le sujet, ces sont] les quartiers autour de Dijon et, au lieu de questions de [comprehension;compréhension], on a un [exercise;exercice] de vocabulaire avec [drag & drop;du glisser-déposer]. 
+---
+
+
 
