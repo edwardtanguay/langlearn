@@ -22,5 +22,8 @@ Glissez chaque mot dans sa case, ou cliquez sur un mot puis sur sa définition."
 - on mobile view
     - make the pills smaller so they don't take up so much room
     - when choosing a section in teh dropdown, on mobile it scrolls down too far, instead, scrool so that one can see the headers "Section 06" etc.
-    - 
 
+- when vocabulary words are solved and in toggle mode, allow the user to select text without firing the toggle, but a clean click still fires the toggle
+- remove the "— Niveau B1 / B2 (~300 mots)" from "Text de Lecture"
+- remove the text "Survolez ou touchez les mots soulignés pour revoir leur définition."
+- remove the blue line on the left side of the text

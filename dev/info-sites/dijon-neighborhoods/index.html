@@ -240,8 +240,9 @@
         padding: 1.25rem 0.9rem;
         border-radius: var(--radius-lg);
       }
-      .exercise-box {
+      .panel-box {
         padding: 0.75rem 0.75rem;
+        margin-bottom: 1.25rem;
       }
       .word-bank-container {
         padding: 0.4rem 0.6rem;
@@ -264,6 +265,13 @@
       .def-text {
         font-size: 0.85rem;
         line-height: 1.4;
+      }
+      .reading-body {
+        padding: 1rem 1rem;
+      }
+      .discussion-question {
+        padding: 0.9rem 1rem;
+        font-size: 0.98rem;
       }
     }
 
@@ -304,16 +312,20 @@
       letter-spacing: -0.01em;
     }
 
-    /* MODULE D'EXERCICE DE VOCABULAIRE */
-    .exercise-box {
+    /* CADRE DE PANNEAU UNIFIÉ (VOCABULAIRE, LECTURE, DISCUSSION) */
+    .panel-box {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
       padding: 1.1rem 1.25rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
     }
 
-    .exercise-header {
+    .panel-box:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -322,24 +334,24 @@
       flex-wrap: wrap;
     }
 
-    .exercise-title-group {
+    .panel-title-group {
       display: flex;
       align-items: center;
       gap: 0.65rem;
     }
 
-    .exercise-icon {
+    .panel-icon {
       color: var(--accent-blue);
       display: flex;
     }
 
-    .exercise-title {
+    .panel-title {
       font-size: 1.05rem;
       font-weight: 700;
       color: var(--text-main);
     }
 
-    .exercise-actions {
+    .panel-actions {
       display: flex;
       align-items: center;
       gap: 0.65rem;
@@ -568,45 +580,13 @@
       display: flex;
     }
 
-    /* TEXTE DE LECTURE */
-    .reading-section {
-      margin-bottom: 2rem;
-    }
-
-    .reading-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 1.1rem;
-      flex-wrap: wrap;
-    }
-
-    .reading-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent-blue);
-      background: var(--accent-blue-soft);
-      border: 1px solid var(--accent-blue-border);
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-    }
-
-    .reading-hint {
-      font-size: 0.82rem;
-      color: var(--text-light);
-      font-style: italic;
-    }
-
+    /* CORPS DU TEXTE DE LECTURE */
     .reading-body {
       background: #ffffff;
-      border-left: 4px solid var(--accent-blue);
-      padding: 1.25rem 1.5rem;
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 1.25rem 1.45rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     }
 
     .reading-para {
@@ -661,49 +641,19 @@
       pointer-events: none;
     }
 
-    /* SECTION DISCUSSION */
-    .discussion-card {
-      background: linear-gradient(180deg, #ffffff 0%, var(--bg-surface) 100%);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-    }
-
-    .discussion-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .discussion-icon {
-      color: var(--accent-blue);
-      display: flex;
-      margin-top: 2px;
-    }
-
-    .discussion-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .discussion-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
+    /* QUESTION DE DISCUSSION */
     .discussion-question {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--accent-blue);
       background: #ffffff;
-      border: 1px solid var(--accent-blue-border);
+      border: 1px solid var(--border-subtle);
       padding: 1.1rem 1.25rem;
       border-radius: var(--radius-md);
       line-height: 1.6;
       margin-bottom: 0;
       font-style: italic;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     }
 
     /* BOUTON HAUT DE PAGE */
@@ -808,16 +758,16 @@
             <h2 class="section-title">Le Centre Historique : Hôtels Particuliers et Effervescence Piétonne</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-1" data-section="1">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-1" data-section="1">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(1)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -893,29 +843,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Habiter dans le centre historique de Dijon, c'est s'immerger au quotidien dans un décor grandiose de carte postale médiévale et classique. Les rues piétonnes, entièrement recouvertes d'un vieux <span class="vocab-word" tabindex="0" data-tooltip="Gros bloc de pierre taillée qui recouvre la chaussée d'une rue ancienne.">pavé</span> poli par des siècles de pas, créent une atmosphère intime et préservée où la circulation automobile est presque inexistante. Les résidents qui ont le privilège de loger dans ce secteur résident fréquemment dans d'anciens hôtels particuliers du dix-septième siècle ou de charmants appartements nichés sous les toits de tuiles bourguignonnes. Chaque grande <span class="vocab-word" tabindex="0" data-tooltip="Grande et belle maison d'habitation, souvent ancienne et élégante.">demeure</span> de maître dissimule d'admirables cours intérieures pavées, des puits d'époque et des escaliers à vis en pierre de taille qui témoignent avec éclat de la puissance passée des ducs et du fabuleux patrimoine régional.</p><p class="reading-para">La vie de tous les jours offre ici un confort précieux pour ceux qui apprécient de tout accomplir à pied, sans jamais avoir besoin de voiture. Dès les premières lueurs de l'aube, une joyeuse <span class="vocab-word" tabindex="0" data-tooltip="Grande animation, activité intense et joyeuse dans un lieu.">effervescence</span> gagne les abords du marché couvert des Halles centrales conçues dans le style Eiffel. On y croise les habitués du quartier qui viennent <span class="vocab-word" tabindex="0" data-tooltip="Se promener lentement sans but précis, pour le plaisir d'observer.">flâner</span> entre les étals parfumés et faire leurs courses quotidiennes dans les <span class="vocab-word" tabindex="0" data-tooltip="Magasins qui vendent des produits alimentaires fins et artisanaux.">commerces de bouche</span> réputés : fromagers affineurs, boulangers au levain, bouchers traditionnels et épiciers passionnés. À midi, chaque terrasse ensoleillée de la place du Palais des Ducs et de la place François Rude se remplit instantanément d'étudiants, de fonctionnaires et de voyageurs venus savourer un café sous les arbres.</p><p class="reading-para">Néanmoins, vivre dans ce décor cossu comporte aussi des contraintes concrètes pour chaque riverain. Le coût de l'immobilier y atteint des sommets, et les appartements anciens manquent souvent d'ascenseur ou de double vitrage efficace. Par ailleurs, le bruit nocturne des fêtards et la rareté absolue des places de stationnement représentent un réel inconvénient pour les ménages avec de jeunes enfants. Habiter le cœur de Dijon demande ainsi d'aimer l'énergie collective permanente de la cité.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -933,16 +883,16 @@
             <h2 class="section-title">Montchapet : La Discrétion et les Belles Demeures Aisées</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-2" data-section="2">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-2" data-section="2">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(2)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -1018,29 +968,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Situé sur les douces collines qui dominent le nord-ouest du centre urbain, Montchapet est incontestablement le quartier le plus <span class="vocab-word" tabindex="0" data-tooltip="Se dit d'un quartier ou d'un milieu social très chic, riche et prestigieux.">huppé</span> et le plus réputé de la cité dijonnaise. Dès que l'on quitte les grands boulevards pour s'engager dans ses artères paisibles, l'agitation commerçante s'estompe pour laisser place à une atmosphère feutrée, silencieuse et rassurante. Ce vaste espace résidentiel est avant tout constitué de remarquables maisons individuelles construites entre la fin du dix-neuvième siècle et les années 1930. Chaque grande <span class="vocab-word" tabindex="0" data-tooltip="Vaste maison élégante et de grand confort appartenant à une famille aisée.">demeure bourgeoise</span> s'élève fièrement derrière de hautes grilles en fer forgé laqué de noir, entourée d'un vaste parc arboré où les pelouses impeccables côtoient des massifs de rosiers et de cèdres séculaires.</p><p class="reading-para">La routine quotidienne à Montchapet est bercée par une rare <span class="vocab-word" tabindex="0" data-tooltip="État de tranquillité paisible, de calme absolu et de sérénité profonde.">quiétude</span>. Les larges trottoirs offrent un parcours délicieusement <span class="vocab-word" tabindex="0" data-tooltip="Qui est abrité du soleil par les feuilles et les branches d'arbres touffus.">ombragé</span>, très agréable pour les promeneurs et les enfants rentrant des cours de tennis ou des écoles privées voisines. On ne trouve pratiquement aucun commerce bruyant dans les rues intérieures ; les résidents effectuent leurs achats dans quelques épiceries fines et pharmacies discrètes situées sur les avenues périphériques. La population locale rassemble en grande majorité des médecins spécialistes, des notaires, des dirigeants d'entreprises et des retraités fortunés qui recherchent un cadre de vie sécurisant, verdoyant et distingué.</p><p class="reading-para">Le marché immobilier de ce secteur particulièrement <span class="vocab-word" tabindex="0" data-tooltip="Qui a une grande valeur marchande ou une excellente réputation sur le marché immobilier.">coté</span> figure parmi les plus chers de Bourgogne. Les rares villas mises en vente changent de propriétaire à des prix vertigineux, et les immeubles récents de grand standing se négocient en quelques jours seulement. Vivre à Montchapet permet d'être agréablement en retrait de l'agitation urbaine tout en gardant la possibilité de rejoindre la place Darcy en une dizaine de minutes de marche tranquille. C'est le sanctuaire favori des familles bourgeoises qui privilégient l'intimité, la verdure et la paix sociale avant tout autre critère.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -1058,16 +1008,16 @@
             <h2 class="section-title">Victor Hugo : L'Avenue Cossue et l'Élégance Début de Siècle</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-3" data-section="3">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-3" data-section="3">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(3)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -1143,29 +1093,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">L'avenue Victor Hugo et les rues adjacentes forment l'ensemble architectural bourgeois le plus impressionnant de Dijon. Aménagé à la fin du dix-neuvième siècle afin de relier élégamment le centre historique aux hauteurs de la colline de Montchapet, ce grand boulevard rectiligne s'inspire directement de l'urbanisme parisien d'époque. De chaque côté d'une large chaussée bordée d'arbres majestueux se dresse un imposant <span class="vocab-word" tabindex="0" data-tooltip="Bâtiment d'habitation élégant construit en pierre noble pour les classes aisées.">immeuble de maître</span> en pierre calcaire dorée. Chaque superbe façade sculptée attire le regard grâce à ses corniches ouvragées, ses hautes fenêtres et son magnifique <span class="vocab-word" tabindex="0" data-tooltip="Long balcon continu en fer forgé qui s'étend sur toute la façade d'un étage.">balcon filant</span> en fer forgé orné de motifs floraux. L'aspect d'ensemble est extrêmement <span class="vocab-word" tabindex="0" data-tooltip="Qui témoigne d'une grande aisance financière, luxueux et confortable.">cossu</span> et dégage une impression immédiate de prospérité tranquille.</p><p class="reading-para">À l'intérieur de ces résidences bourgeoises, les appartements séduisent par des volumes généreux et une luminosité abondante. Les réceptions conservent leur superbe <span class="vocab-word" tabindex="0" data-tooltip="Revêtement de sol intérieur composé de lames de bois assemblées avec soin.">parquet</span> en chêne d'origine posé en point de Hongrie, d'élégantes cheminées en marbre et une délicate <span class="vocab-word" tabindex="0" data-tooltip="Ornement décoratif en relief sculpté sur les plafonds, corniches ou boiseries.">moulure</span> en stuc au plafond. Nombre de ces grands logements sont habités par des familles établies depuis des générations, tandis que d'autres accueillent le siège feutré d'une profession libérale : cabinets d'avocats réputés, études de notaires, experts-comptables ou cliniques médicales haut de gamme. L'ambiance générale y est calme, soignée et souverainement distinguée.</p><p class="reading-para">La vie de quartier sur cet axe prestigieux bénéficie d'une excellente desserte grâce aux lignes de bus rapides et à la proximité immédiate de la gare ferroviaire TGV. Les résidents profitent de commerces de grande qualité sur le parcours : librairies indépendantes, boulangeries artisanales, fleuristes et chocolatiers réputés animent le boulevard au fil des heures sans jamais créer de tapage nocturne. C'est une adresse dotée d'un immense prestige qui séduit les citadins exigeants, désireux d'allier le cachet historique des hauts plafonds, la commodité d'un grand boulevard et la tranquillité d'un environnement social privilégié.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -1183,16 +1133,16 @@
             <h2 class="section-title">Les Allées du Parc : Le Grand Cours Prestigieux et Arboré</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-4" data-section="4">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-4" data-section="4">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(4)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -1268,29 +1218,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Les Allées du Parc constituent assurément l'artère paysagère la plus majestueuse et la plus emblématique de la métropole bourguignonne. Tracé au dix-septième siècle sous l'impulsion des princes de Condé, cet immense <span class="vocab-word" tabindex="0" data-tooltip="Grande avenue urbaine large, droite et ornée de rangées d'arbres majestueux.">cours</span> rectiligne s'étire sur plus d'un kilomètre depuis la place Wilson jusqu'au parc de la Colombière. Un remarquable double <span class="vocab-word" tabindex="0" data-tooltip="Disposition de plusieurs éléments (comme des platanes) sur une même ligne droite.">alignement</span> de platanes centenaires borde chaque côté de la chaussée, créant une haute voûte de feuillage qui dispense une fraîcheur bienfaisante durant les chaudes journées d'été. C'est l'itinéraire rêvé pour la <span class="vocab-word" tabindex="0" data-tooltip="Promenade lente et détendue sans destination précise pour admirer les alentours.">flânerie</span> du dimanche, la promenade à bicyclette et la contemplation contemplative au milieu des grands espaces verts.</p><p class="reading-para">Posséder un bien immobilier le long des allées est l'apanage d'un milieu privilégié. Les habitations qui bordent l'avenue sont exceptionnelles : chaque somptueuse <span class="vocab-word" tabindex="0" data-tooltip="Grande maison individuelle de plaisance entourée d'un vaste jardin privé.">villa</span> de style Belle Époque, manoir néo-Renaissance ou hôtel particulier moderne est entouré d'un parc privatif clos de haies épaisses. La sensation d'espace et de verdure y est omniprésente au quotidien. La largeur inhabituelle de la voirie permet d'étouffer le bruit de la circulation automobile, offrant aux riverains une ambiance bucolique tout à fait exceptionnelle à seulement dix minutes de marche de l'hypercentre commerçant.</p><p class="reading-para">Durant le week-end, le quartier se transforme en un formidable théâtre de convivialité pour les familles dijonnaises de toutes conditions. Dès le samedi matin, cyclistes, promeneurs avec poussettes et chaque <span class="vocab-word" tabindex="0" data-tooltip="Personne qui pratique la course à pied régulière pour sa santé ou sa forme.">joggeur</span> matinal empruntent les contre-allées sablonneuses pour converger vers le parc de la Colombière, véritable poumon vert communal de trente-trois hectares avec ses daims, ses aires de jeux et ses sentiers forestiers classés. Habiter dans ce décor majestueux garantit un confort d'existence hors du commun, combinant la splendeur des grands espaces verts avec le prestige d'une des adresses les plus admirées de toute la région bourguignonne.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -1308,16 +1258,16 @@
             <h2 class="section-title">Chevreul - Parc : Douceur Familiale entre Écoles et Jardins</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-5" data-section="5">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-5" data-section="5">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(5)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -1393,29 +1343,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Bordant le sud des allées historiques, le quartier Chevreul - Parc s'impose comme le secteur familial par excellence de Dijon. Moins aristocratique que Montchapet mais particulièrement soigné, cet environnement <span class="vocab-word" tabindex="0" data-tooltip="Riche en végétation saine, grands arbres, pelouses et jardins fleuris.">verdoyant</span> propose un équilibre parfait entre des petits immeubles de trois étages à l'architecture soignée et de charmantes rues bordées d'arbres. L'habitat s'y révèle harmonieux et diversifié : un bel hôtel particulier en pierre calcaire côtoie fréquemment un coquet <span class="vocab-word" tabindex="0" data-tooltip="Maison individuelle d'habitation de taille moyenne avec un jardinet attenant.">pavillon</span> des années 1930 dont le jardinet fleuri partage une discrète <span class="vocab-word" tabindex="0" data-tooltip="État de deux habitations ou propriétés qui se touchent par un mur mitoyen commun.">mitoyenneté</span> avec la propriété voisine. Les cours arrière dissimulent des potagers soignés et des terrasses intimes où les familles prennent le déjeuner dès le mois de mai.</p><p class="reading-para">Ce qui fait le charme de la vie de tous les jours ici, c'est avant tout son caractère <span class="vocab-word" tabindex="0" data-tooltip="Calme, tranquille, sans bruit agressif ni agitation perturbatrice.">paisible</span> et sécurisant. Le matin, les trottoirs s'animent des éclats de rire des enfants se rendant à pied dans les écoles réputées du quartier. La circulation automobile y est très modérée grâce à des voies réservées aux riverains et des zones apaisées. L'usage quotidien de la bicyclette y est devenu incontournable : les pistes cyclables protégées permettent de rejoindre la place de la Libération ou la gare en quelques coups de pédale à peine.</p><p class="reading-para">La vie de voisinage repose sur un réseau dynamique de <span class="vocab-word" tabindex="0" data-tooltip="Boutique de quartier facilement accessible à pied pour les achats de chaque jour.">commerce de proximité</span> : boulangerie réputée pour ses croissants, boucherie artisanale, caviste indépendant et maraîcher de saison animent le carrefour Chevreul dans un esprit convivial et détendu. Même si ce secteur reste très recherché par les acheteurs et affiche des prix élevés, il conserve une vraie mixité entre retraités fidèles au quartier depuis un demi-siècle et jeunes couples avec enfants. C'est l'endroit parfait pour installer une famille nombreuse tout en profitant du calme et d'une proximité immédiate avec les grands parcs de la ville.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -1433,16 +1383,16 @@
             <h2 class="section-title">Quartier des Antiquaires et Rue Verrerie : Charme Médiéval et Esprit Bohème</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-6" data-section="6">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-6" data-section="6">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(6)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -1518,29 +1468,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Enlacé derrière l'église Notre-Dame et la célèbre chouette porte-bonheur sculptée sur un contrefort, le quartier des <span class="vocab-word" tabindex="0" data-tooltip="Professionnel qui achète, restaure et vend des objets ou meubles d'art anciens.">Antiquaires</span> centré sur la rue Verrerie propulse le piéton dans une autre époque. C'est incontestablement le coin le plus <span class="vocab-word" tabindex="0" data-tooltip="Qui séduit le regard par son originalité, son authenticité et sa beauté singulière.">pittoresque</span> et envoûtant du centre dijonnais. Ici, de splendides maisons médiévales à <span class="vocab-word" tabindex="0" data-tooltip="Poutres en bois apparentes formant l'ossature extérieure d'une maison ancienne (colombages).">pans de bois</span> et aux poutres sculptées se dressent le long d'une <span class="vocab-word" tabindex="0" data-tooltip="Rue très étroite et intime typique des villes d'époque médiévale.">ruelle</span> étroite pavée de grès. Les étages en encorbellement se rapprochent tellement qu'ils semblent presque se toucher sous le ciel, créant une ambiance feutrée où chaque recoin recèle un détail historique, une cour pavée secrète ou une gargouille de pierre grimaçante.</p><p class="reading-para">Vivre dans ce décor préservé offre une expérience résidentielle totalement atypique. Les rez-de-chaussée des bâtisses sont occupés par chaque antiquaire chevronné, des galeries de peinture, des librairies de livres rares et des créateurs de bijoux contemporains. L'atmosphère générale baigne dans un esprit bohème et artistique très séduisant. La communauté des habitants est soudée et chaleureuse : on s'arrête devant la vitrine d'un <span class="vocab-word" tabindex="0" data-tooltip="Espace de travail manuel et de création pour un artiste ou un artisan d'art.">atelier</span> d'ébénisterie pour bavarder, ou bien l'on partage un thé sur le pas d'une porte avec les commerçants du voisinage qui se connaissent tous par leurs prénoms et veillent les uns sur les autres.</p><p class="reading-para">Cependant, vivre entre ces vieux colombages impose d'accepter un indéniable inconfort matériel au fil des saisons. La faible luminosité naturelle dans les appartements des étages bas, les planchers d'origine qui penchent en pente douce et l'isolation thermique limitée rappellent la vétusté de constructions vieilles de cinq siècles. Monter des meubles imposants par des escaliers en colimaçon étroits demande aussi une vraie dose de patience. Pourtant, les passionnés d'histoire ne troqueraient pour rien au monde la poésie unique de ces ruelles médiévales chargées d'âme, de légendes et de mémoire bourguignonne.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -1558,16 +1508,16 @@
             <h2 class="section-title">Place Wilson et Boulevard Carnot : L'Animation Citadine et Conviviale</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-7" data-section="7">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-7" data-section="7">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(7)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -1643,29 +1593,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">La magnifique place Wilson forme un gigantesque rond-point paysager au carrefour des quartiers sud et du centre ancien. Dotée d'un superbe <span class="vocab-word" tabindex="0" data-tooltip="Grande pièce d'eau décorative artificielle ornée d'un puissant jet d'eau au centre d'un square.">bassin</span> circulaire d'où jaillit un haut jet d'eau rafraîchissant et d'un élégant <span class="vocab-word" tabindex="0" data-tooltip="Petite construction circulaire ouverte dans un jardin où jouaient autrefois les fanfares.">kiosque à musique</span> en ferronnerie blanche, cette place constitue l'un des espaces publics les plus aimés de la métropole. Tout autour du square arboré qui garantit un généreux <span class="vocab-word" tabindex="0" data-tooltip="Ombre fraîche et protectrice dispensée par les feuilles d'arbres touffus en été.">ombrage</span> estival, de grands immeubles classiques du dix-neuvième siècle abritent une population composée d'avocats, de professeurs, de retraités aisés et de ménages de profil <span class="vocab-word" tabindex="0" data-tooltip="Qui appartient aux classes moyennes ou supérieures confortablement établies.">bourgeois</span> attachés à la qualité de leur cadre de vie.</p><p class="reading-para">La place et le large boulevard Carnot qui s'y rattache se distinguent par une animation citadine constante et chaleureuse. Dès les premières heures de la matinée, chaque terrasse ensoleillée de café accueille des habitués lisant le quotidien régional devant un chocolat chaud. La réputation commerciale du secteur est excellente : chaque commerçant de bouche passionné, des fleuristes aux parfums enivrants, une célèbre librairie jeunesse et chaque bistrot accueillant font de la place un point de ralliement incontournable pour retrouver ses amis ou sa famille en fin de journée.</p><p class="reading-para">Cette effervescence urbaine s'équilibre avec une qualité de vie appréciable au jour le jour. Bien que traversée par une <span class="vocab-word" tabindex="0" data-tooltip="Avenue ou voie de communication principale traversant une zone urbaine active.">artère</span> circulante aux heures de pointe, la place dispose de trottoirs très larges et d'un jardin central sécurisé où les enfants jouent autour de la fontaine pendant que les aînés discutent sur les bancs de pierre. Les résidents apprécient de pouvoir rejoindre les théâtres et les magasins piétons en cinq minutes à pied tout en profitant des arrêts de bus centraux vers les gares. C'est le compromis parfait entre l'élégance architecturale de la pierre de taille, la convivialité des comptoirs de café et le confort d'un grand nœud urbain moderne.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -1683,16 +1633,16 @@
             <h2 class="section-title">République et Faubourg Nord : Carrefour Cosmopolite et Énergie Nocturne</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-8" data-section="8">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-8" data-section="8">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(8)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -1768,29 +1718,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Au nord immédiat du centre piétonnier, la vaste place de la République et les artères du Faubourg Nord forment le carrefour névralgique de la ville contemporaine. Traversée par les lignes 1 et 2 du tramway dijonnais qui se croisent sous de hautes pergolas métalliques, cette immense esplanade minérale représente le principal <span class="vocab-word" tabindex="0" data-tooltip="Lieu de correspondance où se rencontrent plusieurs réseaux de transport (tramway, bus, vélos).">pôle multimodal</span> de transports publics de l'agglomération. Du matin au soir, des dizaines de milliers d'usagers, salariés pressés, étudiants universitaires et lycéens s'y côtoient, créant un extraordinaire brassage humain et une <span class="vocab-word" tabindex="0" data-tooltip="Mouvement tumultueux, intense et continu d'une foule en activité dans un quartier.">effervescence</span> permanente au cœur de la ville qui ne faiblit jamais.</p><p class="reading-para">Le tissu bâti environnant est particulièrement dense et éclectique. Des immeubles faubouriens en briques et pierres côtoient des résidences contemporaines construites lors de la grande rénovation de la place. La population y est jeune, mobile et <span class="vocab-word" tabindex="0" data-tooltip="Qui réunit et mélange des personnes de nombreuses nationalités et origines culturelles.">cosmopolite</span>. Comme les loyers y demeurent plus accessibles que dans le cœur historique patrimonial, le quartier est une aubaine très prisée pour les colocations étudiantes et les jeunes professionnels qui emménagent pour leur tout premier emploi. À chaque croisement, on trouve des supermarchés ouverts tard, des boulangeries rapides, des salles de fitness et des services administratifs pratiques qui simplifient l'existence au quotidien.</p><p class="reading-para">À la nuit tombée, le quartier dévoile une tout autre facette : une vie <span class="vocab-word" tabindex="0" data-tooltip="Qui se passe pendant la nuit ou qui touche aux sorties tardives en ville.">nocturne</span> particulièrement animée. Les pubs de style irlandais, les bars à bières artisanales et les restaurants de cuisine du monde font le plein jusqu'aux premières heures du matin. Pour les riverains habitant au-dessus des établissements, cette popularité festive entraîne régulièrement une <span class="vocab-word" tabindex="0" data-tooltip="Bruit répétitif ou excessif qui dérange le repos et la tranquillité des résidents.">nuisance sonore</span> sensible durant les week-ends. Néanmoins, pour ceux qui aiment vivre au cœur battant du mouvement et tout faire en tramway, République offre une vitalité moderne et une liberté de déplacement sans égale.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -1808,16 +1758,16 @@
             <h2 class="section-title">Mansart et le Campus Universitaire : La Jeunesse et l'Esprit Étudiant</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-9" data-section="9">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-9" data-section="9">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(9)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -1893,29 +1843,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">S'étendant sur les vastes plaines à l'est de Dijon, le quartier Mansart et le grand campus Montmuzard forment une immense cité de la jeunesse et du savoir. Ce secteur académique accueille chaque année plus de trente mille étudiants inscrits à l'université de Bourgogne et dans ses prestigieuses écoles d'ingénieurs. L'architecture y est résolument moderne et aérée, combinant d'imposants bâtiments de facultés en béton brut avec de vastes étendues de verdure où les jeunes viennent s'installer sur l'herbe au printemps pour relire leurs notes de cours ou jouer de la guitare entre deux travaux dirigés.</p><p class="reading-para">Le paysage locatif se caractérise par une offre massive de logements compacts. Entre les tours publiques gérées par le CROUS abritant chaque <span class="vocab-word" tabindex="0" data-tooltip="Grand immeuble d'État destiné au logement des étudiants à un tarif modéré.">résidence universitaire</span> et les dizaines d'immeubles privés récents remplis de <span class="vocab-word" tabindex="0" data-tooltip="Très petit logement meublé d'une seule pièce compacte destiné à une personne.">studette</span> meublée, le quartier offre un hébergement abordable très recherché. Le quotidien est synchronisé avec les cours dispensés dans chaque vaste <span class="vocab-word" tabindex="0" data-tooltip="Grande salle de cours en gradins dans une faculté ou grande école d'enseignement supérieur.">amphithéâtre</span> et les pauses de midi animées au restaurant universitaire. De nombreux équipements sportifs et culturels jalonnent le secteur : piscine olympique, terrains d'athlétisme couverts et l'Atheneum, une scène réputée pour le spectacle vivant et les concerts associatifs.</p><p class="reading-para">Grâce à la ligne T1 du tramway qui traverse le campus d'un bout à l'autre, les étudiants rejoignent la gare SNCF et le centre piétonnier en huit minutes sans encombre. L'ambiance internationale apporte une grande joie de vivre communicative. Cependant, le quartier vit au strict <span class="vocab-word" tabindex="0" data-tooltip="Alternance annuelle entre les périodes intenses d'études et le vide des congés.">rythme scolaire</span> du calendrier universitaire. Alors que l'automne et le printemps résonnent d'une intense <span class="vocab-word" tabindex="0" data-tooltip="Agitation vive, enthousiaste et dynamique d'une population nombreuse et active.">effervescence</span> festive, les mois d'été de juillet et août transforment subitement les allées en un décor désert et étonnamment silencieux dès la fin des examens de fin d'année lorsque chacun regagne sa région d'origine.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -1933,16 +1883,16 @@
             <h2 class="section-title">Port du Canal et 1er Mai : L'Héritage Batelier Réinventé au Bord de l'Eau</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-10" data-section="10">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-10" data-section="10">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(10)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -2018,29 +1968,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Au sud-ouest de la gare centrale, là où le canal de Bourgogne rejoint les méandres de la rivière de l'Ouche, le quartier du Port du Canal et de la place du 1er Mai dévoile une ambiance fluviale unique en son genre. Pendant plus d'un siècle, ce carrefour portuaire et ouvrier résonnait du vacarme des <span class="vocab-word" tabindex="0" data-tooltip="Bateau fluvial à fond plat servant au transport de fret ou aménagé en habitation flottante.">péniches</span> transportant le charbon, le ciment et le vin vers Paris. Aujourd'hui, une exemplaire <span class="vocab-word" tabindex="0" data-tooltip="Transformation complète d'un ancien site industriel ou logistique vers un usage résidentiel moderne.">reconversion</span> urbaine a transformé les anciennes friches de stockage en un quartier résidentiel lumineux et très prisé, parsemé d'immeubles contemporains aux façades de bois et aux balcons ouverts sur l'eau.</p><p class="reading-para">Le grand <span class="vocab-word" tabindex="0" data-tooltip="Grand plan d'eau aménagé pour accueillir les bateaux et péniches le long d'un canal.">bassin fluvial</span> accueille désormais une flottille permanente de péniches multicolores amarrées le long du vieux quai en pierre. Plusieurs familles ont choisi de vivre à l'année sur l'eau, berçant leur quotidien au rythme des saisons et du passage des bateaux de tourisme franchissant une <span class="vocab-word" tabindex="0" data-tooltip="Ouvrage hydraulique équipé de portes permettant aux embarcations de franchir une dénivellation d'eau.">écluse</span> centenaire. Les <span class="vocab-word" tabindex="0" data-tooltip="Bords de terre ou de pierre aménagés qui longent une rivière ou un canal.">berges</span> verdoyantes du canal ont été transformées en une piste cyclable très appréciée, idéale pour une balade du dimanche ou pour partir en randonnée jusqu'au lac Kir sans jamais côtoyer de circulation motorisée.</p><p class="reading-para">Le secteur séduit par son alliance de sérénité aquatique et de proximité immédiate avec les services urbains. La récente ouverture de la Cité Internationale de la Gastronomie et du Vin à quelques centaines de mètres a apporté une forte valeur ajoutée commerciale et culturelle. Néanmoins, cette attractivité nouvelle alimente une gentrification rapide qui renchérit le coût des loyers et pousse peu à peu les populations modestes vers la banlieue. Malgré cela, les riverains savourent une quiétude rare au bord de l'eau, profitant d'un véritable air de vacances permanentes au cœur de la ville et d'un environnement écologique privilégié.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -2058,16 +2008,16 @@
             <h2 class="section-title">Les Grésilles : Énergie Populaire, Solidarité et Métamorphose Urbaine</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-11" data-section="11">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-11" data-section="11">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(11)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -2143,29 +2093,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Édifié à la fin des années 1950 pour héberger les ouvriers des grandes usines mécaniques dijonnaises et les familles de rapatriés, le quartier des Grésilles est le grand quartier populaire emblématique du nord-est de Dijon. Conçu initialement comme un immense <span class="vocab-word" tabindex="0" data-tooltip="Vaste quartier urbain constitué d'immeubles collectifs et de barres d'habitation construits dans les années 1950-1970.">grand ensemble</span> constitué de hautes tours en béton et d'une concentration massive de logements sociaux, ce secteur a bénéficié depuis une quinzaine d'années d'une profonde opération de <span class="vocab-word" tabindex="0" data-tooltip="Programme public visant à démolir, reconstruire et embellir les quartiers d'habitat social dégradés.">rénovation urbaine</span>. Plusieurs anciennes barres massives ont été démolies pour laisser place à chaque petit ilot d'immeubles bas à taille humaine, entourés de pelouses bien entretenues et de plantations d'arbres d'ornement.</p><p class="reading-para">Le quotidien aux Grésilles est animé d'une remarquable chaleur humaine et d'une entraide entre voisins rare en milieu urbain. Deux matins par semaine, la place Galilée accueille un grand <span class="vocab-word" tabindex="0" data-tooltip="Grand marché alimentaire où se côtoient produits, saveurs et commerçants de toutes les cultures du monde.">marché cosmopolite</span> renommé dans toute la région. On y achète des herbes fraîches, des épices orientales, des primeurs bon marché et des vêtements dans une atmosphère festive où plusieurs langues se mêlent avec naturel. Le secteur s'appuie également sur un réseau <span class="vocab-word" tabindex="0" data-tooltip="Qui concerne les associations citoyennes, d'entraide ou de loisirs animées par des bénévoles.">associatif</span> très vigoureux : soutien scolaire pour les enfants, ateliers de cuisine interculturels et jardins partagés florissants rythment la semaine dans une authentique convivialité.</p><p class="reading-para">Le quartier affronte néanmoins de vraies difficultés économiques au quotidien. Le taux de chômage y est nettement plus élevé que la moyenne métropolitaine et de nombreux foyers font face à la <span class="vocab-word" tabindex="0" data-tooltip="Situation d'instabilité financière ou sociale marquée par de faibles revenus et le manque de sécurité d'emploi.">précarité</span> financière. Pourtant, à l'opposé de chaque stéréotype anxiogène véhiculé par ceux qui ne le connaissent pas, le quartier fait preuve d'une formidable dignité. Pour chaque locataire modeste, les Grésilles garantissent un logement économique et des équipements publics modernisés. De plus, la ligne T1 du tramway a permis de désenclaver totalement le quartier en reliant les facultés et la gare en quelques minutes seulement.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -2183,16 +2133,16 @@
             <h2 class="section-title">Fontaine d'Ouche : Entre Barres d'Immeubles et Nature au Bord du Lac Kir</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-12" data-section="12">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-12" data-section="12">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(12)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -2268,29 +2218,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Bâti au début des années 1970 à la pointe occidentale de Dijon, le quartier de Fontaine d'Ouche présente une identité géographique tout à fait captivante. D'un côté, le paysage architectural est marqué par une grande <span class="vocab-word" tabindex="0" data-tooltip="Très long bâtiment d'habitation rectangulaire de plusieurs étages, typique des années 1960-1970.">barre d'immeubles</span> en gradins et des ensembles de logements collectifs en béton brut caractéristiques de la politique d'urbanisme de cette époque. De l'autre côté, le quartier s'ouvre directement sur le lac Kir, un immense <span class="vocab-word" tabindex="0" data-tooltip="Étendue d'eau stagnante ou aménagée, comme un lac ou un bassin de loisirs.">plan d'eau</span> artificiel de trente-sept hectares ceinturé de collines sauvages et de forêts de chênes bourguignons où chaque vaste <span class="vocab-word" tabindex="0" data-tooltip="Zone de nature, pelouses ou jardins publics entretenus au milieu des constructions urbaines.">espace vert</span> apporte de l'oxygène au quotidien.</p><p class="reading-para">Cette situation unique offre aux résidents un cadre naturel exceptionnel que beaucoup d'habitants du centre-ville leur envient. Dès l'apparition des beaux jours, chaque famille descend sur les grandes pelouses qui longent les berges du lac pour pique-niquer à l'ombre. Les jeunes profitent de la plage de sable surveillée pour la baignade estivale, tandis que les retraités se retrouvent au boulodrome ombragé pour disputer d'interminables parties de pétanque. Le quartier dispose en outre d'une superbe piscine municipale couverte, d'un port de plaisance sur le canal et d'une médiathèque très dynamique.</p><p class="reading-para">La population locale demeure en majorité modeste, mais les pouvoirs publics déploient d'importants efforts pour maintenir une saine <span class="vocab-word" tabindex="0" data-tooltip="Cohabitation harmonieuse de personnes de conditions sociales et économiques variées dans un même espace.">mixité sociale</span>. De vastes chantiers de rénovation thermique ont permis d'isoler les façades extérieures des tours, de réduire les factures d'énergie et de moderniser les halls d'entrée. Autrefois considéré comme un secteur <span class="vocab-word" tabindex="0" data-tooltip="Séparé des autres quartiers, difficile d'accès ou situé à l'écart des grands axes.">isolé</span> du reste de la métropole, Fontaine d'Ouche est aujourd'hui parfaitement raccordé grâce aux voies de bus régulières et aux pistes cyclables. C'est un quartier populaire singulier où l'on profite de loyers très abordables tout en ayant un lac magnifique au pied de sa fenêtre.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -2308,16 +2258,16 @@
             <h2 class="section-title">Chenôve : Le Double Visage entre Vieux Bourg Viticole et Grand Mail Populaire</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-13" data-section="13">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-13" data-section="13">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(13)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -2393,29 +2343,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Adossée à la limite sud de Dijon, la commune de Chenôve est l'une des villes les plus singulières de l'agglomération en raison d'un saisissant <span class="vocab-word" tabindex="0" data-tooltip="Opposition frappante et très visible entre deux réalités ou deux ambiances différentes.">contraste</span> territorial et social. Chenôve présente en réalité deux univers distincts que tout semble opposer. À l'ouest, grimpant sur les premières pentes de la côte viticole, s'abrite le Vieux Chenôve : un authentique village bourguignon aux ruelles pavées de calcaire, célèbre pour les monumentaux <span class="vocab-word" tabindex="0" data-tooltip="Grand appareil ou machine traditionnelle servant à écraser le raisin pour extraire le jus de vin.">pressoirs</span> des ducs de Bourgogne bâtis au treizième siècle. Dans ce secteur historique et le quartier <span class="vocab-word" tabindex="0" data-tooltip="Composé principalement de maisons individuelles avec jardin privé dans un quartier calme.">pavillonnaire</span> voisin, des familles aisées et chaque vigneron réputé jouissent d'une tranquillité champêtre remarquable.</p><p class="reading-para">À l'est de la route départementale, le paysage change brutalement avec le grand quartier du Mail. Conçu dans les années 1970 pour accueillir la main-d'œuvre industrielle, cet immense secteur d'habitat collectif rassemble une population populaire au sein de hauts immeubles. Longtemps considéré comme un secteur défavorisé, le Mail a fait l'objet d'un spectaculaire plan de métamorphose urbaine. La création d'une longue esplanade piétonne arborée, l'implantation de la médiathèque Le Cèdre et l'arrivée du tramway T2 assurent désormais une remarquable desserte directe vers la gare de Dijon en un quart d'heure.</p><p class="reading-para">Cette dualité géographique marque le <span class="vocab-word" tabindex="0" data-tooltip="Organisation et agencement des rues, des places et des constructions dans une ville.">tissu urbain</span> de la ville au quotidien. Bien qu'un réel clivage sociologique sépare les coteaux aisés et les tours du bas, les habitants se retrouvent régulièrement lors des événements sportifs ou de la grande fête de la Saint-Vincent célébrée dans une sincère <span class="vocab-word" tabindex="0" data-tooltip="Esprit de partage agréable et relation facile et bienveillante entre habitants.">convivialité</span> partagée par tous. Chenôve incarne à merveille la richesse des banlieues bourguignonnes contemporaines, où l'héritage ouvrier généreux et la culture millénaire de la vigne cohabitent sur quelques kilomètres carrés seulement avec une authentique dignité populaire.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -2433,16 +2383,16 @@
             <h2 class="section-title">Quetigny : Ville Verte, Pavillons Calmes et Grand Pôle Commercial</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-14" data-section="14">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-14" data-section="14">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(14)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -2518,29 +2468,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Implantée à l'est de Dijon, la commune de Quetigny s'est développée à partir de la fin des années 1960 avec une vision novatrice : concevoir une véritable « ville verte » à taille humaine. Contrairement aux banlieues dortoirs traditionnelles, la municipalité a soigneusement planifié un réseau continu d'espaces verts et de coulées paysagères reliant chaque quartier. Piétons et cyclistes circulent sur chaque <span class="vocab-word" tabindex="0" data-tooltip="Chemin aménagé réservé exclusivement aux promeneurs et fermé à la circulation automobile.">allée piétonne</span> en parfaite sécurité sans jamais traverser de routes automobiles à grand trafic. Ce cadre verdoyant représente l'idéal <span class="vocab-word" tabindex="0" data-tooltip="Situé dans la périphérie d'une grande agglomération, entre la ville dense et la campagne.">périurbain</span> par excellence pour la famille de classe moyenne désireuse d'offrir un jardin à ses enfants tout en restant proche des commodités.</p><p class="reading-para">L'habitat quetignois est majoritairement pavillonnaire. On y parcourt de paisibles <span class="vocab-word" tabindex="0" data-tooltip="Ensemble de parcelles de terrain issues d'une même division pour construire des maisons individuelles.">lotissements</span> bordés de pelouses nettes où chaque maison individuelle dispose de son garage, de sa terrasse ensoleillée et de sa haie de lauriers. Quelques petits immeubles collectifs de faible hauteur complètent l'offre résidentielle sans rompre l'harmonie des lieux. Les habitants apprécient une <span class="vocab-word" tabindex="0" data-tooltip="Calme profond, absence de tapage ou d'agitation perturbatrice.">tranquillité</span> absolue au quotidien : les enfants se rendent à pied dans les collèges, au complexe sportif ou à la médiathèque municipale sans le moindre danger.</p><p class="reading-para">Sur le versant économique, la commune abrite la plus gigantesque <span class="vocab-word" tabindex="0" data-tooltip="Vaste espace regroupant des hypermarchés, des centres commerciaux et de grandes enseignes.">zone commerciale</span> de toute la région Bourgogne. Hypermarché géant, boutiques d'habillement, enseignes de bricolage et cinémas multiplexes constituent un puissant bassin d'emploi local. Cette attraction marchande provoque régulièrement un engorgement des carrefours et des ronds-points le samedi après-midi. Cependant, grâce au tramway moderne qui dépose les usagers sur la place de la République en une quinzaine de minutes, Quetigny parvient à concilier le calme d'un lotissement verdoyant et toutes les facilités de la vie moderne.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -2558,16 +2508,16 @@
             <h2 class="section-title">Longvic : L'Héritage Industriel, la Base Aérienne et l'Esprit Ouvrier</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-15" data-section="15">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-15" data-section="15">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(15)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -2643,29 +2593,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Limitrophe du sud-est de Dijon, Longvic est une cité ouvrière fière de sa trajectoire humaine et de son riche <span class="vocab-word" tabindex="0" data-tooltip="Histoire économique marquée par la présence d'usines métallurgiques et d'ateliers de fabrication.">passé industriel</span>. Pendant près d'un siècle, le destin de la commune a vibré au son des escadrons de chasse de la prestigieuse <span class="vocab-word" tabindex="0" data-tooltip="Site militaire spécialement équipé de pistes d'atterrissage, de hangars et de casernes pour l'aviation.">base aérienne</span> 102, qui a accueilli les plus célèbres as de l'aviation française. La fermeture définitive des activités militaires en 2016 a contraint la ville à un courageux travail de <span class="vocab-word" tabindex="0" data-tooltip="Adaptation complète d'anciens sites fermés vers de nouvelles activités économiques civiles.">reconversion</span> urbaine. D'anciens hangars ont été démolis pour faire éclore des zones artisanales dynamiques, des centres de logistique verte et des laboratoires de recherche technologique de pointe.</p><p class="reading-para">L'identité sociale de la commune demeure fortement forgée par son monde <span class="vocab-word" tabindex="0" data-tooltip="Travailleur manuel exerçant dans l'industrie, le bâtiment ou les ateliers mécaniques.">ouvrier</span> d'origine. Les quartiers résidentiels mêlent harmonieusement de petits immeubles à loyer modéré rénovés et un habitat de lotissement des décennies d'après-guerre où les habitants cultivent de charmants potagers derrière leurs clôtures. La population y cultive un état d'esprit <span class="vocab-word" tabindex="0" data-tooltip="Uni par un sentiment fort d'entraide fraternelle, de loyauté et de soutien collectif.">solidaire</span> et convivial. Les nombreuses fêtes citoyennes, les amicales de quartier et les associations sportives de football et d'athlétisme fédèrent des familles fidèles à leur commune depuis plusieurs générations.</p><p class="reading-para">Sur le plan environnemental, la ville possède un précieux atout géographique : elle jouxte directement le grand parc de la Colombière et les rives ombragées de l'Ouche. Ce superbe parc public permet aux résidents de profiter de sous-bois sauvages et de pistes cyclables en quelques minutes de marche. Même si la ville n'est pas desservie par le tramway, des lignes de bus rapides assurent des trajets réguliers vers le centre-ville. Pour ceux qui recherchent un cadre de vie tranquille, financièrement accessible et dépourvu de snobisme bourgeois, Longvic offre une authenticité humaine très attachante.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -2683,16 +2633,16 @@
             <h2 class="section-title">Talant : Le Village Perché Médiéval Surplombant la Cité des Ducs</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-16" data-section="16">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-16" data-section="16">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(16)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -2768,29 +2718,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Bâtie sur une haute colline calcaire qui domine le nord-ouest dijonnais, Talant est une commune limitrophe au caractère spectaculaire. Son quartier historique est un authentique bourg médiéval <span class="vocab-word" tabindex="0" data-tooltip="Situé sur une butte ou un sommet élevé dominant la plaine environnante.">perché</span>, établi au début du treizième siècle par les ducs de Bourgogne pour surveiller les routes de Champagne et repousser les invasions. Quand on pénètre dans l'enceinte de l'ancien <span class="vocab-word" tabindex="0" data-tooltip="Muraille fortifiée en pierre destinée autrefois à défendre une cité contre les ennemis.">rempart</span> fortifié, on découvre un dédale poétique où chaque <span class="vocab-word" tabindex="0" data-tooltip="Petite rue ancienne pavée ou encadrée de murs en pierres calcaires de Bourgogne.">ruelle de pierre</span> serpente entre d'anciennes maisons vigneronnes en pierre blonde, de superbes puits fleuris et la vénérable église Notre-Dame de style gothique bourguignon.</p><p class="reading-para">Résider sur les hauteurs de Talant procure un sentiment d'exception. Depuis chaque <span class="vocab-word" tabindex="0" data-tooltip="Point de vue élevé spécialement aménagé pour contempler un paysage remarquable.">belvédère</span> aménagé sur le rebord de la falaise, on embrasse un grandiose <span class="vocab-word" tabindex="0" data-tooltip="Vue très large et dégagée sur un vaste paysage ou une ville vue d'en haut.">panorama</span> à 360 degrés englobant les toits de tuiles de Dijon, la vallée sinueuse de l'Ouche et, par matin dégagé, la ligne bleutée du massif du Jura. Les habitants du vieux bourg forment une population cultivée et de profil bourgeois, rassemblant des professions libérales, des enseignants et des amoureux d'art attirés par ce patrimoine historique incomparable et ce calme olympien à dix minutes seulement de la gare TGV.</p><p class="reading-para">La vie sur la butte demande toutefois quelques efforts physiques au quotidien. Les chemins d'accès se révèlent particulièrement abrupts, ce qui complique les déplacements à vélo et peut rendre la circulation délicate lors des hivers neigeux. De plus, la commune comporte également dans sa partie basse le quartier contemporain du Belvédère avec ses logements collectifs rénovés et ses écoles modernes. C'est une commune originale qui marie avec succès la poésie d'un nid d'aigle historique et la commodité immédiate des services modernes de la métropole.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -2808,16 +2758,16 @@
             <h2 class="section-title">Fontaine-lès-Dijon : Le Refuge Aristocratique sur la Colline Saint-Bernard</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-17" data-section="17">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-17" data-section="17">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(17)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -2893,29 +2843,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Adossée au flanc nord de Dijon dans le prolongement direct du quartier Montchapet, Fontaine-lès-Dijon s'est forgé la réputation de ville la plus <span class="vocab-word" tabindex="0" data-tooltip="Très chic, sélectif, réservé aux couches sociales les plus riches et prestigieuses.">huppée</span> de tout le département. Berceau natal de saint Bernard de Clairvaux, grand réformateur monastique né ici en 1090 dans le château de ses ancêtres, la cité s'est développée autour de sa butte historique dominée par une église romane classée. Du sommet de cette haute <span class="vocab-word" tabindex="0" data-tooltip="Petite élévation de terrain aux pentes douces dominant une zone urbaine.">colline</span> résidentielle jusqu'aux vallons boisés, la commune déroule une atmosphère de sérénité aristocratique où l'élégance se marie au silence le plus complet au milieu d'une abondante verdure préservée.</p><p class="reading-para">L'environnement résidentiel est constitué de domaines d'une beauté saisissante. Chaque magnifique <span class="vocab-word" tabindex="0" data-tooltip="Belle demeure patricienne construite en pierre noble avec de vastes pièces de réception.">maison de maître</span> et chaque villa contemporaine d'architecte se dissimule derrière de hauts murs de clôture en pierre de Bourgogne et d'épaisses haies de lauriers. Les allées privatives serpentent au milieu d'arbres centenaires formant un décor ombragé et intimiste. On ne trouve sur le territoire municipal aucune usine polluante ni grand ensemble collectif, ce qui garantit une <span class="vocab-word" tabindex="0" data-tooltip="État de tranquillité profonde, repos de l'esprit à l'abri du bruit et de l'agitation.">quiétude</span> absolue et un sentiment de sécurité très apprécié par les résidents fortunés.</p><p class="reading-para">Ce milieu privilégié regroupe principalement des cadres dirigeants, des chirurgiens, des chefs d'entreprises renommés et des universitaires chevronnés. Pour un acheteur ordinaire de la classe moyenne, le marché immobilier local est tout bonnement inaccessible en raison du niveau vertigineux des transactions. Malgré cette exclusivité économique, la commune offre un <span class="vocab-word" tabindex="0" data-tooltip="Environnement enchanteur, harmonieux, beau et paisible comme un rêve de carte postale.">cadre idyllique</span> ouvert à tous lors des promenades dominicales dans le parc arboré des Basses Feuilles. Vivre à Fontaine-lès-Dijon représente l'apogée du confort bourgeois en Bourgogne : la quiétude d'un village préservé à seulement quelques minutes des lycées et commerces du centre.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -2933,16 +2883,16 @@
             <h2 class="section-title">Marsannay-la-Côte : La Porte Sud des Vins et la Douceur Vigneronne</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-18" data-section="18">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-18" data-section="18">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(18)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -3018,29 +2968,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Située à six kilomètres au sud de la métropole, la commune de Marsannay-la-Côte ouvre magnifiquement la célèbre Route des Grands Crus de Bourgogne. Dès que l'on franchit l'entrée du village, les perspectives urbaines s'effacent pour laisser place à un superbe <span class="vocab-word" tabindex="0" data-tooltip="Pente ou colline inclinée bien exposée au soleil, propice à la culture des vignes fines.">coteau</span> recouvert de rangs de vignes de pinot noir et de chardonnay. Marsannay possède la rare fierté d'être l'unique appellation village de toute la Côte-d'Or à produire des vins d'excellence sous les trois couleurs : blanc minéral, rouge charpenté et un rosé gastronomique emblématique de son <span class="vocab-word" tabindex="0" data-tooltip="Ensemble des facteurs géologiques, climatiques et humains donnant à un vin sa typicité singulière.">terroir</span> séculaire.</p><p class="reading-para">Le cœur historique du bourg est caractérisé par la robuste <span class="vocab-word" tabindex="0" data-tooltip="Demeure traditionnelle en pierre avec cave sous la maison et escalier extérieur montant à l'habitation.">maison vigneronne</span> en calcaire doré. Ces bâtisses traditionnelles se reconnaissent à leur vaste porche cintré pour les charrettes, leur cave voûtée enterrée et leur escalier de pierre extérieur menant directement aux pièces de vie. Durant la période de chaque vendange en septembre, le village entre en ébullition : les remorques pleines de grappes violettes défilent dans les ruelles et les odeurs de moût en fermentation imprègnent l'air ambiant. De nombreux domaines familiaux ouvrent leur caveau accueillant pour une <span class="vocab-word" tabindex="0" data-tooltip="Action de goûter un vin ou un aliment avec attention pour en analyser les saveurs subtiles.">dégustation</span> commentée par chaque passionné <span class="vocab-word" tabindex="0" data-tooltip="Producteur qui cultive la vigne et élabore son propre vin artisanal dans ses caves.">vigneron</span>.</p><p class="reading-para">Autour du vieux centre, des quartiers composés de chaque pavillon récent ont poussé pour accueillir de jeunes ménages travaillant à Dijon. La ville a su maintenir un esprit villageois authentique et une franche convivialité avec ses marchés hebdomadaires, ses écoles accueillantes et ses bistrots gourmands. Le réseau de bus métropolitain permet de rallier le centre dijonnais en une vingtaine de minutes. Habiter à Marsannay, c'est choisir un art de vivre ancré dans la vigne, la beauté changeante des saisons et la gourmandise bourguignonne.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -3058,16 +3008,16 @@
             <h2 class="section-title">Ahuy : Le Bourg Périurbain Paisible Très Prisé des Cadres</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-19" data-section="19">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-19" data-section="19">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(19)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -3143,29 +3093,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">Positionné au nord immédiat de Dijon, à quelques minutes seulement du pôle économique de la Toison d'Or, le village d'Ahuy s'est imposé comme un havre résidentiel très convoité. Ancien modeste <span class="vocab-word" tabindex="0" data-tooltip="Gros village de campagne disposant de services essentiels, d'une mairie et d'artisans locaux.">bourg</span> rural groupé autour de son clocher ancien, de son lavoir fleuri et de ses fontaines de pierre, la commune a su maîtriser son développement immobilier pour préserver son identité champêtre. La nature y est partout présente : les champs de blé dorés, les combes boisées et les vergers de mirabelliers bordent directement les jardins des dernières maisons dans un cadre admirablement préservé et apaisant.</p><p class="reading-para">Cette commune <span class="vocab-word" tabindex="0" data-tooltip="Situé à la campagne immédiate tout en dépendant directement des emplois d'une grande ville.">périurbaine</span> attire principalement des ingénieurs, des cadres supérieurs et des professions de santé désireux de faire construire une maison individuelle spacieuse avec un grand terrain sans subir l'anonymat des cités denses. Une très forte proportion de ménages est <span class="vocab-word" tabindex="0" data-tooltip="Personne qui détient un bien immobilier ou une maison en titre légal complet.">propriétaire</span> de son logement. L'ambiance au quotidien y est d'une grande <span class="vocab-word" tabindex="0" data-tooltip="Calme profond, absence de bruit gênant et sérénité de l'environnement au quotidien.">quiétude</span> : aucun grand axe bruyant ne traverse le centre villageois, et les enfants peuvent pédaler sur la place de la mairie en toute sécurité. Les liens de <span class="vocab-word" tabindex="0" data-tooltip="Ensemble des personnes qui habitent à proximité les unes des autres dans un quartier.">voisinage</span> sont conviviaux et polis lors de la fête communale d'été ou des manifestations associatives.</p><p class="reading-para">Cette tranquillité campagnarde implique toutefois une réelle dépendance automobile pour la majorité des déplacements. Bien que des lignes de bus métropolitaines desservent le village, posséder au moins une voiture personnelle demeure indispensable pour transporter les enfants au collège ou faire les courses de la semaine. Malgré cela, ce cadre périurbain reste particulièrement recherché par ceux qui travaillent dans les parcs tertiaires du nord dijonnais : rentrer chez soi en cinq minutes de route pour retrouver un écrin de verdure et faire travailler chaque artisan local constitue un luxe quotidien très convoité.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -3183,16 +3133,16 @@
             <h2 class="section-title">Plombières-lès-Dijon : La Vallée de l'Ouche et l'Atmosphère Champêtre</h2>
           </header>
 
-          <!-- EXERCICE DE VOCABULAIRE -->
-          <div class="exercise-box" id="exercise-20" data-section="20">
-            <div class="exercise-header">
-              <div class="exercise-title-group">
-                <span class="exercise-icon" aria-hidden="true">
+          <!-- 1. VOCABULAIRE CLÉ -->
+          <div class="panel-box exercise-box" id="exercise-20" data-section="20">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
-                <h3 class="exercise-title">Vocabulaire Clé</h3>
+                <h3 class="panel-title">Vocabulaire Clé</h3>
               </div>
-              <div class="exercise-actions">
+              <div class="panel-actions">
                 <button type="button" class="btn-reset" onclick="resetExercise(20)" title="Réinitialiser l'exercice">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                   Réinitialiser
@@ -3268,29 +3218,29 @@
             </div>
           </div>
 
-          <!-- TEXTE DE LECTURE -->
-          <div class="reading-section">
-            <div class="reading-header">
-              <span class="reading-tag">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Texte de Lecture — Niveau B1 / B2 (~300 mots)
-              </span>
-              <span class="reading-hint">Survolez ou touchez les mots soulignés pour revoir leur définition.</span>
+          <!-- 2. TEXTE DE LECTURE -->
+          <div class="panel-box reading-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </span>
+                <h3 class="panel-title">Texte de Lecture</h3>
+              </div>
             </div>
             <div class="reading-body">
               <p class="reading-para">En remontant le cours de l'Ouche vers l'ouest au-delà du lac Kir, on pénètre dans la somptueuse <span class="vocab-word" tabindex="0" data-tooltip="Espace géographique allongé et creusé par un cours d'eau entre deux versants de collines.">vallée</span> <span class="vocab-word" tabindex="0" data-tooltip="Couvert d'une végétation abondante, d'arbres feuillus et de prairies vertes fraîches.">verdoyante</span> où s'étend la commune atypique de Plombières-lès-Dijon. Bâtie au fond d'un relief profondément <span class="vocab-word" tabindex="0" data-tooltip="Resserré et profond entre deux collines abruptes dans le fond d'une vallée étroite.">encaissé</span> entre deux hautes collines calcaires couvertes de forêts de feuillus, cette localité possède un charme <span class="vocab-word" tabindex="0" data-tooltip="Simple, naturel, un peu brut et campagnard sans luxe sophistiqué.">rustique</span> et pittoresque qui la distingue totalement des banlieues pavillonnaires ordinaires. La rivière impétueuse, les méandres du canal de Bourgogne et la silhouette majestueuse du grand viaduc ferroviaire en pierre dessinent un paysage d'un romantisme surprenant.</p><p class="reading-para">L'histoire de Plombières est intimement liée à l'épopée du rail : pendant plus d'un siècle, de nombreuses familles de travailleur <span class="vocab-word" tabindex="0" data-tooltip="Employé travaillant pour les chemins de fer nationaux ou la traction ferroviaire.">cheminot</span> de la célèbre ligne impériale Paris-Lyon-Marseille se sont installées ici dans de solides maisons de village flanquées de potagers nourriciers. La vie quotidienne y est douce, rythmée par le murmure de la rivière, le chant des oiseaux et le passage occasionnel des trains de marchandises. Durant la canicule estivale, la configuration de la vallée procure une fraîcheur vivifiante fort appréciée des promeneurs fuyant la chaleur étouffante des rues du centre-ville.</p><p class="reading-para">Les habitants profitent d'un accès immédiat aux sentiers de randonnée montant vers les combes sauvages environnantes. Le village dispose de services de base, d'un bistrot convivial où les gens se retrouvent pour un café et d'une école primaire très active. Même si l'ensoleillement est plus court en hiver en raison des falaises et que les ruelles anciennes sont étroites, la grande quiétude des lieux et les prix immobiliers plus raisonnables que dans les secteurs cossus du nord séduisent tous ceux qui rêvent d'une authentique vie de campagne aux portes de Dijon.</p>
             </div>
           </div>
 
-          <!-- QUESTION D'OPINION ET DISCUSSION -->
-          <div class="discussion-card">
-            <div class="discussion-header">
-              <span class="discussion-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              </span>
-              <div>
-                <h4 class="discussion-title">Question d'Opinion pour le Professeur et l'Étudiant</h4>
-                <p class="discussion-subtitle">Sujet d'échange oral et de réflexion sur le mode de vie et l'urbanisme</p>
+          <!-- 3. QUESTION DE DISCUSSION -->
+          <div class="panel-box discussion-box">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <h3 class="panel-title">Question de Discussion</h3>
               </div>
             </div>
             <div class="discussion-question">
@@ -3420,8 +3370,28 @@
         card.addEventListener('dragover', handleCardDragOver);
         card.addEventListener('dragleave', handleCardDragLeave);
         card.addEventListener('drop', handleCardDrop);
+        card.addEventListener('mousedown', handleCardMouseDown);
+        card.addEventListener('mousemove', handleCardMouseMove);
         card.addEventListener('click', handleCardClick);
       });
+    }
+
+    let cardMouseDownX = 0;
+    let cardMouseDownY = 0;
+    let isSelectingCardText = false;
+
+    function handleCardMouseDown(e) {
+      cardMouseDownX = e.clientX;
+      cardMouseDownY = e.clientY;
+      isSelectingCardText = false;
+    }
+
+    function handleCardMouseMove(e) {
+      if (e.buttons === 1) {
+        if (Math.abs(e.clientX - cardMouseDownX) > 4 || Math.abs(e.clientY - cardMouseDownY) > 4) {
+          isSelectingCardText = true;
+        }
+      }
     }
 
     // DRAG DESKTOP HANDLERS
@@ -3483,7 +3453,14 @@
 
     function handleCardClick(e) {
       if (this.classList.contains('is-matched')) {
-        // Cliquer sur le mot/définition bascule l'affichage de l'exemple
+        // Si du texte est sélectionné ou si la souris a glissé, ne pas basculer l'affichage
+        const selection = window.getSelection();
+        const hasSelection = selection && selection.toString().trim().length > 0;
+        if (hasSelection || isSelectingCardText) {
+          isSelectingCardText = false;
+          return;
+        }
+        // Clic net : bascule l'affichage de l'exemple
         this.classList.toggle('is-collapsed');
         return;
       }
