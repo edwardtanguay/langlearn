@@ -8,3 +8,19 @@ Create an HTML/CSS/JavaScript file called index.html in the folder dev\info-site
 - change réduire and développer buttons to small, simple open/close icons
 - keep everything smaller/compacter on the questions since if the area goes over a screen, the drag/dropping is difficult, e.g. put the "drop area" simply the size of a word at the end of the definition, not on its own line
 - also remove the "— " when collapse
+
+[/grill-me](slashCommand;grill-me) 
+
+- don't show the area "déposer le mot" at allow, and allow the user to drop anywhere on the who area where the sentence is shown
+- as soon as the user drops the correct answer, show it the same way it is shown when panel is closed, e.g. pill word then the definition
+- remove the whole line "Exemple extrait du texte : "
+- remove "Mots à placer :"
+- remove " — 5 Mots à Associer, 
+
+Glissez chaque mot dans sa case, ou cliquez sur un mot puis sur sa définition."
+- remove "0 / 5 trouvé(s)"
+- on mobile view
+    - make the pills smaller so they don't take up so much room
+    - when choosing a section in teh dropdown, on mobile it scrolls down too far, instead, scrool so that one can see the headers "Section 06" etc.
+    - 
+
