@@ -177,7 +177,7 @@
     .site-hero {
       background: linear-gradient(180deg, #ffffff 0%, var(--bg-surface) 100%);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 3.5rem 1.5rem 2.5rem;
+      padding: 2.25rem 1.5rem 1.75rem;
       text-align: center;
     }
 
@@ -197,61 +197,22 @@
       border-radius: 9999px;
       font-weight: 700;
       font-size: 0.85rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
     .site-hero h1 {
-      font-size: clamp(2rem, 4.5vw, 2.9rem);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
       font-weight: 800;
-      line-height: 1.2;
+      line-height: 1.25;
       color: var(--text-main);
-      margin-bottom: 1rem;
+      margin-bottom: 0;
       letter-spacing: -0.02em;
     }
 
     .site-hero h1 span {
       color: var(--accent-blue);
-    }
-
-    .hero-lead {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-guide-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
-      text-align: left;
-    }
-
-    .guide-card {
-      background: #ffffff;
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.2rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .guide-card-title {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--text-main);
-      margin-bottom: 0.35rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .guide-card-text {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.5;
     }
 
     /* CONTENEUR PRINCIPAL */
@@ -294,9 +255,8 @@
         padding: 0.2rem 0.52rem;
         font-size: 0.78rem;
       }
-      .collapsed-word-pill {
-        padding: 0.1rem 0.45rem;
-        font-size: 0.78rem;
+      .matched-word {
+        font-size: 0.85rem;
       }
       .def-card {
         padding: 0.45rem 0.65rem;
@@ -493,75 +453,47 @@
 
     .def-card.shake-error {
       animation: shakeAnimation 0.45s ease;
-      border-color: var(--danger-red);
-      background: var(--danger-red-soft);
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+    }
+
+    .def-card.shake-error .def-text {
+      color: #b91c1c !important;
     }
 
     .def-card.is-matched {
       background: #f0fdf4;
       border-color: var(--success-green-border);
-      cursor: default;
+      cursor: pointer;
     }
 
     .def-card.is-matched.is-collapsed {
-      padding: 0.4rem 0.85rem;
+      background: #ffffff;
+      border-color: #d1fae5;
     }
 
     .def-main-line {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       flex-wrap: wrap;
-      gap: 0.45rem;
+      gap: 0.35rem;
+    }
+
+    .matched-word {
+      display: none;
+      font-weight: 800;
+      color: #1e3a8a;
+      margin-right: 0.35rem;
+    }
+
+    .def-card.is-matched .matched-word {
+      display: inline;
     }
 
     .def-text {
       font-size: 0.92rem;
       color: var(--text-main);
       line-height: 1.45;
-    }
-
-    .collapsed-word-pill {
-      display: none;
-      align-items: center;
-      font-weight: 800;
-      color: var(--success-green);
-      font-size: 0.88rem;
-      background: #ffffff;
-      padding: 0.15rem 0.55rem;
-      border-radius: 9999px;
-      border: 1.5px solid var(--success-green-border);
-      box-shadow: 0 1px 2px rgba(21, 128, 61, 0.08);
-      margin-right: 0.25rem;
-    }
-
-    .def-card.is-matched .collapsed-word-pill {
-      display: inline-flex;
-    }
-
-    .btn-toggle-collapse {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      background: #ffffff;
-      border: 1px solid var(--border-strong);
-      color: var(--text-muted);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      flex-shrink: 0;
-      margin-left: auto;
-    }
-
-    .def-card.is-matched .btn-toggle-collapse {
-      display: inline-flex;
-    }
-
-    .btn-toggle-collapse:hover {
-      background: var(--bg-surface);
-      color: var(--text-main);
-      border-color: var(--text-muted);
     }
 
     /* ANIMATION ERREUR SHAKE */
@@ -861,41 +793,6 @@
     <div class="hero-content">
       <span class="hero-badge">Exploration Urbaine & Immersion B1 / B2</span>
       <h1>Vingt Quartiers et Communes Autour de <span>Dijon</span></h1>
-      <p class="hero-lead">
-        Une traversée sociologique et humaine de la métropole bourguignonne : des cours patriciens de Montchapet aux ruelles médiévales, des cités populaires dynamiques des Grésilles et de Fontaine d'Ouche aux villages vignerons et collines panoramiques.
-      </p>
-
-      <div class="hero-guide-cards">
-        <div class="guide-card">
-          <div class="guide-card-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-burgundy)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-            1. Vocabulaire Actif
-          </div>
-          <div class="guide-card-text">
-            Glissez ou touchez les 5 mots difficiles vers leurs définitions pour débloquer votre compréhension.
-          </div>
-        </div>
-
-        <div class="guide-card">
-          <div class="guide-card-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-burgundy)" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-            2. Lecture B1/B2
-          </div>
-          <div class="guide-card-text">
-            Un texte vivant d'environ 300 mots décrivant le quotidien, le bâti, les transports et les profils d'habitants.
-          </div>
-        </div>
-
-        <div class="guide-card">
-          <div class="guide-card-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-burgundy)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            3. Discussion Ouverte
-          </div>
-          <div class="guide-card-text">
-            Une question d'opinion pour confronter les points de vue entre enseignant et apprenant.
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -938,65 +835,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="effervescence" tabindex="0">
+            <div class="def-card" data-target="effervescence" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">effervescence</span>
+                <strong class="matched-word">effervescence</strong>
                 <span class="def-text">Grande animation, activité intense et joyeuse dans un lieu.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Dès les premières lueurs de l'aube, une joyeuse <strong>effervescence</strong> gagne les abords du marché couvert des Halles centrales conçues dans le style Eiffel. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="pavé" tabindex="0">
+            <div class="def-card" data-target="pavé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">pavé</span>
+                <strong class="matched-word">pavé</strong>
                 <span class="def-text">Gros bloc de pierre taillée qui recouvre la chaussée d'une rue ancienne.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Les rues piétonnes, entièrement recouvertes d'un vieux <strong>pavé</strong> poli par des siècles de pas, créent une atmosphère intime et préservée où la circulation automobile est presque inexistante. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="flâner" tabindex="0">
+            <div class="def-card" data-target="flâner" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">flâner</span>
+                <strong class="matched-word">flâner</strong>
                 <span class="def-text">Se promener lentement sans but précis, pour le plaisir d'observer.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« On y croise les habitués du quartier qui viennent <strong>flâner</strong> entre les étals parfumés et faire leurs courses quotidiennes dans les commerces de bouche réputés : fromagers affineurs, boulangers au levain, bouchers traditionnels et épiciers passionnés. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="demeure" tabindex="0">
+            <div class="def-card" data-target="demeure" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">demeure</span>
+                <strong class="matched-word">demeure</strong>
                 <span class="def-text">Grande et belle maison d'habitation, souvent ancienne et élégante.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Chaque grande <strong>demeure</strong> de maître dissimule d'admirables cours intérieures pavées, des puits d'époque et des escaliers à vis en pierre de taille qui témoignent avec éclat de la puissance passée des ducs et du fabuleux patrimoine régional. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="commerces de bouche" tabindex="0">
+            <div class="def-card" data-target="commerces de bouche" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">commerces de bouche</span>
+                <strong class="matched-word">commerces de bouche</strong>
                 <span class="def-text">Magasins qui vendent des produits alimentaires fins et artisanaux.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« On y croise les habitués du quartier qui viennent flâner entre les étals parfumés et faire leurs courses quotidiennes dans les <strong>commerces de bouche</strong> réputés : fromagers affineurs, boulangers au levain, bouchers traditionnels et épiciers passionnés. »</blockquote>
@@ -1078,65 +960,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="huppé" tabindex="0">
+            <div class="def-card" data-target="huppé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">huppé</span>
+                <strong class="matched-word">huppé</strong>
                 <span class="def-text">Se dit d'un quartier ou d'un milieu social très chic, riche et prestigieux.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Situé sur les douces collines qui dominent le nord-ouest du centre urbain, Montchapet est incontestablement le quartier le plus <strong>huppé</strong> et le plus réputé de la cité dijonnaise. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="demeure bourgeoise" tabindex="0">
+            <div class="def-card" data-target="demeure bourgeoise" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">demeure bourgeoise</span>
+                <strong class="matched-word">demeure bourgeoise</strong>
                 <span class="def-text">Vaste maison élégante et de grand confort appartenant à une famille aisée.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Chaque grande <strong>demeure bourgeoise</strong> s'élève fièrement derrière de hautes grilles en fer forgé laqué de noir, entourée d'un vaste parc arboré où les pelouses impeccables côtoient des massifs de rosiers et de cèdres séculaires. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="ombragé" tabindex="0">
+            <div class="def-card" data-target="ombragé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">ombragé</span>
+                <strong class="matched-word">ombragé</strong>
                 <span class="def-text">Qui est abrité du soleil par les feuilles et les branches d'arbres touffus.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Les larges trottoirs offrent un parcours délicieusement <strong>ombragé</strong>, très agréable pour les promeneurs et les enfants rentrant des cours de tennis ou des écoles privées voisines. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="quiétude" tabindex="0">
+            <div class="def-card" data-target="quiétude" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">quiétude</span>
+                <strong class="matched-word">quiétude</strong>
                 <span class="def-text">État de tranquillité paisible, de calme absolu et de sérénité profonde.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« La routine quotidienne à Montchapet est bercée par une rare <strong>quiétude</strong>. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="coté" tabindex="0">
+            <div class="def-card" data-target="coté" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">coté</span>
+                <strong class="matched-word">coté</strong>
                 <span class="def-text">Qui a une grande valeur marchande ou une excellente réputation sur le marché immobilier.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Le marché immobilier de ce secteur particulièrement <strong>coté</strong> figure parmi les plus chers de Bourgogne. »</blockquote>
@@ -1218,65 +1085,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="cossu" tabindex="0">
+            <div class="def-card" data-target="cossu" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">cossu</span>
+                <strong class="matched-word">cossu</strong>
                 <span class="def-text">Qui témoigne d'une grande aisance financière, luxueux et confortable.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« L'aspect d'ensemble est extrêmement <strong>cossu</strong> et dégage une impression immédiate de prospérité tranquille. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="immeuble de maître" tabindex="0">
+            <div class="def-card" data-target="immeuble de maître" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">immeuble de maître</span>
+                <strong class="matched-word">immeuble de maître</strong>
                 <span class="def-text">Bâtiment d'habitation élégant construit en pierre noble pour les classes aisées.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« De chaque côté d'une large chaussée bordée d'arbres majestueux se dresse un imposant <strong>immeuble de maître</strong> en pierre calcaire dorée. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="parquet" tabindex="0">
+            <div class="def-card" data-target="parquet" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">parquet</span>
+                <strong class="matched-word">parquet</strong>
                 <span class="def-text">Revêtement de sol intérieur composé de lames de bois assemblées avec soin.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Les réceptions conservent leur superbe <strong>parquet</strong> en chêne d'origine posé en point de Hongrie, d'élégantes cheminées en marbre et une délicate moulure en stuc au plafond. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="moulure" tabindex="0">
+            <div class="def-card" data-target="moulure" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">moulure</span>
+                <strong class="matched-word">moulure</strong>
                 <span class="def-text">Ornement décoratif en relief sculpté sur les plafonds, corniches ou boiseries.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Les réceptions conservent leur superbe parquet en chêne d'origine posé en point de Hongrie, d'élégantes cheminées en marbre et une délicate <strong>moulure</strong> en stuc au plafond. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="balcon filant" tabindex="0">
+            <div class="def-card" data-target="balcon filant" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">balcon filant</span>
+                <strong class="matched-word">balcon filant</strong>
                 <span class="def-text">Long balcon continu en fer forgé qui s'étend sur toute la façade d'un étage.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Chaque superbe façade sculptée attire le regard grâce à ses corniches ouvragées, ses hautes fenêtres et son magnifique <strong>balcon filant</strong> en fer forgé orné de motifs floraux. »</blockquote>
@@ -1358,65 +1210,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="cours" tabindex="0">
+            <div class="def-card" data-target="cours" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">cours</span>
+                <strong class="matched-word">cours</strong>
                 <span class="def-text">Grande avenue urbaine large, droite et ornée de rangées d'arbres majestueux.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Tracé au dix-septième siècle sous l'impulsion des princes de Condé, cet immense <strong>cours</strong> rectiligne s'étire sur plus d'un kilomètre depuis la place Wilson jusqu'au parc de la Colombière. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="flânerie" tabindex="0">
+            <div class="def-card" data-target="flânerie" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">flânerie</span>
+                <strong class="matched-word">flânerie</strong>
                 <span class="def-text">Promenade lente et détendue sans destination précise pour admirer les alentours.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« C'est l'itinéraire rêvé pour la <strong>flânerie</strong> du dimanche, la promenade à bicyclette et la contemplation contemplative au milieu des grands espaces verts. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="joggeur" tabindex="0">
+            <div class="def-card" data-target="joggeur" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">joggeur</span>
+                <strong class="matched-word">joggeur</strong>
                 <span class="def-text">Personne qui pratique la course à pied régulière pour sa santé ou sa forme.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Dès le samedi matin, cyclistes, promeneurs avec poussettes et chaque <strong>joggeur</strong> matinal empruntent les contre-allées sablonneuses pour converger vers le parc de la Colombière, véritable poumon vert communal de trente-trois hectares avec ses daims, ses aires de jeux et ses sentiers forestiers classés. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="alignement" tabindex="0">
+            <div class="def-card" data-target="alignement" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">alignement</span>
+                <strong class="matched-word">alignement</strong>
                 <span class="def-text">Disposition de plusieurs éléments (comme des platanes) sur une même ligne droite.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Un remarquable double <strong>alignement</strong> de platanes centenaires borde chaque côté de la chaussée, créant une haute voûte de feuillage qui dispense une fraîcheur bienfaisante durant les chaudes journées d'été. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="villa" tabindex="0">
+            <div class="def-card" data-target="villa" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">villa</span>
+                <strong class="matched-word">villa</strong>
                 <span class="def-text">Grande maison individuelle de plaisance entourée d'un vaste jardin privé.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Les habitations qui bordent l'avenue sont exceptionnelles : chaque somptueuse <strong>villa</strong> de style Belle Époque, manoir néo-Renaissance ou hôtel particulier moderne est entouré d'un parc privatif clos de haies épaisses. »</blockquote>
@@ -1498,65 +1335,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="mitoyenneté" tabindex="0">
+            <div class="def-card" data-target="mitoyenneté" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">mitoyenneté</span>
+                <strong class="matched-word">mitoyenneté</strong>
                 <span class="def-text">État de deux habitations ou propriétés qui se touchent par un mur mitoyen commun.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« L'habitat s'y révèle harmonieux et diversifié : un bel hôtel particulier en pierre calcaire côtoie fréquemment un coquet pavillon des années 1930 dont le jardinet fleuri partage une discrète <strong>mitoyenneté</strong> avec la propriété voisine. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="pavillon" tabindex="0">
+            <div class="def-card" data-target="pavillon" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">pavillon</span>
+                <strong class="matched-word">pavillon</strong>
                 <span class="def-text">Maison individuelle d'habitation de taille moyenne avec un jardinet attenant.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« L'habitat s'y révèle harmonieux et diversifié : un bel hôtel particulier en pierre calcaire côtoie fréquemment un coquet <strong>pavillon</strong> des années 1930 dont le jardinet fleuri partage une discrète mitoyenneté avec la propriété voisine. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="verdoyant" tabindex="0">
+            <div class="def-card" data-target="verdoyant" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">verdoyant</span>
+                <strong class="matched-word">verdoyant</strong>
                 <span class="def-text">Riche en végétation saine, grands arbres, pelouses et jardins fleuris.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Moins aristocratique que Montchapet mais particulièrement soigné, cet environnement <strong>verdoyant</strong> propose un équilibre parfait entre des petits immeubles de trois étages à l'architecture soignée et de charmantes rues bordées d'arbres. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="paisible" tabindex="0">
+            <div class="def-card" data-target="paisible" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">paisible</span>
+                <strong class="matched-word">paisible</strong>
                 <span class="def-text">Calme, tranquille, sans bruit agressif ni agitation perturbatrice.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Ce qui fait le charme de la vie de tous les jours ici, c'est avant tout son caractère <strong>paisible</strong> et sécurisant. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="commerce de proximité" tabindex="0">
+            <div class="def-card" data-target="commerce de proximité" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">commerce de proximité</span>
+                <strong class="matched-word">commerce de proximité</strong>
                 <span class="def-text">Boutique de quartier facilement accessible à pied pour les achats de chaque jour.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« La vie de voisinage repose sur un réseau dynamique de <strong>commerce de proximité</strong> : boulangerie réputée pour ses croissants, boucherie artisanale, caviste indépendant et maraîcher de saison animent le carrefour Chevreul dans un esprit convivial et détendu. »</blockquote>
@@ -1638,65 +1460,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="pans de bois" tabindex="0">
+            <div class="def-card" data-target="pans de bois" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">pans de bois</span>
+                <strong class="matched-word">pans de bois</strong>
                 <span class="def-text">Poutres en bois apparentes formant l'ossature extérieure d'une maison ancienne (colombages).</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Ici, de splendides maisons médiévales à <strong>pans de bois</strong> et aux poutres sculptées se dressent le long d'une ruelle étroite pavée de grès. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="pittoresque" tabindex="0">
+            <div class="def-card" data-target="pittoresque" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">pittoresque</span>
+                <strong class="matched-word">pittoresque</strong>
                 <span class="def-text">Qui séduit le regard par son originalité, son authenticité et sa beauté singulière.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« C'est incontestablement le coin le plus <strong>pittoresque</strong> et envoûtant du centre dijonnais. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="antiquaire" tabindex="0">
+            <div class="def-card" data-target="antiquaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">antiquaire</span>
+                <strong class="matched-word">antiquaire</strong>
                 <span class="def-text">Professionnel qui achète, restaure et vend des objets ou meubles d'art anciens.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Enlacé derrière l'église Notre-Dame et la célèbre chouette porte-bonheur sculptée sur un contrefort, le quartier des <strong>Antiquaires</strong> centré sur la rue Verrerie propulse le piéton dans une autre époque. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="ruelle" tabindex="0">
+            <div class="def-card" data-target="ruelle" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">ruelle</span>
+                <strong class="matched-word">ruelle</strong>
                 <span class="def-text">Rue très étroite et intime typique des villes d'époque médiévale.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Ici, de splendides maisons médiévales à pans de bois et aux poutres sculptées se dressent le long d'une <strong>ruelle</strong> étroite pavée de grès. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="atelier" tabindex="0">
+            <div class="def-card" data-target="atelier" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">atelier</span>
+                <strong class="matched-word">atelier</strong>
                 <span class="def-text">Espace de travail manuel et de création pour un artiste ou un artisan d'art.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« La communauté des habitants est soudée et chaleureuse : on s'arrête devant la vitrine d'un <strong>atelier</strong> d'ébénisterie pour bavarder, ou bien l'on partage un thé sur le pas d'une porte avec les commerçants du voisinage qui se connaissent tous par leurs prénoms et veillent les uns sur les autres. »</blockquote>
@@ -1778,65 +1585,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="kiosque à musique" tabindex="0">
+            <div class="def-card" data-target="kiosque à musique" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">kiosque à musique</span>
+                <strong class="matched-word">kiosque à musique</strong>
                 <span class="def-text">Petite construction circulaire ouverte dans un jardin où jouaient autrefois les fanfares.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Dotée d'un superbe bassin circulaire d'où jaillit un haut jet d'eau rafraîchissant et d'un élégant <strong>kiosque à musique</strong> en ferronnerie blanche, cette place constitue l'un des espaces publics les plus aimés de la métropole. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="bassin" tabindex="0">
+            <div class="def-card" data-target="bassin" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">bassin</span>
+                <strong class="matched-word">bassin</strong>
                 <span class="def-text">Grande pièce d'eau décorative artificielle ornée d'un puissant jet d'eau au centre d'un square.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Dotée d'un superbe <strong>bassin</strong> circulaire d'où jaillit un haut jet d'eau rafraîchissant et d'un élégant kiosque à musique en ferronnerie blanche, cette place constitue l'un des espaces publics les plus aimés de la métropole. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="ombrage" tabindex="0">
+            <div class="def-card" data-target="ombrage" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">ombrage</span>
+                <strong class="matched-word">ombrage</strong>
                 <span class="def-text">Ombre fraîche et protectrice dispensée par les feuilles d'arbres touffus en été.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Tout autour du square arboré qui garantit un généreux <strong>ombrage</strong> estival, de grands immeubles classiques du dix-neuvième siècle abritent une population composée d'avocats, de professeurs, de retraités aisés et de ménages de profil bourgeois attachés à la qualité de leur cadre de vie. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="bourgeois" tabindex="0">
+            <div class="def-card" data-target="bourgeois" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">bourgeois</span>
+                <strong class="matched-word">bourgeois</strong>
                 <span class="def-text">Qui appartient aux classes moyennes ou supérieures confortablement établies.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Tout autour du square arboré qui garantit un généreux ombrage estival, de grands immeubles classiques du dix-neuvième siècle abritent une population composée d'avocats, de professeurs, de retraités aisés et de ménages de profil <strong>bourgeois</strong> attachés à la qualité de leur cadre de vie. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="artère" tabindex="0">
+            <div class="def-card" data-target="artère" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">artère</span>
+                <strong class="matched-word">artère</strong>
                 <span class="def-text">Avenue ou voie de communication principale traversant une zone urbaine active.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Bien que traversée par une <strong>artère</strong> circulante aux heures de pointe, la place dispose de trottoirs très larges et d'un jardin central sécurisé où les enfants jouent autour de la fontaine pendant que les aînés discutent sur les bancs de pierre. »</blockquote>
@@ -1918,65 +1710,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="pôle multimodal" tabindex="0">
+            <div class="def-card" data-target="pôle multimodal" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">pôle multimodal</span>
+                <strong class="matched-word">pôle multimodal</strong>
                 <span class="def-text">Lieu de correspondance où se rencontrent plusieurs réseaux de transport (tramway, bus, vélos).</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Traversée par les lignes 1 et 2 du tramway dijonnais qui se croisent sous de hautes pergolas métalliques, cette immense esplanade minérale représente le principal <strong>pôle multimodal</strong> de transports publics de l'agglomération. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="effervescence" tabindex="0">
+            <div class="def-card" data-target="effervescence" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">effervescence</span>
+                <strong class="matched-word">effervescence</strong>
                 <span class="def-text">Mouvement tumultueux, intense et continu d'une foule en activité dans un quartier.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Du matin au soir, des dizaines de milliers d'usagers, salariés pressés, étudiants universitaires et lycéens s'y côtoient, créant un extraordinaire brassage humain et une <strong>effervescence</strong> permanente au cœur de la ville qui ne faiblit jamais. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="nocturne" tabindex="0">
+            <div class="def-card" data-target="nocturne" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">nocturne</span>
+                <strong class="matched-word">nocturne</strong>
                 <span class="def-text">Qui se passe pendant la nuit ou qui touche aux sorties tardives en ville.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« À la nuit tombée, le quartier dévoile une tout autre facette : une vie <strong>nocturne</strong> particulièrement animée. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="cosmopolite" tabindex="0">
+            <div class="def-card" data-target="cosmopolite" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">cosmopolite</span>
+                <strong class="matched-word">cosmopolite</strong>
                 <span class="def-text">Qui réunit et mélange des personnes de nombreuses nationalités et origines culturelles.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« La population y est jeune, mobile et <strong>cosmopolite</strong>. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="nuisance sonore" tabindex="0">
+            <div class="def-card" data-target="nuisance sonore" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">nuisance sonore</span>
+                <strong class="matched-word">nuisance sonore</strong>
                 <span class="def-text">Bruit répétitif ou excessif qui dérange le repos et la tranquillité des résidents.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Pour les riverains habitant au-dessus des établissements, cette popularité festive entraîne régulièrement une <strong>nuisance sonore</strong> sensible durant les week-ends. »</blockquote>
@@ -2058,65 +1835,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="résidence universitaire" tabindex="0">
+            <div class="def-card" data-target="résidence universitaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">résidence universitaire</span>
+                <strong class="matched-word">résidence universitaire</strong>
                 <span class="def-text">Grand immeuble d'État destiné au logement des étudiants à un tarif modéré.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Entre les tours publiques gérées par le CROUS abritant chaque <strong>résidence universitaire</strong> et les dizaines d'immeubles privés récents remplis de studette meublée, le quartier offre un hébergement abordable très recherché. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="studette" tabindex="0">
+            <div class="def-card" data-target="studette" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">studette</span>
+                <strong class="matched-word">studette</strong>
                 <span class="def-text">Très petit logement meublé d'une seule pièce compacte destiné à une personne.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Entre les tours publiques gérées par le CROUS abritant chaque résidence universitaire et les dizaines d'immeubles privés récents remplis de <strong>studette</strong> meublée, le quartier offre un hébergement abordable très recherché. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="amphithéâtre" tabindex="0">
+            <div class="def-card" data-target="amphithéâtre" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">amphithéâtre</span>
+                <strong class="matched-word">amphithéâtre</strong>
                 <span class="def-text">Grande salle de cours en gradins dans une faculté ou grande école d'enseignement supérieur.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Le quotidien est synchronisé avec les cours dispensés dans chaque vaste <strong>amphithéâtre</strong> et les pauses de midi animées au restaurant universitaire. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="effervescence" tabindex="0">
+            <div class="def-card" data-target="effervescence" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">effervescence</span>
+                <strong class="matched-word">effervescence</strong>
                 <span class="def-text">Agitation vive, enthousiaste et dynamique d'une population nombreuse et active.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Alors que l'automne et le printemps résonnent d'une intense <strong>effervescence</strong> festive, les mois d'été de juillet et août transforment subitement les allées en un décor désert et étonnamment silencieux dès la fin des examens de fin d'année lorsque chacun regagne sa région d'origine. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="rythme scolaire" tabindex="0">
+            <div class="def-card" data-target="rythme scolaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">rythme scolaire</span>
+                <strong class="matched-word">rythme scolaire</strong>
                 <span class="def-text">Alternance annuelle entre les périodes intenses d'études et le vide des congés.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Cependant, le quartier vit au strict <strong>rythme scolaire</strong> du calendrier universitaire. »</blockquote>
@@ -2198,65 +1960,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="péniche" tabindex="0">
+            <div class="def-card" data-target="péniche" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">péniche</span>
+                <strong class="matched-word">péniche</strong>
                 <span class="def-text">Bateau fluvial à fond plat servant au transport de fret ou aménagé en habitation flottante.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Pendant plus d'un siècle, ce carrefour portuaire et ouvrier résonnait du vacarme des <strong>péniches</strong> transportant le charbon, le ciment et le vin vers Paris. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="bassin fluvial" tabindex="0">
+            <div class="def-card" data-target="bassin fluvial" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">bassin fluvial</span>
+                <strong class="matched-word">bassin fluvial</strong>
                 <span class="def-text">Grand plan d'eau aménagé pour accueillir les bateaux et péniches le long d'un canal.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Le grand <strong>bassin fluvial</strong> accueille désormais une flottille permanente de péniches multicolores amarrées le long du vieux quai en pierre. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="berges" tabindex="0">
+            <div class="def-card" data-target="berges" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">berges</span>
+                <strong class="matched-word">berges</strong>
                 <span class="def-text">Bords de terre ou de pierre aménagés qui longent une rivière ou un canal.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Les <strong>berges</strong> verdoyantes du canal ont été transformées en une piste cyclable très appréciée, idéale pour une balade du dimanche ou pour partir en randonnée jusqu'au lac Kir sans jamais côtoyer de circulation motorisée. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="reconversion" tabindex="0">
+            <div class="def-card" data-target="reconversion" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">reconversion</span>
+                <strong class="matched-word">reconversion</strong>
                 <span class="def-text">Transformation complète d'un ancien site industriel ou logistique vers un usage résidentiel moderne.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Aujourd'hui, une exemplaire <strong>reconversion</strong> urbaine a transformé les anciennes friches de stockage en un quartier résidentiel lumineux et très prisé, parsemé d'immeubles contemporains aux façades de bois et aux balcons ouverts sur l'eau. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="écluse" tabindex="0">
+            <div class="def-card" data-target="écluse" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">écluse</span>
+                <strong class="matched-word">écluse</strong>
                 <span class="def-text">Ouvrage hydraulique équipé de portes permettant aux embarcations de franchir une dénivellation d'eau.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Plusieurs familles ont choisi de vivre à l'année sur l'eau, berçant leur quotidien au rythme des saisons et du passage des bateaux de tourisme franchissant une <strong>écluse</strong> centenaire. »</blockquote>
@@ -2338,65 +2085,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="grand ensemble" tabindex="0">
+            <div class="def-card" data-target="grand ensemble" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">grand ensemble</span>
+                <strong class="matched-word">grand ensemble</strong>
                 <span class="def-text">Vaste quartier urbain constitué d'immeubles collectifs et de barres d'habitation construits dans les années 1950-1970.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Conçu initialement comme un immense <strong>grand ensemble</strong> constitué de hautes tours en béton et d'une concentration massive de logements sociaux, ce secteur a bénéficié depuis une quinzaine d'années d'une profonde opération de rénovation urbaine. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="rénovation urbaine" tabindex="0">
+            <div class="def-card" data-target="rénovation urbaine" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">rénovation urbaine</span>
+                <strong class="matched-word">rénovation urbaine</strong>
                 <span class="def-text">Programme public visant à démolir, reconstruire et embellir les quartiers d'habitat social dégradés.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Conçu initialement comme un immense grand ensemble constitué de hautes tours en béton et d'une concentration massive de logements sociaux, ce secteur a bénéficié depuis une quinzaine d'années d'une profonde opération de <strong>rénovation urbaine</strong>. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="marché cosmopolite" tabindex="0">
+            <div class="def-card" data-target="marché cosmopolite" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">marché cosmopolite</span>
+                <strong class="matched-word">marché cosmopolite</strong>
                 <span class="def-text">Grand marché alimentaire où se côtoient produits, saveurs et commerçants de toutes les cultures du monde.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Deux matins par semaine, la place Galilée accueille un grand <strong>marché cosmopolite</strong> renommé dans toute la région. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="associatif" tabindex="0">
+            <div class="def-card" data-target="associatif" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">associatif</span>
+                <strong class="matched-word">associatif</strong>
                 <span class="def-text">Qui concerne les associations citoyennes, d'entraide ou de loisirs animées par des bénévoles.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Le secteur s'appuie également sur un réseau <strong>associatif</strong> très vigoureux : soutien scolaire pour les enfants, ateliers de cuisine interculturels et jardins partagés florissants rythment la semaine dans une authentique convivialité. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="précarité" tabindex="0">
+            <div class="def-card" data-target="précarité" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">précarité</span>
+                <strong class="matched-word">précarité</strong>
                 <span class="def-text">Situation d'instabilité financière ou sociale marquée par de faibles revenus et le manque de sécurité d'emploi.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Le taux de chômage y est nettement plus élevé que la moyenne métropolitaine et de nombreux foyers font face à la <strong>précarité</strong> financière. »</blockquote>
@@ -2478,65 +2210,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="barre d'immeubles" tabindex="0">
+            <div class="def-card" data-target="barre d'immeubles" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">barre d'immeubles</span>
+                <strong class="matched-word">barre d'immeubles</strong>
                 <span class="def-text">Très long bâtiment d'habitation rectangulaire de plusieurs étages, typique des années 1960-1970.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« D'un côté, le paysage architectural est marqué par une grande <strong>barre d'immeubles</strong> en gradins et des ensembles de logements collectifs en béton brut caractéristiques de la politique d'urbanisme de cette époque. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="mixité sociale" tabindex="0">
+            <div class="def-card" data-target="mixité sociale" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">mixité sociale</span>
+                <strong class="matched-word">mixité sociale</strong>
                 <span class="def-text">Cohabitation harmonieuse de personnes de conditions sociales et économiques variées dans un même espace.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« La population locale demeure en majorité modeste, mais les pouvoirs publics déploient d'importants efforts pour maintenir une saine <strong>mixité sociale</strong>. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="espace vert" tabindex="0">
+            <div class="def-card" data-target="espace vert" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">espace vert</span>
+                <strong class="matched-word">espace vert</strong>
                 <span class="def-text">Zone de nature, pelouses ou jardins publics entretenus au milieu des constructions urbaines.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« De l'autre côté, le quartier s'ouvre directement sur le lac Kir, un immense plan d'eau artificiel de trente-sept hectares ceinturé de collines sauvages et de forêts de chênes bourguignons où chaque vaste <strong>espace vert</strong> apporte de l'oxygène au quotidien. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="plan d'eau" tabindex="0">
+            <div class="def-card" data-target="plan d'eau" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">plan d'eau</span>
+                <strong class="matched-word">plan d'eau</strong>
                 <span class="def-text">Étendue d'eau stagnante ou aménagée, comme un lac ou un bassin de loisirs.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« De l'autre côté, le quartier s'ouvre directement sur le lac Kir, un immense <strong>plan d'eau</strong> artificiel de trente-sept hectares ceinturé de collines sauvages et de forêts de chênes bourguignons où chaque vaste espace vert apporte de l'oxygène au quotidien. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="isolé" tabindex="0">
+            <div class="def-card" data-target="isolé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">isolé</span>
+                <strong class="matched-word">isolé</strong>
                 <span class="def-text">Séparé des autres quartiers, difficile d'accès ou situé à l'écart des grands axes.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Autrefois considéré comme un secteur <strong>isolé</strong> du reste de la métropole, Fontaine d'Ouche est aujourd'hui parfaitement raccordé grâce aux voies de bus régulières et aux pistes cyclables. »</blockquote>
@@ -2618,65 +2335,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="pressoir" tabindex="0">
+            <div class="def-card" data-target="pressoir" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">pressoir</span>
+                <strong class="matched-word">pressoir</strong>
                 <span class="def-text">Grand appareil ou machine traditionnelle servant à écraser le raisin pour extraire le jus de vin.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« À l'ouest, grimpant sur les premières pentes de la côte viticole, s'abrite le Vieux Chenôve : un authentique village bourguignon aux ruelles pavées de calcaire, célèbre pour les monumentaux <strong>pressoirs</strong> des ducs de Bourgogne bâtis au treizième siècle. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="contraste" tabindex="0">
+            <div class="def-card" data-target="contraste" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">contraste</span>
+                <strong class="matched-word">contraste</strong>
                 <span class="def-text">Opposition frappante et très visible entre deux réalités ou deux ambiances différentes.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Adossée à la limite sud de Dijon, la commune de Chenôve est l'une des villes les plus singulières de l'agglomération en raison d'un saisissant <strong>contraste</strong> territorial et social. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="pavillonnaire" tabindex="0">
+            <div class="def-card" data-target="pavillonnaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">pavillonnaire</span>
+                <strong class="matched-word">pavillonnaire</strong>
                 <span class="def-text">Composé principalement de maisons individuelles avec jardin privé dans un quartier calme.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Dans ce secteur historique et le quartier <strong>pavillonnaire</strong> voisin, des familles aisées et chaque vigneron réputé jouissent d'une tranquillité champêtre remarquable. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="tissu urbain" tabindex="0">
+            <div class="def-card" data-target="tissu urbain" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">tissu urbain</span>
+                <strong class="matched-word">tissu urbain</strong>
                 <span class="def-text">Organisation et agencement des rues, des places et des constructions dans une ville.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Cette dualité géographique marque le <strong>tissu urbain</strong> de la ville au quotidien. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="convivialité" tabindex="0">
+            <div class="def-card" data-target="convivialité" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">convivialité</span>
+                <strong class="matched-word">convivialité</strong>
                 <span class="def-text">Esprit de partage agréable et relation facile et bienveillante entre habitants.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Bien qu'un réel clivage sociologique sépare les coteaux aisés et les tours du bas, les habitants se retrouvent régulièrement lors des événements sportifs ou de la grande fête de la Saint-Vincent célébrée dans une sincère <strong>convivialité</strong> partagée par tous. »</blockquote>
@@ -2758,65 +2460,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="zone commerciale" tabindex="0">
+            <div class="def-card" data-target="zone commerciale" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">zone commerciale</span>
+                <strong class="matched-word">zone commerciale</strong>
                 <span class="def-text">Vaste espace regroupant des hypermarchés, des centres commerciaux et de grandes enseignes.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Sur le versant économique, la commune abrite la plus gigantesque <strong>zone commerciale</strong> de toute la région Bourgogne. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="périurbain" tabindex="0">
+            <div class="def-card" data-target="périurbain" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">périurbain</span>
+                <strong class="matched-word">périurbain</strong>
                 <span class="def-text">Situé dans la périphérie d'une grande agglomération, entre la ville dense et la campagne.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Ce cadre verdoyant représente l'idéal <strong>périurbain</strong> par excellence pour la famille de classe moyenne désireuse d'offrir un jardin à ses enfants tout en restant proche des commodités. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="lotissement" tabindex="0">
+            <div class="def-card" data-target="lotissement" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">lotissement</span>
+                <strong class="matched-word">lotissement</strong>
                 <span class="def-text">Ensemble de parcelles de terrain issues d'une même division pour construire des maisons individuelles.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« On y parcourt de paisibles <strong>lotissements</strong> bordés de pelouses nettes où chaque maison individuelle dispose de son garage, de sa terrasse ensoleillée et de sa haie de lauriers. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="allée piétonne" tabindex="0">
+            <div class="def-card" data-target="allée piétonne" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">allée piétonne</span>
+                <strong class="matched-word">allée piétonne</strong>
                 <span class="def-text">Chemin aménagé réservé exclusivement aux promeneurs et fermé à la circulation automobile.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Piétons et cyclistes circulent sur chaque <strong>allée piétonne</strong> en parfaite sécurité sans jamais traverser de routes automobiles à grand trafic. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="tranquillité" tabindex="0">
+            <div class="def-card" data-target="tranquillité" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">tranquillité</span>
+                <strong class="matched-word">tranquillité</strong>
                 <span class="def-text">Calme profond, absence de tapage ou d'agitation perturbatrice.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Les habitants apprécient une <strong>tranquillité</strong> absolue au quotidien : les enfants se rendent à pied dans les collèges, au complexe sportif ou à la médiathèque municipale sans le moindre danger. »</blockquote>
@@ -2898,65 +2585,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="passé industriel" tabindex="0">
+            <div class="def-card" data-target="passé industriel" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">passé industriel</span>
+                <strong class="matched-word">passé industriel</strong>
                 <span class="def-text">Histoire économique marquée par la présence d'usines métallurgiques et d'ateliers de fabrication.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Limitrophe du sud-est de Dijon, Longvic est une cité ouvrière fière de sa trajectoire humaine et de son riche <strong>passé industriel</strong>. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="base aérienne" tabindex="0">
+            <div class="def-card" data-target="base aérienne" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">base aérienne</span>
+                <strong class="matched-word">base aérienne</strong>
                 <span class="def-text">Site militaire spécialement équipé de pistes d'atterrissage, de hangars et de casernes pour l'aviation.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Pendant près d'un siècle, le destin de la commune a vibré au son des escadrons de chasse de la prestigieuse <strong>base aérienne</strong> 102, qui a accueilli les plus célèbres as de l'aviation française. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="ouvrier" tabindex="0">
+            <div class="def-card" data-target="ouvrier" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">ouvrier</span>
+                <strong class="matched-word">ouvrier</strong>
                 <span class="def-text">Travailleur manuel exerçant dans l'industrie, le bâtiment ou les ateliers mécaniques.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« L'identité sociale de la commune demeure fortement forgée par son monde <strong>ouvrier</strong> d'origine. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="solidaire" tabindex="0">
+            <div class="def-card" data-target="solidaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">solidaire</span>
+                <strong class="matched-word">solidaire</strong>
                 <span class="def-text">Uni par un sentiment fort d'entraide fraternelle, de loyauté et de soutien collectif.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« La population y cultive un état d'esprit <strong>solidaire</strong> et convivial. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="reconversion" tabindex="0">
+            <div class="def-card" data-target="reconversion" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">reconversion</span>
+                <strong class="matched-word">reconversion</strong>
                 <span class="def-text">Adaptation complète d'anciens sites fermés vers de nouvelles activités économiques civiles.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« La fermeture définitive des activités militaires en 2016 a contraint la ville à un courageux travail de <strong>reconversion</strong> urbaine. »</blockquote>
@@ -3038,65 +2710,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="perché" tabindex="0">
+            <div class="def-card" data-target="perché" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">perché</span>
+                <strong class="matched-word">perché</strong>
                 <span class="def-text">Situé sur une butte ou un sommet élevé dominant la plaine environnante.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Son quartier historique est un authentique bourg médiéval <strong>perché</strong>, établi au début du treizième siècle par les ducs de Bourgogne pour surveiller les routes de Champagne et repousser les invasions. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="panorama" tabindex="0">
+            <div class="def-card" data-target="panorama" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">panorama</span>
+                <strong class="matched-word">panorama</strong>
                 <span class="def-text">Vue très large et dégagée sur un vaste paysage ou une ville vue d'en haut.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Depuis chaque belvédère aménagé sur le rebord de la falaise, on embrasse un grandiose <strong>panorama</strong> à 360 degrés englobant les toits de tuiles de Dijon, la vallée sinueuse de l'Ouche et, par matin dégagé, la ligne bleutée du massif du Jura. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="rempart" tabindex="0">
+            <div class="def-card" data-target="rempart" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">rempart</span>
+                <strong class="matched-word">rempart</strong>
                 <span class="def-text">Muraille fortifiée en pierre destinée autrefois à défendre une cité contre les ennemis.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Quand on pénètre dans l'enceinte de l'ancien <strong>rempart</strong> fortifié, on découvre un dédale poétique où chaque ruelle de pierre serpente entre d'anciennes maisons vigneronnes en pierre blonde, de superbes puits fleuris et la vénérable église Notre-Dame de style gothique bourguignon. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="ruelle de pierre" tabindex="0">
+            <div class="def-card" data-target="ruelle de pierre" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">ruelle de pierre</span>
+                <strong class="matched-word">ruelle de pierre</strong>
                 <span class="def-text">Petite rue ancienne pavée ou encadrée de murs en pierres calcaires de Bourgogne.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Quand on pénètre dans l'enceinte de l'ancien rempart fortifié, on découvre un dédale poétique où chaque <strong>ruelle de pierre</strong> serpente entre d'anciennes maisons vigneronnes en pierre blonde, de superbes puits fleuris et la vénérable église Notre-Dame de style gothique bourguignon. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="belvédère" tabindex="0">
+            <div class="def-card" data-target="belvédère" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">belvédère</span>
+                <strong class="matched-word">belvédère</strong>
                 <span class="def-text">Point de vue élevé spécialement aménagé pour contempler un paysage remarquable.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Depuis chaque <strong>belvédère</strong> aménagé sur le rebord de la falaise, on embrasse un grandiose panorama à 360 degrés englobant les toits de tuiles de Dijon, la vallée sinueuse de l'Ouche et, par matin dégagé, la ligne bleutée du massif du Jura. »</blockquote>
@@ -3178,65 +2835,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="huppé" tabindex="0">
+            <div class="def-card" data-target="huppé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">huppé</span>
+                <strong class="matched-word">huppé</strong>
                 <span class="def-text">Très chic, sélectif, réservé aux couches sociales les plus riches et prestigieuses.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Adossée au flanc nord de Dijon dans le prolongement direct du quartier Montchapet, Fontaine-lès-Dijon s'est forgé la réputation de ville la plus <strong>huppée</strong> de tout le département. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="colline" tabindex="0">
+            <div class="def-card" data-target="colline" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">colline</span>
+                <strong class="matched-word">colline</strong>
                 <span class="def-text">Petite élévation de terrain aux pentes douces dominant une zone urbaine.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Du sommet de cette haute <strong>colline</strong> résidentielle jusqu'aux vallons boisés, la commune déroule une atmosphère de sérénité aristocratique où l'élégance se marie au silence le plus complet au milieu d'une abondante verdure préservée. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="cadre idyllique" tabindex="0">
+            <div class="def-card" data-target="cadre idyllique" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">cadre idyllique</span>
+                <strong class="matched-word">cadre idyllique</strong>
                 <span class="def-text">Environnement enchanteur, harmonieux, beau et paisible comme un rêve de carte postale.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Malgré cette exclusivité économique, la commune offre un <strong>cadre idyllique</strong> ouvert à tous lors des promenades dominicales dans le parc arboré des Basses Feuilles. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="maison de maître" tabindex="0">
+            <div class="def-card" data-target="maison de maître" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">maison de maître</span>
+                <strong class="matched-word">maison de maître</strong>
                 <span class="def-text">Belle demeure patricienne construite en pierre noble avec de vastes pièces de réception.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Chaque magnifique <strong>maison de maître</strong> et chaque villa contemporaine d'architecte se dissimule derrière de hauts murs de clôture en pierre de Bourgogne et d'épaisses haies de lauriers. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="quiétude" tabindex="0">
+            <div class="def-card" data-target="quiétude" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">quiétude</span>
+                <strong class="matched-word">quiétude</strong>
                 <span class="def-text">État de tranquillité profonde, repos de l'esprit à l'abri du bruit et de l'agitation.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« On ne trouve sur le territoire municipal aucune usine polluante ni grand ensemble collectif, ce qui garantit une <strong>quiétude</strong> absolue et un sentiment de sécurité très apprécié par les résidents fortunés. »</blockquote>
@@ -3318,65 +2960,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="coteau" tabindex="0">
+            <div class="def-card" data-target="coteau" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">coteau</span>
+                <strong class="matched-word">coteau</strong>
                 <span class="def-text">Pente ou colline inclinée bien exposée au soleil, propice à la culture des vignes fines.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Dès que l'on franchit l'entrée du village, les perspectives urbaines s'effacent pour laisser place à un superbe <strong>coteau</strong> recouvert de rangs de vignes de pinot noir et de chardonnay. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="vigneron" tabindex="0">
+            <div class="def-card" data-target="vigneron" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">vigneron</span>
+                <strong class="matched-word">vigneron</strong>
                 <span class="def-text">Producteur qui cultive la vigne et élabore son propre vin artisanal dans ses caves.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« De nombreux domaines familiaux ouvrent leur caveau accueillant pour une dégustation commentée par chaque passionné <strong>vigneron</strong>. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="maison vigneronne" tabindex="0">
+            <div class="def-card" data-target="maison vigneronne" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">maison vigneronne</span>
+                <strong class="matched-word">maison vigneronne</strong>
                 <span class="def-text">Demeure traditionnelle en pierre avec cave sous la maison et escalier extérieur montant à l'habitation.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Le cœur historique du bourg est caractérisé par la robuste <strong>maison vigneronne</strong> en calcaire doré. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="dégustation" tabindex="0">
+            <div class="def-card" data-target="dégustation" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">dégustation</span>
+                <strong class="matched-word">dégustation</strong>
                 <span class="def-text">Action de goûter un vin ou un aliment avec attention pour en analyser les saveurs subtiles.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« De nombreux domaines familiaux ouvrent leur caveau accueillant pour une <strong>dégustation</strong> commentée par chaque passionné vigneron. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="terroir" tabindex="0">
+            <div class="def-card" data-target="terroir" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">terroir</span>
+                <strong class="matched-word">terroir</strong>
                 <span class="def-text">Ensemble des facteurs géologiques, climatiques et humains donnant à un vin sa typicité singulière.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Marsannay possède la rare fierté d'être l'unique appellation village de toute la Côte-d'Or à produire des vins d'excellence sous les trois couleurs : blanc minéral, rouge charpenté et un rosé gastronomique emblématique de son <strong>terroir</strong> séculaire. »</blockquote>
@@ -3458,65 +3085,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="bourg" tabindex="0">
+            <div class="def-card" data-target="bourg" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">bourg</span>
+                <strong class="matched-word">bourg</strong>
                 <span class="def-text">Gros village de campagne disposant de services essentiels, d'une mairie et d'artisans locaux.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Ancien modeste <strong>bourg</strong> rural groupé autour de son clocher ancien, de son lavoir fleuri et de ses fontaines de pierre, la commune a su maîtriser son développement immobilier pour préserver son identité champêtre. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="périurbain" tabindex="0">
+            <div class="def-card" data-target="périurbain" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">périurbain</span>
+                <strong class="matched-word">périurbain</strong>
                 <span class="def-text">Situé à la campagne immédiate tout en dépendant directement des emplois d'une grande ville.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Cette commune <strong>périurbaine</strong> attire principalement des ingénieurs, des cadres supérieurs et des professions de santé désireux de faire construire une maison individuelle spacieuse avec un grand terrain sans subir l'anonymat des cités denses. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="quiétude" tabindex="0">
+            <div class="def-card" data-target="quiétude" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">quiétude</span>
+                <strong class="matched-word">quiétude</strong>
                 <span class="def-text">Calme profond, absence de bruit gênant et sérénité de l'environnement au quotidien.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« L'ambiance au quotidien y est d'une grande <strong>quiétude</strong> : aucun grand axe bruyant ne traverse le centre villageois, et les enfants peuvent pédaler sur la place de la mairie en toute sécurité. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="propriétaire" tabindex="0">
+            <div class="def-card" data-target="propriétaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">propriétaire</span>
+                <strong class="matched-word">propriétaire</strong>
                 <span class="def-text">Personne qui détient un bien immobilier ou une maison en titre légal complet.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Une très forte proportion de ménages est <strong>propriétaire</strong> de son logement. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="voisinage" tabindex="0">
+            <div class="def-card" data-target="voisinage" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">voisinage</span>
+                <strong class="matched-word">voisinage</strong>
                 <span class="def-text">Ensemble des personnes qui habitent à proximité les unes des autres dans un quartier.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Les liens de <strong>voisinage</strong> sont conviviaux et polis lors de la fête communale d'été ou des manifestations associatives. »</blockquote>
@@ -3598,65 +3210,50 @@
             <!-- GRILLE DES DÉFINITIONS -->
             <div class="definitions-grid">
               
-            <div class="def-card" data-target="encaissé" tabindex="0">
+            <div class="def-card" data-target="encaissé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">encaissé</span>
+                <strong class="matched-word">encaissé</strong>
                 <span class="def-text">Resserré et profond entre deux collines abruptes dans le fond d'une vallée étroite.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Bâtie au fond d'un relief profondément <strong>encaissé</strong> entre deux hautes collines calcaires couvertes de forêts de feuillus, cette localité possède un charme rustique et pittoresque qui la distingue totalement des banlieues pavillonnaires ordinaires. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="cheminot" tabindex="0">
+            <div class="def-card" data-target="cheminot" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">cheminot</span>
+                <strong class="matched-word">cheminot</strong>
                 <span class="def-text">Employé travaillant pour les chemins de fer nationaux ou la traction ferroviaire.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« L'histoire de Plombières est intimement liée à l'épopée du rail : pendant plus d'un siècle, de nombreuses familles de travailleur <strong>cheminot</strong> de la célèbre ligne impériale Paris-Lyon-Marseille se sont installées ici dans de solides maisons de village flanquées de potagers nourriciers. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="vallée" tabindex="0">
+            <div class="def-card" data-target="vallée" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">vallée</span>
+                <strong class="matched-word">vallée</strong>
                 <span class="def-text">Espace géographique allongé et creusé par un cours d'eau entre deux versants de collines.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« En remontant le cours de l'Ouche vers l'ouest au-delà du lac Kir, on pénètre dans la somptueuse <strong>vallée</strong> verdoyante où s'étend la commune atypique de Plombières-lès-Dijon. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="verdoyant" tabindex="0">
+            <div class="def-card" data-target="verdoyant" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">verdoyant</span>
+                <strong class="matched-word">verdoyant</strong>
                 <span class="def-text">Couvert d'une végétation abondante, d'arbres feuillus et de prairies vertes fraîches.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« En remontant le cours de l'Ouche vers l'ouest au-delà du lac Kir, on pénètre dans la somptueuse vallée <strong>verdoyante</strong> où s'étend la commune atypique de Plombières-lès-Dijon. »</blockquote>
               </div>
             </div>
             
-            <div class="def-card" data-target="rustique" tabindex="0">
+            <div class="def-card" data-target="rustique" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
               <div class="def-main-line">
-                <span class="collapsed-word-pill">rustique</span>
+                <strong class="matched-word">rustique</strong>
                 <span class="def-text">Simple, naturel, un peu brut et campagnard sans luxe sophistiqué.</span>
-                <button type="button" class="btn-toggle-collapse" onclick="toggleCardCollapse(event, this)" title="Développer cette carte" aria-label="Développer ou réduire la carte">
-                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
               </div>
               <div class="def-example">
                 <blockquote class="example-quote">« Bâtie au fond d'un relief profondément encaissé entre deux hautes collines calcaires couvertes de forêts de feuillus, cette localité possède un charme <strong>rustique</strong> et pittoresque qui la distingue totalement des banlieues pavillonnaires ordinaires. »</blockquote>
@@ -3765,13 +3362,8 @@
         words.forEach(word => {
           const card = exercise.querySelector(`.def-card[data-target="${word}"]`);
           if (card) {
-            card.classList.add('is-matched', 'is-collapsed');
-            const toggleBtn = card.querySelector('.btn-toggle-collapse');
-            if (toggleBtn) {
-              const icon = toggleBtn.querySelector('.chevron-icon');
-              if (icon) icon.innerHTML = '<polyline points="6 9 12 15 18 9"></polyline>';
-              toggleBtn.title = 'Développer cette carte';
-            }
+            card.classList.add('is-matched');
+            card.classList.remove('is-collapsed');
           }
 
           const bank = document.getElementById(`bank-${secId}`);
@@ -3890,8 +3482,12 @@
     }
 
     function handleCardClick(e) {
-      if (e.target.closest('.btn-toggle-collapse')) return;
-      if (this.classList.contains('is-matched')) return;
+      if (this.classList.contains('is-matched')) {
+        // Cliquer sur le mot/définition bascule l'affichage de l'exemple
+        this.classList.toggle('is-collapsed');
+        return;
+      }
+
       if (!selectedChip) return;
 
       const currentSection = this.closest('.exercise-box').dataset.section;
@@ -3907,14 +3503,9 @@
     // VALIDATION DU PLACEMENT DU MOT
     function validatePlacement(card, inputWord, targetWord, sectionId) {
       if (inputWord.trim().toLowerCase() === targetWord.trim().toLowerCase()) {
-        // SUCCÈS : MATCH VALIDÉ ET COLLAPSÉ D'EMBLÉE
-        card.classList.add('is-matched', 'is-collapsed');
-        const toggleBtn = card.querySelector('.btn-toggle-collapse');
-        if (toggleBtn) {
-          const icon = toggleBtn.querySelector('.chevron-icon');
-          if (icon) icon.innerHTML = '<polyline points="6 9 12 15 18 9"></polyline>';
-          toggleBtn.title = 'Développer cette carte';
-        }
+        // SUCCÈS : MATCH VALIDÉ ET DÉFINITION / EXEMPLE OUVERT (NON COLLAPSÉ)
+        card.classList.add('is-matched');
+        card.classList.remove('is-collapsed');
 
         // Masquer le mot dans la banque
         const bank = document.getElementById(`bank-${sectionId}`);
@@ -3936,7 +3527,7 @@
         updateSectionScore(sectionId);
         updateGlobalScore();
       } else {
-        // ERREUR : ANIMATION SHAKE ET REJET
+        // ERREUR : ANIMATION WIGGLE EN ROUGE
         card.classList.add('shake-error');
         setTimeout(() => {
           card.classList.remove('shake-error');
@@ -3974,22 +3565,6 @@
       }
     }
 
-    // TOGGLE RÉDUIRE / DÉVELOPPER UNE CARTE RÉSOLUE
-    function toggleCardCollapse(e, btn) {
-      if (e) e.stopPropagation();
-      const card = btn.closest('.def-card');
-      if (!card) return;
-      const isCollapsed = card.classList.toggle('is-collapsed');
-      const icon = btn.querySelector('.chevron-icon');
-      if (isCollapsed) {
-        if (icon) icon.innerHTML = '<polyline points="6 9 12 15 18 9"></polyline>';
-        btn.title = 'Développer cette carte';
-      } else {
-        if (icon) icon.innerHTML = '<polyline points="18 15 12 9 6 15"></polyline>';
-        btn.title = 'Réduire cette carte';
-      }
-    }
-
     // RÉINITIALISATION D'UNE SEULE SECTION
     function resetExercise(sectionId, clearStorage = true) {
       const exercise = document.getElementById(`exercise-${sectionId}`);
@@ -3998,12 +3573,6 @@
       const cards = exercise.querySelectorAll('.def-card');
       cards.forEach(card => {
         card.classList.remove('is-matched', 'is-collapsed', 'drag-hover', 'shake-error');
-        const toggleBtn = card.querySelector('.btn-toggle-collapse');
-        if (toggleBtn) {
-          const icon = toggleBtn.querySelector('.chevron-icon');
-          if (icon) icon.innerHTML = '<polyline points="6 9 12 15 18 9"></polyline>';
-          toggleBtn.title = 'Développer cette carte';
-        }
       });
 
       const chips = exercise.querySelectorAll('.word-chip');
