@@ -436,6 +436,13 @@
       display: none;
     }
 
+    .word-chip.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+      color: #b91c1c !important;
+    }
+
     /* GRILLE DES DÉFINITIONS & COLLAPSE */
     .definitions-grid {
       display: grid;
@@ -607,8 +614,8 @@
       font-weight: 600;
       color: #1d4ed8;
       background: #eff6ff;
-      padding: 0.05rem 0.25rem;
-      border-radius: 3px;
+      padding: 0 1px;
+      border-radius: 2px;
       cursor: help;
       position: relative;
       transition: background-color 0.2s ease;
@@ -3504,10 +3511,20 @@
         updateSectionScore(sectionId);
         updateGlobalScore();
       } else {
-        // ERREUR : ANIMATION WIGGLE EN ROUGE
+        // ERREUR : ANIMATION WIGGLE EN ROUGE SUR LA CARTE ET LE MOT TENTÉ
         card.classList.add('shake-error');
+
+        const bank = document.getElementById(`bank-${sectionId}`);
+        const chip = bank ? bank.querySelector(`.word-chip[data-word="${inputWord}"]`) : null;
+        if (chip) {
+          chip.classList.add('shake-error');
+        }
+
         setTimeout(() => {
           card.classList.remove('shake-error');
+          if (chip) {
+            chip.classList.remove('shake-error');
+          }
         }, 500);
 
         if (selectedChip) {
@@ -3554,7 +3571,7 @@
 
       const chips = exercise.querySelectorAll('.word-chip');
       chips.forEach(chip => {
-        chip.classList.remove('is-placed', 'is-selected', 'is-dragging');
+        chip.classList.remove('is-placed', 'is-selected', 'is-dragging', 'shake-error');
       });
 
       if (selectedChip && selectedChip.closest('.exercise-box').dataset.section == sectionId) {
