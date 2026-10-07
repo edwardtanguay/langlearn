@@ -105,23 +105,8 @@ const percent = computed(() => {
   <div class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs transition-all">
     <!-- Header Summary Row -->
     <div class="flex items-center justify-between mb-2.5">
-      <div class="flex flex-wrap items-center gap-2">
+      <div class="flex items-center gap-2">
         <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Batch</span>
-        
-        <!-- Tested Badge -->
-        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-          Tested: {{ testedCount }} / {{ totalCount }}
-        </span>
-
-        <!-- Learned Badge -->
-        <span
-          class="text-xs font-semibold px-2 py-0.5 rounded-full transition-colors"
-          :class="isBatchComplete 
-            ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400' 
-            : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300'"
-        >
-          Learned: {{ learnedCount }} / {{ totalCount }}
-        </span>
       </div>
 
       <div class="text-xs font-bold text-gray-400 dark:text-gray-500 font-mono">
@@ -144,7 +129,7 @@ const percent = computed(() => {
             slot.id === activeCardId && !isBatchComplete
               ? {
                   borderColor: getLanguageTextColor(slot.language),
-                  boxShadow: `0 0 0 2px var(--tw-ring-offset-color, #ffffff), 0 0 0 4px ${getLanguageTextColor(slot.language)}, 0 4px 6px -1px rgba(0, 0, 0, 0.1)`
+                  boxShadow: `0 0 0 2px ${getLanguageTextColor(slot.language)}, 0 4px 6px -1px rgba(0, 0, 0, 0.1)`
                 }
               : {}
           ]"

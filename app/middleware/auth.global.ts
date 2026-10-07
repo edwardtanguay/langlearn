@@ -6,29 +6,34 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const { loggedIn, isAdmin, fetchRole } = useCurrentUser()
 
-  if (loggedIn.value) {
-    const role = await fetchRole()
-    const isUserAdmin = role === 'admin'
-
-    // Root landing redirect based on role
+  if (!loggedIn.value) {
     if (to.path === '/') {
-      return navigateTo(isUserAdmin ? '/flashcard' : '/member', { replace: true })
+      return navigateTo('/flashcard', { replace: true })
     }
+    return
+  }
 
-    // For non-admin members, restrict access to only member-approved pages
-    if (!isUserAdmin) {
-      const memberAllowedPaths = [
-        '/member',
-        '/links',
-        '/about',
-        '/user',
-        '/activities/gemini-quiz'
-      ]
+  const role = await fetchRole()
+  const isUserAdmin = role === 'admin'
 
-      const isAllowed = memberAllowedPaths.includes(to.path)
-      if (!isAllowed) {
-        return navigateTo('/member', { replace: true })
-      }
+  // Root landing redirect based on role
+  if (to.path === '/') {
+    return navigateTo(isUserAdmin ? '/flashcard' : '/member', { replace: true })
+  }
+
+  // For non-admin members, restrict access to only member-approved pages
+  if (!isUserAdmin) {
+    const memberAllowedPaths = [
+      '/member',
+      '/links',
+      '/about',
+      '/user',
+      '/activities/gemini-quiz'
+    ]
+
+    const isAllowed = memberAllowedPaths.includes(to.path)
+    if (!isAllowed) {
+      return navigateTo('/member', { replace: true })
     }
   }
 })

@@ -83,7 +83,7 @@ const languageColors: Record<string, string> = {
 }
 
 const languageTextColors: Record<string, string> = {
-  fr: '#2563eb',
+  fr: '#60a5fa', // French = brighter blue for high contrast
   es: '#dc2626',
   it: '#16a34a',
   nl: '#ca8a04',
@@ -580,7 +580,7 @@ async function handleImport() {
             </div>
 
             <!-- Confirm Action Buttons -->
-            <div class="pt-2 space-y-2">
+            <div class="pt-2">
               <button
                 v-if="mobilePreviewResult.willImport.length > 0"
                 @click="handleConfirmMobileImport"
@@ -589,14 +589,6 @@ async function handleImport() {
               >
                 <span v-if="isConfirmingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 <span>Confirm Import ({{ mobilePreviewResult.willImport.length }} {{ mobilePreviewResult.willImport.length === 1 ? 'card' : 'cards' }})</span>
-              </button>
-
-              <button
-                @click="cancelMobilePreview"
-                type="button"
-                class="w-full py-2.5 px-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-xl text-xs transition-colors cursor-pointer text-center"
-              >
-                Cancel and edit text
               </button>
             </div>
           </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon, VideoCameraIcon, LinkIcon, SparklesIcon } from '@heroicons/vue/24/outline'
+import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, ArrowLeftOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon, VideoCameraIcon, LinkIcon, SparklesIcon } from '@heroicons/vue/24/outline'
 
 interface CardStats {
   readyCount: number
@@ -253,15 +253,20 @@ const navItems = computed(() => {
                       class="h-5 w-5" />
           </button>
 
-          <!-- Desktop Logout Button -->
+          <!-- Desktop Logout / Login Button -->
           <ClientOnly>
             <button v-if="loggedIn"
                     @click="handleLogout"
-                    class="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white w-[76px] shrink-0 justify-end">
+                    class="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white w-[76px] shrink-0 justify-end cursor-pointer">
               <ArrowRightOnRectangleIcon class="h-5 w-5" />
               <span>Logout</span>
             </button>
-            <div v-else class="w-[76px] shrink-0"></div>
+            <a v-else
+               href="/api/login"
+               class="flex items-center space-x-2 text-indigo-600 hover:text-indigo-800 transition-colors font-semibold dark:text-indigo-400 dark:hover:text-indigo-300 w-[76px] shrink-0 justify-end">
+              <ArrowLeftOnRectangleIcon class="h-5 w-5" />
+              <span>Login</span>
+            </a>
           </ClientOnly>
         </div>
 
@@ -367,14 +372,21 @@ const navItems = computed(() => {
             </NuxtLink>
           </template>
 
-          <!-- Mobile Logout Button -->
+          <!-- Mobile Logout / Login Button -->
           <ClientOnly>
             <button v-if="loggedIn"
                     @click="handleLogout(); mobileMenuOpen = false"
-                    class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black dark:text-gray-300 dark:hover:bg-gray-850/50 transition-colors font-medium">
+                    class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black dark:text-gray-300 dark:hover:bg-gray-850/50 transition-colors font-medium cursor-pointer">
               <ArrowRightOnRectangleIcon class="h-5 w-5" />
               <span>Logout</span>
             </button>
+            <a v-else
+               href="/api/login"
+               @click="mobileMenuOpen = false"
+               class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-indigo-950/50 transition-colors font-semibold">
+              <ArrowLeftOnRectangleIcon class="h-5 w-5" />
+              <span>Login</span>
+            </a>
           </ClientOnly>
         </div>
       </div>
