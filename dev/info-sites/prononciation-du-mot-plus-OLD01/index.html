@@ -1,0 +1,2549 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Mot « Plus » : [plü] ou [plüs] ? — Dialogues B1/B2 & Vocabulaire Interactif</title>
+  <meta name="description" content="Maîtrisez la prononciation du mot 'plus' ([plü], [plüs] et [plüz]) à travers 5 dialogues authentiques de niveau B1/B2, exercices de glisser-déposer de vocabulaire et questions d'expression orale.">
+  <style>
+    /* ==========================================================================
+       VARIABLES DE DESIGN — THÈME SOMBRE HAUT DE GAMME (DARK MODE)
+       ========================================================================== */
+    :root {
+      --bg-body: #070b14;
+      --bg-surface: #0f172a;
+      --bg-card: #141f36;
+      --bg-card-hover: #1a2948;
+      --bg-elevated: #1e293b;
+      --bg-glass: rgba(15, 23, 42, 0.85);
+
+      --border-subtle: #1e293b;
+      --border-medium: #334155;
+      --border-strong: #475569;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+
+      /* PALETTE D'ACCENT : INDIGO ÉLÉGANT & AMBRE CHAUD */
+      --accent-indigo: #6366f1;
+      --accent-indigo-hover: #4f46e5;
+      --accent-indigo-soft: rgba(99, 102, 241, 0.15);
+      --accent-indigo-border: rgba(99, 102, 241, 0.4);
+
+      --accent-amber: #f59e0b;
+      --accent-amber-hover: #d97706;
+      --accent-amber-soft: rgba(245, 158, 11, 0.15);
+      --accent-amber-border: rgba(245, 158, 11, 0.4);
+
+      /* PHONÉTIQUE DE « PLUS » */
+      --phon-ply-bg: rgba(99, 102, 241, 0.22);
+      --phon-ply-text: #a5b4fc;
+      --phon-ply-border: #6366f1;
+
+      --phon-plus-bg: rgba(245, 158, 11, 0.22);
+      --phon-plus-text: #fde68a;
+      --phon-plus-border: #f59e0b;
+
+      --phon-plyz-bg: rgba(20, 184, 166, 0.22);
+      --phon-plyz-text: #99f6e4;
+      --phon-plyz-border: #14b8a6;
+
+      /* STATUTS */
+      --success-green: #10b981;
+      --success-green-soft: rgba(16, 185, 129, 0.16);
+      --success-green-border: rgba(16, 185, 129, 0.4);
+
+      --error-red: #ef4444;
+      --error-red-soft: rgba(239, 68, 68, 0.15);
+
+      --font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 6px 16px -2px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 16px 32px -4px rgba(0, 0, 0, 0.6);
+      --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.25);
+    }
+
+    /* ==========================================================================
+       RESET & BASE
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 100%, rgba(15, 23, 42, 0.8) 0%, transparent 100%);
+      background-attachment: fixed;
+    }
+
+    ::selection {
+      background-color: rgba(99, 102, 241, 0.4);
+      color: #ffffff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* ==========================================================================
+       TOP NAVBAR (STICKY DARK BLUR)
+       ========================================================================== */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      padding: 0.75rem 1.25rem;
+    }
+
+    .nav-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-pill {
+      background: linear-gradient(135deg, var(--accent-indigo), #4338ca);
+      color: #ffffff;
+      padding: 0.22rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(99, 102, 241, 0.35);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    /* SELECTEUR NUXT UI STYLE */
+    .nuxt-dropdown {
+      position: relative;
+      display: inline-block;
+      min-width: 230px;
+      max-width: 300px;
+      flex: 1 1 200px;
+    }
+
+    .nuxt-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.45rem 0.85rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.86rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .nuxt-dropdown-trigger:hover,
+    .nuxt-dropdown-trigger:focus {
+      border-color: var(--accent-indigo);
+      background: var(--bg-card-hover);
+    }
+
+    .dropdown-chevron {
+      transition: transform 0.2s ease;
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .nuxt-dropdown.is-open .dropdown-chevron {
+      transform: rotate(180deg);
+    }
+
+    .nuxt-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: 0.35rem;
+      list-style: none;
+      display: none;
+      z-index: 1050;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    .nuxt-dropdown.is-open .nuxt-dropdown-menu {
+      display: block;
+      animation: fadeInDown 0.16s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nuxt-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .nuxt-dropdown-item:hover,
+    .nuxt-dropdown-item:focus {
+      background: var(--accent-indigo-soft);
+      color: #ffffff;
+    }
+
+    .nuxt-dropdown-item .sec-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.15);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* BADGE SCORE */
+    .score-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .score-badge .score-icon {
+      color: var(--accent-amber);
+    }
+
+    .score-badge .score-val {
+      color: var(--success-green);
+      font-weight: 700;
+    }
+
+    /* BOUTON TOGGLE PHONÉTIQUE GLOBAL */
+    .btn-phon-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-phon-toggle:hover {
+      border-color: var(--accent-amber);
+      color: #ffffff;
+    }
+
+    .btn-phon-toggle.is-active {
+      background: var(--accent-amber-soft);
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+    }
+
+    /* BOUTON RESET GLOBAL */
+    .btn-reset-all {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-subtle);
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-reset-all:hover {
+      color: var(--error-red);
+      background: var(--error-red-soft);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    /* ==========================================================================
+       HERO & PRÉSENTATION
+       ========================================================================== */
+    .main-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2.2rem 1.25rem 5rem;
+    }
+
+    .hero-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 2.5rem 1.5rem;
+      background: linear-gradient(180deg, var(--bg-card) 0%, rgba(20, 31, 54, 0.4) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-header::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--accent-indigo-soft);
+      border: 1px solid var(--accent-indigo-border);
+      color: var(--accent-indigo);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title .highlight-plus {
+      background: linear-gradient(135deg, #a5b4fc 0%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 1.8rem;
+    }
+
+    /* GUIDE PRONONCIATION CARD */
+    .rule-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .rule-card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.9rem;
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+    }
+
+    .rule-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      font-size: 0.86rem;
+    }
+
+    .rule-item.rule-ply {
+      border-left: 3px solid var(--phon-ply-border);
+    }
+
+    .rule-item.rule-plus {
+      border-left: 3px solid var(--phon-plus-border);
+    }
+
+    .rule-item.rule-plyz {
+      border-left: 3px solid var(--phon-plyz-border);
+    }
+
+    .rule-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      margin-bottom: 0.4rem;
+    }
+
+    .badge-ply {
+      background: var(--phon-ply-bg);
+      color: var(--phon-ply-text);
+      border: 1px solid var(--phon-ply-border);
+    }
+
+    .badge-plus {
+      background: var(--phon-plus-bg);
+      color: var(--phon-plus-text);
+      border: 1px solid var(--phon-plus-border);
+    }
+
+    .badge-plyz {
+      background: var(--phon-plyz-bg);
+      color: var(--phon-plyz-text);
+      border: 1px solid var(--phon-plyz-border);
+    }
+
+    .rule-desc {
+      color: var(--text-muted);
+      line-height: 1.45;
+      font-size: 0.83rem;
+    }
+
+    .rule-desc strong {
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       SECTION EXERCICE & DIALOGUE
+       ========================================================================== */
+    .exercise-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.2rem;
+      margin-bottom: 3.5rem;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.25s ease;
+      scroll-margin-top: 5.5rem;
+    }
+
+    .exercise-section:hover {
+      border-color: var(--border-medium);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .meta-badges {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-sec-num {
+      background: var(--accent-indigo);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.18rem 0.55rem;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .badge-sec-category {
+      background: var(--accent-amber-soft);
+      border: 1px solid var(--accent-amber-border);
+      color: var(--accent-amber);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .section-title {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .section-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-sec-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.8rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-sec-action:hover {
+      border-color: var(--accent-indigo);
+      color: #ffffff;
+    }
+
+    .btn-sec-action.is-active {
+      background: var(--accent-amber-soft);
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       JEU DE VOCABULAIRE : BANQUE DE MOTS & CARTES
+       ========================================================================== */
+    .vocab-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .vocab-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+      flex-wrap: wrap;
+    }
+
+    .vocab-block-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .vocab-instruction {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* BANQUE DE MOTS */
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      min-height: 50px;
+      padding: 0.85rem;
+      background: var(--bg-card);
+      border: 1px dashed var(--border-medium);
+      border-radius: var(--radius-md);
+      margin-bottom: 1.4rem;
+      align-items: center;
+    }
+
+    .word-bank:empty::after {
+      content: "Bravo ! Tous les termes de cette section ont été placés.";
+      color: var(--success-green);
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    .word-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: linear-gradient(145deg, #1e293b, #243552);
+      border: 1px solid var(--accent-indigo-border);
+      color: #ffffff;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .word-chip:hover {
+      border-color: var(--accent-indigo);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(99, 102, 241, 0.25);
+    }
+
+    .word-chip:active {
+      cursor: grabbing;
+      transform: scale(0.97);
+    }
+
+    .word-chip.is-dragging {
+      opacity: 0.4;
+      transform: scale(0.95);
+    }
+
+    .word-chip.is-selected {
+      background: var(--accent-indigo);
+      border-color: #ffffff;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+      transform: scale(1.05);
+    }
+
+    /* GRILLE DES CARTES DE DÉFINITION */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .def-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.8rem;
+      min-height: 130px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .def-card.drag-over {
+      border-color: var(--accent-indigo);
+      background: var(--accent-indigo-soft);
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.35);
+    }
+
+    .def-card.is-matched {
+      border-color: var(--success-green-border);
+      background: linear-gradient(180deg, var(--bg-card) 0%, rgba(16, 185, 129, 0.08) 100%);
+    }
+
+    .def-card.shake-error {
+      animation: shake 0.45s cubic-bezier(.36,.07,.19,.97) both;
+      border-color: var(--error-red);
+      background: var(--error-red-soft);
+    }
+
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-2px, 0, 0); }
+      20%, 80% { transform: translate3d(3px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+      40%, 60% { transform: translate3d(5px, 0, 0); }
+    }
+
+    .card-definition {
+      font-size: 0.87rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .card-dropzone {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border-strong);
+      background: rgba(15, 23, 42, 0.5);
+      min-height: 38px;
+      transition: all 0.2s ease;
+    }
+
+    .card-dropzone-placeholder {
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+      font-style: italic;
+    }
+
+    .card-matched-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #34d399;
+    }
+
+    .card-matched-pill .check-icon {
+      font-size: 0.85rem;
+    }
+
+    /* EXEMPLE CONTEXTUEL SUR CARTE RÉSOLUE */
+    .card-context {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.5rem;
+      margin-top: 0.2rem;
+      font-style: italic;
+      display: none;
+    }
+
+    .def-card.is-matched .card-context {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ==========================================================================
+       TEXTE DU DIALOGUE B1/B2
+       ========================================================================== */
+    .dialogue-wrapper {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .dialogue-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+
+    .dialogue-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .dialogue-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: var(--text-main);
+    }
+
+    .dialogue-speaker-line {
+      display: flex;
+      gap: 0.85rem;
+      align-items: baseline;
+    }
+
+    .speaker-name {
+      font-weight: 700;
+      color: var(--accent-amber);
+      font-size: 0.92rem;
+      min-width: 105px;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .speaker-name.speaker-alt {
+      color: #93c5fd;
+    }
+
+    .dialogue-line-text {
+      flex: 1 1 auto;
+    }
+
+    /* MOTS DE VOCABULAIRE EN VALEUR DANS LE TEXTE */
+    .vocab-word {
+      position: relative;
+      color: #5eead4;
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-decoration-color: #14b8a6;
+      cursor: help;
+      padding: 0 0.15rem;
+      border-radius: 3px;
+      transition: all 0.2s ease;
+    }
+
+    .vocab-word:hover,
+    .vocab-word:focus {
+      background: rgba(20, 184, 166, 0.2);
+      color: #ffffff;
+      outline: none;
+    }
+
+    .vocab-word::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #f1f5f9;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: normal;
+      white-space: normal;
+      width: max-content;
+      max-width: 260px;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 100;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .vocab-word:hover::after,
+    .vocab-word:focus::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* ==========================================================================
+       OCCURRENCES DU MOT « PLUS » ET BADGES PHONÉTIQUES
+       ========================================================================== */
+    .plus-instance {
+      position: relative;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    /* MODE NATUREL : LISIBILITÉ TOTALE SANS ENCOMBREMENT */
+    .plus-badge {
+      display: none;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.12rem 0.4rem;
+      border-radius: 4px;
+      margin-left: 0.3rem;
+      vertical-align: 1px;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* QUAND LE MODE PHONÉTIQUE EST ACTIVÉ DANS LA SECTION OU GLOBALEMENT */
+    .phon-active .plus-badge {
+      display: inline-block;
+      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .phon-active .plus-instance {
+      padding: 0.1rem 0.2rem;
+      border-radius: 3px;
+    }
+
+    /* TYPE [plü] */
+    .plus-ply .plus-badge {
+      background: var(--phon-ply-bg);
+      color: var(--phon-ply-text);
+      border: 1px solid var(--phon-ply-border);
+    }
+    .phon-active .plus-ply {
+      color: #c7d2fe;
+    }
+
+    /* TYPE [plüs] */
+    .plus-plus .plus-badge {
+      background: var(--phon-plus-bg);
+      color: var(--phon-plus-text);
+      border: 1px solid var(--phon-plus-border);
+    }
+    .phon-active .plus-plus {
+      color: #fde68a;
+    }
+
+    /* TYPE [plüz] (liaison) */
+    .plus-plyz .plus-badge {
+      background: var(--phon-plyz-bg);
+      color: var(--phon-plyz-text);
+      border: 1px solid var(--phon-plyz-border);
+    }
+    .phon-active .plus-plyz {
+      color: #99f6e4;
+    }
+
+    /* TOOLTIP DE RÈGLE SUR CLIC OU SURVOL DU BADGE */
+    .plus-badge::after {
+      content: attr(data-rule);
+      position: absolute;
+      bottom: calc(100% + 7px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #020617;
+      border: 1px solid #475569;
+      color: #f8fafc;
+      padding: 0.4rem 0.7rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 500;
+      white-space: normal;
+      width: max-content;
+      max-width: 250px;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 120;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .plus-badge:hover::after,
+    .plus-badge:focus::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* ==========================================================================
+       QUESTION DE DISCUSSION
+       ========================================================================== */
+    .discussion-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid var(--border-medium);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: var(--radius-lg);
+      padding: 1.3rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .disc-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .disc-body {
+      flex: 1 1 auto;
+    }
+
+    .disc-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+
+    .disc-text {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       MODAL DE CONFIRMATION RESET
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .modal-backdrop.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-dialog {
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+      text-align: center;
+    }
+
+    .modal-backdrop.is-open .modal-dialog {
+      transform: scale(1);
+    }
+
+    .modal-icon {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      color: var(--error-red);
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.6rem;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 0.85rem;
+      justify-content: center;
+    }
+
+    .btn-modal-cancel {
+      padding: 0.55rem 1.2rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      color: var(--text-main);
+      font-weight: 500;
+      font-size: 0.88rem;
+    }
+
+    .btn-modal-cancel:hover {
+      background: var(--border-medium);
+    }
+
+    .btn-modal-confirm {
+      padding: 0.55rem 1.2rem;
+      border-radius: var(--radius-sm);
+      background: var(--error-red);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+
+    .btn-modal-confirm:hover {
+      background: #dc2626;
+    }
+
+    /* ==========================================================================
+       BOUTON RETOUR EN HAUT (BACK TO TOP)
+       ========================================================================== */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent-indigo);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      z-index: 900;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: var(--accent-indigo-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.6);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 1.75rem;
+      }
+
+      .exercise-section {
+        padding: 1.3rem;
+        margin-bottom: 2.2rem;
+      }
+
+      .dialogue-speaker-line {
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .speaker-name {
+        min-width: auto;
+      }
+
+      .nuxt-dropdown {
+        min-width: 100%;
+        max-width: 100%;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .back-to-top {
+        bottom: 1.25rem;
+        right: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TOP NAVBAR STICKY
+       ========================================================================== -->
+  <header class="top-navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <span class="brand-pill">FRANÇAIS B1/B2</span>
+        <span>Phonétique &amp; Lexique</span>
+      </a>
+
+      <div class="nav-controls">
+        <!-- NUXT UI DROPDOWN SELECTMENU -->
+        <div class="nuxt-dropdown" id="sectionDropdown">
+          <button class="nuxt-dropdown-trigger" id="dropdownTrigger" aria-haspopup="true" aria-expanded="false">
+            <span id="dropdownLabel">Choisir un dialogue...</span>
+            <span class="dropdown-chevron">▼</span>
+          </button>
+          <ul class="nuxt-dropdown-menu" id="dropdownMenu" role="menu">
+            <li class="nuxt-dropdown-item" data-target="section-1" role="menuitem">
+              <span class="sec-badge">01</span>
+              <span>Au Bistrot des Délices</span>
+            </li>
+            <li class="nuxt-dropdown-item" data-target="section-2" role="menuitem">
+              <span class="sec-badge">02</span>
+              <span>L'Entretien d'Embauche</span>
+            </li>
+            <li class="nuxt-dropdown-item" data-target="section-3" role="menuitem">
+              <span class="sec-badge">03</span>
+              <span>À la Gare Centrale</span>
+            </li>
+            <li class="nuxt-dropdown-item" data-target="section-4" role="menuitem">
+              <span class="sec-badge">04</span>
+              <span>Au Cabinet Médical</span>
+            </li>
+            <li class="nuxt-dropdown-item" data-target="section-5" role="menuitem">
+              <span class="sec-badge">05</span>
+              <span>Entre Colocataires</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- SCORE PILL -->
+        <div class="score-badge" title="Progression du vocabulaire placé">
+          <span class="score-icon">★</span>
+          <span>Score :</span>
+          <span class="score-val" id="globalScore">0 / 25</span>
+        </div>
+
+        <!-- TOGGLE PHONÉTIQUE GLOBAL -->
+        <button class="btn-phon-toggle" id="globalPhonToggle" title="Afficher ou masquer la prononciation du mot 'plus' dans tous les textes">
+          <span>🔊</span>
+          <span id="phonToggleText">Prononciation de « plus »</span>
+        </button>
+
+        <!-- RESET GLOBAL -->
+        <button class="btn-reset-all" id="btnOpenResetModal" title="Réinitialiser tous les exercices">
+          <span>↺</span>
+          <span>Effacer</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       CONTENEUR PRINCIPAL
+       ========================================================================== -->
+  <main class="main-container">
+
+    <!-- HERO SECTION -->
+    <section class="hero-header">
+      <div class="hero-tag">ATELIER PRATIQUE PHONÉTIQUE &amp; COMPRÉHENSION</div>
+      <h1 class="hero-title">
+        Le Mot <span class="highlight-plus">« Plus »</span> : [plü] ou [plüs] ?
+      </h1>
+      <p class="hero-desc">
+        Explorez 5 situations communicatives de la vie courante en français B1/B2. Entraînez-vous à prononcer correctement chaque occurrence de « plus », enrichissez votre lexique grâce aux défis de glisser-déposer, puis lancez le débat !
+      </p>
+
+      <!-- AIDE-MÉMOIRE PHONÉTIQUE -->
+      <div class="rule-card">
+        <div class="rule-card-title">
+          <span>💡</span>
+          <span>Aide-mémoire : Les 3 règles d'or pour prononcer « plus »</span>
+        </div>
+        <div class="rule-grid">
+          <div class="rule-item rule-ply">
+            <span class="rule-badge badge-ply">[plü] (S muet)</span>
+            <p class="rule-desc">
+              1. <strong>Négation</strong> : <em>« Je n'en veux plus »</em>.<br>
+              2. <strong>Comparatif + consonne</strong> : <em>« plus cher », « plus vite »</em>.
+            </p>
+          </div>
+          <div class="rule-item rule-plus">
+            <span class="rule-badge badge-plus">[plüs] (S sonore)</span>
+            <p class="rule-desc">
+              1. <strong>Quantité en fin de phrase</strong> : <em>« J'en veux plus ! »</em>.<br>
+              2. <strong>Expressions</strong> : <em>« en plus », « c'est un plus », « de plus »</em>.
+            </p>
+          </div>
+          <div class="rule-item rule-plyz">
+            <span class="rule-badge badge-plyz">[plüz] (Liaison en [z])</span>
+            <p class="rule-desc">
+              Devant une voyelle ou un h muet :<br>
+              <em>« plus agréable », « de plus en plus »</em>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 1 : AU RESTAURANT / CAFÉ
+         ======================================================================== -->
+    <article class="exercise-section" id="section-1" data-section="1">
+      <header class="section-header">
+        <div class="header-meta">
+          <div class="meta-badges">
+            <span class="badge-sec-num">Dialogue 01</span>
+            <span class="badge-sec-category">Restauration &amp; Convivialité</span>
+          </div>
+          <h2 class="section-title">Au Bistrot des Délices : Une Addition Salée</h2>
+        </div>
+        <div class="section-actions">
+          <button class="btn-sec-action btn-sec-phon" data-target-sec="section-1" title="Basculer l'affichage phonétique pour ce dialogue">
+            <span>🔊</span>
+            <span class="sec-phon-txt">Afficher phonétique</span>
+          </button>
+          <button class="btn-sec-action btn-reset-sec" data-target-sec="1" title="Réinitialiser les mots de cette section">
+            <span>↺</span>
+            <span>Réinitialiser</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- JEU VOCABULAIRE -->
+      <div class="vocab-block">
+        <div class="vocab-block-header">
+          <h3 class="vocab-block-title">
+            <span>🧩</span> Vocabulaire B1/B2 à associer
+          </h3>
+          <span class="vocab-instruction">Glissez ou touchez chaque terme pour l'associer à sa définition.</span>
+        </div>
+
+        <div class="word-bank" id="wordBank-1">
+          <span class="word-chip" draggable="true" data-word="copieux" id="chip-copieux">copieux</span>
+          <span class="word-chip" draggable="true" data-word="l'addition" id="chip-l-addition">l'addition</span>
+          <span class="word-chip" draggable="true" data-word="trancher" id="chip-trancher">trancher</span>
+          <span class="word-chip" draggable="true" data-word="la déconvenue" id="chip-la-deconvenue">la déconvenue</span>
+          <span class="word-chip" draggable="true" data-word="frugal" id="chip-frugal">frugal</span>
+        </div>
+
+        <div class="cards-grid">
+          <div class="def-card" data-expected="copieux">
+            <p class="card-definition">Se dit d'un repas particulièrement généreux et abondant en quantité.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Ce plat du jour est bien plus copieux que d'habitude ! »</p>
+          </div>
+
+          <div class="def-card" data-expected="l'addition">
+            <p class="card-definition">La note écrite présentée au client récapitulant le montant total dû au restaurant.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Au moment de régler l'addition, le serveur a remarqué une erreur. »</p>
+          </div>
+
+          <div class="def-card" data-expected="trancher">
+            <p class="card-definition">Prendre une décision ferme, nette et sans appel pour clore une hésitation.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Il faut trancher : soit nous prenons un dessert, soit nous partons. »</p>
+          </div>
+
+          <div class="def-card" data-expected="la déconvenue">
+            <p class="card-definition">Une déception amère et imprévue face à un résultat inférieur aux attentes.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Quelle déconvenue en découvrant que le poisson frais était épuisé ! »</p>
+          </div>
+
+          <div class="def-card" data-expected="frugal">
+            <p class="card-definition">Simple, modeste et mesuré, sans recherche de luxe ni d'excès gastronomique.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Marc préférait un déjeuner frugal pour rester alerte tout l'après-midi. »</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DIALOGUE -->
+      <div class="dialogue-wrapper">
+        <div class="dialogue-header">
+          <h3 class="dialogue-title">
+            <span>💬</span> Dialogue : Au Bistrot des Délices
+          </h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Écoutez mentalement et observez l'emploi de « plus »</span>
+        </div>
+
+        <div class="dialogue-content">
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Élodie :</span>
+            <div class="dialogue-line-text">
+              Regarde la carte, Julien ! Les menus ont l'air délicieux, mais c'est nettement <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Comparatif devant consonne (cher) : [plü]">[plü]</span></span> cher que l'an dernier. J'hésite à prendre le plat du jour ; il paraît qu'il est bien <span class="vocab-word" tabindex="0" data-tooltip="Généreux et abondant en quantité">copieux</span>.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Julien :</span>
+            <div class="dialogue-line-text">
+              Tu as raison, mais moi, j'ai une faim de loup ! Hier soir, mon dîner était trop <span class="vocab-word" tabindex="0" data-tooltip="Simple et très modeste">frugal</span>, alors aujourd'hui, j'en veux <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité supérieure en fin de proposition : [plüs]">[plüs]</span></span> ! Tu ne prends pas d'entrée ?
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Élodie :</span>
+            <div class="dialogue-line-text">
+              Non, franchement, je ne veux <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> d'entrée avant midi. D'ailleurs, il ne reste <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> de soupe à l'oignon selon le serveur. En <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Expression figée 'en plus' : [plüs]">[plüs]</span></span>, je surveille mes dépenses.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Julien :</span>
+            <div class="dialogue-line-text">
+              Allez, il faut <span class="vocab-word" tabindex="0" data-tooltip="Prendre une décision ferme">trancher</span>, le garçon arrive ! Si la tarte maison n'est <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> disponible, ce sera une belle <span class="vocab-word" tabindex="0" data-tooltip="Déception amère et imprévue">déconvenue</span>. S'il te plaît, commande une part de <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité additionnelle après nom : [plüs]">[plüs]</span></span> pour moi.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Élodie :</span>
+            <div class="dialogue-line-text">
+              Tu exagères, Julien ! Plus tu manges, <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Comparatif corrélatif devant verbe/sujet : [plü]">[plü]</span></span> tu as faim ! Mais attention quand arrivera <span class="vocab-word" tabindex="0" data-tooltip="Note récapitulative au restaurant">l'addition</span> : si la facture dépasse cinquante euros, je ne partage <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> à parts égales, c'est promis !
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="discussion-card">
+        <div class="disc-icon">💡</div>
+        <div class="disc-body">
+          <div class="disc-title">Question de discussion orale</div>
+          <p class="disc-text">
+            Au restaurant, privilégiez-vous un repas frugal mais raffiné, ou préférez-vous payer plus pour une assiette très copieuse ? Racontez une déconvenue vécue lors du règlement de l'addition.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ========================================================================
+         SECTION 2 : ENTRETIEN D'EMBAUCHE
+         ======================================================================== -->
+    <article class="exercise-section" id="section-2" data-section="2">
+      <header class="section-header">
+        <div class="header-meta">
+          <div class="meta-badges">
+            <span class="badge-sec-num">Dialogue 02</span>
+            <span class="badge-sec-category">Monde Professionnel &amp; Carrière</span>
+          </div>
+          <h2 class="section-title">L'Entretien d'Embauche : Négociation et Compétences</h2>
+        </div>
+        <div class="section-actions">
+          <button class="btn-sec-action btn-sec-phon" data-target-sec="section-2" title="Basculer l'affichage phonétique pour ce dialogue">
+            <span>🔊</span>
+            <span class="sec-phon-txt">Afficher phonétique</span>
+          </button>
+          <button class="btn-sec-action btn-reset-sec" data-target-sec="2" title="Réinitialiser les mots de cette section">
+            <span>↺</span>
+            <span>Réinitialiser</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- JEU VOCABULAIRE -->
+      <div class="vocab-block">
+        <div class="vocab-block-header">
+          <h3 class="vocab-block-title">
+            <span>🧩</span> Vocabulaire B1/B2 à associer
+          </h3>
+          <span class="vocab-instruction">Glissez ou touchez chaque terme pour l'associer à sa définition.</span>
+        </div>
+
+        <div class="word-bank" id="wordBank-2">
+          <span class="word-chip" draggable="true" data-word="l'atout" id="chip-l-atout">l'atout</span>
+          <span class="word-chip" draggable="true" data-word="polyvalent" id="chip-polyvalent">polyvalent</span>
+          <span class="word-chip" draggable="true" data-word="l'exigence" id="chip-l-exigence">l'exigence</span>
+          <span class="word-chip" draggable="true" data-word="postuler" id="chip-postuler">postuler</span>
+          <span class="word-chip" draggable="true" data-word="la rémunération" id="chip-la-remuneration">la rémunération</span>
+        </div>
+
+        <div class="cards-grid">
+          <div class="def-card" data-expected="l'atout">
+            <p class="card-definition">Un avantage compétitif déterminant qui augmente considérablement les chances de succès.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Parler trois langues couramment constitue un formidable atout pour ce poste. »</p>
+          </div>
+
+          <div class="def-card" data-expected="polyvalent">
+            <p class="card-definition">Capable de s'adapter et d'accomplir des tâches professionnelles variées et complémentaires.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Notre équipe recherche un collaborateur polyvalent capable de gérer l'urgence. »</p>
+          </div>
+
+          <div class="def-card" data-expected="l'exigence">
+            <p class="card-definition">Une condition impérative et rigoureuse demandée pour satisfaire un cahier des charges.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« La ponctualité et la minutie sont des exigences incontournables dans notre secteur. »</p>
+          </div>
+
+          <div class="def-card" data-expected="postuler">
+            <p class="card-definition">Poser officiellement sa candidature pour obtenir un travail ou une fonction.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Des centaines de jeunes diplômés ont décidé de postuler à cette offre internationale. »</p>
+          </div>
+
+          <div class="def-card" data-expected="la rémunération">
+            <p class="card-definition">Le salaire global ou l'ensemble des compensations financières versées pour un travail.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« La négociation de la rémunération comprend le salaire de base et des primes. »</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DIALOGUE -->
+      <div class="dialogue-wrapper">
+        <div class="dialogue-header">
+          <h3 class="dialogue-title">
+            <span>💬</span> Dialogue : L'Entretien d'Embauche
+          </h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Distinguez le S muet de la négation et le S prononcé des expressions</span>
+        </div>
+
+        <div class="dialogue-content">
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Recruteur :</span>
+            <div class="dialogue-line-text">
+              Bonjour Monsieur Morin. J'ai examiné votre parcours avant de vous inviter à <span class="vocab-word" tabindex="0" data-tooltip="Poser sa candidature formelle">postuler</span> à cette fonction cadre. Votre profil technique est indéniablement solide, et c'est un <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Nom masculin 'un plus' (avantage) : [plüs]">[plüs]</span></span> appréciable pour notre cabinet.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Candidat :</span>
+            <div class="dialogue-line-text">
+              Merci. J'ai souhaité changer d'orientation car je ne me sentais <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> stimulé dans mon ancienne agence. Je cherche un cadre où l'on s'investit <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité / intensité en fin de proposition : [plüs]">[plüs]</span></span> dans l'innovation collective.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Recruteur :</span>
+            <div class="dialogue-line-text">
+              Nos projets exigent une rigueur sans faille. Notre principale <span class="vocab-word" tabindex="0" data-tooltip="Condition stricte et rigoureuse">exigence</span> est de trouver quelqu'un de véritablement <span class="vocab-word" tabindex="0" data-tooltip="Capable d'activités multiples">polyvalent</span>. Pensez-vous pouvoir travailler <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Comparatif devant adverbe commençant par consonne (rapidement) : [plü]">[plü]</span></span> rapidement tout en conservant une précision irréprochable ?
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Candidat :</span>
+            <div class="dialogue-line-text">
+              Tout à fait. Mon expérience antérieure m'a appris à gérer le stress sous pression. En <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Expression figée 'en plus' : [plüs]">[plüs]</span></span> de mes compétences en gestion, ma réactivité est mon principal <span class="vocab-word" tabindex="0" data-tooltip="Avantage déterminant pour réussir">atout</span>. Cependant, je ne ferai <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> de compromis sur l'équilibre de vie.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Recruteur :</span>
+            <div class="dialogue-line-text">
+              C'est tout à fait légitime. Abordons maintenant <span class="vocab-word" tabindex="0" data-tooltip="Salaire et avantages financiers">la rémunération</span> souhaitée. Le poste offre un salaire fixe attractif, auquel s'ajoutent des primes de rendement. Donnez-m'en <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité en fin de phrase : [plüs]">[plüs]</span></span> sur vos prétentions exactes : voulez-vous un forfait fixe ou des bonus variables ?
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Candidat :</span>
+            <div class="dialogue-line-text">
+              Un bonus variable est intéressant, mais le fixe compte le <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Superlatif devant verbe / consonne implicite : [plü]">[plü]</span></span> pour sécuriser mes projets familiaux.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="discussion-card">
+        <div class="disc-icon">💡</div>
+        <div class="disc-body">
+          <div class="disc-title">Question de discussion orale</div>
+          <p class="disc-text">
+            Lors d'une embauche, estimez-vous que la rémunération est ce qui compte le plus, ou l'ambiance et les atouts de carrière prévalent-ils ? Avez-vous déjà refusé de travailler plus pour préserver votre vie personnelle ?
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ========================================================================
+         SECTION 3 : À LA GARE CENTRALE
+         ======================================================================== -->
+    <article class="exercise-section" id="section-3" data-section="3">
+      <header class="section-header">
+        <div class="header-meta">
+          <div class="meta-badges">
+            <span class="badge-sec-num">Dialogue 03</span>
+            <span class="badge-sec-category">Transports &amp; Imprévus</span>
+          </div>
+          <h2 class="section-title">À la Gare Centrale : Correspondance Manquée et Imprévus</h2>
+        </div>
+        <div class="section-actions">
+          <button class="btn-sec-action btn-sec-phon" data-target-sec="section-3" title="Basculer l'affichage phonétique pour ce dialogue">
+            <span>🔊</span>
+            <span class="sec-phon-txt">Afficher phonétique</span>
+          </button>
+          <button class="btn-sec-action btn-reset-sec" data-target-sec="3" title="Réinitialiser les mots de cette section">
+            <span>↺</span>
+            <span>Réinitialiser</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- JEU VOCABULAIRE -->
+      <div class="vocab-block">
+        <div class="vocab-block-header">
+          <h3 class="vocab-block-title">
+            <span>🧩</span> Vocabulaire B1/B2 à associer
+          </h3>
+          <span class="vocab-instruction">Glissez ou touchez chaque terme pour l'associer à sa définition.</span>
+        </div>
+
+        <div class="word-bank" id="wordBank-3">
+          <span class="word-chip" draggable="true" data-word="la correspondance" id="chip-la-correspondance">la correspondance</span>
+          <span class="word-chip" draggable="true" data-word="le guichet" id="chip-le-guichet">le guichet</span>
+          <span class="word-chip" draggable="true" data-word="le dédommagement" id="chip-le-dedommagement">le dédommagement</span>
+          <span class="word-chip" draggable="true" data-word="l'exaspération" id="chip-l-exasperation">l'exaspération</span>
+          <span class="word-chip" draggable="true" data-word="embarquer" id="chip-embarquer">embarquer</span>
+        </div>
+
+        <div class="cards-grid">
+          <div class="def-card" data-expected="la correspondance">
+            <p class="card-definition">Le changement d'un train ou moyen de transport à un autre pour continuer un trajet.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Nous n'avions que six minutes pour assurer notre correspondance à Lyon. »</p>
+          </div>
+
+          <div class="def-card" data-expected="le guichet">
+            <p class="card-definition">Le comptoir où s'effectuent les ventes de billets et les réclamations de voyage.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Une longue file d'attente s'était formée devant l'unique guichet ouvert. »</p>
+          </div>
+
+          <div class="def-card" data-expected="le dédommagement">
+            <p class="card-definition">Une compensation financière ou matérielle versée pour réparer un préjudice subi.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Les passagers bloqués ont réclamé un dédommagement intégral pour leur retard. »</p>
+          </div>
+
+          <div class="def-card" data-expected="l'exaspération">
+            <p class="card-definition">Un sentiment intense d'irritation, d'énervement et de colère face à une contrariété répétée.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« L'annonce d'une heure d'attente supplémentaire a suscité l'exaspération générale. »</p>
+          </div>
+
+          <div class="def-card" data-expected="embarquer">
+            <p class="card-definition">Monter à bord d'un moyen de transport (train, avion, bateau) avant son départ.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Les contrôleurs nous ont invités à embarquer sans attendre sur la voie B. »</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DIALOGUE -->
+      <div class="dialogue-wrapper">
+        <div class="dialogue-header">
+          <h3 class="dialogue-title">
+            <span>💬</span> Dialogue : À la Gare Centrale
+          </h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Attention aux expressions : « je n'en peux plus » vs « un peu plus »</span>
+        </div>
+
+        <div class="dialogue-content">
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Passagère :</span>
+            <div class="dialogue-line-text">
+              Monsieur l'agent, le train pour Marseille est parti avec dix minutes d'avance ! Il n'y a <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> personne sur le quai, et j'ai manqué ma <span class="vocab-word" tabindex="0" data-tooltip="Changement de train ou transport">correspondance</span> pour Toulon !
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Agent SNCF :</span>
+            <div class="dialogue-line-text">
+              Calmez-vous, Madame. Le convoi ne pouvait pas attendre <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité temporelle en fin de proposition : [plüs]">[plüs]</span></span> sans bloquer toute la ligne. Présentez-vous sans attendre au <span class="vocab-word" tabindex="0" data-tooltip="Comptoir de service en gare">guichet</span> numéro trois pour échanger votre titre de transport.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Passagère :</span>
+            <div class="dialogue-line-text">
+              Je n'en peux <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Expression négative figée 'en pouvoir plus' : [plü]">[plü]</span></span> ! C'est la troisième fois ce mois-ci ! En <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Expression figée 'en plus' : [plüs]">[plüs]</span></span>, le prochain départ est prévu <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Comparatif devant adverbe à consonne (tard) : [plü]">[plü]</span></span> tard dans la soirée, vers vingt-deux heures.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Agent SNCF :</span>
+            <div class="dialogue-line-text">
+              Je comprends votre <span class="vocab-word" tabindex="0" data-tooltip="Irritation et énervement intenses">exaspération</span>, mais il ne sert à rien de crier. Un formulaire vous sera remis pour solliciter un <span class="vocab-word" tabindex="0" data-tooltip="Compensation financière pour préjudice">dédommagement</span> proportionnel à la durée de votre retard.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Passagère :</span>
+            <div class="dialogue-line-text">
+              Un dédommagement ? Vos bons d'achat ne valent rien de <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Expression 'rien de plus' : [plüs]">[plüs]</span></span> qu'un simple café gratuit ! Si je paie <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité / comparaison sur le verbe en fin de proposition : [plüs]">[plüs]</span></span> pour voyager en première classe, ce n'est pas pour dormir sur un banc de gare !
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Agent SNCF :</span>
+            <div class="dialogue-line-text">
+              Un TGV supplémentaire vient d'être affiché voie 7. Dépêchez-vous d'<span class="vocab-word" tabindex="0" data-tooltip="Monter à bord du train">embarquer</span> avant que les portes ne soient verrouillées ; il n'y aura <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> d'autre train ce soir !
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="discussion-card">
+        <div class="disc-icon">💡</div>
+        <div class="disc-body">
+          <div class="disc-title">Question de discussion orale</div>
+          <p class="disc-text">
+            Face aux retards répétés des transports en commun, votre exaspération prend-elle le dessus ou gardez-vous votre sang-froid ? Exigez-vous systématiquement un dédommagement financier ?
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ========================================================================
+         SECTION 4 : CABINET MÉDICAL
+         ======================================================================== -->
+    <article class="exercise-section" id="section-4" data-section="4">
+      <header class="section-header">
+        <div class="header-meta">
+          <div class="meta-badges">
+            <span class="badge-sec-num">Dialogue 04</span>
+            <span class="badge-sec-category">Santé &amp; Consultations</span>
+          </div>
+          <h2 class="section-title">Au Cabinet Médical : Posologie et Convalescence</h2>
+        </div>
+        <div class="section-actions">
+          <button class="btn-sec-action btn-sec-phon" data-target-sec="section-4" title="Basculer l'affichage phonétique pour ce dialogue">
+            <span>🔊</span>
+            <span class="sec-phon-txt">Afficher phonétique</span>
+          </button>
+          <button class="btn-sec-action btn-reset-sec" data-target-sec="4" title="Réinitialiser les mots de cette section">
+            <span>↺</span>
+            <span>Réinitialiser</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- JEU VOCABULAIRE -->
+      <div class="vocab-block">
+        <div class="vocab-block-header">
+          <h3 class="vocab-block-title">
+            <span>🧩</span> Vocabulaire B1/B2 à associer
+          </h3>
+          <span class="vocab-instruction">Glissez ou touchez chaque terme pour l'associer à sa définition.</span>
+        </div>
+
+        <div class="word-bank" id="wordBank-4">
+          <span class="word-chip" draggable="true" data-word="la posologie" id="chip-la-posologie">la posologie</span>
+          <span class="word-chip" draggable="true" data-word="l'ordonnance" id="chip-l-ordonnance">l'ordonnance</span>
+          <span class="word-chip" draggable="true" data-word="bénin" id="chip-benin">bénin</span>
+          <span class="word-chip" draggable="true" data-word="la rechute" id="chip-la-rechute">la rechute</span>
+          <span class="word-chip" draggable="true" data-word="l'apaisement" id="chip-l-apaisement">l'apaisement</span>
+        </div>
+
+        <div class="cards-grid">
+          <div class="def-card" data-expected="la posologie">
+            <p class="card-definition">Le dosage strict et la fréquence d'administration d'un traitement médicamenteux.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Il est impératif de respecter scrupuleusement la posologie indiquée. »</p>
+          </div>
+
+          <div class="def-card" data-expected="l'ordonnance">
+            <p class="card-definition">Le document officiel rédigé par le médecin prescrivant les médicaments requis.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Présentez cette ordonnance au pharmacien pour retirer vos comprimés. »</p>
+          </div>
+
+          <div class="def-card" data-expected="bénin">
+            <p class="card-definition">Sans gravité médicale particulière, sans danger menaçant la santé du patient.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Rassurez-vous, ce malaise passager est tout à fait bénin. »</p>
+          </div>
+
+          <div class="def-card" data-expected="la rechute">
+            <p class="card-definition">La réapparition subite d'une maladie après une période d'amélioration ou de guérison apparente.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Reprenez le travail trop vite et vous risquez une rechute sévère. »</p>
+          </div>
+
+          <div class="def-card" data-expected="l'apaisement">
+            <p class="card-definition">La diminution sensible de la douleur physique ou du trouble émotionnel d'un malade.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Cette tisane aux plantes apporte un apaisement immédiat aux maux de gorge. »</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DIALOGUE -->
+      <div class="dialogue-wrapper">
+        <div class="dialogue-header">
+          <h3 class="dialogue-title">
+            <span>💬</span> Dialogue : Au Cabinet Médical
+          </h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Comparez la nuance essentielle : « j'ai plus mal » ([plü] = fini vs [plüs] = empiré)</span>
+        </div>
+
+        <div class="dialogue-content">
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Médecin :</span>
+            <div class="dialogue-line-text">
+              Asseyez-vous, Madame Robert. Alors, comment évolue votre bronchite ? Vous avez suivi le sirop ?
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Patiente :</span>
+            <div class="dialogue-line-text">
+              Docteur, je ne tousse presque <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> le matin, mais dès que le froid tombe, j'ai l'impression de souffrir <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité / intensité en fin de proposition : [plüs]">[plüs]</span></span> qu'au début de la semaine.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Médecin :</span>
+            <div class="dialogue-line-text">
+              Voyons cela. Respirez profondément... Très bien. Vos poumons sont clairs, vous n'avez <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> de fièvre non <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Expression négative 'non plus' : [plü]">[plü]</span></span>. Ce virus reste tout à fait <span class="vocab-word" tabindex="0" data-tooltip="Sans gravité médicale, sans danger">bénin</span>, rassurez-vous.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Patiente :</span>
+            <div class="dialogue-line-text">
+              Quel soulagement ! Mais pour éviter <span class="vocab-word" tabindex="0" data-tooltip="Réapparition subite d'une maladie">la rechute</span>, ne devrais-je pas prendre un antibiotique de <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité additionnelle après nom : [plüs]">[plüs]</span></span> ?
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Médecin :</span>
+            <div class="dialogue-line-text">
+              Certainement pas ! Les antibiotiques ne sont <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> prescrits pour de simples infections virales. Je vous rédige une nouvelle <span class="vocab-word" tabindex="0" data-tooltip="Document prescrivant le traitement">ordonnance</span> avec un spray nasal pour apporter un <span class="vocab-word" tabindex="0" data-tooltip="Diminution sensible de la douleur">apaisement</span> durable. Respectez à la lettre <span class="vocab-word" tabindex="0" data-tooltip="Dosage strict et fréquence d'un médicament">la posologie</span> : deux pulvérisations par jour, ni moins ni <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Expression d'égalité quantitative : [plüs]">[plüs]</span></span> !
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Patiente :</span>
+            <div class="dialogue-line-text">
+              Entendu. Et si le mal persiste <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Comparatif devant consonne (longtemps) : [plü]">[plü]</span></span> longtemps que prévu, je reviens vous voir ?
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="discussion-card">
+        <div class="disc-icon">💡</div>
+        <div class="disc-body">
+          <div class="disc-title">Question de discussion orale</div>
+          <p class="disc-text">
+            Êtes-vous du genre à consulter un professionnel de santé au moindre malaise bénin ou attendez-vous de ne plus pouvoir bouger ? Respectez-vous scrupuleusement la posologie des ordonnances ?
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ========================================================================
+         SECTION 5 : ENTRE COLOCATAIRES
+         ======================================================================== -->
+    <article class="exercise-section" id="section-5" data-section="5">
+      <header class="section-header">
+        <div class="header-meta">
+          <div class="meta-badges">
+            <span class="badge-sec-num">Dialogue 05</span>
+            <span class="badge-sec-category">Vie Quotidienne &amp; Relations</span>
+          </div>
+          <h2 class="section-title">Entre Colocataires : Répartition des Tâches et Budget</h2>
+        </div>
+        <div class="section-actions">
+          <button class="btn-sec-action btn-sec-phon" data-target-sec="section-5" title="Basculer l'affichage phonétique pour ce dialogue">
+            <span>🔊</span>
+            <span class="sec-phon-txt">Afficher phonétique</span>
+          </button>
+          <button class="btn-sec-action btn-reset-sec" data-target-sec="5" title="Réinitialiser les mots de cette section">
+            <span>↺</span>
+            <span>Réinitialiser</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- JEU VOCABULAIRE -->
+      <div class="vocab-block">
+        <div class="vocab-block-header">
+          <h3 class="vocab-block-title">
+            <span>🧩</span> Vocabulaire B1/B2 à associer
+          </h3>
+          <span class="vocab-instruction">Glissez ou touchez chaque terme pour l'associer à sa définition.</span>
+        </div>
+
+        <div class="word-bank" id="wordBank-5">
+          <span class="word-chip" draggable="true" data-word="la rancœur" id="chip-la-rancoeur">la rancœur</span>
+          <span class="word-chip" draggable="true" data-word="concéder" id="chip-conceder">concéder</span>
+          <span class="word-chip" draggable="true" data-word="équitable" id="chip-equitable">équitable</span>
+          <span class="word-chip" draggable="true" data-word="l'inadvertance" id="chip-l-inadvertance">l'inadvertance</span>
+          <span class="word-chip" draggable="true" data-word="le compromis" id="chip-le-compromis">le compromis</span>
+        </div>
+
+        <div class="cards-grid">
+          <div class="def-card" data-expected="la rancœur">
+            <p class="card-definition">Un ressentiment tenace et amer provoqué par un sentiment d'injustice ou de blessure subie.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Garder de la rancœur contre ses amis finit par détruire la confiance. »</p>
+          </div>
+
+          <div class="def-card" data-expected="concéder">
+            <p class="card-definition">Reconnaître un point légitime à son interlocuteur lors d'une controverse ou d'un accord.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Il a fini par concéder qu'il avait oublié de régler sa part d'électricité. »</p>
+          </div>
+
+          <div class="def-card" data-expected="équitable">
+            <p class="card-definition">Qui fait preuve d'une justice impartiale et d'une stricte égalité entre chaque partie.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Une répartition équitable des tâches ménagères apaise les tensions. »</p>
+          </div>
+
+          <div class="def-card" data-expected="l'inadvertance">
+            <p class="card-definition">Un défaut momentané d'attention ou de vigilance involontaire commis sans mauvaise intention.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Par pure inadvertance, j'ai laissé la porte d'entrée ouverte en partant. »</p>
+          </div>
+
+          <div class="def-card" data-expected="le compromis">
+            <p class="card-definition">Un accord négocié où chacun renonce partiellement à une exigence pour s'entendre.</p>
+            <div class="card-dropzone">
+              <span class="card-dropzone-placeholder">Déposer le terme ici</span>
+            </div>
+            <p class="card-context">« Trouver un compromis raisonnable est le seul moyen de cohabiter sereinement. »</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DIALOGUE -->
+      <div class="dialogue-wrapper">
+        <div class="dialogue-header">
+          <h3 class="dialogue-title">
+            <span>💬</span> Dialogue : Entre Colocataires
+          </h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Observez comment « plus » exprime l'arrêt (« ne... plus ») ou le surplus</span>
+        </div>
+
+        <div class="dialogue-content">
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Romain :</span>
+            <div class="dialogue-line-text">
+              Théo, assieds-toi deux minutes. Nous devons parler de l'appartement. La cuisine est en désordre permanent, et ce n'est <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ce n'est plus' : [plü]">[plü]</span></span> tenable ! Tu ne passes <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'ne... plus' : [plü]">[plü]</span></span> le balai le dimanche comme prévu.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Théo :</span>
+            <div class="dialogue-line-text">
+              Attends, c'est injuste ! Je travaille bien <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Quantité / comparaison sur le verbe en fin de proposition : [plüs]">[plüs]</span></span> que toi à la fac ce semestre. Si j'ai laissé la vaisselle traîner hier, c'était par simple <span class="vocab-word" tabindex="0" data-tooltip="Inattention involontaire">inadvertance</span>, pas par mauvaise volonté.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Romain :</span>
+            <div class="dialogue-line-text">
+              Certes, mais si personne ne fait d'effort, la situation va devenir de <span class="plus-instance plus-plyz">plus en plus<span class="plus-badge" data-rule="Liaison en [z] 'de plus en plus' : [plü-zɑ̃-plü]">[plüz]</span></span> insupportable. Je ne veux pas que nous accumulions de <span class="vocab-word" tabindex="0" data-tooltip="Ressentiment tenace et amer">la rancœur</span> pour des broutilles. Établissons un calendrier véritablement <span class="vocab-word" tabindex="0" data-tooltip="Juste et impartial pour tous">équitable</span>.
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name speaker-alt">Théo :</span>
+            <div class="dialogue-line-text">
+              Je suis prêt à <span class="vocab-word" tabindex="0" data-tooltip="Admettre un point légitime">concéder</span> que j'ai été distrait ces derniers temps. Trouvons un <span class="vocab-word" tabindex="0" data-tooltip="Accord où chacun cède une partie">compromis</span> : je m'occupe de toutes les poubelles et des courses lourdes, et toi tu gères le nettoyage du salon. Qu'en dis-tu ?
+            </div>
+          </div>
+
+          <div class="dialogue-speaker-line">
+            <span class="speaker-name">Romain :</span>
+            <div class="dialogue-line-text">
+              C'est honnête. En <span class="plus-instance plus-plus">plus<span class="plus-badge" data-rule="Expression figée 'en plus' : [plüs]">[plüs]</span></span>, il n'y a <span class="plus-instance plus-ply">plus<span class="plus-badge" data-rule="Négation 'il n'y a plus' : [plü]">[plü]</span></span> de liquide vaisselle dans le placard, alors rajoute-le sur la liste commune. Marché conclu !
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="discussion-card">
+        <div class="disc-icon">💡</div>
+        <div class="disc-body">
+          <div class="disc-title">Question de discussion orale</div>
+          <p class="disc-text">
+            Quelle est selon vous la règle d'or pour vivre en colocation sans accumuler de rancœur ? Comment trouvez-vous un compromis équitable lorsque l'un des membres semble travailler plus que les autres ?
+          </p>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL DE RÉINITIALISATION GLOBALE
+       ========================================================================== -->
+  <div class="modal-backdrop" id="resetModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div class="modal-icon">⚠️</div>
+      <h2 class="modal-title" id="modalTitle">Réinitialiser les exercices ?</h2>
+      <p class="modal-text">
+        Cette action remettra à zéro l'ensemble de votre score et détachera tous les mots de vocabulaire placés dans les 5 dialogues.
+      </p>
+      <div class="modal-buttons">
+        <button class="btn-modal-cancel" id="btnCancelReset">Annuler</button>
+        <button class="btn-modal-confirm" id="btnConfirmReset">Réinitialiser tout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       BOUTON RETOUR EN HAUT
+       ========================================================================== -->
+  <button class="back-to-top" id="backToTop" title="Retourner en haut de page" aria-label="Retour en haut">
+    ▲
+  </button>
+
+  <!-- ==========================================================================
+       LOGIQUE JAVASCRIPT VANILLA INTERACTIVE
+       ========================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // -----------------------------------------------------------------------
+      // ÉTAT GLOBAL DE L'APPLICATION
+      // -----------------------------------------------------------------------
+      const STORAGE_KEY = 'prononciation_plus_progress_v1';
+      let state = {
+        matches: {}, // Format: { "copieux": "copieux", ... }
+        phoneticModeGlobal: false,
+        phoneticSections: {} // { "section-1": true, ... }
+      };
+
+      // -----------------------------------------------------------------------
+      // CHARGEMENT & SAUVEGARDE LOCALSTORAGE
+      // -----------------------------------------------------------------------
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === 'object') {
+              state = Object.assign(state, parsed);
+            }
+          }
+        } catch (e) {
+          console.warn('Impossible de charger le localStorage:', e);
+        }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          console.warn('Impossible d\'enregistrer dans le localStorage:', e);
+        }
+      }
+
+      // -----------------------------------------------------------------------
+      // INTERACTION DRAG & DROP ET TAP-TO-PLACE
+      // -----------------------------------------------------------------------
+      let selectedChip = null;
+      let draggedChip = null;
+
+      function initChipsAndCards() {
+        const chips = document.querySelectorAll('.word-chip');
+        const cards = document.querySelectorAll('.def-card');
+
+        // GESTION DES CHIPS DE MOTS
+        chips.forEach(chip => {
+          // HTML5 DRAG & DROP
+          chip.addEventListener('dragstart', (e) => {
+            draggedChip = chip;
+            chip.classList.add('is-dragging');
+            e.dataTransfer.setData('text/plain', chip.dataset.word);
+            e.dataTransfer.effectAllowed = 'move';
+          });
+
+          chip.addEventListener('dragend', () => {
+            chip.classList.remove('is-dragging');
+            draggedChip = null;
+          });
+
+          // TAP / CLICK TO SELECT (MOBILE & DESKTOP ALTERNATIVE)
+          chip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (selectedChip === chip) {
+              // Désélectionner si déjà actif
+              chip.classList.remove('is-selected');
+              selectedChip = null;
+            } else {
+              if (selectedChip) selectedChip.classList.remove('is-selected');
+              chip.classList.add('is-selected');
+              selectedChip = chip;
+            }
+          });
+        });
+
+        // GESTION DES CARTES DE DÉFINITION
+        cards.forEach(card => {
+          // DRAG OVER
+          card.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            if (!card.classList.contains('is-matched')) {
+              card.classList.add('drag-over');
+            }
+          });
+
+          card.addEventListener('dragleave', () => {
+            card.classList.remove('drag-over');
+          });
+
+          // DROP
+          card.addEventListener('drop', (e) => {
+            e.preventDefault();
+            card.classList.remove('drag-over');
+            const word = e.dataTransfer.getData('text/plain');
+            handleMatchAttempt(word, card);
+          });
+
+          // TAP / CLICK CARD TO PLACE SELECTED CHIP
+          card.addEventListener('click', () => {
+            if (selectedChip && !card.classList.contains('is-matched')) {
+              const word = selectedChip.dataset.word;
+              handleMatchAttempt(word, card);
+            }
+          });
+        });
+
+        // DÉCLICKE N'IMPORTE OÙ POUR DÉSÉLECTIONNER
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('.word-chip') && selectedChip) {
+            selectedChip.classList.remove('is-selected');
+            selectedChip = null;
+          }
+        });
+      }
+
+      function handleMatchAttempt(word, card) {
+        if (!word || card.classList.contains('is-matched')) return;
+
+        const expected = card.dataset.expected;
+
+        if (word === expected) {
+          // SUCCÈS !
+          executeMatch(word, card);
+          state.matches[word] = expected;
+          saveState();
+          updateScore();
+        } else {
+          // ERREUR AVEC ANIMATION SECOUSSE
+          card.classList.add('shake-error');
+          setTimeout(() => {
+            card.classList.remove('shake-error');
+          }, 500);
+        }
+
+        // Réinitialiser la sélection manuelle
+        if (selectedChip) {
+          selectedChip.classList.remove('is-selected');
+          selectedChip = null;
+        }
+      }
+
+      function executeMatch(word, card) {
+        card.classList.add('is-matched');
+
+        // Mettre à jour la zone de drop
+        const dropzone = card.querySelector('.card-dropzone');
+        if (dropzone) {
+          dropzone.innerHTML = `
+            <span class="card-matched-pill">
+              <span class="check-icon">✓</span>
+              <span>${word}</span>
+            </span>
+          `;
+        }
+
+        // Masquer ou retirer le jeton de la banque de mots
+        const chip = document.querySelector(`.word-chip[data-word="${word}"]`);
+        if (chip) {
+          chip.style.display = 'none';
+        }
+      }
+
+      function restoreMatches() {
+        Object.keys(state.matches).forEach(word => {
+          const card = document.querySelector(`.def-card[data-expected="${word}"]`);
+          if (card) {
+            executeMatch(word, card);
+          }
+        });
+        updateScore();
+      }
+
+      function updateScore() {
+        const totalExpected = 25;
+        const matchedCount = Object.keys(state.matches).length;
+        const scoreEl = document.getElementById('globalScore');
+        if (scoreEl) {
+          scoreEl.textContent = `${matchedCount} / ${totalExpected}`;
+          if (matchedCount === totalExpected) {
+            scoreEl.style.color = '#34d399';
+          }
+        }
+      }
+
+      // -----------------------------------------------------------------------
+      // GESTION DU MODE PHONÉTIQUE DE « PLUS »
+      // -----------------------------------------------------------------------
+      const globalPhonToggle = document.getElementById('globalPhonToggle');
+      const phonToggleText = document.getElementById('phonToggleText');
+
+      function initPhoneticToggles() {
+        // Toggle Global
+        if (globalPhonToggle) {
+          globalPhonToggle.addEventListener('click', () => {
+            state.phoneticModeGlobal = !state.phoneticModeGlobal;
+            applyGlobalPhoneticState();
+            saveState();
+          });
+        }
+
+        // Toggles individuels par section
+        const secPhonBtns = document.querySelectorAll('.btn-sec-phon');
+        secPhonBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const secId = btn.dataset.targetSec;
+            const secEl = document.getElementById(secId);
+            if (!secEl) return;
+
+            const isCurrentlyActive = secEl.classList.contains('phon-active');
+            if (isCurrentlyActive) {
+              secEl.classList.remove('phon-active');
+              btn.classList.remove('is-active');
+              btn.querySelector('.sec-phon-txt').textContent = 'Afficher phonétique';
+              state.phoneticSections[secId] = false;
+            } else {
+              secEl.classList.add('phon-active');
+              btn.classList.add('is-active');
+              btn.querySelector('.sec-phon-txt').textContent = 'Masquer phonétique';
+              state.phoneticSections[secId] = true;
+            }
+            saveState();
+          });
+        });
+      }
+
+      function applyGlobalPhoneticState() {
+        const sections = document.querySelectorAll('.exercise-section');
+        const secPhonBtns = document.querySelectorAll('.btn-sec-phon');
+
+        if (state.phoneticModeGlobal) {
+          globalPhonToggle.classList.add('is-active');
+          phonToggleText.textContent = 'Masquer prononciations';
+          sections.forEach(sec => sec.classList.add('phon-active'));
+          secPhonBtns.forEach(btn => {
+            btn.classList.add('is-active');
+            btn.querySelector('.sec-phon-txt').textContent = 'Masquer phonétique';
+          });
+        } else {
+          globalPhonToggle.classList.remove('is-active');
+          phonToggleText.textContent = 'Prononciation de « plus »';
+          sections.forEach(sec => sec.classList.remove('phon-active'));
+          secPhonBtns.forEach(btn => {
+            btn.classList.remove('is-active');
+            btn.querySelector('.sec-phon-txt').textContent = 'Afficher phonétique';
+          });
+        }
+      }
+
+      function restorePhoneticState() {
+        if (state.phoneticModeGlobal) {
+          applyGlobalPhoneticState();
+        } else {
+          Object.keys(state.phoneticSections).forEach(secId => {
+            if (state.phoneticSections[secId]) {
+              const secEl = document.getElementById(secId);
+              const btn = document.querySelector(`.btn-sec-phon[data-target-sec="${secId}"]`);
+              if (secEl) secEl.classList.add('phon-active');
+              if (btn) {
+                btn.classList.add('is-active');
+                btn.querySelector('.sec-phon-txt').textContent = 'Masquer phonétique';
+              }
+            }
+          });
+        }
+      }
+
+      // -----------------------------------------------------------------------
+      // RÉINITIALISATION PAR SECTION & GLOBALE
+      // -----------------------------------------------------------------------
+      function initResetControls() {
+        // Reset section par section
+        const resetSecBtns = document.querySelectorAll('.btn-reset-sec');
+        resetSecBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const secNum = btn.dataset.targetSec;
+            resetSection(secNum);
+          });
+        });
+
+        // Modale de reset global
+        const modal = document.getElementById('resetModal');
+        const openBtn = document.getElementById('btnOpenResetModal');
+        const cancelBtn = document.getElementById('btnCancelReset');
+        const confirmBtn = document.getElementById('btnConfirmReset');
+
+        if (openBtn && modal) {
+          openBtn.addEventListener('click', () => modal.classList.add('is-open'));
+        }
+
+        if (cancelBtn && modal) {
+          cancelBtn.addEventListener('click', () => modal.classList.remove('is-open'));
+        }
+
+        if (confirmBtn && modal) {
+          confirmBtn.addEventListener('click', () => {
+            resetAllProgress();
+            modal.classList.remove('is-open');
+          });
+        }
+
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('is-open');
+          });
+        }
+      }
+
+      function resetSection(secNum) {
+        const secEl = document.getElementById(`section-${secNum}`);
+        if (!secEl) return;
+
+        const cards = secEl.querySelectorAll('.def-card');
+        cards.forEach(card => {
+          const word = card.dataset.expected;
+          card.classList.remove('is-matched');
+          const dropzone = card.querySelector('.card-dropzone');
+          if (dropzone) {
+            dropzone.innerHTML = `<span class="card-dropzone-placeholder">Déposer le terme ici</span>`;
+          }
+          delete state.matches[word];
+
+          const chip = secEl.querySelector(`.word-chip[data-word="${word}"]`);
+          if (chip) {
+            chip.style.display = 'inline-flex';
+            chip.classList.remove('is-selected');
+          }
+        });
+
+        saveState();
+        updateScore();
+      }
+
+      function resetAllProgress() {
+        state.matches = {};
+        saveState();
+
+        const cards = document.querySelectorAll('.def-card');
+        cards.forEach(card => {
+          card.classList.remove('is-matched');
+          const dropzone = card.querySelector('.card-dropzone');
+          if (dropzone) {
+            dropzone.innerHTML = `<span class="card-dropzone-placeholder">Déposer le terme ici</span>`;
+          }
+        });
+
+        const chips = document.querySelectorAll('.word-chip');
+        chips.forEach(chip => {
+          chip.style.display = 'inline-flex';
+          chip.classList.remove('is-selected');
+        });
+
+        updateScore();
+      }
+
+      // -----------------------------------------------------------------------
+      // MENU DÉROULANT NUXT UI STYLE (USelectMenu)
+      // -----------------------------------------------------------------------
+      function initDropdown() {
+        const dropdown = document.getElementById('sectionDropdown');
+        const trigger = document.getElementById('dropdownTrigger');
+        const label = document.getElementById('dropdownLabel');
+        const items = document.querySelectorAll('.nuxt-dropdown-item');
+
+        if (!dropdown || !trigger) return;
+
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = dropdown.classList.contains('is-open');
+          if (isOpen) {
+            dropdown.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+          } else {
+            dropdown.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+
+        items.forEach(item => {
+          item.addEventListener('click', () => {
+            const targetId = item.dataset.target;
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+              label.textContent = item.querySelector('span:last-child').textContent;
+            }
+            dropdown.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      // -----------------------------------------------------------------------
+      // RETOUR EN HAUT (BACK TO TOP)
+      // -----------------------------------------------------------------------
+      function initBackToTop() {
+        const btn = document.getElementById('backToTop');
+        if (!btn) return;
+
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 400) {
+            btn.classList.add('is-visible');
+          } else {
+            btn.classList.remove('is-visible');
+          }
+        });
+
+        btn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // -----------------------------------------------------------------------
+      // INITIALISATION AU CHARGEMENT DU DOM
+      // -----------------------------------------------------------------------
+      document.addEventListener('DOMContentLoaded', () => {
+        loadState();
+        initChipsAndCards();
+        initPhoneticToggles();
+        initResetControls();
+        initDropdown();
+        initBackToTop();
+        restoreMatches();
+        restorePhoneticState();
+      });
+
+    })();
+  </script>
+</body>
+</html>
