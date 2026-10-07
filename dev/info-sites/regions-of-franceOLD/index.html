@@ -1,0 +1,3087 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Régions de France — Lecture B1/B2 & Exercices Interactifs</title>
+  <meta name="description" content="Explorez les treize régions métropolitaines de France : histoire séculaire, architecture, mémoires régionales et débats d'actualité. Textes de niveau B1/B2 avec exercices de vocabulaire interactifs.">
+  <style>
+    /* VARIABLES DE CONCEPTION — STYLE ÉDITORIAL MODERNE ET HÉALDIE ROYALE */
+    :root {
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-surface: #f1f5f9;
+      --bg-elevated: #ffffff;
+      
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      
+      /* PALETTE BLEU ROYAL & OR DE FRANCE */
+      --accent-blue: #1d4ed8;
+      --accent-blue-hover: #1e3a8a;
+      --accent-blue-soft: #eff6ff;
+      --accent-blue-border: #bfdbfe;
+      
+      --accent-gold: #d97706;
+      --accent-gold-hover: #b45309;
+      --accent-gold-soft: #fef3c7;
+      --accent-gold-border: #fde68a;
+      
+      --success-green: #059669;
+      --success-green-soft: #ecfdf5;
+      --success-green-border: #a7f3d0;
+      
+      --font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+    }
+
+    /* RÉINITIALISATION FONDAMENTALE */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      user-select: text;
+    }
+
+    ::selection {
+      background-color: #bfdbfe;
+      color: #1e3a8a;
+    }
+
+    /* BARRE DE NAVIGATION SUPÉRIEURE FIXE */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      padding: 0.75rem 1.25rem;
+    }
+
+    .nav-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .brand-pill {
+      background: var(--accent-blue);
+      color: #ffffff;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    /* MENU DÉROULANT STYLE NUXT UI */
+    .nuxt-dropdown {
+      position: relative;
+      display: inline-block;
+      min-width: 250px;
+      max-width: 320px;
+      flex: 1 1 200px;
+    }
+
+    .nuxt-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.45rem 0.75rem;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      outline: none;
+    }
+
+    .nuxt-dropdown-trigger:hover {
+      border-color: #94a3b8;
+      background: #fafcff;
+    }
+
+    .nuxt-dropdown-trigger:focus-visible {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.2);
+    }
+
+    .nuxt-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: 0.35rem;
+      display: none;
+      z-index: 1010;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    .nuxt-dropdown.is-open .nuxt-dropdown-menu {
+      display: block;
+    }
+
+    .nuxt-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      transition: all 0.12s ease;
+      background: transparent;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nuxt-dropdown-item:hover {
+      background: var(--accent-blue-soft);
+      color: var(--accent-blue-hover);
+    }
+
+    .item-pill {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    .nuxt-dropdown-item:hover .item-pill {
+      background: var(--accent-blue);
+      color: #ffffff;
+    }
+
+    /* BADGE DE SCORE GLOBAL */
+    .global-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .score-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-gold);
+      border-radius: 9999px;
+      flex-shrink: 0;
+    }
+
+    .btn-reset-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.38rem 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-reset-all:hover {
+      background: var(--accent-blue-soft);
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+    }
+
+    /* MODAL DE CONFIRMATION STYLE NUXT UI */
+    .nuxt-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nuxt-modal-overlay.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nuxt-modal-container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .nuxt-modal-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+      transform: scale(0.95);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nuxt-modal-overlay.is-open .nuxt-modal-card {
+      transform: scale(1);
+    }
+
+    .nuxt-modal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .nuxt-modal-icon-badge {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #fef2f2;
+      color: #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #fee2e2;
+    }
+
+    .nuxt-modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0 0 0.35rem 0;
+      line-height: 1.3;
+    }
+
+    .nuxt-modal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .nuxt-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    .btn-nuxt-secondary {
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-nuxt-secondary:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .btn-nuxt-danger {
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: #ef4444;
+      border: 1px solid #dc2626;
+      padding: 0.5rem 1.15rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(239, 68, 68, 0.2);
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .btn-nuxt-danger:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    /* EN-TÊTE PRINCIPAL (HERO) */
+    .site-hero {
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-surface) 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 3.5rem 1.25rem 3rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-gold-soft);
+      color: var(--accent-gold-hover);
+      border: 1px solid var(--accent-gold-border);
+      padding: 0.25rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .site-hero h1 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text-main);
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.02em;
+    }
+
+    .site-hero h1 span {
+      color: var(--accent-blue);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* CONTENEUR PRINCIPAL */
+    .main-container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    /* CARTE DE SECTION */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.2s ease;
+    }
+
+    .section-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-num {
+      background: var(--accent-blue);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-category {
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+    }
+
+    .section-title {
+      font-size: clamp(1.35rem, 2.8vw, 1.8rem);
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--text-main);
+      margin-bottom: 1.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    /* PANNEAUX INTÉRIEURS (VOCABULAIRE, LECTURE, DISCUSSION) */
+    .panel-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .panel-box:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      flex-wrap: nowrap;
+    }
+
+    .panel-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .panel-icon {
+      color: var(--accent-blue);
+      display: flex;
+    }
+
+    .panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .panel-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: #ffffff;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset:hover {
+      background: #f1f5f9;
+      color: #dc2626;
+      border-color: #fca5a5;
+    }
+
+    /* BANQUE DE MOTS */
+    .word-bank-container {
+      background: #ffffff;
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.85rem;
+      margin-bottom: 0.85rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .word-bank-container.is-hidden {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-width: 0;
+      overflow: hidden;
+    }
+
+    .word-bank-container.is-hidden-instant {
+      display: none;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      min-height: 36px;
+    }
+
+    .word-chip {
+      background: #ffffff;
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue-hover);
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+      touch-action: manipulation;
+    }
+
+    .word-chip:hover {
+      background: var(--accent-blue-soft);
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+    }
+
+    .word-chip:active {
+      cursor: grabbing;
+    }
+
+    .word-chip.is-selected {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue-hover);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.25);
+      transform: scale(1.05);
+    }
+
+    .word-chip.is-placed {
+      opacity: 0.25;
+      pointer-events: none;
+      text-decoration: line-through;
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+    }
+
+    .word-chip.is-dragging {
+      opacity: 0.4;
+      transform: scale(0.95);
+    }
+
+    .word-chip.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      background: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+    }
+
+    /* GRILLE DES DÉFINITIONS */
+    .definitions-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .def-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.85rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .def-card:not(.is-matched):hover {
+      border-color: var(--accent-blue-border);
+      background: #fafcff;
+    }
+
+    .def-card.eligible-drop {
+      border: 1.5px dashed #93c5fd !important;
+      background: #f0f7ff !important;
+    }
+
+    .def-card.drag-hover {
+      border-color: var(--accent-blue-hover) !important;
+      background: #eff6ff !important;
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.25);
+    }
+
+    .def-card.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+    }
+
+    .def-card.shake-error .def-text {
+      color: #b91c1c !important;
+    }
+
+    .def-card.is-matched,
+    .def-card.is-matched.is-collapsed {
+      background: #f0fdf4;
+      border-color: var(--success-green-border);
+      cursor: pointer;
+    }
+
+    .def-main-line {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .matched-word {
+      display: none;
+      font-weight: 800;
+      color: #1e3a8a;
+      margin-right: 0.35rem;
+    }
+
+    .def-card.is-matched .matched-word {
+      display: inline;
+    }
+
+    .def-text {
+      font-size: 0.92rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    @keyframes shakeAnimation {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    .def-example {
+      display: none;
+      margin-top: 0.45rem;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-left: 3.5px solid var(--accent-blue);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.8rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+      user-select: text;
+    }
+
+    @keyframes fadeInExample {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .def-card.is-matched:not(.is-collapsed) .def-example {
+      display: block;
+      animation: fadeInExample 0.35s ease-out forwards;
+    }
+
+    .example-quote {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .example-quote strong {
+      color: var(--accent-blue-hover);
+      font-weight: 700;
+      font-style: normal;
+      background: var(--accent-blue-soft);
+      padding: 0 0.25rem;
+      border-radius: 3px;
+    }
+
+    /* TEXTE DE LECTURE */
+    .reading-body {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      padding: 1.35rem 1.55rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+
+    .reading-para {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      line-height: 1.8;
+      margin-bottom: 1.15rem;
+      text-align: justify;
+    }
+
+    .reading-para:last-child {
+      margin-bottom: 0;
+    }
+
+    /* TOOLTIP MOT DE VOCABULAIRE SURVOL */
+    .vocab-word {
+      font-weight: 700;
+      color: var(--accent-blue);
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+      cursor: help;
+      position: relative;
+      display: inline-block;
+      transition: color 0.15s ease;
+      outline: none;
+    }
+
+    .vocab-word:hover,
+    .vocab-word:focus-visible {
+      color: var(--accent-gold-hover);
+      background: var(--accent-gold-soft);
+      border-radius: 3px;
+    }
+
+    .vocab-word::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 500;
+      line-height: 1.35;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      white-space: normal;
+      width: max-content;
+      max-width: 280px;
+      box-shadow: var(--shadow-lg);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 100;
+    }
+
+    .vocab-word:hover::after,
+    .vocab-word:focus-visible::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* QUESTION DE DISCUSSION */
+    .discussion-question {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--accent-gold);
+      padding: 1.1rem 1.35rem;
+      border-radius: var(--radius-md);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.6;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .top-navbar {
+        padding: 0.6rem 0.85rem;
+      }
+      .nav-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+      }
+      .nav-controls {
+        justify-content: space-between;
+      }
+      .nuxt-dropdown {
+        min-width: 100%;
+        max-width: 100%;
+        order: 2;
+      }
+      .site-hero {
+        padding: 2.25rem 1rem 1.75rem;
+      }
+      .main-container {
+        padding: 1.5rem 0.75rem 4rem;
+        gap: 2.25rem;
+      }
+      .section-card {
+        padding: 1.25rem 0.9rem;
+        border-radius: var(--radius-lg);
+      }
+      .panel-box {
+        padding: 0.75rem 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+      .panel-header {
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+      }
+      .panel-title {
+        font-size: 0.95rem;
+        white-space: nowrap;
+      }
+      .btn-reset {
+        width: 28px;
+        height: 28px;
+      }
+      .word-bank-container {
+        padding: 0.4rem 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .word-bank {
+        gap: 0.3rem;
+        min-height: 28px;
+      }
+      .word-chip {
+        padding: 0.2rem 0.52rem;
+        font-size: 0.78rem;
+      }
+      .matched-word {
+        font-size: 0.85rem;
+      }
+      .def-card {
+        padding: 0.45rem 0.65rem;
+      }
+      .def-text {
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+      .reading-body {
+        padding: 0.9rem 0.9rem;
+      }
+      .reading-para {
+        font-size: 0.95rem;
+        line-height: 1.62;
+        text-align: left;
+        margin-bottom: 0.9rem;
+      }
+      .discussion-question {
+        padding: 0.9rem 1rem;
+        font-size: 0.98rem;
+      }
+    }
+
+    /* BOUTON RETOUR EN HAUT */
+    .btn-back-to-top {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      background: var(--text-main);
+      color: #ffffff;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.2s ease;
+      z-index: 900;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .btn-back-to-top.is-visible {
+      opacity: 0.92;
+      visibility: visible;
+    }
+
+    .btn-back-to-top:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      background: var(--accent-blue);
+    }
+
+    /* PIED DE PAGE */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-subtle);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-content {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRE DE NAVIGATION SUPÉRIEURE FIXE -->
+  <header class="top-navbar" id="top-navbar">
+    <div class="nav-inner">
+      <a href="#top" class="nav-brand">
+        <span class="brand-pill">FRANCE • B1/B2</span>
+        <span>Régions de France</span>
+      </a>
+
+      <div class="nav-controls">
+        <!-- MENU DÉROULANT DES 13 RÉGIONS -->
+        <div class="nuxt-dropdown" id="region-dropdown">
+          <button type="button" class="nuxt-dropdown-trigger" id="dropdown-btn" aria-haspopup="true" aria-expanded="false">
+            <span id="dropdown-current-label">Choisir une région...</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="nuxt-dropdown-menu" id="dropdown-menu" role="menu">
+            <button type="button" class="nuxt-dropdown-item" data-target="section-1" role="menuitem">
+              <span class="item-pill">01</span> Île-de-France
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-2" role="menuitem">
+              <span class="item-pill">02</span> Auvergne-Rhône-Alpes
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-3" role="menuitem">
+              <span class="item-pill">03</span> Bourgogne-Franche-Comté
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-4" role="menuitem">
+              <span class="item-pill">04</span> Bretagne
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-5" role="menuitem">
+              <span class="item-pill">05</span> Centre-Val de Loire
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-6" role="menuitem">
+              <span class="item-pill">06</span> Corse
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-7" role="menuitem">
+              <span class="item-pill">07</span> Grand Est
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-8" role="menuitem">
+              <span class="item-pill">08</span> Hauts-de-France
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-9" role="menuitem">
+              <span class="item-pill">09</span> Normandie
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-10" role="menuitem">
+              <span class="item-pill">10</span> Nouvelle-Aquitaine
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-11" role="menuitem">
+              <span class="item-pill">11</span> Occitanie
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-12" role="menuitem">
+              <span class="item-pill">12</span> Pays de la Loire
+            </button>
+            <button type="button" class="nuxt-dropdown-item" data-target="section-13" role="menuitem">
+              <span class="item-pill">13</span> Provence-Alpes-Côte d'Azur
+            </button>
+          </div>
+        </div>
+
+        <!-- SCORE GLOBAL -->
+        <div class="global-score-badge" id="global-score">
+          <span class="score-dot"></span>
+          <span id="global-score-text">0 / 65 mots</span>
+        </div>
+
+        <!-- BOUTON RÉINITIALISER TOUT -->
+        <button type="button" class="btn-reset-all" onclick="openResetModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          <span>Réinitialiser tout</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MODAL DE CONFIRMATION -->
+  <div class="nuxt-modal-overlay" id="reset-modal" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+    <div class="nuxt-modal-container">
+      <div class="nuxt-modal-card">
+        <div class="nuxt-modal-header">
+          <div class="nuxt-modal-icon-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="nuxt-modal-title" id="reset-modal-title">Réinitialiser les exercices</h3>
+            <p class="nuxt-modal-desc">Voulez-vous vraiment effacer votre progression et réinitialiser les 13 régions (65 définitions) ? Cette action est irréversible.</p>
+          </div>
+        </div>
+        <div class="nuxt-modal-footer">
+          <button type="button" class="btn-nuxt-secondary" onclick="closeResetModal()">Annuler</button>
+          <button type="button" class="btn-nuxt-danger" onclick="confirmResetAll()">Réinitialiser tout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION HÉROS -->
+  <section class="site-hero" id="top">
+    <div class="hero-content">
+      <span class="hero-badge">Exploration Culturelle & Lecture B1/B2</span>
+      <h1>Les Treize Régions de <span>France</span></h1>
+      <p class="hero-subtitle">Perfectionnez votre français à travers le patrimoine monumental, les mémoires régionales et les grands débats qui animent les territoires de l'Hexagone.</p>
+    </div>
+  </section>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="main-container">
+
+    <!-- SECTION 01: ÎLE-DE-FRANCE -->
+    <article class="section-card" id="section-1">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 01</span>
+          <span class="badge-category">Cœur historique & Rayonnement royal</span>
+        </div>
+        <h2 class="section-title">Île-de-France : Berceau de la royauté, rayonnement intellectuel et faste monumental</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-1" data-section="1">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(1)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-1">
+            <div class="word-chip" draggable="true" data-word="édifice" tabindex="0">édifice</div>
+            <div class="word-chip" draggable="true" data-word="faste" tabindex="0">faste</div>
+            <div class="word-chip" draggable="true" data-word="centralisme" tabindex="0">centralisme</div>
+            <div class="word-chip" draggable="true" data-word="monarchie" tabindex="0">monarchie</div>
+            <div class="word-chip" draggable="true" data-word="rayonnement" tabindex="0">rayonnement</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="faste" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">faste</strong>
+              <span class="def-text">Déploiement de splendeur, de luxe et de magnificence dans l'art de vivre ou l'exercice du pouvoir.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le <strong>faste</strong> de la cour versaillaise illustrait la toute-puissance du Roi-Soleil aux yeux de l'Europe. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="rayonnement" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">rayonnement</strong>
+              <span class="def-text">Diffusion éclatante et influence majeure d'une culture, d'une langue ou d'un prestige politique au-delà des frontières.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le <strong>rayonnement</strong> intellectuel des salons parisiens au siècle des Lumières a transformé la pensée philosophique. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="monarchie" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">monarchie</strong>
+              <span class="def-text">Régime politique dans lequel l'autorité suprême est exercée par un roi ou un monarque héréditaire.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« L'avènement de la <strong>monarchie</strong> absolue a progressivement centralisé le destin de tout le pays dans la capitale. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="édifice" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">édifice</strong>
+              <span class="def-text">Bâtiment imposant et durable remarquable par ses dimensions, son esthétique ou sa valeur symbolique.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Chaque grand <strong>édifice</strong> bordant la Seine raconte un pan de l'histoire tumultueuse de la nation. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="centralisme" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">centralisme</strong>
+              <span class="def-text">Mode d'organisation administrative concentrant la totalité des décisions politiques et financières dans la capitale.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Ce <strong>centralisme</strong> historique a longtemps érigé Paris en centre exclusif des arts et de la décision politique. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Au carrefour des méandres fertiles de la Seine, l'Île-de-France s'est affirmée dès le Moyen Âge comme le centre névralgique du royaume capétien. La fondation de la basilique de Saint-Denis puis l'érection de la cathédrale Notre-Dame ont consacré cette terre comme le sanctuaire politique et spirituel du pays. Au fil des siècles, chaque prestigieux <span class="vocab-word" tabindex="0" data-tooltip="Bâtiment imposant et durable remarquable par ses dimensions et sa valeur symbolique.">édifice</span> de la cité témoigne des mutations architecturales, du gothique flamboyant aux perspectives rectilignes du baron Haussmann.</p>
+          <p class="reading-para">Sous le règne de Louis XIV, le transfert de la cour vers Versailles a incarné le <span class="vocab-word" tabindex="0" data-tooltip="Déploiement de splendeur, de luxe et de magnificence dans l'art de vivre ou le pouvoir.">faste</span> absolu d'une <span class="vocab-word" tabindex="0" data-tooltip="Régime politique où l'autorité suprême est exercée par un monarque héréditaire.">monarchie</span> devenue arbitre esthétique du continent. Ce théâtre de pouvoir visait à garantir le <span class="vocab-word" tabindex="0" data-tooltip="Diffusion éclatante et influence majeure d'une culture ou d'un prestige politique.">rayonnement</span> diplomatique et culturel français. Néanmoins, cette concentration séculaire des richesses a forgé un <span class="vocab-word" tabindex="0" data-tooltip="Mode d'organisation concentrant les décisions politiques dans la capitale.">centralisme</span> tenace qui structure encore aujourd'hui les débats sur l'équilibre territorial.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « Le centralisme politique et culturel incarné par Paris a-t-il affaibli l'identité des autres régions françaises, ou constitue-t-il au contraire un ciment indispensable à l'unité de la nation ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 02: AUVERGNE-RHÔNE-ALPES -->
+    <article class="section-card" id="section-2">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 02</span>
+          <span class="badge-category">Terres volcaniques, Alpes & Gastronomie</span>
+        </div>
+        <h2 class="section-title">Auvergne-Rhône-Alpes : Des volcans millénaires au confluent lyonnais et aux bastions alpins</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-2" data-section="2">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(2)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-2">
+            <div class="word-chip" draggable="true" data-word="artisanat" tabindex="0">artisanat</div>
+            <div class="word-chip" draggable="true" data-word="vestige" tabindex="0">vestige</div>
+            <div class="word-chip" draggable="true" data-word="confluent" tabindex="0">confluent</div>
+            <div class="word-chip" draggable="true" data-word="terroir" tabindex="0">terroir</div>
+            <div class="word-chip" draggable="true" data-word="bastion" tabindex="0">bastion</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="bastion" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">bastion</strong>
+              <span class="def-text">Ouvrage fortifié défensif, ou au figuré, forteresse inexpugnable d'une culture ou d'une tradition.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Perché sur son éperon rocheux, le fort servait de <strong>bastion</strong> imprenable face aux assauts des armées savoyardes. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="confluent" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">confluent</strong>
+              <span class="def-text">Point de jonction géographique où deux cours d'eau majeurs se rejoignent.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Fondée au <strong>confluent</strong> de la Saône et du Rhône, Lugdunum est devenue la prestigieuse capitale des Gaules. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="terroir" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">terroir</strong>
+              <span class="def-text">Territoire rural dont la géologie, le microclimat et les coutumes donnent des qualités uniques aux produits locaux.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les vignerons et éleveurs locaux défendent un <strong>terroir</strong> aux savoir-faire séculaires. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="vestige" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">vestige</strong>
+              <span class="def-text">Trace matérielle ou ruine subsistante d'une époque ancienne ou d'une civilisation disparue.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les théâtres antiques de Fourvière constituent un majestueux <strong>vestige</strong> de la prospérité gallo-romaine. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="artisanat" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">artisanat</strong>
+              <span class="def-text">Secteur des métiers manuels traditionnels exigeant une haute qualification technique et une longue transmission.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les tisseurs de soie lyonnais, appelés canuts, ont élevé leur <strong>artisanat</strong> au rang d'art mondialement réputé. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">S'étendant des cratères paisibles de la chaîne des Puys jusqu'aux cimes alpines du mont Blanc, cette région condense les contrastes géologiques les plus saisissants. À Lyon, ancienne capitale des Gaules, le moindre <span class="vocab-word" tabindex="0" data-tooltip="Trace matérielle ou ruine d'une époque ancienne.">vestige</span> romain côtoie les traboules de la Renaissance. C'est à ce stratégique <span class="vocab-word" tabindex="0" data-tooltip="Point de jonction où deux cours d'eau majeurs se rejoignent.">confluent</span> fluvial que s'est noué le destin marchand de la métropole, célèbre pour ses foires européennes et sa gastronomie bourgeoise.</p>
+          <p class="reading-para">Sur les hauteurs de la Croix-Rousse, un <span class="vocab-word" tabindex="0" data-tooltip="Secteur des métiers manuels exigeant une haute qualification technique.">artisanat</span> d'élite lié au tissage de la soie a façonné une communauté ouvrière combative et fière. Plus à l'est, les vallées alpines ont développé des places fortes et chaque forteresse agissait comme un véritable <span class="vocab-word" tabindex="0" data-tooltip="Ouvrage fortifié défensif, forteresse d'une culture.">bastion</span> protégeant les cols transfrontaliers. Partout, les communautés montagnardes préservent jalousement leur <span class="vocab-word" tabindex="0" data-tooltip="Territoire rural dont le sol et le climat confèrent des qualités uniques aux productions.">terroir</span>, incarné par des fromages d'alpage d'exception.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « Comment concilier le développement d'un tourisme de masse dans les stations alpines avec la préservation écologique et culturelle des communautés de terroir montagnardes ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 03: BOURGOGNE-FRANCHE-COMTÉ -->
+    <article class="section-card" id="section-3">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 03</span>
+          <span class="badge-category">Duché flamboyant, Abbayes & Vignobles</span>
+        </div>
+        <h2 class="section-title">Bourgogne-Franche-Comté : L'héritage des ducs, le recueillement monastique et la pierre taillée</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-3" data-section="3">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(3)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-3">
+            <div class="word-chip" draggable="true" data-word="colombage" tabindex="0">colombage</div>
+            <div class="word-chip" draggable="true" data-word="abbaye" tabindex="0">abbaye</div>
+            <div class="word-chip" draggable="true" data-word="séculaire" tabindex="0">séculaire</div>
+            <div class="word-chip" draggable="true" data-word="duché" tabindex="0">duché</div>
+            <div class="word-chip" draggable="true" data-word="seigneurie" tabindex="0">seigneurie</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="duché" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">duché</strong>
+              <span class="def-text">Territoire souverain ou province féodale gouvernée par un duc ou une duchesse.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Au quinzième siècle, le <strong>duché</strong> de Bourgogne rivalisait d'opulence et d'influence avec le royaume de France. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="abbaye" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">abbaye</strong>
+              <span class="def-text">Monastère dirigé par un abbé ou une abbesse, foyer de recueillement, d'érudition et d'architecture.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La prestigieuse <strong>abbaye</strong> de Cluny a dirigé un réseau monastique qui s'étendait sur toute la chrétienté occidentale. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="colombage" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">colombage</strong>
+              <span class="def-text">Technique de charpente traditionnelle combinant une ossature de poutres de bois apparentes et un remplissage maçonné.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les ruelles de Dole et de Dijon sont bordées de maisons à <strong>colombage</strong> préservées depuis l'époque médiévale. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="seigneurie" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">seigneurie</strong>
+              <span class="def-text">Domaine foncier sur lequel un seigneur exerçait son autorité territoriale, fiscale et judiciaire.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Chaque château fortifié régnait autrefois sur une vaste <strong>seigneurie</strong> agricole et forestière. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="séculaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">séculaire</strong>
+              <span class="def-text">Qui existe depuis un ou plusieurs siècles, ou qui perpétue une coutume immémoriale.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La transmission <strong>séculaire</strong> des méthodes de vinification a donné naissance au classement minutieux des climats bourguignons. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Région de carrefours fluviaux et de plateaux jurassiens, la Bourgogne-Franche-Comté s'est illustrée dans l'Occident médiéval par une ambition politique sans égale. À son apogée, le puissant <span class="vocab-word" tabindex="0" data-tooltip="Territoire souverain ou province féodale gouvernée par un duc.">duché</span> bourguignon entretenait des maîtres de la peinture flamande et une diplomatie raffinée. Dans les cités d'art comme Dijon ou Besançon, le promeneur admire les façades à <span class="vocab-word" tabindex="0" data-tooltip="Charpente traditionnelle à poutres de bois apparentes et remplissage maçonné.">colombage</span> qui subsistent au cœur des anciens quartiers protégés.</p>
+          <p class="reading-para">L'histoire régionale est indissociable de son essor religieux : la fondation de l'illustre <span class="vocab-word" tabindex="0" data-tooltip="Monastère dirigé par un abbé, foyer d'érudition et de spiritualité.">abbaye</span> de Cluny puis celle de Cîteaux ont initié un renouveau spirituel et architectural à l'échelle européenne. Autour de chaque <span class="vocab-word" tabindex="0" data-tooltip="Domaine foncier sur lequel un seigneur exerçait son autorité territoriale et fiscale.">seigneurie</span> terrienne, les moines ont patiemment délimité les parcelles de vigne. Cette patience <span class="vocab-word" tabindex="0" data-tooltip="Qui existe depuis un ou plusieurs siècles, ou perpétue une coutume immémoriale.">séculaire</span> a donné naissance au concept de « climat », inscrit au patrimoine mondial de l'humanité.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « La reconnaissance internationale de traditions gastronomiques ou vinicoles au patrimoine de l'UNESCO protège-t-elle le savoir-faire local ou risque-t-elle de le réserver aux spéculateurs et élites financières ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 04: BRETAGNE -->
+    <article class="section-card" id="section-4">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 04</span>
+          <span class="badge-category">Armor, Celtes & Marins</span>
+        </div>
+        <h2 class="section-title">Bretagne : Terres d'Armor et d'Argoat, fierté maritime et ferveur celtique</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-4" data-section="4">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(4)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-4">
+            <div class="word-chip" draggable="true" data-word="idiome" tabindex="0">idiome</div>
+            <div class="word-chip" draggable="true" data-word="littoral" tabindex="0">littoral</div>
+            <div class="word-chip" draggable="true" data-word="corsaire" tabindex="0">corsaire</div>
+            <div class="word-chip" draggable="true" data-word="mégalithe" tabindex="0">mégalithe</div>
+            <div class="word-chip" draggable="true" data-word="légende" tabindex="0">légende</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="littoral" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">littoral</strong>
+              <span class="def-text">Bande côtière de terre en bordure d'océan ou de mer soumise aux marées et aux tempêtes.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les tempêtes d'hiver sculptent sans cesse les falaises de granit sur ce <strong>littoral</strong> battu par les vents. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="légende" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">légende</strong>
+              <span class="def-text">Récit populaire transmis par la tradition orale mêlant faits historiques et imaginaire merveilleux.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La forêt de Brocéliande demeure le berceau enchanté où naquit la <strong>légende</strong> du roi Arthur et de Merlin. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="mégalithe" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">mégalithe</strong>
+              <span class="def-text">Monument préhistorique imposant constitué de blocs de pierre dressés ou assemblés (menhirs, dolmens).</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les alignements de Carnac abritent des milliers de <strong>mégalithes</strong> énigmatiques érigés il y a cinq millénaires. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="idiome" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">idiome</strong>
+              <span class="def-text">Forme linguistique ou langue propre à une communauté culturelle ou territoriale spécifique.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les anciens transmettaient leur <strong>idiome</strong> celtique par le chant et les contes avant son recul au vingtième siècle. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="corsaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">corsaire</strong>
+              <span class="def-text">Capitaine ou marin de navire marchand mandaté par lettre de marque royale pour attaquer la flotte ennemie.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La cité intra-muros de Saint-Malo rend hommage aux capitaines et au moindre <strong>corsaire</strong> ayant défendu ses remparts. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Surgissant dans l'océan Atlantique comme une péninsule de granit, la Bretagne possède une personnalité forgée par les éléments marins et l'imaginaire celtique. Son vaste <span class="vocab-word" tabindex="0" data-tooltip="Bande côtière de terre en bordure d'océan soumise aux marées.">littoral</span>, découpé en rias et pointes abruptes, abrite une longue tradition de marins et de pêcheurs d'Islande. Derrière ses hautes murailles de granit, la cité de Saint-Malo se souvient encore des exploits héroïques de chaque <span class="vocab-word" tabindex="0" data-tooltip="Capitaine marchand mandaté par le roi pour attaquer les navires ennemis.">corsaire</span> breton protégeant la bannière royale contre les flottes rivales.</p>
+          <p class="reading-para">Dans l'intérieur des terres, l'Argoat mystérieux entretient une riche <span class="vocab-word" tabindex="0" data-tooltip="Récit populaire mêlant mémoire historique et imaginaire merveilleux.">légende</span> liée aux chevaliers de la Table ronde. Bien avant les rois de France, d'immenses civilisations ont dressé le <span class="vocab-word" tabindex="0" data-tooltip="Monument préhistorique fait de pierres dressées (menhir, dolmen).">mégalithe</span> à Carnac et Locmariaquer. Longtemps marginalisé par l'école de la République jacobine, le breton, précieux <span class="vocab-word" tabindex="0" data-tooltip="Forme linguistique propre à une communauté culturelle.">idiome</span> celtique, connaît aujourd'hui un sursaut grâce aux écoles associatives Diwan et aux festoù-noz.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « La revitalisation des langues régionales comme le breton constitue-t-elle un enrichissement de la diversité culturelle française ou une menace potentielle pour le principe républicain d'une langue nationale unique ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 05: CENTRE-VAL DE LOIRE -->
+    <article class="section-card" id="section-5">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 05</span>
+          <span class="badge-category">Châteaux royaux, Renaissance & Fleuve royal</span>
+        </div>
+        <h2 class="section-title">Centre-Val de Loire : Le jardin de la France, les fastes de la Renaissance et le fleuve sauvage</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-5" data-section="5">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(5)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-5">
+            <div class="word-chip" draggable="true" data-word="navigabilité" tabindex="0">navigabilité</div>
+            <div class="word-chip" draggable="true" data-word="mécénat" tabindex="0">mécénat</div>
+            <div class="word-chip" draggable="true" data-word="fossé" tabindex="0">fossé</div>
+            <div class="word-chip" draggable="true" data-word="résidence" tabindex="0">résidence</div>
+            <div class="word-chip" draggable="true" data-word="fief" tabindex="0">fief</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="résidence" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">résidence</strong>
+              <span class="def-text">Demeure seigneuriale ou palais de plaisance où séjourne un monarque ou un dignitaire officiel.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« François Ier a fait de Chambord une prestigieuse <strong>résidence</strong> dédiée à la chasse et aux réceptions princières. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="fief" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">fief</strong>
+              <span class="def-text">Domaine concédé par un seigneur à son vassal en contrepartie d'une prestation de fidélité et de secours militaire.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les barons vassaux administraient leur <strong>fief</strong> selon les règles coutumières de la noblesse provinciale. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="fossé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">fossé</strong>
+              <span class="def-text">Large tranchée défensive creusée autour d'un château fort, souvent remplie d'eau pour en interdire l'accès.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Rempli d'eau dérivée de la rivière, le <strong>fossé</strong> encerclait la forteresse médiévale d'une barrière protectrice. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="mécénat" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">mécénat</strong>
+              <span class="def-text">Soutien financier et protection éclairée accordés par un souverain ou une élite fortunée aux artistes et penseurs.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le généreux <strong>mécénat</strong> des rois de France a attiré Léonard de Vinci et les plus grands maîtres italiens en Touraine. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="navigabilité" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">navigabilité</strong>
+              <span class="def-text">Capacité technique d'un fleuve ou canal à permettre la circulation sécurisée et régulière des navires.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les crues et les bancs de sable ont toujours rendu délicate la <strong>navigabilité</strong> commerciale de la Loire sauvage. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Baigné par les eaux miroitantes du plus long fleuve de France, le Centre-Val de Loire est surnommé le « jardin de la France » en raison de sa clémence climatique et de la fertilité de ses coteaux. À la fin de la guerre de Cent Ans, les souverains français ont délaissé Paris pour installer leur cour sur ces rives accueillantes. Ils ont transformé chaque ancien <span class="vocab-word" tabindex="0" data-tooltip="Domaine concédé par un seigneur à son vassal en échange de fidélité.">fief</span> fortifié en demeure d'agrément, où le profond <span class="vocab-word" tabindex="0" data-tooltip="Large tranchée défensive creusée autour d'un château fort.">fossé</span> féodal devenait un miroir d'eau ornemental.</p>
+          <p class="reading-para">L'introduction des idéaux de la Renaissance a suscité un extraordinaire <span class="vocab-word" tabindex="0" data-tooltip="Soutien financier accordé par un souverain aux artistes et penseurs.">mécénat</span> royal. Léonard de Vinci vécut ses dernières années au château du Clos Lucé sous la protection bienveillante de François Ier. Dans chaque somptueuse <span class="vocab-word" tabindex="0" data-tooltip="Demeure seigneuriale ou palais de plaisance où séjourne un monarque.">résidence</span> telle que Chenonceau ou Blois, l'architecture célèbre l'harmonie des proportions. Pourtant, la difficile <span class="vocab-word" tabindex="0" data-tooltip="Capacité d'un fleuve à permettre la circulation régulière des bateaux.">navigabilité</span> de ce fleuve sauvage aux bancs de sable mouvants rappelle l'indomptable liberté de la nature.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « Le coût d'entretien colossal des châteaux historiques doit-il être financé en priorité par les deniers publics au nom de la mémoire nationale, ou délégué à des fondations et investisseurs touristiques privés ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 06: CORSE -->
+    <article class="section-card" id="section-6">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 06</span>
+          <span class="badge-category">Île de Beauté, Citadelles & Maquis</span>
+        </div>
+        <h2 class="section-title">Corse : L'Île de Beauté, falaises de granit, citadelles génoises et fierté insulaire</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-6" data-section="6">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(6)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-6">
+            <div class="word-chip" draggable="true" data-word="vendetta" tabindex="0">vendetta</div>
+            <div class="word-chip" draggable="true" data-word="citadelle" tabindex="0">citadelle</div>
+            <div class="word-chip" draggable="true" data-word="insularité" tabindex="0">insularité</div>
+            <div class="word-chip" draggable="true" data-word="souche" tabindex="0">souche</div>
+            <div class="word-chip" draggable="true" data-word="maquis" tabindex="0">maquis</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="maquis" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">maquis</strong>
+              <span class="def-text">Végétation méditerranéenne dense et épineuse composée d'arbustes odorants couvrant le relief insulaire.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les parfums d'immortelle et de myrte flottant sur le <strong>maquis</strong> annoncent l'approche de la côte aux navigateurs. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="citadelle" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">citadelle</strong>
+              <span class="def-text">Forteresse militaire surélevée chargée de commander une ville côtière et d'en assurer la défense.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La haute <strong>citadelle</strong> de Bonifacio surplombe de spectaculaires falaises de calcaire blanc tombant à pic dans la mer. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="insularité" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">insularité</strong>
+              <span class="def-text">Caractère géographique d'un territoire entouré par la mer conférant des particularités économiques et culturelles.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« L'<strong>insularité</strong> a forgé un attachement viscéral aux traditions ancestrales et une résistance farouche aux envahisseurs. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="vendetta" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">vendetta</strong>
+              <span class="def-text">Vengeance privée d'honneur exercée autrefois entre familles rivales selon une coutume méditerranéenne ancestrale.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les romans du dix-neuvième siècle ont souvent dramatisé la pratique de la <strong>vendetta</strong> au cœur des villages de montagne. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="souche" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">souche</strong>
+              <span class="def-text">Origine ancestrale ou lignée familiale profondément enracinée dans la terre et l'histoire locale.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Chaque habitant de vieille <strong>souche</strong> connaît la généalogie des familles composant son village d'altitude. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Véritable montagne surgie de la Méditerranée, la Corse offre un relief tourmenté dont la beauté farouche a inspiré poètes et historiens. Durant des siècles, la république de Gênes a ceinturé l'île de tours de guet et a érigé de puissantes forteresses. L'impressionnante <span class="vocab-word" tabindex="0" data-tooltip="Forteresse militaire surélevée commandant une ville côtière.">citadelle</span> de Calvi ou de Bastia témoigne de ce passé défensif face aux incursions répétées de pirates barbaresques.</p>
+          <p class="reading-para">Au-delà des côtes convoitées, l'intérieur montagneux abrite des villages de schiste nichés au-dessus de gorges vertigineuses. C'est dans ce <span class="vocab-word" tabindex="0" data-tooltip="Végétation méditerranéenne dense composée d'arbustes odorants.">maquis</span> odorant que les bergers trouvaient refuge lors des conflits. Les habitants revendiquent une <span class="vocab-word" tabindex="0" data-tooltip="Lignée familiale ancienne profondément enracinée dans le territoire.">souche</span> paysanne fière, régie jadis par un code d'honneur intransigeant où l'outrage pouvait déclencher une impitoyable <span class="vocab-word" tabindex="0" data-tooltip="Vengeance privée d'honneur exercée entre familles rivales.">vendetta</span>. De nos jours, cette forte <span class="vocab-word" tabindex="0" data-tooltip="Caractère géographique d'un territoire entouré par la mer.">insularité</span> nourrit des débats d'actualité autour de l'autonomie institutionnelle et de la survie de la langue corse.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « Un statut d'autonomie politique et fiscale pour la Corse est-il le garant d'une paix durable et de la protection de son environnement, ou risque-t-il d'ébrécher l'indivisibilité constitutionnelle de la République ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 07: GRAND EST -->
+    <article class="section-card" id="section-7">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 07</span>
+          <span class="badge-category">Carrefour européen, Cathédrales & Mémoire</span>
+        </div>
+        <h2 class="section-title">Grand Est : Carrefour des civilisations, flèches de grès rose et terres de mémoire</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-7" data-section="7">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(7)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-7">
+            <div class="word-chip" draggable="true" data-word="annexion" tabindex="0">annexion</div>
+            <div class="word-chip" draggable="true" data-word="concordat" tabindex="0">concordat</div>
+            <div class="word-chip" draggable="true" data-word="commémoration" tabindex="0">commémoration</div>
+            <div class="word-chip" draggable="true" data-word="carrefour" tabindex="0">carrefour</div>
+            <div class="word-chip" draggable="true" data-word="colombages" tabindex="0">colombages</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="carrefour" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">carrefour</strong>
+              <span class="def-text">Lieu d'intersection de voies d'échanges, de civilisations et d'influences culturelles majeures.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Strasbourg s'impose depuis l'Antiquité comme un vivant <strong>carrefour</strong> entre le monde rhénan et l'espace roman. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="concordat" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">concordat</strong>
+              <span class="def-text">Convention diplomatique et juridique réglant les rapports entre les confessions religieuses et l'État.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« L'Alsace et la Moselle conservent sous statut dérogatoire les dispositions du <strong>concordat</strong> de 1801. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="annexion" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">annexion</strong>
+              <span class="def-text">Rattachement forcé et unilatéral d'un territoire par un État conquérant à l'issue d'un conflit armé.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« L'<strong>annexion</strong> de 1871 a douloureusement séparé l'Alsace-Lorraine du reste du territoire national pendant un demi-siècle. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="colombages" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">colombages</strong>
+              <span class="def-text">Éléments de poutres en bois laissés apparents sur les façades des maisons traditionnelles de la région.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les pittoresques villages viticoles d'Alsace alignent leurs façades pimpantes ornées de <strong>colombages</strong> peints. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="commémoration" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">commémoration</strong>
+              <span class="def-text">Cérémonie publique solennelle destinée à raviver le souvenir de héros de guerre ou d'événements historiques capitaux.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« L'ossuaire de Douaumont accueille chaque année une émouvante <strong>commémoration</strong> en mémoire des combattants de 1916. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Terre de passage et d'humanisme rhénan, la région Grand Est porte les stigmates glorieux et tragiques de l'histoire européenne. Dès le Moyen Âge, commerçants et imprimeurs se pressaient dans ce formidable <span class="vocab-word" tabindex="0" data-tooltip="Lieu d'intersection de voies d'échanges et d'influences majeures.">carrefour</span> culturel où Johannes Gutenberg mit au point ses caractères mobiles. À Strasbourg, la cathédrale Notre-Dame dresse sa flèche de grès rose au-dessus des maisons à <span class="vocab-word" tabindex="0" data-tooltip="Poutres de charpente en bois laissées apparentes sur les façades.">colombages</span>, symbole d'un dialogue artistique fécond entre génie français et tradition germanique.</p>
+          <p class="reading-para">Cependant, ce territoire frontière a également été le théâtre sanglant des rivalités nationales. Le traumatisme d'une brutale <span class="vocab-word" tabindex="0" data-tooltip="Rattachement forcé d'un territoire par un État conquérant.">annexion</span> prussienne en 1871 a durablement marqué les mémoires et a préservé en Alsace-Moselle un droit local spécifique comprenant le régime du <span class="vocab-word" tabindex="0" data-tooltip="Convention réglant les rapports entre confessions religieuses et l'État.">concordat</span>. Plus à l'ouest, les collines martyres de Verdun rappellent l'hécatombe de 1916, où chaque solennelle <span class="vocab-word" tabindex="0" data-tooltip="Cérémonie publique destinée à perpétuer le souvenir d'un sacrifice historique.">commémoration</span> célèbre désormais la réconciliation franco-allemande.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « Le maintien de particularismes juridiques hérités du passé, comme le régime concordataire d'Alsace-Moselle, enrichit-il la diversité républicaine ou contredit-il le principe fondamental de laïcité républicaine ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 08: HAUTS-DE-FRANCE -->
+    <article class="section-card" id="section-8">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 08</span>
+          <span class="badge-category">Beffrois flamands, Épopée minière & Résilience</span>
+        </div>
+        <h2 class="section-title">Hauts-de-France : Beffrois séculaires, mémoire ouvrière et reconversion créative</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-8" data-section="8">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(8)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-8">
+            <div class="word-chip" draggable="true" data-word="résilience" tabindex="0">résilience</div>
+            <div class="word-chip" draggable="true" data-word="bassin" tabindex="0">bassin</div>
+            <div class="word-chip" draggable="true" data-word="beffroi" tabindex="0">beffroi</div>
+            <div class="word-chip" draggable="true" data-word="friche" tabindex="0">friche</div>
+            <div class="word-chip" draggable="true" data-word="corporation" tabindex="0">corporation</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="beffroi" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">beffroi</strong>
+              <span class="def-text">Haute tour civile communale abritant la cloche publique et symbolisant les libertés municipales médiévales.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Du haut du <strong>beffroi</strong> d'Arras, le guetteur sonnait l'alarme ou proclamait les chartes accordées aux bourgeois. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="friche" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">friche</strong>
+              <span class="def-text">Terrain ou bâtiment industriel abandonné à la suite d'une fermeture économique et en attente de reconversion.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Une immense <strong>friche</strong> minière a été spectaculairement transformée pour accueillir le musée du Louvre-Lens. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="bassin" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">bassin</strong>
+              <span class="def-text">Vaste territoire géographique et géologique homogène caractérisé par une activité industrielle ou minière commune.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le <strong>bassin</strong> minier du Nord-Pas-de-Calais est aujourd'hui classé par l'UNESCO au titre de paysage culturel évolutif. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="corporation" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">corporation</strong>
+              <span class="def-text">Communauté de marchands ou d'artisans médiévaux exerçant le même métier et régie par des statuts jurés.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La riche <strong>corporation</strong> des drapiers flamands finançait la construction d'hôtels de ville monumentaux. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="résilience" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">résilience</strong>
+              <span class="def-text">Capacité collective d'une société ou d'un bassin de vie à se reconstruire après des épreuves économiques ou destructions.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La <strong>résilience</strong> exemplaire des habitants a permis de réinventer l'économie régionale après la fermeture des mines. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Bordés par la Manche et la mer du Nord, les Hauts-de-France incarnent une histoire forgée par le labeur, l'indépendance communale et la solidarité ouvrière. Dès le douzième siècle, les marchands et tisserands de Flandre ont conquis leur autonomie face aux seigneurs féodaux. Pour proclamer ces privilèges chèrement acquis, chaque cité a érigé un fier <span class="vocab-word" tabindex="0" data-tooltip="Haute tour communale symbolisant les franchises médiévales.">beffroi</span> surplombant la Grand'Place, tandis qu'une puissante <span class="vocab-word" tabindex="0" data-tooltip="Communauté de marchands exerçant le même métier avec statuts jurés.">corporation</span> commerciale régissait la confection de draps de laine réputés.</p>
+          <p class="reading-para">Au dix-neuvième siècle, la révolution industrielle a bouleversé la région en transformant les campagnes en un gigantesque <span class="vocab-word" tabindex="0" data-tooltip="Vaste territoire caractérisé par une industrie minière commune.">bassin</span> houiller. Des générations de mineurs de fond y ont extrait le charbon au prix de lourds tributs sanitaires. Lorsque les puits ont fermé, de nombreux carreaux sont devenus une morne <span class="vocab-word" tabindex="0" data-tooltip="Terrain ou complexe industriel abandonné en attente de renouveau.">friche</span> économique. Pourtant, grâce à une formidable <span class="vocab-word" tabindex="0" data-tooltip="Capacité d'un territoire à se reconstruire après des crises économiques.">résilience</span> populaire, ces terrils se métamorphosent aujourd'hui en parcs naturels, incubateurs numériques et musées de rang mondial.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « La transformation de friches industrielles en grands musées (comme le Louvre-Lens) suffit-elle à régénérer le tissu social ou risque-t-elle de masquer la persistance de poches de précarité ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 09: NORMANDIE -->
+    <article class="section-card" id="section-9">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 09</span>
+          <span class="badge-category">Vikings, Ducs conquérants & Débarquement</span>
+        </div>
+        <h2 class="section-title">Normandie : L'héritage ducal, falaises d'albâtre et tournant de la liberté</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-9" data-section="9">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(9)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-9">
+            <div class="word-chip" draggable="true" data-word="marée" tabindex="0">marée</div>
+            <div class="word-chip" draggable="true" data-word="débarquement" tabindex="0">débarquement</div>
+            <div class="word-chip" draggable="true" data-word="conquérant" tabindex="0">conquérant</div>
+            <div class="word-chip" draggable="true" data-word="bocage" tabindex="0">bocage</div>
+            <div class="word-chip" draggable="true" data-word="tapisserie" tabindex="0">tapisserie</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="conquérant" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">conquérant</strong>
+              <span class="def-text">Chef militaire victorieux qui soumet des pays voisins par la force des armes ou le stratagème.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Guillaume le <strong>conquérant</strong>, duc de Normandie, s'est emparé de la couronne d'Angleterre après la bataille d'Hastings en 1066. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="bocage" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">bocage</strong>
+              <span class="def-text">Paysage agraire clos où les parcelles agricoles sont délimitées par des talus et des haies vives touffues.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les combats de l'été 1944 ont été rendus particulièrement ardus par les haies inextricables du <strong>bocage</strong> normand. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="débarquement" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">débarquement</strong>
+              <span class="def-text">Manoeuvre militaire amphibie consistant à jeter des troupes sur un rivage ennemi depuis la flotte navale.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le <strong>débarquement</strong> allié du 6 juin 1944 sur les plages d'Omaha et d'Utah a ouvert la voie à la libération de l'Europe. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="tapisserie" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">tapisserie</strong>
+              <span class="def-text">Ouvrage d'art textile brodé ou tissé à la main illustrant un événement historique d'envergure.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La célèbre <strong>tapisserie</strong> de Bayeux relate avec minutie les préparatifs de l'invasion normande de l'Angleterre. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="marée" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">marée</strong>
+              <span class="def-text">Oscillation périodique de flux et de reflux du niveau des mers sous l'effet gravitationnel des astres.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les eaux de la baie montent à la vitesse d'un cheval au galop lors de la grande <strong>marée</strong> entourant le mont Saint-Michel. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Terre de bocages fertiles et de falaises de craie vertigineuses, la Normandie tire son identité des marins scandinaves qui y débarquèrent au dixième siècle. Leur chef Rollon fonda un duché prospère dont le souverain le plus célèbre devint un redoutable <span class="vocab-word" tabindex="0" data-tooltip="Chef militaire victorieux qui s'empare de nouveaux royaumes.">conquérant</span> couronné à Londres. Cette épopée militaire transmanche est fidèlement représentée sur la sublime <span class="vocab-word" tabindex="0" data-tooltip="Grand ouvrage textile brodé représentant un récit historique.">tapisserie</span> médiévale de Bayeux.</p>
+          <p class="reading-para">Aux confins occidentaux, la merveilleuse abbaye du mont Saint-Michel s'élève au-dessus des sables, encerclée deux fois par jour par une vertigineuse <span class="vocab-word" tabindex="0" data-tooltip="Mouvement périodique de flux et reflux des eaux maritimes.">marée</span> atlantique. Mais la province est également un sanctuaire de la liberté universelle. Le 6 juin 1944, ses plages ont accueilli le gigantesque <span class="vocab-word" tabindex="0" data-tooltip="Opération militaire amphibie visant à débarquer des troupes sur une côte hostile.">débarquement</span> des forces alliées pour renverser le joug nazi, au prix de combats acharnés dans l'impénétrable <span class="vocab-word" tabindex="0" data-tooltip="Paysage agraire fermé par des haies vives et talus.">bocage</span> normand.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « Le tourisme de mémoire sur les plages normandes du Débarquement parvient-il à éveiller une véritable conscience citoyenne chez les jeunes générations ou glisse-t-il vers une marchandisation de la tragédie ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 10: NOUVELLE-AQUITAINE -->
+    <article class="section-card" id="section-10">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 10</span>
+          <span class="badge-category">Guyenne historique, Terroirs viticoles & Basques</span>
+        </div>
+        <h2 class="section-title">Nouvelle-Aquitaine : De l'épopée d'Aliénor aux grands crus et rivages d'océan</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-10" data-section="10">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(10)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-10">
+            <div class="word-chip" draggable="true" data-word="dune" tabindex="0">dune</div>
+            <div class="word-chip" draggable="true" data-word="cépage" tabindex="0">cépage</div>
+            <div class="word-chip" draggable="true" data-word="bastide" tabindex="0">bastide</div>
+            <div class="word-chip" draggable="true" data-word="allégeance" tabindex="0">allégeance</div>
+            <div class="word-chip" draggable="true" data-word="négoce" tabindex="0">négoce</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="allégeance" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">allégeance</strong>
+              <span class="def-text">Devoir solennel de fidélité et de soumission qu'un vassal ou un sujet voue à son souverain légitime.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les seigneurs gascons prêtaient parfois <strong>allégeance</strong> au roi d'Angleterre plutôt qu'au monarque français. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="cépage" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">cépage</strong>
+              <span class="def-text">Variété distincte de plant de vigne qui donne au vin ses arômes et sa personnalité gustative.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« L'assemblage harmonieux de chaque grand cru bordelais associe un <strong>cépage</strong> comme le merlot au cabernet sauvignon. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="bastide" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">bastide</strong>
+              <span class="def-text">Ville neuve médiévale fortifiée du Sud-Ouest bâtie selon un tracé en damier régulier autour d'une place centrale.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les arcades de la place centrale de cette charmante <strong>bastide</strong> accueillaient autrefois les foires aux bestiaux. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="négoce" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">négoce</strong>
+              <span class="def-text">Commerce maritime ou terrestre de gros spécialisé dans l'exportation de marchandises de grande valeur.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les armateurs du port de la Lune ont bâti leur fortune grâce au florissant <strong>négoce</strong> viticole avec l'Europe du Nord. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="dune" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">dune</strong>
+              <span class="def-text">Colline de sable fin façonnée et déplacée par la force des vents marins le long du rivage océanique.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Du sommet de la gigantesque <strong>dune</strong> du Pilat, la vue embrasse la forêt de pins et le banc d'Arguin. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Plus vaste région métropolitaine, la Nouvelle-Aquitaine s'étend des plateaux du Limousin jusqu'aux crêtes pyrénéennes et aux vagues puissantes de l'Atlantique. Son histoire a été marquée au douzième siècle par le destin d'Aliénor d'Aquitaine. Pendant trois siècles de rivalités franco-anglaises, les seigneurs locaux hésitaient sur l'exacte <span class="vocab-word" tabindex="0" data-tooltip="Devoir solennel de fidélité voué par un sujet à son seigneur.">allégeance</span> à accorder entre Paris et Londres, stimulant la fondation de la <span class="vocab-word" tabindex="0" data-tooltip="Ville neuve médiévale fortifiée bâtie selon un plan géométrique en damier.">bastide</span> pour stabiliser le peuplement rural.</p>
+          <p class="reading-para">Le long de la Gironde, Bordeaux s'est enrichie grâce à un florissant <span class="vocab-word" tabindex="0" data-tooltip="Commerce de gros d'envergure internationale de marchandises précieuses.">négoce</span> de tonneaux expédiés vers les îles britanniques et la mer Baltique. Dans les châteaux environnants, la sélection minutieuse de chaque <span class="vocab-word" tabindex="0" data-tooltip="Variété de vigne donnant au vin sa typicité aromatique.">cépage</span> a forgé une renommée œnologique universelle. Vers le littoral landais, la forêt de pins protège les terres contre la progression de la plus haute <span class="vocab-word" tabindex="0" data-tooltip="Colline de sable fin façonnée par les vents marins sur le rivage.">dune</span> d'Europe, tandis que le Pays basque perpétue ses traditions sportives et sa langue millénaire.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « La fusion administrative de provinces historiques distinctes (Aquitaine, Limousin, Poitou-Charentes) a-t-elle dilué la proximité démocratique et l'identité des terroirs ruraux ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 11: OCCITANIE -->
+    <article class="section-card" id="section-11">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 11</span>
+          <span class="badge-category">Pays cathare, Cités médiévales & Langue d'oc</span>
+        </div>
+        <h2 class="section-title">Occitanie : Terres cathares, forteresses vertigineuses et verbe des troubadours</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-11" data-section="11">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(11)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-11">
+            <div class="word-chip" draggable="true" data-word="consulat" tabindex="0">consulat</div>
+            <div class="word-chip" draggable="true" data-word="aqueduc" tabindex="0">aqueduc</div>
+            <div class="word-chip" draggable="true" data-word="hérésie" tabindex="0">hérésie</div>
+            <div class="word-chip" draggable="true" data-word="troubadour" tabindex="0">troubadour</div>
+            <div class="word-chip" draggable="true" data-word="citadelle" tabindex="0">citadelle</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="hérésie" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">hérésie</strong>
+              <span class="def-text">Doctrine théologique ou croyance dissidente condamnée par l'orthodoxie officielle de l'Église.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La croisade contre les Albigeois visait à extirper l'<strong>hérésie</strong> cathare implantée dans les comtés du Midi. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="citadelle" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">citadelle</strong>
+              <span class="def-text">Forteresse retranchée sur une crête rocheuse inaccessible servant de dernier sanctuaire défensif.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les ruines de Quéribus et de Peyrepertuse campent telle une vertigineuse <strong>citadelle</strong> du vertige défiant les cieux. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="troubadour" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">troubadour</strong>
+              <span class="def-text">Poète médiéval d'expression occitane composant et chantant l'art délicat de l'amour courtois (fin'amor).</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le chant lyrique d'un illustre <strong>troubadour</strong> résonnait dans les cours seigneuriales de Toulouse et de Carcassonne. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="aqueduc" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">aqueduc</strong>
+              <span class="def-text">Ouvrage monumental d'ingénierie antique à arches destiné à acheminer l'eau courante vers les cités.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le pont du Gard constitue un spectaculaire <strong>aqueduc</strong> romain bravant les siècles au-dessus du Gardon. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="consulat" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">consulat</strong>
+              <span class="def-text">Gouvernement municipal autonome du Midi médiéval où des magistrats élus (consuls ou capitouls) administraient la cité.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La ville rose de Toulouse protégeait jalousement son autonomie sous l'égide de son <strong>consulat</strong> des capitouls. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Terre de soleil adossée aux Pyrénées et baignée par la Méditerranée, l'Occitanie porte la mémoire d'une brillante civilisation médiévale. C'est dans ses cours seigneuriales que s'est épanoui l'idéal de la fin'amor, célébré par le verbe délicat d'un inspiré <span class="vocab-word" tabindex="0" data-tooltip="Poète médiéval en langue d'oc chantant l'art de l'amour courtois.">troubadour</span>. À Toulouse comme à Nîmes, l'organisation citadine reposait sur un fier <span class="vocab-word" tabindex="0" data-tooltip="Gouvernement municipal autonome dirigé par des magistrats élus.">consulat</span> garantissant les libertés de la commune face aux ingérences du roi.</p>
+          <p class="reading-para">Cependant, l'émergence du mouvement cathare au treizième siècle provoqua un séisme politique. Condamné sans appel comme une dangereuse <span class="vocab-word" tabindex="0" data-tooltip="Doctrine religieuse dissidente réprouvée par l'orthodoxie officielle.">hérésie</span> par Rome, ce courant déclencha la croisade des Albigeois et le rattachement forcé du Midi à la couronne de France. Les fidèles pourchassés trouvèrent leur ultime refuge dans chaque audacieuse <span class="vocab-word" tabindex="0" data-tooltip="Forteresse retranchée sur une crête rocheuse imprenable.">citadelle</span> des Corbières. Aujourd'hui, les remparts de Carcassonne et le majestueux <span class="vocab-word" tabindex="0" data-tooltip="Ouvrage d'ingénierie antique à arches acheminant l'eau.">aqueduc</span> du pont du Gard rappellent cette exceptionnelle densité patrimoniale.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « La mémoire de la croisade contre les Albigeois et du déclin de la langue d'oc nourrit-elle encore aujourd'hui un ressentiment légitime contre l'hégémonie historique du pouvoir central parisien ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 12: PAYS DE LA LOIRE -->
+    <article class="section-card" id="section-12">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 12</span>
+          <span class="badge-category">Estuaire atlantique, Marais & Ducs de Bretagne</span>
+        </div>
+        <h2 class="section-title">Pays de la Loire : L'embouchure royale, splendeurs ducales et marais salants</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-12" data-section="12">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(12)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-12">
+            <div class="word-chip" draggable="true" data-word="armateur" tabindex="0">armateur</div>
+            <div class="word-chip" draggable="true" data-word="estuaire" tabindex="0">estuaire</div>
+            <div class="word-chip" draggable="true" data-word="paludier" tabindex="0">paludier</div>
+            <div class="word-chip" draggable="true" data-word="marais" tabindex="0">marais</div>
+            <div class="word-chip" draggable="true" data-word="forteresse" tabindex="0">forteresse</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="estuaire" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">estuaire</strong>
+              <span class="def-text">Embouchure évasée d'un grand fleuve où se rencontrent et se mélangent eaux douces et marées océaniques.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« À Saint-Nazaire, le vaste <strong>estuaire</strong> de la Loire s'ouvre sur les eaux de l'Atlantique et leurs chantiers navals. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="marais" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">marais</strong>
+              <span class="def-text">Bassin littoral peu profond spécialement canalisé pour la récolte artisanale du sel de mer.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les paludiers de Guérande récoltent la fleur de sel au cœur d'un labyrinthe de <strong>marais</strong> séculaires. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="armateur" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">armateur</strong>
+              <span class="def-text">Personne ou compagnie qui finance l'équipement et l'exploitation commerciale de navires marchands au long cours.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Au dix-huitième siècle, le riche <strong>armateur</strong> nantais décorait sa demeure de mascarons et de balcons ouvragés. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="forteresse" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">forteresse</strong>
+              <span class="def-text">Ensemble d'édifices militaires entouré de remparts massifs conçu pour résister à des sièges prolongés.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le château des ducs de Bretagne à Nantes se dresse comme une formidable <strong>forteresse</strong> au centre de la cité. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="paludier" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">paludier</strong>
+              <span class="def-text">Artisan saunier qui cueille et récolte traditionnellement le sel marin dans les œillets des salines.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le geste précis et millénaire du <strong>paludier</strong> extrait les cristaux sans altérer l'équilibre fragile de l'argile. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">À la rencontre du fleuve royal et du grand large océanique, la région des Pays de la Loire conjugue héritage ducal, faste du commerce d'outre-mer et paysages amphibies. À Nantes, ancienne capitale historique bretonne, la robuste <span class="vocab-word" tabindex="0" data-tooltip="Ensemble d'édifices militaires massif conçu pour résister aux sièges.">forteresse</span> des ducs de Bretagne domine le centre urbain. Plus tard, au siècle des Lumières, les profits du commerce transatlantique ont permis à chaque prospère <span class="vocab-word" tabindex="0" data-tooltip="Financeur de l'armement et de l'exploitation de navires marchands au long cours.">armateur</span> de bâtir de somptueux hôtels particuliers en tuffeau sur l'île Feydeau.</p>
+          <p class="reading-para">En aval, les rives s'élargissent pour créer un grandiose <span class="vocab-word" tabindex="0" data-tooltip="Embouchure évasée d'un grand fleuve soumise à la marée océanique.">estuaire</span> marqué par l'épopée industrielle des chantiers navals de Saint-Nazaire. Sur la presqu'île voisine de Guérande, le paysage s'apaise dans un vaste <span class="vocab-word" tabindex="0" data-tooltip="Bassin littoral peu profond canalisé pour récolter le sel marin.">marais</span> salant façonné depuis le Moyen Âge. C'est dans ce milieu préservé que le patient <span class="vocab-word" tabindex="0" data-tooltip="Artisan saunier récoltant manuellement le sel marin dans les salines.">paludier</span> récolte la fleur de sel, témoignant d'une alliance millénaire entre l'ingéniosité humaine et la mer.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « Le rattachement historique de Nantes et de la Loire-Atlantique à la région des Pays de la Loire plutôt qu'à la Bretagne administrative relève-t-il d'une anomalie démocratique ou d'un choix pragmatique d'équilibre régional ? »
+        </div>
+      </div>
+    </article>
+
+    <!-- SECTION 13: PROVENCE-ALPES-CÔTE D'AZUR -->
+    <article class="section-card" id="section-13">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Section 13</span>
+          <span class="badge-category">Arènes antiques, Lumière des peintres & Garrigue</span>
+        </div>
+        <h2 class="section-title">Provence-Alpes-Côte d'Azur : Arènes de pierre, chant des cigales et rivages d'azur</h2>
+      </header>
+
+      <!-- 1. VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-13" data-section="13">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Mots à glisser-déposer</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(13)" title="Réinitialiser cet exercice" aria-label="Réinitialiser cet exercice">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-13">
+            <div class="word-chip" draggable="true" data-word="calanque" tabindex="0">calanque</div>
+            <div class="word-chip" draggable="true" data-word="garrigue" tabindex="0">garrigue</div>
+            <div class="word-chip" draggable="true" data-word="bastide" tabindex="0">bastide</div>
+            <div class="word-chip" draggable="true" data-word="arène" tabindex="0">arène</div>
+            <div class="word-chip" draggable="true" data-word="félibrige" tabindex="0">félibrige</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="garrigue" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">garrigue</strong>
+              <span class="def-text">Végétation méditerranéenne rase poussant sur sol calcaire aride et embaumant le thym, le romarin et le chêne kermès.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les collines arides de la <strong>garrigue</strong> résonnent en été de la stridulation assourdissante des cigales. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="arène" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">arène</strong>
+              <span class="def-text">Amphithéâtre antique de plan ovale où les Romains organisaient combats de gladiateurs et spectacles publics.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« L'immense <strong>arène</strong> d'Arles accueille encore aujourd'hui des spectacles taurins et des fêtes traditionnelles. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="bastide" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">bastide</strong>
+              <span class="def-text">Vaste maison de maître rurale provençale en pierre de taille agrémentée d'une cour plantée de platanes ou de cyprès.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Nichée au milieu des cyprès et des oliviers, la <strong>bastide</strong> familiale offre une fraîcheur bienvenue sous le zénith. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="calanque" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">calanque</strong>
+              <span class="def-text">Crique côtière étroite et encaissée aux parois de calcaire blanc plongeant verticalement dans les eaux turquoise.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les randonneurs admirent les eaux turquoise baignant chaque <strong>calanque</strong> secrète entre Marseille et Cassis. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="félibrige" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">félibrige</strong>
+              <span class="def-text">Mouvement littéraire initié au dix-neuvième siècle par Frédéric Mistral pour faire revivre la langue et les lettres provençales.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Les poètes du <strong>félibrige</strong> ont redonné ses lettres de noblesse à la poésie occitane et provençale. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTE DE LECTURE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texte de Lecture</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Baignée par une lumière étincelante qui a subjugué Paul Cézanne, Vincent van Gogh et Henri Matisse, la Provence-Alpes-Côte d'Azur allie un legs antique exceptionnel et des rivages côtiers mythiques. À Arles, Orange ou Fréjus, la pierre de taille des bâtisseurs romains traverse les millénaires. Dans chaque vaste <span class="vocab-word" tabindex="0" data-tooltip="Amphithéâtre antique ovale romain pour les spectacles publics.">arène</span> ou théâtre gallo-romain, les gradins témoignent de l'intégration précoce de la Provincia au monde méditerranéen impérial.</p>
+          <p class="reading-para">Dans l'arrière-pays parfumé de lavande, les chemins caillouteux serpentent à travers une austère <span class="vocab-word" tabindex="0" data-tooltip="Végétation rase sur sol calcaire embaumant le thym et le romarin.">garrigue</span> jusqu'à une élégante <span class="vocab-word" tabindex="0" data-tooltip="Vaste maison rurale provençale en pierre de taille.">bastide</span> aux volets persiennés. Au dix-neuvième siècle, face au recul du dialecte provençal, l'écrivain Frédéric Mistral fonda le <span class="vocab-word" tabindex="0" data-tooltip="Mouvement littéraire créé par Mistral pour ressusciter la langue provençale.">félibrige</span>, obtenant le prix Nobel de littérature. Plus au sud, le littoral marseillais plonge dans la mer Méditerranée en abritant chaque somptueuse <span class="vocab-word" tabindex="0" data-tooltip="Crique côtière calcaire étroite aux eaux turquoise.">calanque</span> préservée par un parc national aux accès désormais régulés.</p>
+        </div>
+      </div>
+
+      <!-- 3. QUESTION DE DISCUSSION -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de Débat Analytique</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          « L'instauration de quotas stricts de fréquentation touristique sur des sites naturels fragiles (comme les calanques de Marseille) constitue-t-elle une atteinte à la liberté de mouvement ou l'unique rempart contre la destruction écologique ? »
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- BOUTON RETOUR EN HAUT -->
+  <button type="button" class="btn-back-to-top" id="btn-back-to-top" aria-label="Retour en haut de la page" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="m18 15-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <!-- PIED DE PAGE -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p><strong>Régions de France</strong> — Module interactif d'apprentissage du français langue étrangère (FLE B1/B2).</p>
+      <p>Conception pédagogique autonome avec progression sauvegardée localement.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIQUE INTERACTIVE -->
+  <script>
+    const STORAGE_KEY = 'regions_of_france_progress';
+    const TOTAL_ITEMS = 65;
+    let selectedChip = null;
+    let isSelectingCardText = false;
+
+    // INITIALISATION DU SITE
+    document.addEventListener('DOMContentLoaded', () => {
+      initDropdown();
+      initInteractionSuite();
+      initScrollSpy();
+      restoreProgress();
+    });
+
+    // MENU DÉROULANT DES RÉGIONS STYLE NUXT UI
+    function initDropdown() {
+      const dropdown = document.getElementById('region-dropdown');
+      const btn = document.getElementById('dropdown-btn');
+      const menu = document.getElementById('dropdown-menu');
+      const items = menu.querySelectorAll('.nuxt-dropdown-item');
+      const label = document.getElementById('dropdown-current-label');
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      items.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = item.dataset.target;
+          const targetElem = document.getElementById(targetId);
+          if (targetElem) {
+            const navbarHeight = document.getElementById('top-navbar').offsetHeight;
+            const top = targetElem.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 16;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+          label.textContent = item.textContent.trim().replace(/^\d+\s*/, '');
+          dropdown.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    // MODAL DE CONFIRMATION GLOBALE
+    function openResetModal() {
+      const modal = document.getElementById('reset-modal');
+      modal.classList.add('is-open');
+    }
+
+    function closeResetModal() {
+      const modal = document.getElementById('reset-modal');
+      modal.classList.remove('is-open');
+    }
+
+    function confirmResetAll() {
+      closeResetModal();
+      for (let s = 1; s <= 13; s++) {
+        resetExercise(s, false);
+      }
+      localStorage.removeItem(STORAGE_KEY);
+      updateGlobalScore();
+    }
+
+    // GESTION DU STOCKAGE LOCAL (LOCALSTORAGE)
+    function getStoredProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveMatchToStorage(sectionId, targetWord) {
+      const progress = getStoredProgress();
+      if (!progress[sectionId]) {
+        progress[sectionId] = [];
+      }
+      if (!progress[sectionId].includes(targetWord)) {
+        progress[sectionId].push(targetWord);
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {
+        console.error('Erreur de sauvegarde locale', e);
+      }
+    }
+
+    function clearSectionStorage(sectionId) {
+      const progress = getStoredProgress();
+      delete progress[sectionId];
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {
+        console.error('Erreur lors du nettoyage de la section', e);
+      }
+    }
+
+    function restoreProgress() {
+      const progress = getStoredProgress();
+      Object.keys(progress).forEach(secId => {
+        const words = progress[secId] || [];
+        const exercise = document.getElementById(`exercise-${secId}`);
+        if (!exercise) return;
+
+        const bank = document.getElementById(`bank-${secId}`);
+
+        words.forEach(word => {
+          const card = exercise.querySelector(`.def-card[data-target="${word}"]`);
+          if (card) {
+            card.classList.add('is-matched');
+            card.classList.remove('is-collapsed');
+          }
+          if (bank) {
+            const chip = bank.querySelector(`.word-chip[data-word="${word}"]`);
+            if (chip) {
+              chip.classList.add('is-placed');
+            }
+          }
+        });
+        updateSectionScore(secId, false);
+      });
+      updateGlobalScore();
+    }
+
+    // INTERACTION DOUBLE : GLISSER-DÉPOSER ET TAP-TO-PLACE
+    function initInteractionSuite() {
+      const chips = document.querySelectorAll('.word-chip');
+      const cards = document.querySelectorAll('.def-card');
+
+      chips.forEach(chip => {
+        chip.addEventListener('dragstart', handleDragStart);
+        chip.addEventListener('dragend', handleDragEnd);
+        chip.addEventListener('click', handleChipClick);
+      });
+
+      cards.forEach(card => {
+        card.addEventListener('dragover', handleCardDragOver);
+        card.addEventListener('dragleave', handleCardDragLeave);
+        card.addEventListener('drop', handleCardDrop);
+        card.addEventListener('click', handleCardClick);
+        card.addEventListener('mousedown', () => { isSelectingCardText = false; });
+        card.addEventListener('mouseup', () => {
+          const sel = window.getSelection();
+          if (sel && sel.toString().trim().length > 0) {
+            isSelectingCardText = true;
+          }
+        });
+      });
+    }
+
+    function highlightEligibleCards(sectionId, shouldHighlight) {
+      document.querySelectorAll('.def-card').forEach(card => {
+        if (!shouldHighlight) {
+          card.classList.remove('eligible-drop');
+        } else {
+          const cardSection = card.closest('.exercise-box').dataset.section;
+          if (cardSection === sectionId && !card.classList.contains('is-matched')) {
+            card.classList.add('eligible-drop');
+          } else {
+            card.classList.remove('eligible-drop');
+          }
+        }
+      });
+    }
+
+    // GESTIONNAIRES DE GLISSER-DÉPOSER
+    function handleDragStart(e) {
+      if (this.classList.contains('is-placed')) {
+        e.preventDefault();
+        return;
+      }
+      const currentSection = this.closest('.exercise-box').dataset.section;
+      e.dataTransfer.setData('text/plain', this.dataset.word);
+      e.dataTransfer.setData('source-section', currentSection);
+      e.dataTransfer.effectAllowed = 'move';
+      this.classList.add('is-dragging');
+      if (selectedChip) {
+        selectedChip.classList.remove('is-selected');
+        selectedChip = null;
+      }
+      highlightEligibleCards(currentSection, true);
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('is-dragging');
+      highlightEligibleCards(null, false);
+    }
+
+    function handleCardDragOver(e) {
+      e.preventDefault();
+      if (!this.classList.contains('is-matched')) {
+        this.classList.add('drag-hover');
+      }
+    }
+
+    function handleCardDragLeave(e) {
+      this.classList.remove('drag-hover');
+    }
+
+    function handleCardDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-hover');
+      highlightEligibleCards(null, false);
+      if (this.classList.contains('is-matched')) return;
+
+      const droppedWord = e.dataTransfer.getData('text/plain');
+      const sourceSection = e.dataTransfer.getData('source-section');
+      const currentSection = this.closest('.exercise-box').dataset.section;
+
+      if (sourceSection !== currentSection) return;
+
+      const targetWord = this.dataset.target;
+      validatePlacement(this, droppedWord, targetWord, currentSection);
+    }
+
+    // GESTIONNAIRES DU TAP / CLIC
+    function handleChipClick(e) {
+      if (this.classList.contains('is-placed')) return;
+      const currentSection = this.closest('.exercise-box').dataset.section;
+
+      if (selectedChip === this) {
+        this.classList.remove('is-selected');
+        selectedChip = null;
+        highlightEligibleCards(null, false);
+      } else {
+        if (selectedChip) {
+          selectedChip.classList.remove('is-selected');
+          highlightEligibleCards(null, false);
+        }
+        selectedChip = this;
+        this.classList.add('is-selected');
+        highlightEligibleCards(currentSection, true);
+      }
+    }
+
+    function handleCardClick(e) {
+      if (this.classList.contains('is-matched')) {
+        const selection = window.getSelection();
+        const hasSelection = selection && selection.toString().trim().length > 0;
+        if (hasSelection || isSelectingCardText) {
+          isSelectingCardText = false;
+          return;
+        }
+        this.classList.toggle('is-collapsed');
+        return;
+      }
+
+      if (!selectedChip) return;
+
+      const currentSection = this.closest('.exercise-box').dataset.section;
+      const chipSection = selectedChip.closest('.exercise-box').dataset.section;
+      if (currentSection !== chipSection) return;
+
+      const droppedWord = selectedChip.dataset.word;
+      const targetWord = this.dataset.target;
+
+      validatePlacement(this, droppedWord, targetWord, currentSection);
+    }
+
+    // VALIDATION DU PLACEMENT D'UN MOT
+    function validatePlacement(card, inputWord, targetWord, sectionId) {
+      highlightEligibleCards(null, false);
+      if (inputWord.trim().toLowerCase() === targetWord.trim().toLowerCase()) {
+        card.classList.add('is-matched');
+        card.classList.remove('is-collapsed');
+
+        const bank = document.getElementById(`bank-${sectionId}`);
+        if (bank) {
+          const chip = bank.querySelector(`.word-chip[data-word="${inputWord}"]`);
+          if (chip) {
+            chip.classList.remove('is-selected');
+            chip.classList.add('is-placed');
+          }
+        }
+        if (selectedChip && selectedChip.dataset.word === inputWord) {
+          selectedChip = null;
+        }
+
+        saveMatchToStorage(sectionId, targetWord);
+        updateSectionScore(sectionId);
+        updateGlobalScore();
+      } else {
+        card.classList.add('shake-error');
+
+        const bank = document.getElementById(`bank-${sectionId}`);
+        const chip = bank ? bank.querySelector(`.word-chip[data-word="${inputWord}"]`) : null;
+        if (chip) {
+          chip.classList.add('shake-error');
+        }
+
+        setTimeout(() => {
+          card.classList.remove('shake-error');
+          if (chip) {
+            chip.classList.remove('shake-error');
+          }
+        }, 500);
+
+        if (selectedChip) {
+          selectedChip.classList.remove('is-selected');
+          selectedChip = null;
+        }
+      }
+    }
+
+    // MISE À JOUR DES SCORES
+    function updateSectionScore(sectionId, animate = true) {
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+      const matchedCount = exercise.querySelectorAll('.def-card.is-matched').length;
+
+      const bankContainer = exercise.querySelector('.word-bank-container');
+      if (bankContainer) {
+        if (matchedCount === 5) {
+          if (!animate) {
+            bankContainer.classList.add('is-hidden-instant');
+          } else {
+            bankContainer.classList.remove('is-hidden-instant');
+            bankContainer.classList.add('is-hidden');
+          }
+        } else {
+          bankContainer.classList.remove('is-hidden', 'is-hidden-instant');
+        }
+      }
+    }
+
+    function updateGlobalScore() {
+      const totalMatched = document.querySelectorAll('.def-card.is-matched').length;
+      const textElem = document.getElementById('global-score-text');
+      if (textElem) {
+        textElem.textContent = `${totalMatched} / ${TOTAL_ITEMS} mots`;
+      }
+    }
+
+    // RÉINITIALISATION D'UNE SECTION SPÉCIFIQUE
+    function resetExercise(sectionId, clearStorage = true) {
+      highlightEligibleCards(null, false);
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+
+      const cards = exercise.querySelectorAll('.def-card');
+      cards.forEach(card => {
+        card.classList.remove('is-matched', 'is-collapsed', 'drag-hover', 'shake-error', 'eligible-drop');
+      });
+
+      const bank = document.getElementById(`bank-${sectionId}`);
+      if (bank) {
+        const chips = bank.querySelectorAll('.word-chip');
+        chips.forEach(chip => {
+          chip.classList.remove('is-placed', 'is-selected', 'is-dragging', 'shake-error');
+        });
+      }
+
+      if (clearStorage) {
+        clearSectionStorage(sectionId);
+      }
+
+      updateSectionScore(sectionId);
+      updateGlobalScore();
+    }
+
+    // BOUTON DE DÉFILEMENT VERS LE HAUT
+    function initScrollSpy() {
+      const btnTop = document.getElementById('btn-back-to-top');
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 400) {
+          btnTop.classList.add('is-visible');
+        } else {
+          btnTop.classList.remove('is-visible');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

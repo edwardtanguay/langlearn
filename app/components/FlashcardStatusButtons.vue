@@ -79,12 +79,18 @@ function toggleWordAt(index: number) {
     <!-- Top row: Learned & Keep Testing in their own dark cell -->
     <div class="bg-gray-50 dark:bg-gray-950 p-2 sm:p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex gap-2">
       <button @click="$emit('action', 'MARKED_AS_LEARNED', 'LEARNED')"
-        class="flex-1 py-2 sm:py-2.5 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-xl transition-all cursor-pointer">
-        Learned
+        class="flex-1 py-2 sm:py-2.5 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-xl border border-emerald-500/40 dark:border-emerald-500/50 shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+        <span>Learned</span>
       </button>
       <button @click="$emit('action', 'MARKED_AS_KEEP_TESTING')"
-        class="flex-1 py-2 sm:py-2.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/60 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-xl transition-all cursor-pointer">
-        Keep Testing
+        class="flex-1 py-2 sm:py-2.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/60 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-xl border border-indigo-500/40 dark:border-indigo-500/50 shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        <span>Keep Testing</span>
       </button>
     </div>
 
@@ -101,7 +107,7 @@ function toggleWordAt(index: number) {
           Delete
         </button>
         <button @click="isHighlighting = true"
-          class="px-3.5 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 border border-gray-200/80 dark:border-gray-750 text-[10px] font-bold rounded-xl transition-all shadow-xs cursor-pointer">
+          class="px-5 sm:px-6 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
           Highlight words
         </button>
       </div>

@@ -94,3 +94,7 @@
 	- de lepel, de vork, het mes, het bord, de kom, het glas, het kopje, de pan, de koekenpan, de koelkast, de vriezer, de oven, het fornuis, de magnetron, de gootsteen, de vaatwasser, de snijplank, het servet, de fles, de waterkoker
 - office
 	- de paperclip, de nietmachine, de schaar, de map, de pen, het potlood, het toetsenbord, de muis, het bureau, het scherm, de printer, het notitieboekje, het gummetje, het plakband, de markeerstift, de envelop, de kalender, de rekenmachine, de aktetas, de plakbriefjes
+- writing
+	- de punt, de komma, de puntkomma, de dubbele punt, het uitroepteken, het vraagteken, de aanhalingstekens, de chevrons, de apostrof, het koppelteken, het gedachtestreepje, de haakjes, de rechte haken, de accolades, het beletselteken, de schuine streep, de omgekeerde schuine streep, het laag liggend streepje, de tilde, het en-teken
+- language
+	- het zelfstandig naamwoord, het werkwoord, het bijvoeglijk naamwoord, het bijwoord, het voornaamwoord, het voorzetsel, het voegwoord, het lidwoord, het onderwerp, het lijdend voorwerp, de werkwoordstijd, de vervoeging, de grammatica, de woordenschat, de uitspraak, de lettergreep, de zin, de alinea, het enkelvoud, het meervoud

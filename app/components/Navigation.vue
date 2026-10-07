@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon, VideoCameraIcon } from '@heroicons/vue/24/outline'
+import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, ArrowLeftOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon, VideoCameraIcon, LinkIcon, SparklesIcon } from '@heroicons/vue/24/outline'
 
 interface CardStats {
   readyCount: number
@@ -151,14 +151,21 @@ const countButtonClass = computed(() => {
 const navItems = computed(() => {
   const items = []
   if (loggedIn.value) {
-    items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
-    items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
-    items.push({ name: 'Videos', path: '/videos', icon: VideoCameraIcon })
-    items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
-    if (showDevPageConfig.value && isAdmin.value) {
-      items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
+    if (isAdmin.value) {
+      items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
+      items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
+      items.push({ name: 'Links', path: '/links', icon: LinkIcon })
+      items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
+      if (showDevPageConfig.value) {
+        items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
+      }
+      items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
+    } else {
+      items.push({ name: 'Member Home', path: '/member', icon: HomeIcon })
+      items.push({ name: 'Gemini Quiz', path: '/activities/gemini-quiz', icon: SparklesIcon })
+      items.push({ name: 'Links', path: '/links', icon: LinkIcon })
+      items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     }
-    items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
   } else {
     items.push({ name: 'Home', path: '/', icon: HomeIcon })
     items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
@@ -176,7 +183,7 @@ const navItems = computed(() => {
         <!-- Logo / User Profile (First Name Only) -->
         <div class="flex items-center space-x-3">
           <ClientOnly>
-            <NuxtLink :to="loggedIn ? '/user' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
+            <NuxtLink :to="loggedIn ? (isAdmin ? '/profile' : '/member') : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
               <div class="flex flex-row items-center gap-2.5">
                 <template v-if="loggedIn">
                   <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs">
@@ -202,17 +209,17 @@ const navItems = computed(() => {
             </template>
           </ClientOnly>
 
-          <!-- Quick-Add Idea Drawer Trigger -->
+          <!-- Quick-Add Idea Drawer Trigger (Admin only) -->
           <ClientOnly>
-            <QuickAddIdeaDrawer v-if="loggedIn" />
+            <QuickAddIdeaDrawer v-if="loggedIn && isAdmin" />
           </ClientOnly>
         </div>
 
         <!-- Desktop Navigation & Take-Count Progress Pill -->
         <div class="hidden md:flex items-center space-x-6">
-          <!-- Desktop Take-Count Goal Progress Pill -->
+          <!-- Desktop Take-Count Goal Progress Pill (Admin only) -->
           <ClientOnly>
-            <button v-if="loggedIn"
+            <button v-if="loggedIn && isAdmin"
                     @click.stop="showStatsModal = !showStatsModal; mobileMenuOpen = false"
                     class="px-3 py-1 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer border text-xs font-bold shadow-xs min-h-[32px]"
                     :class="countButtonClass"
@@ -246,15 +253,20 @@ const navItems = computed(() => {
                       class="h-5 w-5" />
           </button>
 
-          <!-- Desktop Logout Button -->
+          <!-- Desktop Logout / Login Button -->
           <ClientOnly>
             <button v-if="loggedIn"
                     @click="handleLogout"
-                    class="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white w-[76px] shrink-0 justify-end">
+                    class="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white w-[76px] shrink-0 justify-end cursor-pointer">
               <ArrowRightOnRectangleIcon class="h-5 w-5" />
               <span>Logout</span>
             </button>
-            <div v-else class="w-[76px] shrink-0"></div>
+            <a v-else
+               href="/api/login"
+               class="flex items-center space-x-2 text-indigo-600 hover:text-indigo-800 transition-colors font-semibold dark:text-indigo-400 dark:hover:text-indigo-300 w-[76px] shrink-0 justify-end">
+              <ArrowLeftOnRectangleIcon class="h-5 w-5" />
+              <span>Login</span>
+            </a>
           </ClientOnly>
         </div>
 
@@ -360,14 +372,21 @@ const navItems = computed(() => {
             </NuxtLink>
           </template>
 
-          <!-- Mobile Logout Button -->
+          <!-- Mobile Logout / Login Button -->
           <ClientOnly>
             <button v-if="loggedIn"
                     @click="handleLogout(); mobileMenuOpen = false"
-                    class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black dark:text-gray-300 dark:hover:bg-gray-850/50 transition-colors font-medium">
+                    class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black dark:text-gray-300 dark:hover:bg-gray-850/50 transition-colors font-medium cursor-pointer">
               <ArrowRightOnRectangleIcon class="h-5 w-5" />
               <span>Logout</span>
             </button>
+            <a v-else
+               href="/api/login"
+               @click="mobileMenuOpen = false"
+               class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-indigo-950/50 transition-colors font-semibold">
+              <ArrowLeftOnRectangleIcon class="h-5 w-5" />
+              <span>Login</span>
+            </a>
           </ClientOnly>
         </div>
       </div>

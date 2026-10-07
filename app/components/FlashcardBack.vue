@@ -109,6 +109,13 @@ function handleTextClick(event: MouseEvent) {
   }
 }
 
+function openConjugationSearch() {
+  const cleanBack = stripAsterisks(props.currentCard.back).trim()
+  const query = `conjugate this phrase in three other tenses: "${cleanBack}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
+
 const getTextClass = (text: string) => {
   const clean = stripFormatting(text)
   const len = clean ? clean.length : 0
@@ -164,6 +171,18 @@ const getTextClass = (text: string) => {
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
           </svg>
           <span>edit</span>
+        </button>
+
+        <!-- Conjugate Button (Bottom Middle) -->
+        <button
+          @click.stop="openConjugationSearch"
+          class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider transition-all z-20 cursor-pointer select-none bg-transparent border-0 p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10 backface-hidden"
+          title="Conjugate this phrase in three other tenses with AI"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+          </svg>
+          <span>conjugate</span>
         </button>
 
         <!-- Audio Button (Bottom Right) -->

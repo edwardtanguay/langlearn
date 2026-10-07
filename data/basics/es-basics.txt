@@ -93,3 +93,7 @@
 	- la cuchara, el tenedor, el cuchillo, el plato, el tazón, el vaso, la taza, la olla, la sartén, el refrigerador, el congelador, el horno, la estufa, el microondas, el fregadero, el lavavajillas, la tabla de cortar, la servilleta, la botella, la tetera
 - office
 	- el clip, la grapadora, las tijeras, la carpeta, el bolígrafo, el lápiz, el teclado, el ratón, el escritorio, el monitor, la impresora, el cuaderno, la goma de borrar, la cinta adhesiva, el subrayador, el sobre, el calendario, la calculadora, el maletín, las notas adhesivas
+- writing
+	- el punto, la coma, el punto y coma, los dos puntos, el signo de exclamación, el signo de interrogación, las comillas, las comillas angulares, el apóstrofo, el guion, la raya, los paréntesis, los corchetes, las llaves, los puntos suspensivos, la barra, la barra invertida, el guion bajo, la virgulilla, el et
+- language
+	- el sustantivo, el verbo, el adjetivo, el adverbio, el pronombre, la preposición, la conjunción, el artículo, el sujeto, el objeto, el tiempo verbal, la conjugación, la gramática, el vocabulario, la pronunciación, la sílaba, la frase, el párrafo, el singular, el plural

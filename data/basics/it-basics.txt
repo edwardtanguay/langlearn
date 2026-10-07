@@ -44,26 +44,26 @@
 - family
 	- la madre, il padre, i genitori, la sorella, il fratello, il figlio, la figlia, la nonna, il nonno, la zia, lo zio, il cugino / la cugina, il marito, la moglie, il bambino / i bambini
 - jobs
-	- l'insegnante, il medico / la dottoressa, l'infermiere / l'infermiera, lo studente / la studentessa, l'ingegnere, il cameriere / la cameriera, il cuoco / la cuoca, l'autista, il commesso / la commessa, il poliziotto / la poliziotta, il pompiere, l'agricoltore / l'agricoltrice, l'impiegato / l'impiegata, disoccupato, in pensione
+	- l'insegnante (m/f), il medico / la dottoressa, l'infermiere (m) / l'infermiera (f), lo studente / la studentessa, l'ingegnere (m), il cameriere / la cameriera, il cuoco / la cuoca, l'autista (m/f), il commesso / la commessa, il poliziotto / la poliziotta, il pompiere, l'agricoltore (m) / l'agricoltrice (f), l'impiegato (m) / l'impiegata (f), disoccupato, in pensione
 - food and drink
-	- il pane, il riso, la pasta, la carne, il pollo, il pesce, l'uovo, il formaggio, la frutta, la mela, la banana, l'arancia, la verdura, la patata, il pomodoro, l'insalata, la zuppa, il panino, la pizza
-	- il latte, l'acqua, il succo, il caffè, il tè, la torta, il cioccolato, la colazione, il pranzo, la cena
+	- il pane, il riso, la pasta, la carne, il pollo, il pesce, l'uovo (m), il formaggio, la frutta, la mela, la banana, l'arancia (f), la verdura, la patata, il pomodoro, l'insalata, la zuppa, il panino, la pizza
+	- il latte, l'acqua (f), il succo, il caffè, il tè, la torta, il cioccolato, la colazione, il pranzo, la cena
 - clothes
 	- la maglietta, la camicia, i pantaloni, i jeans, la gonna, il vestito, la giacca, il cappotto, il maglione, le scarpe, gli stivali, i calzini, il cappello, la sciarpa, i guanti, la borsa
 - weather
 	- soleggiato, piovoso, nuvoloso, ventoso, nevoso, caldo, tiepido, freddo, fresco
 - seasons
-	- la primavera, l'estate, l'autunno, l'inverno
+	- la primavera, l'estate (f), l'autunno (m), l'inverno (m)
 - body
-	- la testa, i capelli, il viso, l'occhio, l'orecchio, il naso, la bocca, il dente / i denti, il braccio, la mano, il dito, la gamba, il piede / i piedi, la schiena, lo stomaco
+	- la testa, i capelli, il viso, l'occhio (m), l'orecchio (m), il naso, la bocca, il dente / i denti, il braccio, la mano, il dito, la gamba, il piede / i piedi, la schiena, lo stomaco
 - house
-	- la casa, l'appartamento, la stanza, la camera da letto, il bagno, la cucina, il soggiorno, il giardino
+	- la casa, l'appartamento (m), la stanza, la camera da letto, il bagno, la cucina, il soggiorno, il giardino
 - furniture
-	- il letto, il tavolo, la sedia, il divano, la scrivania, l'armadio, il frigorifero, i fornelli, la finestra, la porta, il muro, il pavimento
+	- il letto, il tavolo, la sedia, il divano, la scrivania, l'armadio (m), il frigorifero, i fornelli, la finestra, la porta, il muro, il pavimento
 - places
-	- la scuola, l'ospedale, il supermercato, il negozio, la banca, l'ufficio postale, il ristorante, il bar, il cinema, il parco, il museo, la stazione, l'aeroporto, l'albergo, la biblioteca, la palestra
+	- la scuola, l'ospedale (m), il supermercato, il negozio, la banca, l'ufficio postale, il ristorante, il bar, il cinema, il parco, il museo, la stazione, l'aeroporto (m), l'albergo (m), la biblioteca, la palestra
 - transport
-	- la macchina, l'autobus, il treno, l'aereo, la bicicletta / la bici, la moto, il taxi, la barca, la metropolitana, a piedi, in macchina / in autobus
+	- la macchina, l'autobus, il treno, l'aereo (m), la bicicletta / la bici, la moto, il taxi, la barca, la metropolitana, a piedi, in macchina / in autobus
 - directions 
 	- a sinistra, a destra, dritto, vicino a, di fronte a, tra, davanti a, dietro, vicino a, lontano da, al semaforo, girare a sinistra/a destra
 - routines
@@ -83,12 +83,16 @@
 - frequency
 	- sempre, di solito, spesso, a volte, mai, ogni giorno, una volta alla settimana, due volte alla settimana, ogni mattina, nel fine settimana
 - tech
-	- il telefono, il computer, il portatile, il caricabatterie, la chiave, il portafoglio, l'ombrello, le cuffie, la macchina fotografica, il tablet
+	- il telefono, il computer, il portatile, il caricabatterie, la chiave, il portafoglio, l'ombrello (m), le cuffie, la macchina fotografica, il tablet
 - school
-	- l'inglese, la matematica, le scienze, la storia, la geografia, l'arte, la musica, la biologia, la chimica
+	- l'inglese (m), la matematica, le scienze, la storia, la geografia, l'arte (f), la musica, la biologia, la chimica
 - animals
-	- il cane, il gatto, l'uccello, il pesce, il coniglio, il cavallo, il leone, la tigre, l'elefante, la scimmia
+	- il cane, il gatto, l'uccello (m), il pesce, il coniglio, il cavallo, il leone, la tigre, l'elefante (m), la scimmia
 - kitchen
 	- il cucchiaio, la forchetta, il coltello, il piatto, la ciotola, il bicchiere, la tazza, la pentola, la padella, il frigorifero, il congelatore, il forno, il fornello, il microonde, il lavandino, la lavastoviglie, il tagliere, il tovagliolo, la bottiglia, il bollitore
 - office
-	- la graffetta, la cucitrice, le forbici, la cartella, la penna, la matita, la tastiera, il mouse, la scrivania, il monitor, la stampante, il quaderno, la gomma, il nastro adesivo, l'evidenziatore, la busta, il calendario, la calcolatrice, la valigetta, i foglietti adesivi
+	- la graffetta, la cucitrice, le forbici, la cartella, la penna, la matita, la tastiera, il mouse, la scrivania, il monitor, la stampante, il quaderno, la gomma, il nastro adesivo, l'evidenziatore (m), la busta, il calendario, la calcolatrice, la valigetta, i foglietti adesivi
+- writing
+	- il punto, la virgola, il punto e virgola, i due punti, il punto esclamativo, il punto interrogativo, le virgolette, i caporali, l'apostrofo (m), il trattino, la lineetta, le parentesi tonde, le parentesi quadre, le parentesi graffe, i puntini di sospensione, la barra obliqua, la barra rovesciata, il trattino basso, la tilde, la e commerciale
+- language
+	- il sostantivo, il verbo, l'aggettivo (m), l'avverbio (m), il pronome, la preposizione, la congiunzione, l'articolo (m), il soggetto, il complemento, il tempo verbale, la coniugazione, la grammatica, il vocabolario, la pronuncia, la sillaba, la frase, il paragrafo, il singolare, il plurale

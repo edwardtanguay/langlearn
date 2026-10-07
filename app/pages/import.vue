@@ -64,6 +64,56 @@ interface MobilePreviewData {
 }
 
 const mobilePreviewResult = ref<MobilePreviewData | null>(null)
+const mobileImportSuccessStats = ref<{
+  count: number
+  languages: Record<string, number>
+} | null>(null)
+
+const languageColors: Record<string, string> = {
+  fr: '#2563eb', // French = blue
+  es: '#dc2626', // Spanish = red
+  it: '#16a34a', // Italian = green
+  nl: '#ca8a04', // Dutch = yellow
+  pl: '#9ca3af',
+  de: '#78350f',
+  ru: '#4b5563',
+  is: '#0891b2',
+  da: '#9333ea',
+  el: '#ea580c'
+}
+
+const languageTextColors: Record<string, string> = {
+  fr: '#60a5fa', // French = brighter blue for high contrast
+  es: '#dc2626',
+  it: '#16a34a',
+  nl: '#ca8a04',
+  pl: '#9ca3af',
+  de: '#d97706', // German = brighter warm amber/brown
+  ru: '#4b5563',
+  is: '#0891b2',
+  da: '#9333ea',
+  el: '#ea580c'
+}
+
+function getCardLanguageColor(card: PreviewCardItem): string {
+  const code = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
+  return languageColors[code] || '#2563eb'
+}
+
+function getCardLanguageTextColor(card: PreviewCardItem): string {
+  const code = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
+  return languageTextColors[code] || getCardLanguageColor(card)
+}
+
+const mobileLanguageBreakdown = computed(() => {
+  if (!mobilePreviewResult.value?.willImport) return {}
+  const breakdown: Record<string, number> = {}
+  for (const card of mobilePreviewResult.value.willImport) {
+    const lang = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
+    breakdown[lang] = (breakdown[lang] || 0) + 1
+  }
+  return breakdown
+})
 
 const checkMobile = () => {
   if (typeof window !== 'undefined') {
@@ -75,6 +125,7 @@ const handleMobileImportPreview = async () => {
   if (!mobileInputText.value.trim() || isSubmittingMobile.value) return
   isSubmittingMobile.value = true
   mobileImportError.value = null
+  mobileImportSuccessStats.value = null
 
   try {
     const res = await $fetch<MobilePreviewData>('/api/import/mobile', {
@@ -96,13 +147,19 @@ const handleConfirmMobileImport = async () => {
   mobileImportError.value = null
 
   try {
+    const currentBreakdown = { ...mobileLanguageBreakdown.value }
+    const totalCount = mobilePreviewResult.value?.willImport.length || 0
+
     await $fetch('/api/import/mobile', {
       method: 'POST',
       body: { mobileImportText: mobileInputText.value }
     })
+    mobileImportSuccessStats.value = {
+      count: totalCount,
+      languages: currentBreakdown
+    }
     mobileInputText.value = ''
     mobilePreviewResult.value = null
-    await navigateTo('/flashcard')
   } catch (err: any) {
     console.error('Failed mobile import confirmation:', err)
     mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to submit mobile import.'
@@ -225,8 +282,66 @@ async function handleImport() {
       <div v-if="loggedIn" class="mt-8 flex flex-col items-center w-full min-h-[340px] justify-start pt-2">
         <!-- Mobile View (completely different page view) -->
         <div v-if="isMobile" class="w-full max-w-lg space-y-6">
-          <!-- State 1: Input form (when not previewing) -->
-          <div v-if="!mobilePreviewResult" class="space-y-4">
+          <!-- State 3: Success Screen (after confirming import) -->
+          <div v-if="mobileImportSuccessStats" class="space-y-6">
+            <div class="p-6 bg-white dark:bg-gray-900 border border-emerald-200 dark:border-emerald-800 rounded-3xl shadow-sm text-center space-y-4">
+              <div class="w-12 h-12 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+
+              <div>
+                <h1 class="text-xl font-black text-gray-900 dark:text-white">Import Successful!</h1>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {{ mobileImportSuccessStats.count }} {{ mobileImportSuccessStats.count === 1 ? 'flashcard was' : 'flashcards were' }} successfully added to your deck.
+                </p>
+              </div>
+
+              <!-- Stats by language -->
+              <div class="pt-2 border-t border-gray-100 dark:border-gray-800 flex flex-wrap justify-center gap-2">
+                <span
+                  v-for="(count, lang) in mobileImportSuccessStats.languages"
+                  :key="lang"
+                  class="px-3 py-1 rounded-lg text-xs font-bold text-white shadow-xs"
+                  :style="{ backgroundColor: languageColors[lang] || '#6366f1' }"
+                >
+                  {{ (lang || 'unknown').toUpperCase() }}: {{ count }} {{ count === 1 ? 'card' : 'cards' }}
+                </span>
+              </div>
+
+              <!-- Google Translate reminder box -->
+              <div class="p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 rounded-2xl text-left space-y-2">
+                <p class="text-xs text-amber-900 dark:text-amber-200/90 leading-relaxed">
+                  Be sure to delete the cards you just imported from your saved list on Google Translate so you don't import them again later.
+                </p>
+                <div class="pt-1">
+                  <a
+                    href="https://translate.google.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-950 dark:text-amber-300 underline hover:text-amber-700 dark:hover:text-amber-200 transition-colors"
+                  >
+                    <span>Delete cards at Google Translate</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="pt-2">
+                <NuxtLink
+                  to="/flashcard"
+                  class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+                >
+                  <span>Continue to Flashcards →</span>
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+
+          <!-- State 1: Input form (when not previewing and not success) -->
+          <div v-else-if="!mobilePreviewResult" class="space-y-4">
             <div class="space-y-2">
               <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mobile Import</h1>
               <p class="text-sm text-gray-500 dark:text-gray-400">Paste text below to import into your account.</p>
@@ -281,10 +396,9 @@ async function handleImport() {
 
             <!-- (1) Cards that WILL NOT be imported -->
             <div v-if="mobilePreviewResult.willNotImport.length > 0" class="space-y-3">
-              <div class="flex items-center justify-between">
-                <h2 class="text-sm font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-                  Will NOT be imported ({{ mobilePreviewResult.willNotImport.length }})
+              <div class="pt-1 pb-0.5">
+                <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
+                  {{ mobilePreviewResult.willNotImport.length }} {{ mobilePreviewResult.willNotImport.length === 1 ? 'card' : 'cards' }} will not be imported
                 </h2>
               </div>
 
@@ -349,10 +463,9 @@ async function handleImport() {
 
             <!-- (2) Cards that WILL be imported -->
             <div v-if="mobilePreviewResult.willImport.length > 0" class="space-y-3">
-              <div class="flex items-center justify-between">
-                <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  Will be imported ({{ mobilePreviewResult.willImport.length }})
+              <div class="pt-2 pb-0.5">
+                <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  {{ mobilePreviewResult.willImport.length }} {{ mobilePreviewResult.willImport.length === 1 ? 'card' : 'cards' }} will be imported
                 </h2>
               </div>
 
@@ -360,17 +473,27 @@ async function handleImport() {
                 <div
                   v-for="(card, idx) in mobilePreviewResult.willImport"
                   :key="idx"
-                  class="p-3.5 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/50 rounded-2xl space-y-2 text-xs shadow-xs"
+                  class="p-3.5 border rounded-2xl space-y-2 text-xs shadow-xs transition-colors"
+                  :style="{
+                    borderColor: getCardLanguageColor(card),
+                    backgroundColor: `color-mix(in srgb, ${getCardLanguageColor(card)} 8%, transparent)`
+                  }"
                 >
-                  <!-- Ready badge -->
-                  <div class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-semibold">
-                    <span class="px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/50 text-[11px] font-bold">
-                      ✓ Ready to import
+                  <!-- Ready badge with language color -->
+                  <div class="flex items-center justify-between">
+                    <span
+                      class="px-2 py-0.5 rounded-md text-[11px] font-bold"
+                      :style="{
+                        backgroundColor: `color-mix(in srgb, ${getCardLanguageColor(card)} 18%, transparent)`,
+                        color: getCardLanguageTextColor(card)
+                      }"
+                    >
+                      ✓ Ready to import ({{ (card.backLanguage || card.frontLanguage || 'FR').toUpperCase() }})
                     </span>
                   </div>
 
                   <!-- Details grid -->
-                  <div class="space-y-1 text-gray-700 dark:text-gray-300">
+                  <div class="space-y-1.5 text-gray-700 dark:text-gray-300">
                     <div v-if="card.frontLanguage || card.backLanguage" class="flex gap-2">
                       <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Language:</span>
                       <span class="font-semibold uppercase">{{ card.frontLanguage || '—' }} → {{ card.backLanguage || '—' }}</span>
@@ -391,9 +514,21 @@ async function handleImport() {
                       <span class="font-mono text-yellow-600 dark:text-yellow-400 font-medium">[{{ card.pronunciation }}]</span>
                     </div>
 
-                    <div v-if="card.rank !== undefined && card.rank !== null" class="flex gap-2">
+                    <!-- Rank as a number inside a filled horizontal bar -->
+                    <div v-if="card.rank !== undefined && card.rank !== null" class="flex gap-2 items-center">
                       <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Rank:</span>
-                      <span class="font-mono">{{ card.rank }}</span>
+                      <div class="flex-1 max-w-[200px] bg-gray-200 dark:bg-gray-800 rounded-full h-5 relative overflow-hidden border border-gray-300 dark:border-gray-700 flex items-center">
+                        <div
+                          class="h-full rounded-full transition-all duration-300"
+                          :style="{
+                            width: `${Math.min(100, Math.max(14, ((card.rank || 0) / 5) * 100))}%`,
+                            backgroundColor: getCardLanguageColor(card)
+                          }"
+                        ></div>
+                        <span class="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold text-white drop-shadow-sm font-mono">
+                          {{ card.rank }}
+                        </span>
+                      </div>
                     </div>
 
                     <div v-if="card.tags && card.tags.length > 0" class="flex gap-2 items-center">
@@ -414,8 +549,38 @@ async function handleImport() {
               </div>
             </div>
 
+            <!-- Overall Report Summary Box at the Bottom -->
+            <div class="p-4 bg-black dark:bg-black border border-gray-800 rounded-2xl shadow-xs space-y-2 text-xs text-gray-200">
+              <div class="font-bold text-gray-100 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                <span>Overall Import Report</span>
+              </div>
+              <div class="flex items-center justify-between text-gray-300">
+                <span>Total cards found:</span>
+                <span class="font-bold font-mono">{{ mobilePreviewResult.totalParsed }}</span>
+              </div>
+              <div class="flex items-center justify-between text-gray-300">
+                <span>Ready to import:</span>
+                <span class="font-bold font-mono text-emerald-400">{{ mobilePreviewResult.willImport.length }}</span>
+              </div>
+              <div class="flex items-center justify-between text-gray-300">
+                <span>Skipped:</span>
+                <span class="font-bold font-mono text-rose-400">{{ mobilePreviewResult.willNotImport.length }}</span>
+              </div>
+              <div v-if="Object.keys(mobileLanguageBreakdown).length > 0" class="pt-2 border-t border-gray-800 flex flex-wrap items-center gap-1.5">
+                <span class="text-gray-400 text-[11px] font-semibold">Languages:</span>
+                <span
+                  v-for="(count, lang) in mobileLanguageBreakdown"
+                  :key="lang"
+                  class="px-2 py-0.5 rounded-md text-[11px] font-bold text-white shadow-xs"
+                  :style="{ backgroundColor: languageColors[lang] || '#6366f1' }"
+                >
+                  {{ (lang || 'unknown').toUpperCase() }}: {{ count }}
+                </span>
+              </div>
+            </div>
+
             <!-- Confirm Action Buttons -->
-            <div class="pt-2 space-y-2">
+            <div class="pt-2">
               <button
                 v-if="mobilePreviewResult.willImport.length > 0"
                 @click="handleConfirmMobileImport"
@@ -424,14 +589,6 @@ async function handleImport() {
               >
                 <span v-if="isConfirmingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 <span>Confirm Import ({{ mobilePreviewResult.willImport.length }} {{ mobilePreviewResult.willImport.length === 1 ? 'card' : 'cards' }})</span>
-              </button>
-
-              <button
-                @click="cancelMobilePreview"
-                type="button"
-                class="w-full py-2.5 px-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-xl text-xs transition-colors cursor-pointer text-center"
-              >
-                Cancel and edit text
               </button>
             </div>
           </div>

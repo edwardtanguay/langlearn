@@ -28,9 +28,27 @@ const languageColors: Record<string, string> = {
   el: '#ea580c'
 }
 
+const languageTextColors: Record<string, string> = {
+  fr: '#3b82f6', // French = brighter blue
+  it: '#22c55e', // Italian = brighter green
+  es: '#ef4444', // Spanish = brighter red
+  nl: '#eab308', // Dutch = brighter yellow
+  pl: '#cbd5e1', // Polish = brighter gray
+  de: '#d97706', // German = brighter warm amber/brown
+  ru: '#94a3b8',
+  is: '#06b6d4',
+  da: '#a855f7',
+  el: '#f97316'
+}
+
 function getLanguageColor(lang?: string): string {
   const code = (lang || 'fr').toLowerCase()
   return languageColors[code] || '#2563eb'
+}
+
+function getLanguageTextColor(lang?: string): string {
+  const code = (lang || 'fr').toLowerCase()
+  return languageTextColors[code] || getLanguageColor(lang)
 }
 
 function getSlotStyle(slot: BatchSlot) {
@@ -44,6 +62,7 @@ function getSlotStyle(slot: BatchSlot) {
   }
 
   const color = getLanguageColor(slot.language)
+  const textColor = getLanguageTextColor(slot.language)
 
   if (slot.status === 'learned') {
     return {
@@ -58,7 +77,7 @@ function getSlotStyle(slot: BatchSlot) {
     return {
       backgroundColor: `color-mix(in srgb, ${color} 25%, transparent)`,
       borderColor: color,
-      color: color,
+      color: textColor,
       opacity: 1
     }
   }
@@ -67,7 +86,7 @@ function getSlotStyle(slot: BatchSlot) {
   return {
     backgroundColor: `color-mix(in srgb, ${color} 15%, transparent)`,
     borderColor: `color-mix(in srgb, ${color} 50%, transparent)`,
-    color: color,
+    color: textColor,
     opacity: 0.95
   }
 }
@@ -86,23 +105,8 @@ const percent = computed(() => {
   <div class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs transition-all">
     <!-- Header Summary Row -->
     <div class="flex items-center justify-between mb-2.5">
-      <div class="flex flex-wrap items-center gap-2">
+      <div class="flex items-center gap-2">
         <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Batch</span>
-        
-        <!-- Tested Badge -->
-        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-          Tested: {{ testedCount }} / {{ totalCount }}
-        </span>
-
-        <!-- Learned Badge -->
-        <span
-          class="text-xs font-semibold px-2 py-0.5 rounded-full transition-colors"
-          :class="isBatchComplete 
-            ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400' 
-            : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300'"
-        >
-          Learned: {{ learnedCount }} / {{ totalCount }}
-        </span>
       </div>
 
       <div class="text-xs font-bold text-gray-400 dark:text-gray-500 font-mono">
@@ -120,10 +124,18 @@ const percent = computed(() => {
         <!-- The Pill Capsule -->
         <div
           class="w-full h-8 rounded-lg flex items-center justify-center font-bold text-xs transition-all duration-200 select-none cursor-default border"
-          :style="getSlotStyle(slot)"
+          :style="[
+            getSlotStyle(slot),
+            slot.id === activeCardId && !isBatchComplete
+              ? {
+                  borderColor: getLanguageTextColor(slot.language),
+                  boxShadow: `0 0 0 2px ${getLanguageTextColor(slot.language)}, 0 4px 6px -1px rgba(0, 0, 0, 0.1)`
+                }
+              : {}
+          ]"
           :class="[
             slot.id === activeCardId && !isBatchComplete
-              ? 'ring-2 ring-indigo-600 dark:ring-indigo-400 ring-offset-2 dark:ring-offset-gray-900 shadow-md scale-105 z-10'
+              ? 'scale-105 z-10'
               : ''
           ]"
           :title="`Card ${slot.slotIndex + 1}: ${
@@ -143,10 +155,10 @@ const percent = computed(() => {
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
 
-          <!-- Parked State -->
+          <!-- Parked State: Gray -->
           <svg
             v-else-if="slot.status === 'parked'"
-            class="w-3 h-3 text-amber-600 dark:text-amber-400"
+            class="w-3 h-3 text-gray-400 dark:text-gray-500"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -154,26 +166,36 @@ const percent = computed(() => {
             <rect x="14" y="5" width="4" height="14" rx="1.5" />
           </svg>
 
-          <!-- Deleted State -->
-          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-rose-600 dark:text-rose-400">✕</span>
+          <!-- Deleted State: Gray -->
+          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-gray-400 dark:text-gray-500">✕</span>
 
-          <!-- Unsuccessful fail count (color of the language) -->
+          <!-- Currently active card slot: shows current test count (e.g. 1x, 2x) pulsating slowly -->
+          <span
+            v-else-if="slot.id === activeCardId && !isBatchComplete"
+            class="text-xs font-mono font-bold leading-none animate-slow-pulse"
+            :style="{ color: getLanguageTextColor(slot.language) }"
+          >
+            {{ slot.unsuccessfulCount + 1 }}x
+          </span>
+
+          <!-- Non-active unsuccessful tested count (e.g. 1x, 2x) in language color -->
           <span
             v-else-if="slot.unsuccessfulCount > 0"
             class="text-xs font-mono font-bold leading-none"
-            :style="{ color: getLanguageColor(slot.language) }"
+            :style="{ color: getLanguageTextColor(slot.language) }"
           >
-            {{ slot.unsuccessfulCount }}
+            {{ slot.unsuccessfulCount }}x
           </span>
 
-          <!-- Untested State: Delicate 5-point outline star -->
+          <!-- Untested State: Delicate 5-point outline star in language color -->
           <svg
             v-else
-            class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500"
+            class="w-3.5 h-3.5"
+            :style="{ color: getLanguageTextColor(slot.language) }"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="1.5"
+            stroke-width="1.75"
             stroke-linecap="round"
             stroke-linejoin="round"
           >
@@ -185,7 +207,8 @@ const percent = computed(() => {
         <div class="h-3.5 flex items-center justify-center mt-1">
           <svg
             v-if="slot.id === activeCardId && !isBatchComplete"
-            class="w-3 h-3 text-indigo-600 dark:text-indigo-400 animate-pulse drop-shadow-xs"
+            class="w-3 h-3 animate-pulse drop-shadow-xs"
+            :style="{ color: getLanguageTextColor(slot.language) }"
             viewBox="0 0 24 24"
             fill="currentColor"
           >
@@ -197,3 +220,21 @@ const percent = computed(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes slowPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.08);
+  }
+}
+
+.animate-slow-pulse {
+  display: inline-block;
+  animation: slowPulse 2.2s infinite ease-in-out;
+}
+</style>

@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ciudades de Colombia — Lectura A1 & Ejercicios Interactivos</title>
+  <meta name="description" content="Descubre seis grandes ciudades de Colombia: Bogotá, Medellín, Cartagena, Cali, Santa Marta y Barranquilla. Textos graduados para nivel A1, ejercicios interactivos de vocabulario y preguntas de conversación.">
+  <style>
+    /* VARIABLES DE DISEÑO — ESTILO EDITORIAL MODERNO */
+    :root {
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-surface: #f1f5f9;
+      --bg-elevated: #ffffff;
+      
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      
+      /* PALETA AZUL Y ACENTOS CÁLIDOS */
+      --accent-blue: #2563eb;
+      --accent-blue-hover: #1d4ed8;
+      --accent-blue-soft: #eff6ff;
+      --accent-blue-border: #bfdbfe;
+      
+      --accent-warm: #d97706;
+      --accent-warm-soft: #fef3c7;
+      
+      --success-green: #059669;
+      --success-green-soft: #ecfdf5;
+      --success-green-border: #a7f3d0;
+      
+      --font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+    }
+
+    /* RESET BÁSICO */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      user-select: text;
+    }
+
+    ::selection {
+      background-color: #bfdbfe;
+      color: #1e3a8a;
+    }
+
+    /* BARRA DE NAVEGACIÓN SUPERIOR FIJA */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      padding: 0.75rem 1.25rem;
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .brand-pill {
+      background: var(--accent-blue);
+      color: #ffffff;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    /* DROPDOWN ESTILO NUXT UI */
+    .nuxt-dropdown {
+      position: relative;
+      display: inline-block;
+      min-width: 240px;
+      max-width: 310px;
+      flex: 1 1 200px;
+    }
+
+    .nuxt-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.45rem 0.75rem;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      outline: none;
+    }
+
+    .nuxt-dropdown-trigger:hover {
+      border-color: #94a3b8;
+      background: #fafcff;
+    }
+
+    .nuxt-dropdown.is-open .nuxt-dropdown-trigger,
+    .nuxt-dropdown-trigger:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    .dropdown-trigger-content {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dropdown-trigger-icon {
+      color: var(--accent-blue);
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    .dropdown-trigger-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dropdown-chevron {
+      color: #94a3b8;
+      display: flex;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .nuxt-dropdown.is-open .dropdown-chevron {
+      transform: rotate(180deg);
+      color: var(--accent-blue);
+    }
+
+    .nuxt-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.06);
+      padding: 0.35rem;
+      max-height: 310px;
+      overflow-y: auto;
+      z-index: 1100;
+      display: none;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .nuxt-dropdown.is-open .nuxt-dropdown-menu {
+      display: block;
+      animation: dropdownFadeIn 0.15s ease-out forwards;
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nuxt-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background 0.12s ease, color 0.12s ease;
+      user-select: none;
+    }
+
+    .nuxt-dropdown-item:hover {
+      background: #f1f5f9;
+      color: #1e3a8a;
+    }
+
+    .nuxt-dropdown-item.is-active {
+      background: #eff6ff;
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .item-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #475569;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .nuxt-dropdown-item.is-active .item-badge {
+      background: var(--accent-blue-soft);
+      color: var(--accent-blue);
+    }
+
+    .item-label {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-check {
+      color: var(--accent-blue);
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .nuxt-dropdown-item.is-active .item-check {
+      display: flex;
+    }
+
+    .global-score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--accent-blue-soft);
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.38rem 0.75rem;
+      border-radius: 9999px;
+      flex-shrink: 0;
+    }
+
+    .btn-reset-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.38rem 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-reset-all:hover {
+      background: var(--accent-blue-soft);
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+    }
+
+    /* MODAL DE CONFIRMACIÓN ESTILO NUXT UI */
+    .nuxt-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nuxt-modal-overlay.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nuxt-modal-container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .nuxt-modal-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+      transform: scale(0.95);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nuxt-modal-overlay.is-open .nuxt-modal-card {
+      transform: scale(1);
+    }
+
+    .nuxt-modal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .nuxt-modal-icon-badge {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #fef2f2;
+      color: #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #fee2e2;
+    }
+
+    .nuxt-modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0 0 0.35rem 0;
+      line-height: 1.3;
+    }
+
+    .nuxt-modal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .nuxt-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    .btn-nuxt-secondary {
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-nuxt-secondary:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .btn-nuxt-danger {
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: #ef4444;
+      border: 1px solid #dc2626;
+      padding: 0.5rem 1.15rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(239, 68, 68, 0.2);
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .btn-nuxt-danger:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    /* ENCABEZADO PRINCIPAL (HERO) */
+    .site-hero {
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-surface) 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 2.25rem 1.5rem 1.75rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-blue-soft);
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .site-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    .site-hero h1 span {
+      color: var(--accent-blue);
+    }
+
+    .site-hero p.hero-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0.4rem auto 0;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .main-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    /* TARJETA DE SECCIÓN */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.2s ease;
+    }
+
+    .section-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-num {
+      background: var(--accent-blue);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-category {
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+    }
+
+    .section-title {
+      font-size: clamp(1.4rem, 3vw, 1.85rem);
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--text-main);
+      margin-bottom: 1.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    /* PANELES INTERIORES (VOCABULARIO, LECTURA, DISCUSIÓN) */
+    .panel-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .panel-box:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      flex-wrap: nowrap;
+    }
+
+    .panel-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .panel-icon {
+      color: var(--accent-blue);
+      display: flex;
+    }
+
+    .panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .panel-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      color: var(--text-muted);
+      font-family: inherit;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .btn-reset:hover {
+      background: var(--accent-blue-soft);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    /* BANCO DE PALABRAS */
+    .word-bank-container {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.6rem 0.85rem;
+      margin-bottom: 0.85rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+      max-height: 250px;
+      overflow: hidden;
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  margin-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  padding-top 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  padding-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .word-bank-container.is-hidden {
+      opacity: 0;
+      max-height: 0 !important;
+      margin-bottom: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      border-top-width: 0 !important;
+      border-bottom-width: 0 !important;
+      border-color: transparent;
+      pointer-events: none;
+    }
+
+    .word-bank-container.is-hidden-instant {
+      display: none !important;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      align-items: center;
+      min-height: 36px;
+    }
+
+    /* CHIPS DE PALABRAS */
+    .word-chip {
+      display: inline-flex;
+      align-items: center;
+      background: #ffffff;
+      color: var(--accent-blue);
+      border: 1px solid var(--accent-blue-border);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 9999px;
+      cursor: grab;
+      user-select: text;
+      transition: all 0.18s ease;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .word-chip:hover {
+      background: var(--accent-blue-soft);
+      border-color: var(--accent-blue-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.2);
+    }
+
+    .word-chip:active {
+      cursor: grabbing;
+    }
+
+    .word-chip.is-selected {
+      background: #dbeafe;
+      border-color: var(--accent-blue);
+      color: #1e3a8a;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
+      transform: scale(1.04);
+    }
+
+    .word-chip.is-placed {
+      display: none;
+    }
+
+    .word-chip.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+      color: #b91c1c !important;
+    }
+
+    /* TARJETAS DE DEFINICIONES */
+    .definitions-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+
+    .def-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.85rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .def-card:not(.is-matched):hover {
+      border-color: var(--accent-blue-border);
+      background: #fafcff;
+    }
+
+    .def-card.eligible-drop {
+      border: 1.5px dashed #93c5fd !important;
+      background: #f0f7ff !important;
+    }
+
+    .def-card.drag-hover {
+      border-color: var(--accent-blue-hover) !important;
+      background: #eff6ff !important;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+    }
+
+    .def-card.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+    }
+
+    .def-card.shake-error .def-text {
+      color: #b91c1c !important;
+    }
+
+    .def-card.is-matched,
+    .def-card.is-matched.is-collapsed {
+      background: #f0fdf4;
+      border-color: var(--success-green-border);
+      cursor: pointer;
+    }
+
+    .def-main-line {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .matched-word {
+      display: none;
+      font-weight: 800;
+      color: #1e3a8a;
+      margin-right: 0.35rem;
+    }
+
+    .def-card.is-matched .matched-word {
+      display: inline;
+    }
+
+    .def-text {
+      font-size: 0.92rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    @keyframes shakeAnimation {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    .def-example {
+      display: none;
+      margin-top: 0.45rem;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-left: 3.5px solid var(--accent-blue);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.8rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+      user-select: text;
+    }
+
+    @keyframes fadeInExample {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .def-card.is-matched:not(.is-collapsed) .def-example {
+      display: block;
+      animation: fadeInExample 0.35s ease-out forwards;
+    }
+
+    .example-quote {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .example-quote strong {
+      color: var(--accent-blue-hover);
+      font-weight: 700;
+      font-style: normal;
+      background: var(--accent-blue-soft);
+      padding: 0 0.25rem;
+      border-radius: 3px;
+    }
+
+    /* TEXTO DE LECTURA */
+    .reading-body {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      padding: 1.25rem 1.45rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+
+    .reading-para {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      line-height: 1.8;
+      margin-bottom: 1.15rem;
+      text-align: justify;
+    }
+
+    .reading-para:last-child {
+      margin-bottom: 0;
+    }
+
+    .vocab-word {
+      border-bottom: 2px dashed #3b82f6;
+      font-weight: 600;
+      color: #1d4ed8;
+      background: #eff6ff;
+      padding: 0 2px;
+      border-radius: 3px;
+      cursor: help;
+      position: relative;
+      transition: background-color 0.2s ease;
+    }
+
+    .vocab-word:hover {
+      background: #dbeafe;
+    }
+
+    .vocab-word:hover::after,
+    .vocab-word:focus::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 400;
+      line-height: 1.4;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      white-space: normal;
+      width: max-content;
+      max-width: 260px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    /* PREGUNTA DE DISCUSIÓN */
+    .discussion-question {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--accent-blue);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      padding: 1.1rem 1.25rem;
+      border-radius: var(--radius-md);
+      line-height: 1.6;
+      margin-bottom: 0;
+      font-style: italic;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 640px) {
+      .top-navbar {
+        padding: 0.5rem 0.75rem;
+      }
+      .nav-inner {
+        gap: 0.45rem;
+      }
+      .nav-brand span:not(.brand-pill) {
+        display: none;
+      }
+      .nuxt-dropdown {
+        min-width: 140px;
+        flex: 1 1 auto;
+      }
+      .global-score-pill {
+        font-size: 0.78rem;
+        padding: 0.3rem 0.55rem;
+      }
+      .btn-reset-all {
+        font-size: 0.78rem;
+        padding: 0.3rem 0.55rem;
+      }
+      .section-card {
+        padding: 1.25rem 0.9rem;
+        border-radius: var(--radius-lg);
+      }
+      .panel-box {
+        padding: 0.75rem 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+      .panel-header {
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+      }
+      .panel-title {
+        font-size: 0.95rem;
+        white-space: nowrap;
+      }
+      .btn-reset {
+        width: 28px;
+        height: 28px;
+      }
+      .word-bank-container {
+        padding: 0.4rem 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .word-bank {
+        gap: 0.3rem;
+        min-height: 28px;
+      }
+      .word-chip {
+        padding: 0.2rem 0.52rem;
+        font-size: 0.78rem;
+      }
+      .matched-word {
+        font-size: 0.85rem;
+      }
+      .def-card {
+        padding: 0.45rem 0.65rem;
+      }
+      .def-text {
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+      .reading-body {
+        padding: 0.9rem 0.9rem;
+      }
+      .reading-para {
+        font-size: 0.95rem;
+        line-height: 1.62;
+        text-align: left;
+        margin-bottom: 0.9rem;
+      }
+      .discussion-question {
+        padding: 0.9rem 1rem;
+        font-size: 0.98rem;
+      }
+    }
+
+    /* BOTÓN VOLVER ARRIBA */
+    .btn-back-to-top {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      background: var(--text-main);
+      color: #ffffff;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.2s ease;
+      z-index: 900;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .btn-back-to-top.is-visible {
+      opacity: 0.92;
+      visibility: visible;
+    }
+
+    .btn-back-to-top:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      background: var(--accent-blue);
+    }
+
+    /* PIE DE PÁGINA */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-subtle);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-content {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR FIJA -->
+  <header class="top-navbar" id="top-navbar">
+    <div class="nav-inner">
+      <a href="#top" class="nav-brand">
+        <span class="brand-pill">COLOMBIA • A1</span>
+        <span>Ciudades de Colombia</span>
+      </a>
+
+      <div class="nav-controls">
+        <!-- MENÚ DESPLEGABLE ESTILO NUXT UI -->
+        <div class="nuxt-dropdown" id="section-dropdown">
+          <button type="button" class="nuxt-dropdown-trigger" id="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDropdown()">
+            <span class="dropdown-trigger-content">
+              <span class="dropdown-trigger-icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </span>
+              <span class="dropdown-trigger-label" id="dropdown-current-label">Elegir una ciudad...</span>
+            </span>
+            <span class="dropdown-chevron" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          
+          <div class="nuxt-dropdown-menu" id="dropdown-menu" role="listbox" tabindex="-1">
+            <div class="dropdown-menu-list">
+              <div class="nuxt-dropdown-item" role="option" data-value="section-1" onclick="selectSection('section-1', '01. Bogotá')">
+                <span class="item-badge">01</span>
+                <span class="item-label">Bogotá</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-2" onclick="selectSection('section-2', '02. Medellín')">
+                <span class="item-badge">02</span>
+                <span class="item-label">Medellín</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-3" onclick="selectSection('section-3', '03. Cartagena de Indias')">
+                <span class="item-badge">03</span>
+                <span class="item-label">Cartagena de Indias</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-4" onclick="selectSection('section-4', '04. Cali')">
+                <span class="item-badge">04</span>
+                <span class="item-label">Cali</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-5" onclick="selectSection('section-5', '05. Santa Marta')">
+                <span class="item-badge">05</span>
+                <span class="item-label">Santa Marta</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-6" onclick="selectSection('section-6', '06. Barranquilla')">
+                <span class="item-badge">06</span>
+                <span class="item-label">Barranquilla</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PÍLDORA DE PUNTUACIÓN -->
+        <div class="global-score-pill" title="Puntuación total de palabras resueltas">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <span id="global-score-text">0 / 30 palabras</span>
+        </div>
+
+        <!-- BOTÓN REINICIAR TODO -->
+        <button type="button" class="btn-reset-all" onclick="openResetModal()" title="Reiniciar todos los ejercicios">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          Reiniciar todo
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MODAL DE CONFIRMACIÓN -->
+  <div class="nuxt-modal-overlay" id="reset-modal" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+    <div class="nuxt-modal-container">
+      <div class="nuxt-modal-card">
+        <div class="nuxt-modal-header">
+          <div class="nuxt-modal-icon-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="nuxt-modal-title" id="reset-modal-title">Reiniciar los ejercicios</h3>
+            <p class="nuxt-modal-desc">¿Seguro que deseas borrar tu progreso y reiniciar las 6 secciones? Esta acción no se puede deshacer.</p>
+          </div>
+        </div>
+        <div class="nuxt-modal-footer">
+          <button type="button" class="btn-nuxt-secondary" onclick="closeResetModal()">Cancelar</button>
+          <button type="button" class="btn-nuxt-danger" onclick="confirmResetAll()">Reiniciar todo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN HERO -->
+  <section class="site-hero" id="top">
+    <div class="hero-content">
+      <span class="hero-badge">Exploración Cultural & Lectura A1</span>
+      <h1>Seis Grandes Ciudades de <span>Colombia</span></h1>
+      <p class="hero-subtitle">Aprende vocabulario en español, practica la comprensión lectora con textos graduados y descubre la geografía de Colombia.</p>
+    </div>
+  </section>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-container">
+
+    <!-- SECCIÓN 01: BOGOTÁ -->
+    <article class="section-card" id="section-1">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Sección 01</span>
+          <span class="badge-category">Capital Andina & Cultura</span>
+        </div>
+        <h2 class="section-title">Bogotá: La Gran Capital en las Alturas de los Andes</h2>
+      </header>
+
+      <!-- 1. VOCABULARIO -->
+      <div class="panel-box exercise-box" id="exercise-1" data-section="1">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Palabras para arrastrar y soltar</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(1)" title="Reiniciar este ejercicio" aria-label="Reiniciar este ejercicio">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-1">
+            <div class="word-chip" draggable="true" data-word="transporte" tabindex="0">transporte</div>
+            <div class="word-chip" draggable="true" data-word="montaña" tabindex="0">montaña</div>
+            <div class="word-chip" draggable="true" data-word="museo" tabindex="0">museo</div>
+            <div class="word-chip" draggable="true" data-word="clima" tabindex="0">clima</div>
+            <div class="word-chip" draggable="true" data-word="plaza" tabindex="0">plaza</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="clima" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">clima</strong>
+              <span class="def-text">Condiciones de temperatura y tiempo habituales en una región.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«El <strong>clima</strong> es fresco durante todo el año, por eso muchas personas llevan chaqueta cómoda.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="montaña" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">montaña</strong>
+              <span class="def-text">Gran elevación natural del terreno con mucha altura.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Desde casi cualquier calle de la ciudad se puede ver una alta <strong>montaña</strong> verde llamada Monserrate.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="plaza" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">plaza</strong>
+              <span class="def-text">Espacio público abierto y ancho rodeado de edificios.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«En el centro histórico está la gran <strong>plaza</strong> de Bolívar, donde pasean ciudadanos y turistas.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="museo" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">museo</strong>
+              <span class="def-text">Lugar donde se conservan y exhiben obras de arte u objetos antiguos.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«En Bogotá puedes visitar un famoso <strong>museo</strong> con piezas doradas de las culturas prehispánicas.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="transporte" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">transporte</strong>
+              <span class="def-text">Sistema de vehículos para trasladar personas de un punto a otro.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«El sistema de autobuses rojos es el medio de <strong>transporte</strong> público diario para millones de habitantes.»</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTO DE LECTURA -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texto de Lectura</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Bogotá es la capital de Colombia y la ciudad más poblada del país. Está situada en una meseta alta en la cordillera oriental de los Andes, a más de dos mil seiscientos metros sobre el nivel del mar. Debido a esta altitud, el <span class="vocab-word" tabindex="0" data-tooltip="Condiciones de temperatura y tiempo habituales en una región.">clima</span> es fresco durante todo el año, por eso muchas personas llevan chaqueta cómoda. Al mirar al este de la capital, se observa una imponente <span class="vocab-word" tabindex="0" data-tooltip="Gran elevación natural del terreno con mucha altura.">montaña</span> verde llamada cerro de Monserrate, desde donde hay una vista panorámica espectacular.</p>
+          <p class="reading-para">El barrio más antiguo y pintoresco se llama La Candelaria. Sus calles son adoquinadas y conservan casas coloniales de tonos vivos. En el corazón del sector se encuentra la amplia <span class="vocab-word" tabindex="0" data-tooltip="Espacio público abierto y ancho rodeado de edificios.">plaza</span> de Bolívar, sede de la catedral y de las instituciones del Estado. A corta distancia, un visitante curioso puede recorrer un ilustre <span class="vocab-word" tabindex="0" data-tooltip="Lugar donde se conservan y exhiben obras de arte u objetos antiguos.">museo</span> de talla internacional, como el Museo del Oro o el Museo Botero. Para cruzar las largas avenidas de la metrópoli, el <span class="vocab-word" tabindex="0" data-tooltip="Sistema de vehículos para trasladar personas de un punto a otro.">transporte</span> más popular son los autobuses expresos del sistema TransMilenio.</p>
+        </div>
+      </div>
+
+      <!-- 3. PREGUNTA DE DISCUSIÓN -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Pregunta de Discusión</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          «¿Prefieres vivir en una ciudad de montaña con clima fresco o en una ciudad cálida junto al mar?»
+        </div>
+      </div>
+    </article>
+
+    <!-- SECCIÓN 02: MEDELLÍN -->
+    <article class="section-card" id="section-2">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Sección 02</span>
+          <span class="badge-category">Valle de Aburrá & Innovación</span>
+        </div>
+        <h2 class="section-title">Medellín: La Ciudad de la Eterna Primavera</h2>
+      </header>
+
+      <!-- 1. VOCABULARIO -->
+      <div class="panel-box exercise-box" id="exercise-2" data-section="2">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Palabras para arrastrar y soltar</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(2)" title="Reiniciar este ejercicio" aria-label="Reiniciar este ejercicio">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-2">
+            <div class="word-chip" draggable="true" data-word="café" tabindex="0">café</div>
+            <div class="word-chip" draggable="true" data-word="flores" tabindex="0">flores</div>
+            <div class="word-chip" draggable="true" data-word="metro" tabindex="0">metro</div>
+            <div class="word-chip" draggable="true" data-word="colina" tabindex="0">colina</div>
+            <div class="word-chip" draggable="true" data-word="parque" tabindex="0">parque</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="flores" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">flores</strong>
+              <span class="def-text">Partes coloridas y aromáticas de las plantas que adornan los jardines.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«En agosto, los campesinos desfilan con enormes arreglos de <strong>flores</strong> en sus espaldas.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="metro" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">metro</strong>
+              <span class="def-text">Tren urbano moderno y rápido que comunica los distritos de la ciudad.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Medellín cuenta con un eficiente <strong>metro</strong> que conecta el norte y el sur del valle.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="colina" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">colina</strong>
+              <span class="def-text">Elevación suave de tierra, más baja que una montaña.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Las cabinas del teleférico Metrocable suben a cada <strong>colina</strong> para transportar a los vecinos.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="parque" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">parque</strong>
+              <span class="def-text">Terreno arbolado con áreas verdes para pasear y descansar.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Cerca del centro se encuentra un concurrido <strong>parque</strong> con monumentales estatuas de bronce.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="café" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">café</strong>
+              <span class="def-text">Bebida caliente y fragante muy típica de las haciendas colombianas.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Es una costumbre diaria compartir una taza de <strong>café</strong> suave con amigos en una terraza.»</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTO DE LECTURA -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texto de Lectura</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Medellín es la segunda ciudad de Colombia y la capital del departamento de Antioquia. Se ubica en el fondo de un valle verde con clima templado todo el año, lo que le ha valido el apodo de la «Ciudad de la Eterna Primavera». Cada año celebra su famosa Feria de las Flores, donde miles de vistosas <span class="vocab-word" tabindex="0" data-tooltip="Partes coloridas y aromáticas de las plantas que adornan los jardines.">flores</span> de múltiples variedades llenan las avenidas de alegría y tradición.</p>
+          <p class="reading-para">La ciudad destaca por su innovación urbana y su limpieza. Es la única ciudad colombiana con un sistema de <span class="vocab-word" tabindex="0" data-tooltip="Tren urbano moderno y rápido que comunica los distritos de la ciudad.">metro</span> por tren, complementado con líneas aéreas de teleférico que ascienden hacia la cima de cada <span class="vocab-word" tabindex="0" data-tooltip="Elevación suave de tierra, más baja que una montaña.">colina</span> residencial. En el centro, las personas descansan en un animado <span class="vocab-word" tabindex="0" data-tooltip="Terreno arbolado con áreas verdes para pasear y descansar.">parque</span> al aire libre rodeado de esculturas del artista Fernando Botero. Al atardecer, es un placer sentarse en una cafetería a degustar un <span class="vocab-word" tabindex="0" data-tooltip="Bebida caliente y fragante muy típica de las haciendas colombianas.">café</span> de alta montaña recién tostado.</p>
+        </div>
+      </div>
+
+      <!-- 3. PREGUNTA DE DISCUSIÓN -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Pregunta de Discusión</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          «¿Qué importancia tienen las áreas verdes y el transporte público ecológico para la calidad de vida en tu ciudad?»
+        </div>
+      </div>
+    </article>
+
+    <!-- SECCIÓN 03: CARTAGENA DE INDIAS -->
+    <article class="section-card" id="section-3">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Sección 03</span>
+          <span class="badge-category">Costa Caribe & Patrimonio</span>
+        </div>
+        <h2 class="section-title">Cartagena de Indias: Murallas Coloniales y Mar Caribe</h2>
+      </header>
+
+      <!-- 1. VOCABULARIO -->
+      <div class="panel-box exercise-box" id="exercise-3" data-section="3">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Palabras para arrastrar y soltar</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(3)" title="Reiniciar este ejercicio" aria-label="Reiniciar este ejercicio">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-3">
+            <div class="word-chip" draggable="true" data-word="castillo" tabindex="0">castillo</div>
+            <div class="word-chip" draggable="true" data-word="muralla" tabindex="0">muralla</div>
+            <div class="word-chip" draggable="true" data-word="turista" tabindex="0">turista</div>
+            <div class="word-chip" draggable="true" data-word="balcón" tabindex="0">balcón</div>
+            <div class="word-chip" draggable="true" data-word="playa" tabindex="0">playa</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="muralla" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">muralla</strong>
+              <span class="def-text">Muro de piedra alto y grueso levantado para la protección defensiva.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Caminar sobre la antigua <strong>muralla</strong> de piedra al atardecer es una experiencia inolvidable.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="balcón" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">balcón</strong>
+              <span class="def-text">Estructura con barandilla que sobresale de la fachada de una casa.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«En cada casa colonial hay un <strong>balcón</strong> de madera adornado con plantas trepadoras.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="castillo" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">castillo</strong>
+              <span class="def-text">Gran fortaleza militar histórica levantada con piedra y cañones.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«El imponente <strong>castillo</strong> de San Felipe custodiaba la bahía ante las incursiones de piratas.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="playa" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">playa</strong>
+              <span class="def-text">Franja costera de arena frente a las olas del mar.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«En las tardes calurosas es ideal nadar y descansar en la <strong>playa</strong> frente a las aguas del Caribe.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="turista" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">turista</strong>
+              <span class="def-text">Persona que viaja a conocer otros países o ciudades por placer.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Casi cualquier <strong>turista</strong> toma fotografías de las calles empedradas y las casonas históricas.»</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTO DE LECTURA -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texto de Lectura</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Cartagena de Indias es una joya colonial ubicada en la costa norte de Colombia, frente a las aguas cálidas del mar Caribe. Es famosa por su centro histórico protegido por una majestuosa <span class="vocab-word" tabindex="0" data-tooltip="Muro de piedra alto y grueso levantado para la protección defensiva.">muralla</span> fortificada que tardó más de dos siglos en construirse. Las casonas de estilo español lucen colores pastel y casi cada <span class="vocab-word" tabindex="0" data-tooltip="Estructura con barandilla que sobresale de la fachada de una casa.">balcón</span> de madera está decorado con flores tropicales como las buganvilias.</p>
+          <p class="reading-para">Muy cerca del casco antiguo se alza el cerro de San Lázaro, donde se levanta un imponente <span class="vocab-word" tabindex="0" data-tooltip="Gran fortaleza militar histórica levantada con piedra y cañones.">castillo</span> de piedra con pasadizos secretos y vistas a toda la bahía. Además de la historia militar, la ciudad ofrece diversión marina: los viajeros pueden tomar una lancha hacia una tranquila <span class="vocab-word" tabindex="0" data-tooltip="Franja costera de arena frente a las olas del mar.">playa</span> de arena blanca en las islas del Rosario. Por la noche, el ambiente festivo atrae a cada <span class="vocab-word" tabindex="0" data-tooltip="Persona que viaja a conocer otros países o ciudades por placer.">turista</span> a degustar ceviche fresco al son de la música costeña.</p>
+        </div>
+      </div>
+
+      <!-- 3. PREGUNTA DE DISCUSIÓN -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Pregunta de Discusión</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          «¿Qué te resulta más atractivo de una ciudad turística: su patrimonio histórico o sus opciones para descansar en la naturaleza?»
+        </div>
+      </div>
+    </article>
+
+    <!-- SECCIÓN 04: CALI -->
+    <article class="section-card" id="section-4">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Sección 04</span>
+          <span class="badge-category">Valle del Cauca & Ritmo</span>
+        </div>
+        <h2 class="section-title">Cali: La Capital Mundial de la Salsa</h2>
+      </header>
+
+      <!-- 1. VOCABULARIO -->
+      <div class="panel-box exercise-box" id="exercise-4" data-section="4">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Palabras para arrastrar y soltar</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(4)" title="Reiniciar este ejercicio" aria-label="Reiniciar este ejercicio">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-4">
+            <div class="word-chip" draggable="true" data-word="calor" tabindex="0">calor</div>
+            <div class="word-chip" draggable="true" data-word="música" tabindex="0">música</div>
+            <div class="word-chip" draggable="true" data-word="bailar" tabindex="0">bailar</div>
+            <div class="word-chip" draggable="true" data-word="fruta" tabindex="0">fruta</div>
+            <div class="word-chip" draggable="true" data-word="río" tabindex="0">río</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="música" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">música</strong>
+              <span class="def-text">Combinación de melodías y compases que contagian alegría.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«En las calles de Cali la <strong>música</strong> de salsa acompaña el día de los habitantes.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="bailar" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">bailar</strong>
+              <span class="def-text">Mover los pies y el cuerpo al ritmo de las canciones con destreza.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Los caleños aprenden a <strong>bailar</strong> desde pequeños con pasos veloces y precisión.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="calor" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">calor</strong>
+              <span class="def-text">Sensación térmica elevada en el ambiente durante las horas de sol.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Durante el mediodía el <strong>calor</strong> se hace sentir, pero a las cinco de la tarde sopla una brisa agradable.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="río" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">río</strong>
+              <span class="def-text">Corriente continua de agua dulce que cruza la ciudad.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Muchas personas caminan por el bulevar arbolado al lado del <strong>río</strong> para refrescarse.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="fruta" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">fruta</strong>
+              <span class="def-text">Producto vegetal dulce o ácido con el que se hacen jugos y postres.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«En los parques venden bebidas preparadas con <strong>fruta</strong> exótica fresca y mucho hielo picado.»</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTO DE LECTURA -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texto de Lectura</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Santiago de Cali es la tercera metrópoli de Colombia y el corazón del fértil Valle del Cauca. Mundialmente famosa como la capital de la salsa, en sus barrios la <span class="vocab-word" tabindex="0" data-tooltip="Combinación de melodías y compases que contagian alegría.">música</span> forma parte de la vida cotidiana. Los habitantes son conocidos por su calidez y su pasión por <span class="vocab-word" tabindex="0" data-tooltip="Mover los pies y el cuerpo al ritmo de las canciones con destreza.">bailar</span> con un estilo ágil y elegante que sorprende a quienes asisten a sus academias y festivales.</p>
+          <p class="reading-para">En las horas centrales del día, el agradable <span class="vocab-word" tabindex="0" data-tooltip="Sensación térmica elevada en el ambiente durante las horas de sol.">calor</span> tropical llena de luz los bulevares. Sin embargo, hacia el atardecer desciende de los cerros una brisa fresca muy esperada. Las familias aprovechan para reunirse en el paseo peatonal junto al <span class="vocab-word" tabindex="0" data-tooltip="Corriente continua de agua dulce que cruza la ciudad.">río</span> Cali. Allí es tradición saborear un cholado o una lulada bien fría, dos preparaciones típicas elaboradas con deliciosa <span class="vocab-word" tabindex="0" data-tooltip="Producto vegetal dulce o ácido con el que se hacen jugos y postres.">fruta</span> de la región.</p>
+        </div>
+      </div>
+
+      <!-- 3. PREGUNTA DE DISCUSIÓN -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Pregunta de Discusión</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          «¿Qué estilo musical representa mejor las fiestas y las reuniones familiares en tu país de origen?»
+        </div>
+      </div>
+    </article>
+
+    <!-- SECCIÓN 05: SANTA MARTA -->
+    <article class="section-card" id="section-5">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Sección 05</span>
+          <span class="badge-category">Caribe & Selva Tropical</span>
+        </div>
+        <h2 class="section-title">Santa Marta: Bahía Histórica y Sierra Nevada</h2>
+      </header>
+
+      <!-- 1. VOCABULARIO -->
+      <div class="panel-box exercise-box" id="exercise-5" data-section="5">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Palabras para arrastrar y soltar</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(5)" title="Reiniciar este ejercicio" aria-label="Reiniciar este ejercicio">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-5">
+            <div class="word-chip" draggable="true" data-word="pescado" tabindex="0">pescado</div>
+            <div class="word-chip" draggable="true" data-word="bahía" tabindex="0">bahía</div>
+            <div class="word-chip" draggable="true" data-word="barco" tabindex="0">barco</div>
+            <div class="word-chip" draggable="true" data-word="selva" tabindex="0">selva</div>
+            <div class="word-chip" draggable="true" data-word="atardecer" tabindex="0">atardecer</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="bahía" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">bahía</strong>
+              <span class="def-text">Entrada de mar en la costa, resguardada y propicia para los barcos.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«La tranquila <strong>bahía</strong> de Santa Marta ofrece aguas calmas para el descanso.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="barco" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">barco</strong>
+              <span class="def-text">Embarcación flotante que navega sobre el agua transportando personas.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Es habitual subir a un <strong>barco</strong> pequeño para navegar hasta las playas del parque natural.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="selva" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">selva</strong>
+              <span class="def-text">Bosque denso y húmedo con abundante vegetación y fauna silvestre.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«El sendero cruza una <strong>selva</strong> tupida habitada por monos y pájaros multicolores.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="pescado" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">pescado</strong>
+              <span class="def-text">Pez capturado que se cocina como comida típica en la costa.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«En los restaurantes costeros sirven <strong>pescado</strong> frito con arroz de coco y patacones.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="atardecer" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">atardecer</strong>
+              <span class="def-text">Caída de la tarde cuando el sol se oculta en el horizonte del mar.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«El cielo se llena de tonalidades doradas y púrpuras durante el <strong>atardecer</strong> costero.»</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTO DE LECTURA -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texto de Lectura</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Santa Marta es la ciudad hispánica más antigua conservada en Colombia. Fundada en 1525, se encuentra entre la orilla del mar Caribe y la Sierra Nevada de Santa Marta, una cordillera con picos nevados a poca distancia de las playas. Su puerto histórico se ubica en una serena <span class="vocab-word" tabindex="0" data-tooltip="Entrada de mar en la costa, resguardada y propicia para los barcos.">bahía</span> donde descansan botes de pescadores y yates de recreo.</p>
+          <p class="reading-para">A pocos minutos del centro se extiende el Parque Nacional Natural Tayrona, famoso por sus ensenadas vírgenes. Para llegar a los rincones más tranquilos, muchos excursionistas toman un <span class="vocab-word" tabindex="0" data-tooltip="Embarcación flotante que navega sobre el agua transportando personas.">barco</span> en Taganga o caminan por senderos ecológicos. Durante el recorrido se atraviesa una espesa <span class="vocab-word" tabindex="0" data-tooltip="Bosque denso y húmedo con abundante vegetación y fauna silvestre.">selva</span> tropical con árboles centenarios y fauna nativa. Al final del día, los turistas saborean un plato de <span class="vocab-word" tabindex="0" data-tooltip="Pez capturado que se cocina como comida típica en la costa.">pescado</span> fresco frente a un mágico <span class="vocab-word" tabindex="0" data-tooltip="Caída de la tarde cuando el sol se oculta en el horizonte del mar.">atardecer</span> caribeño.</p>
+        </div>
+      </div>
+
+      <!-- 3. PREGUNTA DE DISCUSIÓN -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Pregunta de Discusión</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          «¿Te animarías a caminar por la selva tropical para descubrir una playa escondida o prefieres una playa de fácil acceso?»
+        </div>
+      </div>
+    </article>
+
+    <!-- SECCIÓN 06: BARRANQUILLA -->
+    <article class="section-card" id="section-6">
+      <header class="section-header">
+        <div class="section-meta">
+          <span class="badge-num">Sección 06</span>
+          <span class="badge-category">Río Magdalena & Carnaval</span>
+        </div>
+        <h2 class="section-title">Barranquilla: La Puerta de Oro y el Gran Carnaval</h2>
+      </header>
+
+      <!-- 1. VOCABULARIO -->
+      <div class="panel-box exercise-box" id="exercise-6" data-section="6">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Palabras para arrastrar y soltar</h3>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise(6)" title="Reiniciar este ejercicio" aria-label="Reiniciar este ejercicio">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-6">
+            <div class="word-chip" draggable="true" data-word="disfraz" tabindex="0">disfraz</div>
+            <div class="word-chip" draggable="true" data-word="carnaval" tabindex="0">carnaval</div>
+            <div class="word-chip" draggable="true" data-word="calle" tabindex="0">calle</div>
+            <div class="word-chip" draggable="true" data-word="puerto" tabindex="0">puerto</div>
+            <div class="word-chip" draggable="true" data-word="gente" tabindex="0">gente</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="carnaval" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">carnaval</strong>
+              <span class="def-text">Fiesta popular anual con desfiles, comparsas y danzas en el espacio público.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«El célebre <strong>carnaval</strong> de Barranquilla congrega a miles de bailarines y músicos folclóricos.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="disfraz" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">disfraz</strong>
+              <span class="def-text">Vestimenta especial y colorida para caracterizar un personaje tradicional.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Cada comparsa prepara con esmero un llamativo <strong>disfraz</strong> de marimonda o de torito.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="puerto" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">puerto</strong>
+              <span class="def-text">Instalación ribereña o costera para el atraque y comercio de navíos.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Por su activo <strong>puerto</strong> fluvial sobre el río Magdalena entraron grandes adelantos del país.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="calle" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">calle</strong>
+              <span class="def-text">Vía pública urbana por donde caminan las personas y circulan vehículos.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«Durante cuatro días enteros, cada <strong>calle</strong> principal se transforma en una pista de baile.»</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="gente" tabindex="0" title="Hacer clic para ver u ocultar el ejemplo">
+            <div class="def-main-line">
+              <strong class="matched-word">gente</strong>
+              <span class="def-text">Personas que forman una comunidad alegre y hospitalaria.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">«La <strong>gente</strong> barranquillera es célebre por su espontaneidad, alegría y entusiasmo.»</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TEXTO DE LECTURA -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </span>
+            <h3 class="panel-title">Texto de Lectura</h3>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">Barranquilla es una activa urbe industrial y cultural situada en el punto donde el caudaloso río Magdalena desemboca en el mar Caribe. Su apodo histórico es «La Puerta de Oro de Colombia», pues gracias a su floreciente <span class="vocab-word" tabindex="0" data-tooltip="Instalación ribereña o costera para el atraque y comercio de navíos.">puerto</span> ingresaron al país la aviación comercial, el teléfono, el cine y diversas comunidades de inmigrantes que aportaron riqueza gastronómica y comercial.</p>
+          <p class="reading-para">El acontecimiento más esperado del año es el <span class="vocab-word" tabindex="0" data-tooltip="Fiesta popular anual con desfiles, comparsas y danzas en el espacio público.">carnaval</span>, declarado patrimonio oral e inmaterial por la UNESCO. Durante los festejos, la <span class="vocab-word" tabindex="0" data-tooltip="Personas que forman una comunidad alegre y hospitalaria.">gente</span> local y los turistas salen a disfrutar de la música de cumbia y mapalé. Los participantes lucen con orgullo un elaborado <span class="vocab-word" tabindex="0" data-tooltip="Vestimenta especial y colorida para caracterizar un personaje tradicional.">disfraz</span> artesanal y desfilan al compás de los tambores. De esta forma, cada amplia <span class="vocab-word" tabindex="0" data-tooltip="Vía pública urbana por donde caminan las personas y circulan vehículos.">calle</span> del malecón fluvial se viste de fiesta y hermandad.</p>
+        </div>
+      </div>
+
+      <!-- 3. PREGUNTA DE DISCUSIÓN -->
+      <div class="panel-box discussion-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Pregunta de Discusión</h3>
+          </div>
+        </div>
+        <div class="discussion-question">
+          «¿Has participado alguna vez en un desfile o fiesta de disfraces en la calle? ¿Qué personaje o temática te gustaría representar?»
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- BOTÓN VOLVER ARRIBA -->
+  <button type="button" class="btn-back-to-top" id="btn-back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Volver arriba" title="Volver arriba">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p><strong>Ciudades de Colombia</strong> — Material didáctico interactivo de español como lengua extranjera (Nivel A1).</p>
+      <p>Diseño autónomo sin dependencias externas ni imágenes obligatorias • Textos y vocabulario accesibles para clase y autoaprendizaje.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT INTERACTIVO: DRAG & DROP, TAP-TO-PLACE, LOCALSTORAGE & MENÚS -->
+  <script>
+    // ESTADO GLOBAL DE LA APLICACIÓN
+    let selectedChip = null;
+    const TOTAL_ITEMS = 30;
+    const STORAGE_KEY = 'colombian_cities_a1_progress';
+
+    // GESTIÓN DE LOCALSTORAGE
+    function getStoredProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveMatchToStorage(sectionId, targetWord) {
+      const progress = getStoredProgress();
+      if (!progress[sectionId]) {
+        progress[sectionId] = [];
+      }
+      if (!progress[sectionId].includes(targetWord)) {
+        progress[sectionId].push(targetWord);
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {}
+    }
+
+    function clearSectionStorage(sectionId) {
+      const progress = getStoredProgress();
+      delete progress[sectionId];
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {}
+    }
+
+    function restoreProgressFromStorage() {
+      const progress = getStoredProgress();
+      Object.keys(progress).forEach(secId => {
+        const words = progress[secId];
+        const exercise = document.getElementById(`exercise-${secId}`);
+        if (!exercise) return;
+
+        words.forEach(word => {
+          const card = exercise.querySelector(`.def-card[data-target="${word}"]`);
+          if (card) {
+            card.classList.add('is-matched');
+            card.classList.remove('is-collapsed');
+          }
+
+          const bank = document.getElementById(`bank-${secId}`);
+          if (bank) {
+            const chip = bank.querySelector(`.word-chip[data-word="${word}"]`);
+            if (chip) {
+              chip.classList.add('is-placed');
+            }
+          }
+        });
+
+        updateSectionScore(secId, false);
+      });
+
+      updateGlobalScore();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initExercises();
+      restoreProgressFromStorage();
+      initScrollSpy();
+      initDropdownListeners();
+      initModalListeners();
+    });
+
+    // CONTROL DEL MENÚ DESPLEGABLE (NUXT UI STYLE)
+    function toggleDropdown() {
+      const dd = document.getElementById('section-dropdown');
+      const trigger = document.getElementById('dropdown-trigger');
+      const isOpen = dd.classList.contains('is-open');
+      if (isOpen) {
+        closeDropdown();
+      } else {
+        dd.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    function closeDropdown() {
+      const dd = document.getElementById('section-dropdown');
+      const trigger = document.getElementById('dropdown-trigger');
+      if (dd) {
+        dd.classList.remove('is-open');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    function selectSection(sectionTargetId, labelText) {
+      closeDropdown();
+      
+      const labelElem = document.getElementById('dropdown-current-label');
+      if (labelElem) {
+        labelElem.textContent = labelText;
+      }
+      
+      document.querySelectorAll('.nuxt-dropdown-item').forEach(item => {
+        if (item.dataset.value === sectionTargetId) {
+          item.classList.add('is-active');
+        } else {
+          item.classList.remove('is-active');
+        }
+      });
+
+      jumpToSection(sectionTargetId);
+    }
+
+    function initDropdownListeners() {
+      document.addEventListener('click', (e) => {
+        const dd = document.getElementById('section-dropdown');
+        if (dd && !dd.contains(e.target)) {
+          closeDropdown();
+        }
+      });
+    }
+
+    // DESPLAZAMIENTO SUAVE A LA SECCIÓN
+    function jumpToSection(sectionId) {
+      if (!sectionId) return;
+      const target = document.getElementById(sectionId);
+      if (target) {
+        const navbar = document.getElementById('top-navbar');
+        const navHeight = navbar ? navbar.offsetHeight : 60;
+        const headerOffset = navHeight + 18;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: "smooth"
+        });
+      }
+    }
+
+    // MODAL DE REINICIO
+    function openResetModal() {
+      const modal = document.getElementById('reset-modal');
+      if (modal) {
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeResetModal() {
+      const modal = document.getElementById('reset-modal');
+      if (modal) {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function confirmResetAll() {
+      closeResetModal();
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+
+      for (let i = 1; i <= 6; i++) {
+        resetExercise(i, false);
+      }
+      updateGlobalScore();
+    }
+
+    function initModalListeners() {
+      const modal = document.getElementById('reset-modal');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target.id === 'reset-modal') {
+            closeResetModal();
+          }
+        });
+      }
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeResetModal();
+          closeDropdown();
+        }
+      });
+    }
+
+    // RESALTADO DE ZONAS ELEGIBLES
+    function highlightEligibleCards(sectionId, enable) {
+      document.querySelectorAll('.def-card.eligible-drop').forEach(card => card.classList.remove('eligible-drop'));
+      if (!enable || !sectionId) return;
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+      exercise.querySelectorAll('.def-card:not(.is-matched)').forEach(card => {
+        card.classList.add('eligible-drop');
+      });
+    }
+
+    // INICIALIZACIÓN DRAG & DROP Y TAP-TO-PLACE
+    function initExercises() {
+      const chips = document.querySelectorAll('.word-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('dragstart', handleDragStart);
+        chip.addEventListener('dragend', handleDragEnd);
+        chip.addEventListener('click', handleChipClick);
+      });
+
+      const cards = document.querySelectorAll('.def-card');
+      cards.forEach(card => {
+        card.addEventListener('dragover', handleCardDragOver);
+        card.addEventListener('dragleave', handleCardDragLeave);
+        card.addEventListener('drop', handleCardDrop);
+        card.addEventListener('mousedown', handleCardMouseDown);
+        card.addEventListener('mousemove', handleCardMouseMove);
+        card.addEventListener('click', handleCardClick);
+      });
+    }
+
+    let cardMouseDownX = 0;
+    let cardMouseDownY = 0;
+    let isSelectingCardText = false;
+
+    function handleCardMouseDown(e) {
+      cardMouseDownX = e.clientX;
+      cardMouseDownY = e.clientY;
+      isSelectingCardText = false;
+    }
+
+    function handleCardMouseMove(e) {
+      if (e.buttons === 1) {
+        if (Math.abs(e.clientX - cardMouseDownX) > 4 || Math.abs(e.clientY - cardMouseDownY) > 4) {
+          isSelectingCardText = true;
+        }
+      }
+    }
+
+    // HANDLERS DE ARRASTRE
+    function handleDragStart(e) {
+      if (this.classList.contains('is-placed')) return;
+      const currentSection = this.closest('.exercise-box').dataset.section;
+      e.dataTransfer.setData('text/plain', this.dataset.word);
+      e.dataTransfer.setData('source-section', currentSection);
+      e.dataTransfer.effectAllowed = 'move';
+      this.classList.add('is-dragging');
+      if (selectedChip) {
+        selectedChip.classList.remove('is-selected');
+        selectedChip = null;
+      }
+      highlightEligibleCards(currentSection, true);
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('is-dragging');
+      highlightEligibleCards(null, false);
+    }
+
+    function handleCardDragOver(e) {
+      e.preventDefault();
+      if (!this.classList.contains('is-matched')) {
+        this.classList.add('drag-hover');
+      }
+    }
+
+    function handleCardDragLeave(e) {
+      this.classList.remove('drag-hover');
+    }
+
+    function handleCardDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-hover');
+      highlightEligibleCards(null, false);
+      if (this.classList.contains('is-matched')) return;
+
+      const droppedWord = e.dataTransfer.getData('text/plain');
+      const sourceSection = e.dataTransfer.getData('source-section');
+      const currentSection = this.closest('.exercise-box').dataset.section;
+
+      if (sourceSection !== currentSection) return;
+
+      const targetWord = this.dataset.target;
+      validatePlacement(this, droppedWord, targetWord, currentSection);
+    }
+
+    // TAP / CLICK HANDLERS
+    function handleChipClick(e) {
+      if (this.classList.contains('is-placed')) return;
+      const currentSection = this.closest('.exercise-box').dataset.section;
+
+      if (selectedChip === this) {
+        this.classList.remove('is-selected');
+        selectedChip = null;
+        highlightEligibleCards(null, false);
+      } else {
+        if (selectedChip) {
+          selectedChip.classList.remove('is-selected');
+          highlightEligibleCards(null, false);
+        }
+        selectedChip = this;
+        this.classList.add('is-selected');
+        highlightEligibleCards(currentSection, true);
+      }
+    }
+
+    function handleCardClick(e) {
+      if (this.classList.contains('is-matched')) {
+        const selection = window.getSelection();
+        const hasSelection = selection && selection.toString().trim().length > 0;
+        if (hasSelection || isSelectingCardText) {
+          isSelectingCardText = false;
+          return;
+        }
+        this.classList.toggle('is-collapsed');
+        return;
+      }
+
+      if (!selectedChip) return;
+
+      const currentSection = this.closest('.exercise-box').dataset.section;
+      const chipSection = selectedChip.closest('.exercise-box').dataset.section;
+      if (currentSection !== chipSection) return;
+
+      const droppedWord = selectedChip.dataset.word;
+      const targetWord = this.dataset.target;
+
+      validatePlacement(this, droppedWord, targetWord, currentSection);
+    }
+
+    // VALIDACIÓN DE COLOCACIÓN
+    function validatePlacement(card, inputWord, targetWord, sectionId) {
+      highlightEligibleCards(null, false);
+      if (inputWord.trim().toLowerCase() === targetWord.trim().toLowerCase()) {
+        card.classList.add('is-matched');
+        card.classList.remove('is-collapsed');
+
+        const bank = document.getElementById(`bank-${sectionId}`);
+        if (bank) {
+          const chip = bank.querySelector(`.word-chip[data-word="${inputWord}"]`);
+          if (chip) {
+            chip.classList.remove('is-selected');
+            chip.classList.add('is-placed');
+          }
+        }
+        if (selectedChip && selectedChip.dataset.word === inputWord) {
+          selectedChip = null;
+        }
+
+        saveMatchToStorage(sectionId, targetWord);
+        updateSectionScore(sectionId);
+        updateGlobalScore();
+      } else {
+        card.classList.add('shake-error');
+
+        const bank = document.getElementById(`bank-${sectionId}`);
+        const chip = bank ? bank.querySelector(`.word-chip[data-word="${inputWord}"]`) : null;
+        if (chip) {
+          chip.classList.add('shake-error');
+        }
+
+        setTimeout(() => {
+          card.classList.remove('shake-error');
+          if (chip) {
+            chip.classList.remove('shake-error');
+          }
+        }, 500);
+
+        if (selectedChip) {
+          selectedChip.classList.remove('is-selected');
+          selectedChip = null;
+        }
+      }
+    }
+
+    // ACTUALIZACIÓN DE PUNTAJES
+    function updateSectionScore(sectionId, animate = true) {
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+      const matchedCount = exercise.querySelectorAll('.def-card.is-matched').length;
+
+      const bankContainer = exercise.querySelector('.word-bank-container');
+      if (bankContainer) {
+        if (matchedCount === 5) {
+          if (!animate) {
+            bankContainer.classList.add('is-hidden-instant');
+          } else {
+            bankContainer.classList.remove('is-hidden-instant');
+            bankContainer.classList.add('is-hidden');
+          }
+        } else {
+          bankContainer.classList.remove('is-hidden', 'is-hidden-instant');
+        }
+      }
+    }
+
+    function updateGlobalScore() {
+      const totalMatched = document.querySelectorAll('.def-card.is-matched').length;
+      const textElem = document.getElementById('global-score-text');
+      if (textElem) {
+        textElem.textContent = `${totalMatched} / ${TOTAL_ITEMS} palabras`;
+      }
+    }
+
+    // REINICIO DE UNA SECCIÓN
+    function resetExercise(sectionId, clearStorage = true) {
+      highlightEligibleCards(null, false);
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+
+      const cards = exercise.querySelectorAll('.def-card');
+      cards.forEach(card => {
+        card.classList.remove('is-matched', 'is-collapsed', 'drag-hover', 'shake-error', 'eligible-drop');
+      });
+
+      const bank = document.getElementById(`bank-${sectionId}`);
+      if (bank) {
+        const chips = bank.querySelectorAll('.word-chip');
+        chips.forEach(chip => {
+          chip.classList.remove('is-placed', 'is-selected', 'is-dragging', 'shake-error');
+        });
+      }
+
+      if (clearStorage) {
+        clearSectionStorage(sectionId);
+      }
+
+      updateSectionScore(sectionId);
+      updateGlobalScore();
+    }
+
+    // BOTÓN DE DESPLAZAMIENTO SUPERIOR
+    function initScrollSpy() {
+      const btnTop = document.getElementById('btn-back-to-top');
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 400) {
+          btnTop.classList.add('is-visible');
+        } else {
+          btnTop.classList.remove('is-visible');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
