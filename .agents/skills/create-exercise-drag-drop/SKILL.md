@@ -51,7 +51,7 @@ Before generating any code or content, run a grilling interview following the `/
 ### Decision Points to Grill:
 1. **Section Count & Breakdown**: Confirm the exact number of sections (typically 5 to 8) and propose specific thematic titles/subtopics for each section.
 2. **Vocabulary & Level Calibration**: Confirm the lexical focus, register, and difficulty suited to the CEFR level, identifying any particular domain vocabulary to feature.
-3. **Reading Text Tone & Format**: Confirm narrative or editorial style (e.g., cultural overview, city guides, personal reflections, historical vignettes).
+3. **Reading Text Tone & Format**: Confirm narrative or editorial style (e.g., cultural overview, city guides, personal reflections, historical vignettes). Propose the standard default of ~300 words per reading text unless the user specifies otherwise.
 4. **Visual & Color Theme**: Propose topic-harmonized accent palette colors (e.g., warm terracotta, emerald green, Mediterranean azure, burgundy).
 5. **Discussion Prompts**: Align on the style and focus of the discussion questions (e.g., conversational prompts, analytical debate, personal experiences).
 
@@ -78,7 +78,7 @@ Generate **5 to 8 thematic sections** (or the specific count requested by the us
    - Contextual quote / example sentence demonstrating the word in use.
    - Matching target word (hidden until matched or tapped).
 4. **Reading Passage (Texte de Lecture)**:
-   - 2 to 3 well-written paragraphs at the specified CEFR level.
+   - Standard length of **~300 words** (typically 2 to 4 well-written paragraphs) at the specified CEFR level unless the user specifies otherwise.
    - Natural inclusion of all 5 vocabulary words from the section.
    - Each vocabulary occurrence wrapped in `<span class="vocab-word" tabindex="0" data-tooltip="...">` showing the definition on hover/focus.
 5. **Discussion Question (Question de Discussion)**:
@@ -136,6 +136,6 @@ Implement vanilla JavaScript providing the complete interaction suite from `dijo
 
 1. Write the complete, standalone file to:
    `c:\edward\projects\apps\langlearn\dev\info-sites\<slug>\index.html`
-2. Validate that the HTML is well-formed, all section IDs match dropdown links, and JavaScript contains no syntax errors.
+2. **No Browser or Testing Required**: The agent does NOT need to check the document in the browser, launch any browser subagents, or test it in any way. Simply create the file, write it, and state that it is finished.
 3. Provide a concise summary to the user with a direct clickable file link:
    `[index.html](file:///c:/edward/projects/apps/langlearn/dev/info-sites/<slug>/index.html)`

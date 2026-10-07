@@ -1,0 +1,2869 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Villes de Bourgogne — Guide de Voyage B1/B2 & Exercices Interactifs</title>
+  <meta name="description" content="Explorez dix villes emblématiques de Bourgogne : patrimoine architectural, flânerie touristique, escales fluviales et délices du terroir. Textes de niveau B1/B2 avec exercices de vocabulaire interactifs glisser-déposer.">
+  <style>
+    /* ==========================================================================
+       VARIABLES DE CONCEPTION — PALETTE BOURGOGNE GRAND CRU & PIERRE DE BOURGOGNE
+       ========================================================================== */
+    :root {
+      --bg-body: #faf8f5;
+      --bg-card: #ffffff;
+      --bg-surface: #f4efe8;
+      --bg-elevated: #ffffff;
+      
+      --border-subtle: #e6dfd5;
+      --border-strong: #d5c9b8;
+      
+      --text-main: #1c1917;
+      --text-muted: #57534e;
+      --text-subtle: #78716c;
+      
+      /* PALETTE BOURGOGNE GRAND CRU */
+      --accent-wine: #881337;
+      --accent-wine-hover: #4c0519;
+      --accent-wine-soft: #fff1f2;
+      --accent-wine-border: #fecdd3;
+      
+      /* ACCENTS DORÉS & AMBRÉS DU TERROIR */
+      --accent-gold: #b45309;
+      --accent-gold-hover: #92400e;
+      --accent-gold-soft: #fef3c7;
+      --accent-gold-border: #fde68a;
+      
+      /* ÉTAT SUCCÈS VALIDATION */
+      --success-green: #047857;
+      --success-green-hover: #065f46;
+      --success-green-soft: #ecfdf5;
+      --success-green-border: #a7f3d0;
+      
+      --font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      
+      --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(28, 25, 23, 0.07), 0 2px 4px -2px rgba(28, 25, 23, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(28, 25, 23, 0.08), 0 4px 6px -4px rgba(28, 25, 23, 0.04);
+    }
+
+    /* RÉINITIALISATION FONDAMENTALE */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      user-select: text;
+    }
+
+    ::selection {
+      background-color: #fecdd3;
+      color: #881337;
+    }
+
+    /* BARRE DE NAVIGATION SUPÉRIEURE FIXE */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(250, 248, 245, 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      padding: 0.75rem 1.25rem;
+    }
+
+    .nav-inner {
+      max-width: 940px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .brand-pill {
+      background: var(--accent-wine);
+      color: #ffffff;
+      padding: 0.2rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    /* MENU DÉROULANT STYLE NUXT UI */
+    .nuxt-dropdown {
+      position: relative;
+      display: inline-block;
+      min-width: 250px;
+      max-width: 320px;
+      flex: 1 1 200px;
+    }
+
+    .nuxt-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.45rem 0.75rem;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+      outline: none;
+    }
+
+    .nuxt-dropdown-trigger:hover {
+      border-color: #a8a29e;
+      background: #fafaf9;
+    }
+
+    .nuxt-dropdown-trigger:focus-visible {
+      border-color: var(--accent-wine);
+      box-shadow: 0 0 0 2px rgba(136, 19, 55, 0.2);
+    }
+
+    .nuxt-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: 0.35rem;
+      display: none;
+      z-index: 1010;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    .nuxt-dropdown.is-open .nuxt-dropdown-menu {
+      display: block;
+    }
+
+    .nuxt-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      transition: all 0.12s ease;
+      background: transparent;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nuxt-dropdown-item:hover {
+      background: var(--accent-wine-soft);
+      color: var(--accent-wine-hover);
+    }
+
+    .item-pill {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      background: #e7e5e4;
+      color: #57534e;
+    }
+
+    .nuxt-dropdown-item:hover .item-pill {
+      background: var(--accent-wine);
+      color: #ffffff;
+    }
+
+    /* BADGE DE SCORE GLOBAL */
+    .global-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .score-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-gold);
+      border-radius: 9999px;
+      flex-shrink: 0;
+    }
+
+    .btn-reset-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      border: 1px solid var(--accent-wine-border);
+      color: var(--accent-wine);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.38rem 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-reset-all:hover {
+      background: var(--accent-wine-soft);
+      border-color: var(--accent-wine);
+      transform: translateY(-1px);
+    }
+
+    /* MODAL DE CONFIRMATION STYLE NUXT UI */
+    .nuxt-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 25, 23, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nuxt-modal-overlay.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nuxt-modal-container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .nuxt-modal-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+      transform: scale(0.95);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nuxt-modal-overlay.is-open .nuxt-modal-card {
+      transform: scale(1);
+    }
+
+    .nuxt-modal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .nuxt-modal-icon-badge {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 9999px;
+      background: var(--accent-wine-soft);
+      color: var(--accent-wine);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nuxt-modal-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    .nuxt-modal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .nuxt-modal-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    .nuxt-modal-btn-cancel {
+      padding: 0.5rem 1rem;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .nuxt-modal-btn-cancel:hover {
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+
+    .nuxt-modal-btn-confirm {
+      padding: 0.5rem 1.15rem;
+      background: var(--accent-wine);
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(136, 19, 55, 0.2);
+    }
+
+    .nuxt-modal-btn-confirm:hover {
+      background: var(--accent-wine-hover);
+    }
+
+    /* EN-TÊTE DU SITE / SECTION HERO */
+    .site-hero {
+      text-align: center;
+      padding: 3.5rem 1.25rem 2.5rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-gold-soft);
+      color: var(--accent-gold-hover);
+      border: 1px solid var(--accent-gold-border);
+      padding: 0.25rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .site-hero h1 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text-main);
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.02em;
+    }
+
+    .site-hero h1 span {
+      color: var(--accent-wine);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* CONTENEUR PRINCIPAL */
+    .main-container {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    /* CARTE DE SECTION */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.2s ease;
+    }
+
+    .section-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-num {
+      background: var(--accent-wine);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-category {
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+    }
+
+    .section-title {
+      font-size: clamp(1.35rem, 2.8vw, 1.8rem);
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--text-main);
+      margin-bottom: 1.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    /* PANNEAUX INTÉRIEURS (VOCABULAIRE, LECTURE, DISCUSSION) */
+    .panel-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .panel-box:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      flex-wrap: nowrap;
+    }
+
+    .panel-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .panel-icon {
+      color: var(--accent-wine);
+      display: flex;
+    }
+
+    .panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .panel-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: #ffffff;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset:hover {
+      background: #f5f5f4;
+      color: #dc2626;
+      border-color: #fca5a5;
+    }
+
+    /* BANQUE DE MOTS */
+    .word-bank-container {
+      background: #ffffff;
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.85rem;
+      margin-bottom: 0.85rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .word-bank-container.is-hidden {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-width: 0;
+      overflow: hidden;
+    }
+
+    .word-bank-container.is-hidden-instant {
+      display: none;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      min-height: 36px;
+    }
+
+    .word-chip {
+      background: #ffffff;
+      border: 1px solid var(--accent-wine-border);
+      color: var(--accent-wine-hover);
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 1px 2px rgba(28, 25, 23, 0.05);
+      touch-action: manipulation;
+    }
+
+    .word-chip:hover {
+      background: var(--accent-wine-soft);
+      border-color: var(--accent-wine);
+      transform: translateY(-1px);
+    }
+
+    .word-chip:active {
+      cursor: grabbing;
+    }
+
+    .word-chip.is-selected {
+      background: var(--accent-wine);
+      color: #ffffff;
+      border-color: var(--accent-wine-hover);
+      box-shadow: 0 0 0 3px rgba(136, 19, 55, 0.25);
+      transform: scale(1.05);
+    }
+
+    .word-chip.is-placed {
+      opacity: 0.25;
+      pointer-events: none;
+      text-decoration: line-through;
+      background: #f5f5f4;
+      border-color: #d6d3d1;
+      color: #a8a29e;
+      box-shadow: none;
+    }
+
+    .word-chip.is-dragging {
+      opacity: 0.4;
+      transform: scale(0.95);
+    }
+
+    .word-chip.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      background: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+    }
+
+    /* GRILLE DES DÉFINITIONS */
+    .definitions-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .def-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.85rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .def-card:not(.is-matched):hover {
+      border-color: var(--accent-wine-border);
+      background: #fafaf9;
+    }
+
+    .def-card.eligible-drop {
+      border: 1.5px dashed #fda4af !important;
+      background: #fff5f5 !important;
+    }
+
+    .def-card.drag-hover {
+      border-color: var(--accent-wine-hover) !important;
+      background: #ffe4e6 !important;
+      box-shadow: 0 0 0 2px rgba(136, 19, 55, 0.25);
+    }
+
+    .def-card.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+    }
+
+    .def-card.shake-error .def-text {
+      color: #b91c1c !important;
+    }
+
+    .def-card.is-matched,
+    .def-card.is-matched.is-collapsed {
+      background: #f0fdf4;
+      border-color: var(--success-green-border);
+      cursor: pointer;
+    }
+
+    .def-main-line {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .matched-word {
+      display: none;
+      font-weight: 800;
+      color: var(--accent-wine);
+      margin-right: 0.35rem;
+    }
+
+    .def-card.is-matched .matched-word {
+      display: inline;
+    }
+
+    .def-text {
+      font-size: 0.92rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    @keyframes shakeAnimation {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+      20%, 60% { transform: translateX(-6px); }
+    }
+
+    .def-example {
+      display: none;
+      margin-top: 0.45rem;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-left: 3.5px solid var(--accent-wine);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.8rem;
+      box-shadow: 0 1px 3px rgba(28, 25, 23, 0.04);
+      user-select: text;
+    }
+
+    @keyframes fadeInExample {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .def-card.is-matched:not(.is-collapsed) .def-example {
+      display: block;
+      animation: fadeInExample 0.35s ease-out forwards;
+    }
+
+    .example-quote {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .example-quote strong {
+      color: var(--accent-wine);
+      font-weight: 700;
+      font-style: normal;
+      background: var(--accent-wine-soft);
+      padding: 0 0.25rem;
+      border-radius: 3px;
+    }
+
+    /* TEXTE DE LECTURE */
+    .reading-body {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      padding: 1.35rem 1.55rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 1px 3px rgba(28, 25, 23, 0.04);
+    }
+
+    .reading-para {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      line-height: 1.8;
+      margin-bottom: 1.15rem;
+      text-align: justify;
+    }
+
+    .reading-para:last-child {
+      margin-bottom: 0;
+    }
+
+    /* TOOLTIP MOT DE VOCABULAIRE SURVOL */
+    .vocab-word {
+      font-weight: 700;
+      color: var(--accent-wine);
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+      cursor: help;
+      position: relative;
+      display: inline-block;
+      transition: color 0.15s ease, background-color 0.15s ease;
+      outline: none;
+    }
+
+    .vocab-word:hover,
+    .vocab-word:focus-visible {
+      color: var(--accent-gold-hover);
+      background: var(--accent-gold-soft);
+      border-radius: 3px;
+    }
+
+    .vocab-word::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: #1c1917;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 500;
+      line-height: 1.35;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      white-space: normal;
+      width: max-content;
+      max-width: 280px;
+      box-shadow: var(--shadow-lg);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 100;
+    }
+
+    .vocab-word:hover::after,
+    .vocab-word:focus-visible::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* QUESTION DE DISCUSSION */
+    .discussion-question {
+      font-size: 1rem;
+      color: var(--text-main);
+      font-weight: 600;
+      line-height: 1.6;
+      background: #ffffff;
+      padding: 1.1rem 1.35rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--accent-gold);
+    }
+
+    /* BOUTON RETOUR EN HAUT FLOTTANT */
+    .btn-back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow-md);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 900;
+    }
+
+    .btn-back-to-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .btn-back-to-top:hover {
+      background: var(--accent-wine-soft);
+      color: var(--accent-wine);
+      border-color: var(--accent-wine-border);
+      transform: translateY(-2px);
+    }
+
+    /* PIED DE PAGE */
+    .site-footer {
+      border-top: 1px solid var(--border-subtle);
+      background: #ffffff;
+      padding: 3rem 1.25rem;
+      text-align: center;
+      color: var(--text-subtle);
+      font-size: 0.9rem;
+    }
+
+    .footer-note {
+      margin-top: 0.5rem;
+      font-size: 0.82rem;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .section-card {
+        padding: 1.5rem 1rem;
+      }
+      .panel-box {
+        padding: 0.9rem 0.85rem;
+      }
+      .reading-body {
+        padding: 1rem 1.1rem;
+      }
+      .reading-para {
+        font-size: 1rem;
+        line-height: 1.7;
+        text-align: left;
+      }
+      .site-hero {
+        padding: 2.5rem 1rem 1.5rem;
+      }
+      .nuxt-dropdown {
+        min-width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRE DE NAVIGATION SUPÉRIEURE FIXE -->
+  <header class="top-navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <span class="brand-pill">BOURGOGNE • B1/B2</span>
+        <span>Villes de Bourgogne</span>
+      </a>
+
+      <div class="nav-controls">
+        <!-- MENU DÉROULANT STYLE NUXT UI -->
+        <div class="nuxt-dropdown" id="cityDropdown">
+          <button type="button" class="nuxt-dropdown-trigger" id="dropdownTrigger" aria-haspopup="true" aria-expanded="false">
+            <span id="dropdownSelectedLabel">Choisir une ville...</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="nuxt-dropdown-menu" id="dropdownMenu" role="menu">
+            <button type="button" class="nuxt-dropdown-item" data-target="dijon"><span class="item-pill">01</span> Dijon</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="beaune"><span class="item-pill">02</span> Beaune</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="chalon"><span class="item-pill">03</span> Chalon-sur-Saône</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="autun"><span class="item-pill">04</span> Autun</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="macon"><span class="item-pill">05</span> Mâcon</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="nevers"><span class="item-pill">06</span> Nevers</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="auxerre"><span class="item-pill">07</span> Auxerre</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="sens"><span class="item-pill">08</span> Sens</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="cluny"><span class="item-pill">09</span> Cluny</button>
+            <button type="button" class="nuxt-dropdown-item" data-target="vezelay"><span class="item-pill">10</span> Vézelay</button>
+          </div>
+        </div>
+
+        <!-- SCORE GLOBAL -->
+        <div class="global-score-badge" title="Mots correctement placés">
+          <span class="score-dot"></span>
+          <span id="global-score-text">0 / 50 mots</span>
+        </div>
+
+        <!-- RÉINITIALISATION GLOBALE -->
+        <button type="button" class="btn-reset-all" id="btnOpenResetModal" title="Tout recommencer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>Réinitialiser</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MODAL DE CONFIRMATION DE RÉINITIALISATION -->
+  <div class="nuxt-modal-overlay" id="resetModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="nuxt-modal-container">
+      <div class="nuxt-modal-card">
+        <div class="nuxt-modal-header">
+          <div class="nuxt-modal-icon-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="nuxt-modal-title" id="modalTitle">Réinitialiser tous les exercices ?</h3>
+            <p class="nuxt-modal-desc">Cette action effacera l'ensemble de vos correspondances de vocabulaire pour les dix villes. Votre progression reviendra à zéro.</p>
+          </div>
+        </div>
+        <div class="nuxt-modal-actions">
+          <button type="button" class="nuxt-modal-btn-cancel" id="btnCancelReset">Annuler</button>
+          <button type="button" class="nuxt-modal-btn-confirm" id="btnConfirmReset">Tout effacer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EN-TÊTE PRINCIPAL / HERO -->
+  <section class="site-hero">
+    <div class="hero-badge">Bourgogne Historique & Touristique</div>
+    <h1>Échappées Belles dans les <span>Cités de Bourgogne</span></h1>
+    <p class="hero-subtitle">
+      Explorez dix villes de caractère au fil de nos récits de voyage B1/B2. Associez chaque mot de vocabulaire à sa définition par glisser-déposer ou par simple clic, lisez les chroniques immersives et approfondissez vos compétences de communication.
+    </p>
+  </section>
+
+  <!-- CONTENEUR DES 10 SECTIONS -->
+  <main class="main-container">
+
+    <!-- =========================================================================
+         SECTION 01 : DIJON
+         ========================================================================= -->
+    <article class="section-card" id="section-dijon">
+      <div class="section-meta">
+        <span class="badge-num">Section 01</span>
+        <span class="badge-category">Côte-d'Or • Capitale Ducale & Gastronomie</span>
+      </div>
+      <h2 class="section-title">Dijon : Splendeurs des Ducs & Saveurs Gourmandes</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-dijon" data-section="dijon">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('dijon')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-dijon">
+            <button type="button" class="word-chip" draggable="true" data-word="flânerie">flânerie</button>
+            <button type="button" class="word-chip" draggable="true" data-word="terroir">terroir</button>
+            <button type="button" class="word-chip" draggable="true" data-word="dégustation">dégustation</button>
+            <button type="button" class="word-chip" draggable="true" data-word="itinéraire">itinéraire</button>
+            <button type="button" class="word-chip" draggable="true" data-word="incontournable">incontournable</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="flânerie" tabindex="0" role="button" aria-label="Définition de flânerie">
+            <div class="def-main-line">
+              <span class="matched-word">flânerie :</span>
+              <span class="def-text">Promenade lente et curieuse sans destination précise, au gré de ses envies.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« La <strong>flânerie</strong> matinale dans les ruelles pavées dévoile de splendides hôtels particuliers préservés. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="terroir" tabindex="0" role="button" aria-label="Définition de terroir">
+            <div class="def-main-line">
+              <span class="matched-word">terroir :</span>
+              <span class="def-text">Ensemble des spécificités écologiques, géologiques et culturelles donnant leur identité aux produits d'une contrée.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Aux Halles centrales, les étals rendent un vibrant hommage aux spécialités réputées du <strong>terroir</strong> bourguignon. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="dégustation" tabindex="0" role="button" aria-label="Définition de dégustation">
+            <div class="def-main-line">
+              <span class="matched-word">dégustation :</span>
+              <span class="def-text">Action attentive d'apprécier la saveur, les arômes et la texture d'un mets ou d'une boisson.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Une halte gourmande s'impose pour une <strong>dégustation</strong> de moutardes artisanales au cassis et au vin blanc. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="itinéraire" tabindex="0" role="button" aria-label="Définition de itinéraire">
+            <div class="def-main-line">
+              <span class="matched-word">itinéraire :</span>
+              <span class="def-text">Parcours jalonné d'étapes conçu pour guider une exploration pédestre ou touristique.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« En suivant les petites chouettes en bronze scellées au sol, on effectue un <strong>itinéraire</strong> très enrichissant. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="incontournable" tabindex="0" role="button" aria-label="Définition de incontournable">
+            <div class="def-main-line">
+              <span class="matched-word">incontournable :</span>
+              <span class="def-text">Élément ou étape dont on ne peut se dispenser lors d'un séjour, absolument essentiel.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Grimper les marches de la tour Philippe le Bon est une étape <strong>incontournable</strong> pour embrasser la ville. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Au Cœur de la Cité des Ducs</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            Dès l'arrivée à la gare de Dijon, l'atmosphère paisible et soignée invite immédiatement à la <span class="vocab-word" tabindex="0" data-tooltip="Promenade lente et curieuse sans destination précise">flânerie</span>. Capitale historique des puissants ducs de Bourgogne, la cité a su piétonniser harmonieusement son vaste cœur urbain. On commence généralement son séjour en suivant le fameux parcours de la Chouette : cet <span class="vocab-word" tabindex="0" data-tooltip="Parcours jalonné d'étapes conçu pour guider une visite">itinéraire</span> fléché de vingt-deux étapes mène de la place de la Libération, dessinée en hémicycle face au somptueux palais ducal, jusqu'au chevet de l'église Notre-Dame, où chaque voyageur caresse de la main gauche la chouette sculptée en faisant un vœu secret.
+          </p>
+          <p class="reading-para">
+            Les amateurs de bonne chère trouveront ici leur paradis sur terre. Dijon arbore fièrement le label de Cité internationale de la gastronomie et du vin. Entre les étals parfumés des Halles centrales conçues par les ateliers d'Eiffel et les boutiques centenaires de pain d'épices, la richesse du <span class="vocab-word" tabindex="0" data-tooltip="Ensemble des spécificités écologiques et culturelles locales">terroir</span> frappe par sa diversité. Une halte s'impose dans une maison historique pour une <span class="vocab-word" tabindex="0" data-tooltip="Action attentive d'apprécier la saveur d'un mets">dégustation</span> de moutardes préparées à la meule de pierre, relevées au pinot noir ou à l'estragon frais.
+          </p>
+          <p class="reading-para">
+            Avant de quitter la cité pour la côte viticole, une dernière expérience demeure <span class="vocab-word" tabindex="0" data-tooltip="Absolument essentiel, dont on ne peut se dispenser">incontournable</span> : gravir les trois cent seize marches de la tour Philippe le Bon. Du haut de cette plateforme érigée au XVe siècle, la vue panoramique embrasse les toits vernissés aux tuiles polychromes et s'étend jusqu'aux premiers coteaux viticoles. Une introduction mémorable à l'art de vivre bourguignon.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          Lorsque vous visitez une ville réputée pour sa gastronomie, privilégiez-vous les marchés traditionnels, les adresses historiques ou les restaurants modernes ? Quelle spécialité dijonnaise éveillerait le plus votre curiosité ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 02 : BEAUNE
+         ========================================================================= -->
+    <article class="section-card" id="section-beaune">
+      <div class="section-meta">
+        <span class="badge-num">Section 02</span>
+        <span class="badge-category">Côte-d'Or • Capitale des Vins & Hôtel-Dieu</span>
+      </div>
+      <h2 class="section-title">Beaune : Cité des Climats & Bastions Fortifiés</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-beaune" data-section="beaune">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('beaune')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-beaune">
+            <button type="button" class="word-chip" draggable="true" data-word="hébergement">hébergement</button>
+            <button type="button" class="word-chip" draggable="true" data-word="bastion">bastion</button>
+            <button type="button" class="word-chip" draggable="true" data-word="toiture">toiture</button>
+            <button type="button" class="word-chip" draggable="true" data-word="sommelier">sommelier</button>
+            <button type="button" class="word-chip" draggable="true" data-word="étape">étape</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="hébergement" tabindex="0" role="button" aria-label="Définition de hébergement">
+            <div class="def-main-line">
+              <span class="matched-word">hébergement :</span>
+              <span class="def-text">Lieu d'accueil temporaire proposé aux voyageurs (hôtel, chambre d'hôtes ou gîte).</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Réserver un <strong>hébergement</strong> au cœur des remparts permet de se déplacer entièrement à pied. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="bastion" tabindex="0" role="button" aria-label="Définition de bastion">
+            <div class="def-main-line">
+              <span class="matched-word">bastion :</span>
+              <span class="def-text">Ouvrage défensif avancé d'une enceinte fortifiée protégeant les courtines.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« La promenade le long du <strong>bastion</strong> des Dames offre une vue charmante sur les fossés fleuris. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="toiture" tabindex="0" role="button" aria-label="Définition de toiture">
+            <div class="def-main-line">
+              <span class="matched-word">toiture :</span>
+              <span class="def-text">Ensemble des éléments de couverture d'un bâtiment, souvent parée de tuiles vernissées en Bourgogne.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« La spectaculaire <strong>toiture</strong> polychrome de l'Hôtel-Dieu brille d'éclats dorés et géométriques. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="sommelier" tabindex="0" role="button" aria-label="Définition de sommelier">
+            <div class="def-main-line">
+              <span class="matched-word">sommelier :</span>
+              <span class="def-text">Professionnel qualifié guidant le choix des vins et assurant le service d'œnologie.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Écouter un <strong>sommelier</strong> passionné expliciter la notion de terroir transforme la découverte des grands crus. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="étape" tabindex="0" role="button" aria-label="Définition de étape">
+            <div class="def-main-line">
+              <span class="matched-word">étape :</span>
+              <span class="def-text">Point d'arrêt et de halte au cours d'un itinéraire ou d'un voyage.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Beaune est une <strong>étape</strong> majeure sur la véloroute serpentant à travers les vignobles réputés. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Escapade dans la Capitale des Vins</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            Nichée au pied des coteaux de la côte viticole, Beaune séduit d'emblée par son charme intime et son patrimoine exceptionnel. Dès la porte Saint-Nicolas franchie, les murailles circulaires invitent à faire le tour de la ville par le sommet des anciens remparts. Chaque <span class="vocab-word" tabindex="0" data-tooltip="Ouvrage défensif avancé d'une enceinte fortifiée">bastion</span> de pierre, reconverti aujourd'hui en promenade arborée ou en caveau de vieillissement, rappelle la position stratégique de cette ville ducale au Moyen Âge.
+          </p>
+          <p class="reading-para">
+            Le véritable joyau architectural de Beaune se dévoile dans la cour d'honneur des célèbres Hospices. Fondé en 1443 par Nicolas Rolin pour accueillir les nécessiteux, l'Hôtel-Dieu arbore une saisissante <span class="vocab-word" tabindex="0" data-tooltip="Ensemble de couverture d'un bâtiment">toiture</span> aux tuiles vernissées rouges, jaunes, vertes et noires formant d'élégants motifs en losange. À l'intérieur, la grande salle des Pôvres et le polyptyque du Jugement dernier de Rogier van der Weyden transportent le visiteur dans une émotion artistique rare.
+          </p>
+          <p class="reading-para">
+            Pour un séjour réussi, dénicher un <span class="vocab-word" tabindex="0" data-tooltip="Lieu d'accueil temporaire pour les voyageurs">hébergement</span> traditionnel dans l'une des ruelles calmes permet de profiter des soirées beaunoises. Après avoir arpenté les caves voûtées où des kilomètres de bouteilles reposent dans l'obscurité, on s'installe dans un bar à vin où un <span class="vocab-word" tabindex="0" data-tooltip="Professionnel expert en conseil et service des vins">sommelier</span> explique les subtilités des Climats du vignoble bourguignon, inscrits au patrimoine mondial de l'UNESCO. Beaune n'est pas une simple <span class="vocab-word" tabindex="0" data-tooltip="Point d'arrêt et de halte au cours d'un voyage">étape</span> sur la route des vacances : c'est une célébration vivante du temps et de la patience humaine.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          La réputation mondiale des Hospices de Beaune repose à la fois sur un hôpital caritatif médiéval et sur des ventes de vin aux enchères. Comment ce mariage entre charité chrétienne et grand commerce façonne-t-il l'image touristique d'une région ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 03 : CHALON-SUR-SAÔNE
+         ========================================================================= -->
+    <article class="section-card" id="section-chalon">
+      <div class="section-meta">
+        <span class="badge-num">Section 03</span>
+        <span class="badge-category">Saône-et-Loire • Berceau de l'Image & Port Fluvial</span>
+      </div>
+      <h2 class="section-title">Chalon-sur-Saône : Quais Paisibles & Histoire de la Photographie</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-chalon" data-section="chalon">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('chalon')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-chalon">
+            <button type="button" class="word-chip" draggable="true" data-word="quai">quai</button>
+            <button type="button" class="word-chip" draggable="true" data-word="passerelle">passerelle</button>
+            <button type="button" class="word-chip" draggable="true" data-word="halte">halte</button>
+            <button type="button" class="word-chip" draggable="true" data-word="cliché">cliché</button>
+            <button type="button" class="word-chip" draggable="true" data-word="guinguette">guinguette</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="quai" tabindex="0" role="button" aria-label="Définition de quai">
+            <div class="def-main-line">
+              <span class="matched-word">quai :</span>
+              <span class="def-text">Chaussée aménagée en bordure de fleuve ou de rivière, propice à la promenade et à l'accostage.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Les terrasses animées du <strong>quai</strong> Gambetta offrent une vue reposante sur les reflets de la rivière. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="passerelle" tabindex="0" role="button" aria-label="Définition de passerelle">
+            <div class="def-main-line">
+              <span class="matched-word">passerelle :</span>
+              <span class="def-text">Pont réservé exclusivement aux piétons et cyclistes permettant de franchir un cours d'eau.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Emprunter la <strong>passerelle</strong> piétonne permet d'accéder rapidement aux petits bistrots de l'île Saint-Laurent. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="halte" tabindex="0" role="button" aria-label="Définition de halte">
+            <div class="def-main-line">
+              <span class="matched-word">halte :</span>
+              <span class="def-text">Pause ou court temps de repos marqué au cours d'un périple ou d'une croisière fluviale.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Les bateaux de plaisance apprécient cette <strong>halte</strong> fluviale très équipée au cœur de la Saône-et-Loire. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="cliché" tabindex="0" role="button" aria-label="Définition de cliché">
+            <div class="def-main-line">
+              <span class="matched-word">cliché :</span>
+              <span class="def-text">Image ou prise de vue obtenue à l'aide d'un appareil photographique.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« C'est à quelques kilomètres d'ici que Nicéphore Niépce a fixé le tout premier <strong>cliché</strong> de l'histoire en 1827. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="guinguette" tabindex="0" role="button" aria-label="Définition de guinguette">
+            <div class="def-main-line">
+              <span class="matched-word">guinguette :</span>
+              <span class="def-text">Café-restaurant populaire de plein air situé en bord de rivière, à l'ambiance joyeuse et décontractée.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Une soirée d'été dans une <strong>guinguette</strong> au bord de l'eau permet de savourer une délicieuse friture locale. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Au Fil de la Saône et de l'Image</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            Bordée par les eaux calmes de la Saône, Chalon-sur-Saône s'affirme comme une cité fluviale au carrefour des voies navigables bourguignonnes. En se promenant le long du large <span class="vocab-word" tabindex="0" data-tooltip="Chaussée aménagée en bordure de fleuve ou rivière">quai</span>, on ressent immédiatement le rythme paisible des embarcations de croisière et des péniches de transport. La ville possède une lumière douce et changeante qui a profondément inspiré les artistes à travers les siècles.
+          </p>
+          <p class="reading-para">
+            C'est ici qu'est né Nicéphore Niépce, l'inventeur de la photographie. Le musée qui porte son nom, installé dans l'ancien hôtel des Messageries royales, conserve une collection fascinante de plus de trois millions de photographies et d'appareils d'époque. Découvrir les premiers essais pionniers et observer la plaque sur laquelle fut capturé le premier <span class="vocab-word" tabindex="0" data-tooltip="Image obtenue par un appareil photographique">cliché</span> du monde constitue un moment d'émerveillement pour tout passionné d'art visuel.
+          </p>
+          <p class="reading-para">
+            Pour le déjeuner ou le dîner, il suffit d'emprunter la <span class="vocab-word" tabindex="0" data-tooltip="Pont exclusivement piétonnier reliant deux berges">passerelle</span> piétonne qui enjambe le fleuve vers l'île Saint-Laurent. Cette bande de terre abrite une rue animée jalonnée de restaurants spécialisés dans la pôchouse, une matelote traditionnelle de quatre poissons d'eau douce au vin blanc. Plus en aval, les berges aménagées accueillent une agréable <span class="vocab-word" tabindex="0" data-tooltip="Café-restaurant populaire de plein air en bord de rivière">guinguette</span> estivale où touristes et Chalonnais aiment marquer une <span class="vocab-word" tabindex="0" data-tooltip="Pause ou temps de repos au cours d'un voyage">halte</span> rafraîchissante au son de musiques entraînantes.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          Aujourd'hui, avec nos téléphones portables, nous prenons des milliers de photos en voyage. En quoi la visite d'un lieu comme le musée Niépce modifie-t-elle notre façon de contempler et d'immortaliser les paysages que nous traversons ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 04 : AUTUN
+         ========================================================================= -->
+    <article class="section-card" id="section-autun">
+      <div class="section-meta">
+        <span class="badge-num">Section 04</span>
+        <span class="badge-category">Saône-et-Loire • Cité Gallo-Romaine & Porte du Morvan</span>
+      </div>
+      <h2 class="section-title">Autun : Théâtres Antiques & Secrets du Morvan</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-autun" data-section="autun">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('autun')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-autun">
+            <button type="button" class="word-chip" draggable="true" data-word="vestige">vestige</button>
+            <button type="button" class="word-chip" draggable="true" data-word="belvédère">belvédère</button>
+            <button type="button" class="word-chip" draggable="true" data-word="sentier">sentier</button>
+            <button type="button" class="word-chip" draggable="true" data-word="typique">typique</button>
+            <button type="button" class="word-chip" draggable="true" data-word="tympan">tympan</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="vestige" tabindex="0" role="button" aria-label="Définition de vestige">
+            <div class="def-main-line">
+              <span class="matched-word">vestige :</span>
+              <span class="def-text">Reste visible ou trace monumentale laissée par une civilisation ou époque ancienne.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Le théâtre antique compte parmi les plus imposants <strong>vestiges</strong> romains de la Gaule impériale. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="belvédère" tabindex="0" role="button" aria-label="Définition de belvédère">
+            <div class="def-main-line">
+              <span class="matched-word">belvédère :</span>
+              <span class="def-text">Emplacement aménagé sur une hauteur pour embrasser une large vue panoramique.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Depuis le <strong>belvédère</strong> de la croix de la Libération, on contemple toute la vallée et les contreforts boisés. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="sentier" tabindex="0" role="button" aria-label="Définition de sentier">
+            <div class="def-main-line">
+              <span class="matched-word">sentier :</span>
+              <span class="def-text">Chemin étroit de campagne ou de forêt réservé aux randonneurs et marcheurs.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Un <strong>sentier</strong> balisé permet de quitter le centre historique pour s'enfoncer sous les chênes du Morvan. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="typique" tabindex="0" role="button" aria-label="Définition de typique">
+            <div class="def-main-line">
+              <span class="matched-word">typique :</span>
+              <span class="def-text">Qui possède les caractéristiques traditionnelles et distinctives d'une contrée.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« L'auberge propose un plat <strong>typique</strong> composé de jambon persillé et de fromages fermiers de la région. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="tympan" tabindex="0" role="button" aria-label="Définition de tympan">
+            <div class="def-main-line">
+              <span class="matched-word">tympan :</span>
+              <span class="def-text">Espace sculpté en demi-cercle situé au-dessus du portail d'une cathédrale romane ou gothique.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Les visiteurs restent saisis devant le <strong>tympan</strong> de Gislebertus illustrant le Jugement dernier avec un réalisme saisissant. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Dans la « Sœur et Émule de Rome »</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            Fondée par l'empereur Auguste pour supplanter l'oppidum celte de Bibracte, Autun s'impose comme un véritable musée à ciel ouvert au pied des monts du Morvan. En pénétrant dans la ville, on aperçoit encore les impressionnantes portes antiques d'Arroux et de Saint-André. Le grand théâtre romain, capable d'accueillir vingt mille spectateurs à l'époque impériale, demeure le plus vaste <span class="vocab-word" tabindex="0" data-tooltip="Trace monumentale laissée par une civilisation ancienne">vestige</span> de ce genre conservé en Gaule.
+          </p>
+          <p class="reading-para">
+            La période médiévale a légué à Autun un chef-d'œuvre non moins remarquable : la cathédrale Saint-Lazare. Perché au sommet de la ville haute, cet édifice abrite un trésor d'art sacré. Les amateurs de sculpture romane s'attardent de longues minutes devant le majestueux <span class="vocab-word" tabindex="0" data-tooltip="Espace sculpté en demi-cercle surmontant le portail d'une église">tympan</span>, œuvre signée au XIIe siècle par le sculpteur Gislebertus, qui dépeint la pesée des âmes avec une force expressive stupéfiante.
+          </p>
+          <p class="reading-para">
+            Pour les voyageurs en quête de grand air et de nature sauvage, Autun constitue la rampe de lancement idéale. On grimpe jusqu'au <span class="vocab-word" tabindex="0" data-tooltip="Emplacement aménagé sur une hauteur offrant une large vue">belvédère</span> de la croix de la Libération pour contempler le moutonnement infini des collines boisées avant d'emprunter un <span class="vocab-word" tabindex="0" data-tooltip="Chemin étroit réservé aux marcheurs en forêt ou campagne">sentier</span> de randonnée vers les forêts de hêtres et de conifères. De retour au bourg, une halte dans un bistrot <span class="vocab-word" tabindex="0" data-tooltip="Caractéristique et représentatif d'une contrée">typique</span> permet de reprendre des forces en dégustant une terrine de sanglier ou un généreux morceau d'époisses crémeux.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          Autun fait cohabiter des ruines romaines de l'Antiquité, une cathédrale romane médiévale et un parc naturel régional verdoyant. Préférez-vous ce genre de ville polyvalente ou les destinations entièrement consacrées à une seule thématique touristique ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 05 : MÂCON
+         ========================================================================= -->
+    <article class="section-card" id="section-macon">
+      <div class="section-meta">
+        <span class="badge-num">Section 05</span>
+        <span class="badge-category">Saône-et-Loire • Rives Méridionales & Vignobles Lamartiniens</span>
+      </div>
+      <h2 class="section-title">Mâcon : Douceur Fluviale & Coteaux Poétiques</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-macon" data-section="macon">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('macon')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-macon">
+            <button type="button" class="word-chip" draggable="true" data-word="esplanade">esplanade</button>
+            <button type="button" class="word-chip" draggable="true" data-word="vignoble">vignoble</button>
+            <button type="button" class="word-chip" draggable="true" data-word="façade">façade</button>
+            <button type="button" class="word-chip" draggable="true" data-word="escapade">escapade</button>
+            <button type="button" class="word-chip" draggable="true" data-word="convivialité">convivialité</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="esplanade" tabindex="0" role="button" aria-label="Définition de esplanade">
+            <div class="def-main-line">
+              <span class="matched-word">esplanade :</span>
+              <span class="def-text">Vaste espace dégagé et plat réservé aux promeneurs devant un fleuve ou un monument.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« L'<strong>esplanade</strong> des quais de Saône se colore de terrasses lumineuses dès les premières douceurs printanières. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="vignoble" tabindex="0" role="button" aria-label="Définition de vignoble">
+            <div class="def-main-line">
+              <span class="matched-word">vignoble :</span>
+              <span class="def-text">Grande étendue de terres plantées de vignes produisant des raisins de cuve.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Le <strong>vignoble</strong> du Mâconnais s'étire en vagues ondulantes jusqu'au pied de la célèbre roche de Solutré. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="façade" tabindex="0" role="button" aria-label="Définition de façade">
+            <div class="def-main-line">
+              <span class="matched-word">façade :</span>
+              <span class="def-text">Face extérieure principale d'un édifice donnant sur une voie publique ou une place.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« La fameuse Maison de Bois attire tous les regards grâce à sa curieuse <strong>façade</strong> couverte de statuettes médiévales. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="escapade" tabindex="0" role="button" aria-label="Définition de escapade">
+            <div class="def-main-line">
+              <span class="matched-word">escapade :</span>
+              <span class="def-text">Court voyage d'agrément de quelques jours pour rompre avec le quotidien.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Une <strong>escapade</strong> sur les pas du poète Lamartine combine littérature romantique et dégustation de blancs solaires. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="convivialité" tabindex="0" role="button" aria-label="Définition de convivialité">
+            <div class="def-main-line">
+              <span class="matched-word">convivialité :</span>
+              <span class="def-text">Chaleur humaine et esprit de partage qui règnent lors d'un moment agréable en société.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Partager une assiette de gougères chaudes avec un verre de Saint-Véran incarne toute la <strong>convivialité</strong> du Sud bourguignon. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Aux Portes Méridionales de la Bourgogne</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            À l'extrémité méridionale de la région, Mâcon surprend agréablement le voyageur par sa luminosité presque méditerranéenne. Ses toits de tuiles romanes, ses façades peintes dans des tons chauds d'ocre et de pastel et la majesté de la Saône confèrent à la ville un accent méridional indéniable. Se promener sur la large <span class="vocab-word" tabindex="0" data-tooltip="Vaste espace dégagé réservé aux promeneurs en bordure de fleuve">esplanade</span> Lamartine en contemplant le pont Saint-Laurent aux douze arches de pierre invite à ralentir la cadence.
+          </p>
+          <p class="reading-para">
+            Dans le dédale des rues du centre ancien, on découvre un patrimoine éclectique et attachant. Sur la place aux Herbes, la Maison de Bois retient l'attention avec son étonnante <span class="vocab-word" tabindex="0" data-tooltip="Face extérieure principale d'un édifice">façade</span> sculptée de la Renaissance foisonnant de figures grotesques et de motifs végétaux. C'est également à Mâcon qu'est né Alphonse de Lamartine : un circuit balisé conduit le visiteur sur les lieux chers au poète romantique, des salons de l'hôtel Senecé jusqu'au château de Saint-Point niché dans la campagne environnante.
+          </p>
+          <p class="reading-para">
+            Mâcon constitue enfin un point de départ remarquable pour une <span class="vocab-word" tabindex="0" data-tooltip="Court voyage d'agrément pour rompre avec le rythme habituel">escapade</span> œnologique à travers un splendide <span class="vocab-word" tabindex="0" data-tooltip="Étendue de terres plantées de vignes">vignoble</span> de coteaux calcaires. Ici, les appellations Pouilly-Fuissé et Saint-Véran offrent des vins blancs vifs et beurrés d'une grande distinction. Dans chaque caveau de village, la sincérité des vignerons et la généreuse <span class="vocab-word" tabindex="0" data-tooltip="Chaleur humaine et plaisir du partage en société">convivialité</span> des tablées réchauffent le cœur des visiteurs.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          La ville de Mâcon marque la frontière de transition culturelle entre l'Europe du Nord et les premières influences du Sud méditerranéen. Avez-vous déjà ressenti ce genre de changement d'atmosphère en passant d'une région à une autre ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 06 : NEVERS
+         ========================================================================= -->
+    <article class="section-card" id="section-nevers">
+      <div class="section-meta">
+        <span class="badge-num">Section 06</span>
+        <span class="badge-category">Nièvre • Bords de Loire, Faïence d'Art & Palais Ducal</span>
+      </div>
+      <h2 class="section-title">Nevers : Cité Ducale de Loire & Faïence Séculaire</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-nevers" data-section="nevers">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('nevers')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-nevers">
+            <button type="button" class="word-chip" draggable="true" data-word="faïence">faïence</button>
+            <button type="button" class="word-chip" draggable="true" data-word="château">château</button>
+            <button type="button" class="word-chip" draggable="true" data-word="sanctuaire">sanctuaire</button>
+            <button type="button" class="word-chip" draggable="true" data-word="fleuve">fleuve</button>
+            <button type="button" class="word-chip" draggable="true" data-word="artisanat">artisanat</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="faïence" tabindex="0" role="button" aria-label="Définition de faïence">
+            <div class="def-main-line">
+              <span class="matched-word">faïence :</span>
+              <span class="def-text">Poterie de terre cuite émaillée et peinte, spécialité historique et artistique renommée de la cité.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Le fameux bleu de Nevers décore avec délicatesse des pièces de <strong>faïence</strong> façonnées selon la tradition. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="château" tabindex="0" role="button" aria-label="Définition de château">
+            <div class="def-main-line">
+              <span class="matched-word">château :</span>
+              <span class="def-text">Vaste demeure seigneuriale et royale fortifiée ou palais princier remarquable.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Considéré comme le tout premier <strong>château</strong> de la Loire, le palais ducal domine avec majesté la colline. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="sanctuaire" tabindex="0" role="button" aria-label="Définition de sanctuaire">
+            <div class="def-main-line">
+              <span class="matched-word">sanctuaire :</span>
+              <span class="def-text">Lieu sacré propice au recueillement abritant des reliques ou dédié à une figure spirituelle.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« De nombreux pèlerins viennent se recueillir dans le <strong>sanctuaire</strong> paisible où repose sainte Bernadette Soubirous. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="fleuve" tabindex="0" role="button" aria-label="Définition de fleuve">
+            <div class="def-main-line">
+              <span class="matched-word">fleuve :</span>
+              <span class="def-text">Important cours d'eau naturel qui se jette dans la mer ou l'océan, à l'instar de la Loire.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Les bancs de sable du grand <strong>fleuve</strong> royal attirent hérons cendrés et sternes au coucher du soleil. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="artisanat" tabindex="0" role="button" aria-label="Définition de artisanat">
+            <div class="def-main-line">
+              <span class="matched-word">artisanat :</span>
+              <span class="def-text">Métiers manuels de création et de production d'objets d'art selon un savoir-faire transmis de génération en génération.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Les maîtres faïenciers préservent avec fierté un <strong>artisanat</strong> d'art vieux de plus de quatre siècles. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Entre Loire Sauvage et Arts Faïenciers</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            Dressée fièrement sur un éperon rocheux face aux méandres sauvages de la Loire, Nevers ouvre la Bourgogne sur le bassin fluvial de l'ouest. Sa silhouette noble est couronnée par le Palais ducal, résidence des ducs de Nevers du XVe siècle. Doté d'une superbe façade ornée de tourelles ouvragées et de bas-reliefs Renaissance, l'édifice est souvent présenté comme le tout premier <span class="vocab-word" tabindex="0" data-tooltip="Vaste demeure seigneuriale fortifiée ou palais princier">château</span> de la Loire.
+          </p>
+          <p class="reading-para">
+            L'identité culturelle de Nevers est indissociable de son illustre tradition potière. Introduit à la Renaissance par des maîtres italiens sous l'impulsion de Louis de Gonzague, le travail de la <span class="vocab-word" tabindex="0" data-tooltip="Poterie de terre cuite émaillée et peinte">faïence</span> a fait la renommée internationale de la cité. En parcourant le quartier historique des faïenciers, on peut encore pousser la porte d'ateliers vivants où cet <span class="vocab-word" tabindex="0" data-tooltip="Métiers manuels d'art selon des savoir-faire transmis">artisanat</span> exigeant se perpétue, notamment à travers le célèbre décor du « bleu persan » rehaussé de fleurs blanches et d'oiseaux stylisés.
+          </p>
+          <p class="reading-para">
+            La ville attire également les voyageurs pour son atmosphère sereine et son héritage spirituel. Au couvent Saint-Gildard, transformé en <span class="vocab-word" tabindex="0" data-tooltip="Lieu sacré propice au recueillement et à la prière">sanctuaire</span>, repose dans une châsse de verre le corps intact de Bernadette Soubirous, venue de Lourdes pour passer les dernières années de sa vie en prière et en humilité. En fin de journée, rien ne surpasse une marche tranquille au fil du <span class="vocab-word" tabindex="0" data-tooltip="Important cours d'eau se jetant dans la mer ou l'océan">fleuve</span>, où la lumière dorée embrase les îles sauvages peuplées d'oiseaux migrateurs.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          La fabrication artisanale d'objets d'art (comme la faïence à Nevers) fait face à la production industrielle moderne. Lors de vos voyages, achetez-vous des pièces d'artisanat local pour soutenir les ateliers traditionnels ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 07 : AUXERRE
+         ========================================================================= -->
+    <article class="section-card" id="section-auxerre">
+      <div class="section-meta">
+        <span class="badge-num">Section 07</span>
+        <span class="badge-category">Yonne • Maisons Médiévales & Vignobles du Chablisien</span>
+      </div>
+      <h2 class="section-title">Auxerre : Panoramas Fluviaux & Ruelles à Pans de Bois</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-auxerre" data-section="auxerre">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('auxerre')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-auxerre">
+            <button type="button" class="word-chip" draggable="true" data-word="colombage">colombage</button>
+            <button type="button" class="word-chip" draggable="true" data-word="péniche">péniche</button>
+            <button type="button" class="word-chip" draggable="true" data-word="fresque">fresque</button>
+            <button type="button" class="word-chip" draggable="true" data-word="caviste">caviste</button>
+            <button type="button" class="word-chip" draggable="true" data-word="croisière">croisière</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="colombage" tabindex="0" role="button" aria-label="Définition de colombage">
+            <div class="def-main-line">
+              <span class="matched-word">colombage :</span>
+              <span class="def-text">Charpente en bois apparente formant l'ossature des façades de maisons médiévales.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Les ruelles médiévales dévoilent de magnifiques demeures à <strong>colombage</strong> coiffées d'encorbellements élégants. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="péniche" tabindex="0" role="button" aria-label="Définition de péniche">
+            <div class="def-main-line">
+              <span class="matched-word">péniche :</span>
+              <span class="def-text">Bateau fluvial traditionnel à fond plat servant aujourd'hui aux croisières douces ou à l'hébergement insolite.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Une <strong>péniche</strong> transformée en chambre d'hôtes offre une vue imprenable sur la cathédrale illuminée. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="fresque" tabindex="0" role="button" aria-label="Définition de fresque">
+            <div class="def-main-line">
+              <span class="matched-word">fresque :</span>
+              <span class="def-text">Peinture murale réalisée sur un enduit frais dont les pigments résistent durablement au temps.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Dans la crypte de l'abbaye Saint-Germain, la <strong>fresque</strong> carolingienne du IXe siècle conserve des teintes éclatantes. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="caviste" tabindex="0" role="button" aria-label="Définition de caviste">
+            <div class="def-main-line">
+              <span class="matched-word">caviste :</span>
+              <span class="def-text">Marchand spécialiste conseillant les amateurs sur le choix et l'accord des bouteilles de vin.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Le <strong>caviste</strong> du centre-ville recommande un chablis premier cru aux notes fraîches de silex et d'agrumes. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="croisière" tabindex="0" role="button" aria-label="Définition de croisière">
+            <div class="def-main-line">
+              <span class="matched-word">croisière :</span>
+              <span class="def-text">Excursion touristique de loisir réalisée à bord d'un bateau sur un canal ou une rivière.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Embarquer pour une <strong>croisière</strong> sur l'Yonne et le canal du Nivernais permet d'admirer la ville sous un autre angle. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Clarté de l'Yonne et Trésors Carolingiens</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            Lorsque l'on contemple Auxerre depuis la rive droite de l'Yonne, la perspective semble tout droit sortie d'un tableau de maître. La silhouette majestueuse de la cathédrale Saint-Étienne et celle de l'abbaye Saint-Germain se reflètent avec grâce dans les eaux tranquilles de la rivière. En franchissant la passerelle piétonne, on pénètre dans un centre piétonnier remarquablement préservé où chaque maison à <span class="vocab-word" tabindex="0" data-tooltip="Charpente en bois apparente des façades anciennes">colombage</span> du XVe siècle raconte le riche passé marchand de la cité.
+          </p>
+          <p class="reading-para">
+            L'abbaye Saint-Germain réserve une plongée vertigineuse dans le premier Moyen Âge européen. Au fond de ses cryptes souterraines, on découvre les plus anciennes peintures murales répertoriées en France. Cette <span class="vocab-word" tabindex="0" data-tooltip="Peinture murale réalisée sur enduit frais">fresque</span> carolingienne représentant la lapidation de saint Étienne frappe par la pureté de ses lignes et la vitalité préservée de ses ocres rouges et jaunes, peints il y a plus de mille cent ans.
+          </p>
+          <p class="reading-para">
+            Sur les quais du port de plaisance, l'ambiance est propice au slow tourisme. Plusieurs voyageurs choisissent de louer une <span class="vocab-word" tabindex="0" data-tooltip="Bateau fluvial traditionnel à fond plat">péniche</span> sans permis pour s'engager dans une paisible <span class="vocab-word" tabindex="0" data-tooltip="Excursion de loisir réalisée à bord d'un bateau">croisière</span> le long du canal du Nivernais, réputé pour ses paysages bucoliques et ses ponts de pierre. Avant d'embarquer, un arrêt chez un <span class="vocab-word" tabindex="0" data-tooltip="Marchand spécialiste conseillant sur le vin">caviste</span> local permet de glisser dans son panier quelques flacons de Chablis et d'Irancy pour agrémenter les repas au fil de l'eau.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          Le tourisme fluvial en bateau habitable séduit de plus en plus de voyageurs adeptes du ralentissement et de la nature. Seriez-vous tenté par des vacances entières à bord d'une péniche sur les canaux bourguignons ? Pourquoi ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 08 : SENS
+         ========================================================================= -->
+    <article class="section-card" id="section-sens">
+      <div class="section-meta">
+        <span class="badge-num">Section 08</span>
+        <span class="badge-category">Yonne • Berceau du Gothique & Marché Couvert</span>
+      </div>
+      <h2 class="section-title">Sens : Première Cathédrale Gothique & Trésors d'Archevêché</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-sens" data-section="sens">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('sens')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-sens">
+            <button type="button" class="word-chip" draggable="true" data-word="halle">halle</button>
+            <button type="button" class="word-chip" draggable="true" data-word="vitrail">vitrail</button>
+            <button type="button" class="word-chip" draggable="true" data-word="palais">palais</button>
+            <button type="button" class="word-chip" draggable="true" data-word="trésor">trésor</button>
+            <button type="button" class="word-chip" draggable="true" data-word="spécialité">spécialité</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="halle" tabindex="0" role="button" aria-label="Définition de halle">
+            <div class="def-main-line">
+              <span class="matched-word">halle :</span>
+              <span class="def-text">Bâtiment public couvert et aéré abritant un marché régulier de denrées alimentaires.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« La grande <strong>halle</strong> métallique de style Baltard bourdonne d'animation chaque lundi matin. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="vitrail" tabindex="0" role="button" aria-label="Définition de vitrail">
+            <div class="def-main-line">
+              <span class="matched-word">vitrail :</span>
+              <span class="def-text">Composition décorative lumineuse formée de verres colorés assemblés par des baguettes de plomb.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Le <strong>vitrail</strong> racontant l'exil de Thomas Becket diffuse une douce clarté bleue et rouge dans la nef. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="palais" tabindex="0" role="button" aria-label="Définition de palais">
+            <div class="def-main-line">
+              <span class="matched-word">palais :</span>
+              <span class="def-text">Somptueuse résidence urbaine d'un haut dignitaire politique ou ecclésiastique.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« L'ancien <strong>palais</strong> archiépiscopal abrite aujourd'hui les riches collections des musées municipaux. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="trésor" tabindex="0" role="button" aria-label="Définition de trésor">
+            <div class="def-main-line">
+              <span class="matched-word">trésor :</span>
+              <span class="def-text">Collection exceptionnelle d'objets sacrés précieux, d'orfèvrerie et d'étoffes rares réunie dans une cathédrale.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Le <strong>trésor</strong> de la cathédrale de Sens rivalise en importance avec les plus célèbres sanctuaires européens. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="spécialité" tabindex="0" role="button" aria-label="Définition de spécialité">
+            <div class="def-main-line">
+              <span class="matched-word">spécialité :</span>
+              <span class="def-text">Plat ou produit culinaire réputé représentatif du savoir-faire d'une ville ou contrée.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Le boudin noir aux oignons et les gougères tièdes au fromage sont une <strong>spécialité</strong> incontournable du marché. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Au Berceau du Grand Gothique Français</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            À moins d'une heure de train au sud de Paris, la ville de Sens réserve une surprise architecturale de premier plan. C'est ici, dès 1135, que fut entreprise l'édification de la cathédrale Saint-Étienne, considérée par les historiens d'art comme la toute première grande cathédrale gothique de l'histoire. En pénétrant dans la nef élancée, on mesure l'audace des maîtres d'œuvre qui osèrent pour la première fois percer de larges baies pour inonder l'espace de clarté céleste.
+          </p>
+          <p class="reading-para">
+            Les verrières médiévales de l'édifice comptent parmi les plus somptueuses d'Europe. Chaque <span class="vocab-word" tabindex="0" data-tooltip="Composition de verres colorés assemblés au plomb">vitrail</span> scintille sous le soleil matinal, contant aux fidèles et curieux la parabole du Bon Samaritain ou la tragique épopée de l'archevêque anglais Thomas Becket, réfugié à Sens lors de son exil. Adossé à la cathédrale, l'ancien <span class="vocab-word" tabindex="0" data-tooltip="Somptueuse résidence d'un haut dignitaire">palais</span> des archevêques abrite un extraordinaire <span class="vocab-word" tabindex="0" data-tooltip="Collection exceptionnelle d'objets précieux et d'étoffes">trésor</span> ecclésiastique où brillent de fabuleux reliquaires en ivoire sculpté et des tapisseries brodées de fils d'or.
+          </p>
+          <p class="reading-para">
+            Après cette visite patrimoniale marquante, la vie quotidienne sénonaise invite à la détente gourmande sur la place centrale. Juste en face de la façade gothique, une magnifique <span class="vocab-word" tabindex="0" data-tooltip="Bâtiment public couvert pour les marchés alimentaires">halle</span> couverte en fonte et brique rouge accueille les maraîchers locaux. On y découvre avec délice chaque <span class="vocab-word" tabindex="0" data-tooltip="Produit culinaire typique d'une ville ou contrée">spécialité</span> de terroir, à commencer par le croustillant des gougères tout juste sorties du four et les fromages de chèvre affinés de l'Yonne.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          La cathédrale de Sens est la première cathédrale gothique de France, mais elle est moins célèbre que Notre-Dame de Paris ou Chartres. Préférez-vous visiter des monuments mondialement célèbres ou découvrir des trésors historiques moins fréquentés ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 09 : CLUNY
+         ========================================================================= -->
+    <article class="section-card" id="section-cluny">
+      <div class="section-meta">
+        <span class="badge-num">Section 09</span>
+        <span class="badge-category">Saône-et-Loire • Cité Monastique Bénédictine & Haras National</span>
+      </div>
+      <h2 class="section-title">Cluny : Cœur Spirituel de l'Occident Médiéval & Traditions Équestres</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-cluny" data-section="cluny">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('cluny')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-cluny">
+            <button type="button" class="word-chip" draggable="true" data-word="abbaye">abbaye</button>
+            <button type="button" class="word-chip" draggable="true" data-word="ruelle">ruelle</button>
+            <button type="button" class="word-chip" draggable="true" data-word="haras">haras</button>
+            <button type="button" class="word-chip" draggable="true" data-word="cloître">cloître</button>
+            <button type="button" class="word-chip" draggable="true" data-word="panorama">panorama</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="abbaye" tabindex="0" role="button" aria-label="Définition de abbaye">
+            <div class="def-main-line">
+              <span class="matched-word">abbaye :</span>
+              <span class="def-text">Grand monastère placé sous la gouvernance d'un abbé, foyer religieux et intellectuel majeur.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« L'immense <strong>abbaye</strong> de Cluny exerçait au XIe siècle une autorité morale sur des centaines de prieurés européens. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="ruelle" tabindex="0" role="button" aria-label="Définition de ruelle">
+            <div class="def-main-line">
+              <span class="matched-word">ruelle :</span>
+              <span class="def-text">Petite rue étroite et pittoresque bordée de bâtisses anciennes.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« En sillonnant chaque <strong>ruelle</strong> du bourg abbatial, on remarque des maisons romanes percées de claires-voies. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="haras" tabindex="0" role="button" aria-label="Définition de haras">
+            <div class="def-main-line">
+              <span class="matched-word">haras :</span>
+              <span class="def-text">Établissement consacré à la reproduction, au dressage et à la valorisation des chevaux de race.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Créé sous Napoléon Ier, le <strong>haras</strong> national propose des visites guidées passionnantes de ses écuries historiques. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="cloître" tabindex="0" role="button" aria-label="Définition de cloître">
+            <div class="def-main-line">
+              <span class="matched-word">cloître :</span>
+              <span class="def-text">Galerie couverte quadrangulaire entourant le préau d'un monastère, vouée au silence et à la méditation.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« La déambulation sous les arcades du <strong>cloître</strong> du XVIIIe siècle inspire un sentiment d'apaisement absolu. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="panorama" tabindex="0" role="button" aria-label="Définition de panorama">
+            <div class="def-main-line">
+              <span class="matched-word">panorama :</span>
+              <span class="def-text">Vue dégagée et très vaste circulaire portant au loin sur un paysage ou des toitures.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Du haut de la tour des Fromages, le <strong>panorama</strong> à trois cent soixante degrés révèle la grandeur du site monastique. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Dans le Phare de la Chrétienté Médiévale</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            Nichée dans une vallée verdoyante de Saône-et-Loire, la petite ville de Cluny a abrité le cœur spirituel le plus influent de tout l'Occident médiéval. Fondée en 910 par le duc Guillaume d'Aquitaine, l'illustre <span class="vocab-word" tabindex="0" data-tooltip="Grand monastère sous la direction d'un abbé">abbaye</span> bénédictine étendit son réseau réformateur sur plus de mille monastères répartis à travers l'Europe. Jusqu'à la reconstruction de la basilique Saint-Pierre de Rome au XVIe siècle, la prestigieuse Maior Ecclesia de Cluny demeura la plus grande église chrétienne jamais bâtie.
+          </p>
+          <p class="reading-para">
+            Même si la majeure partie de la basilique fut démantelée après la Révolution pour servir de carrière de pierres, la visite des vestiges actuels reste saisissante de gigantisme. En franchissant le grand transept subsistant et en contemplant la hauteur vertigineuse des voûtes, on imagine sans peine les chants liturgiques des centaines de moines résonnant dans cet édifice colossal. Une promenade silencieuse sous les arcades du vaste <span class="vocab-word" tabindex="0" data-tooltip="Galerie couverte entourant le préau d'un monastère">cloître</span> néoclassique permet de ressentir la quiétude monacale d'antan.
+          </p>
+          <p class="reading-para">
+            La magie de Cluny se poursuit hors des murs abbatiaux. En flânant dans chaque petite <span class="vocab-word" tabindex="0" data-tooltip="Rue étroite et pittoresque bordée de vieilles maisons">ruelle</span> pavée, le voyageur découvre la plus grande concentration d'habitations civiles d'époque romane en France. Plus bas, le <span class="vocab-word" tabindex="0" data-tooltip="Établissement voué à l'élevage et au dressage équestre">haras</span> nationalperpétue avec brio l'art équestre et le respect des nobles montures. Enfin, gravir les deux cents marches de la tour des Fromages offre un inoubliable <span class="vocab-word" tabindex="0" data-tooltip="Vue circulaire dégagée et très vaste">panorama</span> sur les toits de tuiles romaines et les collines ondoyantes du Clunisois.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          La réalité virtuelle et la technologie permettent aujourd'hui de restituer en 3D des monuments détruits comme l'abbaye géante de Cluny. Pensez-vous que les outils numériques améliorent la compréhension historique des sites patrimoniaux ?
+        </div>
+      </div>
+    </article>
+
+    <!-- =========================================================================
+         SECTION 10 : VÉZELAY
+         ========================================================================= -->
+    <article class="section-card" id="section-vezelay">
+      <div class="section-meta">
+        <span class="badge-num">Section 10</span>
+        <span class="badge-category">Yonne • La Colline Éternelle & Départ de Compostelle</span>
+      </div>
+      <h2 class="section-title">Vézelay : La Colline Éternelle & Lumière Romane</h2>
+
+      <!-- EXERCICE DE VOCABULAIRE -->
+      <div class="panel-box exercise-box" id="exercise-vezelay" data-section="vezelay">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <span class="panel-title">Banque de Vocabulaire (5 mots)</span>
+          </div>
+          <div class="panel-actions">
+            <button type="button" class="btn-reset" onclick="resetExercise('vezelay')" title="Réinitialiser cette section">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="word-bank-container">
+          <div class="word-bank" id="bank-vezelay">
+            <button type="button" class="word-chip" draggable="true" data-word="colline">colline</button>
+            <button type="button" class="word-chip" draggable="true" data-word="basilique">basilique</button>
+            <button type="button" class="word-chip" draggable="true" data-word="pèlerinage">pèlerinage</button>
+            <button type="button" class="word-chip" draggable="true" data-word="galerie">galerie</button>
+            <button type="button" class="word-chip" draggable="true" data-word="vigneron">vigneron</button>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="colline" tabindex="0" role="button" aria-label="Définition de colline">
+            <div class="def-main-line">
+              <span class="matched-word">colline :</span>
+              <span class="def-text">Relief naturel arrondi de faible élévation sur lequel s'élève un bourg fortifié.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Surnommée la Colline Éternelle, cette éminence calcaire domine de façon spectaculaire la vallée de la Cure. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="basilique" tabindex="0" role="button" aria-label="Définition de basilique">
+            <div class="def-main-line">
+              <span class="matched-word">basilique :</span>
+              <span class="def-text">Église prestigieuse de grand pèlerinage dotée de privilèges pontificaux et d'une architecture d'exception.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« La <strong>basilique</strong> Sainte-Marie-Madeleine constitue un chef-d'œuvre absolu de l'architecture romane bourguignonne. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="pèlerinage" tabindex="0" role="button" aria-label="Définition de pèlerinage">
+            <div class="def-main-line">
+              <span class="matched-word">pèlerinage :</span>
+              <span class="def-text">Déplacement pédestre ou spirituel entrepris vers un lieu sacré ou dévotionnel.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« Vézelay demeure depuis le XIIe siècle un point de départ emblématique pour le grand <strong>pèlerinage</strong> de Compostelle. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="galerie" tabindex="0" role="button" aria-label="Définition de galerie">
+            <div class="def-main-line">
+              <span class="matched-word">galerie :</span>
+              <span class="def-text">Boutique ou espace dédié à l'exposition et à la vente d'œuvres d'art et d'artisanat de création.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« La rue principale montante regorge d'ateliers d'écrivains, de librairies anciennes et de <strong>galeries</strong> d'art séduisantes. »</p>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="vigneron" tabindex="0" role="button" aria-label="Définition de vigneron">
+            <div class="def-main-line">
+              <span class="matched-word">vigneron :</span>
+              <span class="def-text">Artisan exploitant qui cultive les ceps de vigne et élabore son propre vin au domaine.</span>
+            </div>
+            <div class="def-example">
+              <p class="example-quote">« En contrebas du village, un <strong>vigneron</strong> indépendant fait goûter son bourgogne-vézelay blanc aux arômes d'acacia. »</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Carnet de Voyage : Au Sommet de la Colline Éternelle</span>
+          </div>
+        </div>
+        <div class="reading-body">
+          <p class="reading-para">
+            Émergeant des brumes matinales au cœur du parc naturel régional du Morvan, la silhouette de Vézelay provoque un choc visuel inoubliable. Perché au sommet d'une haute <span class="vocab-word" tabindex="0" data-tooltip="Relief naturel arrondi sur lequel s'élève le village">colline</span> couronnée de remparts, ce village classé parmi les plus beaux de France a conservé son aura mystique intacte. Dès l'époque médiévale, des foules innombrables de marcheurs se sont élancées depuis ce promontoire pour accomplir le long <span class="vocab-word" tabindex="0" data-tooltip="Voyage spirituel entrepris vers un lieu sacré">pèlerinage</span> menant à Saint-Jacques-de-Compostelle.
+          </p>
+          <p class="reading-para">
+            Au terme de l'ascension par la pittoresque rue Saint-Étienne, jalonnée de maisons vigneronnes, de librairies poétiques et de chaque <span class="vocab-word" tabindex="0" data-tooltip="Espace d'exposition et vente d'œuvres d'art">galerie</span> d'artisan créateur, on atteint le parvis de la basilique Sainte-Marie-Madeleine. Classée au patrimoine mondial de l'UNESCO, la <span class="vocab-word" tabindex="0" data-tooltip="Église prestigieuse de grand pèlerinage">basilique</span> subjugue par la clarté lumineuse de sa nef romane bicolore et la virtuosité de ses chapiteaux historiés, sculptés de scènes bibliques et allégoriques d'une incroyable finesse. Aux solstices d'été et d'hiver, un alignement parfait fait tomber des disques de lumière solaire au centre exact de l'allée centrale.
+          </p>
+          <p class="reading-para">
+            Derrière le chevet du sanctuaire, la terrasse de l'ancien château abbatial offre un point de vue vertigineux sur les prés verdoyants et les coteaux de vignes baignés de soleil. C'est là que travaille avec passion chaque <span class="vocab-word" tabindex="0" data-tooltip="Artisan qui cultive la vigne et vinifie son vin">vigneron</span> du cru Vézelay, une jeune appellation village réputée pour ses chardonnays ciselés et minéraux. S'attabler en terrasse en admirant l'horizon infini conclut avec plénitude ce grand périple à travers les cités bourguignonnes.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span class="panel-title">Question d'Échange & Discussion</span>
+          </div>
+        </div>
+        <div class="discussion-question">
+          Vézelay incarne le lieu de pèlerinage par excellence, où des voyageurs de tous horizons marchent des centaines de kilomètres pour trouver le calme ou un sens personnel. Seriez-vous prêt à entreprendre une telle marche à pied sur plusieurs semaines ? Quelles vertus attribuez-vous à ce type de voyage ?
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- BOUTON RETOUR EN HAUT FLOTTANT -->
+  <button type="button" class="btn-back-to-top" id="btn-back-to-top" title="Retourner en haut" aria-label="Retourner en haut">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m18 15-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <!-- PIED DE PAGE -->
+  <footer class="site-footer">
+    <p><strong>Villes de Bourgogne</strong> • Module Pédagogique d'Apprentissage du Français (Niveau B1/B2)</p>
+    <p class="footer-note">Dix cités remarquables : Dijon, Beaune, Chalon-sur-Saône, Autun, Mâcon, Nevers, Auxerre, Sens, Cluny, Vézelay.</p>
+  </footer>
+
+  <!-- SCRIPT LOGIQUE & INTERACTIVITÉ COMPLÈTE -->
+  <script>
+    // CONSTANTES & ÉTAT GLOBAL
+    const STORAGE_KEY = 'cities_of_bourgogne_progress';
+    const TOTAL_ITEMS = 50; // 10 villes x 5 mots
+    let selectedChip = null;
+    let isSelectingCardText = false;
+
+    // INITIALISATION PRINCIPALE AU CHARGEMENT DU DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      initDropdown();
+      initResetModal();
+      initScrollSpy();
+      initInteractiveCards();
+      shuffleAllWordBanks();
+      restoreProgressFromStorage();
+      updateGlobalScore();
+    });
+
+    // MÉCANISME DU MENU DÉROULANT STYLE NUXT UI
+    function initDropdown() {
+      const dropdown = document.getElementById('cityDropdown');
+      const trigger = document.getElementById('dropdownTrigger');
+      const menu = document.getElementById('dropdownMenu');
+      const label = document.getElementById('dropdownSelectedLabel');
+
+      if (!dropdown || !trigger || !menu) return;
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('is-open');
+        trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('is-open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      const items = menu.querySelectorAll('.nuxt-dropdown-item');
+      items.forEach(item => {
+        item.addEventListener('click', () => {
+          const targetId = item.dataset.target;
+          const targetSection = document.getElementById(`section-${targetId}`);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (label) {
+              label.textContent = item.textContent.trim();
+            }
+          }
+          dropdown.classList.remove('is-open');
+          trigger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    // MODAL DE RÉINITIALISATION GLOBALE STYLE NUXT UI
+    function initResetModal() {
+      const overlay = document.getElementById('resetModalOverlay');
+      const btnOpen = document.getElementById('btnOpenResetModal');
+      const btnCancel = document.getElementById('btnCancelReset');
+      const btnConfirm = document.getElementById('btnConfirmReset');
+
+      if (!overlay || !btnOpen || !btnCancel || !btnConfirm) return;
+
+      btnOpen.addEventListener('click', () => {
+        overlay.classList.add('is-open');
+      });
+
+      const closeModal = () => {
+        overlay.classList.remove('is-open');
+      };
+
+      btnCancel.addEventListener('click', closeModal);
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+          closeModal();
+        }
+      });
+
+      btnConfirm.addEventListener('click', () => {
+        localStorage.removeItem(STORAGE_KEY);
+        const sections = [
+          'dijon', 'beaune', 'chalon', 'autun', 'macon',
+          'nevers', 'auxerre', 'sens', 'cluny', 'vezelay'
+        ];
+        sections.forEach(sec => resetExercise(sec, false));
+        updateGlobalScore();
+        closeModal();
+      });
+    }
+
+    // GESTION DU STOCKAGE LOCAL (LOCALSTORAGE)
+    function getStoredProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveMatchToStorage(sectionId, targetWord) {
+      const progress = getStoredProgress();
+      if (!progress[sectionId]) {
+        progress[sectionId] = [];
+      }
+      if (!progress[sectionId].includes(targetWord)) {
+        progress[sectionId].push(targetWord);
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {}
+    }
+
+    function clearSectionStorage(sectionId) {
+      const progress = getStoredProgress();
+      delete progress[sectionId];
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      } catch (e) {}
+    }
+
+    function restoreProgressFromStorage() {
+      const progress = getStoredProgress();
+      Object.keys(progress).forEach(sectionId => {
+        const matchedWords = progress[sectionId];
+        const exercise = document.getElementById(`exercise-${sectionId}`);
+        if (!exercise) return;
+
+        matchedWords.forEach(word => {
+          const card = exercise.querySelector(`.def-card[data-target="${word}"]`);
+          if (card) {
+            card.classList.add('is-matched');
+            card.classList.remove('is-collapsed');
+          }
+          const bank = document.getElementById(`bank-${sectionId}`);
+          if (bank) {
+            const chip = bank.querySelector(`.word-chip[data-word="${word}"]`);
+            if (chip) {
+              chip.classList.add('is-placed');
+            }
+          }
+        });
+        updateSectionScore(sectionId, false);
+      });
+    }
+
+    // MÉLANGE ALÉATOIRE DES BANQUES DE MOTS (FISHER-YATES)
+    function shuffleAllWordBanks() {
+      const banks = document.querySelectorAll('.word-bank');
+      banks.forEach(bank => {
+        const chips = Array.from(bank.children);
+        for (let i = chips.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          bank.appendChild(chips[j]);
+        }
+      });
+    }
+
+    // INITIALISATION DES CARTES ET PUCES INTERACTIVES
+    function initInteractiveCards() {
+      const chips = document.querySelectorAll('.word-chip');
+      const cards = document.querySelectorAll('.def-card');
+
+      chips.forEach(chip => {
+        // DRAG & DROP HTML5
+        chip.addEventListener('dragstart', handleDragStart);
+        chip.addEventListener('dragend', handleDragEnd);
+
+        // TAP-TO-PLACE (TACTILE ET CLIC SOURIS)
+        chip.addEventListener('click', handleChipClick);
+      });
+
+      cards.forEach(card => {
+        card.addEventListener('dragover', handleDragOver);
+        card.addEventListener('dragleave', handleDragLeave);
+        card.addEventListener('drop', handleDrop);
+
+        card.addEventListener('mousedown', () => { isSelectingCardText = false; });
+        card.addEventListener('mousemove', () => { isSelectingCardText = true; });
+
+        card.addEventListener('click', handleCardClick);
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleCardClick.call(card, e);
+          }
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.word-chip') && !e.target.closest('.def-card')) {
+          if (selectedChip) {
+            selectedChip.classList.remove('is-selected');
+            selectedChip = null;
+            highlightEligibleCards(null, false);
+          }
+        }
+      });
+    }
+
+    // GESTION DU DRAG & DROP HTML5
+    function handleDragStart(e) {
+      if (this.classList.contains('is-placed')) {
+        e.preventDefault();
+        return;
+      }
+      this.classList.add('is-dragging');
+      const sectionId = this.closest('.exercise-box').dataset.section;
+      e.dataTransfer.setData('text/plain', JSON.stringify({
+        word: this.dataset.word,
+        sectionId: sectionId
+      }));
+      e.dataTransfer.effectAllowed = 'move';
+      highlightEligibleCards(sectionId, true);
+    }
+
+    function handleDragEnd() {
+      this.classList.remove('is-dragging');
+      highlightEligibleCards(null, false);
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      if (this.classList.contains('is-matched')) return;
+      this.classList.add('drag-hover');
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleDragLeave() {
+      this.classList.remove('drag-hover');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-hover');
+      if (this.classList.contains('is-matched')) return;
+
+      try {
+        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+        const currentSection = this.closest('.exercise-box').dataset.section;
+        if (data.sectionId !== currentSection) return;
+
+        validatePlacement(this, data.word, this.dataset.target, currentSection);
+      } catch (err) {}
+    }
+
+    // GESTION DU TAP-TO-PLACE
+    function handleChipClick(e) {
+      e.stopPropagation();
+      if (this.classList.contains('is-placed')) return;
+
+      const currentSection = this.closest('.exercise-box').dataset.section;
+
+      if (selectedChip === this) {
+        this.classList.remove('is-selected');
+        selectedChip = null;
+        highlightEligibleCards(null, false);
+        return;
+      }
+
+      if (selectedChip) {
+        selectedChip.classList.remove('is-selected');
+      }
+
+      this.classList.add('is-selected');
+      selectedChip = this;
+      highlightEligibleCards(currentSection, true);
+    }
+
+    function highlightEligibleCards(sectionId, highlight) {
+      document.querySelectorAll('.def-card').forEach(card => {
+        card.classList.remove('eligible-drop');
+      });
+      if (highlight && sectionId) {
+        const exercise = document.getElementById(`exercise-${sectionId}`);
+        if (exercise) {
+          exercise.querySelectorAll('.def-card:not(.is-matched)').forEach(card => {
+            card.classList.add('eligible-drop');
+          });
+        }
+      }
+    }
+
+    function handleCardClick() {
+      // SI LA CARTE EST DÉJÀ MATCHÉE : BASCULE DE L'EXEMPLE
+      if (this.classList.contains('is-matched')) {
+        const selection = window.getSelection();
+        const hasSelection = selection && selection.toString().trim().length > 0;
+        if (hasSelection || isSelectingCardText) {
+          isSelectingCardText = false;
+          return;
+        }
+        this.classList.toggle('is-collapsed');
+        return;
+      }
+
+      if (!selectedChip) return;
+
+      const currentSection = this.closest('.exercise-box').dataset.section;
+      const chipSection = selectedChip.closest('.exercise-box').dataset.section;
+      if (currentSection !== chipSection) return;
+
+      const droppedWord = selectedChip.dataset.word;
+      const targetWord = this.dataset.target;
+
+      validatePlacement(this, droppedWord, targetWord, currentSection);
+    }
+
+    // VALIDATION DU PLACEMENT D'UN MOT
+    function validatePlacement(card, inputWord, targetWord, sectionId) {
+      highlightEligibleCards(null, false);
+      if (inputWord.trim().toLowerCase() === targetWord.trim().toLowerCase()) {
+        card.classList.add('is-matched');
+        card.classList.remove('is-collapsed');
+
+        const bank = document.getElementById(`bank-${sectionId}`);
+        if (bank) {
+          const chip = bank.querySelector(`.word-chip[data-word="${inputWord}"]`);
+          if (chip) {
+            chip.classList.remove('is-selected');
+            chip.classList.add('is-placed');
+          }
+        }
+        if (selectedChip && selectedChip.dataset.word === inputWord) {
+          selectedChip = null;
+        }
+
+        saveMatchToStorage(sectionId, targetWord);
+        updateSectionScore(sectionId);
+        updateGlobalScore();
+      } else {
+        card.classList.add('shake-error');
+
+        const bank = document.getElementById(`bank-${sectionId}`);
+        const chip = bank ? bank.querySelector(`.word-chip[data-word="${inputWord}"]`) : null;
+        if (chip) {
+          chip.classList.add('shake-error');
+        }
+
+        setTimeout(() => {
+          card.classList.remove('shake-error');
+          if (chip) {
+            chip.classList.remove('shake-error');
+          }
+        }, 500);
+
+        if (selectedChip) {
+          selectedChip.classList.remove('is-selected');
+          selectedChip = null;
+        }
+      }
+    }
+
+    // MISE À JOUR DES SCORES ET DISSIMULATION DU WORD BANK
+    function updateSectionScore(sectionId, animate = true) {
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+      const matchedCount = exercise.querySelectorAll('.def-card.is-matched').length;
+
+      const bankContainer = exercise.querySelector('.word-bank-container');
+      if (bankContainer) {
+        if (matchedCount === 5) {
+          if (!animate) {
+            bankContainer.classList.add('is-hidden-instant');
+          } else {
+            bankContainer.classList.remove('is-hidden-instant');
+            bankContainer.classList.add('is-hidden');
+          }
+        } else {
+          bankContainer.classList.remove('is-hidden', 'is-hidden-instant');
+        }
+      }
+    }
+
+    function updateGlobalScore() {
+      const totalMatched = document.querySelectorAll('.def-card.is-matched').length;
+      const textElem = document.getElementById('global-score-text');
+      if (textElem) {
+        textElem.textContent = `${totalMatched} / ${TOTAL_ITEMS} mots`;
+      }
+    }
+
+    // RÉINITIALISATION D'UNE SECTION SPÉCIFIQUE
+    function resetExercise(sectionId, clearStorage = true) {
+      highlightEligibleCards(null, false);
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+
+      const cards = exercise.querySelectorAll('.def-card');
+      cards.forEach(card => {
+        card.classList.remove('is-matched', 'is-collapsed', 'drag-hover', 'shake-error', 'eligible-drop');
+      });
+
+      const bank = document.getElementById(`bank-${sectionId}`);
+      if (bank) {
+        const chips = bank.querySelectorAll('.word-chip');
+        chips.forEach(chip => {
+          chip.classList.remove('is-placed', 'is-selected', 'is-dragging', 'shake-error');
+        });
+      }
+
+      if (clearStorage) {
+        clearSectionStorage(sectionId);
+      }
+
+      updateSectionScore(sectionId);
+      updateGlobalScore();
+    }
+
+    // BOUTON DE DÉFILEMENT VERS LE HAUT
+    function initScrollSpy() {
+      const btnTop = document.getElementById('btn-back-to-top');
+      if (!btnTop) return;
+
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 400) {
+          btnTop.classList.add('is-visible');
+        } else {
+          btnTop.classList.remove('is-visible');
+        }
+      });
+
+      btnTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  </script>
+</body>
+</html>
