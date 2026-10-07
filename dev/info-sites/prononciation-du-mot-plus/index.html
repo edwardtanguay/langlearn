@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Mot « Plus » : [plü], [plüs] ou [plüz] ? — Dialogues B1/B2 & Vocabulaire Interactif</title>
+  <meta name="description" content="Maîtrisez la prononciation du mot 'plus' ([plü], [plüs] et [plüz]) à travers 5 dialogues authentiques de niveau B1/B2, exercices de glisser-déposer de vocabulaire et questions d'expression orale.">
+  <style>
+    /* ==========================================================================
+       VARIABLES DE DESIGN — THÈME SOMBRE HAUT DE GAMME INDIGO & AMBRE
+       ========================================================================== */
+    :root {
+      --bg-body: #070b14;
+      --bg-surface: #0f172a;
+      --bg-card: #141f36;
+      --bg-card-hover: #1a2948;
+      --bg-elevated: #1e293b;
+      --bg-glass: rgba(15, 23, 42, 0.88);
+
+      --border-subtle: #1e293b;
+      --border-medium: #334155;
+      --border-strong: #475569;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+
+      /* PALETTE D'ACCENT */
+      --accent-indigo: #6366f1;
+      --accent-indigo-hover: #4f46e5;
+      --accent-indigo-soft: rgba(99, 102, 241, 0.15);
+      --accent-indigo-border: rgba(99, 102, 241, 0.4);
+
+      --accent-amber: #f59e0b;
+      --accent-amber-hover: #d97706;
+      --accent-amber-soft: rgba(245, 158, 11, 0.15);
+      --accent-amber-border: rgba(245, 158, 11, 0.4);
+
+      /* PHONÉTIQUE DE « PLUS » */
+      --phon-ply-bg: rgba(99, 102, 241, 0.22);
+      --phon-ply-text: #a5b4fc;
+      --phon-ply-border: #6366f1;
+
+      --phon-plus-bg: rgba(245, 158, 11, 0.22);
+      --phon-plus-text: #fde68a;
+      --phon-plus-border: #f59e0b;
+
+      --phon-plyz-bg: rgba(20, 184, 166, 0.22);
+      --phon-plyz-text: #99f6e4;
+      --phon-plyz-border: #14b8a6;
+
+      /* STATUTS */
+      --success-green: #10b981;
+      --success-green-soft: rgba(16, 185, 129, 0.16);
+      --success-green-border: rgba(16, 185, 129, 0.4);
+
+      --error-red: #ef4444;
+      --error-red-soft: rgba(239, 68, 68, 0.15);
+
+      --font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 6px 16px -2px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 16px 32px -4px rgba(0, 0, 0, 0.6);
+      --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.25);
+    }
+
+    /* ==========================================================================
+       RESET & BASE
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 100%, rgba(15, 23, 42, 0.8) 0%, transparent 100%);
+      background-attachment: fixed;
+    }
+
+    ::selection {
+      background-color: rgba(99, 102, 241, 0.4);
+      color: #ffffff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* ==========================================================================
+       TOP NAVBAR (STICKY DARK BLUR)
+       ========================================================================== */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      padding: 0.75rem 1.25rem;
+    }
+
+    .nav-inner {
+      max-width: 940px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+    }
+
+    .brand-pill {
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-amber));
+      color: #0b0f19;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    /* DROPDOWN STYLE NUXT UI */
+    .nuxt-dropdown {
+      position: relative;
+      display: inline-block;
+      min-width: 210px;
+      max-width: 280px;
+    }
+
+    .nuxt-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.45rem 0.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      outline: none;
+    }
+
+    .nuxt-dropdown-trigger:hover {
+      border-color: var(--accent-indigo);
+      background: var(--bg-card);
+    }
+
+    .nuxt-dropdown.is-open .nuxt-dropdown-trigger,
+    .nuxt-dropdown-trigger:focus {
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+    }
+
+    .dropdown-trigger-content {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dropdown-trigger-icon {
+      color: var(--accent-amber);
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    .dropdown-trigger-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dropdown-chevron {
+      color: var(--text-muted);
+      display: flex;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .nuxt-dropdown.is-open .dropdown-chevron {
+      transform: rotate(180deg);
+    }
+
+    .nuxt-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: 0.4rem;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.2s;
+    }
+
+    .nuxt-dropdown.is-open .nuxt-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu-list {
+      max-height: 280px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .dropdown-menu-list::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .dropdown-menu-list::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 4px;
+    }
+
+    .nuxt-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .nuxt-dropdown-item:hover {
+      background: var(--bg-elevated);
+      color: #ffffff;
+    }
+
+    .nuxt-dropdown-item.is-selected {
+      background: var(--accent-indigo-soft);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .item-badge {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--accent-amber);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .item-label {
+      flex: 1 1 auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .item-check {
+      color: var(--accent-indigo);
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .nuxt-dropdown-item.is-selected .item-check {
+      display: flex;
+    }
+
+    /* BOUTONS ET BADGES NAV */
+    .global-score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--accent-indigo-border);
+      color: #c7d2fe;
+      padding: 0.4rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .btn-phon-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.42rem 0.75rem;
+      background: var(--accent-amber-soft);
+      border: 1px solid var(--accent-amber-border);
+      color: var(--accent-amber);
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-phon-all:hover {
+      background: rgba(245, 158, 11, 0.25);
+      border-color: var(--accent-amber);
+      color: #fff;
+    }
+
+    .btn-reset-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.42rem 0.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset-all:hover {
+      border-color: var(--error-red);
+      color: var(--error-red);
+      background: var(--error-red-soft);
+    }
+
+    /* ==========================================================================
+       MODALE CONFIRMATION STYLE NUXT UI
+       ========================================================================== */
+    .nuxt-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 11, 20, 0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .nuxt-modal-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nuxt-modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.95);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nuxt-modal-overlay.is-open .nuxt-modal-card {
+      transform: scale(1);
+    }
+
+    .nuxt-modal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .nuxt-modal-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--error-red-soft);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: var(--error-red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nuxt-modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.3rem;
+    }
+
+    .nuxt-modal-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .nuxt-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.65rem;
+    }
+
+    .btn-modal-cancel {
+      padding: 0.45rem 0.9rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-medium);
+      color: var(--text-main);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .btn-modal-cancel:hover {
+      background: var(--border-medium);
+    }
+
+    .btn-modal-confirm {
+      padding: 0.45rem 0.9rem;
+      background: var(--error-red);
+      color: #ffffff;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: opacity 0.15s ease;
+    }
+
+    .btn-modal-confirm:hover {
+      opacity: 0.9;
+    }
+
+    /* ==========================================================================
+       HERO & GUIDE PHONÉTIQUE
+       ========================================================================== */
+    .hero-container {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 2rem;
+    }
+
+    .hero-badge-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-tag {
+      background: var(--accent-indigo-soft);
+      border: 1px solid var(--accent-indigo-border);
+      color: #a5b4fc;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #a5b4fc, #fde68a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 780px;
+      margin-bottom: 2rem;
+    }
+
+    /* GUIDE DES 3 PRONONCIATIONS */
+    .rules-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2.5rem;
+    }
+
+    .rules-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .rule-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .rule-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .phon-pill {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .pill-ply {
+      background: var(--phon-ply-bg);
+      color: var(--phon-ply-text);
+      border: 1px solid var(--phon-ply-border);
+    }
+
+    .pill-plus {
+      background: var(--phon-plus-bg);
+      color: var(--phon-plus-text);
+      border: 1px solid var(--phon-plus-border);
+    }
+
+    .pill-plyz {
+      background: var(--phon-plyz-bg);
+      color: var(--phon-plyz-text);
+      border: 1px solid var(--phon-plyz-border);
+    }
+
+    .rule-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .rule-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .rule-examples {
+      font-size: 0.78rem;
+      color: var(--accent-amber);
+      font-style: italic;
+      background: rgba(245, 158, 11, 0.08);
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    /* ==========================================================================
+       SECTION CONTAINER & CARTE SECTION
+       ========================================================================== */
+    .main-container {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.25s ease;
+      scroll-margin-top: 5rem;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-medium);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .section-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-num {
+      background: var(--accent-indigo);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.18rem 0.6rem;
+      border-radius: 9999px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .badge-category {
+      background: var(--accent-amber-soft);
+      border: 1px solid var(--accent-amber-border);
+      color: var(--accent-amber);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.18rem 0.6rem;
+      border-radius: 9999px;
+    }
+
+    .section-title {
+      font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .section-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-toggle-phon {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.42rem 0.8rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-toggle-phon:hover {
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+    }
+
+    .btn-toggle-phon.is-active {
+      background: var(--accent-amber-soft);
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+    }
+
+    .btn-reset-section {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset-section:hover {
+      border-color: var(--error-red);
+      color: var(--error-red);
+      background: var(--error-red-soft);
+    }
+
+    /* ==========================================================================
+       PANEL CADRES (VOCABULAIRE, LECTURE, DISCUSSION)
+       ========================================================================== */
+    .panel-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.45rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .panel-box:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .panel-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .panel-icon {
+      color: var(--accent-amber);
+      display: flex;
+    }
+
+    .panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .panel-instruction {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       JEU DE VOCABULAIRE : BANQUE DE MOTS & CARTES SANS DROPZONE
+       ========================================================================== */
+    .word-bank-container {
+      background: var(--bg-card);
+      border: 1px dashed var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.15rem;
+      max-height: 250px;
+      overflow: hidden;
+      transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  margin-bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  padding-top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  padding-bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .word-bank-container.is-hidden {
+      opacity: 0;
+      max-height: 0 !important;
+      margin-bottom: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      border-top-width: 0 !important;
+      border-bottom-width: 0 !important;
+      border-color: transparent;
+      pointer-events: none;
+    }
+
+    .word-bank-container.is-hidden-instant {
+      display: none !important;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+      min-height: 38px;
+    }
+
+    .word-chip {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-elevated);
+      color: #ffffff;
+      border: 1px solid var(--accent-indigo-border);
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .word-chip:hover {
+      background: var(--accent-indigo-soft);
+      border-color: var(--accent-indigo);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+    }
+
+    .word-chip:active {
+      cursor: grabbing;
+    }
+
+    .word-chip.is-selected {
+      background: rgba(99, 102, 241, 0.35);
+      border-color: var(--accent-indigo);
+      color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4);
+      transform: scale(1.05);
+    }
+
+    .word-chip.is-placed {
+      display: none;
+    }
+
+    .word-chip.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      border-color: var(--error-red) !important;
+      background: var(--error-red-soft) !important;
+      color: #fca5a5 !important;
+    }
+
+    /* GRILLE DES CARTES DE DÉFINITION (DIRECT DROP TARGET — SANS INPUT BOX) */
+    .definitions-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+
+    .def-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      user-select: text;
+    }
+
+    .def-card:not(.is-matched):hover {
+      border-color: var(--accent-indigo-border);
+      background: var(--bg-card-hover);
+    }
+
+    /* SURVOL LORS DU DRAG OU CHIP SÉLECTIONNÉ */
+    .def-card.eligible-drop {
+      border: 1.5px dashed var(--accent-indigo) !important;
+      background: rgba(99, 102, 241, 0.1) !important;
+    }
+
+    .def-card.drag-hover {
+      border-color: var(--accent-indigo) !important;
+      background: rgba(99, 102, 241, 0.2) !important;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+    }
+
+    .def-card.shake-error {
+      animation: shakeAnimation 0.45s ease;
+      border-color: var(--error-red) !important;
+      background: var(--error-red-soft) !important;
+    }
+
+    .def-card.shake-error .def-text {
+      color: #fca5a5 !important;
+    }
+
+    /* CARTE RÉSOLUE */
+    .def-card.is-matched,
+    .def-card.is-matched.is-collapsed {
+      background: var(--success-green-soft);
+      border-color: var(--success-green-border);
+      cursor: pointer;
+    }
+
+    .def-main-line {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .matched-word {
+      display: none;
+      font-weight: 800;
+      color: #34d399;
+      margin-right: 0.35rem;
+      font-size: 0.95rem;
+    }
+
+    .def-card.is-matched .matched-word {
+      display: inline;
+    }
+
+    .def-text {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    /* EXEMPLE CONTEXTUEL TOGGLEABLE SUR CARTE RÉSOLUE */
+    .def-example {
+      display: none;
+      margin-top: 0.6rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-left: 3.5px solid var(--accent-indigo);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.85rem;
+      user-select: text;
+    }
+
+    @keyframes fadeInExample {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .def-card.is-matched:not(.is-collapsed) .def-example {
+      display: block;
+      animation: fadeInExample 0.3s ease-out forwards;
+    }
+
+    .def-card.is-matched.is-collapsed .def-example {
+      display: none;
+    }
+
+    .example-quote {
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .example-quote strong {
+      color: #ffffff;
+      font-weight: 700;
+      font-style: normal;
+      background: var(--accent-indigo-soft);
+      padding: 0 0.25rem;
+      border-radius: 3px;
+    }
+
+    @keyframes shakeAnimation {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    /* ==========================================================================
+       TEXTE DE LECTURE (DIALOGUE AUTHENTIQUE B1/B2)
+       ========================================================================== */
+    .reading-box .reading-body {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1.45rem 1.65rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dialogue-turn {
+      display: flex;
+      align-items: baseline;
+      gap: 0.85rem;
+      margin-bottom: 1.15rem;
+      font-size: 1.02rem;
+      line-height: 1.75;
+    }
+
+    .dialogue-turn:last-child {
+      margin-bottom: 0;
+    }
+
+    .speaker-label {
+      font-weight: 800;
+      font-size: 0.88rem;
+      letter-spacing: 0.03em;
+      min-width: 85px;
+      flex-shrink: 0;
+      color: var(--accent-amber);
+    }
+
+    .speaker-label.alt {
+      color: #93c5fd;
+    }
+
+    .turn-text {
+      flex: 1 1 auto;
+      color: var(--text-main);
+    }
+
+    /* MOTS DE VOCABULAIRE EN VALEUR (TOOLTIP) */
+    .vocab-word {
+      position: relative;
+      color: #5eead4;
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-decoration-color: #14b8a6;
+      cursor: help;
+      padding: 0 0.15rem;
+      border-radius: 3px;
+      transition: all 0.2s ease;
+    }
+
+    .vocab-word:hover,
+    .vocab-word:focus {
+      background: rgba(20, 184, 166, 0.2);
+      color: #ffffff;
+      outline: none;
+    }
+
+    .vocab-word::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      color: #f1f5f9;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: normal;
+      white-space: normal;
+      width: max-content;
+      max-width: 260px;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 100;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .vocab-word:hover::after,
+    .vocab-word:focus::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* OCCURRENCES DU MOT « PLUS » ET BADGES PHONÉTIQUES */
+    .plus-instance {
+      position: relative;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .plus-badge {
+      display: none;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.12rem 0.42rem;
+      border-radius: 4px;
+      margin-left: 0.3rem;
+      vertical-align: 1px;
+      user-select: none;
+    }
+
+    /* QUAND LA PHONÉTIQUE EST ACTIVÉE */
+    .phon-active .plus-badge {
+      display: inline-block;
+      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .plus-ply .plus-badge {
+      background: var(--phon-ply-bg);
+      color: var(--phon-ply-text);
+      border: 1px solid var(--phon-ply-border);
+    }
+
+    .phon-active .plus-ply {
+      color: #c7d2fe;
+    }
+
+    .plus-plus .plus-badge {
+      background: var(--phon-plus-bg);
+      color: var(--phon-plus-text);
+      border: 1px solid var(--phon-plus-border);
+    }
+
+    .phon-active .plus-plus {
+      color: #fde68a;
+    }
+
+    .plus-plyz .plus-badge {
+      background: var(--phon-plyz-bg);
+      color: var(--phon-plyz-text);
+      border: 1px solid var(--phon-plyz-border);
+    }
+
+    .phon-active .plus-plyz {
+      color: #99f6e4;
+    }
+
+    /* ==========================================================================
+       QUESTION DE DISCUSSION
+       ========================================================================== */
+    .discussion-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.45rem;
+    }
+
+    .discussion-prompt {
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: var(--text-main);
+      font-style: italic;
+    }
+
+    /* ==========================================================================
+       BOUTON HAUT DE PAGE & FOOTER
+       ========================================================================== */
+    .btn-back-to-top {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      background: var(--accent-indigo);
+      color: #ffffff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.2s ease;
+      z-index: 900;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .btn-back-to-top.is-visible {
+      opacity: 0.92;
+      visibility: visible;
+    }
+
+    .btn-back-to-top:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      background: var(--accent-indigo-hover);
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-content {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    /* ==========================================================================
+       RÈGLES CRITIQUES MOBILE (LARGEUR MAXIMALE SANS DOUBLE PANNEAU)
+       ========================================================================== */
+    @media (max-width: 640px) {
+      .top-navbar {
+        padding: 0.5rem 0.75rem;
+      }
+
+      .nav-inner {
+        gap: 0.45rem;
+      }
+
+      .nav-brand span:not(.brand-pill) {
+        display: none;
+      }
+
+      .nuxt-dropdown {
+        min-width: 135px;
+        flex: 1 1 auto;
+      }
+
+      .global-score-pill,
+      .btn-phon-all,
+      .btn-reset-all {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+      }
+
+      .section-card {
+        padding: 1.25rem 0.85rem;
+        border-radius: var(--radius-lg);
+      }
+
+      .panel-box {
+        padding: 0.85rem 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .panel-header {
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+      }
+
+      .panel-title {
+        font-size: 0.95rem;
+      }
+
+      .word-bank-container {
+        padding: 0.5rem 0.6rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .word-bank {
+        gap: 0.35rem;
+        min-height: 30px;
+      }
+
+      .word-chip {
+        padding: 0.25rem 0.55rem;
+        font-size: 0.8rem;
+      }
+
+      .def-card {
+        padding: 0.55rem 0.75rem;
+      }
+
+      .matched-word {
+        font-size: 0.85rem;
+      }
+
+      .def-text {
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+
+      /* APPLATISSEMENT STRICT DU TEXTE DE LECTURE SUR MOBILE */
+      .reading-box .reading-body {
+        background: transparent;
+        border: none;
+        padding: 0.15rem 0.15rem;
+        box-shadow: none;
+      }
+
+      .dialogue-turn {
+        flex-direction: column;
+        gap: 0.2rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 0.9rem;
+      }
+
+      .speaker-label {
+        min-width: unset;
+        font-size: 0.82rem;
+      }
+
+      .discussion-prompt {
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRE DE NAVIGATION STICKY AVEC DROPDOWN STYLE NUXT UI -->
+  <header class="top-navbar" id="top-navbar">
+    <div class="nav-inner">
+      <a href="#top" class="nav-brand">
+        <span class="brand-pill">B1 / B2</span>
+        <span>Le Mot « Plus »</span>
+      </a>
+
+      <div class="nav-controls">
+        <!-- DROPDOWN STYLE NUXT UI -->
+        <div class="nuxt-dropdown" id="section-dropdown">
+          <button type="button" class="nuxt-dropdown-trigger" id="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" onclick="toggleDropdown()">
+            <span class="dropdown-trigger-content">
+              <span class="dropdown-trigger-icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </span>
+              <span class="dropdown-trigger-label" id="dropdown-current-label">Choisir un dialogue...</span>
+            </span>
+            <span class="dropdown-chevron" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          
+          <div class="nuxt-dropdown-menu" id="dropdown-menu" role="listbox" tabindex="-1">
+            <div class="dropdown-menu-list">
+              <div class="nuxt-dropdown-item" role="option" data-value="section-1" onclick="selectSection('section-1', '01. Au café & au restaurant')">
+                <span class="item-badge">01</span>
+                <span class="item-label">Au café & au restaurant</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-2" onclick="selectSection('section-2', '02. Au bureau & au travail')">
+                <span class="item-badge">02</span>
+                <span class="item-label">Au bureau & au travail</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-3" onclick="selectSection('section-3', '03. En voyage & à la gare')">
+                <span class="item-badge">03</span>
+                <span class="item-label">En voyage & à la gare</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-4" onclick="selectSection('section-4', '04. Recherche d\'appartement')">
+                <span class="item-badge">04</span>
+                <span class="item-label">Recherche d'appartement</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+              <div class="nuxt-dropdown-item" role="option" data-value="section-5" onclick="selectSection('section-5', '05. Dîner entre amis')">
+                <span class="item-badge">05</span>
+                <span class="item-label">Dîner entre amis</span>
+                <span class="item-check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-phon-all" id="btn-phon-global" onclick="toggleGlobalPhonetics()" title="Afficher ou masquer les indices phonétiques partout">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+          Phonétique
+        </button>
+
+        <div class="global-score-pill" title="Score global de vocabulaire">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <span id="global-score-text">0 / 25 mots</span>
+        </div>
+
+        <button type="button" class="btn-reset-all" onclick="openResetModal()" title="Réinitialiser tous les exercices">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          Réinitialiser
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MODALE STYLE NUXT UI : CONFIRMATION RÉINITIALISATION -->
+  <div class="nuxt-modal-overlay" id="reset-modal" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+    <div class="nuxt-modal-card">
+      <div class="nuxt-modal-header">
+        <div class="nuxt-modal-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="nuxt-modal-title" id="reset-modal-title">Réinitialiser les exercices</h3>
+          <p class="nuxt-modal-desc">Voulez-vous vraiment effacer votre progression sur l'ensemble des 5 dialogues ? Cette action est irréversible.</p>
+        </div>
+      </div>
+      <div class="nuxt-modal-footer">
+        <button type="button" class="btn-modal-cancel" onclick="closeResetModal()">Annuler</button>
+        <button type="button" class="btn-modal-confirm" onclick="confirmResetAll()">Réinitialiser tout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EN-TÊTE ÉDITORIAL & GUIDE PHONÉTIQUE -->
+  <section class="hero-container" id="top">
+    <div class="hero-badge-line">
+      <span class="hero-tag">Phonétique & Pragmatique</span>
+      <span class="hero-tag">Niveau B1 / B2</span>
+    </div>
+    <h1 class="hero-title">Le Mot <span>« Plus »</span> : [plü], [plüs] ou [plüz] ?</h1>
+    <p class="hero-subtitle">
+      La prononciation du mot <em>plus</em> constitue l'une des subtilités les plus délicates du français parlé. Découvrez les règles en contexte à travers 5 dialogues vivants de la vie quotidienne, entraînez-vous au vocabulaire par glisser-déposer et développez votre aisance orale.
+    </p>
+
+    <!-- RÈGLES DE PRONONCIATION -->
+    <div class="rules-card">
+      <div class="rules-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        Repères essentiels de prononciation
+      </div>
+      <div class="rules-grid">
+        <div class="rule-item">
+          <div class="rule-badge-row">
+            <span class="phon-pill pill-ply">[plü]</span>
+            <span class="rule-name">S muet</span>
+          </div>
+          <p class="rule-desc">Dans la <strong>négation</strong> (<em>ne... plus</em>) et dans la <strong>comparaison</strong> devant une consonne.</p>
+          <div class="rule-examples">« Je n'en veux plus », « plus tard », « plus grand »</div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-badge-row">
+            <span class="phon-pill pill-plus">[plüs]</span>
+            <span class="rule-name">S prononcé</span>
+          </div>
+          <p class="rule-desc">Pour une <strong>quantité positive</strong> en fin de phrase, dans <em>en plus</em>, <em>de plus</em>, ou comme pronom.</p>
+          <div class="rule-examples">« J'en veux plus ! », « En plus », « Qui plus est »</div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-badge-row">
+            <span class="phon-pill pill-plyz">[plüz]</span>
+            <span class="rule-name">Liaison en [z]</span>
+          </div>
+          <p class="rule-desc">Obligatoire devant un mot commençant par une <strong>voyelle</strong> ou un <strong>h muet</strong>.</p>
+          <div class="rule-examples">« De plus en plus », « plus agréable », « plus utile »</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENEUR DES 5 SECTIONS -->
+  <main class="main-container">
+
+    <!-- ======================================================================
+         SECTION 01 : AU CAFÉ & AU RESTAURANT
+         ====================================================================== -->
+    <article class="section-card" id="section-1" data-section="1">
+      <div class="section-header">
+        <div>
+          <div class="section-meta">
+            <span class="badge-num">Section 01</span>
+            <span class="badge-category">Vie quotidienne & Restauration</span>
+          </div>
+          <h2 class="section-title">Au café & au restaurant : entre gourmandise et addition</h2>
+        </div>
+        <div class="section-actions">
+          <button type="button" class="btn-toggle-phon" onclick="toggleSectionPhonetics('section-1')" title="Afficher ou masquer les badges phonétiques de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            Phonétique
+          </button>
+          <button type="button" class="btn-reset-section" onclick="resetExercise(1)" title="Réinitialiser le vocabulaire de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- EXERCICE GLISSER-DÉPOSER DIRECT (SANS ZONE DE DROP SÉPARÉE) -->
+      <div class="panel-box exercise-box" id="exercise-1" data-section="1">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Vocabulaire contextuel</h3>
+          </div>
+          <span class="panel-instruction">Glissez ou touchez un mot, puis touchez sa définition</span>
+        </div>
+
+        <!-- BANQUE DE MOTS SHUFFLED -->
+        <div class="word-bank-container" id="bank-container-1">
+          <div class="word-bank" id="bank-1">
+            <div class="word-chip" draggable="true" data-word="à la rigueur">à la rigueur</div>
+            <div class="word-chip" draggable="true" data-word="succulent">succulent</div>
+            <div class="word-chip" draggable="true" data-word="décommander">décommander</div>
+            <div class="word-chip" draggable="true" data-word="frugal">frugal</div>
+            <div class="word-chip" draggable="true" data-word="additionner">additionner</div>
+          </div>
+        </div>
+
+        <!-- DÉFINITIONS TARGET (DIRECT DROP) -->
+        <div class="definitions-grid">
+          <div class="def-card" data-target="additionner" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">additionner :</strong>
+              <span class="def-text">Calculer la somme globale des consommations avant de régler la note.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Si nous devons <strong>additionner</strong> nos consommations respectives, cela risque de prendre du temps. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="frugal" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">frugal :</strong>
+              <span class="def-text">Caractérise un repas modeste, sobre et peu abondant.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Je préférais pourtant un déjeuner <strong>frugal</strong> pour ne pas m'endormir au travail. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="succulent" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">succulent :</strong>
+              <span class="def-text">Délicieux, doté d'une saveur particulièrement exquise au palais.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Ce plat du jour est absolument <strong>succulent</strong>, je ne regrette rien ! »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="décommander" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">décommander :</strong>
+              <span class="def-text">Annuler une réservation ou un plat préalablement sollicité.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Il est malheureusement trop tard pour <strong>décommander</strong> notre deuxième entrée. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="à la rigueur" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">à la rigueur :</strong>
+              <span class="def-text">En acceptant une concession extrême, à la limite de ce qui est envisageable.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Je veux bien reprendre une part de tarte, <strong>à la rigueur</strong>, mais rien d'autre. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE DU DIALOGUE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Dialogue : Pause déjeuner chez Léon</h3>
+          </div>
+          <span class="panel-instruction">Passez sur les mots soulignés pour voir leur définition</span>
+        </div>
+        <div class="reading-body">
+          <div class="dialogue-turn">
+            <span class="speaker-label">JULIEN :</span>
+            <span class="turn-text">
+              Regarde la terrasse, Clara ! C'est <span class="plus-instance plus-plyz">de plus en plus<span class="plus-badge">[plüz]</span></span> animé à cette heure. Tu ne trouves pas que c'est <span class="plus-instance plus-plyz">plus agréable<span class="plus-badge">[plüz]</span></span> de s'asseoir dehors ? Il ne fait <span class="plus-instance plus-ply">plus froid<span class="plus-badge">[plü]</span></span> du tout avec ces rayons de soleil printaniers.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">CLARA :</span>
+            <span class="turn-text">
+              Tu as raison, mais dépêchons-nous : je n'ai <span class="plus-instance plus-ply">plus faim<span class="plus-badge">[plü]</span></span> d'attendre ! J'espérais un déjeuner <span class="vocab-word" tabindex="0" data-tooltip="Modeste, sobre et peu abondant">frugal</span>, pourtant la formule du jour avec velouté et pavé de saumon me tente bien. Tu veux commander <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> de choses ou on s'en tient au menu ?
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">JULIEN :</span>
+            <span class="turn-text">
+              Oh, moi, si tu me laisses faire, j'en prends toujours <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> ! Le serveur m'a garanti que le crumble aux pommes était <span class="vocab-word" tabindex="0" data-tooltip="Délicieux et particulièrement savoureux">succulent</span>. <span class="plus-instance plus-plus">En plus<span class="plus-badge">[plüs]</span></span>, un café gourmand ne coûte que deux euros de <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> que le café simple. Ce serait dommage de <span class="vocab-word" tabindex="0" data-tooltip="Annuler une réservation ou commande">décommander</span> une telle gourmandise.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">CLARA :</span>
+            <span class="turn-text">
+              Ne sois pas trop optimiste avec nos finances ! Si le serveur commence à <span class="vocab-word" tabindex="0" data-tooltip="Calculer la somme globale">additionner</span> chaque supplément, la note sera bien <span class="plus-instance plus-ply">plus chère<span class="plus-badge">[plü]</span></span> que prévu. Je veux bien partager le dessert avec toi, <span class="vocab-word" tabindex="0" data-tooltip="À la limite de ce qui est envisageable">à la rigueur</span>, mais nous ne prendrons <span class="plus-instance plus-ply">plus rien<span class="plus-badge">[plü]</span></span> d'autre après ça, c'est promis ?
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">JULIEN :</span>
+            <span class="turn-text">
+              D'accord, marché conclu. Mais avoue que ce café devient <span class="plus-instance plus-plyz">de plus en plus<span class="plus-badge">[plüz]</span></span> incontournable dans le quartier. On n'a <span class="plus-instance plus-ply">plus envie<span class="plus-badge">[plü]</span></span> de repartir au bureau une fois installé ici !
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de discussion</h3>
+          </div>
+        </div>
+        <div class="discussion-box">
+          <p class="discussion-prompt">
+            « Lorsque vous déjeunez au restaurant avec des amis ou des collègues, avez-vous tendance à commander plus que nécessaire ou préférez-vous rester frugal ? Comment gérez-vous le moment d'additionner et de partager la note ? »
+          </p>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ======================================================================
+         SECTION 02 : AU BUREAU & AU TRAVAIL
+         ====================================================================== -->
+    <article class="section-card" id="section-2" data-section="2">
+      <div class="section-header">
+        <div>
+          <div class="section-meta">
+            <span class="badge-num">Section 02</span>
+            <span class="badge-category">Monde professionnel & Projets</span>
+          </div>
+          <h2 class="section-title">Au bureau avec un collègue : délais serrés et gestion du stress</h2>
+        </div>
+        <div class="section-actions">
+          <button type="button" class="btn-toggle-phon" onclick="toggleSectionPhonetics('section-2')" title="Afficher ou masquer les badges phonétiques de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            Phonétique
+          </button>
+          <button type="button" class="btn-reset-section" onclick="resetExercise(2)" title="Réinitialiser le vocabulaire de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- EXERCICE GLISSER-DÉPOSER DIRECT -->
+      <div class="panel-box exercise-box" id="exercise-2" data-section="2">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Vocabulaire contextuel</h3>
+          </div>
+          <span class="panel-instruction">Glissez ou touchez un mot, puis touchez sa définition</span>
+        </div>
+
+        <div class="word-bank-container" id="bank-container-2">
+          <div class="word-bank" id="bank-2">
+            <div class="word-chip" draggable="true" data-word="prendre du recul">prendre du recul</div>
+            <div class="word-chip" draggable="true" data-word="échéance">échéance</div>
+            <div class="word-chip" draggable="true" data-word="surchargé">surchargé</div>
+            <div class="word-chip" draggable="true" data-word="déléguer">déléguer</div>
+            <div class="word-chip" draggable="true" data-word="faire l'impasse">faire l'impasse</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="surchargé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">surchargé :</strong>
+              <span class="def-text">Accablé par un excès de travail ou un calendrier rempli au-delà du raisonnable.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Mon emploi du temps est tellement <strong>surchargé</strong> que je ne sais plus par où commencer. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="déléguer" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">déléguer :</strong>
+              <span class="def-text">Confier la réalisation d'une tâche ou d'une responsabilité à un tiers.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Tu devrais apprendre à <strong>déléguer</strong> une partie des rapports à l'équipe stagiaire. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="échéance" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">échéance :</strong>
+              <span class="def-text">Date ou moment précis fixé pour le rendu final d'un travail.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La date d'<strong>échéance</strong> est fixée à vendredi midi, nous n'avons plus de marge. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="faire l'impasse" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">faire l'impasse :</strong>
+              <span class="def-text">Choisir délibérément d'omettre ou de renoncer à un point secondaire faute de temps.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Nous ferons <strong>l'impasse</strong> sur l'annexe graphique pour nous concentrer sur le texte. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="prendre du recul" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">prendre du recul :</strong>
+              <span class="def-text">S'éloigner momentanément de la pression pour juger une situation avec lucidité.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Fais une pause de dix minutes pour <strong>prendre du recul</strong> avant d'envoyer ce courriel. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE DU DIALOGUE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Dialogue : Boucler le dossier avant vendredi</h3>
+          </div>
+          <span class="panel-instruction">Passez sur les mots soulignés pour voir leur définition</span>
+        </div>
+        <div class="reading-body">
+          <div class="dialogue-turn">
+            <span class="speaker-label">MAXIME :</span>
+            <span class="turn-text">
+              Sophie, tu as deux minutes ? Je n'en peux <span class="plus-instance plus-ply">plus<span class="plus-badge">[plü]</span></span> avec cette présentation trimestrielle. Mon calendrier est complètement <span class="vocab-word" tabindex="0" data-tooltip="Accablé par un excès de travail">surchargé</span> et j'ai l'impression de travailler <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> que tous les autres membres du pôle réuni !
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">SOPHIE :</span>
+            <span class="turn-text">
+              Respire, Maxime. C'est vrai que la direction en demande toujours <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> ces derniers temps. Mais regarde les choses en face : il n'y a <span class="plus-instance plus-ply">plus d'urgence<span class="plus-badge">[plü]</span></span> immédiate aujourd'hui puisque l'<span class="vocab-word" tabindex="0" data-tooltip="Date limite de rendu">échéance</span> a été repoussée de quarante-huit heures. C'est <span class="plus-instance plus-plyz">d'autant plus appréciable<span class="plus-badge">[plüz]</span></span> que nous étions tous sous pression.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">MAXIME :</span>
+            <span class="turn-text">
+              Peut-être, mais qui <span class="plus-instance plus-plus">plus est<span class="plus-badge">[plüs]</span></span>, le client veut ajouter trois nouvelles diapositives comparatives. Je pensais pouvoir <span class="vocab-word" tabindex="0" data-tooltip="Choisir délibérément de renoncer à un point">faire l'impasse</span> sur les détails techniques, mais apparemment c'est ce qui l'intéresse le <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span>. Ne pourrions-nous pas <span class="vocab-word" tabindex="0" data-tooltip="Confier une responsabilité à un tiers">déléguer</span> cette partie à Thomas ?
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">SOPHIE :</span>
+            <span class="turn-text">
+              Excellente idée ! Thomas a justement <span class="plus-instance plus-ply">plus de temps<span class="plus-badge">[plü]</span></span> libre depuis qu'il a terminé son audit hier. Ce serait bien <span class="plus-instance plus-plyz">plus efficace<span class="plus-badge">[plüz]</span></span> pour tout le monde. Tu devrais aller prendre un café dehors afin de <span class="vocab-word" tabindex="0" data-tooltip="Prendre de la distance pour juger lucidement">prendre du recul</span>. Quand on est fatigué, on ne voit <span class="plus-instance plus-ply">plus clair<span class="plus-badge">[plü]</span></span> dans ses priorités.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">MAXIME :</span>
+            <span class="turn-text">
+              Tu as parfaitement raison. Un quart d'heure d'aération sera bien <span class="plus-instance plus-plyz">plus utile<span class="plus-badge">[plüz]</span></span> que de fixer cet écran sans fin. Je ne toucherai <span class="plus-instance plus-ply">plus au fichier<span class="plus-badge">[plü]</span></span> avant demain matin !
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de discussion</h3>
+          </div>
+        </div>
+        <div class="discussion-box">
+          <p class="discussion-prompt">
+            « Dans votre vie professionnelle ou étudiante, vous est-il déjà arrivé de ne plus supporter une charge de travail trop lourde ? Préférez-vous déléguer et faire l'impasse sur certains détails ou exigez-vous toujours plus de perfection ? »
+          </p>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ======================================================================
+         SECTION 03 : EN VOYAGE & À LA GARE
+         ====================================================================== -->
+    <article class="section-card" id="section-3" data-section="3">
+      <div class="section-header">
+        <div>
+          <div class="section-meta">
+            <span class="badge-num">Section 03</span>
+            <span class="badge-category">Mobilité & Déplacements</span>
+          </div>
+          <h2 class="section-title">En voyage & à la gare : retard imprévu sur le quai numéro 4</h2>
+        </div>
+        <div class="section-actions">
+          <button type="button" class="btn-toggle-phon" onclick="toggleSectionPhonetics('section-3')" title="Afficher ou masquer les badges phonétiques de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            Phonétique
+          </button>
+          <button type="button" class="btn-reset-section" onclick="resetExercise(3)" title="Réinitialiser le vocabulaire de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- EXERCICE GLISSER-DÉPOSER DIRECT -->
+      <div class="panel-box exercise-box" id="exercise-3" data-section="3">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Vocabulaire contextuel</h3>
+          </div>
+          <span class="panel-instruction">Glissez ou touchez un mot, puis touchez sa définition</span>
+        </div>
+
+        <div class="word-bank-container" id="bank-container-3">
+          <div class="word-bank" id="bank-3">
+            <div class="word-chip" draggable="true" data-word="imprévu">imprévu</div>
+            <div class="word-chip" draggable="true" data-word="acheminer">acheminer</div>
+            <div class="word-chip" draggable="true" data-word="en contrepartie">en contrepartie</div>
+            <div class="word-chip" draggable="true" data-word="bondé">bondé</div>
+            <div class="word-chip" draggable="true" data-word="correspondance">correspondance</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="imprévu" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">imprévu :</strong>
+              <span class="def-text">Événement soudain et non anticipé qui vient bousculer l'organisation.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Un sérieux <strong>imprévu</strong> sur la ligne à grande vitesse paralyse le trafic ferroviaire. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="bondé" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">bondé :</strong>
+              <span class="def-text">Rempli au maximum de sa capacité, sans aucune place libre restante.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le hall de la gare est totalement <strong>bondé</strong> à cause des retards cumulés. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="acheminer" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">acheminer :</strong>
+              <span class="def-text">Transporter et diriger des personnes ou des bagages vers leur destination.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Des autocars de substitution vont <strong>acheminer</strong> les voyageurs jusqu'à Lyon. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="correspondance" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">correspondance :</strong>
+              <span class="def-text">Changement de train ou de véhicule permettant la poursuite d'un itinéraire.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Nous risquons fort de rater notre <strong>correspondance</strong> à Dijon Ville. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="en contrepartie" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">en contrepartie :</strong>
+              <span class="def-text">En compensation ou en dédommagement d'un inconvénient subi.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« La compagnie offre un bon d'achat <strong>en contrepartie</strong> de cette heure perdue. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE DU DIALOGUE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Dialogue : Annonce sur le quai de la gare</h3>
+          </div>
+          <span class="panel-instruction">Passez sur les mots soulignés pour voir leur définition</span>
+        </div>
+        <div class="reading-body">
+          <div class="dialogue-turn">
+            <span class="speaker-label">ANTOINE :</span>
+            <span class="turn-text">
+              Camille, regarde le panneau d'affichage : notre TGV a encore dix minutes de <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> de retard ! Je ne comprends pas, il n'y a <span class="plus-instance plus-ply">plus d'espoir<span class="plus-badge">[plü]</span></span> d'attraper notre <span class="vocab-word" tabindex="0" data-tooltip="Changement de train pour continuer le trajet">correspondance</span> à ce rythme.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">CAMILLE :</span>
+            <span class="turn-text">
+              Ne panique pas tout de suite. La voix au micro a dit qu'un <span class="vocab-word" tabindex="0" data-tooltip="Événement soudain et non anticipé">imprévu</span> technique bloquait la voie en amont. C'est <span class="plus-instance plus-plyz">plus embêtant<span class="plus-badge">[plüz]</span></span> que prévu, certes, mais ils viennent d'annoncer qu'ils allaient <span class="vocab-word" tabindex="0" data-tooltip="Transporter vers la destination">acheminer</span> tout le monde par le train suivant. Le quai est déjà complètement <span class="vocab-word" tabindex="0" data-tooltip="Rempli au maximum">bondé</span>, alors avançons un peu.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">ANTOINE :</span>
+            <span class="turn-text">
+              J'ai voyagé souvent cette année, mais je constate que c'est <span class="plus-instance plus-plyz">de plus en plus<span class="plus-badge">[plüz]</span></span> fréquent. Pourtant, le billet coûte <span class="plus-instance plus-ply">plus cher<span class="plus-badge">[plü]</span></span> qu'autrefois ! On paie le prix fort et, <span class="plus-instance plus-plus">en plus<span class="plus-badge">[plüs]</span></span>, on arrive avec deux heures de décalage. Il n'y a <span class="plus-instance plus-ply">plus aucun respect<span class="plus-badge">[plü]</span></span> des horaires.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">CAMILLE :</span>
+            <span class="turn-text">
+              Garde ton calme. <span class="vocab-word" tabindex="0" data-tooltip="En compensation ou dédommagement">En contrepartie</span>, nous pourrons demander un remboursement partiel sur l'application. Ceux qui râlent le <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> n'obtiennent rien de bon à s'énerver. Tu n'as <span class="plus-instance plus-ply">plus de batterie<span class="plus-badge">[plü]</span></span> sur ton téléphone ? Tiens, prends ma batterie externe, ce sera bien <span class="plus-instance plus-plyz">plus intelligent<span class="plus-badge">[plüz]</span></span> pour prévenir nos hôtes.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">ANTOINE :</span>
+            <span class="turn-text">
+              Merci Camille. Au fond, attendre ensemble sur ce banc n'est pas <span class="plus-instance plus-ply">plus désagréable<span class="plus-badge">[plü]</span></span> que de courir dans les couloirs du métro. Prenons notre mal en patience !
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de discussion</h3>
+          </div>
+        </div>
+        <div class="discussion-box">
+          <p class="discussion-prompt">
+            « Avez-vous déjà vécu une mésaventure de transport où plus rien ne fonctionnait à cause d'un imprévu ? Préférez-vous voyager en train même quand les billets coûtent plus cher pour des raisons écologiques ? »
+          </p>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ======================================================================
+         SECTION 04 : RECHERCHE D'APPARTEMENT
+         ====================================================================== -->
+    <article class="section-card" id="section-4" data-section="4">
+      <div class="section-header">
+        <div>
+          <div class="section-meta">
+            <span class="badge-num">Section 04</span>
+            <span class="badge-category">Habitat & Logement</span>
+          </div>
+          <h2 class="section-title">Recherche d'appartement : visite d'un deux-pièces en centre-ville</h2>
+        </div>
+        <div class="section-actions">
+          <button type="button" class="btn-toggle-phon" onclick="toggleSectionPhonetics('section-4')" title="Afficher ou masquer les badges phonétiques de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            Phonétique
+          </button>
+          <button type="button" class="btn-reset-section" onclick="resetExercise(4)" title="Réinitialiser le vocabulaire de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- EXERCICE GLISSER-DÉPOSER DIRECT -->
+      <div class="panel-box exercise-box" id="exercise-4" data-section="4">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Vocabulaire contextuel</h3>
+          </div>
+          <span class="panel-instruction">Glissez ou touchez un mot, puis touchez sa définition</span>
+        </div>
+
+        <div class="word-bank-container" id="bank-container-4">
+          <div class="word-bank" id="bank-4">
+            <div class="word-chip" draggable="true" data-word="bailleur">bailleur</div>
+            <div class="word-chip" draggable="true" data-word="mitoyen">mitoyen</div>
+            <div class="word-chip" draggable="true" data-word="exigu">exigu</div>
+            <div class="word-chip" draggable="true" data-word="lumineux">lumineux</div>
+            <div class="word-chip" draggable="true" data-word="compromis">compromis</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="exigu" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">exigu :</strong>
+              <span class="def-text">Très étroit et restreint en termes de surface et d'espace disponible.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Ce salon est un peu trop <strong>exigu</strong> pour y installer une table et un canapé. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="mitoyen" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">mitoyen :</strong>
+              <span class="def-text">Qui est contigu et partagé entre deux propriétés ou logements voisins.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le mur <strong>mitoyen</strong> est bien insonorisé contre les bruits du couloir. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="lumineux" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">lumineux :</strong>
+              <span class="def-text">Baigné d'un bel éclairage naturel grâce à de grandes ouvertures.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« L'espace est particulièrement <strong>lumineux</strong> grâce à son exposition sud. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="bailleur" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">bailleur :</strong>
+              <span class="def-text">Propriétaire qui concède un bien immobilier à la location.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le <strong>bailleur</strong> exige un dossier complet avec plusieurs garants solides. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="compromis" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">compromis :</strong>
+              <span class="def-text">Accord né de concessions mutuelles pour surmonter un différend ou une contrainte.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Trouver un appartement idéal impose toujours de faire un <strong>compromis</strong> sur le loyer ou l'espace. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE DU DIALOGUE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Dialogue : Une visite prometteuse rue de la Liberté</h3>
+          </div>
+          <span class="panel-instruction">Passez sur les mots soulignés pour voir leur définition</span>
+        </div>
+        <div class="reading-body">
+          <div class="dialogue-turn">
+            <span class="speaker-label">FLORIAN :</span>
+            <span class="turn-text">
+              Alors, Élodie, qu'est-ce que tu en penses ? Le séjour est nettement <span class="plus-instance plus-ply">plus grand<span class="plus-badge">[plü]</span></span> que celui de notre studio actuel. Et surtout, c'est bien <span class="plus-instance plus-plyz">plus éclairé<span class="plus-badge">[plüz]</span></span> ! Les fenêtres donnent sur une cour paisible, il n'y a <span class="plus-instance plus-ply">plus aucun bruit<span class="plus-badge">[plü]</span></span> de circulation.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">ÉLODIE :</span>
+            <span class="turn-text">
+              C'est vrai qu'il est incroyablement <span class="vocab-word" tabindex="0" data-tooltip="Baigné d'une lumière naturelle">lumineux</span>. Mais regarde la cuisine : elle me paraît terriblement <span class="vocab-word" tabindex="0" data-tooltip="Très étroit et restreint">exiguë</span>. On ne pourra <span class="plus-instance plus-ply">plus inviter<span class="plus-badge">[plü]</span></span> quatre personnes à dîner en même temps. Tu as vu le loyer ? C'est cent cinquante euros de <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> par mois que notre budget initial !
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">FLORIAN :</span>
+            <span class="turn-text">
+              Oui, mais le chauffage est compris dans les charges, ce qui est <span class="plus-instance plus-plyz">plus avantageux<span class="plus-badge">[plüz]</span></span> pendant l'hiver. <span class="plus-instance plus-plus">En plus<span class="plus-badge">[plüs]</span></span>, l'appartement est au deuxième étage avec ascenseur. Le propriétaire a refait toute l'isolation du mur <span class="vocab-word" tabindex="0" data-tooltip="Séparant deux logements voisins">mitoyen</span> pour que nous n'entendions personne. Si nous voulons du calme en plein centre, il faut payer un peu <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span>.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">ÉLODIE :</span>
+            <span class="turn-text">
+              Tu as peut-être raison, la recherche devient <span class="plus-instance plus-plyz">de plus en plus<span class="plus-badge">[plüz]</span></span> difficile dans ce secteur prisé. Si nous ne prenons pas celui-ci, nous n'aurons <span class="plus-instance plus-ply">plus beaucoup d'options<span class="plus-badge">[plü]</span></span> avant le mois prochain. Trouver la perle rare relève toujours d'un sage <span class="vocab-word" tabindex="0" data-tooltip="Accord issu de concessions mutuelles">compromis</span>. Espérons seulement que le <span class="vocab-word" tabindex="0" data-tooltip="Propriétaire qui loue le logement">bailleur</span> acceptera notre dossier rapidement.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">FLORIAN :</span>
+            <span class="turn-text">
+              Je le lui dépose ce soir dès dix-huit heures ! Plus vite nous signons, <span class="plus-instance plus-ply">plus tôt<span class="plus-badge">[plü]</span></span> nous pourrons emménager et souffler un bon coup.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de discussion</h3>
+          </div>
+        </div>
+        <div class="discussion-box">
+          <p class="discussion-prompt">
+            « Quels sont pour vous les critères les plus déterminants dans le choix d'un logement (la surface, la lumière, la proximité du travail ou le calme) ? Sur quoi refuseriez-vous absolument de faire des compromis ? »
+          </p>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ======================================================================
+         SECTION 05 : DÎNER ENTRE AMIS
+         ====================================================================== -->
+    <article class="section-card" id="section-5" data-section="5">
+      <div class="section-header">
+        <div>
+          <div class="section-meta">
+            <span class="badge-num">Section 05</span>
+            <span class="badge-category">Convivialité & Partage</span>
+          </div>
+          <h2 class="section-title">Dîner entre amis : secrets de cuisine et anecdotes partagées</h2>
+        </div>
+        <div class="section-actions">
+          <button type="button" class="btn-toggle-phon" onclick="toggleSectionPhonetics('section-5')" title="Afficher ou masquer les badges phonétiques de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            Phonétique
+          </button>
+          <button type="button" class="btn-reset-section" onclick="resetExercise(5)" title="Réinitialiser le vocabulaire de cette section">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- EXERCICE GLISSER-DÉPOSER DIRECT -->
+      <div class="panel-box exercise-box" id="exercise-5" data-section="5">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Vocabulaire contextuel</h3>
+          </div>
+          <span class="panel-instruction">Glissez ou touchez un mot, puis touchez sa définition</span>
+        </div>
+
+        <div class="word-bank-container" id="bank-container-5">
+          <div class="word-bank" id="bank-5">
+            <div class="word-chip" draggable="true" data-word="convive">convive</div>
+            <div class="word-chip" draggable="true" data-word="incontournable">incontournable</div>
+            <div class="word-chip" draggable="true" data-word="rassasié">rassasié</div>
+            <div class="word-chip" draggable="true" data-word="mitonner">mitonner</div>
+            <div class="word-chip" draggable="true" data-word="anecdote">anecdote</div>
+          </div>
+        </div>
+
+        <div class="definitions-grid">
+          <div class="def-card" data-target="convive" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">convive :</strong>
+              <span class="def-text">Personne invitée qui partage un même repas à une table conviviale.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Chaque <strong>convive</strong> a apporté une bouteille ou un dessert fait maison. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="mitonner" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">mitonner :</strong>
+              <span class="def-text">Cuire ou préparer longuement et soigneusement un plat savoureux.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Nadia a passé l'après-midi à <strong>mitonner</strong> un bœuf bourguignon traditionnel. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="rassasié" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">rassasié :</strong>
+              <span class="def-text">Qui n'a plus faim, dont l'appétit a été pleinement comblé par le repas.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Je suis totalement <strong>rassasié</strong> après ces deux portions généreuses. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="incontournable" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">incontournable :</strong>
+              <span class="def-text">Indispensable, qu'il est impossible de négliger ou d'ignorer lors d'une fête.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Le plateau de fromages affinés reste un classique <strong>incontournable</strong> en fin de repas. »</blockquote>
+            </div>
+          </div>
+
+          <div class="def-card" data-target="anecdote" tabindex="0" title="Cliquer pour afficher ou masquer l'exemple">
+            <div class="def-main-line">
+              <strong class="matched-word">anecdote :</strong>
+              <span class="def-text">Récit court, vivant et divertissant relatant un souvenir marquant ou amusant.</span>
+            </div>
+            <div class="def-example">
+              <blockquote class="example-quote">« Lucas nous a raconté une <strong>anecdote</strong> hilarante sur son dernier voyage en Italie. »</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTE DE LECTURE DU DIALOGUE -->
+      <div class="panel-box reading-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <h3 class="panel-title">Dialogue : Autour d'un plat mijoté</h3>
+          </div>
+          <span class="panel-instruction">Passez sur les mots soulignés pour voir leur définition</span>
+        </div>
+        <div class="reading-body">
+          <div class="dialogue-turn">
+            <span class="speaker-label">LUCAS :</span>
+            <span class="turn-text">
+              Nadia, ce ragoût aux herbes fraîches est une merveille absolue ! Tu as dû passer des heures entières à le <span class="vocab-word" tabindex="0" data-tooltip="Cuire et préparer longuement">mitonner</span>. Je ne peux <span class="plus-instance plus-ply">plus m'arrêter<span class="plus-badge">[plü]</span></span> d'en manger, même si la raison me souffle d'être <span class="plus-instance plus-ply">plus raisonnable<span class="plus-badge">[plü]</span></span>.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">NADIA :</span>
+            <span class="turn-text">
+              Merci Lucas, cela me touche énormément ! Je voulais que chaque <span class="vocab-word" tabindex="0" data-tooltip="Invité qui partage un repas">convive</span> se sente comme à la maison ce soir. Sers-toi encore une louche : si tu en veux <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span>, n'hésite pas une seule seconde ! Il en reste plein la cocotte et je refuse de jeter quoi que ce soit.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">LUCAS :</span>
+            <span class="turn-text">
+              J'aimerais beaucoup, mais je suis déjà presque <span class="vocab-word" tabindex="0" data-tooltip="Dont l'appétit est pleinement satisfait">rassasié</span>. <span class="plus-instance plus-plus">En plus<span class="plus-badge">[plüs]</span></span>, je sais pertinemment que tu as préparé ta mousse au chocolat noir, ce dessert <span class="vocab-word" tabindex="0" data-tooltip="Indispensable, qu'on ne peut éviter">incontournable</span> dont tout le monde parle ! Gardons de la place. Raconte-nous plutôt la suite de ton <span class="vocab-word" tabindex="0" data-tooltip="Récit court et amusant d'un souvenir">anecdote</span> avec le chef italien.
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label alt">NADIA :</span>
+            <span class="turn-text">
+              Ah oui ! Figure-toi qu'il affirmait qu'avec <span class="plus-instance plus-plus">plus<span class="plus-badge">[plüs]</span></span> de basilic et un soupçon d'ail confit, la sauce devenait cent fois <span class="plus-instance plus-plyz">plus savoureuse<span class="plus-badge">[plüz]</span></span>. Au début, j'étais sceptique, mais c'est <span class="plus-instance plus-plyz">d'autant plus étonnant<span class="plus-badge">[plüz]</span></span> que cela transforme toute l'harmonie du plat. Tout le monde en redemandait !
+            </span>
+          </div>
+
+          <div class="dialogue-turn">
+            <span class="speaker-label">LUCAS :</span>
+            <span class="turn-text">
+              C'est passionnant. Plus nous discutons de cuisine, <span class="plus-instance plus-plyz">plus j'ai envie<span class="plus-badge">[plüz]</span></span> de m'y mettre sérieusement. Je n'achèterai <span class="plus-instance plus-ply">plus jamais<span class="plus-badge">[plü]</span></span> de plats préparés au supermarché ! Portons un toast à nos retrouvailles.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTION DE DISCUSSION -->
+      <div class="panel-box">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </span>
+            <h3 class="panel-title">Question de discussion</h3>
+          </div>
+        </div>
+        <div class="discussion-box">
+          <p class="discussion-prompt">
+            « Quand vous recevez des proches à dîner, prenez-vous plaisir à mitonner de longs plats ou préférez-vous la simplicité ? Racontez une anecdote de repas partagé qui vous a particulièrement marqué. »
+          </p>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- BOUTON RETOUR EN HAUT -->
+  <button type="button" class="btn-back-to-top" id="btn-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Retourner en haut de page">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <!-- PIED DE PAGE -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p><strong>La Prononciation du Mot « Plus »</strong> — Module interactif de français langue étrangère (B1 / B2).</p>
+      <p style="color: var(--text-subtle); font-size: 0.8rem;">Glisser-déposer sans boîte de saisie • Citations contextuelles rétractables • Immersion phonétique [plü], [plüs], [plüz].</p>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       SCRIPTS JAVASCRIPT : INTERACTIONS, DRAG & DROP, PHONÉTIQUE, LOCALSTORAGE
+       ========================================================================== -->
+  <script>
+    const STORAGE_KEY = 'prononciation_du_mot_plus_progress';
+    const TOTAL_ITEMS = 25;
+    let selectedChip = null;
+    let isSelectingCardText = false;
+    let cardMouseDownX = 0;
+    let cardMouseDownY = 0;
+
+    // --- INITIALISATION AU CHARGEMENT ---
+    document.addEventListener('DOMContentLoaded', () => {
+      initDropdown();
+      initModalListeners();
+      initExercises();
+      initScrollSpy();
+      loadProgressFromStorage();
+    });
+
+    // --- GESTION DU MENU DÉROULANT (STYLE NUXT UI) ---
+    function toggleDropdown() {
+      const dropdown = document.getElementById('section-dropdown');
+      const trigger = document.getElementById('dropdown-trigger');
+      const isOpen = dropdown.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    function closeDropdown() {
+      const dropdown = document.getElementById('section-dropdown');
+      const trigger = document.getElementById('dropdown-trigger');
+      if (dropdown) {
+        dropdown.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    function selectSection(sectionId, sectionLabel) {
+      closeDropdown();
+      const labelElem = document.getElementById('dropdown-current-label');
+      if (labelElem) labelElem.textContent = sectionLabel;
+
+      document.querySelectorAll('.nuxt-dropdown-item').forEach(item => {
+        item.classList.toggle('is-selected', item.dataset.value === sectionId);
+      });
+
+      const target = document.getElementById(sectionId);
+      if (target) {
+        const offset = 80;
+        const topPos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: Math.max(0, topPos), behavior: 'smooth' });
+      }
+    }
+
+    function initDropdown() {
+      document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('section-dropdown');
+        if (dropdown && !dropdown.contains(e.target)) {
+          closeDropdown();
+        }
+      });
+    }
+
+    // --- GESTION DE LA PHONÉTIQUE (SECTION & GLOBALE) ---
+    let isGlobalPhoneticActive = false;
+
+    function toggleSectionPhonetics(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      const btn = section.querySelector('.btn-toggle-phon');
+      const isActive = section.classList.toggle('phon-active');
+      if (btn) btn.classList.toggle('is-active', isActive);
+    }
+
+    function toggleGlobalPhonetics() {
+      isGlobalPhoneticActive = !isGlobalPhoneticActive;
+      const globalBtn = document.getElementById('btn-phon-global');
+      if (globalBtn) globalBtn.classList.toggle('is-active', isGlobalPhoneticActive);
+
+      for (let i = 1; i <= 5; i++) {
+        const section = document.getElementById(`section-${i}`);
+        if (section) {
+          const btn = section.querySelector('.btn-toggle-phon');
+          if (isGlobalPhoneticActive) {
+            section.classList.add('phon-active');
+            if (btn) btn.classList.add('is-active');
+          } else {
+            section.classList.remove('phon-active');
+            if (btn) btn.classList.remove('is-active');
+          }
+        }
+      }
+    }
+
+    // --- MODALE DE CONFIRMATION RESET ---
+    function openResetModal() {
+      const modal = document.getElementById('reset-modal');
+      if (modal) {
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeResetModal() {
+      const modal = document.getElementById('reset-modal');
+      if (modal) {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function confirmResetAll() {
+      closeResetModal();
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+
+      for (let i = 1; i <= 5; i++) {
+        resetExercise(i, false);
+      }
+      updateGlobalScore();
+    }
+
+    function initModalListeners() {
+      const modal = document.getElementById('reset-modal');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target.id === 'reset-modal') closeResetModal();
+        });
+      }
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeResetModal();
+          closeDropdown();
+        }
+      });
+    }
+
+    // --- INDICATION VISUELLE DES ZONES ÉLIGIBLES ---
+    function highlightEligibleCards(sectionId, enable) {
+      document.querySelectorAll('.def-card.eligible-drop').forEach(card => card.classList.remove('eligible-drop'));
+      if (!enable || !sectionId) return;
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+      exercise.querySelectorAll('.def-card:not(.is-matched)').forEach(card => {
+        card.classList.add('eligible-drop');
+      });
+    }
+
+    // --- INITIALISATION DU DRAG & DROP ET TAP-TO-PLACE ---
+    function initExercises() {
+      const chips = document.querySelectorAll('.word-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('dragstart', handleDragStart);
+        chip.addEventListener('dragend', handleDragEnd);
+        chip.addEventListener('click', handleChipClick);
+      });
+
+      const cards = document.querySelectorAll('.def-card');
+      cards.forEach(card => {
+        card.addEventListener('dragover', handleCardDragOver);
+        card.addEventListener('dragleave', handleCardDragLeave);
+        card.addEventListener('drop', handleCardDrop);
+        card.addEventListener('mousedown', handleCardMouseDown);
+        card.addEventListener('mousemove', handleCardMouseMove);
+        card.addEventListener('click', handleCardClick);
+      });
+    }
+
+    function handleCardMouseDown(e) {
+      cardMouseDownX = e.clientX;
+      cardMouseDownY = e.clientY;
+      isSelectingCardText = false;
+    }
+
+    function handleCardMouseMove(e) {
+      if (e.buttons === 1) {
+        if (Math.abs(e.clientX - cardMouseDownX) > 4 || Math.abs(e.clientY - cardMouseDownY) > 4) {
+          isSelectingCardText = true;
+        }
+      }
+    }
+
+    // --- GESTIONNAIRES DRAG & DROP HTML5 ---
+    function handleDragStart(e) {
+      if (this.classList.contains('is-placed')) return;
+      const currentSection = this.closest('.exercise-box').dataset.section;
+      e.dataTransfer.setData('text/plain', this.dataset.word);
+      e.dataTransfer.setData('source-section', currentSection);
+      e.dataTransfer.effectAllowed = 'move';
+      this.classList.add('is-dragging');
+
+      if (selectedChip) {
+        selectedChip.classList.remove('is-selected');
+        selectedChip = null;
+      }
+      highlightEligibleCards(currentSection, true);
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('is-dragging');
+      highlightEligibleCards(null, false);
+    }
+
+    function handleCardDragOver(e) {
+      e.preventDefault();
+      if (!this.classList.contains('is-matched')) {
+        this.classList.add('drag-hover');
+      }
+    }
+
+    function handleCardDragLeave(e) {
+      this.classList.remove('drag-hover');
+    }
+
+    function handleCardDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-hover');
+      highlightEligibleCards(null, false);
+      if (this.classList.contains('is-matched')) return;
+
+      const droppedWord = e.dataTransfer.getData('text/plain');
+      const sourceSection = e.dataTransfer.getData('source-section');
+      const currentSection = this.closest('.exercise-box').dataset.section;
+
+      if (sourceSection !== currentSection) return;
+      const targetWord = this.dataset.target;
+      validatePlacement(this, droppedWord, targetWord, currentSection);
+    }
+
+    // --- GESTIONNAIRES CLIC / TAP-TO-PLACE ---
+    function handleChipClick(e) {
+      if (this.classList.contains('is-placed')) return;
+      const currentSection = this.closest('.exercise-box').dataset.section;
+
+      if (selectedChip === this) {
+        this.classList.remove('is-selected');
+        selectedChip = null;
+        highlightEligibleCards(null, false);
+      } else {
+        if (selectedChip) {
+          selectedChip.classList.remove('is-selected');
+          highlightEligibleCards(null, false);
+        }
+        selectedChip = this;
+        this.classList.add('is-selected');
+        highlightEligibleCards(currentSection, true);
+      }
+    }
+
+    function handleCardClick(e) {
+      // SI LA CARTE EST DÉJÀ RÉSOLUE : CLIC TOGGLE OPEN/CLOSE EXEMPLE
+      if (this.classList.contains('is-matched')) {
+        const selection = window.getSelection();
+        const hasSelection = selection && selection.toString().trim().length > 0;
+        if (hasSelection || isSelectingCardText) {
+          isSelectingCardText = false;
+          return;
+        }
+        this.classList.toggle('is-collapsed');
+        return;
+      }
+
+      // SI AUCUN MOT N'EST SÉLECTIONNÉ
+      if (!selectedChip) return;
+
+      const currentSection = this.closest('.exercise-box').dataset.section;
+      const chipSection = selectedChip.closest('.exercise-box').dataset.section;
+      if (currentSection !== chipSection) return;
+
+      const droppedWord = selectedChip.dataset.word;
+      const targetWord = this.dataset.target;
+      validatePlacement(this, droppedWord, targetWord, currentSection);
+    }
+
+    // --- VALIDATION DU PLACEMENT ---
+    function validatePlacement(card, inputWord, targetWord, sectionId) {
+      highlightEligibleCards(null, false);
+      if (inputWord.trim().toLowerCase() === targetWord.trim().toLowerCase()) {
+        // SUCCÈS : MATCH VALIDÉ ET EXEMPLE DÉPLIÉ
+        card.classList.add('is-matched');
+        card.classList.remove('is-collapsed');
+
+        // Masquer le chip dans la banque
+        const bank = document.getElementById(`bank-${sectionId}`);
+        if (bank) {
+          const chip = bank.querySelector(`.word-chip[data-word="${inputWord}"]`);
+          if (chip) {
+            chip.classList.remove('is-selected');
+            chip.classList.add('is-placed');
+          }
+        }
+
+        if (selectedChip && selectedChip.dataset.word === inputWord) {
+          selectedChip = null;
+        }
+
+        saveMatchToStorage(sectionId, targetWord);
+        updateSectionScore(sectionId);
+        updateGlobalScore();
+      } else {
+        // ERREUR : SHAKE EN ROUGE
+        card.classList.add('shake-error');
+        const bank = document.getElementById(`bank-${sectionId}`);
+        const chip = bank ? bank.querySelector(`.word-chip[data-word="${inputWord}"]`) : null;
+        if (chip) chip.classList.add('shake-error');
+
+        setTimeout(() => {
+          card.classList.remove('shake-error');
+          if (chip) chip.classList.remove('shake-error');
+        }, 500);
+
+        if (selectedChip) {
+          selectedChip.classList.remove('is-selected');
+          selectedChip = null;
+        }
+      }
+    }
+
+    // --- SCORES ET DISPARITION DE LA BANQUE ---
+    function updateSectionScore(sectionId, animate = true) {
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+      const matchedCount = exercise.querySelectorAll('.def-card.is-matched').length;
+      const bankContainer = exercise.querySelector('.word-bank-container');
+
+      if (bankContainer) {
+        if (matchedCount === 5) {
+          if (!animate) {
+            bankContainer.classList.add('is-hidden-instant');
+          } else {
+            bankContainer.classList.remove('is-hidden-instant');
+            bankContainer.classList.add('is-hidden');
+          }
+        } else {
+          bankContainer.classList.remove('is-hidden', 'is-hidden-instant');
+        }
+      }
+    }
+
+    function updateGlobalScore() {
+      const totalMatched = document.querySelectorAll('.def-card.is-matched').length;
+      const textElem = document.getElementById('global-score-text');
+      if (textElem) {
+        textElem.textContent = `${totalMatched} / ${TOTAL_ITEMS} mots`;
+      }
+    }
+
+    // --- RÉINITIALISATION D'UNE SECTION ---
+    function resetExercise(sectionId, clearStorage = true) {
+      highlightEligibleCards(null, false);
+      const exercise = document.getElementById(`exercise-${sectionId}`);
+      if (!exercise) return;
+
+      const cards = exercise.querySelectorAll('.def-card');
+      cards.forEach(card => {
+        card.classList.remove('is-matched', 'is-collapsed', 'drag-hover', 'shake-error', 'eligible-drop');
+      });
+
+      const bank = document.getElementById(`bank-${sectionId}`);
+      if (bank) {
+        const chips = bank.querySelectorAll('.word-chip');
+        chips.forEach(chip => {
+          chip.classList.remove('is-placed', 'is-selected', 'is-dragging', 'shake-error');
+        });
+      }
+
+      if (clearStorage) {
+        clearSectionStorage(sectionId);
+      }
+
+      updateSectionScore(sectionId);
+      updateGlobalScore();
+    }
+
+    // --- PERSISTANCE LOCALSTORAGE ---
+    function getStoredData() {
+      try {
+        const data = localStorage.getItem(STORAGE_KEY);
+        return data ? JSON.parse(data) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveMatchToStorage(sectionId, targetWord) {
+      try {
+        const store = getStoredData();
+        if (!store[sectionId]) store[sectionId] = [];
+        if (!store[sectionId].includes(targetWord)) {
+          store[sectionId].push(targetWord);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+        }
+      } catch (e) {}
+    }
+
+    function clearSectionStorage(sectionId) {
+      try {
+        const store = getStoredData();
+        delete store[sectionId];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+      } catch (e) {}
+    }
+
+    function loadProgressFromStorage() {
+      try {
+        const store = getStoredData();
+        for (const [sectionId, matchedWords] of Object.entries(store)) {
+          const exercise = document.getElementById(`exercise-${sectionId}`);
+          if (!exercise || !Array.isArray(matchedWords)) continue;
+
+          matchedWords.forEach(word => {
+            const card = exercise.querySelector(`.def-card[data-target="${word}"]`);
+            if (card) {
+              card.classList.add('is-matched');
+              card.classList.remove('is-collapsed');
+            }
+            const bank = document.getElementById(`bank-${sectionId}`);
+            if (bank) {
+              const chip = bank.querySelector(`.word-chip[data-word="${word}"]`);
+              if (chip) chip.classList.add('is-placed');
+            }
+          });
+
+          updateSectionScore(sectionId, false);
+        }
+        updateGlobalScore();
+      } catch (e) {}
+    }
+
+    // --- SCROLL ET BOUTON RETOUR EN HAUT ---
+    function initScrollSpy() {
+      const btnTop = document.getElementById('btn-back-to-top');
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 400) {
+          btnTop.classList.add('is-visible');
+        } else {
+          btnTop.classList.remove('is-visible');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
