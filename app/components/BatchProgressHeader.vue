@@ -143,10 +143,10 @@ const percent = computed(() => {
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
 
-          <!-- Parked State -->
+          <!-- Parked State: Gray -->
           <svg
             v-else-if="slot.status === 'parked'"
-            class="w-3 h-3 text-amber-600 dark:text-amber-400"
+            class="w-3 h-3 text-gray-400 dark:text-gray-500"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -154,26 +154,36 @@ const percent = computed(() => {
             <rect x="14" y="5" width="4" height="14" rx="1.5" />
           </svg>
 
-          <!-- Deleted State -->
-          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-rose-600 dark:text-rose-400">✕</span>
+          <!-- Deleted State: Gray -->
+          <span v-else-if="slot.status === 'deleted'" class="text-[11px] leading-none font-bold text-gray-400 dark:text-gray-500">✕</span>
 
-          <!-- Unsuccessful fail count (color of the language) -->
+          <!-- Currently active card slot: shows current test count (e.g. 1x, 2x) pulsating slowly -->
+          <span
+            v-else-if="slot.id === activeCardId && !isBatchComplete"
+            class="text-xs font-mono font-bold leading-none animate-slow-pulse"
+            :style="{ color: getLanguageColor(slot.language) }"
+          >
+            {{ slot.unsuccessfulCount + 1 }}x
+          </span>
+
+          <!-- Non-active unsuccessful tested count (e.g. 1x, 2x) in language color -->
           <span
             v-else-if="slot.unsuccessfulCount > 0"
             class="text-xs font-mono font-bold leading-none"
             :style="{ color: getLanguageColor(slot.language) }"
           >
-            {{ slot.unsuccessfulCount }}
+            {{ slot.unsuccessfulCount }}x
           </span>
 
-          <!-- Untested State: Delicate 5-point outline star -->
+          <!-- Untested State: Delicate 5-point outline star in language color -->
           <svg
             v-else
-            class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500"
+            class="w-3.5 h-3.5"
+            :style="{ color: getLanguageColor(slot.language) }"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="1.5"
+            stroke-width="1.75"
             stroke-linecap="round"
             stroke-linejoin="round"
           >
@@ -197,3 +207,21 @@ const percent = computed(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes slowPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.animate-slow-pulse {
+  display: inline-block;
+  animation: slowPulse 2.2s infinite ease-in-out;
+}
+</style>

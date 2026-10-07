@@ -43,28 +43,28 @@
 - opposites
 	- grand/petit, chaud/froid, bon/mauvais, rapide/lent, vieux/neuf, heureux/triste, facile/difficile, riche/pauvre, lourd/léger, ouvert/fermé, tôt/tard, jeune/vieux, près/loin, propre/sale, fort/faible, sombre/clair, calme/bruyant, cher/bon marché, sûr/dangereux, vide/plein
 - family
-	- la mère, le père, les parents, la sœur, le frère, le fils, la fille, la grand-mère, le grand-père, la tante, l'oncle, le cousin / la cousine, le mari, la femme, l'enfant / les enfants
+	- la mère, le père, les parents, la sœur, le frère, le fils, la fille, la grand-mère, le grand-père, la tante, l'oncle (m), le cousin / la cousine, le mari, la femme, l'enfant (m) / les enfants
 - jobs
-	- le professeur / la professeure, le médecin, l'infirmier / l'infirmière, l'étudiant / l'étudiante, l'ingénieur / l'ingénieure, le serveur / la serveuse, le chef / la cheffe, le conducteur / la conductrice, le vendeur / la vendeuse, le policier / la policière, le pompier, l'agriculteur / l'agricultrice, l'employé de bureau / l'employée de bureau, au chômage, à la retraite
+	- le professeur / la professeure, le médecin, l'infirmier (m) / l'infirmière (f), l'étudiant (m) / l'étudiante (f), l'ingénieur (m) / l'ingénieure (f), le serveur / la serveuse, le chef / la cheffe, le conducteur / la conductrice, le vendeur / la vendeuse, le policier / la policière, le pompier, l'agriculteur (m) / l'agricultrice (f), l'employé de bureau (m) / l'employée de bureau (f), au chômage, à la retraite
 - food and drink
-	- le pain, le riz, les pâtes, la viande, le poulet, le poisson, l'œuf, le fromage, le fruit, la pomme, la banane, l'orange, le légume, la pomme de terre, la tomate, la salade, la soupe, le sandwich, la pizza
-	- le lait, l'eau, le jus, le café, le thé, le gâteau, le chocolat, le petit-déjeuner, le déjeuner, le dîner
+	- le pain, le riz, les pâtes, la viande, le poulet, le poisson, l'œuf (m), le fromage, le fruit, la pomme, la banane, l'orange (f), le légume, la pomme de terre, la tomate, la salade, la soupe, le sandwich, la pizza
+	- le lait, l'eau (f), le jus, le café, le thé, le gâteau, le chocolat, le petit-déjeuner, le déjeuner, le dîner
 - clothes
-	- le T-shirt, la chemise, le pantalon, le jean, la jupe, la robe, la veste, le manteau, le pull, les chaussures, les bottes, les chaussettes, le chapeau, l'écharpe, les gants, le sac
+	- le T-shirt, la chemise, le pantalon, le jean, la jupe, la robe, la veste, le manteau, le pull, les chaussures, les bottes, les chaussettes, le chapeau, l'écharpe (f), les gants, le sac
 - weather
 	- ensoleillé, pluvieux, nuageux, venteux, neigeux, chaud, tiède, froid, frais
 - seasons
-	- le printemps, l'été, l'automne, l'hiver
+	- le printemps, l'été (m), l'automne (m), l'hiver (m)
 - body
-	- la tête, les cheveux, le visage, l'œil, l'oreille, le nez, la bouche, la dent / les dents, le bras, la main, le doigt, la jambe, le pied / les pieds, le dos, l'estomac
+	- la tête, les cheveux, le visage, l'œil (m), l'oreille (f), le nez, la bouche, la dent / les dents, le bras, la main, le doigt, la jambe, le pied / les pieds, le dos, l'estomac (m)
 - house
-	- la maison, l'appartement, la pièce, la chambre, la salle de bain, la cuisine, le salon, le jardin
+	- la maison, l'appartement (m), la pièce, la chambre, la salle de bain, la cuisine, le salon, le jardin
 - furniture
-	- le lit, la table, la chaise, le canapé, le bureau, l'armoire, le réfrigérateur, la cuisinière, la fenêtre, la porte, le mur, le sol
+	- le lit, la table, la chaise, le canapé, le bureau, l'armoire (f), le réfrigérateur, la cuisinière, la fenêtre, la porte, le mur, le sol
 - places
-	- l'école, l'hôpital, le supermarché, le magasin, la banque, la poste, le restaurant, le café, le cinéma, le parc, le musée, la gare, l'aéroport, l'hôtel, la bibliothèque, la salle de sport
+	- l'école (f), l'hôpital (m), le supermarché, le magasin, la banque, la poste, le restaurant, le café, le cinéma, le parc, le musée, la gare, l'aéroport (m), l'hôtel (m), la bibliothèque, la salle de sport
 - transport
-	- la voiture, le bus, le train, l'avion, le vélo / la bicyclette, la moto, le taxi, le bateau, le métro, à pied, en voiture / en bus
+	- la voiture, le bus, le train, l'avion (m), le vélo / la bicyclette, la moto, le taxi, le bateau, le métro, à pied, en voiture / en bus
 - directions 
 	- à gauche, à droite, tout droit, à côté de, en face de, entre, devant, derrière, près de, loin de, aux feux de circulation, tourner à gauche/à droite
 - routines
@@ -84,12 +84,16 @@
 - frequency
 	- toujours, d'habitude, souvent, parfois, jamais, tous les jours, une fois par semaine, deux fois par semaine, tous les matins, le week-end
 - tech
-	- le téléphone, l'ordinateur, l'ordinateur portable, le chargeur, la clé, le portefeuille, le parapluie, les écouteurs, l'appareil photo, la tablette
+	- le téléphone, l'ordinateur (m), l'ordinateur portable (m), le chargeur, la clé, le portefeuille, le parapluie, les écouteurs, l'appareil photo (m), la tablette
 - school
-	- l'anglais, les mathématiques, les sciences, l'histoire, la géographie, les arts plastiques, la musique, la biologie, la chimie
+	- l'anglais (m), les mathématiques, les sciences, l'histoire (f), la géographie, les arts plastiques, la musique, la biologie, la chimie
 - animals
-	- le chien, le chat, l'oiseau, le poisson, le lapin, le cheval, le lion, le tigre, l'éléphant, le singe
+	- le chien, le chat, l'oiseau (m), le poisson, le lapin, le cheval, le lion, le tigre, l'éléphant (m), le singe
 - kitchen
-	- la cuillère, la fourchette, le couteau, l'assiette, le bol, le verre, la tasse, la casserole, la poêle, le réfrigérateur, le congélateur, le four, la cuisinière, le micro-ondes, l'évier, le lave-vaisselle, la planche à découper, la serviette, la bouteille, la bouilloire
+	- la cuillère, la fourchette, le couteau, l'assiette (f), le bol, le verre, la tasse, la casserole, la poêle, le réfrigérateur, le congélateur, le four, la cuisinière, le micro-ondes, l'évier (m), le lave-vaisselle, la planche à découper, la serviette, la bouteille, la bouilloire
 - office
-	- le trombone, l'agrafeuse, les ciseaux, le dossier, le stylo, le crayon, le clavier, la souris, le bureau, le moniteur, l'imprimante, le carnet, la gomme, le ruban adhésif, le surligneur, l'enveloppe, le calendrier, la calculatrice, la mallette, les notes adhésives
+	- le trombone, l'agrafeuse (f), les ciseaux, le dossier, le stylo, le crayon, le clavier, la souris, le bureau, le moniteur, l'imprimante (f), le carnet, la gomme, le ruban adhésif, le surligneur, l'enveloppe (f), le calendrier, la calculatrice, la mallette, les notes adhésives
+- writing
+	- le point, la virgule, le point-virgule, les deux-points, le point d'exclamation, le point d'interrogation, les guillemets, les guillemets français, l'apostrophe (f), le trait d'union, le tiret, les parenthèses, les crochets, les accolades, les points de suspension, la barre oblique, la barre oblique inverse, le tiret bas, le tilde, l'esperluette (f)
+- language learning
+	- le nom, le verbe, l'adjectif (m), l'adverbe (m), le pronom, la préposition, la conjonction, l'article (m), le sujet, le complément, le temps, la conjugaison, la grammaire, le vocabulaire, la prononciation, la syllabe, la phrase, le paragraphe, le singulier, le pluriel

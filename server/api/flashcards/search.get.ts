@@ -18,46 +18,29 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    const searchWords = q.split(/\s+/).filter(Boolean)
+
     // Search all non-deleted flashcards (both owned and public)
     const flashcards = await prisma.flashcard.findMany({
       where: {
         status: {
           not: 'DELETED'
         },
-        ...(q ? {
-          OR: [
-            {
-              front: {
-                contains: q
-              }
-            },
-            {
-              back: {
-                contains: q
-              }
-            },
-            {
-              pronunciation: {
-                contains: q
-              }
-            },
-            {
-              memoryHook: {
-                contains: q
-              }
-            },
-            {
-              tags: {
-                some: {
-                  tag: {
-                    abbreviation: {
-                      contains: q
-                    }
-                  }
+        ...(searchWords.length > 0 ? {
+          AND: searchWords.map(word => ({
+            OR: [
+              {
+                front: {
+                  contains: word
+                }
+              },
+              {
+                back: {
+                  contains: word
                 }
               }
-            }
-          ]
+            ]
+          }))
         } : {})
       },
       include: {

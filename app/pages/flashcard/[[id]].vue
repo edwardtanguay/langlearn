@@ -98,13 +98,13 @@ const allActivities = [
   { title: 'Learn à/de', path: '/activities/learn-a-de' },
   { title: 'Gemini Quiz Prompts', path: '/activities/gemini-quiz' }
 ]
-const currentBatchRandomActivity = ref<{ title: string; path: string } | null>(null)
+const currentBatchRandomActivities = ref<Array<{ title: string; path: string }>>([])
 const batchCompleteRandomActivities = ref<Array<{ title: string; path: string }>>([])
 const userDailyGoal = ref(50)
 
 function pickRandomActivitiesForBatch() {
   const shuffled = [...allActivities].sort(() => Math.random() - 0.5)
-  currentBatchRandomActivity.value = shuffled[0] || null
+  currentBatchRandomActivities.value = shuffled.slice(0, 3)
   batchCompleteRandomActivities.value = [shuffled[0]!, shuffled[1]!]
 }
 
@@ -1509,18 +1509,20 @@ onBeforeUnmount(() => {
               </div>
             </Transition>
 
-            <!-- Random activity link after daily goal reached (e.g. 50 cards) -->
+            <!-- Random activity links after 50 cards tested -->
             <div
-              v-if="hasReachedDailyGoal && currentBatchRandomActivity && !isBatchComplete"
-              class="w-full flex items-center justify-center pt-2 pb-1"
+              v-if="hasReachedDailyGoal && currentBatchRandomActivities.length > 0 && !isBatchComplete"
+              class="w-full flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2.5 pt-3 pb-1 text-[11px] sm:text-xs text-gray-400 dark:text-gray-500"
             >
-              <NuxtLink
-                :to="currentBatchRandomActivity.path"
-                class="inline-flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-semibold hover:underline transition-colors py-1"
-              >
-                <span>Try activity: {{ currentBatchRandomActivity.title }}</span>
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </NuxtLink>
+              <template v-for="(act, idx) in currentBatchRandomActivities" :key="act.path">
+                <NuxtLink
+                  :to="act.path"
+                  class="underline hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                >
+                  {{ act.title }}
+                </NuxtLink>
+                <span v-if="idx < currentBatchRandomActivities.length - 1" class="hidden sm:inline opacity-40">|</span>
+              </template>
             </div>
 
           </div>

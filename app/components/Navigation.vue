@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon, VideoCameraIcon } from '@heroicons/vue/24/outline'
+import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon, VideoCameraIcon, LinkIcon, SparklesIcon } from '@heroicons/vue/24/outline'
 
 interface CardStats {
   readyCount: number
@@ -151,14 +151,21 @@ const countButtonClass = computed(() => {
 const navItems = computed(() => {
   const items = []
   if (loggedIn.value) {
-    items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
-    items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
-    items.push({ name: 'Videos', path: '/videos', icon: VideoCameraIcon })
-    items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
-    if (showDevPageConfig.value && isAdmin.value) {
-      items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
+    if (isAdmin.value) {
+      items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
+      items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
+      items.push({ name: 'Links', path: '/links', icon: LinkIcon })
+      items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
+      if (showDevPageConfig.value) {
+        items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
+      }
+      items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
+    } else {
+      items.push({ name: 'Member Home', path: '/member', icon: HomeIcon })
+      items.push({ name: 'Gemini Quiz', path: '/activities/gemini-quiz', icon: SparklesIcon })
+      items.push({ name: 'Links', path: '/links', icon: LinkIcon })
+      items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     }
-    items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
   } else {
     items.push({ name: 'Home', path: '/', icon: HomeIcon })
     items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
@@ -176,7 +183,7 @@ const navItems = computed(() => {
         <!-- Logo / User Profile (First Name Only) -->
         <div class="flex items-center space-x-3">
           <ClientOnly>
-            <NuxtLink :to="loggedIn ? '/user' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
+            <NuxtLink :to="loggedIn ? (isAdmin ? '/flashcard' : '/member') : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
               <div class="flex flex-row items-center gap-2.5">
                 <template v-if="loggedIn">
                   <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs">
@@ -202,17 +209,17 @@ const navItems = computed(() => {
             </template>
           </ClientOnly>
 
-          <!-- Quick-Add Idea Drawer Trigger -->
+          <!-- Quick-Add Idea Drawer Trigger (Admin only) -->
           <ClientOnly>
-            <QuickAddIdeaDrawer v-if="loggedIn" />
+            <QuickAddIdeaDrawer v-if="loggedIn && isAdmin" />
           </ClientOnly>
         </div>
 
         <!-- Desktop Navigation & Take-Count Progress Pill -->
         <div class="hidden md:flex items-center space-x-6">
-          <!-- Desktop Take-Count Goal Progress Pill -->
+          <!-- Desktop Take-Count Goal Progress Pill (Admin only) -->
           <ClientOnly>
-            <button v-if="loggedIn"
+            <button v-if="loggedIn && isAdmin"
                     @click.stop="showStatsModal = !showStatsModal; mobileMenuOpen = false"
                     class="px-3 py-1 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer border text-xs font-bold shadow-xs min-h-[32px]"
                     :class="countButtonClass"

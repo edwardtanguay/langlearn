@@ -1,5 +1,7 @@
 <script setup lang="ts">
-navigateTo('/flashcard', { replace: true })
+const { isAdmin, fetchRole } = useCurrentUser()
+const role = await fetchRole()
+navigateTo(role === 'admin' ? '/flashcard' : '/member', { replace: true })
 </script>
 
 <template>

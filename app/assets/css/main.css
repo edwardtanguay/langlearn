@@ -68,20 +68,31 @@ html.sun-mode body {
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.45);
 }
 
+html.sun-mode,
+html.sun-mode body,
+html.sun-mode button,
+html.sun-mode span,
+html.sun-mode p,
+html.sun-mode div,
+html.sun-mode a,
+html.sun-mode h1,
+html.sun-mode h2,
+html.sun-mode h3,
+html.sun-mode h4,
+html.sun-mode label {
+  color: #ffffff !important;
+}
+
 html.sun-mode .text-gray-400,
 html.sun-mode .text-gray-500,
 html.sun-mode .text-gray-600,
-html.sun-mode .dark\:text-gray-400,
-html.sun-mode .dark\:text-gray-500 {
-  color: #f1f5f9 !important;
-  font-weight: 600 !important;
-}
-
 html.sun-mode .text-gray-700,
 html.sun-mode .text-gray-800,
 html.sun-mode .text-gray-900,
 html.sun-mode .dark\:text-gray-200,
 html.sun-mode .dark\:text-gray-300,
+html.sun-mode .dark\:text-gray-400,
+html.sun-mode .dark\:text-gray-500,
 html.sun-mode .dark\:text-white {
   color: #ffffff !important;
   font-weight: 700 !important;

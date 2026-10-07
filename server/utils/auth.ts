@@ -82,6 +82,11 @@ export async function requireAuth(event: H3Event) {
       where: { id: dbUser.id },
       data: { role: 'admin' }
     })
+  } else if (!isAdminEmail && dbUser.role !== 'member') {
+    dbUser = await prisma.user.update({
+      where: { id: dbUser.id },
+      data: { role: 'member' }
+    })
   }
 
   return {

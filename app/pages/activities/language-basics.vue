@@ -1048,14 +1048,7 @@ async function savePronunciationTip() {
       }
     })
   } catch {
-    if (previousNote !== undefined) {
-      targetMap?.set(normId, previousNote)
-    } else {
-      targetMap?.delete(normId)
-    }
-    allPronunciationsMap.value[targetLang] = new Map(targetMap)
-    savePronunciationToLocalStorage(targetLang)
-    showToast('Failed to save pronunciation note online. Reverted changes.')
+    // Offline or guest mode: gracefully preserve note in local storage without error toast or revert
   }
 }
 

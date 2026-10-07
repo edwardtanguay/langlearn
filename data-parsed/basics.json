@@ -1932,7 +1932,7 @@
       {
         "id": "family-11",
         "en": "uncle",
-        "fr": "l'oncle",
+        "fr": "l'oncle (m)",
         "es": "el tío",
         "it": "lo zio",
         "nl": "de oom"
@@ -1964,7 +1964,7 @@
       {
         "id": "family-15",
         "en": "child/children",
-        "fr": "l'enfant / les enfants",
+        "fr": "l'enfant (m) / les enfants",
         "es": "el niño / los niños",
         "it": "il bambino / i bambini",
         "nl": "het kind / de kinderen"
@@ -1980,7 +1980,7 @@
         "en": "teacher",
         "fr": "le professeur / la professeure",
         "es": "el profesor / la profesora",
-        "it": "l'insegnante",
+        "it": "l'insegnante (m/f)",
         "nl": "de leraar / de lerares"
       },
       {
@@ -1994,15 +1994,15 @@
       {
         "id": "jobs-3",
         "en": "nurse",
-        "fr": "l'infirmier / l'infirmière",
+        "fr": "l'infirmier (m) / l'infirmière (f)",
         "es": "el enfermero / la enfermera",
-        "it": "l'infermiere / l'infermiera",
+        "it": "l'infermiere (m) / l'infermiera (f)",
         "nl": "de verpleegkundige"
       },
       {
         "id": "jobs-4",
         "en": "student",
-        "fr": "l'étudiant / l'étudiante",
+        "fr": "l'étudiant (m) / l'étudiante (f)",
         "es": "el estudiante / la estudiante",
         "it": "lo studente / la studentessa",
         "nl": "de student / de studente"
@@ -2010,9 +2010,9 @@
       {
         "id": "jobs-5",
         "en": "engineer",
-        "fr": "l'ingénieur / l'ingénieure",
+        "fr": "l'ingénieur (m) / l'ingénieure (f)",
         "es": "el ingeniero / la ingeniera",
-        "it": "l'ingegnere",
+        "it": "l'ingegnere (m)",
         "nl": "de ingenieur"
       },
       {
@@ -2036,7 +2036,7 @@
         "en": "driver",
         "fr": "le conducteur / la conductrice",
         "es": "el conductor / la conductora",
-        "it": "l'autista",
+        "it": "l'autista (m/f)",
         "nl": "de chauffeur"
       },
       {
@@ -2066,17 +2066,17 @@
       {
         "id": "jobs-12",
         "en": "farmer",
-        "fr": "l'agriculteur / l'agricultrice",
+        "fr": "l'agriculteur (m) / l'agricultrice (f)",
         "es": "el agricultor / la agricultora",
-        "it": "l'agricoltore / l'agricoltrice",
+        "it": "l'agricoltore (m) / l'agricoltrice (f)",
         "nl": "de boer / de boerin"
       },
       {
         "id": "jobs-13",
         "en": "office worker",
-        "fr": "l'employé de bureau / l'employée de bureau",
+        "fr": "l'employé de bureau (m) / l'employée de bureau (f)",
         "es": "el oficinista / la oficinista",
-        "it": "l'impiegato / l'impiegata",
+        "it": "l'impiegato (m) / l'impiegata (f)",
         "nl": "de kantoormedewerker"
       },
       {
@@ -2152,9 +2152,9 @@
       {
         "id": "food-and-drink-7",
         "en": "egg",
-        "fr": "l'œuf",
+        "fr": "l'œuf (m)",
         "es": "el huevo",
-        "it": "l'uovo",
+        "it": "l'uovo (m)",
         "nl": "het ei"
       },
       {
@@ -2192,9 +2192,9 @@
       {
         "id": "food-and-drink-12",
         "en": "orange",
-        "fr": "l'orange",
+        "fr": "l'orange (f)",
         "es": "la naranja",
-        "it": "l'arancia",
+        "it": "l'arancia (f)",
         "nl": "de sinaasappel"
       },
       {
@@ -2264,9 +2264,9 @@
       {
         "id": "food-and-drink-21",
         "en": "water",
-        "fr": "l'eau",
+        "fr": "l'eau (f)",
         "es": "el agua",
-        "it": "l'acqua",
+        "it": "l'acqua (f)",
         "nl": "het water"
       },
       {
@@ -2446,7 +2446,7 @@
       {
         "id": "clothes-14",
         "en": "scarf",
-        "fr": "l'écharpe",
+        "fr": "l'écharpe (f)",
         "es": "la bufanda",
         "it": "la sciarpa",
         "nl": "de sjaal"
@@ -2562,25 +2562,25 @@
       {
         "id": "seasons-2",
         "en": "summer",
-        "fr": "l'été",
+        "fr": "l'été (m)",
         "es": "el verano",
-        "it": "l'estate",
+        "it": "l'estate (f)",
         "nl": "de zomer"
       },
       {
         "id": "seasons-3",
         "en": "autumn/fall",
-        "fr": "l'automne",
+        "fr": "l'automne (m)",
         "es": "el otoño",
-        "it": "l'autunno",
+        "it": "l'autunno (m)",
         "nl": "de herfst"
       },
       {
         "id": "seasons-4",
         "en": "winter",
-        "fr": "l'hiver",
+        "fr": "l'hiver (m)",
         "es": "el invierno",
-        "it": "l'inverno",
+        "it": "l'inverno (m)",
         "nl": "de winter"
       }
     ]
@@ -2616,17 +2616,17 @@
       {
         "id": "body-4",
         "en": "eye",
-        "fr": "l'œil",
+        "fr": "l'œil (m)",
         "es": "el ojo",
-        "it": "l'occhio",
+        "it": "l'occhio (m)",
         "nl": "het oog"
       },
       {
         "id": "body-5",
         "en": "ear",
-        "fr": "l'oreille",
+        "fr": "l'oreille (f)",
         "es": "la oreja",
-        "it": "l'orecchio",
+        "it": "l'orecchio (m)",
         "nl": "het oor"
       },
       {
@@ -2704,7 +2704,7 @@
       {
         "id": "body-15",
         "en": "stomach",
-        "fr": "l'estomac",
+        "fr": "l'estomac (m)",
         "es": "el estómago",
         "it": "lo stomaco",
         "nl": "de maag"
@@ -2726,9 +2726,9 @@
       {
         "id": "house-2",
         "en": "flat/apartment",
-        "fr": "l'appartement",
+        "fr": "l'appartement (m)",
         "es": "el piso / el apartamento",
-        "it": "l'appartamento",
+        "it": "l'appartamento (m)",
         "nl": "het appartement"
       },
       {
@@ -2828,9 +2828,9 @@
       {
         "id": "furniture-6",
         "en": "cupboard",
-        "fr": "l'armoire",
+        "fr": "l'armoire (f)",
         "es": "el armario",
-        "it": "l'armadio",
+        "it": "l'armadio (m)",
         "nl": "de kast"
       },
       {
@@ -2890,7 +2890,7 @@
       {
         "id": "places-1",
         "en": "school",
-        "fr": "l'école",
+        "fr": "l'école (f)",
         "es": "el colegio",
         "it": "la scuola",
         "nl": "de school"
@@ -2898,9 +2898,9 @@
       {
         "id": "places-2",
         "en": "hospital",
-        "fr": "l'hôpital",
+        "fr": "l'hôpital (m)",
         "es": "el hospital",
-        "it": "l'ospedale",
+        "it": "l'ospedale (m)",
         "nl": "het ziekenhuis"
       },
       {
@@ -2986,17 +2986,17 @@
       {
         "id": "places-13",
         "en": "airport",
-        "fr": "l'aéroport",
+        "fr": "l'aéroport (m)",
         "es": "el aeropuerto",
-        "it": "l'aeroporto",
+        "it": "l'aeroporto (m)",
         "nl": "het vliegveld"
       },
       {
         "id": "places-14",
         "en": "hotel",
-        "fr": "l'hôtel",
+        "fr": "l'hôtel (m)",
         "es": "el hotel",
-        "it": "l'albergo",
+        "it": "l'albergo (m)",
         "nl": "het hotel"
       },
       {
@@ -3048,9 +3048,9 @@
       {
         "id": "transport-4",
         "en": "plane",
-        "fr": "l'avion",
+        "fr": "l'avion (m)",
         "es": "el avión",
-        "it": "l'aereo",
+        "it": "l'aereo (m)",
         "nl": "het vliegtuig"
       },
       {
@@ -4060,7 +4060,7 @@
       {
         "id": "tech-2",
         "en": "computer",
-        "fr": "l'ordinateur",
+        "fr": "l'ordinateur (m)",
         "es": "el ordenador",
         "it": "il computer",
         "nl": "de computer"
@@ -4068,7 +4068,7 @@
       {
         "id": "tech-3",
         "en": "laptop",
-        "fr": "l'ordinateur portable",
+        "fr": "l'ordinateur portable (m)",
         "es": "el portátil",
         "it": "il portatile",
         "nl": "de laptop"
@@ -4102,7 +4102,7 @@
         "en": "umbrella",
         "fr": "le parapluie",
         "es": "el paraguas",
-        "it": "l'ombrello",
+        "it": "l'ombrello (m)",
         "nl": "de paraplu"
       },
       {
@@ -4116,7 +4116,7 @@
       {
         "id": "tech-9",
         "en": "camera",
-        "fr": "l'appareil photo",
+        "fr": "l'appareil photo (m)",
         "es": "la cámara",
         "it": "la macchina fotografica",
         "nl": "de camera"
@@ -4138,9 +4138,9 @@
       {
         "id": "school-1",
         "en": "English",
-        "fr": "l'anglais",
+        "fr": "l'anglais (m)",
         "es": "el inglés",
-        "it": "l'inglese",
+        "it": "l'inglese (m)",
         "nl": "het Engels"
       },
       {
@@ -4162,7 +4162,7 @@
       {
         "id": "school-4",
         "en": "history",
-        "fr": "l'histoire",
+        "fr": "l'histoire (f)",
         "es": "la historia",
         "it": "la storia",
         "nl": "de geschiedenis"
@@ -4180,7 +4180,7 @@
         "en": "art",
         "fr": "les arts plastiques",
         "es": "el arte",
-        "it": "l'arte",
+        "it": "l'arte (f)",
         "nl": "de kunst"
       },
       {
@@ -4232,9 +4232,9 @@
       {
         "id": "animals-3",
         "en": "bird",
-        "fr": "l'oiseau",
+        "fr": "l'oiseau (m)",
         "es": "el pájaro",
-        "it": "l'uccello",
+        "it": "l'uccello (m)",
         "nl": "de vogel"
       },
       {
@@ -4280,9 +4280,9 @@
       {
         "id": "animals-9",
         "en": "elephant",
-        "fr": "l'éléphant",
+        "fr": "l'éléphant (m)",
         "es": "el elefante",
-        "it": "l'elefante",
+        "it": "l'elefante (m)",
         "nl": "de olifant"
       },
       {
@@ -4326,7 +4326,7 @@
       {
         "id": "kitchen-4",
         "en": "plate",
-        "fr": "l'assiette",
+        "fr": "l'assiette (f)",
         "es": "el plato",
         "it": "il piatto",
         "nl": "het bord"
@@ -4414,7 +4414,7 @@
       {
         "id": "kitchen-15",
         "en": "sink",
-        "fr": "l'évier",
+        "fr": "l'évier (m)",
         "es": "el fregadero",
         "it": "il lavandino",
         "nl": "de gootsteen"
@@ -4476,7 +4476,7 @@
       {
         "id": "office-2",
         "en": "stapler",
-        "fr": "l'agrafeuse",
+        "fr": "l'agrafeuse (f)",
         "es": "la grapadora",
         "it": "la cucitrice",
         "nl": "de nietmachine"
@@ -4548,7 +4548,7 @@
       {
         "id": "office-11",
         "en": "printer",
-        "fr": "l'imprimante",
+        "fr": "l'imprimante (f)",
         "es": "la impresora",
         "it": "la stampante",
         "nl": "de printer"
@@ -4582,13 +4582,13 @@
         "en": "highlighter",
         "fr": "le surligneur",
         "es": "el subrayador",
-        "it": "l'evidenziatore",
+        "it": "l'evidenziatore (m)",
         "nl": "de markeerstift"
       },
       {
         "id": "office-16",
         "en": "envelope",
-        "fr": "l'enveloppe",
+        "fr": "l'enveloppe (f)",
         "es": "el sobre",
         "it": "la busta",
         "nl": "de envelop"
@@ -4624,6 +4624,338 @@
         "es": "las notas adhesivas",
         "it": "i foglietti adesivi",
         "nl": "de plakbriefjes"
+      }
+    ]
+  },
+  {
+    "id": "writing",
+    "title": "Writing",
+    "items": [
+      {
+        "id": "writing-1",
+        "en": "period",
+        "fr": "le point",
+        "es": "el punto",
+        "it": "il punto",
+        "nl": "de punt"
+      },
+      {
+        "id": "writing-2",
+        "en": "comma",
+        "fr": "la virgule",
+        "es": "la coma",
+        "it": "la virgola",
+        "nl": "de komma"
+      },
+      {
+        "id": "writing-3",
+        "en": "semicolon",
+        "fr": "le point-virgule",
+        "es": "el punto y coma",
+        "it": "il punto e virgola",
+        "nl": "de puntkomma"
+      },
+      {
+        "id": "writing-4",
+        "en": "colon",
+        "fr": "les deux-points",
+        "es": "los dos puntos",
+        "it": "i due punti",
+        "nl": "de dubbele punt"
+      },
+      {
+        "id": "writing-5",
+        "en": "exclamation mark",
+        "fr": "le point d'exclamation",
+        "es": "el signo de exclamación",
+        "it": "il punto esclamativo",
+        "nl": "het uitroepteken"
+      },
+      {
+        "id": "writing-6",
+        "en": "question mark",
+        "fr": "le point d'interrogation",
+        "es": "el signo de interrogación",
+        "it": "il punto interrogativo",
+        "nl": "het vraagteken"
+      },
+      {
+        "id": "writing-7",
+        "en": "quotation marks",
+        "fr": "les guillemets",
+        "es": "las comillas",
+        "it": "le virgolette",
+        "nl": "de aanhalingstekens"
+      },
+      {
+        "id": "writing-8",
+        "en": "guillemets",
+        "fr": "les guillemets français",
+        "es": "las comillas angulares",
+        "it": "i caporali",
+        "nl": "de chevrons"
+      },
+      {
+        "id": "writing-9",
+        "en": "apostrophe",
+        "fr": "l'apostrophe (f)",
+        "es": "el apóstrofo",
+        "it": "l'apostrofo (m)",
+        "nl": "de apostrof"
+      },
+      {
+        "id": "writing-10",
+        "en": "hyphen",
+        "fr": "le trait d'union",
+        "es": "el guion",
+        "it": "il trattino",
+        "nl": "het koppelteken"
+      },
+      {
+        "id": "writing-11",
+        "en": "dash",
+        "fr": "le tiret",
+        "es": "la raya",
+        "it": "la lineetta",
+        "nl": "het gedachtestreepje"
+      },
+      {
+        "id": "writing-12",
+        "en": "parentheses",
+        "fr": "les parenthèses",
+        "es": "los paréntesis",
+        "it": "le parentesi tonde",
+        "nl": "de haakjes"
+      },
+      {
+        "id": "writing-13",
+        "en": "square brackets",
+        "fr": "les crochets",
+        "es": "los corchetes",
+        "it": "le parentesi quadre",
+        "nl": "de rechte haken"
+      },
+      {
+        "id": "writing-14",
+        "en": "curly brackets",
+        "fr": "les accolades",
+        "es": "las llaves",
+        "it": "le parentesi graffe",
+        "nl": "de accolades"
+      },
+      {
+        "id": "writing-15",
+        "en": "ellipsis",
+        "fr": "les points de suspension",
+        "es": "los puntos suspensivos",
+        "it": "i puntini di sospensione",
+        "nl": "het beletselteken"
+      },
+      {
+        "id": "writing-16",
+        "en": "slash",
+        "fr": "la barre oblique",
+        "es": "la barra",
+        "it": "la barra obliqua",
+        "nl": "de schuine streep"
+      },
+      {
+        "id": "writing-17",
+        "en": "backslash",
+        "fr": "la barre oblique inverse",
+        "es": "la barra invertida",
+        "it": "la barra rovesciata",
+        "nl": "de omgekeerde schuine streep"
+      },
+      {
+        "id": "writing-18",
+        "en": "underscore",
+        "fr": "le tiret bas",
+        "es": "el guion bajo",
+        "it": "il trattino basso",
+        "nl": "het laag liggend streepje"
+      },
+      {
+        "id": "writing-19",
+        "en": "tilde",
+        "fr": "le tilde",
+        "es": "la virgulilla",
+        "it": "la tilde",
+        "nl": "de tilde"
+      },
+      {
+        "id": "writing-20",
+        "en": "ampersand",
+        "fr": "l'esperluette (f)",
+        "es": "el et",
+        "it": "la e commerciale",
+        "nl": "het en-teken"
+      }
+    ]
+  },
+  {
+    "id": "language-learning",
+    "title": "Language Learning",
+    "items": [
+      {
+        "id": "language-learning-1",
+        "en": "noun",
+        "fr": "le nom",
+        "es": "el sustantivo",
+        "it": "il sostantivo",
+        "nl": "het zelfstandig naamwoord"
+      },
+      {
+        "id": "language-learning-2",
+        "en": "verb",
+        "fr": "le verbe",
+        "es": "el verbo",
+        "it": "il verbo",
+        "nl": "het werkwoord"
+      },
+      {
+        "id": "language-learning-3",
+        "en": "adjective",
+        "fr": "l'adjectif (m)",
+        "es": "el adjetivo",
+        "it": "l'aggettivo (m)",
+        "nl": "het bijvoeglijk naamwoord"
+      },
+      {
+        "id": "language-learning-4",
+        "en": "adverb",
+        "fr": "l'adverbe (m)",
+        "es": "el adverbio",
+        "it": "l'avverbio (m)",
+        "nl": "het bijwoord"
+      },
+      {
+        "id": "language-learning-5",
+        "en": "pronoun",
+        "fr": "le pronom",
+        "es": "el pronombre",
+        "it": "il pronome",
+        "nl": "het voornaamwoord"
+      },
+      {
+        "id": "language-learning-6",
+        "en": "preposition",
+        "fr": "la préposition",
+        "es": "la preposición",
+        "it": "la preposizione",
+        "nl": "het voorzetsel"
+      },
+      {
+        "id": "language-learning-7",
+        "en": "conjunction",
+        "fr": "la conjonction",
+        "es": "la conjunción",
+        "it": "la congiunzione",
+        "nl": "het voegwoord"
+      },
+      {
+        "id": "language-learning-8",
+        "en": "article",
+        "fr": "l'article (m)",
+        "es": "el artículo",
+        "it": "l'articolo (m)",
+        "nl": "het lidwoord"
+      },
+      {
+        "id": "language-learning-9",
+        "en": "subject",
+        "fr": "le sujet",
+        "es": "el sujeto",
+        "it": "il soggetto",
+        "nl": "het onderwerp"
+      },
+      {
+        "id": "language-learning-10",
+        "en": "object",
+        "fr": "le complément",
+        "es": "el objeto",
+        "it": "il complemento",
+        "nl": "het lijdend voorwerp"
+      },
+      {
+        "id": "language-learning-11",
+        "en": "tense",
+        "fr": "le temps",
+        "es": "el tiempo verbal",
+        "it": "il tempo verbale",
+        "nl": "de werkwoordstijd"
+      },
+      {
+        "id": "language-learning-12",
+        "en": "conjugation",
+        "fr": "la conjugaison",
+        "es": "la conjugación",
+        "it": "la coniugazione",
+        "nl": "de vervoeging"
+      },
+      {
+        "id": "language-learning-13",
+        "en": "grammar",
+        "fr": "la grammaire",
+        "es": "la gramática",
+        "it": "la grammatica",
+        "nl": "de grammatica"
+      },
+      {
+        "id": "language-learning-14",
+        "en": "vocabulary",
+        "fr": "le vocabulaire",
+        "es": "el vocabulario",
+        "it": "il vocabolario",
+        "nl": "de woordenschat"
+      },
+      {
+        "id": "language-learning-15",
+        "en": "pronunciation",
+        "fr": "la prononciation",
+        "es": "la pronunciación",
+        "it": "la pronuncia",
+        "nl": "de uitspraak"
+      },
+      {
+        "id": "language-learning-16",
+        "en": "syllable",
+        "fr": "la syllabe",
+        "es": "la sílaba",
+        "it": "la sillaba",
+        "nl": "de lettergreep"
+      },
+      {
+        "id": "language-learning-17",
+        "en": "sentence",
+        "fr": "la phrase",
+        "es": "la frase",
+        "it": "la frase",
+        "nl": "de zin"
+      },
+      {
+        "id": "language-learning-18",
+        "en": "paragraph",
+        "fr": "le paragraphe",
+        "es": "el párrafo",
+        "it": "il paragrafo",
+        "nl": "de alinea"
+      },
+      {
+        "id": "language-learning-19",
+        "en": "singular",
+        "fr": "le singulier",
+        "es": "el singular",
+        "it": "il singolare",
+        "nl": "het enkelvoud"
+      },
+      {
+        "id": "language-learning-20",
+        "en": "plural",
+        "fr": "le pluriel",
+        "es": "el plural",
+        "it": "il plurale",
+        "nl": "het meervoud"
       }
     ]
   }
