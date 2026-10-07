@@ -2954,7 +2954,7 @@
           "day": "2026-10-06",
           "sectionIndex": 1,
           "language": "fr",
-          "rawText": "[Ces passent parfait;Ça tombe parfaitement bien] car [aujour'dui;aujourd'hui] j'ai enfins le temps d'organisier ma semaine à Dijon.\n\n\nBonjour Geneviève,\n\nMerci beaucoup pour toutes les [information;informations].\n\nDésolé [que je n'ai pas plus rapide répondu;de ne pas avoir répondu plus rapidement], mais j'ai beaucoup [faire;à faire] avec mon travail et pour préparer [pour mon voyage;mon voyage] cette semaine.\n\nJeudi, j'arriverai 16 h à la gare. Merci pour les infos [avec;concernant] la navette, c'est utile [de savoir;à savoir]. Mais mon plan est [d'avoir seulement un;de n'avoir qu'un] sac à dos et je voudrais faire une promenade à travers Dijon, je pense que ce serait une bonne [exercise;exercice] pour les jambes après dix heures [voyage;de voyage] ! Mais je vais suivre votre [astuce de;conseil et] demander [les informations;des informations] à l'agence DiviaMobilités, merci, c'est une [bon idée;bonne idée].\n\nEt oui, je pense [aussi, ce;aussi que ce] n'est pas [necessaire;nécessaire] d'utiliser les bus et [tram;les trams] pour visiter les [plus populaires endroits à Dijon centre ville;endroits les plus populaires du centre-ville de Dijon]. Mais j'ai un autre raison d'utiliser les bus et [trams;les trams] : ma femme et moi [planifier;prévoyons] un voyage de [randonner;randonnée] en France pour l'été 2027. Nous avons [fait;déjà fait] quelques voyages de [randonner;randonnée] dans les Alpes et maintenant, [chercher;nous cherchons] un endroit [pas trop haute;moins montagneux], mais avec [les;de] petites collines, etc. peut-être [Dijon/Bourgogne;dans la région de Dijon ou en Bourgogne].\n\nJ'ai achèté un livre \"Le Grand Dijon à pied\" avec 34 promenades et randonnées autour de Dijon, par exemple à Daix, Talant, Chenôve, Marsannay-la-Côte, etc. et je voudrais faire [un peu;un peu de] reconnaissance [de la;du] paysage autour de Dijon.\n\nEt vendredi je doit chercher mon dossard de marathon à Quetigny. [Je crois un bus ou tram;Je pense que le bus ou le tram] serait [le mieux façon;le meilleur moyen] de transport pour [ça;y aller].",
+          "rawText": "[Ces passent parfait;Ça tombe parfaitement bien] car [aujour'dui;aujourd'hui] j'ai enfins le temps d'organisier ma semaine à Dijon.\n\nBonjour Geneviève,\n\nMerci beaucoup pour toutes les [information;informations].\n\nDésolé [que je n'ai pas plus rapide répondu;de ne pas avoir répondu plus rapidement], mais j'ai beaucoup [faire;à faire] avec mon travail et pour préparer [pour mon voyage;mon voyage] cette semaine.\n\nJeudi, j'arriverai 16 h à la gare. Merci pour les infos [avec;concernant] la navette, c'est utile [de savoir;à savoir]. Mais mon plan est [d'avoir seulement un;de n'avoir qu'un] sac à dos et je voudrais faire une promenade à travers Dijon, je pense que ce serait une bonne [exercise;exercice] pour les jambes après dix heures [voyage;de voyage] ! Mais je vais suivre votre [astuce de;conseil et] demander [les informations;des informations] à l'agence DiviaMobilités, merci, c'est une [bon idée;bonne idée].\n\nEt oui, je pense [aussi, ce;aussi que ce] n'est pas [necessaire;nécessaire] d'utiliser les bus et [tram;les trams] pour visiter les [plus populaires endroits à Dijon centre ville;endroits les plus populaires du centre-ville de Dijon]. Mais j'ai un autre raison d'utiliser les bus et [trams;les trams] : ma femme et moi [planifier;prévoyons] un voyage de [randonner;randonnée] en France pour l'été 2027. Nous avons [fait;déjà fait] quelques voyages de [randonner;randonnée] dans les Alpes et maintenant, [chercher;nous cherchons] un endroit [pas trop haute;moins montagneux], mais avec [les;de] petites collines, etc. peut-être [Dijon/Bourgogne;dans la région de Dijon ou en Bourgogne].\n\nJ'ai achèté un livre \"Le Grand Dijon à pied\" avec 34 promenades et randonnées autour de Dijon, par exemple à Daix, Talant, Chenôve, Marsannay-la-Côte, etc. et je voudrais faire [un peu;un peu de] reconnaissance [de la;du] paysage autour de Dijon.\n\nEt vendredi je doit chercher mon dossard de marathon à Quetigny. [Je crois un bus ou tram;Je pense que le bus ou le tram] serait [le mieux façon;le meilleur moyen] de transport pour [ça;y aller].",
           "bits": [
             {
               "type": "flashcard",
@@ -2974,7 +2974,7 @@
             },
             {
               "type": "text",
-              "text": " j'ai enfins le temps d'organisier ma semaine à Dijon.\n\n\nBonjour Geneviève,\n\nMerci beaucoup pour toutes les "
+              "text": " j'ai enfins le temps d'organisier ma semaine à Dijon.\n\nBonjour Geneviève,\n\nMerci beaucoup pour toutes les "
             },
             {
               "type": "flashcard",
@@ -3279,13 +3279,98 @@
           ],
           "flashcardsCount": 32,
           "wordCount": 271
+        },
+        {
+          "id": "2026-10-06-sec-2",
+          "day": "2026-10-06",
+          "sectionIndex": 2,
+          "language": "fr",
+          "rawText": "j'ai experimenté un peu plus avec [le format d'exercises;les formats d'exercices] que je peux créer avec l'IA. [Peut-être;Peut-être que] nous pouvons utiliser [cette nouvelle exercise;ce nouvel exercice] pour ce soir. [Le sujet et;Le sujet, ces sont] les quartiers autour de Dijon et, au lieu de questions de [comprehension;compréhension], on a un [exercise;exercice] de vocabulaire avec [drag & drop;du glisser-déposer].",
+          "bits": [
+            {
+              "type": "text",
+              "text": "j'ai experimenté un peu plus avec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-2-fc-1",
+              "incorrect": "le format d'exercises",
+              "correct": "les formats d'exercices"
+            },
+            {
+              "type": "text",
+              "text": " que je peux créer avec l'IA. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-2-fc-2",
+              "incorrect": "Peut-être",
+              "correct": "Peut-être que"
+            },
+            {
+              "type": "text",
+              "text": " nous pouvons utiliser "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-2-fc-3",
+              "incorrect": "cette nouvelle exercise",
+              "correct": "ce nouvel exercice"
+            },
+            {
+              "type": "text",
+              "text": " pour ce soir. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-2-fc-4",
+              "incorrect": "Le sujet et",
+              "correct": "Le sujet, ces sont"
+            },
+            {
+              "type": "text",
+              "text": " les quartiers autour de Dijon et, au lieu de questions de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-2-fc-5",
+              "incorrect": "comprehension",
+              "correct": "compréhension"
+            },
+            {
+              "type": "text",
+              "text": ", on a un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-2-fc-6",
+              "incorrect": "exercise",
+              "correct": "exercice"
+            },
+            {
+              "type": "text",
+              "text": " de vocabulaire avec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-06-sec-2-fc-7",
+              "incorrect": "drag & drop",
+              "correct": "du glisser-déposer"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ],
+          "flashcardsCount": 7,
+          "wordCount": 51
         }
       ],
-      "totalWords": 271,
-      "totalFlashcards": 32
+      "totalWords": 322,
+      "totalFlashcards": 39
     }
   ],
-  "totalSections": 27,
-  "totalWords": 2325,
-  "totalFlashcards": 283
+  "totalSections": 28,
+  "totalWords": 2376,
+  "totalFlashcards": 290
 }
