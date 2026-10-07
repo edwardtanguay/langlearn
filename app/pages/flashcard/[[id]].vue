@@ -722,7 +722,6 @@ function markAction(actionTaken: string, newStatus?: string) {
 
   if (slot) {
     if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
-      slot.unsuccessfulCount++
       slot.status = 'testing'
     } else if (actionTaken === 'MARKED_AS_LEARNED') {
       slot.status = 'learned'
@@ -776,6 +775,10 @@ function markAction(actionTaken: string, newStatus?: string) {
 
   setTimeout(() => {
     if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
+      // Increment attempt count as card is rotated to the back so counter doesn't jump prematurely
+      if (slot) {
+        slot.unsuccessfulCount++
+      }
       // Keep in batch: push current card to the back of the unlearned queue
       const [cardToRotate] = testQueue.value.splice(currentQueueIndex.value, 1)
       if (cardToRotate) {
@@ -1512,16 +1515,16 @@ onBeforeUnmount(() => {
             <!-- Random activity links after 50 cards tested -->
             <div
               v-if="hasReachedDailyGoal && currentBatchRandomActivities.length > 0 && !isBatchComplete"
-              class="w-full flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2.5 pt-3 pb-1 text-[11px] sm:text-xs text-gray-400 dark:text-gray-500"
+              class="w-full flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2.5 pt-3 pb-1 text-sm text-gray-400 dark:text-gray-400"
             >
               <template v-for="(act, idx) in currentBatchRandomActivities" :key="act.path">
                 <NuxtLink
                   :to="act.path"
-                  class="underline hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                  class="underline text-gray-400 hover:text-gray-200 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
                 >
                   {{ act.title }}
                 </NuxtLink>
-                <span v-if="idx < currentBatchRandomActivities.length - 1" class="hidden sm:inline opacity-40">|</span>
+                <span v-if="idx < currentBatchRandomActivities.length - 1" class="hidden sm:inline text-gray-500 opacity-60">|</span>
               </template>
             </div>
 

@@ -28,9 +28,27 @@ const languageColors: Record<string, string> = {
   el: '#ea580c'
 }
 
+const languageTextColors: Record<string, string> = {
+  fr: '#3b82f6', // French = brighter blue
+  it: '#22c55e', // Italian = brighter green
+  es: '#ef4444', // Spanish = brighter red
+  nl: '#eab308', // Dutch = brighter yellow
+  pl: '#cbd5e1', // Polish = brighter gray
+  de: '#d97706', // German = brighter warm amber/brown
+  ru: '#94a3b8',
+  is: '#06b6d4',
+  da: '#a855f7',
+  el: '#f97316'
+}
+
 function getLanguageColor(lang?: string): string {
   const code = (lang || 'fr').toLowerCase()
   return languageColors[code] || '#2563eb'
+}
+
+function getLanguageTextColor(lang?: string): string {
+  const code = (lang || 'fr').toLowerCase()
+  return languageTextColors[code] || getLanguageColor(lang)
 }
 
 function getSlotStyle(slot: BatchSlot) {
@@ -44,6 +62,7 @@ function getSlotStyle(slot: BatchSlot) {
   }
 
   const color = getLanguageColor(slot.language)
+  const textColor = getLanguageTextColor(slot.language)
 
   if (slot.status === 'learned') {
     return {
@@ -58,7 +77,7 @@ function getSlotStyle(slot: BatchSlot) {
     return {
       backgroundColor: `color-mix(in srgb, ${color} 25%, transparent)`,
       borderColor: color,
-      color: color,
+      color: textColor,
       opacity: 1
     }
   }
@@ -67,7 +86,7 @@ function getSlotStyle(slot: BatchSlot) {
   return {
     backgroundColor: `color-mix(in srgb, ${color} 15%, transparent)`,
     borderColor: `color-mix(in srgb, ${color} 50%, transparent)`,
-    color: color,
+    color: textColor,
     opacity: 0.95
   }
 }
@@ -120,10 +139,18 @@ const percent = computed(() => {
         <!-- The Pill Capsule -->
         <div
           class="w-full h-8 rounded-lg flex items-center justify-center font-bold text-xs transition-all duration-200 select-none cursor-default border"
-          :style="getSlotStyle(slot)"
+          :style="[
+            getSlotStyle(slot),
+            slot.id === activeCardId && !isBatchComplete
+              ? {
+                  borderColor: getLanguageTextColor(slot.language),
+                  boxShadow: `0 0 0 2px var(--tw-ring-offset-color, #ffffff), 0 0 0 4px ${getLanguageTextColor(slot.language)}, 0 4px 6px -1px rgba(0, 0, 0, 0.1)`
+                }
+              : {}
+          ]"
           :class="[
             slot.id === activeCardId && !isBatchComplete
-              ? 'ring-2 ring-indigo-600 dark:ring-indigo-400 ring-offset-2 dark:ring-offset-gray-900 shadow-md scale-105 z-10'
+              ? 'scale-105 z-10'
               : ''
           ]"
           :title="`Card ${slot.slotIndex + 1}: ${
@@ -161,7 +188,7 @@ const percent = computed(() => {
           <span
             v-else-if="slot.id === activeCardId && !isBatchComplete"
             class="text-xs font-mono font-bold leading-none animate-slow-pulse"
-            :style="{ color: getLanguageColor(slot.language) }"
+            :style="{ color: getLanguageTextColor(slot.language) }"
           >
             {{ slot.unsuccessfulCount + 1 }}x
           </span>
@@ -170,7 +197,7 @@ const percent = computed(() => {
           <span
             v-else-if="slot.unsuccessfulCount > 0"
             class="text-xs font-mono font-bold leading-none"
-            :style="{ color: getLanguageColor(slot.language) }"
+            :style="{ color: getLanguageTextColor(slot.language) }"
           >
             {{ slot.unsuccessfulCount }}x
           </span>
@@ -179,7 +206,7 @@ const percent = computed(() => {
           <svg
             v-else
             class="w-3.5 h-3.5"
-            :style="{ color: getLanguageColor(slot.language) }"
+            :style="{ color: getLanguageTextColor(slot.language) }"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -195,7 +222,8 @@ const percent = computed(() => {
         <div class="h-3.5 flex items-center justify-center mt-1">
           <svg
             v-if="slot.id === activeCardId && !isBatchComplete"
-            class="w-3 h-3 text-indigo-600 dark:text-indigo-400 animate-pulse drop-shadow-xs"
+            class="w-3 h-3 animate-pulse drop-shadow-xs"
+            :style="{ color: getLanguageTextColor(slot.language) }"
             viewBox="0 0 24 24"
             fill="currentColor"
           >
@@ -215,8 +243,8 @@ const percent = computed(() => {
     transform: scale(1);
   }
   50% {
-    opacity: 0.6;
-    transform: scale(1.1);
+    opacity: 0.3;
+    transform: scale(1.08);
   }
 }
 

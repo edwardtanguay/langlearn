@@ -94,5 +94,5 @@
 	- la graffetta, la cucitrice, le forbici, la cartella, la penna, la matita, la tastiera, il mouse, la scrivania, il monitor, la stampante, il quaderno, la gomma, il nastro adesivo, l'evidenziatore (m), la busta, il calendario, la calcolatrice, la valigetta, i foglietti adesivi
 - writing
 	- il punto, la virgola, il punto e virgola, i due punti, il punto esclamativo, il punto interrogativo, le virgolette, i caporali, l'apostrofo (m), il trattino, la lineetta, le parentesi tonde, le parentesi quadre, le parentesi graffe, i puntini di sospensione, la barra obliqua, la barra rovesciata, il trattino basso, la tilde, la e commerciale
-- language learning
+- language
 	- il sostantivo, il verbo, l'aggettivo (m), l'avverbio (m), il pronome, la preposizione, la congiunzione, l'articolo (m), il soggetto, il complemento, il tempo verbale, la coniugazione, la grammatica, il vocabolario, la pronuncia, la sillaba, la frase, il paragrafo, il singolare, il plurale

@@ -44,6 +44,21 @@ const categories = ref<LanguageCategory[]>([
         id: 'fr-3',
         title: '30 minutes pronunciation video with Fanny',
         url: 'https://www.youtube.com/watch?v=Bmxdtrv4uQM'
+      },
+      {
+        id: 'fr-4',
+        title: 'Paris Podcast Videos',
+        url: 'https://www.youtube.com/@ParisPodcast1'
+      },
+      {
+        id: 'fr-5',
+        title: 'Cozy French',
+        url: 'https://www.youtube.com/@TheCozyFrench/videos'
+      },
+      {
+        id: 'fr-6',
+        title: 'La Psyché Français',
+        url: 'https://www.youtube.com/@LaPsych%C3%A912/videos'
       }
     ]
   },

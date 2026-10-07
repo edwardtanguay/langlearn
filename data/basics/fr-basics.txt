@@ -95,5 +95,5 @@
 	- le trombone, l'agrafeuse (f), les ciseaux, le dossier, le stylo, le crayon, le clavier, la souris, le bureau, le moniteur, l'imprimante (f), le carnet, la gomme, le ruban adhésif, le surligneur, l'enveloppe (f), le calendrier, la calculatrice, la mallette, les notes adhésives
 - writing
 	- le point, la virgule, le point-virgule, les deux-points, le point d'exclamation, le point d'interrogation, les guillemets, les guillemets français, l'apostrophe (f), le trait d'union, le tiret, les parenthèses, les crochets, les accolades, les points de suspension, la barre oblique, la barre oblique inverse, le tiret bas, le tilde, l'esperluette (f)
-- language learning
+- language
 	- le nom, le verbe, l'adjectif (m), l'adverbe (m), le pronom, la préposition, la conjonction, l'article (m), le sujet, le complément, le temps, la conjugaison, la grammaire, le vocabulaire, la prononciation, la syllabe, la phrase, le paragraphe, le singulier, le pluriel

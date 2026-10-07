@@ -4794,11 +4794,11 @@
     ]
   },
   {
-    "id": "language-learning",
-    "title": "Language Learning",
+    "id": "language",
+    "title": "Language",
     "items": [
       {
-        "id": "language-learning-1",
+        "id": "language-1",
         "en": "noun",
         "fr": "le nom",
         "es": "el sustantivo",
@@ -4806,7 +4806,7 @@
         "nl": "het zelfstandig naamwoord"
       },
       {
-        "id": "language-learning-2",
+        "id": "language-2",
         "en": "verb",
         "fr": "le verbe",
         "es": "el verbo",
@@ -4814,7 +4814,7 @@
         "nl": "het werkwoord"
       },
       {
-        "id": "language-learning-3",
+        "id": "language-3",
         "en": "adjective",
         "fr": "l'adjectif (m)",
         "es": "el adjetivo",
@@ -4822,7 +4822,7 @@
         "nl": "het bijvoeglijk naamwoord"
       },
       {
-        "id": "language-learning-4",
+        "id": "language-4",
         "en": "adverb",
         "fr": "l'adverbe (m)",
         "es": "el adverbio",
@@ -4830,7 +4830,7 @@
         "nl": "het bijwoord"
       },
       {
-        "id": "language-learning-5",
+        "id": "language-5",
         "en": "pronoun",
         "fr": "le pronom",
         "es": "el pronombre",
@@ -4838,7 +4838,7 @@
         "nl": "het voornaamwoord"
       },
       {
-        "id": "language-learning-6",
+        "id": "language-6",
         "en": "preposition",
         "fr": "la préposition",
         "es": "la preposición",
@@ -4846,7 +4846,7 @@
         "nl": "het voorzetsel"
       },
       {
-        "id": "language-learning-7",
+        "id": "language-7",
         "en": "conjunction",
         "fr": "la conjonction",
         "es": "la conjunción",
@@ -4854,7 +4854,7 @@
         "nl": "het voegwoord"
       },
       {
-        "id": "language-learning-8",
+        "id": "language-8",
         "en": "article",
         "fr": "l'article (m)",
         "es": "el artículo",
@@ -4862,7 +4862,7 @@
         "nl": "het lidwoord"
       },
       {
-        "id": "language-learning-9",
+        "id": "language-9",
         "en": "subject",
         "fr": "le sujet",
         "es": "el sujeto",
@@ -4870,7 +4870,7 @@
         "nl": "het onderwerp"
       },
       {
-        "id": "language-learning-10",
+        "id": "language-10",
         "en": "object",
         "fr": "le complément",
         "es": "el objeto",
@@ -4878,7 +4878,7 @@
         "nl": "het lijdend voorwerp"
       },
       {
-        "id": "language-learning-11",
+        "id": "language-11",
         "en": "tense",
         "fr": "le temps",
         "es": "el tiempo verbal",
@@ -4886,7 +4886,7 @@
         "nl": "de werkwoordstijd"
       },
       {
-        "id": "language-learning-12",
+        "id": "language-12",
         "en": "conjugation",
         "fr": "la conjugaison",
         "es": "la conjugación",
@@ -4894,7 +4894,7 @@
         "nl": "de vervoeging"
       },
       {
-        "id": "language-learning-13",
+        "id": "language-13",
         "en": "grammar",
         "fr": "la grammaire",
         "es": "la gramática",
@@ -4902,7 +4902,7 @@
         "nl": "de grammatica"
       },
       {
-        "id": "language-learning-14",
+        "id": "language-14",
         "en": "vocabulary",
         "fr": "le vocabulaire",
         "es": "el vocabulario",
@@ -4910,7 +4910,7 @@
         "nl": "de woordenschat"
       },
       {
-        "id": "language-learning-15",
+        "id": "language-15",
         "en": "pronunciation",
         "fr": "la prononciation",
         "es": "la pronunciación",
@@ -4918,7 +4918,7 @@
         "nl": "de uitspraak"
       },
       {
-        "id": "language-learning-16",
+        "id": "language-16",
         "en": "syllable",
         "fr": "la syllabe",
         "es": "la sílaba",
@@ -4926,7 +4926,7 @@
         "nl": "de lettergreep"
       },
       {
-        "id": "language-learning-17",
+        "id": "language-17",
         "en": "sentence",
         "fr": "la phrase",
         "es": "la frase",
@@ -4934,7 +4934,7 @@
         "nl": "de zin"
       },
       {
-        "id": "language-learning-18",
+        "id": "language-18",
         "en": "paragraph",
         "fr": "le paragraphe",
         "es": "el párrafo",
@@ -4942,7 +4942,7 @@
         "nl": "de alinea"
       },
       {
-        "id": "language-learning-19",
+        "id": "language-19",
         "en": "singular",
         "fr": "le singulier",
         "es": "el singular",
@@ -4950,7 +4950,7 @@
         "nl": "het enkelvoud"
       },
       {
-        "id": "language-learning-20",
+        "id": "language-20",
         "en": "plural",
         "fr": "le pluriel",
         "es": "el plural",

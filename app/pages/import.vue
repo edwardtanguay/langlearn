@@ -82,9 +82,27 @@ const languageColors: Record<string, string> = {
   el: '#ea580c'
 }
 
+const languageTextColors: Record<string, string> = {
+  fr: '#2563eb',
+  es: '#dc2626',
+  it: '#16a34a',
+  nl: '#ca8a04',
+  pl: '#9ca3af',
+  de: '#d97706', // German = brighter warm amber/brown
+  ru: '#4b5563',
+  is: '#0891b2',
+  da: '#9333ea',
+  el: '#ea580c'
+}
+
 function getCardLanguageColor(card: PreviewCardItem): string {
   const code = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
   return languageColors[code] || '#2563eb'
+}
+
+function getCardLanguageTextColor(card: PreviewCardItem): string {
+  const code = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
+  return languageTextColors[code] || getCardLanguageColor(card)
 }
 
 const mobileLanguageBreakdown = computed(() => {
@@ -294,26 +312,24 @@ async function handleImport() {
 
               <!-- Google Translate reminder box -->
               <div class="p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 rounded-2xl text-left space-y-2">
-                <div class="flex items-center gap-1.5 text-amber-800 dark:text-amber-300 font-bold text-xs uppercase tracking-wider">
-                  <span>⚠️ Important Next Step</span>
-                </div>
                 <p class="text-xs text-amber-900 dark:text-amber-200/90 leading-relaxed">
                   Be sure to delete the cards you just imported from your saved list on Google Translate so you don't import them again later.
                 </p>
+                <div class="pt-1">
+                  <a
+                    href="https://translate.google.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-950 dark:text-amber-300 underline hover:text-amber-700 dark:hover:text-amber-200 transition-colors"
+                  >
+                    <span>Delete cards at Google Translate</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </div>
               </div>
 
               <!-- Action Buttons -->
-              <div class="pt-2 space-y-2.5">
-                <a
-                  href="https://translate.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-                >
-                  <span>Open Google Translate</span>
-                  <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </a>
-
+              <div class="pt-2">
                 <NuxtLink
                   to="/flashcard"
                   class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
@@ -380,10 +396,9 @@ async function handleImport() {
 
             <!-- (1) Cards that WILL NOT be imported -->
             <div v-if="mobilePreviewResult.willNotImport.length > 0" class="space-y-3">
-              <div class="flex items-center gap-2 pt-1 pb-0.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0"></span>
+              <div class="pt-1 pb-0.5">
                 <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
-                  Will NOT be imported ({{ mobilePreviewResult.willNotImport.length }})
+                  {{ mobilePreviewResult.willNotImport.length }} {{ mobilePreviewResult.willNotImport.length === 1 ? 'card' : 'cards' }} will not be imported
                 </h2>
               </div>
 
@@ -448,10 +463,9 @@ async function handleImport() {
 
             <!-- (2) Cards that WILL be imported -->
             <div v-if="mobilePreviewResult.willImport.length > 0" class="space-y-3">
-              <div class="flex items-center gap-2 pt-2 pb-0.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+              <div class="pt-2 pb-0.5">
                 <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  Will be imported ({{ mobilePreviewResult.willImport.length }})
+                  {{ mobilePreviewResult.willImport.length }} {{ mobilePreviewResult.willImport.length === 1 ? 'card' : 'cards' }} will be imported
                 </h2>
               </div>
 
@@ -471,7 +485,7 @@ async function handleImport() {
                       class="px-2 py-0.5 rounded-md text-[11px] font-bold"
                       :style="{
                         backgroundColor: `color-mix(in srgb, ${getCardLanguageColor(card)} 18%, transparent)`,
-                        color: getCardLanguageColor(card)
+                        color: getCardLanguageTextColor(card)
                       }"
                     >
                       ✓ Ready to import ({{ (card.backLanguage || card.frontLanguage || 'FR').toUpperCase() }})
@@ -512,7 +526,7 @@ async function handleImport() {
                           }"
                         ></div>
                         <span class="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold text-white drop-shadow-sm font-mono">
-                          {{ card.rank }} / 5.0
+                          {{ card.rank }}
                         </span>
                       </div>
                     </div>
@@ -536,24 +550,24 @@ async function handleImport() {
             </div>
 
             <!-- Overall Report Summary Box at the Bottom -->
-            <div class="p-4 bg-gray-50 dark:bg-gray-850 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-xs space-y-2 text-xs">
-              <div class="font-bold text-gray-900 dark:text-white uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-                <span>📊 Overall Import Report</span>
+            <div class="p-4 bg-black dark:bg-black border border-gray-800 rounded-2xl shadow-xs space-y-2 text-xs text-gray-200">
+              <div class="font-bold text-gray-100 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                <span>Overall Import Report</span>
               </div>
-              <div class="flex items-center justify-between text-gray-700 dark:text-gray-300">
+              <div class="flex items-center justify-between text-gray-300">
                 <span>Total cards found:</span>
                 <span class="font-bold font-mono">{{ mobilePreviewResult.totalParsed }}</span>
               </div>
-              <div class="flex items-center justify-between text-gray-700 dark:text-gray-300">
+              <div class="flex items-center justify-between text-gray-300">
                 <span>Ready to import:</span>
-                <span class="font-bold font-mono text-emerald-600 dark:text-emerald-400">{{ mobilePreviewResult.willImport.length }}</span>
+                <span class="font-bold font-mono text-emerald-400">{{ mobilePreviewResult.willImport.length }}</span>
               </div>
-              <div class="flex items-center justify-between text-gray-700 dark:text-gray-300">
+              <div class="flex items-center justify-between text-gray-300">
                 <span>Skipped:</span>
-                <span class="font-bold font-mono text-rose-600 dark:text-rose-400">{{ mobilePreviewResult.willNotImport.length }}</span>
+                <span class="font-bold font-mono text-rose-400">{{ mobilePreviewResult.willNotImport.length }}</span>
               </div>
-              <div v-if="Object.keys(mobileLanguageBreakdown).length > 0" class="pt-2 border-t border-gray-200 dark:border-gray-750 flex flex-wrap items-center gap-1.5">
-                <span class="text-gray-500 dark:text-gray-400 text-[11px] font-semibold">Languages:</span>
+              <div v-if="Object.keys(mobileLanguageBreakdown).length > 0" class="pt-2 border-t border-gray-800 flex flex-wrap items-center gap-1.5">
+                <span class="text-gray-400 text-[11px] font-semibold">Languages:</span>
                 <span
                   v-for="(count, lang) in mobileLanguageBreakdown"
                   :key="lang"

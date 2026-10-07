@@ -92,5 +92,5 @@
 	- paper clip, stapler, scissors, folder, pen, pencil, keyboard, mouse, desk, monitor, printer, notebook, eraser, tape, highlighter, envelope, calendar, calculator, briefcase, sticky notes
 - writing
 	- period, comma, semicolon, colon, exclamation mark, question mark, quotation marks, guillemets, apostrophe, hyphen, dash, parentheses, square brackets, curly brackets, ellipsis, slash, backslash, underscore, tilde, ampersand
-- language learning
+- language
 	- noun, verb, adjective, adverb, pronoun, preposition, conjunction, article, subject, object, tense, conjugation, grammar, vocabulary, pronunciation, syllable, sentence, paragraph, singular, plural

@@ -183,7 +183,7 @@ const navItems = computed(() => {
         <!-- Logo / User Profile (First Name Only) -->
         <div class="flex items-center space-x-3">
           <ClientOnly>
-            <NuxtLink :to="loggedIn ? (isAdmin ? '/flashcard' : '/member') : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
+            <NuxtLink :to="loggedIn ? (isAdmin ? '/profile' : '/member') : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
               <div class="flex flex-row items-center gap-2.5">
                 <template v-if="loggedIn">
                   <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs">
