@@ -19,6 +19,14 @@ If you are asked to make a "miniapp", see /output/miniapps/agents.md"
   - use `transition-all duration-300` on all blurred elements so they fade in smoothly once loaded
   - re-trigger the blur (set `isStatsLoading = true`) whenever the user switches languages or contexts, not just on initial page load
 
+# user groups
+
+There are three user groups:
+
+- **admins**: Have an account at Kinde, can do anything, see all pages, and are shown a "Logout" link.
+- **members**: Have an account at Kinde, only have access to certain pages and features on those pages, and are shown a "Logout" link.
+- **anonymousUsers**: Do not have an account at Kinde, and are shown "Login" and "Register" links.
+
 # language colors reference
 
 Here are the colors defined for the languages:
