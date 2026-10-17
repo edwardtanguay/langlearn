@@ -27,9 +27,10 @@ There are three user groups:
 - **members**: Have an account at Kinde, only have access to certain pages and features on those pages, and are shown a "Logout" link.
 - **anonymousUsers**: Do not have an account at Kinde, and are shown "Login" and "Register" links.
 
-# language colors reference
+# current languages
 
-Here are the colors defined for the languages:
+The languages currently active and supported in the application are:
+- English (`en`): `#0ea5e9` (sky blue)
 - French (`fr`): `#333388` (dark blue)
 - Spanish (`es`): `#be185d` (magenta / pink-red)
 - Italian (`it`): `#194d19` (dark green / forest green)
