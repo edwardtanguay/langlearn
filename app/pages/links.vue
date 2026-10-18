@@ -141,6 +141,14 @@ function toggleCrudToolbar(id: string, event?: Event) {
   activeCrudLinkId.value = activeCrudLinkId.value === id ? null : id
 }
 
+function handleCardClick(link: LinkItem) {
+  if (activeCrudLinkId.value) {
+    activeCrudLinkId.value = null
+    return
+  }
+  openLink(link.url)
+}
+
 function handleClickOutside(e: MouseEvent) {
   const target = e.target as HTMLElement
   if (target && !target.closest('.crud-toolbar')) {
@@ -312,26 +320,7 @@ const executeDelete = async () => {
 
 <template>
   <div class="max-w-5xl mx-auto py-10 px-4 min-h-[600px] space-y-10">
-    <!-- Hero Header -->
-    <div class="bg-gradient-to-r from-gray-900 via-gray-850 to-gray-900 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-800 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="space-y-2 text-center md:text-left">
-        <h1 class="text-2xl md:text-3xl font-black tracking-tight">Links</h1>
-        <p class="text-sm text-gray-300 max-w-xl leading-relaxed">
-          Hand-picked native videos, tutorials, and websites organized by language to elevate your real-world comprehension.
-        </p>
-      </div>
-
-      <!-- Admin Add Link Button -->
-      <div v-if="isAdmin" class="shrink-0">
-        <button
-          @click="openAddModal('fr')"
-          class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
-        >
-          <PlusIcon class="w-4 h-4" />
-          <span>Add New Link</span>
-        </button>
-      </div>
-    </div>
+    <h1 class="sr-only">Links</h1>
 
     <!-- Loading State -->
     <div v-if="isLoading" class="py-16 flex flex-col items-center justify-center space-y-3">
@@ -364,7 +353,7 @@ const executeDelete = async () => {
         <li
           v-for="(link, idx) in category.links"
           :key="link.id"
-          @click="openLink(link.url)"
+          @click="handleCardClick(link)"
           class="p-4 rounded-xl border shadow-xs flex items-start justify-between gap-3 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
           :style="{
             backgroundColor: `color-mix(in srgb, ${category.color} 14%, #111827)`,
@@ -376,7 +365,7 @@ const executeDelete = async () => {
             <div
               v-if="isAdmin && activeCrudLinkId === link.id"
               @click.stop="toggleCrudToolbar(link.id, $event)"
-              class="crud-toolbar flex items-center gap-1.5 bg-black/95 px-3 py-1.5 rounded-xl text-xs shadow-md border border-gray-700 w-fit cursor-pointer"
+              class="crud-toolbar flex items-center gap-1.5 bg-black/95 px-3 py-1.5 rounded-xl text-xs shadow-md border border-gray-700 w-full cursor-pointer"
             >
               <!-- Add New Link in this language -->
               <button
@@ -437,7 +426,7 @@ const executeDelete = async () => {
               v-else
               @click.stop="isAdmin ? toggleCrudToolbar(link.id, $event) : openLink(link.url)"
               class="font-bold text-base leading-snug w-fit"
-              :class="{ 'cursor-pointer hover:underline': isAdmin }"
+              :class="{ 'cursor-pointer': isAdmin }"
               :style="{ color: category.color }"
             >
               <span>{{ link.title.trim() }}</span>&nbsp;<span class="inline-block whitespace-nowrap align-middle">
