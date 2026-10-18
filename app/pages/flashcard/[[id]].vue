@@ -442,8 +442,9 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
       userGroupSize.value = results.length
     }
 
-    if (testQueue.value[0]) {
-      sliderValue.value = testQueue.value[0].rank
+    const firstCard = testQueue.value[0]
+    if (firstCard) {
+      sliderValue.value = firstCard.rank
     }
   } catch (err) {
     if (thisReqId === activeBatchRequestId) {
@@ -471,7 +472,8 @@ function handleSelectSlotCard(cardId: string) {
   if (idx !== -1) {
     currentQueueIndex.value = idx
     isFlipped.value = false
-    if (testQueue.value[idx]) sliderValue.value = testQueue.value[idx].rank
+    const card = testQueue.value[idx]
+    if (card) sliderValue.value = card.rank
     return
   }
 
@@ -806,20 +808,30 @@ function markAction(actionTaken: string, newStatus?: string) {
       if (slot) {
         slot.unsuccessfulCount++
       }
+      const prevIdx = currentQueueIndex.value
       // Keep in batch: push current card to the back of the unlearned queue
-      const [cardToRotate] = testQueue.value.splice(currentQueueIndex.value, 1)
+      const [cardToRotate] = testQueue.value.splice(prevIdx, 1)
       if (cardToRotate) {
         testQueue.value.push(cardToRotate)
       }
-      currentQueueIndex.value = 0
+      // If user was at the end of the batch, wrap to 0, otherwise stay at prevIdx (which now holds the next card)
+      if (prevIdx >= testQueue.value.length - 1) {
+        currentQueueIndex.value = 0
+      } else {
+        currentQueueIndex.value = prevIdx
+      }
       isFlipped.value = false
-      if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
+      const current = testQueue.value[currentQueueIndex.value]
+      if (current) {
+        sliderValue.value = current.rank
+      }
 
       cardAnimState.value = 'entering'
       setTimeout(() => { cardAnimState.value = 'idle' }, 220)
     } else {
       // Learned, Parked, or Deleted: remove card from active batch
-      const [removedCard] = testQueue.value.splice(currentQueueIndex.value, 1)
+      const prevIdx = currentQueueIndex.value
+      const [removedCard] = testQueue.value.splice(prevIdx, 1)
       if (removedCard) {
         lastCompletedBatchCardIds.value.push(removedCard.id)
       }
@@ -827,8 +839,16 @@ function markAction(actionTaken: string, newStatus?: string) {
       isFlipped.value = false
 
       if (testQueue.value.length > 0) {
-        currentQueueIndex.value = 0
-        if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
+        // Move to the next card (which slid into prevIdx), or wrap to 0 if at end
+        if (prevIdx >= testQueue.value.length) {
+          currentQueueIndex.value = 0
+        } else {
+          currentQueueIndex.value = prevIdx
+        }
+        const nextCard = testQueue.value[currentQueueIndex.value]
+        if (nextCard) {
+          sliderValue.value = nextCard.rank
+        }
         cardAnimState.value = 'entering'
         setTimeout(() => { cardAnimState.value = 'idle' }, 220)
       } else {
@@ -838,7 +858,8 @@ function markAction(actionTaken: string, newStatus?: string) {
           if (nextCard) {
             testQueue.value.push(nextCard)
             currentQueueIndex.value = 0
-            if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
+            const firstCard = testQueue.value[0]
+            if (firstCard) sliderValue.value = firstCard.rank
             cardAnimState.value = 'entering'
             setTimeout(() => { cardAnimState.value = 'idle' }, 220)
             return

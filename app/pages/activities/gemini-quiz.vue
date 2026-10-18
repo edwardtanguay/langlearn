@@ -391,15 +391,12 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
             <div class="space-y-3 flex-1 flex flex-col">
               <!-- Prompt Card Header Container -->
               <div class="relative min-h-[36px] flex items-center">
-                <!-- Card Title extending 100% width with pill background (Click to reveal CRUD bar if admin) -->
+                <!-- Card Title (Clean text, not a button pill; click to reveal CRUD bar if admin) -->
                 <h3
                   @click.stop="isAdmin ? toggleCrudToolbar(p.id, $event) : null"
-                  class="w-full text-center text-base font-black tracking-wide text-white py-2 px-5 rounded-full shadow-xs truncate select-none"
-                  :class="{ 'cursor-pointer hover:brightness-110': isAdmin }"
-                  :style="{
-                    backgroundColor: group.color,
-                    textShadow: '0 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.9)'
-                  }"
+                  class="w-full text-center text-base font-black tracking-wide py-1 px-2 select-none truncate"
+                  :class="{ 'cursor-pointer hover:opacity-80': isAdmin }"
+                  :style="{ color: group.color }"
                 >
                   {{ p.title }}
                 </h3>
@@ -408,7 +405,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                 <div
                   v-if="isAdmin && activeCrudPromptId === p.id"
                   @click.stop="toggleCrudToolbar(p.id, $event)"
-                  class="absolute inset-0 flex items-center justify-center gap-1 bg-black px-3 py-1 rounded-full text-xs shadow-md transition-all duration-200 z-10 cursor-pointer"
+                  class="absolute inset-0 flex items-center justify-center gap-1 bg-black/95 px-3 py-1 rounded-xl text-xs shadow-md transition-all duration-200 z-10 cursor-pointer border border-gray-700"
                 >
                   <!-- Add New Prompt in this language -->
                   <button
@@ -480,22 +477,18 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               </p>
             </div>
 
-            <!-- Action Status Indicator -->
+            <!-- Action Status Helper Footer (Integrated text, not a button) -->
             <div
-              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold text-white transition-all duration-200 flex items-center justify-center gap-1.5 shadow-xs border-2 pointer-events-none"
-              :style="{
-                borderColor: copiedPromptId === p.id ? '#059669' : group.color,
-                backgroundColor: copiedPromptId === p.id ? '#0596691a' : (group.color + '26')
-              }"
+              class="w-full pt-1 text-xs font-semibold text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1.5 pointer-events-none transition-colors"
             >
               <template v-if="copiedPromptId === p.id">
-                <UIcon name="lucide:check" class="w-4 h-4 text-emerald-400" />
-                <span class="text-emerald-300">Copied! Opening Gemini&nbsp;AI...</span>
+                <UIcon name="lucide:check" class="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                <span class="text-emerald-600 dark:text-emerald-300 font-bold">Copied! Opening Gemini&nbsp;AI...</span>
               </template>
               <template v-else>
-                <UIcon name="lucide:copy-check" class="w-4 h-4" />
+                <UIcon name="lucide:copy" class="w-3.5 h-3.5 opacity-70" />
                 <span>Click card to copy &amp; open Gemini AI</span>
-                <UIcon name="lucide:arrow-up-right" class="w-4 h-4 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <UIcon name="lucide:arrow-up-right" class="w-3.5 h-3.5 opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </template>
             </div>
           </div>

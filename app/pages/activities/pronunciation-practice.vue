@@ -378,7 +378,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         </div>
 
         <!-- Reveal / Pronunciation Area (Positioned halfway between phrase and bottom of card) -->
-        <div class="w-full mb-7 h-12 flex items-center justify-center">
+        <div class="w-full mb-7 min-h-[56px] flex items-center justify-center">
           <!-- Unrevealed Button -->
           <button
             v-if="!isRevealed"
@@ -396,18 +396,18 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
           <!-- Revealed Pronunciation -->
           <div
             v-else
-            class="w-full max-w-md mx-auto h-11 px-4 rounded-2xl bg-black/40 border border-white/20 backdrop-blur-xs flex items-center justify-center"
+            class="w-full max-w-md mx-auto min-h-[56px] py-2 px-5 rounded-2xl bg-black/50 border border-white/20 backdrop-blur-xs flex items-center justify-center shadow-lg"
           >
             <div 
               class="tracking-wide"
-              :class="(currentCard.pronunciation?.length ?? 0) > 20 ? 'text-xs sm:text-sm' : 'text-sm sm:text-base md:text-lg'"
+              :class="(currentCard.pronunciation?.length ?? 0) > 20 ? 'text-base sm:text-xl md:text-2xl' : 'text-xl sm:text-2xl md:text-3xl'"
               style="font-family: 'Courier New', Courier, monospace"
             >
               <template v-if="(currentCard.pronunciation?.length ?? 0) > 20">
-                <span class="text-yellow-300 font-bold" v-html="formatPronunciationHtml(currentCard.pronunciation)"></span>
+                <span class="text-yellow-300 font-extrabold" v-html="formatPronunciationHtml(currentCard.pronunciation)"></span>
               </template>
               <template v-else>
-                <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-bold" v-html="formatPronunciationHtml(currentCard.pronunciation)"></span><span class="text-yellow-300/40 font-normal"> ]</span>
+                <span class="text-yellow-300/40 font-normal">[ </span><span class="text-yellow-300 font-extrabold" v-html="formatPronunciationHtml(currentCard.pronunciation)"></span><span class="text-yellow-300/40 font-normal"> ]</span>
               </template>
             </div>
           </div>

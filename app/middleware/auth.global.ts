@@ -4,10 +4,16 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo('/links', { replace: true })
   }
 
-  const { loggedIn, isAdmin, fetchRole } = useCurrentUser()
+  const { loggedIn, fetchRole } = useCurrentUser()
+  const returnUrlCookie = useCookie<string | null>('auth_return_url', { maxAge: 3600, sameSite: 'lax', path: '/' })
 
   // 1. Unauthenticated / Unknown Users
   if (!loggedIn.value) {
+    // If a member's session expired while on /member or bookmarks /member, redirect to Welcome page as unknownUser
+    if (to.path === '/member') {
+      return navigateTo('/', { replace: true })
+    }
+
     const unknownAllowedPaths = [
       '/',
       '/links',
@@ -15,8 +21,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
       '/activities/gemini-quiz'
     ]
 
-    // If trying to access /member or any other protected route, redirect to login
+    // If trying to access a forbidden protected route (e.g. /import), remember destination and redirect to login
     if (!unknownAllowedPaths.includes(to.path)) {
+      returnUrlCookie.value = to.fullPath
       return navigateTo('/api/login', { external: true })
     }
     return
@@ -25,6 +32,28 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // 2. Authenticated Users (Resolve role)
   const role = await fetchRole()
   const isUserAdmin = role === 'admin'
+
+  // If returning from login, check for saved destination
+  const savedTarget = returnUrlCookie.value
+  if (savedTarget && (to.path === '/' || to.path === '/member' || to.path === '/flashcard')) {
+    returnUrlCookie.value = null
+    if (isUserAdmin) {
+      return navigateTo(savedTarget, { replace: true })
+    } else {
+      const memberAllowedPaths = [
+        '/member',
+        '/links',
+        '/about',
+        '/user',
+        '/profile',
+        '/activities/gemini-quiz'
+      ]
+      const targetBase = savedTarget.split('?')[0] || ''
+      if (memberAllowedPaths.includes(targetBase)) {
+        return navigateTo(savedTarget, { replace: true })
+      }
+    }
+  }
 
   // Admin routing
   if (isUserAdmin) {

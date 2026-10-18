@@ -77,10 +77,10 @@ if (loggedIn.value) {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
         <NuxtLink
           to="/activities/gemini-quiz"
-          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50/70 dark:bg-gray-850/60 hover:border-indigo-500/50 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/20 transition-all flex flex-col justify-between space-y-3"
+          class="group p-5 rounded-2xl border border-indigo-500/40 bg-indigo-950/30 hover:bg-indigo-900/40 hover:border-indigo-400/60 transition-all flex flex-col justify-between space-y-3 shadow-md"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
               <SparklesIcon class="w-5 h-5" />
             </div>
             <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
@@ -97,10 +97,10 @@ if (loggedIn.value) {
 
         <NuxtLink
           to="/links"
-          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50/70 dark:bg-gray-850/60 hover:border-emerald-500/50 hover:bg-emerald-50/20 dark:hover:bg-emerald-950/20 transition-all flex flex-col justify-between space-y-3"
+          class="group p-5 rounded-2xl border border-emerald-500/40 bg-emerald-950/30 hover:bg-emerald-900/40 hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-3 shadow-md"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
               <LinkIcon class="w-5 h-5" />
             </div>
             <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
@@ -117,10 +117,10 @@ if (loggedIn.value) {
 
         <NuxtLink
           to="/about"
-          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50/70 dark:bg-gray-850/60 hover:border-amber-500/50 hover:bg-amber-50/20 dark:hover:bg-amber-950/20 transition-all flex flex-col justify-between space-y-3"
+          class="group p-5 rounded-2xl border border-amber-500/40 bg-amber-950/30 hover:bg-amber-900/40 hover:border-amber-400/60 transition-all flex flex-col justify-between space-y-3 shadow-md"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
               <InformationCircleIcon class="w-5 h-5" />
             </div>
             <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">

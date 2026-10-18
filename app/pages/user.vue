@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { ArrowRightOnRectangleIcon, SunIcon } from '@heroicons/vue/24/outline'
+import { SunIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - User Profile',
@@ -25,17 +25,42 @@ const updateSiteTime = () => {
   siteTime.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
 }
 
+const isSourceDropdownOpen = ref(false)
+const sourceDropdownRef = ref<HTMLElement | null>(null)
+
+const handleProfileClickOutside = (e: MouseEvent) => {
+  if (sourceDropdownRef.value && !sourceDropdownRef.value.contains(e.target as Node)) {
+    isSourceDropdownOpen.value = false
+  }
+}
+
 onMounted(() => {
   if (!loggedIn.value) {
     navigateTo('/api/login', { external: true })
   }
   updateSiteTime()
   siteTimeInterval = setInterval(updateSiteTime, 1000)
+  document.addEventListener('click', handleProfileClickOutside)
 })
 
 onUnmounted(() => {
   if (siteTimeInterval) clearInterval(siteTimeInterval)
+  document.removeEventListener('click', handleProfileClickOutside)
 })
+
+const languageColors: Record<string, string> = {
+  en: '#0ea5e9',
+  fr: '#333388',
+  es: '#e11d48',
+  it: '#194d19',
+  nl: '#ca8a04',
+  pl: '#b8b8b8',
+  de: '#78350f',
+  ru: '#4b5563',
+  is: '#0891b2',
+  da: '#9333ea',
+  el: '#ea580c'
+}
 
 // All supported languages in the system
 const allSupportedLanguages = [
@@ -111,6 +136,7 @@ const availableTargetLanguages = computed(() => {
 
 const handleSourceLanguageChange = async (newVal: string) => {
   selectedSourceLanguage.value = newVal
+  isSourceDropdownOpen.value = false
   // Remove the new source language from target languages if present
   selectedTargetLanguages.value = selectedTargetLanguages.value.filter(code => code !== newVal)
   await persistLanguageSettings()
@@ -196,10 +222,6 @@ const handleSaveGroupSize = async () => {
     isSavingGroupSize.value = false
   }
 }
-
-const handleLogout = () => {
-  navigateTo('/api/logout', { external: true })
-}
 </script>
 
 <template>
@@ -259,21 +281,68 @@ const handleLogout = () => {
         <!-- Language Learning Preferences Section (Source & Target Languages) -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-5">
           <!-- Source Language Dropdown -->
-          <div class="space-y-2">
+          <div class="space-y-2" ref="sourceDropdownRef">
             <label class="block text-sm font-semibold text-gray-900 dark:text-white">
               Source Language
             </label>
-            <select
-              :value="selectedSourceLanguage"
-              @change="handleSourceLanguageChange(($event.target as HTMLSelectElement).value)"
-              class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-medium text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
-            >
-              <option v-for="opt in sourceLanguageOptions" :key="opt.value" :value="opt.value">
-                {{ opt.label }}
-              </option>
-            </select>
+            <div class="relative w-64 max-w-full">
+              <button
+                type="button"
+                @click="isSourceDropdownOpen = !isSourceDropdownOpen"
+                class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-medium text-sm flex items-center justify-between shadow-xs hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer"
+              >
+                <div class="flex items-center gap-2.5">
+                  <span
+                    class="w-3 h-3 rounded-full shrink-0 shadow-xs"
+                    :style="{ backgroundColor: languageColors[selectedSourceLanguage] || '#0ea5e9' }"
+                  ></span>
+                  <span
+                    class="font-semibold"
+                    :style="{ color: languageColors[selectedSourceLanguage] || undefined }"
+                  >
+                    {{ sourceLanguageOptions.find(o => o.value === selectedSourceLanguage)?.label || selectedSourceLanguage }}
+                  </span>
+                </div>
+                <ChevronDownIcon
+                  class="w-4 h-4 text-gray-400 transition-transform duration-200"
+                  :class="{ 'rotate-180': isSourceDropdownOpen }"
+                />
+              </button>
+
+              <!-- Dropdown Menu -->
+              <div
+                v-if="isSourceDropdownOpen"
+                class="absolute left-0 right-0 mt-1.5 z-30 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl overflow-hidden py-1 max-h-60 overflow-y-auto"
+              >
+                <button
+                  v-for="opt in sourceLanguageOptions"
+                  :key="opt.value"
+                  type="button"
+                  @click="handleSourceLanguageChange(opt.value)"
+                  class="w-full px-3.5 py-2 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors cursor-pointer text-sm"
+                  :class="selectedSourceLanguage === opt.value ? 'bg-gray-50 dark:bg-gray-750/70 font-bold' : 'font-medium'"
+                >
+                  <div class="flex items-center gap-2.5">
+                    <span
+                      class="w-3 h-3 rounded-full shrink-0"
+                      :style="{ backgroundColor: languageColors[opt.value] || '#0ea5e9' }"
+                    ></span>
+                    <span :style="{ color: languageColors[opt.value] || undefined }">
+                      {{ opt.label }}
+                    </span>
+                  </div>
+                  <span
+                    v-if="selectedSourceLanguage === opt.value"
+                    class="text-xs font-mono font-bold"
+                    :style="{ color: languageColors[opt.value] || '#0ea5e9' }"
+                  >
+                    ✓
+                  </span>
+                </button>
+              </div>
+            </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              Source language is your native language. Currently, the site UI is always in English regardless of the source language; this will be relevant when the import function is made available to members.
+              Source language is your <strong class="text-gray-700 dark:text-gray-200 font-bold">native language</strong>. Currently, the site UI is always in English regardless of the source language. The source language will be more relevant when the import function is made available to members.
             </p>
           </div>
 
@@ -286,7 +355,7 @@ const handleLogout = () => {
               <span v-if="languageSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Saved!</span>
             </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              Target languages are the languages you want to learn. Currently, target languages filter the Links page and Gemini Quiz Prompts activity.
+              Target languages are the <strong class="text-gray-700 dark:text-gray-200 font-bold">languages you want to learn</strong>. Currently, target languages filter the Links page and Gemini Quiz Prompts activity.
             </p>
 
             <div class="grid grid-cols-2 gap-2.5 pt-1">
@@ -294,6 +363,10 @@ const handleLogout = () => {
                 v-for="targetLang in availableTargetLanguages"
                 :key="targetLang.code"
                 class="flex items-center gap-2.5 p-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/60 dark:bg-gray-800/60 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors text-xs font-medium text-gray-800 dark:text-gray-200"
+                :style="selectedTargetLanguages.includes(targetLang.code) ? {
+                  borderColor: `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 50%, transparent)`,
+                  backgroundColor: `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 12%, transparent)`
+                } : undefined"
               >
                 <input
                   type="checkbox"
@@ -301,7 +374,20 @@ const handleLogout = () => {
                   @change="toggleTargetLanguage(targetLang.code)"
                   class="rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500 cursor-pointer w-4 h-4"
                 />
-                <span>{{ targetLang.label }}</span>
+                <span
+                  class="w-2.5 h-2.5 rounded-full shrink-0 shadow-xs"
+                  :style="{ backgroundColor: languageColors[targetLang.code] || '#6366f1' }"
+                ></span>
+                <span
+                  :style="{
+                    color: selectedTargetLanguages.includes(targetLang.code)
+                      ? (languageColors[targetLang.code] || undefined)
+                      : undefined
+                  }"
+                  :class="{ 'font-bold': selectedTargetLanguages.includes(targetLang.code) }"
+                >
+                  {{ targetLang.label }}
+                </span>
               </label>
             </div>
           </div>
@@ -321,7 +407,7 @@ const handleLogout = () => {
                 :disabled="isSavingGoal"
                 min="1"
                 max="10000"
-                class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                class="w-1/4 min-w-[70px] text-right font-mono px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
               />
               <button
                 type="submit"
@@ -352,7 +438,7 @@ const handleLogout = () => {
                 :disabled="isSavingGroupSize"
                 min="1"
                 max="50"
-                class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                class="w-1/4 min-w-[70px] text-right font-mono px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
               />
               <button
                 type="submit"
@@ -366,18 +452,6 @@ const handleLogout = () => {
             <p v-if="groupSizeSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Testing group size saved!</p>
           </form>
         </template>
-
-        <!-- Danger Zone & Actions -->
-        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
-          <!-- Logout Button -->
-          <button
-            @click="handleLogout"
-            class="w-full px-6 py-3 bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750 dark:text-gray-200 font-semibold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <ArrowRightOnRectangleIcon class="h-5 w-5" />
-            <span>Logout</span>
-          </button>
-        </div>
       </div>
 
       <template #fallback>

@@ -62,6 +62,19 @@ const loadLinks = async () => {
   }
 }
 
+function capitalizeFirst(text?: string): string {
+  if (!text) return ''
+  const trimmed = text.trim()
+  if (!trimmed) return ''
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1)
+}
+
+function openLink(url: string) {
+  if (typeof window !== 'undefined') {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+}
+
 onMounted(() => {
   loadLinks()
 })
@@ -254,85 +267,66 @@ const executeDelete = async () => {
 
     <!-- Language Link Categories -->
     <div v-else v-for="category in groupedCategories" :key="category.code" class="space-y-4">
-      <!-- Category Header (Top Aligned) -->
-      <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-3">
-        <div class="flex items-center gap-3">
-          <span
-            class="px-2.5 py-0.5 rounded text-xs font-bold text-white shadow-xs uppercase tracking-wider flex items-center justify-center shrink-0"
-            :style="{ backgroundColor: category.color }"
-          >
-            {{ category.code }}
-          </span>
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white tracking-tight leading-none">
-            {{ category.title }}
-          </h2>
-          <span class="text-xs text-gray-500 dark:text-gray-400 font-medium leading-none">
-            ({{ category.links.length }} {{ category.links.length === 1 ? 'link' : 'links' }})
-          </span>
-        </div>
+      <!-- Category Header (Full-width bar with language color outline) -->
+      <div
+        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl border-2 bg-gray-900/60 shadow-xs"
+        :style="{ borderColor: category.color }"
+      >
+        <h2 class="text-lg font-bold text-gray-900 dark:text-white tracking-tight leading-none">
+          {{ category.title }}
+        </h2>
 
-        <!-- Add Link in this category button (Admin) -->
+        <!-- Add Link in this category button (Admin only) -->
         <button
           v-if="isAdmin"
           @click="openAddModal(category.langKey)"
           title="Add link in this language"
-          class="text-xs font-medium text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 flex items-center gap-1 cursor-pointer transition-colors"
+          class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center gap-1 cursor-pointer transition-colors"
         >
           <PlusIcon class="w-3.5 h-3.5" />
           <span>Add</span>
         </button>
       </div>
 
-      <!-- Links List (Styled with Title, Description, and Rank Badge) -->
+      <!-- Links List (Whole panel clickable, colored background, colored title, capitalized description, no rank, no box icon) -->
       <ul class="space-y-3 text-sm">
         <li
           v-for="link in category.links"
           :key="link.id"
-          class="p-3.5 rounded-xl border border-gray-200/80 dark:border-gray-800/80 bg-white dark:bg-gray-900/60 shadow-xs flex items-start justify-between gap-3 group hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
+          @click="openLink(link.url)"
+          class="p-4 rounded-xl border shadow-xs flex items-start justify-between gap-3 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
+          :style="{
+            backgroundColor: `color-mix(in srgb, ${category.color} 14%, #111827)`,
+            borderColor: `color-mix(in srgb, ${category.color} 30%, #374151)`
+          }"
         >
-          <div class="space-y-1 min-w-0 flex-1">
-            <div class="flex items-center gap-2 flex-wrap">
-              <a
-                :href="link.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="font-bold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1.5 leading-snug"
-              >
-                <span>{{ link.title }}</span>
-                <ArrowTopRightOnSquareIcon class="w-4 h-4 shrink-0 text-gray-400" />
-              </a>
+          <div class="space-y-1.5 min-w-0 flex-1">
+            <span
+              class="font-bold text-base block leading-snug group-hover:underline"
+              :style="{ color: category.color }"
+            >
+              {{ link.title }}
+            </span>
 
-              <!-- Rank badge -->
-              <span
-                class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold tracking-tight border"
-                :class="link.rank >= 4.5
-                  ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300/60 dark:border-emerald-800/60'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700'"
-                title="Priority Rank"
-              >
-                ⭐ {{ Number(link.rank).toFixed(1) }}
-              </span>
-            </div>
-
-            <!-- Description -->
-            <p v-if="link.description" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              {{ link.description }}
+            <!-- Description (forced capitalize first letter) -->
+            <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed">
+              {{ capitalizeFirst(link.description) }}
             </p>
           </div>
 
-          <!-- Admin CRUD Buttons (Desktop & Mobile) -->
-          <div v-if="isAdmin" class="flex items-center gap-1 shrink-0 pt-0.5">
+          <!-- Admin CRUD Buttons (Desktop & Mobile, with stopPropagation) -->
+          <div v-if="isAdmin" class="flex items-center gap-1 shrink-0 pt-0.5" @click.stop>
             <button
-              @click="openEditModal(link)"
+              @click.stop="openEditModal(link)"
               title="Edit link"
-              class="p-1 text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 transition-colors cursor-pointer rounded"
+              class="p-1.5 text-gray-400 hover:text-amber-400 hover:bg-white/10 transition-colors cursor-pointer rounded-lg"
             >
               <PencilSquareIcon class="w-4 h-4" />
             </button>
             <button
-              @click="confirmDelete(link)"
+              @click.stop="confirmDelete(link)"
               title="Delete link"
-              class="p-1 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors cursor-pointer rounded"
+              class="p-1.5 text-gray-400 hover:text-red-400 hover:bg-white/10 transition-colors cursor-pointer rounded-lg"
             >
               <TrashIcon class="w-4 h-4" />
             </button>

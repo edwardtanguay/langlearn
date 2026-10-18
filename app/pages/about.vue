@@ -242,7 +242,13 @@ function scrollToVersion(verId: string) {
   if (typeof document !== 'undefined') {
     const el = document.getElementById(`version-${verId}`)
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const navOffset = 90
+      const elementPosition = el.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
     }
   }
 }
@@ -1253,8 +1259,8 @@ const copiedBranchVersionId = ref<string | null>(null)
 let copiedBranchTimeout: ReturnType<typeof setTimeout> | null = null
 
 function getBranchName(ver: Version): string {
-  const cleanDigits = ver.versionNumber.replace(/\./g, '')
-  return `version-${cleanDigits}`
+  const versionSlug = ver.versionNumber.replace(/\./g, '-')
+  return `version-${versionSlug}`
 }
 
 async function copyBranchName(ver: Version) {
@@ -1432,7 +1438,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             :key="ipv.id"
             type="button"
             @click="scrollToVersion(ipv.id)"
-            class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 hover:underline cursor-pointer"
+            class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 underline cursor-pointer"
             :title="`Scroll to version ${ipv.versionNumber}`"
           >
             v{{ ipv.versionNumber }}
@@ -1450,7 +1456,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versionsForDisplay" :key="ver.id" :id="`version-${ver.id}`" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md" :class="[
+        <div v-for="ver in versionsForDisplay" :key="ver.id" :id="`version-${ver.id}`" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md scroll-mt-24" :class="[
           isSearchActive ? 'border-2 border-orange-500' : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? 'border-2 border-dashed border-red-500 dark:border-red-600' : ver.status === 'IN_PROGRESS' ? 'border-2 border-dashed border-amber-500 dark:border-amber-600' : 'border border-gray-200 dark:border-gray-700/80'
         ]">
           <!-- Full-Width Version Panel Card Header -->
