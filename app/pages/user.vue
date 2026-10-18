@@ -374,7 +374,10 @@ const handleSaveGroupSize = async () => {
                   borderColor: `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 50%, transparent)`,
                   backgroundColor: selectedTargetLanguages.includes(targetLang.code)
                     ? `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 12%, transparent)`
-                    : 'transparent'
+                    : 'transparent',
+                  boxShadow: selectedTargetLanguages.includes(targetLang.code)
+                    ? '0 0 8px rgba(255, 255, 255, 0.16), 0 1px 3px rgba(0, 0, 0, 0.3)'
+                    : undefined
                 }"
               >
                 <input

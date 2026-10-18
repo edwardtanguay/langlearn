@@ -77,10 +77,10 @@ if (loggedIn.value) {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
         <NuxtLink
           to="/activities/gemini-quiz"
-          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
+          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-750 text-gray-700 dark:text-gray-300 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center justify-center">
               <SparklesIcon class="w-5 h-5" />
             </div>
             <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-black dark:group-hover:text-white transition-colors">
@@ -97,10 +97,10 @@ if (loggedIn.value) {
 
         <NuxtLink
           to="/links"
-          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
+          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-750 text-gray-700 dark:text-gray-300 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center justify-center">
               <LinkIcon class="w-5 h-5" />
             </div>
             <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-black dark:group-hover:text-white transition-colors">
@@ -117,10 +117,10 @@ if (loggedIn.value) {
 
         <NuxtLink
           to="/about"
-          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
+          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-750 text-gray-700 dark:text-gray-300 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center justify-center">
               <InformationCircleIcon class="w-5 h-5" />
             </div>
             <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-black dark:group-hover:text-white transition-colors">

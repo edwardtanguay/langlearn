@@ -1,10 +1,10 @@
 export const languageColors: Record<string, string> = {
   en: '#0ea5e9',
-  de: '#f59e0b',
+  de: '#c07028',
   fr: '#60a5fa',
   es: '#e11d48',
   it: '#22c55e',
-  nl: '#ca8a04',
+  nl: '#eab308',
   pl: '#b8b8b8',
   ru: '#94a3b8',
   is: '#0891b2',

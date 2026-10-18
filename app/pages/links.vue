@@ -66,30 +66,33 @@ async function moveLink(categoryLinks: LinkItem[], index: number, direction: 'up
 
   const prevLinks = JSON.parse(JSON.stringify(links.value))
 
-  // categoryLinks are sorted descending by rank: index 0 has highest rank
-  let rank1 = item1.rank ?? 2.5
-  let rank2 = item2.rank ?? 2.5
+  // Swap adjacent items in categoryLinks array
+  categoryLinks[index] = item2
+  categoryLinks[targetIndex] = item1
 
-  if (rank1 === rank2) {
-    if (direction === 'up') {
-      rank1 = rank2 + 0.1
-    } else {
-      rank1 = Math.max(0, rank2 - 0.1)
+  // Assign clean, strictly descending unique ranks so relative order is strictly maintained
+  const n = categoryLinks.length
+  const step = n > 1 ? 4.0 / (n - 1) : 0
+  const updates: Promise<any>[] = []
+
+  categoryLinks.forEach((item, idx) => {
+    const newRank = n > 1 ? Number((4.5 - idx * step).toFixed(4)) : 2.5
+    if (item.rank !== newRank) {
+      item.rank = newRank
+      updates.push(
+        ($fetch as any)(`/api/links/${item.id}`, {
+          method: 'PUT',
+          body: { rank: newRank }
+        })
+      )
     }
-  } else {
-    const temp = rank1
-    rank1 = rank2
-    rank2 = temp
-  }
+  })
 
-  item1.rank = rank1
-  item2.rank = rank2
+  // Trigger reactivity for links array
+  links.value = [...links.value]
 
   try {
-    await Promise.all([
-      $fetch(`/api/links/${item1.id}`, { method: 'PUT', body: { rank: item1.rank } }),
-      $fetch(`/api/links/${item2.id}`, { method: 'PUT', body: { rank: item2.rank } })
-    ])
+    await Promise.all(updates)
   } catch (err) {
     console.error('Failed to move link:', err)
     links.value = prevLinks
@@ -244,10 +247,10 @@ const saveLink = async () => {
       })
       links.value.push(created)
     } else {
-      const updated = await $fetch<LinkItem>(`/api/links/${formLink.value.id}`, {
+      const updated = await ($fetch as any)(`/api/links/${formLink.value.id}`, {
         method: 'PUT',
         body: formLink.value
-      })
+      }) as LinkItem
       const idx = links.value.findIndex(l => l.id === updated.id)
       if (idx !== -1) {
         links.value[idx] = updated
@@ -270,7 +273,7 @@ const executeDelete = async () => {
   if (!linkToDelete.value || isDeleting.value) return
   isDeleting.value = true
   try {
-    await $fetch(`/api/links/${linkToDelete.value.id}`, {
+    await ($fetch as any)(`/api/links/${linkToDelete.value.id}`, {
       method: 'DELETE'
     })
     links.value = links.value.filter(l => l.id !== linkToDelete.value?.id)
@@ -357,19 +360,18 @@ const executeDelete = async () => {
           }"
         >
           <div class="space-y-1.5 min-w-0 flex-1">
-            <div class="flex items-center gap-2 flex-wrap">
-              <span
-                class="font-bold text-base block leading-snug"
-                :style="{ color: category.color }"
-              >
-                {{ link.title }}
+            <div
+              class="font-bold text-base leading-snug"
+              :style="{ color: category.color }"
+            >
+              <span>{{ link.title.trim() }}</span>&nbsp;<span class="inline-block whitespace-nowrap align-middle">
+                <!-- YouTube Icon for YouTube URLs -->
+                <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 text-gray-400 dark:text-gray-400 inline-block align-[-1px]" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <!-- Document/Page icon for general web links -->
+                <DocumentTextIcon v-else class="w-4 h-4 text-gray-400 dark:text-gray-400 inline-block align-[-1px]" title="Web article" />
               </span>
-              <!-- YouTube Icon for YouTube URLs -->
-              <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 shrink-0 text-gray-400 dark:text-gray-400 inline-block" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-              <!-- Document/Page icon for general web links -->
-              <DocumentTextIcon v-else class="w-4 h-4 shrink-0 text-gray-400 dark:text-gray-400 inline-block" title="Web article" />
             </div>
 
             <!-- Description (forced capitalize first letter) -->
