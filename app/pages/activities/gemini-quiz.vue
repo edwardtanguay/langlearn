@@ -415,14 +415,6 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                   >
                     {{ p.title }}
                   </h3>
-                  <!-- Subtle Edit Icon hint for Admin -->
-                  <span
-                    v-if="isAdmin"
-                    title="Click to manage prompt"
-                    class="p-0.5 text-gray-400 group-hover/header:text-gray-200 transition-colors shrink-0"
-                  >
-                    <UIcon name="lucide:pencil" class="w-3.5 h-3.5" />
-                  </span>
                 </div>
 
                 <!-- Desktop Admin CRUD Tools (Displayed on title click; click bar area closes it; solid black bg, no border) -->

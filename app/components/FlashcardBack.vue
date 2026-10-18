@@ -91,9 +91,9 @@ const renderBackTextWithHighlights = (text: string) => {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
   // 3. Render <verb> as solid underline with amber background tint
-  result = result.replace(/___VERB_START___(.*?)___VERB_END___/g, '<span class="border-b-2 border-amber-400 bg-amber-500/20 px-1 rounded-sm">$1</span>')
+  result = result.replace(/___VERB_START___(.*?)___VERB_END___/g, '<span class="border-b-2 border-amber-400 bg-amber-500/20 px-0 box-decoration-clone rounded-xs">$1</span>')
   // 4. Render *text* with dashed underline and clickable example word
-  result = result.replace(/\*(.*?)\*/g, '<span data-example-word="$1" class="border-b border-dashed border-white/70 bg-white/10 px-1 rounded-sm cursor-pointer hover:bg-amber-400/20 hover:border-amber-300 transition-colors" title="View 3 examples with \'$1\'">$1</span>')
+  result = result.replace(/\*(.*?)\*/g, '<span data-example-word="$1" class="border-b border-dashed border-white/70 bg-white/10 px-0 box-decoration-clone rounded-xs cursor-pointer hover:bg-amber-400/20 hover:border-amber-300 transition-colors" title="View 3 examples with \'$1\'">$1</span>')
   return result
 }
 

@@ -31,7 +31,22 @@ async function main() {
   const remoteClient = createClient({ url, authToken });
   const localClient = createClient({ url: `file:${backupPath}` });
 
-  const tables = ['User', 'Tag', 'Flashcard', 'UserFlashcardActivity', 'FlashcardTag'];
+  const tables = [
+    'User',
+    'Tag',
+    'Flashcard',
+    'UserFlashcardActivity',
+    'FlashcardTag',
+    'Link',
+    'ChatbotPrompt',
+    'BasicWordInfo',
+    'UserCorrectionSection',
+    'MobileImport',
+    'Version',
+    'VersionCategory',
+    'VersionCategoryAbbreviation',
+    'VersionItem'
+  ];
 
   const allData: Record<string, any[]> = {};
   for (const table of tables) {

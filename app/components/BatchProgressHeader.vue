@@ -145,8 +145,15 @@ const percent = computed(() => {
                     : 'Not yet tested'
           }`"
         >
-          <!-- Learned State: Bold checkmark -->
-          <svg v-if="slot.status === 'learned'" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <!-- Learned State: Bold checkmark in lighter color of the language color -->
+          <svg
+            v-if="slot.status === 'learned'"
+            class="w-4 h-4 stroke-[2.5]"
+            :style="{ color: `color-mix(in srgb, ${getLanguageColor(slot.language)} 35%, white)` }"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
 

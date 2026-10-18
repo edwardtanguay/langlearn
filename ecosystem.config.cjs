@@ -32,9 +32,9 @@ module.exports = {
       interpreter: '/home/edward/.nvm/versions/node/v20.20.2/bin/node', 
       script: './.output/server/index.mjs',
       env: {
-        NODE_ENV: 'production',
         PORT: 3149,
-        ...envConfig
+        ...envConfig,
+        NODE_ENV: 'production'
       }
     }
   ]

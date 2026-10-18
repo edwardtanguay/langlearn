@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import {
   ArrowTopRightOnSquareIcon,
   PlusIcon,
@@ -134,8 +134,39 @@ function openLink(url: string) {
   }
 }
 
+const activeCrudLinkId = ref<string | null>(null)
+
+function toggleCrudToolbar(id: string, event?: Event) {
+  if (event) event.stopPropagation()
+  activeCrudLinkId.value = activeCrudLinkId.value === id ? null : id
+}
+
+function handleCardClick(link: LinkItem) {
+  if (activeCrudLinkId.value) {
+    activeCrudLinkId.value = null
+    return
+  }
+  openLink(link.url)
+}
+
+function handleClickOutside(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  if (target && !target.closest('.crud-toolbar')) {
+    activeCrudLinkId.value = null
+  }
+}
+
 onMounted(() => {
   loadLinks()
+  if (import.meta.client) {
+    window.addEventListener('click', handleClickOutside)
+  }
+})
+
+onUnmounted(() => {
+  if (import.meta.client) {
+    window.removeEventListener('click', handleClickOutside)
+  }
 })
 
 // Filter links based on user role and target languages:
@@ -289,26 +320,7 @@ const executeDelete = async () => {
 
 <template>
   <div class="max-w-5xl mx-auto py-10 px-4 min-h-[600px] space-y-10">
-    <!-- Hero Header -->
-    <div class="bg-gradient-to-r from-gray-900 via-gray-850 to-gray-900 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-800 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="space-y-2 text-center md:text-left">
-        <h1 class="text-2xl md:text-3xl font-black tracking-tight">Links</h1>
-        <p class="text-sm text-gray-300 max-w-xl leading-relaxed">
-          Hand-picked native videos, tutorials, and websites organized by language to elevate your real-world comprehension.
-        </p>
-      </div>
-
-      <!-- Admin Add Link Button -->
-      <div v-if="isAdmin" class="shrink-0">
-        <button
-          @click="openAddModal('fr')"
-          class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
-        >
-          <PlusIcon class="w-4 h-4" />
-          <span>Add New Link</span>
-        </button>
-      </div>
-    </div>
+    <h1 class="sr-only">Links</h1>
 
     <!-- Loading State -->
     <div v-if="isLoading" class="py-16 flex flex-col items-center justify-center space-y-3">
@@ -326,7 +338,7 @@ const executeDelete = async () => {
 
     <!-- Language Link Categories -->
     <div v-else v-for="category in groupedCategories" :key="category.code" class="space-y-4">
-      <!-- Category Header (No outer outline, vertically center-aligned title and Add button) -->
+      <!-- Category Header (Clean title without outer Add button) -->
       <div class="w-full flex items-center justify-between px-1 py-1">
         <h2
           class="text-2xl font-black tracking-tight leading-normal my-0"
@@ -334,17 +346,6 @@ const executeDelete = async () => {
         >
           {{ category.title }}
         </h2>
-
-        <!-- Add Link in this category button (Admin only) -->
-        <button
-          v-if="isAdmin"
-          @click="openAddModal(category.langKey)"
-          title="Add link in this language"
-          class="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center gap-1 cursor-pointer transition-colors"
-        >
-          <PlusIcon class="w-3.5 h-3.5" />
-          <span>Add</span>
-        </button>
       </div>
 
       <!-- Links List (Whole panel clickable, colored background, colored title, capitalized description, no hover underline) -->
@@ -352,7 +353,7 @@ const executeDelete = async () => {
         <li
           v-for="(link, idx) in category.links"
           :key="link.id"
-          @click="openLink(link.url)"
+          @click="handleCardClick(link)"
           class="p-4 rounded-xl border shadow-xs flex items-start justify-between gap-3 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
           :style="{
             backgroundColor: `color-mix(in srgb, ${category.color} 14%, #111827)`,
@@ -360,8 +361,72 @@ const executeDelete = async () => {
           }"
         >
           <div class="space-y-1.5 min-w-0 flex-1">
+            <!-- Active Admin CRUD Tools (Displayed when title clicked) -->
             <div
-              class="font-bold text-base leading-snug"
+              v-if="isAdmin && activeCrudLinkId === link.id"
+              @click.stop="toggleCrudToolbar(link.id, $event)"
+              class="crud-toolbar flex items-center gap-1.5 bg-black/95 px-3 py-1.5 rounded-xl text-xs shadow-md border border-gray-700 w-full cursor-pointer"
+            >
+              <!-- Add New Link in this language -->
+              <button
+                @click.stop="openAddModal(category.langKey)"
+                title="Add Link"
+                class="p-1 text-white/80 hover:text-white cursor-pointer transition-colors"
+              >
+                <PlusIcon class="w-4 h-4" />
+              </button>
+
+              <template v-if="category.links.length > 1">
+                <span class="h-3 w-px bg-white/20 mx-1 self-center"></span>
+
+                <!-- Reorder Up -->
+                <button
+                  @click.stop="moveLink(category.links, idx, 'up')"
+                  :disabled="idx === 0"
+                  title="Move Up"
+                  class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
+                >
+                  <ArrowUpIcon class="w-4 h-4 stroke-[2.5]" />
+                </button>
+
+                <!-- Reorder Down -->
+                <button
+                  @click.stop="moveLink(category.links, idx, 'down')"
+                  :disabled="idx === category.links.length - 1"
+                  title="Move Down"
+                  class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
+                >
+                  <ArrowDownIcon class="w-4 h-4 stroke-[2.5]" />
+                </button>
+              </template>
+
+              <span class="h-3 w-px bg-white/20 mx-1 self-center"></span>
+
+              <!-- Edit -->
+              <button
+                @click.stop="openEditModal(link)"
+                title="Edit Link"
+                class="p-1 text-amber-300 hover:text-amber-200 cursor-pointer transition-colors"
+              >
+                <PencilSquareIcon class="w-4 h-4" />
+              </button>
+
+              <!-- Delete -->
+              <button
+                @click.stop="confirmDelete(link)"
+                title="Delete Link"
+                class="p-1 text-red-400 hover:text-red-300 cursor-pointer transition-colors"
+              >
+                <TrashIcon class="w-4 h-4" />
+              </button>
+            </div>
+
+            <!-- Title Line (Clicking title reveals CRUD toolbar if admin) -->
+            <div
+              v-else
+              @click.stop="isAdmin ? toggleCrudToolbar(link.id, $event) : openLink(link.url)"
+              class="font-bold text-base leading-snug w-fit"
+              :class="{ 'cursor-pointer': isAdmin }"
               :style="{ color: category.color }"
             >
               <span>{{ link.title.trim() }}</span>&nbsp;<span class="inline-block whitespace-nowrap align-middle">
@@ -378,41 +443,6 @@ const executeDelete = async () => {
             <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed">
               {{ capitalizeFirst(link.description) }}
             </p>
-          </div>
-
-          <!-- Admin CRUD Buttons (Desktop & Mobile, with stopPropagation) -->
-          <div v-if="isAdmin" class="flex items-center gap-1 shrink-0 pt-0.5" @click.stop>
-            <button
-              @click.stop="openEditModal(link)"
-              title="Edit link"
-              class="p-1.5 text-gray-400 hover:text-amber-400 hover:bg-white/10 transition-colors cursor-pointer rounded-lg"
-            >
-              <PencilSquareIcon class="w-4 h-4" />
-            </button>
-            <button
-              @click.stop="confirmDelete(link)"
-              title="Delete link"
-              class="p-1.5 text-gray-400 hover:text-red-400 hover:bg-white/10 transition-colors cursor-pointer rounded-lg"
-            >
-              <TrashIcon class="w-4 h-4" />
-            </button>
-            <!-- Reorder Up & Down Buttons -->
-            <button
-              @click.stop="moveLink(category.links, idx, 'up')"
-              :disabled="idx === 0"
-              title="Move Up"
-              class="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer rounded-lg disabled:opacity-20"
-            >
-              <ArrowUpIcon class="w-4 h-4 stroke-[2.5]" />
-            </button>
-            <button
-              @click.stop="moveLink(category.links, idx, 'down')"
-              :disabled="idx === category.links.length - 1"
-              title="Move Down"
-              class="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer rounded-lg disabled:opacity-20"
-            >
-              <ArrowDownIcon class="w-4 h-4 stroke-[2.5]" />
-            </button>
           </div>
         </li>
       </ul>
