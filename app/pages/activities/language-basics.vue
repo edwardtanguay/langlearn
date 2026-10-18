@@ -466,6 +466,7 @@ async function loadPronunciations() {
       '/api/basics/word-info'
     )
     if (data?.items) {
+      const dbPronunciations = new Set<string>()
       for (const it of data.items) {
         const normId = normalizeWordId(it.wordId)
         if (typeof it.rank === 'number') {
@@ -475,11 +476,30 @@ async function loadPronunciations() {
         if (allPronunciationsMap.value[lang]) {
           if (it.pronunciation) {
             allPronunciationsMap.value[lang].set(normId, it.pronunciation)
-          } else {
-            allPronunciationsMap.value[lang].delete(normId)
+            dbPronunciations.add(`${lang}:${normId}`)
           }
         }
       }
+
+      // Sync any local-only pronunciation tips up to the database
+      for (const l of languages) {
+        const localMap = allPronunciationsMap.value[l.code]
+        if (localMap) {
+          for (const [wId, tip] of localMap.entries()) {
+            if (tip && !dbPronunciations.has(`${l.code}:${wId}`)) {
+              $fetch('/api/basics/word-info', {
+                method: 'PUT',
+                body: {
+                  wordId: wId,
+                  language: l.code,
+                  pronunciation: tip
+                }
+              }).catch(() => {})
+            }
+          }
+        }
+      }
+
       if (import.meta.client) {
         try {
           const obj: Record<string, number> = {}
@@ -2261,9 +2281,9 @@ function isFlashcardOpen(itemId: string): boolean {
                 [<span v-html="formatPronunciationHtml(getPronunciation(activeCrossLanguageItem.id, l.code))"></span>]
               </span>
 
-              <!-- Translated word on the right -->
+              <!-- Translated word on the right (scrollable left/right on desktop and mobile) -->
               <span
-                class="text-base font-bold tracking-tight truncate"
+                class="text-base font-bold tracking-tight whitespace-nowrap overflow-x-auto scrollbar-none py-0.5 [-webkit-overflow-scrolling:touch]"
                 :style="{ color: `color-mix(in srgb, ${languageColors[l.code]} 55%, white)` }"
               >
                 {{ activeCrossLanguageItem[l.code] || '—' }}

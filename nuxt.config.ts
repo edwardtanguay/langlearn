@@ -1,11 +1,24 @@
 import env from "./app/lib/env";
 import { defineNuxtConfig } from 'nuxt/config';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export default defineNuxtConfig({
 	compatibilityDate: '2025-07-15',
 	devtools: { enabled: true },
 
 	modules: ['@nuxt/ui', '@nuxtjs/color-mode', '@nuxtjs/kinde'],
+	kinde: {
+		redirectURL: isProd
+			? (process.env.NUXT_KINDE_REDIRECT_URL && !process.env.NUXT_KINDE_REDIRECT_URL.includes('localhost') ? process.env.NUXT_KINDE_REDIRECT_URL : 'https://langlearn.tanguay.eu/api/callback')
+			: (process.env.NUXT_KINDE_REDIRECT_URL || 'http://localhost:3149/api/callback'),
+		logoutRedirectURL: isProd
+			? (process.env.NUXT_KINDE_LOGOUT_REDIRECT_URL && !process.env.NUXT_KINDE_LOGOUT_REDIRECT_URL.includes('localhost') ? process.env.NUXT_KINDE_LOGOUT_REDIRECT_URL : 'https://langlearn.tanguay.eu')
+			: (process.env.NUXT_KINDE_LOGOUT_REDIRECT_URL || 'http://localhost:3149'),
+		postLoginRedirectURL: isProd
+			? (process.env.NUXT_KINDE_POST_LOGIN_REDIRECT_URL && !process.env.NUXT_KINDE_POST_LOGIN_REDIRECT_URL.includes('localhost') ? process.env.NUXT_KINDE_POST_LOGIN_REDIRECT_URL : 'https://langlearn.tanguay.eu')
+			: (process.env.NUXT_KINDE_POST_LOGIN_REDIRECT_URL || 'http://localhost:3149')
+	},
 	icon: {
 		serverBundle: 'remote'
 	},

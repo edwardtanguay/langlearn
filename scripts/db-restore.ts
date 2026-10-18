@@ -79,7 +79,16 @@ async function main() {
     'Tag',
     'Flashcard',
     'UserFlashcardActivity',
-    'FlashcardTag'
+    'FlashcardTag',
+    'Link',
+    'ChatbotPrompt',
+    'BasicWordInfo',
+    'UserCorrectionSection',
+    'MobileImport',
+    'Version',
+    'VersionCategory',
+    'VersionCategoryAbbreviation',
+    'VersionItem'
   ];
 
   console.log('Extracting data from backup...');

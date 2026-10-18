@@ -86,9 +86,9 @@ const stripFormatting = (text: string) => {
 const renderFrontTextWithHighlights = (text: string) => {
   if (!text) return ''
   // Replace <verb> with solid underline & amber tint
-  let result = text.replace(/<([^>]+)>/g, '<span class="border-b-2 border-amber-400 dark:border-amber-400 bg-amber-500/20 dark:bg-amber-500/25 px-1 rounded-sm">$1</span>')
+  let result = text.replace(/<([^>]+)>/g, '<span class="border-b-2 border-amber-400 dark:border-amber-400 bg-amber-500/20 dark:bg-amber-500/25 px-0 box-decoration-clone rounded-xs">$1</span>')
   // Replace *text* with dashed underline and clickable example word
-  result = result.replace(/\*(.*?)\*/g, '<span data-example-word="$1" class="border-b border-dashed border-gray-400 dark:border-white/60 bg-gray-200/40 dark:bg-white/10 px-1 rounded-sm cursor-pointer hover:bg-amber-500/20 hover:border-amber-400 transition-colors" title="View 3 examples with \'$1\'">$1</span>')
+  result = result.replace(/\*(.*?)\*/g, '<span data-example-word="$1" class="border-b border-dashed border-gray-400 dark:border-white/60 bg-gray-200/40 dark:bg-white/10 px-0 box-decoration-clone rounded-xs cursor-pointer hover:bg-amber-500/20 hover:border-amber-400 transition-colors" title="View 3 examples with \'$1\'">$1</span>')
   return result
 }
 

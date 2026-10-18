@@ -99,18 +99,6 @@ export async function requireAuth(event: H3Event) {
       updates.role = 'member'
     }
 
-    if (emailLower === 'giselaschmidt89@gmail.com') {
-      if (dbUser.sourceLanguage !== 'de' || dbUser.targetLanguages !== JSON.stringify(['en', 'fr', 'it'])) {
-        updates.sourceLanguage = 'de'
-        updates.targetLanguages = JSON.stringify(['en', 'fr', 'it'])
-      }
-    } else if (emailLower === 'hanner.condeo@unac.edu.co') {
-      if (dbUser.sourceLanguage !== 'es' || dbUser.targetLanguages !== JSON.stringify(['en'])) {
-        updates.sourceLanguage = 'es'
-        updates.targetLanguages = JSON.stringify(['en'])
-      }
-    }
-
     if (Object.keys(updates).length > 0) {
       dbUser = await prisma.user.update({
         where: { id: dbUser.id },
