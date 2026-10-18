@@ -272,7 +272,7 @@ const navItems = computed(() => {
                       :key="item.path"
                       :to="item.path"
                       class="flex items-center space-x-2 !text-gray-600 hover:!text-black transition-colors font-medium dark:!text-gray-300 dark:hover:!text-white"
-                      active-class="!text-black dark:!text-white font-semibold">
+                      active-class="!text-amber-500 dark:!text-yellow-400 font-semibold">
               <component :is="item.icon"
                          class="h-5 w-5" />
               <span>{{ item.name }}</span>
@@ -299,7 +299,7 @@ const navItems = computed(() => {
             <div v-else class="flex items-center space-x-4 shrink-0">
               <a
                 href="/api/login"
-                class="flex items-center space-x-1.5 text-indigo-600 hover:text-indigo-800 transition-colors font-semibold dark:text-indigo-400 dark:hover:text-indigo-300">
+                class="flex items-center space-x-1.5 text-gray-700 hover:text-gray-900 transition-colors font-semibold dark:text-gray-300 dark:hover:text-white">
                 <ArrowLeftOnRectangleIcon class="h-5 w-5" />
                 <span>Login</span>
               </a>
@@ -436,7 +436,7 @@ const navItems = computed(() => {
               <a
                 href="/api/login"
                 @click="mobileMenuOpen = false"
-                class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-indigo-950/50 transition-colors font-semibold">
+                class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors font-semibold">
                 <ArrowLeftOnRectangleIcon class="h-5 w-5" />
                 <span>Login with Google</span>
               </a>

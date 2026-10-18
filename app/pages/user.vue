@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { SunIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
+import { SunIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
+import { languageColors } from '~/utils/languageColors'
 
 useHead({
   title: 'LangLearn - User Profile',
@@ -48,20 +49,6 @@ onUnmounted(() => {
   document.removeEventListener('click', handleProfileClickOutside)
 })
 
-const languageColors: Record<string, string> = {
-  en: '#0ea5e9',
-  fr: '#333388',
-  es: '#e11d48',
-  it: '#194d19',
-  nl: '#ca8a04',
-  pl: '#b8b8b8',
-  de: '#78350f',
-  ru: '#4b5563',
-  is: '#0891b2',
-  da: '#9333ea',
-  el: '#ea580c'
-}
-
 // All supported languages in the system
 const allSupportedLanguages = [
   { code: 'en', label: 'English' },
@@ -77,15 +64,8 @@ const allSupportedLanguages = [
   { code: 'el', label: 'Greek' }
 ]
 
-// Source language dropdown options per spec
-const sourceLanguageOptions = [
-  { value: 'en', label: 'English' },
-  { value: 'de', label: 'German' },
-  { value: 'fr', label: 'French' },
-  { value: 'es', label: 'Spanish' },
-  { value: 'it', label: 'Italian' },
-  { value: 'nl', label: 'Dutch' }
-]
+// Source language dropdown options: all 11 supported languages
+const sourceLanguageOptions = allSupportedLanguages.map(l => ({ value: l.code, label: l.label }))
 
 // Fetch user profile data
 const { data: meData, refresh: refreshMe } = await useFetch<{
@@ -175,6 +155,38 @@ const persistLanguageSettings = async () => {
   }
 }
 
+let goalDebounceTimer: any = null
+const onGoalInput = () => {
+  if (goalDebounceTimer) clearTimeout(goalDebounceTimer)
+  goalDebounceTimer = setTimeout(() => {
+    handleSaveGoal()
+  }, 400)
+}
+
+let groupSizeDebounceTimer: any = null
+const onGroupSizeInput = () => {
+  if (groupSizeDebounceTimer) clearTimeout(groupSizeDebounceTimer)
+  groupSizeDebounceTimer = setTimeout(() => {
+    handleSaveGroupSize()
+  }, 400)
+}
+
+const stepGoal = (delta: number) => {
+  const current = Number(dailyTakeGoalInput.value) || 100
+  const updated = Math.max(1, current + delta)
+  dailyTakeGoalInput.value = updated
+  if (goalDebounceTimer) clearTimeout(goalDebounceTimer)
+  handleSaveGoal()
+}
+
+const stepGroupSize = (delta: number) => {
+  const current = Number(testingGroupSizeInput.value) || 10
+  const updated = Math.max(1, Math.min(50, current + delta))
+  testingGroupSizeInput.value = updated
+  if (groupSizeDebounceTimer) clearTimeout(groupSizeDebounceTimer)
+  handleSaveGroupSize()
+}
+
 const handleSaveGoal = async () => {
   if (isSavingGoal.value) return
   const prevValue = meData.value?.dailyTakeGoal ?? 100
@@ -190,7 +202,7 @@ const handleSaveGoal = async () => {
       body: { dailyTakeGoal: newValue }
     })
     goalSaveSuccess.value = true
-    setTimeout(() => { goalSaveSuccess.value = false }, 2500)
+    setTimeout(() => { goalSaveSuccess.value = false }, 2000)
   } catch (e) {
     if (meData.value) meData.value.dailyTakeGoal = prevValue
     dailyTakeGoalInput.value = prevValue
@@ -214,7 +226,7 @@ const handleSaveGroupSize = async () => {
       body: { testingGroupSize: newValue }
     })
     groupSizeSaveSuccess.value = true
-    setTimeout(() => { groupSizeSaveSuccess.value = false }, 2500)
+    setTimeout(() => { groupSizeSaveSuccess.value = false }, 2000)
   } catch (e) {
     if (meData.value) meData.value.testingGroupSize = prevValue
     testingGroupSizeInput.value = prevValue
@@ -296,11 +308,8 @@ const handleSaveGroupSize = async () => {
                     class="w-3 h-3 rounded-full shrink-0 shadow-xs"
                     :style="{ backgroundColor: languageColors[selectedSourceLanguage] || '#0ea5e9' }"
                   ></span>
-                  <span
-                    class="font-semibold"
-                    :style="{ color: languageColors[selectedSourceLanguage] || undefined }"
-                  >
-                    {{ sourceLanguageOptions.find(o => o.value === selectedSourceLanguage)?.label || selectedSourceLanguage }}
+                  <span class="font-semibold text-gray-900 dark:text-gray-100">
+                    {{ allSupportedLanguages.find(o => o.code === selectedSourceLanguage)?.label || selectedSourceLanguage }}
                   </span>
                 </div>
                 <ChevronDownIcon
@@ -319,22 +328,21 @@ const handleSaveGroupSize = async () => {
                   :key="opt.value"
                   type="button"
                   @click="handleSourceLanguageChange(opt.value)"
-                  class="w-full px-3.5 py-2 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors cursor-pointer text-sm"
-                  :class="selectedSourceLanguage === opt.value ? 'bg-gray-50 dark:bg-gray-750/70 font-bold' : 'font-medium'"
+                  class="w-full px-3.5 py-2 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700/60 transition-colors cursor-pointer text-sm"
+                  :class="selectedSourceLanguage === opt.value ? 'bg-gray-100 dark:bg-gray-700/80 font-bold' : 'font-medium text-gray-800 dark:text-gray-200'"
                 >
                   <div class="flex items-center gap-2.5">
                     <span
                       class="w-3 h-3 rounded-full shrink-0"
                       :style="{ backgroundColor: languageColors[opt.value] || '#0ea5e9' }"
                     ></span>
-                    <span :style="{ color: languageColors[opt.value] || undefined }">
+                    <span class="text-gray-900 dark:text-gray-100">
                       {{ opt.label }}
                     </span>
                   </div>
                   <span
                     v-if="selectedSourceLanguage === opt.value"
-                    class="text-xs font-mono font-bold"
-                    :style="{ color: languageColors[opt.value] || '#0ea5e9' }"
+                    class="text-xs font-mono font-bold text-gray-700 dark:text-gray-300"
                   >
                     ✓
                   </span>
@@ -362,11 +370,12 @@ const handleSaveGroupSize = async () => {
               <label
                 v-for="targetLang in availableTargetLanguages"
                 :key="targetLang.code"
-                class="flex items-center gap-2.5 p-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/60 dark:bg-gray-800/60 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors text-xs font-medium text-gray-800 dark:text-gray-200"
-                :style="selectedTargetLanguages.includes(targetLang.code) ? {
+                class="flex items-center gap-2.5 p-2 rounded-xl border cursor-pointer transition-all text-xs font-medium"
+                :class="selectedTargetLanguages.includes(targetLang.code) ? 'opacity-100' : 'opacity-35 hover:opacity-75'"
+                :style="{
                   borderColor: `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 50%, transparent)`,
                   backgroundColor: `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 12%, transparent)`
-                } : undefined"
+                }"
               >
                 <input
                   type="checkbox"
@@ -379,12 +388,8 @@ const handleSaveGroupSize = async () => {
                   :style="{ backgroundColor: languageColors[targetLang.code] || '#6366f1' }"
                 ></span>
                 <span
-                  :style="{
-                    color: selectedTargetLanguages.includes(targetLang.code)
-                      ? (languageColors[targetLang.code] || undefined)
-                      : undefined
-                  }"
-                  :class="{ 'font-bold': selectedTargetLanguages.includes(targetLang.code) }"
+                  :style="{ color: languageColors[targetLang.code] || undefined }"
+                  class="font-bold"
                 >
                   {{ targetLang.label }}
                 </span>
@@ -395,63 +400,92 @@ const handleSaveGroupSize = async () => {
 
         <!-- Admin Only Settings (Daily Take Goal & Testing Group Size) -->
         <template v-if="isAdmin">
-          <!-- Daily Goal Setting Form -->
-          <form @submit.prevent="handleSaveGoal" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
-            <label class="block text-sm font-semibold text-gray-900 dark:text-white">
-              Daily Take Goal
-            </label>
+          <!-- Daily Goal Setting -->
+          <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+            <div class="flex items-center justify-between">
+              <label class="block text-sm font-semibold text-gray-900 dark:text-white">
+                Daily Take Goal
+              </label>
+              <span v-if="goalSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Saved!</span>
+            </div>
             <div class="flex items-center gap-2">
+              <button
+                type="button"
+                @click="stepGoal(-10)"
+                :disabled="isSavingGoal || dailyTakeGoalInput <= 1"
+                class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-40"
+                title="Decrease by 10"
+              >
+                <ChevronLeftIcon class="w-4 h-4 stroke-[2.5]" />
+              </button>
               <input
                 type="number"
                 v-model.number="dailyTakeGoalInput"
-                :disabled="isSavingGoal"
+                @input="onGoalInput"
                 min="1"
                 max="10000"
-                class="w-1/4 min-w-[70px] text-right font-mono px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                class="w-20 text-center font-mono px-2 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               <button
-                type="submit"
+                type="button"
+                @click="stepGoal(10)"
                 :disabled="isSavingGoal"
-                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl text-sm transition-all disabled:opacity-50 flex items-center shrink-0 gap-1.5 cursor-pointer"
+                class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-40"
+                title="Increase by 10"
               >
-                <span v-if="isSavingGoal" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                <span>{{ isSavingGoal ? 'Saving...' : 'Save' }}</span>
+                <ChevronRightIcon class="w-4 h-4 stroke-[2.5]" />
               </button>
             </div>
-            <p v-if="goalSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Goal saved!</p>
-          </form>
+          </div>
 
-          <!-- Testing Group Size Setting Form -->
-          <form @submit.prevent="handleSaveGroupSize" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
-            <div>
+          <!-- Testing Group Size Setting -->
+          <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+            <div class="flex items-center justify-between">
               <label class="block text-sm font-semibold text-gray-900 dark:text-white">
                 Testing Group Size
               </label>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
-                Choose how many flashcards you test in a single batch. LangLearn will cycle through this group until you mark all of them as learned, before loading the next batch.
-              </p>
+              <span v-if="groupSizeSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Saved!</span>
             </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+              Choose how many flashcards you test in a single batch. LangLearn will cycle through this group until you mark all of them as learned, before loading the next batch.
+            </p>
             <div class="flex items-center gap-2">
+              <button
+                type="button"
+                @click="stepGroupSize(-1)"
+                :disabled="isSavingGroupSize || testingGroupSizeInput <= 1"
+                class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-40"
+                title="Decrease by 1"
+              >
+                <ChevronLeftIcon class="w-4 h-4 stroke-[2.5]" />
+              </button>
               <input
                 type="number"
                 v-model.number="testingGroupSizeInput"
-                :disabled="isSavingGroupSize"
+                @input="onGroupSizeInput"
                 min="1"
                 max="50"
-                class="w-1/4 min-w-[70px] text-right font-mono px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                class="w-20 text-center font-mono px-2 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               <button
-                type="submit"
-                :disabled="isSavingGroupSize"
-                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl text-sm transition-all disabled:opacity-50 flex items-center shrink-0 gap-1.5 cursor-pointer"
+                type="button"
+                @click="stepGroupSize(1)"
+                :disabled="isSavingGroupSize || testingGroupSizeInput >= 50"
+                class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-40"
+                title="Increase by 1"
               >
-                <span v-if="isSavingGroupSize" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                <span>{{ isSavingGroupSize ? 'Saving...' : 'Save' }}</span>
+                <ChevronRightIcon class="w-4 h-4 stroke-[2.5]" />
               </button>
             </div>
-            <p v-if="groupSizeSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Testing group size saved!</p>
-          </form>
+          </div>
         </template>
+
+        <!-- Immediate Save Notice -->
+        <div class="border-t border-gray-100 dark:border-gray-800 pt-5 text-center">
+          <p class="text-xs text-gray-400 dark:text-gray-500 italic">
+            all changes on this page are saved immediately
+          </p>
+        </div>
       </div>
 
       <template #fallback>

@@ -32,13 +32,7 @@ const languages = [
 
 type LangCode = typeof languages[number]['code']
 
-// Language colors per agents.md (with vibrant Spanish red)
-const languageColors: Record<string, string> = {
-  fr: '#333388',
-  es: '#e11d48',
-  it: '#194d19',
-  nl: '#d97706',
-}
+import { languageColors } from '~/utils/languageColors'
 
 const languageNames: Record<string, string> = {
   fr: 'french',

@@ -53,19 +53,7 @@ const languageNames: Record<string, string> = {
   el: 'Greek'
 }
 
-const languageColors: Record<string, string> = {
-  en: '#0ea5e9',
-  fr: '#333388',
-  es: '#b91c1c',
-  it: '#194d19',
-  nl: '#ca8a04',
-  pl: '#b8b8b8',
-  de: '#582f0e',
-  ru: '#3f3f46',
-  is: '#06b6d4',
-  da: '#7e22ce',
-  el: '#ea580c'
-}
+import { languageColors } from '~/utils/languageColors'
 
 const { loggedIn, userRole } = useCurrentUser()
 const memberTargetLanguages = ref<string[]>([])
@@ -150,6 +138,12 @@ const groupedPrompts = computed(() => {
 
 // Action: Copy text to clipboard & open Gemini AI in new tab
 async function handleCopyAndPaste(text: string, promptId: string) {
+  if (typeof window !== 'undefined') {
+    const selection = window.getSelection()?.toString().trim()
+    if (selection && selection.length > 0) {
+      return
+    }
+  }
   try {
     await navigator.clipboard.writeText(text)
     copiedPromptId.value = promptId
@@ -384,7 +378,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
             class="group relative p-4 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.01] active:scale-[0.99]"
             :style="{
               borderColor: copiedPromptId === p.id ? '#059669' : (group.color + '66'),
-              backgroundColor: copiedPromptId === p.id ? '#05966914' : (group.color + '1a')
+              backgroundColor: copiedPromptId === p.id ? '#05966928' : (group.color + '40')
             }"
             title="Click anywhere to copy prompt and open Gemini AI"
           >
@@ -472,7 +466,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               </div>
 
               <!-- Black prompt area extended down to fill space -->
-              <p class="text-xs text-gray-700 dark:text-gray-300 font-mono bg-white/70 dark:bg-gray-950/80 p-3 rounded-lg border border-gray-200/60 dark:border-gray-800/80 leading-relaxed flex-1 flex items-start select-none">
+              <p class="text-xs text-gray-700 dark:text-gray-300 font-mono bg-white/70 dark:bg-gray-950/80 p-3 rounded-lg border border-gray-200/60 dark:border-gray-800/80 leading-relaxed flex-1 flex items-start select-text">
                 {{ p.prompt }}
               </p>
             </div>
@@ -486,9 +480,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                 <span class="text-emerald-600 dark:text-emerald-300 font-bold">Copied! Opening Gemini&nbsp;AI...</span>
               </template>
               <template v-else>
-                <UIcon name="lucide:copy" class="w-3.5 h-3.5 opacity-70" />
-                <span>Click card to copy &amp; open Gemini AI</span>
-                <UIcon name="lucide:arrow-up-right" class="w-3.5 h-3.5 opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <span>Click card, Gemini will open, paste text</span>
               </template>
             </div>
           </div>

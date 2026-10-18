@@ -37,18 +37,7 @@ interface ActivityItem {
   pronunciation?: string | null
 }
 
-const languageColors: Record<string, string> = {
-  fr: '#333388',
-  es: '#be185d',
-  it: '#194d19',
-  nl: '#d97706',
-  pl: '#b8b8b8',
-  de: '#7e4402',
-  ru: '#3f3f46',
-  is: '#06b6d4',
-  da: '#7e22ce',
-  el: '#ea580c'
-}
+import { languageColors } from '~/utils/languageColors'
 
 // Bright, readable pill styles for each language
 const languagePillStyles: Record<string, { bg: string; color: string; border: string }> = {

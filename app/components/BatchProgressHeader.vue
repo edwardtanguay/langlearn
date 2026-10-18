@@ -19,18 +19,7 @@ const emit = defineEmits<{
   (e: 'selectSlot', cardId: string): void
 }>()
 
-const languageColors: Record<string, string> = {
-  fr: '#2563eb', // French = blue
-  it: '#16a34a', // Italian = green
-  es: '#dc2626', // Spanish = red
-  nl: '#ca8a04', // Dutch = yellow
-  pl: '#9ca3af', // Polish = gray
-  de: '#78350f', // German = brown
-  ru: '#4b5563',
-  is: '#0891b2',
-  da: '#9333ea',
-  el: '#ea580c'
-}
+import { languageColors } from '~/utils/languageColors'
 
 const languageTextColors: Record<string, string> = {
   fr: '#3b82f6', // French = brighter blue

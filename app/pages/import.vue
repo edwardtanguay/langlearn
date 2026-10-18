@@ -69,31 +69,9 @@ const mobileImportSuccessStats = ref<{
   languages: Record<string, number>
 } | null>(null)
 
-const languageColors: Record<string, string> = {
-  fr: '#2563eb', // French = blue
-  es: '#dc2626', // Spanish = red
-  it: '#16a34a', // Italian = green
-  nl: '#ca8a04', // Dutch = yellow
-  pl: '#9ca3af',
-  de: '#78350f',
-  ru: '#4b5563',
-  is: '#0891b2',
-  da: '#9333ea',
-  el: '#ea580c'
-}
+import { languageColors } from '~/utils/languageColors'
 
-const languageTextColors: Record<string, string> = {
-  fr: '#60a5fa', // French = brighter blue for high contrast
-  es: '#dc2626',
-  it: '#16a34a',
-  nl: '#ca8a04',
-  pl: '#9ca3af',
-  de: '#d97706', // German = brighter warm amber/brown
-  ru: '#4b5563',
-  is: '#0891b2',
-  da: '#9333ea',
-  el: '#ea580c'
-}
+const languageTextColors: Record<string, string> = { ...languageColors }
 
 function getCardLanguageColor(card: PreviewCardItem): string {
   const code = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()

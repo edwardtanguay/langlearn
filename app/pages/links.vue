@@ -5,8 +5,12 @@ import {
   PlusIcon,
   PencilSquareIcon,
   TrashIcon,
-  XMarkIcon
+  XMarkIcon,
+  DocumentTextIcon,
+  ChevronUpIcon,
+  ChevronDownIcon
 } from '@heroicons/vue/24/outline'
+import { languageColors } from '~/utils/languageColors'
 
 useHead({
   title: 'LangLearn - Links',
@@ -26,18 +30,70 @@ interface LinkItem {
   rank: number
 }
 
-const languageMetadata: Record<string, { title: string; color: string }> = {
-  en: { title: 'English', color: '#0ea5e9' },
-  fr: { title: 'French', color: '#333388' },
-  es: { title: 'Spanish', color: '#be185d' },
-  it: { title: 'Italian', color: '#194d19' },
-  nl: { title: 'Dutch', color: '#d97706' },
-  pl: { title: 'Polish', color: '#b8b8b8' },
-  de: { title: 'German', color: '#7e4402' },
-  ru: { title: 'Russian', color: '#3f3f46' },
-  is: { title: 'Icelandic', color: '#06b6d4' },
-  da: { title: 'Danish', color: '#7e22ce' },
-  el: { title: 'Greek', color: '#ea580c' }
+const languageTitles: Record<string, string> = {
+  en: 'English',
+  fr: 'French',
+  es: 'Spanish',
+  it: 'Italian',
+  nl: 'Dutch',
+  pl: 'Polish',
+  de: 'German',
+  ru: 'Russian',
+  is: 'Icelandic',
+  da: 'Danish',
+  el: 'Greek'
+}
+
+const languageMetadata: Record<string, { title: string; color: string }> = Object.fromEntries(
+  Object.entries(languageColors).map(([code, color]) => [
+    code,
+    { title: languageTitles[code] || code.toUpperCase(), color }
+  ])
+)
+
+function isYouTubeUrl(url?: string): boolean {
+  if (!url) return false
+  return url.includes('youtube.com') || url.includes('youtu.be')
+}
+
+async function moveLink(categoryLinks: LinkItem[], index: number, direction: 'up' | 'down') {
+  const targetIndex = direction === 'up' ? index - 1 : index + 1
+  if (targetIndex < 0 || targetIndex >= categoryLinks.length) return
+
+  const item1 = categoryLinks[index]
+  const item2 = categoryLinks[targetIndex]
+  if (!item1 || !item2) return
+
+  const prevLinks = JSON.parse(JSON.stringify(links.value))
+
+  // categoryLinks are sorted descending by rank: index 0 has highest rank
+  let rank1 = item1.rank ?? 2.5
+  let rank2 = item2.rank ?? 2.5
+
+  if (rank1 === rank2) {
+    if (direction === 'up') {
+      rank1 = rank2 + 0.1
+    } else {
+      rank1 = Math.max(0, rank2 - 0.1)
+    }
+  } else {
+    const temp = rank1
+    rank1 = rank2
+    rank2 = temp
+  }
+
+  item1.rank = rank1
+  item2.rank = rank2
+
+  try {
+    await Promise.all([
+      $fetch(`/api/links/${item1.id}`, { method: 'PUT', body: { rank: item1.rank } }),
+      $fetch(`/api/links/${item2.id}`, { method: 'PUT', body: { rank: item2.rank } })
+    ])
+  } catch (err) {
+    console.error('Failed to move link:', err)
+    links.value = prevLinks
+  }
 }
 
 const links = ref<LinkItem[]>([])
@@ -267,12 +323,12 @@ const executeDelete = async () => {
 
     <!-- Language Link Categories -->
     <div v-else v-for="category in groupedCategories" :key="category.code" class="space-y-4">
-      <!-- Category Header (Full-width bar with language color outline) -->
-      <div
-        class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl border-2 bg-gray-900/60 shadow-xs"
-        :style="{ borderColor: category.color }"
-      >
-        <h2 class="text-lg font-bold text-gray-900 dark:text-white tracking-tight leading-none">
+      <!-- Category Header (No outer outline, larger text vertically centered with Add button) -->
+      <div class="w-full flex items-center justify-between px-1 py-1">
+        <h2
+          class="text-2xl font-black tracking-tight leading-none"
+          :style="{ color: category.color }"
+        >
           {{ category.title }}
         </h2>
 
@@ -288,10 +344,10 @@ const executeDelete = async () => {
         </button>
       </div>
 
-      <!-- Links List (Whole panel clickable, colored background, colored title, capitalized description, no rank, no box icon) -->
+      <!-- Links List (Whole panel clickable, colored background, colored title, capitalized description, no hover underline) -->
       <ul class="space-y-3 text-sm">
         <li
-          v-for="link in category.links"
+          v-for="(link, idx) in category.links"
           :key="link.id"
           @click="openLink(link.url)"
           class="p-4 rounded-xl border shadow-xs flex items-start justify-between gap-3 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
@@ -301,12 +357,20 @@ const executeDelete = async () => {
           }"
         >
           <div class="space-y-1.5 min-w-0 flex-1">
-            <span
-              class="font-bold text-base block leading-snug group-hover:underline"
-              :style="{ color: category.color }"
-            >
-              {{ link.title }}
-            </span>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span
+                class="font-bold text-base block leading-snug"
+                :style="{ color: category.color }"
+              >
+                {{ link.title }}
+              </span>
+              <!-- YouTube Icon for YouTube URLs -->
+              <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 shrink-0 text-red-600 inline-block" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+              <!-- Document/Page icon for general web links -->
+              <DocumentTextIcon v-else class="w-4 h-4 shrink-0 text-gray-400 dark:text-gray-400 inline-block" title="Web article" />
+            </div>
 
             <!-- Description (forced capitalize first letter) -->
             <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed">
@@ -329,6 +393,23 @@ const executeDelete = async () => {
               class="p-1.5 text-gray-400 hover:text-red-400 hover:bg-white/10 transition-colors cursor-pointer rounded-lg"
             >
               <TrashIcon class="w-4 h-4" />
+            </button>
+            <!-- Reorder Up & Down Buttons -->
+            <button
+              @click.stop="moveLink(category.links, idx, 'up')"
+              :disabled="idx === 0"
+              title="Move Up"
+              class="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer rounded-lg disabled:opacity-20"
+            >
+              <ChevronUpIcon class="w-4 h-4 stroke-[2.5]" />
+            </button>
+            <button
+              @click.stop="moveLink(category.links, idx, 'down')"
+              :disabled="idx === category.links.length - 1"
+              title="Move Down"
+              class="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer rounded-lg disabled:opacity-20"
+            >
+              <ChevronDownIcon class="w-4 h-4 stroke-[2.5]" />
             </button>
           </div>
         </li>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { languageColors } from '~/utils/languageColors'
 
 useHead({
   title: 'LangLearn - Flashcards Practice',
@@ -271,19 +272,6 @@ const languageNames: Record<string, string> = {
   is: 'ICELANDIC',
   da: 'DANISH',
   el: 'GREEK'
-}
-
-const languageColors: Record<string, string> = {
-  fr: '#333388',
-  es: '#be185d',
-  it: '#194d19',
-  nl: '#facc15',
-  pl: '#b8b8b8',
-  de: '#3d1e03',
-  ru: '#3f3f46',
-  is: '#06b6d4',
-  da: '#7e22ce',
-  el: '#ea580c'
 }
 
 const currentQueueIndex = ref(0)
@@ -803,72 +791,63 @@ function markAction(actionTaken: string, newStatus?: string) {
   cardAnimState.value = 'exiting'
 
   setTimeout(() => {
+    const currentSlotIndex = slot ? slot.slotIndex : 0
+
     if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
-      // Increment attempt count as card is rotated to the back so counter doesn't jump prematurely
       if (slot) {
         slot.unsuccessfulCount++
       }
-      const prevIdx = currentQueueIndex.value
-      // Keep in batch: push current card to the back of the unlearned queue
-      const [cardToRotate] = testQueue.value.splice(prevIdx, 1)
-      if (cardToRotate) {
-        testQueue.value.push(cardToRotate)
-      }
-      // If user was at the end of the batch, wrap to 0, otherwise stay at prevIdx (which now holds the next card)
-      if (prevIdx >= testQueue.value.length - 1) {
-        currentQueueIndex.value = 0
-      } else {
-        currentQueueIndex.value = prevIdx
-      }
-      isFlipped.value = false
-      const current = testQueue.value[currentQueueIndex.value]
-      if (current) {
-        sliderValue.value = current.rank
-      }
-
-      cardAnimState.value = 'entering'
-      setTimeout(() => { cardAnimState.value = 'idle' }, 220)
     } else {
       // Learned, Parked, or Deleted: remove card from active batch
-      const prevIdx = currentQueueIndex.value
-      const [removedCard] = testQueue.value.splice(prevIdx, 1)
-      if (removedCard) {
-        lastCompletedBatchCardIds.value.push(removedCard.id)
+      const removeIdx = testQueue.value.findIndex(c => c.id === cardId)
+      if (removeIdx !== -1) {
+        const [removedCard] = testQueue.value.splice(removeIdx, 1)
+        if (removedCard) {
+          lastCompletedBatchCardIds.value.push(removedCard.id)
+        }
       }
       learnedInBatchCount.value++
-      isFlipped.value = false
+    }
 
-      if (testQueue.value.length > 0) {
-        // Move to the next card (which slid into prevIdx), or wrap to 0 if at end
-        if (prevIdx >= testQueue.value.length) {
-          currentQueueIndex.value = 0
-        } else {
-          currentQueueIndex.value = prevIdx
+    isFlipped.value = false
+
+    // Check if batch is complete
+    const allCompleted = batchSlots.value.length > 0 && batchSlots.value.every(s => ['learned', 'parked', 'deleted'].includes(s.status))
+    if (allCompleted) {
+      cardAnimState.value = 'idle'
+      triggerBatchCompletion()
+      return
+    }
+
+    // Determine the next card to test:
+    // First, look for an unfinished slot ahead of currentSlotIndex in slot order
+    let nextSlot = batchSlots.value.find(s => s.slotIndex > currentSlotIndex && (s.status === 'untested' || s.status === 'testing'))
+    // If reached end of the batch, wrap back to the first unfinished slot in the batch (starting from slot 0 / box 1)
+    if (!nextSlot) {
+      nextSlot = batchSlots.value.find(s => s.status === 'untested' || s.status === 'testing')
+    }
+
+    if (nextSlot) {
+      let targetIndex = testQueue.value.findIndex(c => c.id === nextSlot!.id)
+      if (targetIndex === -1) {
+        const cardObj = currentBatchAllCards.value.find(c => c.id === nextSlot!.id)
+        if (cardObj) {
+          testQueue.value.push(cardObj)
+          targetIndex = testQueue.value.length - 1
         }
+      }
+
+      if (targetIndex !== -1) {
+        currentQueueIndex.value = targetIndex
         const nextCard = testQueue.value[currentQueueIndex.value]
         if (nextCard) {
           sliderValue.value = nextCard.rank
         }
-        cardAnimState.value = 'entering'
-        setTimeout(() => { cardAnimState.value = 'idle' }, 220)
-      } else {
-        const nextUnfinishedSlot = batchSlots.value.find(s => s.status === 'untested' || s.status === 'testing')
-        if (nextUnfinishedSlot) {
-          const nextCard = currentBatchAllCards.value.find(c => c.id === nextUnfinishedSlot.id)
-          if (nextCard) {
-            testQueue.value.push(nextCard)
-            currentQueueIndex.value = 0
-            const firstCard = testQueue.value[0]
-            if (firstCard) sliderValue.value = firstCard.rank
-            cardAnimState.value = 'entering'
-            setTimeout(() => { cardAnimState.value = 'idle' }, 220)
-            return
-          }
-        }
-        cardAnimState.value = 'idle'
-        triggerBatchCompletion()
       }
     }
+
+    cardAnimState.value = 'entering'
+    setTimeout(() => { cardAnimState.value = 'idle' }, 220)
   }, 200)
 
   $fetch(`/api/flashcards/${cardId}/action`, {

@@ -39,18 +39,7 @@ interface Metrics {
   total: number
 }
 
-const languageColors: Record<string, string> = {
-  fr: '#333388',
-  es: '#be185d',
-  it: '#194d19',
-  nl: '#facc15',
-  pl: '#b8b8b8',
-  de: '#3d1e03',
-  ru: '#3f3f46',
-  is: '#06b6d4',
-  da: '#7e22ce',
-  el: '#ea580c'
-}
+import { languageColors } from '~/utils/languageColors'
 
 const isLoading = ref(true)
 const cards = ref<Flashcard[]>([])
@@ -58,6 +47,16 @@ const currentIndex = ref(0)
 const isRevealed = ref(false)
 const showSourceText = ref(false)
 const isSubmittingAction = ref(false)
+
+function togglePhraseTranslation() {
+  if (typeof window !== 'undefined') {
+    const selection = window.getSelection()?.toString().trim()
+    if (selection && selection.length > 0) {
+      return
+    }
+  }
+  showSourceText.value = !showSourceText.value
+}
 const metrics = ref<Metrics>({
   learned: 0,
   taken: 0,
@@ -341,17 +340,17 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
     <!-- Active Practice Card -->
     <div v-else-if="currentCard" class="space-y-4">
       <div
-        class="relative min-h-[260px] rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center transition-colors duration-300 border-4 shadow-xl select-none"
+        class="relative min-h-[260px] rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center transition-colors duration-300 border-4 shadow-xl"
         :style="{
-          borderColor: languageColors[currentCard.backLanguage] || '#333388',
-          backgroundColor: `color-mix(in srgb, ${languageColors[currentCard.backLanguage] || '#4f46e5'} 25%, #111827)`
+          borderColor: languageColors[currentCard.backLanguage] || '#60a5fa',
+          backgroundColor: `color-mix(in srgb, ${languageColors[currentCard.backLanguage] || '#60a5fa'} 25%, #111827)`
         }"
       >
         <!-- Language Badge (Top Left) -->
-        <div class="w-full flex items-center justify-between">
+        <div class="w-full flex items-center justify-between select-none">
           <span
             class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white shadow-xs"
-            :style="{ backgroundColor: languageColors[currentCard.backLanguage] || '#333388' }"
+            :style="{ backgroundColor: languageColors[currentCard.backLanguage] || '#60a5fa' }"
           >
             {{ currentCard.backLanguage?.toUpperCase() || 'FR' }}
           </span>
@@ -365,12 +364,12 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
           </span>
         </div>
 
-        <!-- Target Phrase (Click to toggle French/English) -->
+        <!-- Target Phrase (Click to toggle French/English, selectable) -->
         <div class="my-auto py-3 min-h-[64px] flex items-center justify-center">
           <div
-            @click="showSourceText = !showSourceText"
-            class="tracking-tight leading-tight cursor-pointer select-none text-center"
-            :class="showSourceText ? 'text-sm font-semibold text-gray-400 italic' : 'text-2xl sm:text-3xl font-bold text-white'"
+            @click="togglePhraseTranslation"
+            class="tracking-tight leading-tight cursor-pointer select-text text-center px-4 py-1"
+            :class="showSourceText ? 'text-2xl sm:text-3xl font-semibold text-gray-300/90 italic' : 'text-2xl sm:text-3xl font-bold text-white'"
             :title="showSourceText ? 'Click to show target phrase' : 'Click to show translation'"
           >
             {{ showSourceText ? stripAsterisks(currentCard.front) : stripAsterisks(currentCard.back) }}
