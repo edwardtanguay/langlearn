@@ -360,7 +360,6 @@ const handleSaveGroupSize = async () => {
               <label class="block text-sm font-semibold text-gray-900 dark:text-white">
                 Target Languages
               </label>
-              <span v-if="languageSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Saved!</span>
             </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
               Target languages are the <strong class="text-gray-700 dark:text-gray-200 font-bold">languages you want to learn</strong>. Currently, target languages filter the Links page and Gemini Quiz Prompts activity.
@@ -370,11 +369,12 @@ const handleSaveGroupSize = async () => {
               <label
                 v-for="targetLang in availableTargetLanguages"
                 :key="targetLang.code"
-                class="flex items-center gap-2.5 p-2 rounded-xl border cursor-pointer transition-all text-xs font-medium"
-                :class="selectedTargetLanguages.includes(targetLang.code) ? 'opacity-100' : 'opacity-35 hover:opacity-75'"
+                class="flex items-center gap-2.5 p-2 rounded-xl border cursor-pointer transition-all text-xs font-medium hover:brightness-105"
                 :style="{
                   borderColor: `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 50%, transparent)`,
-                  backgroundColor: `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 12%, transparent)`
+                  backgroundColor: selectedTargetLanguages.includes(targetLang.code)
+                    ? `color-mix(in srgb, ${languageColors[targetLang.code] || '#6366f1'} 12%, transparent)`
+                    : 'transparent'
                 }"
               >
                 <input
@@ -406,7 +406,6 @@ const handleSaveGroupSize = async () => {
               <label class="block text-sm font-semibold text-gray-900 dark:text-white">
                 Daily Take Goal
               </label>
-              <span v-if="goalSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Saved!</span>
             </div>
             <div class="flex items-center gap-2">
               <button
@@ -444,7 +443,6 @@ const handleSaveGroupSize = async () => {
               <label class="block text-sm font-semibold text-gray-900 dark:text-white">
                 Testing Group Size
               </label>
-              <span v-if="groupSizeSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Saved!</span>
             </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
               Choose how many flashcards you test in a single batch. LangLearn will cycle through this group until you mark all of them as learned, before loading the next batch.

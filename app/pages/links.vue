@@ -7,8 +7,8 @@ import {
   TrashIcon,
   XMarkIcon,
   DocumentTextIcon,
-  ChevronUpIcon,
-  ChevronDownIcon
+  ArrowUpIcon,
+  ArrowDownIcon
 } from '@heroicons/vue/24/outline'
 import { languageColors } from '~/utils/languageColors'
 
@@ -136,10 +136,10 @@ onMounted(() => {
 })
 
 // Filter links based on user role and target languages:
-// - unknownUsers & admins see all languages
-// - members see ONLY their configured target languages
+// - unknownUsers (not logged in) see all languages
+// - logged-in users (members & admins) see ONLY their configured target languages
 const filteredLinks = computed(() => {
-  if (isAdmin.value || !loggedIn.value || userRole.value === 'unknownUser') {
+  if (!loggedIn.value || userRole.value === 'unknownUser') {
     return links.value
   }
   const targets = new Set(memberTargetLanguages.value.map(l => l.toLowerCase()))
@@ -316,17 +316,17 @@ const executeDelete = async () => {
     <!-- Empty State -->
     <div v-else-if="groupedCategories.length === 0" class="py-16 text-center space-y-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
       <p class="text-gray-700 dark:text-gray-300 font-medium">No links available for your selected target languages.</p>
-      <NuxtLink v-if="loggedIn && !isAdmin" to="/user" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
+      <NuxtLink v-if="loggedIn" to="/user" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
         Configure Target Languages on your Profile &rarr;
       </NuxtLink>
     </div>
 
     <!-- Language Link Categories -->
     <div v-else v-for="category in groupedCategories" :key="category.code" class="space-y-4">
-      <!-- Category Header (No outer outline, larger text vertically centered with Add button) -->
+      <!-- Category Header (No outer outline, vertically center-aligned title and Add button) -->
       <div class="w-full flex items-center justify-between px-1 py-1">
         <h2
-          class="text-2xl font-black tracking-tight leading-none"
+          class="text-2xl font-black tracking-tight leading-normal my-0"
           :style="{ color: category.color }"
         >
           {{ category.title }}
@@ -337,7 +337,7 @@ const executeDelete = async () => {
           v-if="isAdmin"
           @click="openAddModal(category.langKey)"
           title="Add link in this language"
-          class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center gap-1 cursor-pointer transition-colors"
+          class="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center gap-1 cursor-pointer transition-colors"
         >
           <PlusIcon class="w-3.5 h-3.5" />
           <span>Add</span>
@@ -365,7 +365,7 @@ const executeDelete = async () => {
                 {{ link.title }}
               </span>
               <!-- YouTube Icon for YouTube URLs -->
-              <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 shrink-0 text-red-600 inline-block" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
+              <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 shrink-0 text-gray-400 dark:text-gray-400 inline-block" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
               </svg>
               <!-- Document/Page icon for general web links -->
@@ -401,7 +401,7 @@ const executeDelete = async () => {
               title="Move Up"
               class="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer rounded-lg disabled:opacity-20"
             >
-              <ChevronUpIcon class="w-4 h-4 stroke-[2.5]" />
+              <ArrowUpIcon class="w-4 h-4 stroke-[2.5]" />
             </button>
             <button
               @click.stop="moveLink(category.links, idx, 'down')"
@@ -409,7 +409,7 @@ const executeDelete = async () => {
               title="Move Down"
               class="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer rounded-lg disabled:opacity-20"
             >
-              <ChevronDownIcon class="w-4 h-4 stroke-[2.5]" />
+              <ArrowDownIcon class="w-4 h-4 stroke-[2.5]" />
             </button>
           </div>
         </li>

@@ -77,60 +77,60 @@ if (loggedIn.value) {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
         <NuxtLink
           to="/activities/gemini-quiz"
-          class="group p-5 rounded-2xl border border-indigo-500/40 bg-indigo-950/30 hover:bg-indigo-900/40 hover:border-indigo-400/60 transition-all flex flex-col justify-between space-y-3 shadow-md"
+          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-750 text-gray-700 dark:text-gray-300 flex items-center justify-center">
               <SparklesIcon class="w-5 h-5" />
             </div>
-            <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+            <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-black dark:group-hover:text-white transition-colors">
               Gemini Quiz Prompts
             </h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
               Copy curated AI prompts tailored to your target language and level.
             </p>
           </div>
-          <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+          <span class="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
             Try activity &rarr;
           </span>
         </NuxtLink>
 
         <NuxtLink
           to="/links"
-          class="group p-5 rounded-2xl border border-emerald-500/40 bg-emerald-950/30 hover:bg-emerald-900/40 hover:border-emerald-400/60 transition-all flex flex-col justify-between space-y-3 shadow-md"
+          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-750 text-gray-700 dark:text-gray-300 flex items-center justify-center">
               <LinkIcon class="w-5 h-5" />
             </div>
-            <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-black dark:group-hover:text-white transition-colors">
               Links &amp; Videos
             </h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
               Curated videos and resources for high-immersion language learning.
             </p>
           </div>
-          <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+          <span class="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
             Browse links &rarr;
           </span>
         </NuxtLink>
 
         <NuxtLink
           to="/about"
-          class="group p-5 rounded-2xl border border-amber-500/40 bg-amber-950/30 hover:bg-amber-900/40 hover:border-amber-400/60 transition-all flex flex-col justify-between space-y-3 shadow-md"
+          class="group p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg transition-all flex flex-col justify-between space-y-3 shadow-xs"
         >
           <div class="space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-750 text-gray-700 dark:text-gray-300 flex items-center justify-center">
               <InformationCircleIcon class="w-5 h-5" />
             </div>
-            <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+            <h3 class="font-bold text-gray-900 dark:text-white group-hover:text-black dark:group-hover:text-white transition-colors">
               About &amp; Roadmap
             </h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
               Explore the design philosophy, release roadmap, and feature history.
             </p>
           </div>
-          <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+          <span class="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
             View roadmap &rarr;
           </span>
         </NuxtLink>

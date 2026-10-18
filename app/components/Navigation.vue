@@ -271,7 +271,7 @@ const navItems = computed(() => {
             <NuxtLink v-for="item in navItems"
                       :key="item.path"
                       :to="item.path"
-                      class="flex items-center space-x-2 !text-gray-600 hover:!text-black transition-colors font-medium dark:!text-gray-300 dark:hover:!text-white"
+                      class="flex items-center space-x-2 !text-gray-600 hover:!text-amber-600 transition-colors font-medium dark:!text-gray-300 dark:hover:!text-yellow-500"
                       active-class="!text-amber-500 dark:!text-yellow-400 font-semibold">
               <component :is="item.icon"
                          class="h-5 w-5" />

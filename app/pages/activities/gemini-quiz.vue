@@ -79,7 +79,7 @@ async function loadData() {
   try {
     const [data, me] = await Promise.all([
       $fetch<ChatbotPromptItem[]>('/api/chatbot-prompts?category=geminiQuizPrompts'),
-      loggedIn.value ? $fetch<{ role: string; targetLanguages?: string[] }>('/api/user/me').catch(() => ({ role: 'member' })) : null
+      loggedIn.value ? $fetch<{ role: string; targetLanguages?: string[] }>('/api/user/me').catch((): { role: string; targetLanguages?: string[] } => ({ role: 'member' })) : null
     ])
     prompts.value = data || []
     isAdmin.value = me?.role === 'admin'
@@ -106,13 +106,13 @@ onUnmounted(() => {
 const groupedPrompts = computed(() => {
   const groups: Record<string, ChatbotPromptItem[]> = {}
   
-  // For members: filter by target languages. For unknownUsers and admins: show all
-  const isMemberUser = loggedIn.value && !isAdmin.value
+  // For logged in users (members & admins): filter by target languages. For unknownUsers (logged out): show all
+  const isTargetFiltered = loggedIn.value && userRole.value !== 'unknownUser'
   const targetSet = new Set(memberTargetLanguages.value.map(l => l.toLowerCase()))
 
   for (const p of prompts.value) {
     const lang = p.language.toLowerCase()
-    if (isMemberUser && targetSet.size > 0 && !targetSet.has(lang)) {
+    if (isTargetFiltered && !targetSet.has(lang)) {
       continue
     }
     if (!groups[lang]) {
@@ -359,14 +359,32 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
       </div>
     </div>
 
+    <!-- Empty State -->
+    <div v-else-if="groupedPrompts.length === 0" class="py-16 text-center space-y-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
+      <p class="text-gray-700 dark:text-gray-300 font-medium">No quiz prompts available for your selected target languages.</p>
+      <NuxtLink v-if="loggedIn" to="/user" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
+        Configure Target Languages on your Profile &rarr;
+      </NuxtLink>
+    </div>
+
     <!-- Grouped Prompts by Language -->
     <div v-else class="space-y-10">
       <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
-        <!-- Language Group Header: Word with thick full-width underline directly under text with ZERO space -->
-        <div class="border-b-2 w-full border-t-0 pt-0 pb-0 flex flex-col items-start" :style="{ borderColor: group.color }">
+        <!-- Language Group Header: Word with thick full-width underline directly under text with ZERO space, with Add button on far right for admin -->
+        <div class="border-b-2 w-full border-t-0 pt-0 pb-0 flex items-center justify-between" :style="{ borderColor: group.color }">
           <div class="text-2xl text-gray-900 dark:text-white tracking-tight p-0 mb-2 leading-none inline-block translate-y-[2px]">
             {{ group.name }}
           </div>
+          <!-- Add Prompt in this language button (Admin only) -->
+          <button
+            v-if="isAdmin"
+            @click="openAddModal(group.code)"
+            title="Add prompt in this language"
+            class="text-xs font-semibold px-2.5 py-1.5 mb-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-800 dark:text-white flex items-center gap-1 cursor-pointer transition-colors"
+          >
+            <UIcon name="lucide:plus" class="w-3.5 h-3.5" />
+            <span>Add</span>
+          </button>
         </div>
 
         <!-- Prompts Grid -->
@@ -384,16 +402,28 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
           >
             <div class="space-y-3 flex-1 flex flex-col">
               <!-- Prompt Card Header Container -->
-              <div class="relative min-h-[36px] flex items-center">
-                <!-- Card Title (Clean text, not a button pill; click to reveal CRUD bar if admin) -->
-                <h3
+              <div class="relative min-h-[36px] flex items-center justify-center">
+                <!-- Card Title Container (Clean text + subtle pencil icon hint for admin; click reveals CRUD bar if admin) -->
+                <div
                   @click.stop="isAdmin ? toggleCrudToolbar(p.id, $event) : null"
-                  class="w-full text-center text-base font-black tracking-wide py-1 px-2 select-none truncate"
-                  :class="{ 'cursor-pointer hover:opacity-80': isAdmin }"
-                  :style="{ color: group.color }"
+                  class="flex items-center justify-center gap-1.5 py-1 px-2 select-none max-w-full rounded-lg transition-colors group/header"
+                  :class="{ 'cursor-pointer hover:bg-black/5 dark:hover:bg-white/5': isAdmin }"
                 >
-                  {{ p.title }}
-                </h3>
+                  <h3
+                    class="text-base font-black tracking-wide truncate"
+                    :style="{ color: group.color }"
+                  >
+                    {{ p.title }}
+                  </h3>
+                  <!-- Subtle Edit Icon hint for Admin -->
+                  <span
+                    v-if="isAdmin"
+                    title="Click to manage prompt"
+                    class="p-0.5 text-gray-400 group-hover/header:text-gray-200 transition-colors shrink-0"
+                  >
+                    <UIcon name="lucide:pencil" class="w-3.5 h-3.5" />
+                  </span>
+                </div>
 
                 <!-- Desktop Admin CRUD Tools (Displayed on title click; click bar area closes it; solid black bg, no border) -->
                 <div
@@ -480,7 +510,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                 <span class="text-emerald-600 dark:text-emerald-300 font-bold">Copied! Opening Gemini&nbsp;AI...</span>
               </template>
               <template v-else>
-                <span>Click card, Gemini will open, paste text</span>
+                <span>Click card, Gemini opens, paste text</span>
               </template>
             </div>
           </div>
