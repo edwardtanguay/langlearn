@@ -96,4 +96,4 @@
 - writing
 	- el punto, la coma, el punto y coma, los dos puntos, el signo de exclamación, el signo de interrogación, las comillas, las comillas angulares, el apóstrofo, el guion, la raya, los paréntesis, los corchetes, las llaves, los puntos suspensivos, la barra, la barra invertida, el guion bajo, la virgulilla, el et
 - language
-	- el sustantivo, el verbo, el adjetivo, el adverbio, el pronombre, la preposición, la conjunción, el artículo, el sujeto, el objeto, el tiempo verbal, la conjugación, la gramática, el vocabulario, la pronunciación, la sílaba, la frase, el párrafo, el singular, el plural
+	- el sustantivo, el verbo, el adjetivo, el adverbio, el pronombre, la preposición, la conjunción, el artículo, el sujeto, el objeto, el tiempo verbal, la conjugación, la gramática, el vocabulario, la pronunciación, la sílaba, la frase, el párrafo, el singular, el plural, el acento grave, el acento agudo

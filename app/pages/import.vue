@@ -69,31 +69,9 @@ const mobileImportSuccessStats = ref<{
   languages: Record<string, number>
 } | null>(null)
 
-const languageColors: Record<string, string> = {
-  fr: '#2563eb', // French = blue
-  es: '#dc2626', // Spanish = red
-  it: '#16a34a', // Italian = green
-  nl: '#ca8a04', // Dutch = yellow
-  pl: '#9ca3af',
-  de: '#78350f',
-  ru: '#4b5563',
-  is: '#0891b2',
-  da: '#9333ea',
-  el: '#ea580c'
-}
+import { languageColors } from '~/utils/languageColors'
 
-const languageTextColors: Record<string, string> = {
-  fr: '#60a5fa', // French = brighter blue for high contrast
-  es: '#dc2626',
-  it: '#16a34a',
-  nl: '#ca8a04',
-  pl: '#9ca3af',
-  de: '#d97706', // German = brighter warm amber/brown
-  ru: '#4b5563',
-  is: '#0891b2',
-  da: '#9333ea',
-  el: '#ea580c'
-}
+const languageTextColors: Record<string, string> = { ...languageColors }
 
 function getCardLanguageColor(card: PreviewCardItem): string {
   const code = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
@@ -376,9 +354,7 @@ async function handleImport() {
               <div>
                 <h1 class="text-xl font-extrabold text-gray-900 dark:text-white">Import Preview</h1>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ mobilePreviewResult.totalParsed }} {{ mobilePreviewResult.totalParsed === 1 ? 'card' : 'cards' }} found:
-                  <span class="text-rose-600 dark:text-rose-400 font-semibold">{{ mobilePreviewResult.willNotImport.length }} skipped</span>,
-                  <span class="text-emerald-600 dark:text-emerald-400 font-semibold">{{ mobilePreviewResult.willImport.length }} ready to import</span>
+                  {{ mobilePreviewResult.totalParsed }} {{ mobilePreviewResult.totalParsed === 1 ? 'card' : 'cards' }} found
                 </p>
               </div>
               <button

@@ -1,6 +1,21 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { HomeIcon, Bars3Icon, XMarkIcon, SunIcon, MoonIcon, InformationCircleIcon, DocumentTextIcon, ArrowRightOnRectangleIcon, ArrowLeftOnRectangleIcon, WrenchScrewdriverIcon, ArrowUpTrayIcon, SpeakerWaveIcon, VideoCameraIcon, LinkIcon, SparklesIcon } from '@heroicons/vue/24/outline'
+import {
+  HomeIcon,
+  Bars3Icon,
+  XMarkIcon,
+  SunIcon,
+  MoonIcon,
+  InformationCircleIcon,
+  DocumentTextIcon,
+  ArrowRightOnRectangleIcon,
+  ArrowLeftOnRectangleIcon,
+  UserPlusIcon,
+  WrenchScrewdriverIcon,
+  ArrowUpTrayIcon,
+  LinkIcon,
+  SparklesIcon
+} from '@heroicons/vue/24/outline'
 
 interface CardStats {
   readyCount: number
@@ -15,6 +30,7 @@ const mobileMenuOpen = ref(false)
 const showStatsModal = useState('isStatsOpen', () => false)
 const isIdeaBoxOpen = useState('isIdeaBoxOpen', () => false)
 const navRef = ref<HTMLElement | null>(null)
+const isNavReady = ref(false)
 
 const cardStats = useState<CardStats | null>('flashcardStats', () => null)
 const dailyTakeGoal = ref(100)
@@ -42,16 +58,6 @@ const scheduleMidnightRefresh = () => {
   }, msUntilMidnight)
 }
 
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-  scheduleMidnightRefresh()
-})
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
-  if (midnightTimeout) clearTimeout(midnightTimeout)
-})
-
 const colorMode = useColorMode()
 
 const toggleColorMode = () => {
@@ -62,12 +68,10 @@ const config = useRuntimeConfig()
 const showColorModeToggle = config.public.showColorModeToggle
 const showDevPageConfig = computed(() => config.public.showDevPage)
 
-const auth = useAuth()
+const { loggedIn, isAdmin, isMember, isUnknownUser, userRole, fetchRole } = useCurrentUser()
 const isBypass = computed(() => Boolean(config.public.bypassAuth))
-const loggedIn = computed(() => isBypass.value ? true : (auth?.loggedIn ?? false))
+const auth = useAuth()
 const user = computed(() => isBypass.value ? { given_name: 'Edward', picture: null } : (auth?.user ?? null))
-
-const userRole = ref<string>('member')
 
 const fetchUserData = async () => {
   if (!loggedIn.value) return
@@ -106,12 +110,34 @@ const fetchNavCardStats = async () => {
   }
 }
 
-watch(loggedIn, (val) => {
-  if (val) {
-    fetchUserData()
-    fetchNavCardStats()
+onMounted(async () => {
+  document.addEventListener('click', handleClickOutside)
+  scheduleMidnightRefresh()
+
+  if (loggedIn.value) {
+    await Promise.all([
+      fetchUserData(),
+      fetchNavCardStats()
+    ])
+  } else {
+    userRole.value = 'unknownUser'
   }
-}, { immediate: true })
+  isNavReady.value = true
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+  if (midnightTimeout) clearTimeout(midnightTimeout)
+})
+
+watch(loggedIn, async (val) => {
+  if (val) {
+    await Promise.all([
+      fetchUserData(),
+      fetchNavCardStats()
+    ])
+  }
+})
 
 // Mutual exclusion: when stats modal opens, close idea box drawer
 watch(showStatsModal, (newVal) => {
@@ -120,14 +146,12 @@ watch(showStatsModal, (newVal) => {
   }
 })
 
-const isAdmin = computed(() => userRole.value === 'admin')
-
 const handleLogout = () => {
   navigateTo('/api/logout', { external: true })
 }
 
 const route = useRoute()
-const isUserPage = computed(() => route.path === '/user')
+const isUserPage = computed(() => route.path === '/user' || route.path === '/profile')
 
 const todayCount = computed(() => cardStats.value?.todayReviewedCount ?? 0)
 
@@ -162,12 +186,14 @@ const navItems = computed(() => {
       items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     } else {
       items.push({ name: 'Member Home', path: '/member', icon: HomeIcon })
-      items.push({ name: 'Gemini Quiz', path: '/activities/gemini-quiz', icon: SparklesIcon })
+      items.push({ name: 'Activities', path: '/activities/gemini-quiz', icon: SparklesIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
       items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     }
   } else {
-    items.push({ name: 'Home', path: '/', icon: HomeIcon })
+    items.push({ name: 'Welcome', path: '/', icon: HomeIcon })
+    items.push({ name: 'Activities', path: '/activities/gemini-quiz', icon: SparklesIcon })
+    items.push({ name: 'Links', path: '/links', icon: LinkIcon })
     items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
   }
   return items
@@ -180,10 +206,10 @@ const navItems = computed(() => {
        :class="{ 'celebration-mode': isCelebrationMode }">
     <div class="container-custom">
       <div class="flex justify-between items-center h-16" @click="mobileMenuOpen = false">
-        <!-- Logo / User Profile (First Name Only) -->
+        <!-- Logo / User Profile (Navigates to /user for both members and admins) -->
         <div class="flex items-center space-x-3">
           <ClientOnly>
-            <NuxtLink :to="loggedIn ? (isAdmin ? '/profile' : '/member') : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
+            <NuxtLink :to="loggedIn ? '/user' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
               <div class="flex flex-row items-center gap-2.5">
                 <template v-if="loggedIn">
                   <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs">
@@ -216,9 +242,19 @@ const navItems = computed(() => {
         </div>
 
         <!-- Desktop Navigation & Take-Count Progress Pill -->
-        <div class="hidden md:flex items-center space-x-6">
-          <!-- Desktop Take-Count Goal Progress Pill (Admin only) -->
-          <ClientOnly>
+        <div class="hidden md:flex items-center space-x-6 min-h-[36px]">
+          <!-- Skeleton Loading Placeholders until Nav Data is Ready -->
+          <div v-if="!isNavReady" class="flex items-center space-x-4 animate-pulse">
+            <div class="h-7 w-20 bg-gray-200 dark:bg-gray-700/60 rounded-lg"></div>
+            <div class="h-7 w-20 bg-gray-200 dark:bg-gray-700/60 rounded-lg"></div>
+            <div class="h-7 w-16 bg-gray-200 dark:bg-gray-700/60 rounded-lg"></div>
+            <div class="h-7 w-16 bg-gray-200 dark:bg-gray-700/60 rounded-lg"></div>
+            <div class="h-7 w-16 bg-gray-200 dark:bg-gray-700/60 rounded-lg"></div>
+          </div>
+
+          <!-- Fully Loaded Navigation Items (Faded in all at once) -->
+          <div v-else class="flex items-center space-x-6 transition-opacity duration-300 opacity-100">
+            <!-- Desktop Take-Count Goal Progress Pill (Admin only) -->
             <button v-if="loggedIn && isAdmin"
                     @click.stop="showStatsModal = !showStatsModal; mobileMenuOpen = false"
                     class="px-3 py-1 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer border text-xs font-bold shadow-xs min-h-[32px]"
@@ -230,44 +266,51 @@ const navItems = computed(() => {
               <span v-else class="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
               <span class="text-[10px] opacity-75 font-normal">/ {{ dailyTakeGoal }}</span>
             </button>
-          </ClientOnly>
 
-          <NuxtLink v-for="item in navItems"
-                    :key="item.path"
-                    :to="item.path"
-                    class="flex items-center space-x-2 !text-gray-600 hover:!text-black transition-colors font-medium dark:!text-gray-300 dark:hover:!text-white"
-                    active-class="!text-black dark:!text-white font-semibold">
-            <component :is="item.icon"
+            <!-- Nav Links -->
+            <NuxtLink v-for="item in navItems"
+                      :key="item.path"
+                      :to="item.path"
+                      class="flex items-center space-x-2 !text-gray-600 hover:!text-amber-600 transition-colors font-medium dark:!text-gray-300 dark:hover:!text-yellow-500"
+                      active-class="!text-amber-500 dark:!text-yellow-400 font-semibold">
+              <component :is="item.icon"
+                         class="h-5 w-5" />
+              <span>{{ item.name }}</span>
+            </NuxtLink>
+
+            <!-- Desktop Color Mode Toggle -->
+            <button v-if="showColorModeToggle"
+                    @click="toggleColorMode"
+                    class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800"
+                    aria-label="Toggle dark mode">
+              <SunIcon v-if="colorMode.value === 'dark'"
                        class="h-5 w-5" />
-            <span>{{ item.name }}</span>
-          </NuxtLink>
+              <MoonIcon v-else
+                        class="h-5 w-5" />
+            </button>
 
-          <!-- Desktop Color Mode Toggle -->
-          <button v-if="showColorModeToggle"
-                  @click="toggleColorMode"
-                  class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800"
-                  aria-label="Toggle dark mode">
-            <SunIcon v-if="colorMode.value === 'dark'"
-                     class="h-5 w-5" />
-            <MoonIcon v-else
-                      class="h-5 w-5" />
-          </button>
-
-          <!-- Desktop Logout / Login Button -->
-          <ClientOnly>
+            <!-- Desktop Logout / (Login & Register for unknownUsers) -->
             <button v-if="loggedIn"
                     @click="handleLogout"
-                    class="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white w-[76px] shrink-0 justify-end cursor-pointer">
+                    class="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white shrink-0 justify-end cursor-pointer">
               <ArrowRightOnRectangleIcon class="h-5 w-5" />
               <span>Logout</span>
             </button>
-            <a v-else
-               href="/api/login"
-               class="flex items-center space-x-2 text-indigo-600 hover:text-indigo-800 transition-colors font-semibold dark:text-indigo-400 dark:hover:text-indigo-300 w-[76px] shrink-0 justify-end">
-              <ArrowLeftOnRectangleIcon class="h-5 w-5" />
-              <span>Login</span>
-            </a>
-          </ClientOnly>
+            <div v-else class="flex items-center space-x-4 shrink-0">
+              <a
+                href="/api/login"
+                class="flex items-center space-x-1.5 text-gray-700 hover:text-gray-900 transition-colors font-semibold dark:text-gray-300 dark:hover:text-white">
+                <ArrowLeftOnRectangleIcon class="h-5 w-5" />
+                <span>Login</span>
+              </a>
+              <a
+                href="/api/register"
+                class="flex items-center space-x-1.5 text-gray-700 hover:text-gray-900 transition-colors font-semibold dark:text-gray-300 dark:hover:text-white">
+                <UserPlusIcon class="h-5 w-5" />
+                <span>Register</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         <div class="flex items-center space-x-2 md:hidden">
@@ -278,17 +321,17 @@ const navItems = computed(() => {
                     class="px-2.5 py-1 rounded-xl flex items-center transition-all cursor-pointer border min-w-[36px] min-h-[32px] justify-center text-xs font-bold shadow-xs"
                     :class="countButtonClass"
                     title="Tested today count - tap for full stats">
-              <span v-if="cardStats !== null" class="font-extrabold font-mono text-sm">
+              <span v-if="cardStats !== null" class="font-extrabold font-mono">
                 {{ todayCount }}
               </span>
-              <span v-else class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+              <span v-else class="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
             </button>
           </ClientOnly>
 
-          <!-- Mobile Color Mode Toggle -->
+          <!-- Mobile Dark Mode Toggle Button -->
           <button v-if="showColorModeToggle"
-                  @click.stop="toggleColorMode"
-                  class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800"
+                  @click="toggleColorMode"
+                  class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800 cursor-pointer"
                   aria-label="Toggle dark mode">
             <SunIcon v-if="colorMode.value === 'dark'"
                      class="h-5 w-5" />
@@ -296,10 +339,10 @@ const navItems = computed(() => {
                       class="h-5 w-5" />
           </button>
 
-          <!-- Mobile Menu Button -->
-          <button @click.stop="mobileMenuOpen = !mobileMenuOpen; showStatsModal = false"
-                  class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800"
-                  aria-label="Toggle menu">
+          <!-- Mobile Hamburger Toggle -->
+          <button @click.stop="mobileMenuOpen = !mobileMenuOpen"
+                  class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-gray-800 cursor-pointer"
+                  aria-label="Toggle mobile menu">
             <Bars3Icon v-if="!mobileMenuOpen"
                        class="h-6 w-6" />
             <XMarkIcon v-else
@@ -309,24 +352,33 @@ const navItems = computed(() => {
       </div>
     </div>
 
-    <!-- Stats Popdown Modal (Renamed "Got Right" to "Learned") -->
+    <!-- Stats Drawer / Modal -->
     <Transition enter-active-class="transition-all duration-300 ease-out"
                 enter-from-class="opacity-0 -translate-y-2"
                 enter-to-class="opacity-100 translate-y-0"
                 leave-active-class="transition-all duration-200 ease-in"
                 leave-from-class="opacity-100 translate-y-0"
                 leave-to-class="opacity-0 -translate-y-2">
-      <div v-if="showStatsModal && loggedIn"
-           class="absolute left-0 right-0 border-t border-b border-gray-200 bg-white dark:bg-gray-900 shadow-xl z-50 dark:border-gray-800 px-4 py-3">
-        <div v-if="cardStats !== null" class="max-w-3xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+      <div v-if="showStatsModal"
+           class="absolute left-0 right-0 border-t border-b border-gray-200 bg-white shadow-2xl z-50 dark:bg-gray-900 dark:border-gray-800 p-4 md:p-6">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+            Daily Study Progress
+          </h2>
+          <button @click="showStatsModal = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1">
+            <XMarkIcon class="w-5 h-5" />
+          </button>
+        </div>
+
+        <div v-if="cardStats" class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center text-xs">
           <div class="flex flex-col p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-150 dark:border-gray-800">
-            <span class="text-gray-500 dark:text-gray-400 font-medium">Tested Today</span>
+            <span class="text-gray-500 dark:text-gray-400 font-medium">Takes Today</span>
             <span class="text-xl font-black text-indigo-600 dark:text-indigo-400 mt-0.5">
-              {{ cardStats.todayReviewedCount ?? 0 }}
+              {{ todayCount }} / {{ dailyTakeGoal }}
             </span>
           </div>
           <div class="flex flex-col p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-150 dark:border-gray-800">
-            <span class="text-gray-500 dark:text-gray-400 font-medium">Learned</span>
+            <span class="text-gray-500 dark:text-gray-400 font-medium">Correct Today</span>
             <span class="text-xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5">
               {{ cardStats.todayCorrectCount ?? 0 }}
             </span>
@@ -350,7 +402,7 @@ const navItems = computed(() => {
       </div>
     </Transition>
 
-    <!-- Mobile Navigation -->
+    <!-- Mobile Navigation Menu -->
     <Transition enter-active-class="transition-all duration-300 ease-out"
                 enter-from-class="opacity-0 -translate-y-2"
                 enter-to-class="opacity-100 translate-y-0"
@@ -372,22 +424,31 @@ const navItems = computed(() => {
             </NuxtLink>
           </template>
 
-          <!-- Mobile Logout / Login Button -->
-          <ClientOnly>
+          <!-- Mobile Logout / (Login & Register for unknownUsers) -->
+          <div class="border-t border-gray-100 dark:border-gray-800 pt-2">
             <button v-if="loggedIn"
                     @click="handleLogout(); mobileMenuOpen = false"
                     class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black dark:text-gray-300 dark:hover:bg-gray-850/50 transition-colors font-medium cursor-pointer">
               <ArrowRightOnRectangleIcon class="h-5 w-5" />
               <span>Logout</span>
             </button>
-            <a v-else
-               href="/api/login"
-               @click="mobileMenuOpen = false"
-               class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-indigo-950/50 transition-colors font-semibold">
-              <ArrowLeftOnRectangleIcon class="h-5 w-5" />
-              <span>Login</span>
-            </a>
-          </ClientOnly>
+            <div v-else class="space-y-1">
+              <a
+                href="/api/login"
+                @click="mobileMenuOpen = false"
+                class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors font-semibold">
+                <ArrowLeftOnRectangleIcon class="h-5 w-5" />
+                <span>Login with Google</span>
+              </a>
+              <a
+                href="/api/register"
+                @click="mobileMenuOpen = false"
+                class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors font-semibold">
+                <UserPlusIcon class="h-5 w-5" />
+                <span>Register at Kinde</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </Transition>

@@ -15,6 +15,15 @@ export default defineEventHandler(async (event) => {
     dataToUpdate.testingGroupSize = Math.max(1, Math.min(50, parseInt(body.testingGroupSize, 10) || 10))
   }
 
+  if (body.sourceLanguage !== undefined) {
+    dataToUpdate.sourceLanguage = body.sourceLanguage ? String(body.sourceLanguage).toLowerCase().trim() : null
+  }
+
+  if (body.targetLanguages !== undefined) {
+    const arr = Array.isArray(body.targetLanguages) ? body.targetLanguages : []
+    dataToUpdate.targetLanguages = JSON.stringify(arr)
+  }
+
   const updatedUser = await prisma.user.update({
     where: { id: user.dbId || user.id },
     data: dataToUpdate
@@ -29,7 +38,9 @@ export default defineEventHandler(async (event) => {
       lastName: updatedUser.lastName,
       role: updatedUser.role,
       dailyTakeGoal: updatedUser.dailyTakeGoal,
-      testingGroupSize: updatedUser.testingGroupSize
+      testingGroupSize: updatedUser.testingGroupSize,
+      sourceLanguage: updatedUser.sourceLanguage,
+      targetLanguages: updatedUser.targetLanguages ? JSON.parse(updatedUser.targetLanguages) : []
     }
   }
 })

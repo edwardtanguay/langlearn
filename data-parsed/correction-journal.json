@@ -3368,9 +3368,81 @@
       ],
       "totalWords": 322,
       "totalFlashcards": 39
+    },
+    {
+      "date": "2026-10-18",
+      "sections": [
+        {
+          "id": "2026-10-18-sec-1",
+          "day": "2026-10-18",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "Merci pour le lien, je l'ai ajouté [dans le;à ma] liste [de infos;d'infomations] pour 2027. [Ici;Voici] un lien [de la;vers le] même groupe, mais avec [toutes;tous] les événements à venir",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Merci pour le lien, je l'ai ajouté "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-18-sec-1-fc-1",
+              "incorrect": "dans le",
+              "correct": "à ma"
+            },
+            {
+              "type": "text",
+              "text": " liste "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-18-sec-1-fc-2",
+              "incorrect": "de infos",
+              "correct": "d'infomations"
+            },
+            {
+              "type": "text",
+              "text": " pour 2027. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-18-sec-1-fc-3",
+              "incorrect": "Ici",
+              "correct": "Voici"
+            },
+            {
+              "type": "text",
+              "text": " un lien "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-18-sec-1-fc-4",
+              "incorrect": "de la",
+              "correct": "vers le"
+            },
+            {
+              "type": "text",
+              "text": " même groupe, mais avec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-18-sec-1-fc-5",
+              "incorrect": "toutes",
+              "correct": "tous"
+            },
+            {
+              "type": "text",
+              "text": " les événements à venir"
+            }
+          ],
+          "flashcardsCount": 5,
+          "wordCount": 27
+        }
+      ],
+      "totalWords": 27,
+      "totalFlashcards": 5
     }
   ],
-  "totalSections": 28,
-  "totalWords": 2376,
-  "totalFlashcards": 290
+  "totalSections": 29,
+  "totalWords": 2403,
+  "totalFlashcards": 295
 }

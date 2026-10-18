@@ -66,6 +66,18 @@ export async function requireAuth(event: H3Event) {
 
   const isAdminEmail = user.email?.toLowerCase() === 'edwardtanguay@gmail.com'
 
+  const emailLower = (user.email || '').toLowerCase()
+  let defaultSourceLanguage = 'en'
+  let defaultTargetLanguages = JSON.stringify(['de'])
+
+  if (emailLower === 'giselaschmidt89@gmail.com') {
+    defaultSourceLanguage = 'de'
+    defaultTargetLanguages = JSON.stringify(['en', 'fr', 'it'])
+  } else if (emailLower === 'hanner.condeo@unac.edu.co') {
+    defaultSourceLanguage = 'es'
+    defaultTargetLanguages = JSON.stringify(['en'])
+  }
+
   if (!dbUser) {
     // If not found by ID or email, create the new user
     dbUser = await prisma.user.create({
@@ -74,19 +86,37 @@ export async function requireAuth(event: H3Event) {
         email: user.email || '',
         firstName: user.given_name || '',
         lastName: user.family_name || '',
-        role: isAdminEmail ? 'admin' : 'member'
+        role: isAdminEmail ? 'admin' : 'member',
+        sourceLanguage: defaultSourceLanguage,
+        targetLanguages: defaultTargetLanguages
       }
     })
-  } else if (isAdminEmail && dbUser.role !== 'admin') {
-    dbUser = await prisma.user.update({
-      where: { id: dbUser.id },
-      data: { role: 'admin' }
-    })
-  } else if (!isAdminEmail && dbUser.role !== 'member') {
-    dbUser = await prisma.user.update({
-      where: { id: dbUser.id },
-      data: { role: 'member' }
-    })
+  } else {
+    const updates: any = {}
+    if (isAdminEmail && dbUser.role !== 'admin') {
+      updates.role = 'admin'
+    } else if (!isAdminEmail && dbUser.role !== 'member') {
+      updates.role = 'member'
+    }
+
+    if (emailLower === 'giselaschmidt89@gmail.com') {
+      if (dbUser.sourceLanguage !== 'de' || dbUser.targetLanguages !== JSON.stringify(['en', 'fr', 'it'])) {
+        updates.sourceLanguage = 'de'
+        updates.targetLanguages = JSON.stringify(['en', 'fr', 'it'])
+      }
+    } else if (emailLower === 'hanner.condeo@unac.edu.co') {
+      if (dbUser.sourceLanguage !== 'es' || dbUser.targetLanguages !== JSON.stringify(['en'])) {
+        updates.sourceLanguage = 'es'
+        updates.targetLanguages = JSON.stringify(['en'])
+      }
+    }
+
+    if (Object.keys(updates).length > 0) {
+      dbUser = await prisma.user.update({
+        where: { id: dbUser.id },
+        data: updates
+      })
+    }
   }
 
   return {

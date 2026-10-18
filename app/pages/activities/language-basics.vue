@@ -32,13 +32,7 @@ const languages = [
 
 type LangCode = typeof languages[number]['code']
 
-// Language colors per agents.md (with vibrant Spanish red)
-const languageColors: Record<string, string> = {
-  fr: '#333388',
-  es: '#e11d48',
-  it: '#194d19',
-  nl: '#d97706',
-}
+import { languageColors } from '~/utils/languageColors'
 
 const languageNames: Record<string, string> = {
   fr: 'french',
@@ -520,6 +514,21 @@ function scrollToTop() {
 
 // Numbers section view mode: 'default' | 'tens' | 'show-all'
 const numbersViewMode = ref<'default' | 'tens' | 'show-all'>('default')
+
+// Non-numbers category "Show all" toggles
+const showAllCategories = ref<Set<string>>(new Set())
+
+function isCategoryShowAll(catId: string): boolean {
+  return showAllCategories.value.has(catId)
+}
+
+function toggleCategoryShowAll(catId: string) {
+  if (showAllCategories.value.has(catId)) {
+    showAllCategories.value.delete(catId)
+  } else {
+    showAllCategories.value.add(catId)
+  }
+}
 
 function getNumberDigit(id: string): number {
   const norm = normalizeWordId(id)
@@ -1693,16 +1702,37 @@ function isFlashcardOpen(itemId: string): boolean {
                 </button>
                 <button
                   type="button"
-                  @click.stop="numbersViewMode = numbersViewMode === 'show-all' ? 'default' : 'show-all'"
+                  @click.stop="numbersViewMode = numbersViewMode === 'show-all' ? 'default' : 'show-all'; showAllCategories.delete('numbers')"
                   class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
                   :class="numbersViewMode === 'show-all'
                     ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
                     : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
                 >
-                  Show All
+                  Show Groups
+                </button>
+                <button
+                  type="button"
+                  @click.stop="numbersViewMode = 'default'; toggleCategoryShowAll('numbers')"
+                  class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
+                  :class="isCategoryShowAll('numbers')
+                    ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
+                    : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                >
+                  Show all
                 </button>
               </div>
-              <div v-else></div>
+              <div v-else class="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  @click.stop="toggleCategoryShowAll(cat.id)"
+                  class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
+                  :class="isCategoryShowAll(cat.id)
+                    ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
+                    : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                >
+                  Show all
+                </button>
+              </div>
 
               <!-- Reset Category Controls -->
               <div class="shrink-0">
@@ -1874,7 +1904,23 @@ function isFlashcardOpen(itemId: string): boolean {
               </div>
             </div>
 
-            <!-- Standard Word Badges / Chips Cloud (when not in numbers show-all) -->
+            <!-- "Show all" Static List View -->
+            <div v-else-if="isCategoryShowAll(cat.id)" class="pt-1 max-w-xl space-y-1.5">
+              <div
+                v-for="item in getCategoryItems(cat)"
+                :key="item.id"
+                class="flex items-center justify-between gap-3 px-3 py-1.5 rounded-xl border border-gray-200/70 dark:border-gray-800/80 bg-white dark:bg-[#182030] shadow-xs text-xs"
+              >
+                <span class="font-medium text-gray-600 dark:text-gray-300">
+                  {{ item.en }}
+                </span>
+                <span class="font-semibold" :style="{ color: brightColor }">
+                  {{ item[selectedLang] || item.en }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Standard Word Badges / Chips Cloud (when not in numbers show-all and not in non-numbers show-all) -->
             <div v-else class="flex flex-wrap gap-2 pt-0.5">
               <button
                 v-for="item in getCategoryItems(cat)"
@@ -2016,13 +2062,13 @@ function isFlashcardOpen(itemId: string): boolean {
                   :href="vid.url"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900/40 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors"
+                  class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 shadow-xs transition-colors"
                 >
-                  <svg class="w-3.5 h-3.5 text-red-600 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                  <svg class="w-3.5 h-3.5 text-gray-400 dark:text-gray-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                   </svg>
                   <span>{{ vid.title }}</span>
-                  <svg class="w-3.5 h-3.5 text-red-600 dark:text-red-400 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <svg class="w-3.5 h-3.5 text-gray-400 dark:text-gray-400 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                   </svg>
                 </a>

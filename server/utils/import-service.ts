@@ -30,6 +30,31 @@ export interface SkippedCardDetail extends CardDetail {
   reason: string
 }
 
+export function cleanTrailingPunctuation(str: string): string {
+  let s = str.trim()
+  if (!s) return s
+
+  const endsWithAsterisk = s.endsWith('*')
+  if (endsWithAsterisk) {
+    s = s.slice(0, -1).trim()
+  }
+
+  const match = s.match(/[\s.,!?;:…\-]+$/)
+  if (match) {
+    const trailing = match[0]
+    const base = s.slice(0, -trailing.length).trim()
+    if (base) {
+      s = trailing.includes('?') ? `${base}?` : base
+    }
+  }
+
+  if (endsWithAsterisk) {
+    s = `${s}*`
+  }
+
+  return s
+}
+
 export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[]): {
   willImport: CardDetail[]
   willNotImport: SkippedCardDetail[]
@@ -92,8 +117,12 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[]): 
       continue
     }
 
-    // Clean front text: remove "my friend," prefix and asterisks
+    // Clean front text: remove "my friend," prefix, asterisks, and trailing punctuation
     front = front.replace(/^my friend,\s*/i, '').replace(/\*/g, '').trim()
+    front = cleanTrailingPunctuation(front)
+
+    // Clean back text trailing punctuation
+    back = cleanTrailingPunctuation(back)
 
     // If target phrase (back) is only one word, wrap it with asterisks so it's highlighted
     const cleanBack = back.replace(/\*/g, '').trim()

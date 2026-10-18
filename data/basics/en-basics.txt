@@ -93,4 +93,4 @@
 - writing
 	- period, comma, semicolon, colon, exclamation mark, question mark, quotation marks, guillemets, apostrophe, hyphen, dash, parentheses, square brackets, curly brackets, ellipsis, slash, backslash, underscore, tilde, ampersand
 - language
-	- noun, verb, adjective, adverb, pronoun, preposition, conjunction, article, subject, object, tense, conjugation, grammar, vocabulary, pronunciation, syllable, sentence, paragraph, singular, plural
+	- noun, verb, adjective, adverb, pronoun, preposition, conjunction, article, subject, object, tense, conjugation, grammar, vocabulary, pronunciation, syllable, sentence, paragraph, singular, plural, grave accent, acute accent

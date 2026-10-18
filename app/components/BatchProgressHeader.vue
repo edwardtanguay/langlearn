@@ -15,18 +15,11 @@ const props = defineProps<{
   isBatchComplete?: boolean
 }>()
 
-const languageColors: Record<string, string> = {
-  fr: '#2563eb', // French = blue
-  it: '#16a34a', // Italian = green
-  es: '#dc2626', // Spanish = red
-  nl: '#ca8a04', // Dutch = yellow
-  pl: '#9ca3af', // Polish = gray
-  de: '#78350f', // German = brown
-  ru: '#4b5563',
-  is: '#0891b2',
-  da: '#9333ea',
-  el: '#ea580c'
-}
+const emit = defineEmits<{
+  (e: 'selectSlot', cardId: string): void
+}>()
+
+import { languageColors } from '~/utils/languageColors'
 
 const languageTextColors: Record<string, string> = {
   fr: '#3b82f6', // French = brighter blue
@@ -123,7 +116,14 @@ const percent = computed(() => {
       >
         <!-- The Pill Capsule -->
         <div
-          class="w-full h-8 rounded-lg flex items-center justify-center font-bold text-xs transition-all duration-200 select-none cursor-default border"
+          @click="!isBatchComplete && emit('selectSlot', slot.id)"
+          class="w-full h-8 rounded-lg flex items-center justify-center font-bold text-xs transition-all duration-200 select-none border"
+          :class="[
+            !isBatchComplete ? 'cursor-pointer hover:brightness-110 active:scale-95' : 'cursor-default',
+            slot.id === activeCardId && !isBatchComplete
+              ? 'scale-105 z-10'
+              : ''
+          ]"
           :style="[
             getSlotStyle(slot),
             slot.id === activeCardId && !isBatchComplete
@@ -132,11 +132,6 @@ const percent = computed(() => {
                   boxShadow: `0 0 0 2px ${getLanguageTextColor(slot.language)}, 0 4px 6px -1px rgba(0, 0, 0, 0.1)`
                 }
               : {}
-          ]"
-          :class="[
-            slot.id === activeCardId && !isBatchComplete
-              ? 'scale-105 z-10'
-              : ''
           ]"
           :title="`Card ${slot.slotIndex + 1}: ${
             slot.status === 'learned' 

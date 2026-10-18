@@ -95,4 +95,4 @@
 - writing
 	- il punto, la virgola, il punto e virgola, i due punti, il punto esclamativo, il punto interrogativo, le virgolette, i caporali, l'apostrofo (m), il trattino, la lineetta, le parentesi tonde, le parentesi quadre, le parentesi graffe, i puntini di sospensione, la barra obliqua, la barra rovesciata, il trattino basso, la tilde, la e commerciale
 - language
-	- il sostantivo, il verbo, l'aggettivo (m), l'avverbio (m), il pronome, la preposizione, la congiunzione, l'articolo (m), il soggetto, il complemento, il tempo verbale, la coniugazione, la grammatica, il vocabolario, la pronuncia, la sillaba, la frase, il paragrafo, il singolare, il plurale
+	- il sostantivo, il verbo, l'aggettivo (m), l'avverbio (m), il pronome, la preposizione, la congiunzione, l'articolo (m), il soggetto, il complemento, il tempo verbale, la coniugazione, la grammatica, il vocabolario, la pronuncia, la sillaba, la frase, il paragrafo, il singolare, il plurale, l'accento grave, l'accento acuto

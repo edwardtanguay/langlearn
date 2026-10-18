@@ -4956,6 +4956,22 @@
         "es": "el plural",
         "it": "il plurale",
         "nl": "het meervoud"
+      },
+      {
+        "id": "language-21",
+        "en": "grave accent",
+        "fr": "l'accent grave (m)",
+        "es": "el acento grave",
+        "it": "l'accento grave",
+        "nl": "het accent grave"
+      },
+      {
+        "id": "language-22",
+        "en": "acute accent",
+        "fr": "l'accent aigu (m)",
+        "es": "el acento agudo",
+        "it": "l'accento acuto",
+        "nl": "het accent aigu"
       }
     ]
   }

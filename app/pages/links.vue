@@ -1,104 +1,290 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { ArrowTopRightOnSquareIcon, LinkIcon } from '@heroicons/vue/24/outline'
+import { ref, computed, onMounted } from 'vue'
+import {
+  ArrowTopRightOnSquareIcon,
+  PlusIcon,
+  PencilSquareIcon,
+  TrashIcon,
+  XMarkIcon,
+  DocumentTextIcon,
+  ArrowUpIcon,
+  ArrowDownIcon
+} from '@heroicons/vue/24/outline'
+import { languageColors } from '~/utils/languageColors'
 
 useHead({
   title: 'LangLearn - Links',
   meta: [
-    { name: 'description', content: 'Explore curated language learning links and videos organized by language to improve comprehension.' }
+    { name: 'description', content: 'Explore curated language learning links and native resources organized by language.' }
   ]
 })
 
+const { loggedIn, isAdmin, userRole } = useCurrentUser()
+
 interface LinkItem {
   id: string
+  language: string
   title: string
   url: string
+  description?: string
+  rank: number
 }
 
-interface LanguageCategory {
-  id: string
-  code: string
-  title: string
-  color: string
-  links: LinkItem[]
+const languageTitles: Record<string, string> = {
+  en: 'English',
+  fr: 'French',
+  es: 'Spanish',
+  it: 'Italian',
+  nl: 'Dutch',
+  pl: 'Polish',
+  de: 'German',
+  ru: 'Russian',
+  is: 'Icelandic',
+  da: 'Danish',
+  el: 'Greek'
 }
 
-const categories = ref<LanguageCategory[]>([
-  {
-    id: 'fr-links',
-    code: 'FR',
-    title: 'French',
-    color: '#333388', // French dark blue
-    links: [
-      {
-        id: 'fr-1',
-        title: 'Entraînez votre oreille pour comprendre le français naturel',
-        url: 'https://www.youtube.com/watch?v=LlEWRubU33k'
-      },
-      {
-        id: 'fr-2',
-        title: '50 min French pronunciation practice of liasons',
-        url: 'https://www.youtube.com/watch?v=wglgzUdEs5I'
-      },
-      {
-        id: 'fr-3',
-        title: '30 minutes pronunciation video with Fanny',
-        url: 'https://www.youtube.com/watch?v=Bmxdtrv4uQM'
-      },
-      {
-        id: 'fr-4',
-        title: 'Paris Podcast Videos',
-        url: 'https://www.youtube.com/@ParisPodcast1'
-      },
-      {
-        id: 'fr-5',
-        title: 'Cozy French',
-        url: 'https://www.youtube.com/@TheCozyFrench/videos'
-      },
-      {
-        id: 'fr-6',
-        title: 'La Psyché Français',
-        url: 'https://www.youtube.com/@LaPsych%C3%A912/videos'
-      }
-    ]
-  },
-  {
-    id: 'it-links',
-    code: 'IT',
-    title: 'Italian',
-    color: '#194d19', // Italian green
-    links: [
-      {
-        id: 'it-1',
-        title: 'Italiano Facile Videos',
-        url: 'https://www.youtube.com/@italianofacile-u5z'
-      },
-      {
-        id: 'it-2',
-        title: 'Italian Express Videos',
-        url: 'https://www.youtube.com/@ibo-3117/videos'
-      }
-    ]
-  },
-  {
-    id: 'es-links',
-    code: 'ES',
-    title: 'Spanish',
-    color: '#e11d48', // Spanish vibrant red
-    links: [
-      {
-        id: 'es-1',
-        title: 'Spanish Talks Café Videos',
-        url: 'https://www.youtube.com/@SpanishTalksCaf%C3%A9/videos'
-      },
-      {
-        id: 'es-2',
-        title: 'Easy Spanish Podcast Videos',
-        url: 'https://www.youtube.com/@easyspanishpodcast3/videos'
-      }
-    ]
+const languageMetadata: Record<string, { title: string; color: string }> = Object.fromEntries(
+  Object.entries(languageColors).map(([code, color]) => [
+    code,
+    { title: languageTitles[code] || code.toUpperCase(), color }
+  ])
+)
+
+function isYouTubeUrl(url?: string): boolean {
+  if (!url) return false
+  return url.includes('youtube.com') || url.includes('youtu.be')
+}
+
+async function moveLink(categoryLinks: LinkItem[], index: number, direction: 'up' | 'down') {
+  const targetIndex = direction === 'up' ? index - 1 : index + 1
+  if (targetIndex < 0 || targetIndex >= categoryLinks.length) return
+
+  const item1 = categoryLinks[index]
+  const item2 = categoryLinks[targetIndex]
+  if (!item1 || !item2) return
+
+  const prevLinks = JSON.parse(JSON.stringify(links.value))
+
+  // Swap adjacent items in categoryLinks array
+  categoryLinks[index] = item2
+  categoryLinks[targetIndex] = item1
+
+  // Assign clean, strictly descending unique ranks so relative order is strictly maintained
+  const n = categoryLinks.length
+  const step = n > 1 ? 4.0 / (n - 1) : 0
+  const updates: Promise<any>[] = []
+
+  categoryLinks.forEach((item, idx) => {
+    const newRank = n > 1 ? Number((4.5 - idx * step).toFixed(4)) : 2.5
+    if (item.rank !== newRank) {
+      item.rank = newRank
+      updates.push(
+        ($fetch as any)(`/api/links/${item.id}`, {
+          method: 'PUT',
+          body: { rank: newRank }
+        })
+      )
+    }
+  })
+
+  // Trigger reactivity for links array
+  links.value = [...links.value]
+
+  try {
+    await Promise.all(updates)
+  } catch (err) {
+    console.error('Failed to move link:', err)
+    links.value = prevLinks
   }
-])
+}
+
+const links = ref<LinkItem[]>([])
+const isLoading = ref(true)
+const memberTargetLanguages = ref<string[]>([])
+
+const loadLinks = async () => {
+  isLoading.value = true
+  try {
+    const [linksData, meData] = await Promise.all([
+      $fetch<LinkItem[]>('/api/links'),
+      loggedIn.value ? $fetch<{ targetLanguages?: string[] }>('/api/user/me').catch(() => null) : null
+    ])
+    links.value = linksData || []
+    if (meData?.targetLanguages) {
+      memberTargetLanguages.value = meData.targetLanguages
+    }
+  } catch (err) {
+    console.error('Failed to load links:', err)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+function capitalizeFirst(text?: string): string {
+  if (!text) return ''
+  const trimmed = text.trim()
+  if (!trimmed) return ''
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1)
+}
+
+function openLink(url: string) {
+  if (typeof window !== 'undefined') {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+}
+
+onMounted(() => {
+  loadLinks()
+})
+
+// Filter links based on user role and target languages:
+// - unknownUsers (not logged in) see all languages
+// - logged-in users (members & admins) see ONLY their configured target languages
+const filteredLinks = computed(() => {
+  if (!loggedIn.value || userRole.value === 'unknownUser') {
+    return links.value
+  }
+  const targets = new Set(memberTargetLanguages.value.map(l => l.toLowerCase()))
+  return links.value.filter(l => targets.has(l.language.toLowerCase()))
+})
+
+// Group filtered links by language
+const groupedCategories = computed(() => {
+  const groups: Record<string, LinkItem[]> = {}
+
+  for (const item of filteredLinks.value) {
+    const lang = item.language.toLowerCase()
+    if (!groups[lang]) {
+      groups[lang] = []
+    }
+    groups[lang].push(item)
+  }
+
+  // Sort within each language by rank descending
+  for (const lang in groups) {
+    groups[lang]?.sort((a, b) => (b.rank ?? 2.5) - (a.rank ?? 2.5))
+  }
+
+  // Return formatted categories
+  return Object.keys(groups)
+    .map(lang => {
+      const meta = languageMetadata[lang] || { title: lang.toUpperCase(), color: '#4f46e5' }
+      return {
+        code: lang.toUpperCase(),
+        langKey: lang,
+        title: meta.title,
+        color: meta.color,
+        links: groups[lang] ?? []
+      }
+    })
+    .sort((a, b) => b.links.length - a.links.length)
+})
+
+// Admin CRUD Modal state
+const showModal = ref(false)
+const modalMode = ref<'add' | 'edit'>('add')
+const isSaving = ref(false)
+const saveError = ref('')
+
+const formLink = ref({
+  id: '',
+  language: 'fr',
+  title: '',
+  url: '',
+  description: '',
+  rank: 2.5
+})
+
+// Delete modal state
+const showDeleteConfirm = ref(false)
+const linkToDelete = ref<LinkItem | null>(null)
+const isDeleting = ref(false)
+
+const openAddModal = (defaultLang = 'fr') => {
+  modalMode.value = 'add'
+  saveError.value = ''
+  formLink.value = {
+    id: '',
+    language: defaultLang.toLowerCase(),
+    title: '',
+    url: '',
+    description: '',
+    rank: 2.5
+  }
+  showModal.value = true
+}
+
+const openEditModal = (item: LinkItem) => {
+  modalMode.value = 'edit'
+  saveError.value = ''
+  formLink.value = {
+    id: item.id,
+    language: item.language,
+    title: item.title,
+    url: item.url,
+    description: item.description || '',
+    rank: item.rank ?? 2.5
+  }
+  showModal.value = true
+}
+
+const saveLink = async () => {
+  if (isSaving.value) return
+  saveError.value = ''
+
+  if (!formLink.value.title || !formLink.value.url) {
+    saveError.value = 'Title and URL are required'
+    return
+  }
+
+  isSaving.value = true
+  try {
+    if (modalMode.value === 'add') {
+      const created = await $fetch<LinkItem>('/api/links', {
+        method: 'POST',
+        body: formLink.value
+      })
+      links.value.push(created)
+    } else {
+      const updated = await ($fetch as any)(`/api/links/${formLink.value.id}`, {
+        method: 'PUT',
+        body: formLink.value
+      }) as LinkItem
+      const idx = links.value.findIndex(l => l.id === updated.id)
+      if (idx !== -1) {
+        links.value[idx] = updated
+      }
+    }
+    showModal.value = false
+  } catch (err: any) {
+    saveError.value = err?.data?.statusMessage || err?.message || 'Failed to save link'
+  } finally {
+    isSaving.value = false
+  }
+}
+
+const confirmDelete = (item: LinkItem) => {
+  linkToDelete.value = item
+  showDeleteConfirm.value = true
+}
+
+const executeDelete = async () => {
+  if (!linkToDelete.value || isDeleting.value) return
+  isDeleting.value = true
+  try {
+    await ($fetch as any)(`/api/links/${linkToDelete.value.id}`, {
+      method: 'DELETE'
+    })
+    links.value = links.value.filter(l => l.id !== linkToDelete.value?.id)
+    showDeleteConfirm.value = false
+    linkToDelete.value = null
+  } catch (err: any) {
+    console.error('Failed to delete link:', err)
+  } finally {
+    isDeleting.value = false
+  }
+}
 </script>
 
 <template>
@@ -111,44 +297,250 @@ const categories = ref<LanguageCategory[]>([
           Hand-picked native videos, tutorials, and websites organized by language to elevate your real-world comprehension.
         </p>
       </div>
+
+      <!-- Admin Add Link Button -->
+      <div v-if="isAdmin" class="shrink-0">
+        <button
+          @click="openAddModal('fr')"
+          class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
+        >
+          <PlusIcon class="w-4 h-4" />
+          <span>Add New Link</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div v-if="isLoading" class="py-16 flex flex-col items-center justify-center space-y-3">
+      <div class="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 font-mono">Loading links...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div v-else-if="groupedCategories.length === 0" class="py-16 text-center space-y-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
+      <p class="text-gray-700 dark:text-gray-300 font-medium">No links available for your selected target languages.</p>
+      <NuxtLink v-if="loggedIn" to="/user" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
+        Configure Target Languages on your Profile &rarr;
+      </NuxtLink>
     </div>
 
     <!-- Language Link Categories -->
-    <div v-for="category in categories" :key="category.id" class="space-y-4">
-      <!-- Category Header (Top Aligned) -->
-      <div class="flex items-start gap-3 border-b border-gray-200 dark:border-gray-800 pb-3">
-        <span
-          class="px-2.5 py-0.5 rounded text-xs font-bold text-white shadow-sm uppercase tracking-wider flex items-center justify-center shrink-0"
-          :style="{ backgroundColor: category.color }"
+    <div v-else v-for="category in groupedCategories" :key="category.code" class="space-y-4">
+      <!-- Category Header (No outer outline, vertically center-aligned title and Add button) -->
+      <div class="w-full flex items-center justify-between px-1 py-1">
+        <h2
+          class="text-2xl font-black tracking-tight leading-normal my-0"
+          :style="{ color: category.color }"
         >
-          {{ category.code }}
-        </span>
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white tracking-tight leading-none -mt-[3px]">
           {{ category.title }}
         </h2>
-        <span class="text-xs text-gray-500 dark:text-gray-400 font-medium leading-none mt-[3px]">
-          ({{ category.links.length }} {{ category.links.length === 1 ? 'link' : 'links' }})
-        </span>
+
+        <!-- Add Link in this category button (Admin only) -->
+        <button
+          v-if="isAdmin"
+          @click="openAddModal(category.langKey)"
+          title="Add link in this language"
+          class="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center gap-1 cursor-pointer transition-colors"
+        >
+          <PlusIcon class="w-3.5 h-3.5" />
+          <span>Add</span>
+        </button>
       </div>
 
-      <!-- Links List (Bullet Points) -->
-      <ul class="list-disc pl-5 space-y-2.5 text-sm">
+      <!-- Links List (Whole panel clickable, colored background, colored title, capitalized description, no hover underline) -->
+      <ul class="space-y-3 text-sm">
         <li
-          v-for="link in category.links"
+          v-for="(link, idx) in category.links"
           :key="link.id"
-          class="text-gray-800 dark:text-gray-200"
+          @click="openLink(link.url)"
+          class="p-4 rounded-xl border shadow-xs flex items-start justify-between gap-3 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
+          :style="{
+            backgroundColor: `color-mix(in srgb, ${category.color} 14%, #111827)`,
+            borderColor: `color-mix(in srgb, ${category.color} 30%, #374151)`
+          }"
         >
-          <a
-            :href="link.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1.5"
-          >
-            <span>{{ link.title }}</span>
-            <ArrowTopRightOnSquareIcon class="w-4 h-4 shrink-0 text-gray-400" />
-          </a>
+          <div class="space-y-1.5 min-w-0 flex-1">
+            <div
+              class="font-bold text-base leading-snug"
+              :style="{ color: category.color }"
+            >
+              <span>{{ link.title.trim() }}</span>&nbsp;<span class="inline-block whitespace-nowrap align-middle">
+                <!-- YouTube Icon for YouTube URLs -->
+                <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 text-gray-400 dark:text-gray-400 inline-block align-[-1px]" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <!-- Document/Page icon for general web links -->
+                <DocumentTextIcon v-else class="w-4 h-4 text-gray-400 dark:text-gray-400 inline-block align-[-1px]" title="Web article" />
+              </span>
+            </div>
+
+            <!-- Description (forced capitalize first letter) -->
+            <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed">
+              {{ capitalizeFirst(link.description) }}
+            </p>
+          </div>
+
+          <!-- Admin CRUD Buttons (Desktop & Mobile, with stopPropagation) -->
+          <div v-if="isAdmin" class="flex items-center gap-1 shrink-0 pt-0.5" @click.stop>
+            <button
+              @click.stop="openEditModal(link)"
+              title="Edit link"
+              class="p-1.5 text-gray-400 hover:text-amber-400 hover:bg-white/10 transition-colors cursor-pointer rounded-lg"
+            >
+              <PencilSquareIcon class="w-4 h-4" />
+            </button>
+            <button
+              @click.stop="confirmDelete(link)"
+              title="Delete link"
+              class="p-1.5 text-gray-400 hover:text-red-400 hover:bg-white/10 transition-colors cursor-pointer rounded-lg"
+            >
+              <TrashIcon class="w-4 h-4" />
+            </button>
+            <!-- Reorder Up & Down Buttons -->
+            <button
+              @click.stop="moveLink(category.links, idx, 'up')"
+              :disabled="idx === 0"
+              title="Move Up"
+              class="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer rounded-lg disabled:opacity-20"
+            >
+              <ArrowUpIcon class="w-4 h-4 stroke-[2.5]" />
+            </button>
+            <button
+              @click.stop="moveLink(category.links, idx, 'down')"
+              :disabled="idx === category.links.length - 1"
+              title="Move Down"
+              class="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer rounded-lg disabled:opacity-20"
+            >
+              <ArrowDownIcon class="w-4 h-4 stroke-[2.5]" />
+            </button>
+          </div>
         </li>
       </ul>
+    </div>
+
+    <!-- Admin Add/Edit Modal Dialog -->
+    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div class="bg-white dark:bg-gray-900 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-200 dark:border-gray-800 space-y-5 text-left">
+        <div class="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-gray-800">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+            {{ modalMode === 'add' ? 'Add Learning Link' : 'Edit Learning Link' }}
+          </h3>
+          <button @click="showModal = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1">
+            <XMarkIcon class="w-5 h-5" />
+          </button>
+        </div>
+
+        <div v-if="saveError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs rounded-xl">
+          {{ saveError }}
+        </div>
+
+        <form @submit.prevent="saveLink" class="space-y-4 text-xs">
+          <!-- Language Dropdown -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Language</label>
+            <select
+              v-model="formLink.language"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-medium"
+            >
+              <option v-for="(meta, code) in languageMetadata" :key="code" :value="code">
+                {{ meta.title }} ({{ code.toUpperCase() }})
+              </option>
+            </select>
+          </div>
+
+          <!-- Title Input -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Title</label>
+            <input
+              type="text"
+              v-model="formLink.title"
+              placeholder="e.g. Voyages Endormis"
+              required
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white"
+            />
+          </div>
+
+          <!-- URL Input -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">URL</label>
+            <input
+              type="url"
+              v-model="formLink.url"
+              placeholder="https://..."
+              required
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-mono"
+            />
+          </div>
+
+          <!-- Description Input -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Description</label>
+            <textarea
+              v-model="formLink.description"
+              rows="3"
+              placeholder="Short explanation of what this link offers..."
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white"
+            ></textarea>
+          </div>
+
+          <!-- Rank Input (0.0 to 5.0) -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Rank (0.0 to 5.0)</label>
+            <input
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              v-model.number="formLink.rank"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-mono"
+            />
+          </div>
+
+          <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-gray-100 dark:border-gray-800">
+            <button
+              type="button"
+              @click="showModal = false"
+              class="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-medium cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              :disabled="isSaving"
+              class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+            >
+              <span v-if="isSaving" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>{{ isSaving ? 'Saving...' : 'Save Link' }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div v-if="showDeleteConfirm && linkToDelete" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div class="bg-white dark:bg-gray-900 rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-red-200 dark:border-red-900/50 space-y-4 text-left">
+        <h3 class="text-base font-bold text-gray-900 dark:text-white">Delete Link?</h3>
+        <p class="text-xs text-gray-600 dark:text-gray-300">
+          Are you sure you want to delete <strong class="text-gray-900 dark:text-white">{{ linkToDelete.title }}</strong>? This action cannot be undone.
+        </p>
+        <div class="flex items-center justify-end gap-2.5 pt-2">
+          <button
+            @click="showDeleteConfirm = false"
+            :disabled="isDeleting"
+            class="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-medium cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            @click="executeDelete"
+            :disabled="isDeleting"
+            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold cursor-pointer disabled:opacity-50"
+          >
+            {{ isDeleting ? 'Deleting...' : 'Delete' }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'
 
@@ -171,6 +171,12 @@ onMounted(() => {
   checkMobileView()
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', checkMobileView)
+    if (window.innerWidth >= 768) {
+      const saved = localStorage.getItem('adminEditMode')
+      if (saved !== null) {
+        adminEditMode.value = saved === 'true'
+      }
+    }
   }
   if (typeof document !== 'undefined') {
     document.addEventListener('click', handleClickOutsideTypeDropdown)
@@ -187,6 +193,12 @@ onMounted(() => {
     }
     loadData(false)
   })
+})
+
+watch(adminEditMode, (newVal) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('adminEditMode', newVal ? 'true' : 'false')
+  }
 })
 
 onUnmounted(() => {
@@ -219,6 +231,27 @@ const showFutureVersions = ref(false)
 const futureVersionsCount = computed(() => {
   return versions.value.filter(v => v.status === 'FUTURE_VERSION').length
 })
+
+const inProgressVersions = computed(() => {
+  return versions.value
+    .filter(v => v.status === 'IN_PROGRESS')
+    .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+})
+
+function scrollToVersion(verId: string) {
+  if (typeof document !== 'undefined') {
+    const el = document.getElementById(`version-${verId}`)
+    if (el) {
+      const navOffset = 90
+      const elementPosition = el.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }
+}
 
 const displayedVersions = computed(() => {
   if (!adminEditMode.value) {
@@ -295,22 +328,13 @@ interface DropdownVersionOption {
   status: string
 }
 
-// Ordered: move to new version -> FUTURE -> INCOMING (once) -> IN_PROGRESS, excludes PUBLISHED
-function getVersionsForDropdownOptions(includeAllOrVersionId: boolean | string | null = true, currentVersionIdParam?: string | null): DropdownVersionOption[] {
-  let includeAll = true
-  let currentVersionId: string | null | undefined = currentVersionIdParam
-
-  if (typeof includeAllOrVersionId === 'boolean') {
-    includeAll = includeAllOrVersionId
-  } else {
-    currentVersionId = includeAllOrVersionId
-  }
-
+// Precomputed base dropdown options
+const baseDropdownVersionOptions = computed<DropdownVersionOption[]>(() => {
   const options: DropdownVersionOption[] = []
 
   // 1. All FUTURE versions
   const futureVers = versions.value
-    .filter(v => v.status === 'FUTURE_VERSION' && (includeAll || v.id !== currentVersionId))
+    .filter(v => v.status === 'FUTURE_VERSION')
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
 
   for (const f of futureVers) {
@@ -322,20 +346,15 @@ function getVersionsForDropdownOptions(includeAllOrVersionId: boolean | string |
   }
 
   // 2. Incoming Ideas (ONLY ONCE)
-  const incomingVer = versions.value.find(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
-  const incomingId = incomingVer?.id || 'none'
-
-  if (includeAll || (currentVersionId !== null && currentVersionId !== 'none' && currentVersionId !== incomingId)) {
-    options.push({
-      id: 'none',
-      label: 'Incoming Ideas',
-      status: 'INCOMING'
-    })
-  }
+  options.push({
+    id: 'none',
+    label: 'Incoming Ideas',
+    status: 'INCOMING'
+  })
 
   // 3. All IN_PROGRESS versions
   const inProgressVers = versions.value
-    .filter(v => v.status === 'IN_PROGRESS' && (includeAll || v.id !== currentVersionId))
+    .filter(v => v.status === 'IN_PROGRESS')
     .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
 
   for (const p of inProgressVers) {
@@ -347,6 +366,31 @@ function getVersionsForDropdownOptions(includeAllOrVersionId: boolean | string |
   }
 
   return options
+})
+
+// Ordered: move to new version -> FUTURE -> INCOMING (once) -> IN_PROGRESS, excludes PUBLISHED
+function getVersionsForDropdownOptions(includeAllOrVersionId: boolean | string | null = true, currentVersionIdParam?: string | null): DropdownVersionOption[] {
+  let includeAll = true
+  let currentVersionId: string | null | undefined = currentVersionIdParam
+
+  if (typeof includeAllOrVersionId === 'boolean') {
+    includeAll = includeAllOrVersionId
+  } else {
+    currentVersionId = includeAllOrVersionId
+  }
+
+  if (includeAll || !currentVersionId) {
+    return baseDropdownVersionOptions.value
+  }
+
+  const incomingVer = versions.value.find(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
+  const incomingId = incomingVer?.id || 'none'
+
+  return baseDropdownVersionOptions.value.filter(opt => {
+    if (opt.id === currentVersionId) return false
+    if ((opt.id === 'none' || opt.id === incomingId) && (currentVersionId === 'none' || currentVersionId === incomingId)) return false
+    return true
+  })
 }
 
 interface CategoryGroup {
@@ -367,10 +411,15 @@ function sortItemsByRankAndType(items: VersionItem[]): VersionItem[] {
   })
 }
 
+const groupedItemsCache = new WeakMap<VersionItem[], { isAllGeneral: boolean; groups: CategoryGroup[]; allItems: VersionItem[] }>()
+
 function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolean; groups: CategoryGroup[]; allItems: VersionItem[] } {
   if (!items || items.length === 0) {
     return { isAllGeneral: true, groups: [], allItems: [] }
   }
+
+  const cached = groupedItemsCache.get(items)
+  if (cached) return cached
 
   const generalCat = categories.value.find(c => c.title === 'General')
   const generalId = generalCat?.id
@@ -382,7 +431,9 @@ function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolea
   })
 
   if (isAllGeneral) {
-    return { isAllGeneral: true, groups: [], allItems: sortItemsByRankAndType(items) }
+    const res = { isAllGeneral: true, groups: [], allItems: sortItemsByRankAndType(items) }
+    groupedItemsCache.set(items, res)
+    return res
   }
 
   const groupsMap = new Map<string, { categoryTitle: string; categoryRank: number; items: VersionItem[] }>()
@@ -445,7 +496,9 @@ function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolea
     })
   }
 
-  return { isAllGeneral: false, groups: resultGroups, allItems: sortItemsByRankAndType(items) }
+  const res = { isAllGeneral: false, groups: resultGroups, allItems: sortItemsByRankAndType(items) }
+  groupedItemsCache.set(items, res)
+  return res
 }
 
 function calculateNextVersionNumber(): string {
@@ -1206,8 +1259,8 @@ const copiedBranchVersionId = ref<string | null>(null)
 let copiedBranchTimeout: ReturnType<typeof setTimeout> | null = null
 
 function getBranchName(ver: Version): string {
-  const cleanDigits = ver.versionNumber.replace(/\./g, '')
-  return `version-${cleanDigits}`
+  const versionSlug = ver.versionNumber.replace(/\./g, '-')
+  return `version-${versionSlug}`
 }
 
 async function copyBranchName(ver: Version) {
@@ -1366,9 +1419,10 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
         />
       </div>
 
-      <!-- Toggle link for Future Versions in Admin Mode -->
-      <div v-if="!isLoading && isAdmin && adminEditMode && futureVersionsCount > 0" class="pt-1 mb-3">
+      <!-- Toggle link for Future Versions and IN_PROGRESS links in Admin Mode -->
+      <div v-if="!isLoading && isAdmin && adminEditMode" class="pt-1 mb-3 flex flex-wrap items-center gap-3">
         <button
+          v-if="futureVersionsCount > 0"
           type="button"
           @click="showFutureVersions = !showFutureVersions"
           class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors cursor-pointer select-none"
@@ -1376,6 +1430,20 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
           <span class="text-amber-500 dark:text-amber-400">{{ showFutureVersions ? '▼' : '▶' }}</span>
           <span>{{ showFutureVersions ? 'Hide future versions' : `Show future versions (${futureVersionsCount})` }}</span>
         </button>
+
+        <div v-if="inProgressVersions.length > 0" class="flex items-center gap-2">
+          <span v-if="futureVersionsCount > 0" class="text-xs text-gray-400 dark:text-gray-600">|</span>
+          <button
+            v-for="ipv in inProgressVersions"
+            :key="ipv.id"
+            type="button"
+            @click="scrollToVersion(ipv.id)"
+            class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 underline cursor-pointer"
+            :title="`Scroll to version ${ipv.versionNumber}`"
+          >
+            v{{ ipv.versionNumber }}
+          </button>
+        </div>
       </div>
 
       <div v-if="isLoading" class="text-center py-12 text-sm text-gray-500 font-mono">
@@ -1388,7 +1456,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versionsForDisplay" :key="ver.id" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md" :class="[
+        <div v-for="ver in versionsForDisplay" :key="ver.id" :id="`version-${ver.id}`" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md scroll-mt-24" :class="[
           isSearchActive ? 'border-2 border-orange-500' : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? 'border-2 border-dashed border-red-500 dark:border-red-600' : ver.status === 'IN_PROGRESS' ? 'border-2 border-dashed border-amber-500 dark:border-amber-600' : 'border border-gray-200 dark:border-gray-700/80'
         ]">
           <!-- Full-Width Version Panel Card Header -->
@@ -1426,7 +1494,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
                   <button
                     @click="copyBranchName(ver)"
-                    title="Copy branch name to clipboard"
+                    :title="getBranchName(ver)"
                     class="px-2 py-0.5 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
                   >
                     <CheckIcon v-if="copiedBranchVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
@@ -1485,11 +1553,11 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                 <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
                   <li v-for="(item, itemIdx) in ver.versionItems" :key="item.id" class="flex items-start justify-between gap-3 py-0.5 rounded transition-all" :class="{ 'animate-subtle-bounce border-l-4 border-amber-500 pl-2': recentlyEditedItemId === item.id }">
                     <div class="flex items-start gap-2 flex-1 min-w-0">
-                      <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-orange-100 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-700/60 text-orange-800 dark:text-orange-300 font-normal'">
+                      <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block leading-tight mt-0.5" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-orange-100 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-700/60 text-orange-800 dark:text-orange-300 font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                       </span>
                       <!-- Tested checkbox for IN_PROGRESS versions in Admin mode -->
-                      <label v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="shrink-0 flex items-center gap-1 text-[11px] font-medium cursor-pointer select-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                      <label v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="shrink-0 flex items-center gap-1 text-[11px] font-medium cursor-pointer select-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mt-0.5">
                         <input
                           type="checkbox"
                           :checked="Boolean(item.isTested)"
@@ -1498,7 +1566,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                         />
                         <span>Tested</span>
                       </label>
-                      <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
+                      <span class="flex-1 break-words leading-tight mt-0.5">{{ formatSentenceCase(item.body) }}</span>
                       
                       <!-- UP / DOWN Rank Controls for Admin -->
                       <div v-if="isAdmin && adminEditMode && ver.versionItems.length > 1" class="flex items-center gap-0.5 shrink-0 border border-gray-300 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-800 p-0.5">
@@ -1624,11 +1692,11 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300 pl-3">
                     <li v-for="(item, itemIdx) in group.items" :key="item.id" class="flex items-start justify-between gap-3 py-0.5 rounded transition-all" :class="{ 'animate-subtle-bounce border-l-4 border-amber-500 pl-2': recentlyEditedItemId === item.id }">
                       <div class="flex items-start gap-2 flex-1 min-w-0">
-                        <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-orange-100 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-700/60 text-orange-800 dark:text-orange-300 font-normal'">
+                        <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block leading-tight mt-0.5" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-orange-100 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-700/60 text-orange-800 dark:text-orange-300 font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
                         </span>
                         <!-- Tested checkbox for IN_PROGRESS versions in Admin mode -->
-                        <label v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="shrink-0 flex items-center gap-1 text-[11px] font-medium cursor-pointer select-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        <label v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="shrink-0 flex items-center gap-1 text-[11px] font-medium cursor-pointer select-none text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mt-0.5">
                           <input
                             type="checkbox"
                             :checked="Boolean(item.isTested)"
@@ -1637,7 +1705,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                           />
                           <span>Tested</span>
                         </label>
-                        <span class="flex-1 break-words">{{ formatSentenceCase(item.body) }}</span>
+                        <span class="flex-1 break-words leading-tight mt-0.5">{{ formatSentenceCase(item.body) }}</span>
                         
                         <!-- UP / DOWN Rank Controls for Admin -->
                         <div v-if="isAdmin && adminEditMode && group.items.length > 1" class="flex items-center gap-0.5 shrink-0 border border-gray-300 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-800 p-0.5">

@@ -153,18 +153,7 @@ const searchQuery = ref('')
 const now = ref(Date.now())
 let intervalId: any = null
 
-const languageColors: Record<string, string> = {
-  fr: '#333388',
-  es: '#be185d',
-  it: '#194d19',
-  nl: '#facc15',
-  pl: '#b8b8b8',
-  de: '#3d1e03',
-  ru: '#3f3f46',
-  is: '#06b6d4',
-  da: '#7e22ce',
-  el: '#ea580c'
-}
+import { languageColors } from '~/utils/languageColors'
 
 const loadDevCards = async (force = false) => {
   if (hasLoadedCards.value && !force) return
@@ -375,7 +364,7 @@ onUnmounted(() => {
               class="bg-gray-900 border border-gray-800 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-gray-700 w-64 font-mono"
             />
             <button
-              @click="loadDevCards"
+              @click="loadDevCards(true)"
               class="bg-gray-800 hover:bg-gray-700 text-white font-semibold text-xs py-1.5 px-3 rounded font-mono transition-colors"
             >
               Refresh
@@ -499,7 +488,7 @@ onUnmounted(() => {
         <div class="flex justify-between items-center">
           <h2 class="text-lg font-bold text-white">Registered Users & Roles</h2>
           <button
-            @click="loadUsers"
+            @click="loadUsers(true)"
             class="px-3.5 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-xs font-semibold rounded-lg border border-gray-700 transition-colors"
           >
             Refresh Users

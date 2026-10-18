@@ -17,12 +17,25 @@ model User {
   minutesToTestAgain Int                     @default(10)
   dailyTakeGoal      Int                     @default(100)
   testingGroupSize   Int                     @default(10)
+  sourceLanguage     String?
+  targetLanguages    String?                 @default("[]")
   flashcards         Flashcard[]
   activities         UserFlashcardActivity[]
   versionItems       VersionItem[]           @relation("UserVersionItems")
   mobileImports      MobileImport[]
   basicWordInfos     BasicWordInfo[]
   correctionSections UserCorrectionSection[]
+}
+
+model Link {
+  id          String   @id @default(uuid())
+  language    String
+  url         String
+  title       String
+  description String
+  rank        Float    @default(2.5)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Version {

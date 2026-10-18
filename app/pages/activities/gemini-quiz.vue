@@ -40,6 +40,7 @@ function closeCrudToolbar() {
 
 // Language maps
 const languageNames: Record<string, string> = {
+  en: 'English',
   fr: 'French',
   de: 'German',
   nl: 'Dutch',
@@ -52,18 +53,10 @@ const languageNames: Record<string, string> = {
   el: 'Greek'
 }
 
-const languageColors: Record<string, string> = {
-  fr: '#333388',
-  es: '#b91c1c',
-  it: '#194d19',
-  nl: '#ca8a04',
-  pl: '#b8b8b8',
-  de: '#582f0e',
-  ru: '#3f3f46',
-  is: '#06b6d4',
-  da: '#7e22ce',
-  el: '#ea580c'
-}
+import { languageColors } from '~/utils/languageColors'
+
+const { loggedIn, userRole } = useCurrentUser()
+const memberTargetLanguages = ref<string[]>([])
 
 // Modal State
 const showModal = ref(false)
@@ -86,10 +79,13 @@ async function loadData() {
   try {
     const [data, me] = await Promise.all([
       $fetch<ChatbotPromptItem[]>('/api/chatbot-prompts?category=geminiQuizPrompts'),
-      $fetch<{ role: string }>('/api/user/me').catch(() => ({ role: 'member' }))
+      loggedIn.value ? $fetch<{ role: string; targetLanguages?: string[] }>('/api/user/me').catch((): { role: string; targetLanguages?: string[] } => ({ role: 'member' })) : null
     ])
     prompts.value = data || []
     isAdmin.value = me?.role === 'admin'
+    if (me?.targetLanguages) {
+      memberTargetLanguages.value = me.targetLanguages
+    }
   } catch (err) {
     console.error('Failed to load chatbot prompts:', err)
   } finally {
@@ -106,12 +102,19 @@ onUnmounted(() => {
   window.removeEventListener('click', closeCrudToolbar)
 })
 
-// Grouped prompts by language
+// Grouped prompts by language (filtered for members)
 const groupedPrompts = computed(() => {
   const groups: Record<string, ChatbotPromptItem[]> = {}
   
+  // For logged in users (members & admins): filter by target languages. For unknownUsers (logged out): show all
+  const isTargetFiltered = loggedIn.value && userRole.value !== 'unknownUser'
+  const targetSet = new Set(memberTargetLanguages.value.map(l => l.toLowerCase()))
+
   for (const p of prompts.value) {
     const lang = p.language.toLowerCase()
+    if (isTargetFiltered && !targetSet.has(lang)) {
+      continue
+    }
     if (!groups[lang]) {
       groups[lang] = []
     }
@@ -135,6 +138,12 @@ const groupedPrompts = computed(() => {
 
 // Action: Copy text to clipboard & open Gemini AI in new tab
 async function handleCopyAndPaste(text: string, promptId: string) {
+  if (typeof window !== 'undefined') {
+    const selection = window.getSelection()?.toString().trim()
+    if (selection && selection.length > 0) {
+      return
+    }
+  }
   try {
     await navigator.clipboard.writeText(text)
     copiedPromptId.value = promptId
@@ -350,14 +359,32 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
       </div>
     </div>
 
+    <!-- Empty State -->
+    <div v-else-if="groupedPrompts.length === 0" class="py-16 text-center space-y-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
+      <p class="text-gray-700 dark:text-gray-300 font-medium">No quiz prompts available for your selected target languages.</p>
+      <NuxtLink v-if="loggedIn" to="/user" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
+        Configure Target Languages on your Profile &rarr;
+      </NuxtLink>
+    </div>
+
     <!-- Grouped Prompts by Language -->
     <div v-else class="space-y-10">
       <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
-        <!-- Language Group Header: Word with thick full-width underline directly under text with ZERO space -->
-        <div class="border-b-2 w-full border-t-0 pt-0 pb-0 flex flex-col items-start" :style="{ borderColor: group.color }">
+        <!-- Language Group Header: Word with thick full-width underline directly under text with ZERO space, with Add button on far right for admin -->
+        <div class="border-b-2 w-full border-t-0 pt-0 pb-0 flex items-center justify-between" :style="{ borderColor: group.color }">
           <div class="text-2xl text-gray-900 dark:text-white tracking-tight p-0 mb-2 leading-none inline-block translate-y-[2px]">
             {{ group.name }}
           </div>
+          <!-- Add Prompt in this language button (Admin only) -->
+          <button
+            v-if="isAdmin"
+            @click="openAddModal(group.code)"
+            title="Add prompt in this language"
+            class="text-xs font-semibold px-2.5 py-1.5 mb-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-800 dark:text-white flex items-center gap-1 cursor-pointer transition-colors"
+          >
+            <UIcon name="lucide:plus" class="w-3.5 h-3.5" />
+            <span>Add</span>
+          </button>
         </div>
 
         <!-- Prompts Grid -->
@@ -365,33 +392,44 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
           <div
             v-for="(p, idx) in group.items"
             :key="p.id"
-            class="group relative p-4 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 transition-all duration-200"
+            @click="handleCopyAndPaste(p.prompt, p.id)"
+            class="group relative p-4 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.01] active:scale-[0.99]"
             :style="{
-              borderColor: group.color + '66',
-              backgroundColor: group.color + '1a'
+              borderColor: copiedPromptId === p.id ? '#059669' : (group.color + '66'),
+              backgroundColor: copiedPromptId === p.id ? '#05966928' : (group.color + '40')
             }"
+            title="Click anywhere to copy prompt and open Gemini AI"
           >
             <div class="space-y-3 flex-1 flex flex-col">
               <!-- Prompt Card Header Container -->
-              <div class="relative min-h-[36px] flex items-center">
-                <!-- Card Title extending 100% width with pill background (Click to reveal CRUD bar if admin) -->
-                <h3
-                  @click="isAdmin ? toggleCrudToolbar(p.id, $event) : null"
-                  class="w-full text-center text-base font-black tracking-wide text-white py-2 px-5 rounded-full shadow-xs truncate select-none"
-                  :class="{ 'cursor-pointer hover:brightness-110': isAdmin }"
-                  :style="{
-                    backgroundColor: group.color,
-                    textShadow: '0 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.9)'
-                  }"
+              <div class="relative min-h-[36px] flex items-center justify-center">
+                <!-- Card Title Container (Clean text + subtle pencil icon hint for admin; click reveals CRUD bar if admin) -->
+                <div
+                  @click.stop="isAdmin ? toggleCrudToolbar(p.id, $event) : null"
+                  class="flex items-center justify-center gap-1.5 py-1 px-2 select-none max-w-full rounded-lg transition-colors group/header"
+                  :class="{ 'cursor-pointer hover:bg-black/5 dark:hover:bg-white/5': isAdmin }"
                 >
-                  {{ p.title }}
-                </h3>
+                  <h3
+                    class="text-base font-black tracking-wide truncate"
+                    :style="{ color: group.color }"
+                  >
+                    {{ p.title }}
+                  </h3>
+                  <!-- Subtle Edit Icon hint for Admin -->
+                  <span
+                    v-if="isAdmin"
+                    title="Click to manage prompt"
+                    class="p-0.5 text-gray-400 group-hover/header:text-gray-200 transition-colors shrink-0"
+                  >
+                    <UIcon name="lucide:pencil" class="w-3.5 h-3.5" />
+                  </span>
+                </div>
 
                 <!-- Desktop Admin CRUD Tools (Displayed on title click; click bar area closes it; solid black bg, no border) -->
                 <div
                   v-if="isAdmin && activeCrudPromptId === p.id"
-                  @click="toggleCrudToolbar(p.id, $event)"
-                  class="absolute inset-0 flex items-center justify-center gap-1 bg-black px-3 py-1 rounded-full text-xs shadow-md transition-all duration-200 z-10 cursor-pointer"
+                  @click.stop="toggleCrudToolbar(p.id, $event)"
+                  class="absolute inset-0 flex items-center justify-center gap-1 bg-black/95 px-3 py-1 rounded-xl text-xs shadow-md transition-all duration-200 z-10 cursor-pointer border border-gray-700"
                 >
                   <!-- Add New Prompt in this language -->
                   <button
@@ -458,30 +496,23 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               </div>
 
               <!-- Black prompt area extended down to fill space -->
-              <p class="text-xs text-gray-700 dark:text-gray-300 font-mono bg-white/70 dark:bg-gray-950/80 p-3 rounded-lg border border-gray-200/60 dark:border-gray-800/80 leading-relaxed flex-1 flex items-start">
+              <p class="text-xs text-gray-700 dark:text-gray-300 font-mono bg-white/70 dark:bg-gray-950/80 p-3 rounded-lg border border-gray-200/60 dark:border-gray-800/80 leading-relaxed flex-1 flex items-start select-text">
                 {{ p.prompt }}
               </p>
             </div>
 
-            <!-- Action Button: Copy and Paste (Hover response: scale up, brightness, shadow, arrow nudge) -->
-            <button
-              @click="handleCopyAndPaste(p.prompt, p.id)"
-              class="w-full py-2.5 px-4 rounded-lg text-xs font-bold text-white transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-2 hover:scale-[1.015] hover:brightness-125 hover:shadow-md active:scale-[0.98]"
-              :style="{
-                borderColor: copiedPromptId === p.id ? '#059669' : group.color,
-                backgroundColor: copiedPromptId === p.id ? '#0596691a' : (group.color + '26')
-              }"
+            <!-- Action Status Helper Footer (Integrated text, not a button) -->
+            <div
+              class="w-full pt-1 text-xs font-semibold text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1.5 pointer-events-none transition-colors"
             >
               <template v-if="copiedPromptId === p.id">
-                <UIcon name="lucide:check" class="w-4 h-4" />
-                <span>Copied! Opening Gemini&nbsp;AI...</span>
+                <UIcon name="lucide:check" class="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                <span class="text-emerald-600 dark:text-emerald-300 font-bold">Copied! Opening Gemini&nbsp;AI...</span>
               </template>
               <template v-else>
-                <UIcon name="lucide:copy-check" class="w-4 h-4" />
-                <span>Copy and Paste</span>
-                <UIcon name="lucide:arrow-up-right" class="w-4 h-4 stroke-[2.5] transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                <span>Click card, Gemini opens, paste text</span>
               </template>
-            </button>
+            </div>
           </div>
         </div>
       </div>
