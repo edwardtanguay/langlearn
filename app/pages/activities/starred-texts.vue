@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { PencilSquareIcon, SparklesIcon } from '@heroicons/vue/24/outline'
+import { formatPronunciationHtml } from '~/utils/pronunciation'
 
 useHead({
   title: 'LangLearn - Drag/Drop Highlighted Words',
@@ -20,6 +21,7 @@ interface Flashcard {
   back: string
   frontLanguage: string
   backLanguage: string
+  pronunciation?: string | null
   timesShownDragDrop?: number
   tags: { tag: Tag }[]
 }
@@ -32,6 +34,7 @@ interface ActivityItem {
   answerText: string
   currentPlacedAnswer: string | null
   timesShownDragDrop: number
+  pronunciation?: string | null
 }
 
 const languageColors: Record<string, string> = {
@@ -271,7 +274,8 @@ function generateNewRound() {
       displayBack: parsed.display,
       answerText: parsed.answer,
       currentPlacedAnswer: null,
-      timesShownDragDrop: card.timesShownDragDrop ?? 1
+      timesShownDragDrop: card.timesShownDragDrop ?? 1,
+      pronunciation: card.pronunciation || null
     })
     answers.push(parsed.answer)
   })
@@ -500,36 +504,48 @@ onMounted(() => {
                 Prompt: {{ item.fullFront }}
               </div>
 
-              <span>{{ item.displayBack.split('_______')[0] }}</span>
+              <div>
+                <span>{{ item.displayBack.split('_______')[0] }}</span>
 
-              <!-- Drop target slot / placed answer pill -->
-              <button
-                v-if="item.currentPlacedAnswer"
-                @click.stop="removePlacedAnswer(idx)"
-                class="drop-target inline-flex items-center justify-center gap-1 px-1.5 py-0 mx-0.5 rounded text-sm md:text-base font-semibold transition-transform cursor-pointer border align-middle leading-none shadow-xs h-[1.35em]"
-                :style="{
-                  backgroundColor: item.currentPlacedAnswer === item.answerText 
-                    ? currentLanguageColor 
-                    : '#9ca3af',
-                  color: item.currentPlacedAnswer === item.answerText 
-                    ? '#ffffff' 
-                    : '#000000',
-                  borderColor: item.currentPlacedAnswer === item.answerText 
-                    ? currentLanguageColor 
-                    : '#6b7280',
-                  borderStyle: item.currentPlacedAnswer === item.answerText ? 'solid' : 'dashed'
-                }"
-                title="Click to remove"
-              >
-                <span class="leading-none flex items-center justify-center -translate-y-0.5">{{ item.currentPlacedAnswer }}</span>
-              </button>
+                <!-- Drop target slot / placed answer pill -->
+                <button
+                  v-if="item.currentPlacedAnswer"
+                  @click.stop="removePlacedAnswer(idx)"
+                  class="drop-target inline-flex items-center justify-center gap-1 px-1.5 py-0 mx-0.5 rounded text-sm md:text-base font-semibold transition-transform cursor-pointer border align-middle leading-none shadow-xs h-[1.35em]"
+                  :style="{
+                    backgroundColor: item.currentPlacedAnswer === item.answerText 
+                      ? currentLanguageColor 
+                      : '#9ca3af',
+                    color: item.currentPlacedAnswer === item.answerText 
+                      ? '#ffffff' 
+                      : '#000000',
+                    borderColor: item.currentPlacedAnswer === item.answerText 
+                      ? currentLanguageColor 
+                      : '#6b7280',
+                    borderStyle: item.currentPlacedAnswer === item.answerText ? 'solid' : 'dashed'
+                  }"
+                  title="Click to remove"
+                >
+                  <span class="leading-none flex items-center justify-center -translate-y-0.5">{{ item.currentPlacedAnswer }}</span>
+                </button>
 
+                <div
+                  v-else
+                  class="drop-target inline-block min-w-[60px] h-[1.3em] mx-1 rounded bg-gray-400/20 dark:bg-gray-400/15 border border-gray-400/30 dark:border-gray-500/30 transition-colors shadow-xs align-middle"
+                ></div>
+
+                <span>{{ item.displayBack.split('_______')[1] }}</span>
+              </div>
+
+              <!-- Pronunciation in yellow below correctly matched sentence -->
               <div
-                v-else
-                class="drop-target inline-block min-w-[60px] h-[1.3em] mx-1 rounded bg-gray-400/20 dark:bg-gray-400/15 border border-gray-400/30 dark:border-gray-500/30 transition-colors shadow-xs align-middle"
-              ></div>
-
-              <span>{{ item.displayBack.split('_______')[1] }}</span>
+                v-if="item.currentPlacedAnswer === item.answerText && item.pronunciation"
+                class="text-xs font-mono font-medium text-yellow-300 mt-1 flex items-center gap-1"
+              >
+                <span class="text-yellow-300/60 font-normal">[ </span>
+                <span v-html="formatPronunciationHtml(item.pronunciation)"></span>
+                <span class="text-yellow-300/60 font-normal"> ]</span>
+              </div>
             </div>
 
             <!-- Mobile inline action icons horizontally aligned on the right -->

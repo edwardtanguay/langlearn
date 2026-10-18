@@ -376,9 +376,7 @@ async function handleImport() {
               <div>
                 <h1 class="text-xl font-extrabold text-gray-900 dark:text-white">Import Preview</h1>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ mobilePreviewResult.totalParsed }} {{ mobilePreviewResult.totalParsed === 1 ? 'card' : 'cards' }} found:
-                  <span class="text-rose-600 dark:text-rose-400 font-semibold">{{ mobilePreviewResult.willNotImport.length }} skipped</span>,
-                  <span class="text-emerald-600 dark:text-emerald-400 font-semibold">{{ mobilePreviewResult.willImport.length }} ready to import</span>
+                  {{ mobilePreviewResult.totalParsed }} {{ mobilePreviewResult.totalParsed === 1 ? 'card' : 'cards' }} found
                 </p>
               </div>
               <button

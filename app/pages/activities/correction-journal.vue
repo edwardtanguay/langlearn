@@ -748,7 +748,7 @@ onMounted(() => {
             <!-- Plain Text Segment -->
             <span v-if="bit.type === 'text'">{{ formatFrenchText(bit.text) }}</span>
 
-            <!-- Flashcard Interactive Pill (No mouseover title, reduced spacing so it fits in sentences seamlessly) -->
+            <!-- Flashcard Interactive Pill (No margin, natural inline flow) -->
             <span
               v-else-if="bit.type === 'flashcard'"
               role="button"
@@ -756,17 +756,10 @@ onMounted(() => {
               @click="handlePillClick(bit.id)"
               @keydown.enter.prevent="toggleFlashcard(bit.id)"
               @keydown.space.prevent="toggleFlashcard(bit.id)"
-              class="inline mx-0.5 px-1 pt-0 pb-[1px] leading-tight rounded font-bold transition-all duration-150 cursor-pointer shadow-xs border select-text align-baseline"
-              :class="[
-                toggledStates[bit.id]
-                  ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:brightness-110 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/90'
-                  : [
-                      'bg-red-100 dark:bg-red-950/70 text-red-700 dark:text-red-300 hover:brightness-110 hover:bg-red-200/90 dark:hover:bg-red-900/90',
-                      everTurnedGreenSet.has(bit.id)
-                        ? 'border-transparent'
-                        : 'border-red-400 dark:border-red-600'
-                    ]
-              ]"
+              class="inline px-1 py-0 rounded font-bold transition-all duration-150 cursor-pointer select-text align-baseline border"
+              :class="toggledStates[bit.id]
+                ? 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-400 dark:border-emerald-600 text-emerald-800 dark:text-emerald-300 hover:brightness-110 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/90'
+                : 'bg-red-100 dark:bg-red-950/70 border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 hover:brightness-110 hover:bg-red-200/90 dark:hover:bg-red-900/90'"
             >{{ formatFrenchText(toggledStates[bit.id] ? bit.correct : bit.incorrect) }}</span>
           </template>
         </div>

@@ -369,8 +369,8 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         <div class="my-auto py-3 min-h-[64px] flex items-center justify-center">
           <div
             @click="showSourceText = !showSourceText"
-            class="tracking-tight leading-tight cursor-pointer select-none"
-            :class="showSourceText ? 'text-sm font-semibold text-gray-400 italic' : 'text-xl font-semibold text-white'"
+            class="tracking-tight leading-tight cursor-pointer select-none text-center"
+            :class="showSourceText ? 'text-sm font-semibold text-gray-400 italic' : 'text-2xl sm:text-3xl font-bold text-white'"
             :title="showSourceText ? 'Click to show target phrase' : 'Click to show translation'"
           >
             {{ showSourceText ? stripAsterisks(currentCard.front) : stripAsterisks(currentCard.back) }}

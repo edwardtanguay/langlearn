@@ -125,7 +125,20 @@ exports.Prisma.UserScalarFieldEnum = {
   role: 'role',
   minutesToTestAgain: 'minutesToTestAgain',
   dailyTakeGoal: 'dailyTakeGoal',
-  testingGroupSize: 'testingGroupSize'
+  testingGroupSize: 'testingGroupSize',
+  sourceLanguage: 'sourceLanguage',
+  targetLanguages: 'targetLanguages'
+};
+
+exports.Prisma.LinkScalarFieldEnum = {
+  id: 'id',
+  language: 'language',
+  url: 'url',
+  title: 'title',
+  description: 'description',
+  rank: 'rank',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VersionScalarFieldEnum = {
@@ -263,6 +276,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Link: 'Link',
   Version: 'Version',
   VersionCategory: 'VersionCategory',
   VersionCategoryAbbreviation: 'VersionCategoryAbbreviation',

@@ -136,6 +136,24 @@ async function main() {
     }
   }
 
+  // Ensure sourceLanguage column exists on User table
+  try {
+    await client.execute('ALTER TABLE User ADD COLUMN sourceLanguage TEXT;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
+  // Ensure targetLanguages column exists on User table
+  try {
+    await client.execute("ALTER TABLE User ADD COLUMN targetLanguages TEXT DEFAULT '[]';")
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
 
   client.close()

@@ -521,6 +521,21 @@ function scrollToTop() {
 // Numbers section view mode: 'default' | 'tens' | 'show-all'
 const numbersViewMode = ref<'default' | 'tens' | 'show-all'>('default')
 
+// Non-numbers category "Show all" toggles
+const showAllCategories = ref<Set<string>>(new Set())
+
+function isCategoryShowAll(catId: string): boolean {
+  return showAllCategories.value.has(catId)
+}
+
+function toggleCategoryShowAll(catId: string) {
+  if (showAllCategories.value.has(catId)) {
+    showAllCategories.value.delete(catId)
+  } else {
+    showAllCategories.value.add(catId)
+  }
+}
+
 function getNumberDigit(id: string): number {
   const norm = normalizeWordId(id)
   const num = parseInt(norm.replace('numbers-', ''), 10)
@@ -1699,10 +1714,21 @@ function isFlashcardOpen(itemId: string): boolean {
                     ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
                     : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
                 >
-                  Show All
+                  Show Groups
                 </button>
               </div>
-              <div v-else></div>
+              <div v-else class="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  @click.stop="toggleCategoryShowAll(cat.id)"
+                  class="px-2.5 py-0.5 text-xs font-semibold rounded-md border transition-all cursor-pointer shadow-xs"
+                  :class="isCategoryShowAll(cat.id)
+                    ? 'border-gray-400 dark:border-gray-500 bg-gray-200/90 dark:bg-gray-700/90 text-gray-900 dark:text-white font-bold ring-1 ring-gray-400/30'
+                    : 'border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                >
+                  Show all
+                </button>
+              </div>
 
               <!-- Reset Category Controls -->
               <div class="shrink-0">
@@ -1874,7 +1900,23 @@ function isFlashcardOpen(itemId: string): boolean {
               </div>
             </div>
 
-            <!-- Standard Word Badges / Chips Cloud (when not in numbers show-all) -->
+            <!-- Non-Numbers "Show all" Static List View -->
+            <div v-else-if="cat.id !== 'numbers' && isCategoryShowAll(cat.id)" class="pt-1 max-w-xl space-y-1.5">
+              <div
+                v-for="item in getCategoryItems(cat)"
+                :key="item.id"
+                class="flex items-center justify-between gap-3 px-3 py-1.5 rounded-xl border border-gray-200/70 dark:border-gray-800/80 bg-white dark:bg-[#182030] shadow-xs text-xs"
+              >
+                <span class="font-medium text-gray-600 dark:text-gray-300">
+                  {{ item.en }}
+                </span>
+                <span class="font-semibold text-gray-900 dark:text-white">
+                  {{ item[selectedLang] || item.en }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Standard Word Badges / Chips Cloud (when not in numbers show-all and not in non-numbers show-all) -->
             <div v-else class="flex flex-wrap gap-2 pt-0.5">
               <button
                 v-for="item in getCategoryItems(cat)"

@@ -86,6 +86,7 @@ const totalAvailableMatching = ref(0)
 const learnedInBatchCount = ref(0)
 const totalInBatch = ref(7)
 const isBatchComplete = ref(false)
+const currentBatchAllCards = ref<Flashcard[]>([])
 const lastCompletedBatchCardIds = ref<string[]>([])
 let activeBatchRequestId = 0
 
@@ -389,6 +390,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
         if (isEligibleForStrategy && specificCard.id) {
           const otherCards = (restQueue || []).filter(c => c.id !== specificCard.id)
           testQueue.value = [specificCard, ...otherCards]
+          currentBatchAllCards.value = [...testQueue.value]
           batchSlots.value = testQueue.value.map((c, i) => ({
             id: c.id,
             language: c.backLanguage || c.frontLanguage || 'fr',
@@ -423,6 +425,7 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
     if (thisReqId !== activeBatchRequestId) return
 
     testQueue.value = results || []
+    currentBatchAllCards.value = [...testQueue.value]
     batchSlots.value = (results || []).map((c, i) => ({
       id: c.id,
       language: c.backLanguage || c.frontLanguage || 'fr',
@@ -454,8 +457,32 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
 }
 
 function triggerBatchCompletion() {
-  isBatchComplete.value = true
-  pickRandomActivitiesForBatch()
+  const allCompleted = batchSlots.value.length > 0 && batchSlots.value.every(s => s.status === 'learned' || s.status === 'parked' || s.status === 'deleted')
+  if (allCompleted) {
+    isBatchComplete.value = true
+    pickRandomActivitiesForBatch()
+  }
+}
+
+function handleSelectSlotCard(cardId: string) {
+  if (isBatchComplete.value) return
+  // If card is already in active testQueue, switch index to it
+  const idx = testQueue.value.findIndex(c => c.id === cardId)
+  if (idx !== -1) {
+    currentQueueIndex.value = idx
+    isFlipped.value = false
+    if (testQueue.value[idx]) sliderValue.value = testQueue.value[idx].rank
+    return
+  }
+
+  // If card was removed because it was marked learned/parked/deleted, restore it to front of testQueue
+  const card = currentBatchAllCards.value.find(c => c.id === cardId)
+  if (card) {
+    testQueue.value.unshift(card)
+    currentQueueIndex.value = 0
+    isFlipped.value = false
+    sliderValue.value = card.rank
+  }
 }
 
 function startNextBatch() {
@@ -805,6 +832,18 @@ function markAction(actionTaken: string, newStatus?: string) {
         cardAnimState.value = 'entering'
         setTimeout(() => { cardAnimState.value = 'idle' }, 220)
       } else {
+        const nextUnfinishedSlot = batchSlots.value.find(s => s.status === 'untested' || s.status === 'testing')
+        if (nextUnfinishedSlot) {
+          const nextCard = currentBatchAllCards.value.find(c => c.id === nextUnfinishedSlot.id)
+          if (nextCard) {
+            testQueue.value.push(nextCard)
+            currentQueueIndex.value = 0
+            if (testQueue.value[0]) sliderValue.value = testQueue.value[0].rank
+            cardAnimState.value = 'entering'
+            setTimeout(() => { cardAnimState.value = 'idle' }, 220)
+            return
+          }
+        }
         cardAnimState.value = 'idle'
         triggerBatchCompletion()
       }
@@ -1297,6 +1336,7 @@ onBeforeUnmount(() => {
               :slots="batchSlots"
               :active-card-id="currentCard?.id"
               :is-batch-complete="isBatchComplete"
+              @select-slot="handleSelectSlotCard"
             />
 
             <!-- Return to Pronunciation Activity Link (if navigated from pronunciation) -->

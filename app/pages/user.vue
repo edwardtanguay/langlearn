@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { ArrowRightOnRectangleIcon, TrashIcon, ExclamationTriangleIcon, SunIcon } from '@heroicons/vue/24/outline'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ArrowRightOnRectangleIcon, SunIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - User Profile',
   meta: [
-    { name: 'description', content: 'User profile details and settings on LangLearn.' }
+    { name: 'description', content: 'User profile details and language learning preferences on LangLearn.' }
   ]
 })
 
 const { isSunMode, toggleSunMode } = useSunMode()
+const { loggedIn, isAdmin, userRole } = useCurrentUser()
 
 const config = useRuntimeConfig()
 const isBypass = computed(() => Boolean(config.public.bypassAuth))
 const auth = useAuth()
-const loggedIn = computed(() => isBypass.value ? true : (auth?.loggedIn ?? false))
 const user = computed(() => isBypass.value ? { given_name: 'Edward', family_name: 'Tanguay', email: 'edwardtanguay@gmail.com', picture: null } : (auth?.user ?? null))
 
 const siteTime = ref('')
@@ -25,10 +25,9 @@ const updateSiteTime = () => {
   siteTime.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
 }
 
-// Redirect if not logged in & init site time
 onMounted(() => {
   if (!loggedIn.value) {
-    navigateTo('/')
+    navigateTo('/api/login', { external: true })
   }
   updateSiteTime()
   siteTimeInterval = setInterval(updateSiteTime, 1000)
@@ -38,15 +37,40 @@ onUnmounted(() => {
   if (siteTimeInterval) clearInterval(siteTimeInterval)
 })
 
-// Fetch user's flashcards count
-const { data: flashcards, refresh: refreshFlashcards } = useFetch('/api/flashcards', {
-  query: { all: 'true' }
-})
+// All supported languages in the system
+const allSupportedLanguages = [
+  { code: 'en', label: 'English' },
+  { code: 'de', label: 'German' },
+  { code: 'fr', label: 'French' },
+  { code: 'es', label: 'Spanish' },
+  { code: 'it', label: 'Italian' },
+  { code: 'nl', label: 'Dutch' },
+  { code: 'pl', label: 'Polish' },
+  { code: 'ru', label: 'Russian' },
+  { code: 'is', label: 'Icelandic' },
+  { code: 'da', label: 'Danish' },
+  { code: 'el', label: 'Greek' }
+]
 
-const flashcardCount = computed(() => flashcards.value ? flashcards.value.length : 0)
+// Source language dropdown options per spec
+const sourceLanguageOptions = [
+  { value: 'en', label: 'English' },
+  { value: 'de', label: 'German' },
+  { value: 'fr', label: 'French' },
+  { value: 'es', label: 'Spanish' },
+  { value: 'it', label: 'Italian' },
+  { value: 'nl', label: 'Dutch' }
+]
 
 // Fetch user profile data
-const { data: meData, refresh: refreshMe } = await useFetch<{ dailyTakeGoal: number, testingGroupSize: number }>('/api/user/me')
+const { data: meData, refresh: refreshMe } = await useFetch<{
+  dailyTakeGoal: number
+  testingGroupSize: number
+  sourceLanguage: string | null
+  targetLanguages: string[]
+  role: string
+}>('/api/user/me')
+
 const dailyTakeGoalInput = ref(meData.value?.dailyTakeGoal ?? 100)
 const isSavingGoal = ref(false)
 const goalSaveSuccess = ref(false)
@@ -54,6 +78,15 @@ const goalSaveSuccess = ref(false)
 const testingGroupSizeInput = ref(meData.value?.testingGroupSize ?? 10)
 const isSavingGroupSize = ref(false)
 const groupSizeSaveSuccess = ref(false)
+
+const selectedSourceLanguage = ref(meData.value?.sourceLanguage || 'en')
+const selectedTargetLanguages = ref<string[]>(
+  Array.isArray(meData.value?.targetLanguages) && meData.value!.targetLanguages.length > 0
+    ? meData.value!.targetLanguages
+    : ['fr', 'de', 'es', 'it', 'nl', 'pl', 'ru', 'is', 'da', 'el'].filter(l => l !== (meData.value?.sourceLanguage || 'en'))
+)
+const isSavingLanguages = ref(false)
+const languageSaveSuccess = ref(false)
 
 watch(() => meData.value?.dailyTakeGoal, (newVal) => {
   if (newVal !== undefined) dailyTakeGoalInput.value = newVal
@@ -63,12 +96,64 @@ watch(() => meData.value?.testingGroupSize, (newVal) => {
   if (newVal !== undefined) testingGroupSizeInput.value = newVal
 })
 
+watch(() => meData.value?.sourceLanguage, (newVal) => {
+  if (newVal) selectedSourceLanguage.value = newVal
+})
+
+watch(() => meData.value?.targetLanguages, (newVal) => {
+  if (Array.isArray(newVal)) selectedTargetLanguages.value = newVal
+})
+
+// Target languages choices: all supported languages EXCEPT the currently selected source language
+const availableTargetLanguages = computed(() => {
+  return allSupportedLanguages.filter(lang => lang.code !== selectedSourceLanguage.value)
+})
+
+const handleSourceLanguageChange = async (newVal: string) => {
+  selectedSourceLanguage.value = newVal
+  // Remove the new source language from target languages if present
+  selectedTargetLanguages.value = selectedTargetLanguages.value.filter(code => code !== newVal)
+  await persistLanguageSettings()
+}
+
+const toggleTargetLanguage = async (code: string) => {
+  const current = new Set(selectedTargetLanguages.value)
+  if (current.has(code)) {
+    current.delete(code)
+  } else {
+    current.add(code)
+  }
+  selectedTargetLanguages.value = Array.from(current)
+  await persistLanguageSettings()
+}
+
+const persistLanguageSettings = async () => {
+  if (isSavingLanguages.value) return
+  isSavingLanguages.value = true
+  languageSaveSuccess.value = false
+
+  try {
+    await $fetch('/api/user/profile', {
+      method: 'POST',
+      body: {
+        sourceLanguage: selectedSourceLanguage.value,
+        targetLanguages: selectedTargetLanguages.value
+      }
+    })
+    languageSaveSuccess.value = true
+    setTimeout(() => { languageSaveSuccess.value = false }, 2000)
+  } catch (err) {
+    console.error('Failed to save language settings:', err)
+  } finally {
+    isSavingLanguages.value = false
+  }
+}
+
 const handleSaveGoal = async () => {
   if (isSavingGoal.value) return
   const prevValue = meData.value?.dailyTakeGoal ?? 100
   const newValue = Math.max(1, Number(dailyTakeGoalInput.value) || 100)
-  
-  // Optimistic update
+
   if (meData.value) meData.value.dailyTakeGoal = newValue
   isSavingGoal.value = true
   goalSaveSuccess.value = false
@@ -93,7 +178,6 @@ const handleSaveGroupSize = async () => {
   const prevValue = meData.value?.testingGroupSize ?? 10
   const newValue = Math.max(1, Math.min(50, Number(testingGroupSizeInput.value) || 10))
 
-  // Optimistic update
   if (meData.value) meData.value.testingGroupSize = newValue
   isSavingGroupSize.value = true
   groupSizeSaveSuccess.value = false
@@ -113,45 +197,6 @@ const handleSaveGroupSize = async () => {
   }
 }
 
-// Confirmation modal state
-const showConfirmModal = ref(false)
-const isDeleting = ref(false)
-const deleteError = ref<string | null>(null)
-const successMessage = ref<string | null>(null)
-
-const openConfirmModal = () => {
-  deleteError.value = null
-  showConfirmModal.value = true
-}
-
-const closeConfirmModal = () => {
-  if (!isDeleting.value) {
-    showConfirmModal.value = false
-  }
-}
-
-const handleDeleteAllFlashcards = async () => {
-  isDeleting.value = true
-  deleteError.value = null
-
-  try {
-    const res = await $fetch<{ success: boolean; count: number; message: string }>('/api/flashcards/delete-all', {
-      method: 'POST'
-    })
-
-    showConfirmModal.value = false
-    await refreshFlashcards()
-    
-    // Redirect to home page after success
-    navigateTo('/')
-  } catch (err: any) {
-    console.error('Failed to delete flashcards:', err)
-    deleteError.value = err.data?.statusMessage || err.message || 'Failed to delete flashcards. Please try again.'
-  } finally {
-    isDeleting.value = false
-  }
-}
-
 const handleLogout = () => {
   navigateTo('/api/logout', { external: true })
 }
@@ -167,7 +212,7 @@ const handleLogout = () => {
             <img v-if="user.picture" :src="user.picture" alt="Avatar" class="w-full h-full object-cover" />
             <span v-else>{{ user.given_name?.[0] || 'U' }}</span>
           </div>
-          
+
           <div>
             <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">
               {{ user.given_name }} {{ user.family_name }}
@@ -182,64 +227,7 @@ const handleLogout = () => {
           </div>
         </div>
 
-        <!-- Daily Goal Setting Form -->
-        <form @submit.prevent="handleSaveGoal" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
-          <label class="block text-sm font-semibold text-gray-900 dark:text-white">
-            Daily Take Goal
-          </label>
-          <div class="flex items-center gap-2">
-            <input
-              type="number"
-              v-model.number="dailyTakeGoalInput"
-              :disabled="isSavingGoal"
-              min="1"
-              max="10000"
-              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
-            />
-            <button
-              type="submit"
-              :disabled="isSavingGoal"
-              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl text-sm transition-all disabled:opacity-50 flex items-center shrink-0 gap-1.5"
-            >
-              <span v-if="isSavingGoal" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-              <span>{{ isSavingGoal ? 'Saving...' : 'Save' }}</span>
-            </button>
-          </div>
-          <p v-if="goalSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Goal saved!</p>
-        </form>
-
-        <!-- Testing Group Size Setting Form -->
-        <form @submit.prevent="handleSaveGroupSize" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
-          <div>
-            <label class="block text-sm font-semibold text-gray-900 dark:text-white">
-              Testing Group Size
-            </label>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
-              Choose how many flashcards you test in a single batch. LangLearn will cycle through this group until you mark all of them as learned, before loading the next batch.
-            </p>
-          </div>
-          <div class="flex items-center gap-2">
-            <input
-              type="number"
-              v-model.number="testingGroupSizeInput"
-              :disabled="isSavingGroupSize"
-              min="1"
-              max="50"
-              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
-            />
-            <button
-              type="submit"
-              :disabled="isSavingGroupSize"
-              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl text-sm transition-all disabled:opacity-50 flex items-center shrink-0 gap-1.5 cursor-pointer"
-            >
-              <span v-if="isSavingGroupSize" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-              <span>{{ isSavingGroupSize ? 'Saving...' : 'Save' }}</span>
-            </button>
-          </div>
-          <p v-if="groupSizeSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Testing group size saved!</p>
-        </form>
-
-        <!-- Sun Mode Setting Section -->
+        <!-- Sun Mode Setting Section (Visible for both members and admins) -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -264,45 +252,131 @@ const handleLogout = () => {
             </button>
           </div>
           <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-            Sun mode is designed for when you use LangLearn outside in bright sunlight. It keeps your dark background while making all text and symbols much brighter and bolder so everything remains easy to read under the sun.
+            Sun mode is designed for when you use LangLearn outside in bright sunlight. It keeps your dark background while making all text and symbols much brighter and bolder so everything remains easier to read under the sun.
           </p>
         </div>
 
-        <!-- Account Stats & Details -->
-        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-4">
-          <div class="flex justify-between items-center text-sm py-1">
-            <span class="text-gray-500 dark:text-gray-400">Total Flashcards</span>
-            <span class="font-bold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">
-              {{ flashcardCount }}
-            </span>
+        <!-- Language Learning Preferences Section (Source & Target Languages) -->
+        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-5">
+          <!-- Source Language Dropdown -->
+          <div class="space-y-2">
+            <label class="block text-sm font-semibold text-gray-900 dark:text-white">
+              Source Language
+            </label>
+            <select
+              :value="selectedSourceLanguage"
+              @change="handleSourceLanguageChange(($event.target as HTMLSelectElement).value)"
+              class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-medium text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            >
+              <option v-for="opt in sourceLanguageOptions" :key="opt.value" :value="opt.value">
+                {{ opt.label }}
+              </option>
+            </select>
+            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+              Source language is your native language. Currently, the site UI is always in English regardless of the source language; this will be relevant when the import function is made available to members.
+            </p>
           </div>
 
-          <div class="flex justify-between items-center text-sm py-1">
-            <span class="text-gray-500 dark:text-gray-400">Authentication Method</span>
-            <span class="font-medium text-gray-900 dark:text-white">Kinde Auth</span>
+          <!-- Target Languages Checkboxes -->
+          <div class="space-y-2.5 pt-2">
+            <div class="flex items-center justify-between">
+              <label class="block text-sm font-semibold text-gray-900 dark:text-white">
+                Target Languages
+              </label>
+              <span v-if="languageSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Saved!</span>
+            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+              Target languages are the languages you want to learn. Currently, target languages filter the Links page and Gemini Quiz Prompts activity.
+            </p>
+
+            <div class="grid grid-cols-2 gap-2.5 pt-1">
+              <label
+                v-for="targetLang in availableTargetLanguages"
+                :key="targetLang.code"
+                class="flex items-center gap-2.5 p-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/60 dark:bg-gray-800/60 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors text-xs font-medium text-gray-800 dark:text-gray-200"
+              >
+                <input
+                  type="checkbox"
+                  :checked="selectedTargetLanguages.includes(targetLang.code)"
+                  @change="toggleTargetLanguage(targetLang.code)"
+                  class="rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500 cursor-pointer w-4 h-4"
+                />
+                <span>{{ targetLang.label }}</span>
+              </label>
+            </div>
           </div>
         </div>
+
+        <!-- Admin Only Settings (Daily Take Goal & Testing Group Size) -->
+        <template v-if="isAdmin">
+          <!-- Daily Goal Setting Form -->
+          <form @submit.prevent="handleSaveGoal" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+            <label class="block text-sm font-semibold text-gray-900 dark:text-white">
+              Daily Take Goal
+            </label>
+            <div class="flex items-center gap-2">
+              <input
+                type="number"
+                v-model.number="dailyTakeGoalInput"
+                :disabled="isSavingGoal"
+                min="1"
+                max="10000"
+                class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                :disabled="isSavingGoal"
+                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl text-sm transition-all disabled:opacity-50 flex items-center shrink-0 gap-1.5 cursor-pointer"
+              >
+                <span v-if="isSavingGoal" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span>{{ isSavingGoal ? 'Saving...' : 'Save' }}</span>
+              </button>
+            </div>
+            <p v-if="goalSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Goal saved!</p>
+          </form>
+
+          <!-- Testing Group Size Setting Form -->
+          <form @submit.prevent="handleSaveGroupSize" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+            <div>
+              <label class="block text-sm font-semibold text-gray-900 dark:text-white">
+                Testing Group Size
+              </label>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
+                Choose how many flashcards you test in a single batch. LangLearn will cycle through this group until you mark all of them as learned, before loading the next batch.
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <input
+                type="number"
+                v-model.number="testingGroupSizeInput"
+                :disabled="isSavingGroupSize"
+                min="1"
+                max="50"
+                class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                :disabled="isSavingGroupSize"
+                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl text-sm transition-all disabled:opacity-50 flex items-center shrink-0 gap-1.5 cursor-pointer"
+              >
+                <span v-if="isSavingGroupSize" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span>{{ isSavingGroupSize ? 'Saving...' : 'Save' }}</span>
+              </button>
+            </div>
+            <p v-if="groupSizeSaveSuccess" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Testing group size saved!</p>
+          </form>
+        </template>
 
         <!-- Danger Zone & Actions -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
           <!-- Logout Button -->
           <button
             @click="handleLogout"
-            class="w-full px-6 py-3 bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750 dark:text-gray-200 font-semibold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2"
+            class="w-full px-6 py-3 bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-700 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750 dark:text-gray-200 font-semibold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <ArrowRightOnRectangleIcon class="h-5 w-5" />
             <span>Logout</span>
           </button>
-
-          <!-- Centered Dark Red Text Link for Delete All Flashcards -->
-          <div class="pt-2 text-center">
-            <button
-              @click="openConfirmModal"
-              class="text-xs text-red-800 dark:text-red-900 hover:text-red-600 dark:hover:text-red-400 hover:underline transition-colors font-medium cursor-pointer"
-            >
-              Delete all flashcards
-            </button>
-          </div>
         </div>
       </div>
 
@@ -312,56 +386,5 @@ const handleLogout = () => {
         </div>
       </template>
     </ClientOnly>
-
-    <!-- Confirmation Modal Dialog -->
-    <Transition
-      enter-active-class="transition duration-200 ease-out"
-      enter-from-class="opacity-0 scale-95"
-      enter-to-class="opacity-100 scale-100"
-      leave-active-class="transition duration-150 ease-in"
-      leave-from-class="opacity-100 scale-100"
-      leave-to-class="opacity-0 scale-95"
-    >
-      <div v-if="showConfirmModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-        <div class="bg-white dark:bg-gray-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-red-100 dark:border-red-900/40 space-y-5 text-left">
-          
-          <div class="flex items-start gap-4">
-            <div class="p-3 bg-red-100 dark:bg-red-950/60 rounded-full text-red-600 dark:text-red-400 shrink-0">
-              <ExclamationTriangleIcon class="w-7 h-7" />
-            </div>
-            <div class="space-y-1">
-              <h3 class="text-lg font-bold text-gray-900 dark:text-white">Are you sure?</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300">
-                This action will permanently delete all <strong class="text-red-600 dark:text-red-400">{{ flashcardCount }}</strong> flashcards in your collection.
-              </p>
-              <p class="text-xs text-red-500 font-medium">This cannot be undone.</p>
-            </div>
-          </div>
-
-          <div v-if="deleteError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-lg">
-            {{ deleteError }}
-          </div>
-
-          <div class="flex items-center justify-end gap-3 pt-2">
-            <button
-              @click="closeConfirmModal"
-              :disabled="isDeleting"
-              class="px-4 py-2.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 font-medium rounded-xl text-sm transition-colors disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              @click="handleDeleteAllFlashcards"
-              :disabled="isDeleting"
-              class="px-5 py-2.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl text-sm shadow-md transition-all disabled:opacity-50 flex items-center gap-2"
-            >
-              <span v-if="isDeleting" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-              <span>{{ isDeleting ? 'Deleting...' : 'Yes, delete all flashcards' }}</span>
-            </button>
-          </div>
-
-        </div>
-      </div>
-    </Transition>
   </div>
 </template>
