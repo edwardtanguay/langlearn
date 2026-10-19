@@ -1,5 +1,6 @@
 import { prisma } from '../../utils/prisma'
 import { parseAndAssignCategories, ensureDefaultCategories } from '../../utils/categoryParser'
+import { compareSemVerDesc } from '../../../shared/utils/semver'
 
 export default defineEventHandler(async (event) => {
   // Ensure default categories exist
@@ -56,6 +57,8 @@ export default defineEventHandler(async (event) => {
     },
     orderBy: { versionNumber: 'desc' }
   })
+
+  versions.sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
 
   const unassignedItems = await prisma.versionItem.findMany({
     where: { versionId: incomingVersion.id },

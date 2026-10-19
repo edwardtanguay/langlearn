@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { compareSemVerDesc } from '~~/shared/utils/semver'
 
 interface Version {
   id: string
@@ -12,8 +13,20 @@ const { data: versionData } = useFetch<{ versions: Version[] }>('/api/versions/p
 
 const targetVersion = computed(() => {
   if (!versionData.value?.versions || versionData.value.versions.length === 0) return null
-  const published = versionData.value.versions.filter(v => v.status === 'PUBLISHED')
-  return published[0] || versionData.value.versions[0] || null
+
+  // 1. Highest PUBLISHED version (SemVer descending)
+  const published = versionData.value.versions
+    .filter(v => v.status === 'PUBLISHED')
+    .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+  if (published.length > 0) return published[0]
+
+  // 2. Fall back to highest non-incoming version (excluding 0.0.0 and INCOMING)
+  const nonIncoming = versionData.value.versions
+    .filter(v => v.status !== 'INCOMING' && v.versionNumber !== '0.0.0')
+    .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+  if (nonIncoming.length > 0) return nonIncoming[0]
+
+  return null
 })
 
 const versionText = computed(() => {

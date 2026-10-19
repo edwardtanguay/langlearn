@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'
+import { compareSemVerDesc } from '~~/shared/utils/semver'
 
 useHead({
   title: 'LangLearn - About & Roadmap',
@@ -213,18 +214,7 @@ onUnmounted(() => {
   }
 })
 
-// Helper to compare SemVer strings in descending order
-function compareSemVerDesc(v1: string, v2: string): number {
-  const p1 = v1.split('.').map(n => parseInt(n, 10))
-  const p2 = v2.split('.').map(n => parseInt(n, 10))
-  const maxLen = Math.max(p1.length, p2.length)
-  for (let i = 0; i < maxLen; i++) {
-    const num1 = p1[i] ?? 0
-    const num2 = p2[i] ?? 0
-    if (num1 !== num2) return num2 - num1
-  }
-  return 0
-}
+
 
 const showFutureVersions = ref(false)
 

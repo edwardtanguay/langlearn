@@ -1,5 +1,6 @@
 import { requireAdmin } from '../../../utils/auth'
 import { prisma } from '../../../utils/prisma'
+import { compareSemVerDesc } from '../../../../shared/utils/semver'
 
 export default defineEventHandler(async (event) => {
   await requireAdmin(event)
@@ -15,6 +16,8 @@ export default defineEventHandler(async (event) => {
     },
     orderBy: { versionNumber: 'desc' }
   })
+
+  versions.sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
 
   return versions
 })
