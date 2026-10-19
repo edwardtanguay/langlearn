@@ -306,7 +306,7 @@ const handleSaveGroupSize = async () => {
                 <div class="flex items-center gap-2.5">
                   <span
                     class="w-3 h-3 rounded-full shrink-0 shadow-xs"
-                    :style="{ backgroundColor: languageColors[selectedSourceLanguage] || '#0ea5e9' }"
+                    :style="{ backgroundColor: languageColors[selectedSourceLanguage] || languageColors.en || '#9333ea' }"
                   ></span>
                   <span class="font-semibold text-gray-900 dark:text-gray-100">
                     {{ allSupportedLanguages.find(o => o.code === selectedSourceLanguage)?.label || selectedSourceLanguage }}
@@ -334,7 +334,7 @@ const handleSaveGroupSize = async () => {
                   <div class="flex items-center gap-2.5">
                     <span
                       class="w-3 h-3 rounded-full shrink-0"
-                      :style="{ backgroundColor: languageColors[opt.value] || '#0ea5e9' }"
+                      :style="{ backgroundColor: languageColors[opt.value] || languageColors.en || '#9333ea' }"
                     ></span>
                     <span class="text-gray-900 dark:text-gray-100">
                       {{ opt.label }}

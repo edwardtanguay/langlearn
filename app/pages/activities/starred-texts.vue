@@ -49,7 +49,8 @@ const languagePillStyles: Record<string, { bg: string; color: string; border: st
   de: { bg: 'bg-amber-800 dark:bg-amber-800', color: 'text-white dark:text-white', border: 'border-amber-500' },
   ru: { bg: 'bg-zinc-700 dark:bg-zinc-700', color: 'text-white dark:text-white', border: 'border-zinc-400' },
   is: { bg: 'bg-cyan-600 dark:bg-cyan-600', color: 'text-white dark:text-white', border: 'border-cyan-300' },
-  da: { bg: 'bg-purple-700 dark:bg-purple-700', color: 'text-white dark:text-white', border: 'border-purple-400' },
+  da: { bg: 'bg-[#ff1493] dark:bg-[#ff1493]', color: 'text-white dark:text-white', border: 'border-pink-300' },
+  en: { bg: 'bg-purple-700 dark:bg-purple-700', color: 'text-white dark:text-white', border: 'border-purple-400' },
   el: { bg: 'bg-orange-600 dark:bg-orange-600', color: 'text-white dark:text-white', border: 'border-orange-400' }
 }
 

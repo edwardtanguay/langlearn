@@ -30,7 +30,7 @@ There are three user groups:
 # current languages
 
 The languages currently active and supported in the application are:
-- English (`en`): `#0ea5e9` (sky blue)
+- English (`en`): `#9333ea` (purple)
 - French (`fr`): `#333388` (dark blue)
 - Spanish (`es`): `#be185d` (magenta / pink-red)
 - Italian (`it`): `#194d19` (dark green / forest green)
@@ -39,7 +39,7 @@ The languages currently active and supported in the application are:
 - German (`de`): `#7e4402` (brown)
 - Russian (`ru`): `#3f3f46` (dark grey)
 - Icelandic (`is`): `#06b6d4` (cyan / light blue)
-- Danish (`da`): `#7e22ce` (purple)
+- Danish (`da`): `#ff1493` (hot pink)
 - Greek (`el`): `#ea580c` (orange-red)
 
 In general, don't use colors if they are not language related, e.g. don't make links blue, but rather white so that any color indicates a language.

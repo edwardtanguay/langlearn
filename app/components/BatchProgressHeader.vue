@@ -29,8 +29,8 @@ const languageTextColors: Record<string, string> = {
   pl: '#cbd5e1', // Polish = brighter gray
   de: '#92400e', // German = warm rich brown
   ru: '#94a3b8',
-  is: '#06b6d4',
-  da: '#a855f7',
+  da: '#ff1493',
+  en: '#a855f7',
   el: '#f97316'
 }
 
