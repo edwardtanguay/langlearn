@@ -100,14 +100,20 @@ const checkMobile = () => {
 }
 
 const userSourceLanguage = ref<string | null>(null)
+const isLoadingProfile = ref(true)
 
 const fetchUserProfile = async () => {
-  if (!loggedIn.value) return
+  if (!loggedIn.value) {
+    isLoadingProfile.value = false
+    return
+  }
   try {
     const data = await $fetch<{ sourceLanguage: string | null }>('/api/user/me')
     userSourceLanguage.value = data?.sourceLanguage || null
   } catch (err) {
     console.error('Failed to fetch user profile', err)
+  } finally {
+    isLoadingProfile.value = false
   }
 }
 
@@ -275,7 +281,7 @@ async function handleImport() {
     <ClientOnly>
       <div v-if="loggedIn" class="mt-8 flex flex-col items-center w-full min-h-[340px] justify-start pt-2">
         <!-- Source Language Missing Notice Banner -->
-        <div v-if="!userSourceLanguage" class="w-full max-w-4xl p-5 mb-6 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-2xl shadow-xs text-amber-900 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div v-if="!isLoadingProfile && !userSourceLanguage" class="w-full max-w-4xl p-5 mb-6 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-2xl shadow-xs text-amber-900 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div class="space-y-1">
             <h3 class="font-bold text-sm">Source Language Required</h3>
             <p class="text-xs">

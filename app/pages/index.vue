@@ -13,7 +13,21 @@ const { loggedIn, isAdmin, fetchRole } = useCurrentUser()
 // If authenticated, redirect immediately based on role
 if (loggedIn.value) {
   const role = await fetchRole()
-  navigateTo(role === 'admin' ? '/flashcard' : '/member', { replace: true })
+  if (role === 'admin') {
+    navigateTo('/flashcard', { replace: true })
+  } else {
+    try {
+      const headers = useRequestHeaders(['cookie'])
+      const stats = await $fetch<{ totalCount?: number }>('/api/flashcards/stats', { headers })
+      if ((stats?.totalCount ?? 0) > 0) {
+        navigateTo('/flashcard', { replace: true })
+      } else {
+        navigateTo('/member', { replace: true })
+      }
+    } catch {
+      navigateTo('/member', { replace: true })
+    }
+  }
 }
 </script>
 

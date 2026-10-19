@@ -429,7 +429,7 @@ const executeDelete = async () => {
             >
               <div
                 @click.stop="openLink(link.url)"
-                class="font-bold text-base leading-snug flex items-center gap-2 cursor-pointer hover:underline min-w-0"
+                class="font-bold text-base leading-snug flex items-center gap-2 cursor-pointer min-w-0"
                 :style="{ color: category.color }"
               >
                 <!-- YouTube Icon / Document Icon on the front (left side) -->
