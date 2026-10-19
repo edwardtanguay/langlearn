@@ -87,4 +87,37 @@ English\tFrench\tabsolutely\tabsolument`
     expect(rows[0]?.text2).toBe('la pomme')
     expect(rows[1]?.text1).toBe('absolutely')
   })
+
+  it('matches user source language (e.g. Spanish) as front, other as back, and skips non-matching pairs', () => {
+    const text = `1
+Spanish\tFrench\tuna carta\tune lettre
+2
+French\tSpanish\tbonjour\thola
+3
+German\tFrench\tder Baum\tl'arbre`
+
+    const rows = parseImportText(text)
+    expect(rows).toHaveLength(3)
+
+    const analysis = analyzeImportRows(new Set(), rows, 'es')
+    expect(analysis.willImport).toHaveLength(2)
+
+    // Spanish / French row -> Spanish is front, French is back
+    expect(analysis.willImport[0]?.front).toBe('una carta')
+    expect(analysis.willImport[0]?.back).toBe('une lettre')
+    expect(analysis.willImport[0]?.frontLanguage).toBe('es')
+    expect(analysis.willImport[0]?.backLanguage).toBe('fr')
+
+    // French / Spanish row -> Spanish is front, French is back
+    expect(analysis.willImport[1]?.front).toBe('hola')
+    expect(analysis.willImport[1]?.back).toBe('*bonjour*')
+    expect(analysis.willImport[1]?.frontLanguage).toBe('es')
+    expect(analysis.willImport[1]?.backLanguage).toBe('fr')
+
+    // German / French row -> Neither is Spanish, skipped!
+    expect(analysis.willNotImport).toHaveLength(1)
+    expect(analysis.willNotImport[0]?.frontLanguage).toBe('de')
+    expect(analysis.willNotImport[0]?.backLanguage).toBe('fr')
+    expect(analysis.willNotImport[0]?.reason).toBe('Neither language matches your source language (ES)')
+  })
 })

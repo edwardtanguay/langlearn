@@ -1,6 +1,6 @@
 export const languageColors: Record<string, string> = {
   en: '#0ea5e9',
-  de: '#c07028',
+  de: '#92400e',
   fr: '#60a5fa',
   es: '#e11d48',
   it: '#22c55e',

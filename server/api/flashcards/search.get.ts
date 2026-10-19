@@ -20,9 +20,10 @@ export default defineEventHandler(async (event) => {
 
     const searchWords = q.split(/\s+/).filter(Boolean)
 
-    // Search all non-deleted flashcards (both owned and public)
+    // Search user's non-deleted flashcards
     const flashcards = await prisma.flashcard.findMany({
       where: {
+        ownerId: dbUser.id,
         status: {
           not: 'DELETED'
         },

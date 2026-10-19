@@ -55,13 +55,14 @@ export function cleanTrailingPunctuation(str: string): string {
   return s
 }
 
-export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[]): {
+export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], sourceLanguage: string = 'en'): {
   willImport: CardDetail[]
   willNotImport: SkippedCardDetail[]
 } {
   const payloadSet = new Set<string>()
   const willImport: CardDetail[] = []
   const willNotImport: SkippedCardDetail[] = []
+  const userSourceLang = mapLanguage(sourceLanguage || 'en')
 
   for (const row of rows) {
     if (!row.lang1 || !row.lang2 || !row.text1 || !row.text2) {
@@ -89,21 +90,28 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[]): 
     let frontLanguage = ''
     let backLanguage = ''
 
-    if (row.lang1.toLowerCase() === 'english') {
+    const lang1Code = mapLanguage(row.lang1)
+    const lang2Code = mapLanguage(row.lang2)
+
+    if (lang1Code === userSourceLang) {
       front = meta1.cleanText
       back = meta2.cleanText
-      frontLanguage = 'en'
-      backLanguage = mapLanguage(row.lang2)
-    } else if (row.lang2.toLowerCase() === 'english') {
+      frontLanguage = lang1Code
+      backLanguage = lang2Code
+    } else if (lang2Code === userSourceLang) {
       front = meta2.cleanText
       back = meta1.cleanText
-      frontLanguage = 'en'
-      backLanguage = mapLanguage(row.lang1)
+      frontLanguage = lang2Code
+      backLanguage = lang1Code
     } else {
-      front = meta1.cleanText
-      back = meta2.cleanText
-      frontLanguage = mapLanguage(row.lang1)
-      backLanguage = mapLanguage(row.lang2)
+      willNotImport.push({
+        front: meta1.cleanText || row.text1 || '(empty)',
+        back: meta2.cleanText || row.text2 || '(empty)',
+        frontLanguage: lang1Code || row.lang1,
+        backLanguage: lang2Code || row.lang2,
+        reason: `Neither language matches your source language (${userSourceLang.toUpperCase()})`
+      })
+      continue
     }
 
     if (!front || !back) {
@@ -195,13 +203,74 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[]): 
   return { willImport, willNotImport }
 }
 
-export async function processImportRows(userId: string, rows: ParsedRow[]) {
+export function getStartOfDayInTimezone(tz?: string): Date {
+  if (!tz) {
+    const fallback = new Date()
+    fallback.setHours(0, 0, 0, 0)
+    return fallback
+  }
+
+  try {
+    const now = new Date()
+    const formatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: tz,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })
+    const dateStr = formatter.format(now)
+    const utcMidnight = new Date(`${dateStr}T00:00:00.000Z`)
+
+    const offsetParts = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz,
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).formatToParts(utcMidnight)
+
+    const localHour = parseInt(offsetParts.find(p => p.type === 'hour')?.value || '0', 10)
+    const localMinute = parseInt(offsetParts.find(p => p.type === 'minute')?.value || '0', 10)
+    let offsetMinutes = localHour * 60 + localMinute
+    if (offsetMinutes > 12 * 60) {
+      offsetMinutes -= 24 * 60
+    }
+    return new Date(utcMidnight.getTime() - offsetMinutes * 60 * 1000)
+  } catch (e) {
+    const fallback = new Date()
+    fallback.setHours(0, 0, 0, 0)
+    return fallback
+  }
+}
+
+export function formatLocalYMDHMS(date: Date, tz?: string): string {
+  try {
+    const formatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: tz || undefined,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    })
+    return formatter.format(date).replace(',', '')
+  } catch (e) {
+    return date.toISOString().replace('T', ' ').slice(0, 19)
+  }
+}
+
+export async function processImportRows(userId: string, rows: ParsedRow[], clientTz?: string) {
   const dbUser = await prisma.user.findUnique({
     where: { id: userId }
   })
 
   if (!dbUser) {
     throw new Error('User not found')
+  }
+
+  if (!dbUser.sourceLanguage) {
+    throw new Error('Please set your source language in your profile before importing flashcards.')
   }
 
   const existingCards = await prisma.flashcard.findMany({
@@ -222,7 +291,7 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
     existingSet.add(`${card.front.trim().toLowerCase()}|${card.back.trim().toLowerCase()}`)
   }
 
-  const { willImport, willNotImport } = analyzeImportRows(existingSet, rows)
+  const { willImport, willNotImport } = analyzeImportRows(existingSet, rows, dbUser.sourceLanguage)
 
   const cardsToCreate: any[] = []
   const activitiesToCreate: any[] = []
@@ -256,8 +325,7 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
 
   if (cardsToCreate.length > 0) {
     if (dbUser.role !== 'admin') {
-      const startOfToday = new Date()
-      startOfToday.setUTCHours(0, 0, 0, 0)
+      const startOfToday = getStartOfDayInTimezone(clientTz)
 
       const todayCount = await prisma.flashcard.count({
         where: {
@@ -268,7 +336,9 @@ export async function processImportRows(userId: string, rows: ParsedRow[]) {
 
       if (todayCount + cardsToCreate.length > 100) {
         const remaining = Math.max(0, 100 - todayCount)
-        throw new Error(`Daily import limit reached. Non-admin users are limited to 100 phrases per day. You have already imported ${todayCount} phrases today (${remaining} remaining).`)
+        const waitDate = new Date(Date.now() + 24 * 60 * 60 * 1000)
+        const waitFormatted = formatLocalYMDHMS(waitDate, clientTz)
+        throw new Error(`Members can only import 100 cards per day. You have imported ${todayCount} today and are trying to import ${cardsToCreate.length}. You may either import ${remaining} now, or wait until ${waitFormatted} to import 100 again. This is a safety measure to prevent spamming. If you would like to be able to import more cards per day, contact the administrator (Edward).`)
       }
     }
 
