@@ -52,17 +52,19 @@ export default defineEventHandler(async (event) => {
       actionTaken = 'EDITED'
     }
 
+    const cleanText = (val: any) => typeof val === 'string' ? val.trim().replace(/\s+/g, ' ') : val
+
     // Update the Flashcard directly
     const updatedFlashcard = await prisma.flashcard.update({
       where: { id },
       data: {
-        ...(body.front !== undefined ? { front: body.front } : {}),
-        ...(body.back !== undefined ? { back: body.back } : {}),
-        ...(body.pronunciation !== undefined ? { pronunciation: body.pronunciation } : {}),
+        ...(body.front !== undefined ? { front: cleanText(body.front) } : {}),
+        ...(body.back !== undefined ? { back: cleanText(body.back) } : {}),
+        ...(body.pronunciation !== undefined ? { pronunciation: cleanText(body.pronunciation) || null } : {}),
         ...(body.status !== undefined ? { status: body.status } : {}),
         ...(body.rank !== undefined ? { rank: body.rank } : {}),
-        ...(body.memoryHook !== undefined ? { memoryHook: body.memoryHook } : 
-           body.mnemonic !== undefined ? { memoryHook: body.mnemonic } : {}) // Support mnemonic fallback just in case
+        ...(body.memoryHook !== undefined ? { memoryHook: cleanText(body.memoryHook) || null } : 
+           body.mnemonic !== undefined ? { memoryHook: cleanText(body.mnemonic) || null } : {})
       },
       include: {
         owner: true,

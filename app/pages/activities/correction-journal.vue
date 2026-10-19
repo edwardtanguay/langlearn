@@ -457,7 +457,8 @@ const languageTextColors: Record<string, string> = {
   de: 'text-[#7e4402] dark:text-amber-500',
   ru: 'text-[#3f3f46] dark:text-zinc-400',
   is: 'text-[#0891b2] dark:text-cyan-400',
-  da: 'text-[#7e22ce] dark:text-purple-400',
+  da: 'text-[#ff1493] dark:text-pink-400',
+  en: 'text-[#9333ea] dark:text-purple-400',
   el: 'text-[#ea580c] dark:text-orange-400'
 }
 

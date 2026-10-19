@@ -33,6 +33,21 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const role = await fetchRole()
   const isUserAdmin = role === 'admin'
 
+  const isPathAllowedForMember = (path: string) => {
+    if (path.startsWith('/flashcard')) return true
+    const memberAllowedPaths = [
+      '/member',
+      '/batches',
+      '/import',
+      '/links',
+      '/about',
+      '/user',
+      '/profile',
+      '/activities/gemini-quiz'
+    ]
+    return memberAllowedPaths.includes(path)
+  }
+
   // If returning from login, check for saved destination
   const savedTarget = returnUrlCookie.value
   if (savedTarget && (to.path === '/' || to.path === '/member' || to.path === '/flashcard')) {
@@ -40,16 +55,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     if (isUserAdmin) {
       return navigateTo(savedTarget, { replace: true })
     } else {
-      const memberAllowedPaths = [
-        '/member',
-        '/links',
-        '/about',
-        '/user',
-        '/profile',
-        '/activities/gemini-quiz'
-      ]
       const targetBase = savedTarget.split('?')[0] || ''
-      if (memberAllowedPaths.includes(targetBase)) {
+      if (isPathAllowedForMember(targetBase)) {
         return navigateTo(savedTarget, { replace: true })
       }
     }
@@ -71,20 +78,20 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // 3. Member routing
   // Member landing redirect
   if (to.path === '/') {
+    const headers = useRequestHeaders(['cookie'])
+    try {
+      const stats = await $fetch<{ totalCount?: number }>('/api/flashcards/stats', { headers })
+      if ((stats?.totalCount ?? 0) > 0) {
+        return navigateTo('/flashcard', { replace: true })
+      }
+    } catch {
+      // Fallback to /member if fetching stats fails
+    }
     return navigateTo('/member', { replace: true })
   }
 
   // Member allowed paths strictly enforced (no direct URL access to admin pages)
-  const memberAllowedPaths = [
-    '/member',
-    '/links',
-    '/about',
-    '/user',
-    '/profile',
-    '/activities/gemini-quiz'
-  ]
-
-  if (!memberAllowedPaths.includes(to.path)) {
+  if (!isPathAllowedForMember(to.path)) {
     return navigateTo('/member', { replace: true })
   }
 })

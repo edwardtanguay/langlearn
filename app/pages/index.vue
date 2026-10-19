@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SparklesIcon, LinkIcon, InformationCircleIcon, ArrowRightOnRectangleIcon, ArrowLeftEndOnRectangleIcon } from '@heroicons/vue/24/outline'
+import { SparklesIcon, LinkIcon, InformationCircleIcon, ArrowLeftEndOnRectangleIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - Welcome',
@@ -13,7 +13,21 @@ const { loggedIn, isAdmin, fetchRole } = useCurrentUser()
 // If authenticated, redirect immediately based on role
 if (loggedIn.value) {
   const role = await fetchRole()
-  navigateTo(role === 'admin' ? '/flashcard' : '/member', { replace: true })
+  if (role === 'admin') {
+    navigateTo('/flashcard', { replace: true })
+  } else {
+    try {
+      const headers = useRequestHeaders(['cookie'])
+      const stats = await $fetch<{ totalCount?: number }>('/api/flashcards/stats', { headers })
+      if ((stats?.totalCount ?? 0) > 0) {
+        navigateTo('/flashcard', { replace: true })
+      } else {
+        navigateTo('/member', { replace: true })
+      }
+    } catch {
+      navigateTo('/member', { replace: true })
+    }
+  }
 }
 </script>
 
@@ -40,14 +54,7 @@ if (loggedIn.value) {
           class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 text-sm"
         >
           <ArrowLeftEndOnRectangleIcon class="w-5 h-5" />
-          <span>Login with Google</span>
-        </a>
-        <a
-          href="/api/register"
-          class="px-6 py-3 bg-gray-800/80 hover:bg-gray-750 border border-gray-700 text-gray-200 hover:text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 text-sm"
-        >
-          <ArrowRightOnRectangleIcon class="w-5 h-5" />
-          <span>Register for an Account</span>
+          <span>Login with your Google Account</span>
         </a>
       </div>
     </div>

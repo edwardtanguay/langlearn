@@ -402,13 +402,9 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
           >
             <div class="space-y-3 flex-1 flex flex-col">
               <!-- Prompt Card Header Container -->
-              <div class="relative min-h-[36px] flex items-center justify-center">
-                <!-- Card Title Container (Clean text + subtle pencil icon hint for admin; click reveals CRUD bar if admin) -->
-                <div
-                  @click.stop="isAdmin ? toggleCrudToolbar(p.id, $event) : null"
-                  class="flex items-center justify-center gap-1.5 py-1 px-2 select-none max-w-full rounded-lg transition-colors group/header"
-                  :class="{ 'cursor-pointer hover:bg-black/5 dark:hover:bg-white/5': isAdmin }"
-                >
+              <div class="relative min-h-[36px] flex items-center justify-between gap-2">
+                <!-- Card Title Container -->
+                <div class="flex items-center justify-start gap-1.5 py-1 px-1 select-none min-w-0 max-w-full rounded-lg">
                   <h3
                     class="text-base font-black tracking-wide truncate"
                     :style="{ color: group.color }"
@@ -416,6 +412,17 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
                     {{ p.title }}
                   </h3>
                 </div>
+
+                <!-- Small icon on far right with ellipsis to toggle manage bar for admin -->
+                <button
+                  v-if="isAdmin"
+                  type="button"
+                  @click.stop="toggleCrudToolbar(p.id, $event)"
+                  title="Manage prompt"
+                  class="p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
+                >
+                  <UIcon name="lucide:more-horizontal" class="w-5 h-5" />
+                </button>
 
                 <!-- Desktop Admin CRUD Tools (Displayed on title click; click bar area closes it; solid black bg, no border) -->
                 <div
@@ -526,7 +533,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
           </button>
         </div>
 
-        <form @submit.prevent="savePrompt" class="space-y-4">
+        <form @submit.prevent="savePrompt" @keydown.ctrl.enter="savePrompt" @keydown.meta.enter="savePrompt" class="space-y-4">
           <!-- Language Selector -->
           <div>
             <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-1">

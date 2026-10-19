@@ -10,11 +10,11 @@ import {
   DocumentTextIcon,
   ArrowRightOnRectangleIcon,
   ArrowLeftOnRectangleIcon,
-  UserPlusIcon,
   WrenchScrewdriverIcon,
   ArrowUpTrayIcon,
   LinkIcon,
-  SparklesIcon
+  SparklesIcon,
+  QueueListIcon
 } from '@heroicons/vue/24/outline'
 
 interface CardStats {
@@ -177,6 +177,7 @@ const navItems = computed(() => {
   if (loggedIn.value) {
     if (isAdmin.value) {
       items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
+      items.push({ name: 'Batches', path: '/batches', icon: QueueListIcon })
       items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
       items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
@@ -185,7 +186,9 @@ const navItems = computed(() => {
       }
       items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     } else {
-      items.push({ name: 'Member Home', path: '/member', icon: HomeIcon })
+      items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
+      items.push({ name: 'Batches', path: '/batches', icon: QueueListIcon })
+      items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
       items.push({ name: 'Activities', path: '/activities/gemini-quiz', icon: SparklesIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
       items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
@@ -302,12 +305,6 @@ const navItems = computed(() => {
                 class="flex items-center space-x-1.5 text-gray-700 hover:text-gray-900 transition-colors font-semibold dark:text-gray-300 dark:hover:text-white">
                 <ArrowLeftOnRectangleIcon class="h-5 w-5" />
                 <span>Login</span>
-              </a>
-              <a
-                href="/api/register"
-                class="flex items-center space-x-1.5 text-gray-700 hover:text-gray-900 transition-colors font-semibold dark:text-gray-300 dark:hover:text-white">
-                <UserPlusIcon class="h-5 w-5" />
-                <span>Register</span>
               </a>
             </div>
           </div>
@@ -439,13 +436,6 @@ const navItems = computed(() => {
                 class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors font-semibold">
                 <ArrowLeftOnRectangleIcon class="h-5 w-5" />
                 <span>Login with Google</span>
-              </a>
-              <a
-                href="/api/register"
-                @click="mobileMenuOpen = false"
-                class="w-full text-left flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors font-semibold">
-                <UserPlusIcon class="h-5 w-5" />
-                <span>Register at Kinde</span>
               </a>
             </div>
           </div>

@@ -99,16 +99,40 @@ const checkMobile = () => {
   }
 }
 
+const userSourceLanguage = ref<string | null>(null)
+const isLoadingProfile = ref(true)
+
+const fetchUserProfile = async () => {
+  if (!loggedIn.value) {
+    isLoadingProfile.value = false
+    return
+  }
+  try {
+    const data = await $fetch<{ sourceLanguage: string | null }>('/api/user/me')
+    userSourceLanguage.value = data?.sourceLanguage || null
+  } catch (err) {
+    console.error('Failed to fetch user profile', err)
+  } finally {
+    isLoadingProfile.value = false
+  }
+}
+
 const handleMobileImportPreview = async () => {
   if (!mobileInputText.value.trim() || isSubmittingMobile.value) return
+  if (!userSourceLanguage.value) {
+    mobileImportError.value = 'Please set your source language in your profile before importing flashcards.'
+    return
+  }
   isSubmittingMobile.value = true
   mobileImportError.value = null
   mobileImportSuccessStats.value = null
 
   try {
+    const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
     const res = await $fetch<MobilePreviewData>('/api/import/mobile', {
       method: 'POST',
-      body: { mobileImportText: mobileInputText.value, preview: true }
+      headers: tz ? { 'x-client-timezone': tz } : {},
+      body: { mobileImportText: mobileInputText.value, preview: true, tz }
     })
     mobilePreviewResult.value = res
   } catch (err: any) {
@@ -121,16 +145,22 @@ const handleMobileImportPreview = async () => {
 
 const handleConfirmMobileImport = async () => {
   if (!mobileInputText.value.trim() || isConfirmingMobile.value) return
+  if (!userSourceLanguage.value) {
+    mobileImportError.value = 'Please set your source language in your profile before importing flashcards.'
+    return
+  }
   isConfirmingMobile.value = true
   mobileImportError.value = null
 
   try {
+    const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
     const currentBreakdown = { ...mobileLanguageBreakdown.value }
     const totalCount = mobilePreviewResult.value?.willImport.length || 0
 
     await $fetch('/api/import/mobile', {
       method: 'POST',
-      body: { mobileImportText: mobileInputText.value }
+      headers: tz ? { 'x-client-timezone': tz } : {},
+      body: { mobileImportText: mobileInputText.value, tz }
     })
     mobileImportSuccessStats.value = {
       count: totalCount,
@@ -151,7 +181,6 @@ const cancelMobilePreview = () => {
   mobileImportError.value = null
 }
 
-
 const fetchLatestMobileImport = async () => {
   if (!loggedIn.value) return
   try {
@@ -162,20 +191,8 @@ const fetchLatestMobileImport = async () => {
   }
 }
 
-const usage = ref<{ todayCount: number; limit: number; isAdmin: boolean } | null>(null)
-
-const fetchUsage = async () => {
-  if (!loggedIn.value) return
-  try {
-    const data = await $fetch<{ todayCount: number; limit: number; isAdmin: boolean }>('/api/import/usage')
-    usage.value = data
-  } catch (err) {
-    console.error('Failed to fetch import usage', err)
-  }
-}
-
 onMounted(() => {
-  fetchUsage()
+  fetchUserProfile()
   fetchLatestMobileImport()
   checkMobile()
   window.addEventListener('resize', checkMobile)
@@ -228,15 +245,21 @@ function handleFileChange(event: Event) {
 
 async function handleImport() {
   if (parsedData.value.length === 0) return;
+  if (!userSourceLanguage.value) {
+    importError.value = 'Please set your source language in your profile before importing flashcards.';
+    return;
+  }
   
   isImporting.value = true;
   importSummary.value = null;
   importError.value = null;
 
   try {
+    const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : '';
     const response = await $fetch('/api/import', {
       method: 'POST',
-      body: { rows: parsedData.value }
+      headers: tz ? { 'x-client-timezone': tz } : {},
+      body: { rows: parsedData.value, tz }
     });
     
     importSummary.value = response as { importedCount: number; skippedCount: number; skippedCards: SkippedCard[] };
@@ -244,7 +267,6 @@ async function handleImport() {
     if (fileInput.value) {
       fileInput.value.value = ''; // Reset file input
     }
-    await fetchUsage()
   } catch (err: any) {
     console.error('Import error:', err);
     importError.value = err.data?.statusMessage || 'An error occurred during import.';
@@ -258,6 +280,21 @@ async function handleImport() {
   <div class="max-w-4xl mx-auto px-4 pt-0 pb-8 space-y-12 transition-all duration-300">
     <ClientOnly>
       <div v-if="loggedIn" class="mt-8 flex flex-col items-center w-full min-h-[340px] justify-start pt-2">
+        <!-- Source Language Missing Notice Banner -->
+        <div v-if="!isLoadingProfile && !userSourceLanguage" class="w-full max-w-4xl p-5 mb-6 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-2xl shadow-xs text-amber-900 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <h3 class="font-bold text-sm">Source Language Required</h3>
+            <p class="text-xs">
+              Please set your native / source language in your profile before importing flashcards. This allows the importer to determine which side of the card should be in your native language.
+            </p>
+          </div>
+          <NuxtLink
+            to="/user"
+            class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl text-xs whitespace-nowrap shadow-xs transition-colors shrink-0"
+          >
+            Configure Profile &rarr;
+          </NuxtLink>
+        </div>
         <!-- Mobile View (completely different page view) -->
         <div v-if="isMobile" class="w-full max-w-lg space-y-6">
           <!-- State 3: Success Screen (after confirming import) -->
@@ -576,12 +613,6 @@ async function handleImport() {
             <div>
               <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Import Flashcards from Google Translate</h1>
             </div>
-            <!-- Daily Allowance Banner -->
-            <div v-if="usage" class="px-4 py-2 rounded-xl text-xs font-semibold border shadow-sm shrink-0"
-                 :class="usage.isAdmin ? 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-gray-800 dark:text-amber-300 dark:border-gray-700' : 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-gray-800 dark:text-blue-300 dark:border-gray-700'">
-              <span v-if="usage.isAdmin">⭐ Daily Import Allowance: <strong>Unlimited (Admin)</strong></span>
-              <span v-else>📊 Daily Import Allowance: <strong>{{ usage.todayCount }} / {{ usage.limit }}</strong> phrases used today</span>
-            </div>
           </div>
 
           <ul class="list-disc list-inside space-y-1.5 text-gray-600 dark:text-gray-400">
@@ -618,12 +649,13 @@ async function handleImport() {
               {{ importSummary.importedCount }} {{ importSummary.importedCount === 1 ? 'card' : 'cards' }} imported
             </p>
             <div v-if="importSummary.skippedCount > 0" class="space-y-1">
-              <p class="text-red-700 dark:text-red-400">
-                {{ importSummary.skippedCount }} {{ importSummary.skippedCount === 1 ? 'card was' : 'cards were' }} not imported because they already exist in the database:
+              <p class="text-red-700 dark:text-red-400 font-semibold">
+                {{ importSummary.skippedCount }} {{ importSummary.skippedCount === 1 ? 'card was' : 'cards were' }} not imported:
               </p>
               <ul class="list-disc list-inside pl-2 space-y-1 text-gray-700 dark:text-gray-300">
                 <li v-for="(card, i) in importSummary.skippedCards" :key="i">
-                  {{ card.front }} / {{ card.back }}
+                  <span>{{ card.front }} / {{ card.back }}</span>
+                  <span v-if="(card as any).reason" class="text-xs text-gray-500 dark:text-gray-400"> &mdash; {{ (card as any).reason }}</span>
                 </li>
               </ul>
             </div>

@@ -904,10 +904,15 @@ async function saveEdit() {
   const originalPronunciation = currentCard.value.pronunciation
   const originalMemoryHook = currentCard.value.memoryHook
   
-  const newFront = editFront.value.trim()
-  const newBack = editBack.value.trim()
-  const newPron = editPronunciation.value.trim() || null
-  const newMemoryHook = editMemoryHook.value.trim() || null
+  const newFront = editFront.value.trim().replace(/\s+/g, ' ')
+  const newBack = editBack.value.trim().replace(/\s+/g, ' ')
+  const newPron = editPronunciation.value.trim().replace(/\s+/g, ' ') || null
+  const newMemoryHook = editMemoryHook.value.trim().replace(/\s+/g, ' ') || null
+
+  editFront.value = newFront
+  editBack.value = newBack
+  editPronunciation.value = newPron || ''
+  editMemoryHook.value = newMemoryHook || ''
 
   currentCard.value.front = newFront
   currentCard.value.back = newBack

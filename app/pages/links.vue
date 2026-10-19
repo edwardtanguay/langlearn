@@ -8,7 +8,8 @@ import {
   XMarkIcon,
   DocumentTextIcon,
   ArrowUpIcon,
-  ArrowDownIcon
+  ArrowDownIcon,
+  EllipsisHorizontalIcon
 } from '@heroicons/vue/24/outline'
 import { languageColors } from '~/utils/languageColors'
 
@@ -421,22 +422,36 @@ const executeDelete = async () => {
               </button>
             </div>
 
-            <!-- Title Line (Clicking title reveals CRUD toolbar if admin) -->
+            <!-- Title Line (Paper/video icon on front, ellipsis icon on far right for admin) -->
             <div
               v-else
-              @click.stop="isAdmin ? toggleCrudToolbar(link.id, $event) : openLink(link.url)"
-              class="font-bold text-base leading-snug w-fit"
-              :class="{ 'cursor-pointer': isAdmin }"
-              :style="{ color: category.color }"
+              class="flex items-center justify-between gap-2 w-full"
             >
-              <span>{{ link.title.trim() }}</span>&nbsp;<span class="inline-block whitespace-nowrap align-middle">
-                <!-- YouTube Icon for YouTube URLs -->
-                <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 text-gray-400 dark:text-gray-400 inline-block align-[-1px]" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                </svg>
-                <!-- Document/Page icon for general web links -->
-                <DocumentTextIcon v-else class="w-4 h-4 text-gray-400 dark:text-gray-400 inline-block align-[-1px]" title="Web article" />
-              </span>
+              <div
+                @click.stop="openLink(link.url)"
+                class="font-bold text-base leading-snug flex items-center gap-2 cursor-pointer min-w-0"
+                :style="{ color: category.color }"
+              >
+                <!-- YouTube Icon / Document Icon on the front (left side) -->
+                <span class="inline-flex items-center shrink-0">
+                  <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 text-gray-400 dark:text-gray-400" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                  <DocumentTextIcon v-else class="w-4 h-4 text-gray-400 dark:text-gray-400" title="Web article" />
+                </span>
+                <span class="truncate">{{ link.title.trim() }}</span>
+              </div>
+
+              <!-- Ellipsis icon on far right for admin to toggle manage bar -->
+              <button
+                v-if="isAdmin"
+                type="button"
+                @click.stop="toggleCrudToolbar(link.id, $event)"
+                title="Manage link"
+                class="p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
+              >
+                <EllipsisHorizontalIcon class="w-5 h-5" />
+              </button>
             </div>
 
             <!-- Description (forced capitalize first letter) -->
@@ -464,7 +479,7 @@ const executeDelete = async () => {
           {{ saveError }}
         </div>
 
-        <form @submit.prevent="saveLink" class="space-y-4 text-xs">
+        <form @submit.prevent="saveLink" @keydown.ctrl.enter="saveLink" @keydown.meta.enter="saveLink" class="space-y-4 text-xs">
           <!-- Language Dropdown -->
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Language</label>

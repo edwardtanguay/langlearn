@@ -47,6 +47,13 @@ export default defineEventHandler(async (event) => {
 
   // If preview requested, return dry-run analysis without persisting
   if (body.preview) {
+    if (!dbUser.sourceLanguage) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Please set your source language in your profile before importing flashcards.'
+      })
+    }
+
     const existingCards = await prisma.flashcard.findMany({
       where: {
         ownerId: dbUser.id,
@@ -59,7 +66,7 @@ export default defineEventHandler(async (event) => {
       existingSet.add(`${card.front.trim().toLowerCase()}|${card.back.trim().toLowerCase()}`)
     }
 
-    const { willImport, willNotImport } = analyzeImportRows(existingSet, parsedRows)
+    const { willImport, willNotImport } = analyzeImportRows(existingSet, parsedRows, dbUser.sourceLanguage)
 
     return {
       preview: true,
@@ -79,7 +86,8 @@ export default defineEventHandler(async (event) => {
 
   // 2. Process import rows (creates flashcards, skips duplicates)
   try {
-    const importResult = await processImportRows(dbUser.id, parsedRows)
+    const clientTz = (getHeader(event, 'x-client-timezone') as string) || body.tz || undefined
+    const importResult = await processImportRows(dbUser.id, parsedRows, clientTz)
     return {
       id: record.id,
       userId: record.userId,
