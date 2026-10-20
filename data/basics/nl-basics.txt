@@ -15,7 +15,7 @@
 - letters
 	- https://www.youtube.com/watch?v=YIf3ukVvFRM;A-Z
 	- https://youtu.be/YIf3ukVvFRM?t=64; A-Z snel
-	- ah, bay, say, day, ay, eff, %ay, hah, ee, yay, kah, ell, emm, enn, oh, pay, koo, air, ess, tay, oo, fay, vay, iks, ay, zed
+	- ah, bay, say, day, ay, eff, %ay, hah, ee, yay, kah, ell, emm, enn, oh, pay, koo, air, ess, tay, oo, fay, vay, iks, ee-grehk, zed
 - question words
 	- wie, wat, waar, wanneer, waarom, hoe, welk, hoeveel, hoeveel
 - weekdays
@@ -40,7 +40,7 @@
 - greetings
 	- hallo, goedemorgen, goedemiddag, goedenavond, goedenacht, tot ziens, tot later
 - colors
-	- rood, blauw, geel, groen, oranje, paars, roze, bruin, zwart, wit, grijs
+	- rood, blauw, geel, groen, oranje, paars, roze, bruin, zwart, wit, grijs, zilver, goud, brons
 - opposites
 	- groot/klein, warm/koud, goed/slecht, snel/langzaam, oud/nieuw, blij/verdrietig, makkelijk/moeilijk, rijk/arm, zwaar/licht, open/gesloten, vroeg/laat, jong/oud, dichtbij/ver, schoon/vies, sterk/zwak, donker/licht, rustig/lawaaiig, duur/goedkoop, veilig/gevaarlijk, leeg/vol
 - family
@@ -83,7 +83,7 @@
 - adjectives
 	- mooi, lelijk, schoon, vies, rustig, luidruchtig, duur, goedkoop, interessant, saai, belangrijk, gevaarlijk, veilig, vriendelijk, beleefd
 - frequency
-	- altijd, meestal, vaak, soms, nooit, elke dag, een keer per week, twee keer per week, elke ochtend, in het weekend
+	- altijd, meestal, gewoonlijk, frequent, vaak, soms, af en toe, zelden, bijna nooit, nooit
 - tech
 	- de telefoon, de computer, de laptop, de oplader, de sleutel, de portemonnee, de paraplu, de koptelefoon, de camera, de tablet
 - school

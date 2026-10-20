@@ -600,7 +600,12 @@ function getCategoryItems(cat: BasicCategory) {
   return cat.items
 }
 
-watch(selectedLang, async () => {
+watch(selectedLang, async (newLang) => {
+  if (import.meta.client) {
+    try {
+      localStorage.setItem('lang-basics-selected-language', newLang)
+    } catch {}
+  }
   testPronunciationRevealed.value.clear()
 
   // Retain currently open card IDs across language switch
@@ -701,6 +706,14 @@ function selectLanguage(code: LangCode) {
 }
 
 onMounted(() => {
+  if (import.meta.client) {
+    try {
+      const savedLang = localStorage.getItem('lang-basics-selected-language') as LangCode | null
+      if (savedLang && languages.some(l => l.code === savedLang)) {
+        selectedLang.value = savedLang
+      }
+    } catch {}
+  }
   loadRanksFromLocalStorage()
   loadSavedProgress()
   loadPronunciations()

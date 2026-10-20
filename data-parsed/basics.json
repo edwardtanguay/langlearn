@@ -1091,7 +1091,7 @@
         "fr": "ee-grek",
         "es": "ee-gray-gah",
         "it": "ee-grekka",
-        "nl": "ay"
+        "nl": "ee-grehk"
       },
       {
         "id": "letters-26",
@@ -1676,6 +1676,30 @@
         "es": "gris",
         "it": "grigio",
         "nl": "grijs"
+      },
+      {
+        "id": "colors-12",
+        "en": "silver",
+        "fr": "argent",
+        "es": "plata",
+        "it": "argento",
+        "nl": "zilver"
+      },
+      {
+        "id": "colors-13",
+        "en": "gold",
+        "fr": "or",
+        "es": "oro",
+        "it": "oro",
+        "nl": "goud"
+      },
+      {
+        "id": "colors-14",
+        "en": "bronze",
+        "fr": "bronze",
+        "es": "bronce",
+        "it": "bronzo",
+        "nl": "brons"
       }
     ]
   },
@@ -3981,6 +4005,22 @@
       },
       {
         "id": "frequency-3",
+        "en": "normally",
+        "fr": "normalement",
+        "es": "habitualmente",
+        "it": "normalmente",
+        "nl": "gewoonlijk"
+      },
+      {
+        "id": "frequency-4",
+        "en": "frequently",
+        "fr": "fréquemment",
+        "es": "frecuentemente",
+        "it": "frequentemente",
+        "nl": "frequent"
+      },
+      {
+        "id": "frequency-5",
         "en": "often",
         "fr": "souvent",
         "es": "a menudo",
@@ -3988,7 +4028,7 @@
         "nl": "vaak"
       },
       {
-        "id": "frequency-4",
+        "id": "frequency-6",
         "en": "sometimes",
         "fr": "parfois",
         "es": "a veces",
@@ -3996,52 +4036,36 @@
         "nl": "soms"
       },
       {
-        "id": "frequency-5",
+        "id": "frequency-7",
+        "en": "occasionally",
+        "fr": "de temps en temps",
+        "es": "de vez en cuando",
+        "it": "occasionalmente",
+        "nl": "af en toe"
+      },
+      {
+        "id": "frequency-8",
+        "en": "rarely",
+        "fr": "rarement",
+        "es": "raramente",
+        "it": "raramente",
+        "nl": "zelden"
+      },
+      {
+        "id": "frequency-9",
+        "en": "seldom",
+        "fr": "peu souvent",
+        "es": "casi nunca",
+        "it": "di rado",
+        "nl": "bijna nooit"
+      },
+      {
+        "id": "frequency-10",
         "en": "never",
         "fr": "jamais",
         "es": "nunca",
         "it": "mai",
         "nl": "nooit"
-      },
-      {
-        "id": "frequency-6",
-        "en": "every day",
-        "fr": "tous les jours",
-        "es": "todos los días",
-        "it": "ogni giorno",
-        "nl": "elke dag"
-      },
-      {
-        "id": "frequency-7",
-        "en": "once a week",
-        "fr": "une fois par semaine",
-        "es": "una vez a la semana",
-        "it": "una volta alla settimana",
-        "nl": "een keer per week"
-      },
-      {
-        "id": "frequency-8",
-        "en": "twice a week",
-        "fr": "deux fois par semaine",
-        "es": "dos veces a la semana",
-        "it": "due volte alla settimana",
-        "nl": "twee keer per week"
-      },
-      {
-        "id": "frequency-9",
-        "en": "every morning",
-        "fr": "tous les matins",
-        "es": "todas las mañanas",
-        "it": "ogni mattina",
-        "nl": "elke ochtend"
-      },
-      {
-        "id": "frequency-10",
-        "en": "at the weekend",
-        "fr": "le week-end",
-        "es": "los fines de semana",
-        "it": "nel fine settimana",
-        "nl": "in het weekend"
       }
     ]
   },

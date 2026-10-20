@@ -38,7 +38,7 @@
 - greetings
 	- ciao, buongiorno, buon pomeriggio, buonasera, buonanotte, arrivederci, a più tardi
 - colors
-	- rosso, blu, giallo, verde, arancione, viola, rosa, marrone, nero, bianco, grigio
+	- rosso, blu, giallo, verde, arancione, viola, rosa, marrone, nero, bianco, grigio, argento, oro, bronzo
 - opposites
 	- grande/piccolo, caldo/freddo, buono/cattivo, veloce/lento, vecchio/nuovo, felice/triste, facile/difficile, ricco/povero, pesante/leggero, aperto/chiuso, presto/tardi, giovane/vecchio, vicino/lontano, pulito/sporco, forte/debole, scuro/chiaro, silenzioso/rumoroso, costoso/economico, sicuro/pericoloso, vuoto/pieno
 - family
@@ -81,7 +81,7 @@
 - adjectives
 	- bello, brutto, pulito, sporco, silenzioso, rumoroso, costoso, economico, interessante, noioso, importante, pericoloso, sicuro, amichevole, educato
 - frequency
-	- sempre, di solito, spesso, a volte, mai, ogni giorno, una volta alla settimana, due volte alla settimana, ogni mattina, nel fine settimana
+	- sempre, di solito, normalmente, frequentemente, spesso, a volte, occasionalmente, raramente, di rado, mai
 - tech
 	- il telefono, il computer, il portatile, il caricabatterie, la chiave, il portafoglio, l'ombrello (m), le cuffie, la macchina fotografica, il tablet
 - school

@@ -36,7 +36,7 @@
 - greetings
 	- hello, good morning, good afternoon, good evening, good night, goodbye, see you later
 - colors
-	- red, blue, yellow, green, orange, purple, pink, brown, black, white, gray
+	- red, blue, yellow, green, orange, purple, pink, brown, black, white, gray, silver, gold, bronze
 - opposites
 	- big/small, hot/cold, good/bad, fast/slow, old/new, happy/sad, easy/difficult, rich/poor, heavy/light, open/closed, early/late, young/old, near/far, clean/dirty, strong/weak, dark/light, quiet/noisy, expensive/cheap, safe/dangerous, empty/full
 - family
@@ -79,7 +79,7 @@
 - adjectives
 	- beautiful, ugly, clean, dirty, quiet, noisy, expensive, cheap, interesting, boring, important, dangerous, safe, friendly, polite
 - frequency
-	- always, usually, often, sometimes, never, every day, once a week, twice a week, every morning, at the weekend
+	- always, usually, normally, frequently, often, sometimes, occasionally, rarely, seldom, never
 - tech
 	- phone, computer, laptop, charger, key, wallet, umbrella, headphones, camera, tablet
 - school

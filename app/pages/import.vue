@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { parseImportText } from '~~/server/utils/import-parser'
-import { parseMetadata } from '~~/server/utils/metadata-parser'
-import { calculateOptimalRank } from '~~/server/utils/rank-config'
+import { languageColors } from '~/utils/languageColors'
 
 useHead({
   title: 'LangLearn - Import Flashcards',
   meta: [
-    { name: 'description', content: 'Import your flashcards from a CSV file.' }
+    { name: 'description', content: 'Import your flashcards from Google Translate or CSV text.' }
   ]
 })
 
@@ -16,33 +14,15 @@ const isBypass = config.public.bypassAuth
 const auth = !isBypass ? useAuth() : null
 const loggedIn = computed(() => isBypass ? true : (auth?.loggedIn ?? false))
 
-interface ParsedRow {
-  lang1: string;
-  lang2: string;
-  text1: string;
-  text2: string;
-  rank: number;
-  pronunciation: string;
-  memoryHook: string;
-}
-
-interface SkippedCard {
-  front: string;
-  back: string;
-}
-
 const fileInput = ref<HTMLInputElement | null>(null)
-const parsedData = ref<ParsedRow[]>([])
-const isImporting = ref(false)
-const importSummary = ref<{ importedCount: number; skippedCount: number; skippedCards: SkippedCard[] } | null>(null)
+const uploadedFileName = ref<string | null>(null)
+const inputText = ref('')
+
+const isAnalyzing = ref(false)
+const isConfirming = ref(false)
 const importError = ref<string | null>(null)
 
 const isMobile = ref(false)
-const mobileInputText = ref('')
-const isSubmittingMobile = ref(false)
-const isConfirmingMobile = ref(false)
-const mobileImportResult = ref<{ id: string; userId: string; mobileImportText: string; whenImported: string } | null>(null)
-const mobileImportError = ref<string | null>(null)
 
 interface PreviewCardItem {
   front: string
@@ -56,20 +36,18 @@ interface PreviewCardItem {
   reason?: string
 }
 
-interface MobilePreviewData {
+interface PreviewData {
   preview: boolean
   totalParsed: number
   willNotImport: PreviewCardItem[]
   willImport: PreviewCardItem[]
 }
 
-const mobilePreviewResult = ref<MobilePreviewData | null>(null)
-const mobileImportSuccessStats = ref<{
+const previewResult = ref<PreviewData | null>(null)
+const importSuccessStats = ref<{
   count: number
   languages: Record<string, number>
 } | null>(null)
-
-import { languageColors } from '~/utils/languageColors'
 
 const languageTextColors: Record<string, string> = { ...languageColors }
 
@@ -83,10 +61,10 @@ function getCardLanguageTextColor(card: PreviewCardItem): string {
   return languageTextColors[code] || getCardLanguageColor(card)
 }
 
-const mobileLanguageBreakdown = computed(() => {
-  if (!mobilePreviewResult.value?.willImport) return {}
+const languageBreakdown = computed(() => {
+  if (!previewResult.value?.willImport) return {}
   const breakdown: Record<string, number> = {}
-  for (const card of mobilePreviewResult.value.willImport) {
+  for (const card of previewResult.value.willImport) {
     const lang = (card.backLanguage || card.frontLanguage || 'fr').toLowerCase()
     breakdown[lang] = (breakdown[lang] || 0) + 1
   }
@@ -117,83 +95,116 @@ const fetchUserProfile = async () => {
   }
 }
 
-const handleMobileImportPreview = async () => {
-  if (!mobileInputText.value.trim() || isSubmittingMobile.value) return
+const runPreview = async (textToPreview: string) => {
+  const text = textToPreview.trim()
+  if (!text || isAnalyzing.value) return
   if (!userSourceLanguage.value) {
-    mobileImportError.value = 'Please set your source language in your profile before importing flashcards.'
+    importError.value = 'Please set your source language in your profile before importing flashcards.'
     return
   }
-  isSubmittingMobile.value = true
-  mobileImportError.value = null
-  mobileImportSuccessStats.value = null
+  isAnalyzing.value = true
+  importError.value = null
+  importSuccessStats.value = null
 
   try {
     const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
-    const res = await $fetch<MobilePreviewData>('/api/import/mobile', {
+    const res = await $fetch<PreviewData>('/api/import/mobile', {
       method: 'POST',
       headers: tz ? { 'x-client-timezone': tz } : {},
-      body: { mobileImportText: mobileInputText.value, preview: true, tz }
+      body: { mobileImportText: text, preview: true, tz }
     })
-    mobilePreviewResult.value = res
+    previewResult.value = res
   } catch (err: any) {
-    console.error('Failed mobile import preview:', err)
-    mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to parse import text.'
+    console.error('Failed import preview:', err)
+    importError.value = err.data?.statusMessage || err.message || 'Failed to parse import text.'
   } finally {
-    isSubmittingMobile.value = false
+    isAnalyzing.value = false
   }
 }
 
-const handleConfirmMobileImport = async () => {
-  if (!mobileInputText.value.trim() || isConfirmingMobile.value) return
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (!target.files || target.files.length === 0) return
+
+  const file = target.files[0]
+  if (!file) return
+
+  uploadedFileName.value = file.name
+  importError.value = null
+
+  const reader = new FileReader()
+  reader.onload = async (e) => {
+    const content = e.target?.result as string
+    if (!content) return
+    inputText.value = content
+    await runPreview(content)
+  }
+  reader.readAsText(file)
+}
+
+const handleConfirmImport = async () => {
+  const text = inputText.value.trim()
+  if (!text || isConfirming.value) return
   if (!userSourceLanguage.value) {
-    mobileImportError.value = 'Please set your source language in your profile before importing flashcards.'
+    importError.value = 'Please set your source language in your profile before importing flashcards.'
     return
   }
-  isConfirmingMobile.value = true
-  mobileImportError.value = null
+  isConfirming.value = true
+  importError.value = null
 
   try {
     const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
-    const currentBreakdown = { ...mobileLanguageBreakdown.value }
-    const totalCount = mobilePreviewResult.value?.willImport.length || 0
+    const currentBreakdown = { ...languageBreakdown.value }
+    const totalCount = previewResult.value?.willImport.length || 0
 
     await $fetch('/api/import/mobile', {
       method: 'POST',
       headers: tz ? { 'x-client-timezone': tz } : {},
-      body: { mobileImportText: mobileInputText.value, tz }
+      body: { mobileImportText: text, tz }
     })
-    mobileImportSuccessStats.value = {
+    importSuccessStats.value = {
       count: totalCount,
       languages: currentBreakdown
     }
-    mobileInputText.value = ''
-    mobilePreviewResult.value = null
+    inputText.value = ''
+    uploadedFileName.value = null
+    previewResult.value = null
+    if (fileInput.value) {
+      fileInput.value.value = ''
+    }
   } catch (err: any) {
-    console.error('Failed mobile import confirmation:', err)
-    mobileImportError.value = err.data?.statusMessage || err.message || 'Failed to submit mobile import.'
+    console.error('Failed import confirmation:', err)
+    importError.value = err.data?.statusMessage || err.message || 'Failed to submit import.'
   } finally {
-    isConfirmingMobile.value = false
+    isConfirming.value = false
   }
 }
 
-const cancelMobilePreview = () => {
-  mobilePreviewResult.value = null
-  mobileImportError.value = null
+const cancelPreview = () => {
+  previewResult.value = null
+  importError.value = null
+  if (!isMobile.value) {
+    inputText.value = ''
+    uploadedFileName.value = null
+    if (fileInput.value) {
+      fileInput.value.value = ''
+    }
+  }
 }
 
-const fetchLatestMobileImport = async () => {
-  if (!loggedIn.value) return
-  try {
-    const data = await $fetch<{ id: string; userId: string; mobileImportText: string; whenImported: string } | null>('/api/import/mobile')
-    mobileImportResult.value = data
-  } catch (err) {
-    console.error('Failed to fetch latest mobile import', err)
+const resetToInitial = () => {
+  previewResult.value = null
+  importSuccessStats.value = null
+  inputText.value = ''
+  uploadedFileName.value = null
+  importError.value = null
+  if (fileInput.value) {
+    fileInput.value.value = ''
   }
 }
 
 onMounted(() => {
   fetchUserProfile()
-  fetchLatestMobileImport()
   checkMobile()
   window.addEventListener('resize', checkMobile)
 })
@@ -201,79 +212,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', checkMobile)
 })
-
-function parseCSVLine(line: string): string[] {
-  const result: string[] = [];
-  let current = '';
-  let inQuotes = false;
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    if (char === '"') {
-      inQuotes = !inQuotes;
-    } else if (char === ',' && !inQuotes) {
-      result.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-  result.push(current.trim());
-  return result.map(val => val.replace(/^"|"$/g, '').trim());
-}
-
-function handleFileChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  if (!target.files || target.files.length === 0) return;
-
-  importSummary.value = null;
-  importError.value = null;
-  parsedData.value = [];
-
-  const file = target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = (e) => {
-    const text = e.target?.result as string;
-    if (!text) return;
-    parsedData.value = parseImportText(text) as ParsedRow[];
-  };
-
-  reader.readAsText(file);
-}
-
-async function handleImport() {
-  if (parsedData.value.length === 0) return;
-  if (!userSourceLanguage.value) {
-    importError.value = 'Please set your source language in your profile before importing flashcards.';
-    return;
-  }
-  
-  isImporting.value = true;
-  importSummary.value = null;
-  importError.value = null;
-
-  try {
-    const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : '';
-    const response = await $fetch('/api/import', {
-      method: 'POST',
-      headers: tz ? { 'x-client-timezone': tz } : {},
-      body: { rows: parsedData.value, tz }
-    });
-    
-    importSummary.value = response as { importedCount: number; skippedCount: number; skippedCards: SkippedCard[] };
-    parsedData.value = []; // Clear table after successful import
-    if (fileInput.value) {
-      fileInput.value.value = ''; // Reset file input
-    }
-  } catch (err: any) {
-    console.error('Import error:', err);
-    importError.value = err.data?.statusMessage || 'An error occurred during import.';
-  } finally {
-    isImporting.value = false;
-  }
-}
 </script>
 
 <template>
@@ -295,10 +233,12 @@ async function handleImport() {
             Configure Profile &rarr;
           </NuxtLink>
         </div>
-        <!-- Mobile View (completely different page view) -->
-        <div v-if="isMobile" class="w-full max-w-lg space-y-6">
-          <!-- State 3: Success Screen (after confirming import) -->
-          <div v-if="mobileImportSuccessStats" class="space-y-6">
+
+        <!-- Main Unified Container (Used for both Desktop and Mobile) -->
+        <div class="w-full" :class="isMobile ? 'max-w-lg' : 'max-w-4xl'">
+          
+          <!-- STATE 3: Success Screen (Shared across Mobile and Desktop) -->
+          <div v-if="importSuccessStats" class="space-y-6">
             <div class="p-6 bg-white dark:bg-gray-900 border border-emerald-200 dark:border-emerald-800 rounded-3xl shadow-sm text-center space-y-4">
               <div class="w-12 h-12 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -309,14 +249,14 @@ async function handleImport() {
               <div>
                 <h1 class="text-xl font-black text-gray-900 dark:text-white">Import Successful!</h1>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {{ mobileImportSuccessStats.count }} {{ mobileImportSuccessStats.count === 1 ? 'flashcard was' : 'flashcards were' }} successfully added to your deck.
+                  {{ importSuccessStats.count }} {{ importSuccessStats.count === 1 ? 'flashcard was' : 'flashcards were' }} successfully added to your deck.
                 </p>
               </div>
 
               <!-- Stats by language -->
               <div class="pt-2 border-t border-gray-100 dark:border-gray-800 flex flex-wrap justify-center gap-2">
                 <span
-                  v-for="(count, lang) in mobileImportSuccessStats.languages"
+                  v-for="(count, lang) in importSuccessStats.languages"
                   :key="lang"
                   class="px-3 py-1 rounded-lg text-xs font-bold text-white shadow-xs"
                   :style="{ backgroundColor: languageColors[lang] || '#6366f1' }"
@@ -344,80 +284,134 @@ async function handleImport() {
               </div>
 
               <!-- Action Buttons -->
-              <div class="pt-2">
+              <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  @click="resetToInitial"
+                  class="flex-1 py-3 px-4 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-800 dark:text-gray-200 font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                >
+                  Import More Cards
+                </button>
                 <NuxtLink
                   to="/flashcard"
-                  class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+                  class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
                 >
-                  <span>Continue to Flashcards →</span>
+                  <span>Continue to Flashcards &rarr;</span>
                 </NuxtLink>
               </div>
             </div>
           </div>
 
-          <!-- State 1: Input form (when not previewing and not success) -->
-          <div v-else-if="!mobilePreviewResult" class="space-y-4">
-            <div class="space-y-2">
-              <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mobile Import</h1>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Paste text below to import into your account.</p>
+          <!-- STATE 1: Initial Input Screen (Mobile: Textarea, Desktop: CSV File Upload) -->
+          <div v-else-if="!previewResult" class="space-y-6">
+            <!-- Mobile Form -->
+            <div v-if="isMobile" class="space-y-4">
+              <div class="space-y-2">
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mobile Import</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Paste text below to import into your account.</p>
+              </div>
+
+              <div class="space-y-4">
+                <textarea
+                  v-model="inputText"
+                  rows="10"
+                  placeholder="Paste text here..."
+                  class="w-full p-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-2xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
+                ></textarea>
+
+                <button
+                  @click="runPreview(inputText)"
+                  :disabled="!inputText.trim() || isAnalyzing"
+                  class="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span v-if="isAnalyzing" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  <span>{{ isAnalyzing ? 'Analyzing cards...' : 'Import' }}</span>
+                </button>
+
+                <div v-if="importError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
+                  {{ importError }}
+                </div>
+              </div>
             </div>
 
-            <div class="space-y-4">
-              <textarea
-                v-model="mobileInputText"
-                rows="10"
-                placeholder="Paste text here..."
-                class="w-full p-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-2xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
-              ></textarea>
+            <!-- Desktop Form -->
+            <div v-else class="space-y-6">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Import Flashcards from Google Translate</h1>
+                </div>
+              </div>
 
-              <button
-                @click="handleMobileImportPreview"
-                :disabled="!mobileInputText.trim() || isSubmittingMobile"
-                class="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span v-if="isSubmittingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                <span>{{ isSubmittingMobile ? 'Analyzing cards...' : 'Import' }}</span>
-              </button>
+              <ul class="list-disc list-inside space-y-1.5 text-gray-600 dark:text-gray-400">
+                <li>Go to <a href="https://translate.google.com" target="_blank" rel="noopener noreferrer" class="underline text-gray-900 dark:text-white hover:opacity-80">Google Translate</a></li>
+                <li>click on the "Saved" star icon</li>
+                <li>click the Google Sheets icon</li>
+                <li>click "Import the data"</li>
+                <li>click File, Download, Comma-separated values (.csv)</li>
+                <li>click below on "Import CSV file"</li>
+                <li>find and double-click on the file you just imported</li>
+              </ul>
 
-              <div v-if="mobileImportError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
-                {{ mobileImportError }}
+              <!-- File Upload -->
+              <div class="flex items-center gap-4">
+                <input 
+                  type="file" 
+                  accept=".csv" 
+                  ref="fileInput"
+                  @change="handleFileChange"
+                  class="hidden"
+                >
+                <button 
+                  type="button"
+                  @click="fileInput?.click()"
+                  :disabled="isAnalyzing"
+                  class="px-5 py-2.5 text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-800 focus:outline-none cursor-pointer flex items-center gap-2"
+                >
+                  <span v-if="isAnalyzing" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  <span>{{ isAnalyzing ? 'Reading & Analyzing...' : 'Import CSV file' }}</span>
+                </button>
+              </div>
+
+              <div v-if="importError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 border border-red-200 dark:border-red-900" role="alert">
+                <span class="font-medium">Notice:</span> {{ importError }}
               </div>
             </div>
           </div>
 
-          <!-- State 2: Preview Screen (after clicking Import) -->
+          <!-- STATE 2: Preview Screen (Shared across Mobile and Desktop) -->
           <div v-else class="space-y-6">
             <div class="flex items-center justify-between gap-2 border-b border-gray-200 dark:border-gray-800 pb-3">
               <div>
                 <h1 class="text-xl font-extrabold text-gray-900 dark:text-white">Import Preview</h1>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ mobilePreviewResult.totalParsed }} {{ mobilePreviewResult.totalParsed === 1 ? 'card' : 'cards' }} found
+                  {{ previewResult.totalParsed }} {{ previewResult.totalParsed === 1 ? 'card' : 'cards' }} found
+                  <span v-if="uploadedFileName" class="ml-1 text-gray-400">({{ uploadedFileName }})</span>
                 </p>
               </div>
               <button
-                @click="cancelMobilePreview"
+                @click="cancelPreview"
                 type="button"
                 class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
               >
-                Edit Text
+                {{ isMobile ? 'Edit Text' : 'Choose Another File' }}
               </button>
             </div>
 
-            <div v-if="mobileImportError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
-              {{ mobileImportError }}
+            <div v-if="importError" class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl">
+              {{ importError }}
             </div>
 
             <!-- (1) Cards that WILL NOT be imported -->
-            <div v-if="mobilePreviewResult.willNotImport.length > 0" class="space-y-3">
+            <div v-if="previewResult.willNotImport.length > 0" class="space-y-3">
               <div class="pt-1 pb-0.5">
                 <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
-                  {{ mobilePreviewResult.willNotImport.length }} {{ mobilePreviewResult.willNotImport.length === 1 ? 'card' : 'cards' }} will not be imported
+                  {{ previewResult.willNotImport.length }} {{ previewResult.willNotImport.length === 1 ? 'card' : 'cards' }} will not be imported
                 </h2>
               </div>
 
               <div class="space-y-2.5">
                 <div
-                  v-for="(card, idx) in mobilePreviewResult.willNotImport"
+                  v-for="(card, idx) in previewResult.willNotImport"
                   :key="idx"
                   class="p-3.5 bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 rounded-2xl space-y-2 text-xs shadow-xs"
                 >
@@ -450,52 +444,30 @@ async function handleImport() {
                       <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Pronunciation:</span>
                       <span class="font-mono text-yellow-600 dark:text-yellow-400 font-medium">[{{ card.pronunciation }}]</span>
                     </div>
-
-                    <div v-if="card.rank !== undefined && card.rank !== null" class="flex gap-2">
-                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Rank:</span>
-                      <span class="font-mono">{{ card.rank }}</span>
-                    </div>
-
-                    <div v-if="card.tags && card.tags.length > 0" class="flex gap-2 items-center">
-                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Tags:</span>
-                      <div class="flex flex-wrap gap-1">
-                        <span v-for="t in card.tags" :key="t" class="px-1.5 py-0.5 rounded bg-gray-200 dark:bg-gray-800 text-[10px] font-mono font-bold">
-                          #{{ t }}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div v-if="card.memoryHook" class="flex gap-2">
-                      <span class="font-bold text-gray-500 dark:text-gray-400 w-24 shrink-0">Memory Hook:</span>
-                      <span class="italic text-gray-600 dark:text-gray-400">{{ card.memoryHook }}</span>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- (2) Cards that WILL be imported -->
-            <div v-if="mobilePreviewResult.willImport.length > 0" class="space-y-3">
-              <div class="pt-2 pb-0.5">
+            <div v-if="previewResult.willImport.length > 0" class="space-y-3">
+              <div class="pt-1 pb-0.5">
                 <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  {{ mobilePreviewResult.willImport.length }} {{ mobilePreviewResult.willImport.length === 1 ? 'card' : 'cards' }} will be imported
+                  {{ previewResult.willImport.length }} {{ previewResult.willImport.length === 1 ? 'card' : 'cards' }} ready to import
                 </h2>
               </div>
 
               <div class="space-y-2.5">
                 <div
-                  v-for="(card, idx) in mobilePreviewResult.willImport"
+                  v-for="(card, idx) in previewResult.willImport"
                   :key="idx"
-                  class="p-3.5 border rounded-2xl space-y-2 text-xs shadow-xs transition-colors"
-                  :style="{
-                    borderColor: getCardLanguageColor(card),
-                    backgroundColor: `color-mix(in srgb, ${getCardLanguageColor(card)} 8%, transparent)`
-                  }"
+                  class="p-3.5 bg-white dark:bg-gray-900 border rounded-2xl space-y-2 text-xs shadow-xs transition-all"
+                  :style="{ borderColor: `color-mix(in srgb, ${getCardLanguageColor(card)} 35%, transparent)` }"
                 >
-                  <!-- Ready badge with language color -->
-                  <div class="flex items-center justify-between">
+                  <!-- Language & Ready Tag Header -->
+                  <div class="flex items-center justify-between pb-1 border-b border-gray-100 dark:border-gray-800">
                     <span
-                      class="px-2 py-0.5 rounded-md text-[11px] font-bold"
+                      class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider"
                       :style="{
                         backgroundColor: `color-mix(in srgb, ${getCardLanguageColor(card)} 18%, transparent)`,
                         color: getCardLanguageTextColor(card)
@@ -569,20 +541,20 @@ async function handleImport() {
               </div>
               <div class="flex items-center justify-between text-gray-300">
                 <span>Total cards found:</span>
-                <span class="font-bold font-mono">{{ mobilePreviewResult.totalParsed }}</span>
+                <span class="font-bold font-mono">{{ previewResult.totalParsed }}</span>
               </div>
               <div class="flex items-center justify-between text-gray-300">
                 <span>Ready to import:</span>
-                <span class="font-bold font-mono text-emerald-400">{{ mobilePreviewResult.willImport.length }}</span>
+                <span class="font-bold font-mono text-emerald-400">{{ previewResult.willImport.length }}</span>
               </div>
               <div class="flex items-center justify-between text-gray-300">
                 <span>Skipped:</span>
-                <span class="font-bold font-mono text-rose-400">{{ mobilePreviewResult.willNotImport.length }}</span>
+                <span class="font-bold font-mono text-rose-400">{{ previewResult.willNotImport.length }}</span>
               </div>
-              <div v-if="Object.keys(mobileLanguageBreakdown).length > 0" class="pt-2 border-t border-gray-800 flex flex-wrap items-center gap-1.5">
+              <div v-if="Object.keys(languageBreakdown).length > 0" class="pt-2 border-t border-gray-800 flex flex-wrap items-center gap-1.5">
                 <span class="text-gray-400 text-[11px] font-semibold">Languages:</span>
                 <span
-                  v-for="(count, lang) in mobileLanguageBreakdown"
+                  v-for="(count, lang) in languageBreakdown"
                   :key="lang"
                   class="px-2 py-0.5 rounded-md text-[11px] font-bold text-white shadow-xs"
                   :style="{ backgroundColor: languageColors[lang] || '#6366f1' }"
@@ -595,134 +567,17 @@ async function handleImport() {
             <!-- Confirm Action Buttons -->
             <div class="pt-2">
               <button
-                v-if="mobilePreviewResult.willImport.length > 0"
-                @click="handleConfirmMobileImport"
-                :disabled="isConfirmingMobile"
+                v-if="previewResult.willImport.length > 0"
+                @click="handleConfirmImport"
+                :disabled="isConfirming"
                 class="w-full py-3 px-6 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span v-if="isConfirmingMobile" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                <span>Confirm Import ({{ mobilePreviewResult.willImport.length }} {{ mobilePreviewResult.willImport.length === 1 ? 'card' : 'cards' }})</span>
+                <span v-if="isConfirming" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span>Confirm Import ({{ previewResult.willImport.length }} {{ previewResult.willImport.length === 1 ? 'card' : 'cards' }})</span>
               </button>
             </div>
           </div>
-        </div>
 
-        <!-- Desktop View Container -->
-        <div v-else class="w-full max-w-4xl space-y-6">
-          <div class="flex justify-between items-start">
-            <div>
-              <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Import Flashcards from Google Translate</h1>
-            </div>
-          </div>
-
-          <ul class="list-disc list-inside space-y-1.5 text-gray-600 dark:text-gray-400">
-            <li>Go to <a href="https://translate.google.com" target="_blank" rel="noopener noreferrer" class="underline text-gray-900 dark:text-white hover:opacity-80">Google Translate</a></li>
-            <li>click on the "Saved" star icon</li>
-            <li>click the Google Sheets icon</li>
-            <li>click "Import the data"</li>
-            <li>click File, Download, Comma-separated values (.csv)</li>
-            <li>click below on "Import CSV file"</li>
-            <li>find and double-click on the file you just imported</li>
-          </ul>
-
-          <!-- File Upload -->
-          <div class="flex items-center gap-4">
-            <input 
-              type="file" 
-              accept=".csv" 
-              ref="fileInput"
-              @change="handleFileChange"
-              class="hidden"
-            >
-            <button 
-              type="button"
-              @click="fileInput?.click()"
-              class="px-5 py-2.5 text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-800 focus:outline-none cursor-pointer"
-            >
-              Import CSV file
-            </button>
-          </div>
-
-          <!-- Summary Message -->
-          <div v-if="importSummary" class="p-4 mb-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 space-y-2" role="alert">
-            <p class="font-medium text-base text-gray-900 dark:text-white">
-              {{ importSummary.importedCount }} {{ importSummary.importedCount === 1 ? 'card' : 'cards' }} imported
-            </p>
-            <div v-if="importSummary.skippedCount > 0" class="space-y-1">
-              <p class="text-red-700 dark:text-red-400 font-semibold">
-                {{ importSummary.skippedCount }} {{ importSummary.skippedCount === 1 ? 'card was' : 'cards were' }} not imported:
-              </p>
-              <ul class="list-disc list-inside pl-2 space-y-1 text-gray-700 dark:text-gray-300">
-                <li v-for="(card, i) in importSummary.skippedCards" :key="i">
-                  <span>{{ card.front }} / {{ card.back }}</span>
-                  <span v-if="(card as any).reason" class="text-xs text-gray-500 dark:text-gray-400"> &mdash; {{ (card as any).reason }}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Error Message -->
-          <div v-if="importError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 border border-red-200 dark:border-red-900" role="alert">
-            <span class="font-medium">Notice:</span> {{ importError }}
-          </div>
-
-          <!-- Data Preview Table -->
-          <div v-if="parsedData.length > 0" class="mt-8 space-y-4">
-            <div class="flex justify-between items-center">
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">There are {{ parsedData.length }} {{ parsedData.length === 1 ? 'row' : 'rows' }} to import as flashcards:</h2>
-              <button 
-                @click="handleImport"
-                :disabled="isImporting"
-                class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {{ isImporting ? 'Importing...' : 'Import to Database' }}
-              </button>
-            </div>
-
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-h-96">
-              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 shadow-sm z-10">
-                  <tr>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Language&nbsp;1</th>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Text&nbsp;1</th>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Language&nbsp;2</th>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Text&nbsp;2</th>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Rank</th>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Pronunciation</th>
-                    <th scope="col" class="px-6 py-3 whitespace-nowrap">Memory&nbsp;Hook</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(row, index) in parsedData" :key="index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {{ row.lang1 }}
-                    </td>
-                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {{ row.text1 }}
-                    </td>
-                    <td class="px-6 py-4">{{ row.lang2 }}</td>
-                    <td class="px-6 py-4">{{ row.text2 }}</td>
-                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{ row.rank }}</td>
-                    <td class="px-6 py-4">{{ row.pronunciation }}</td>
-                    <td class="px-6 py-4">{{ row.memoryHook }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Clear Google Translate Phrases Section -->
-          <div v-if="importSummary" class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800 space-y-2">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">You should now clear your Google Translate phrases:</h2>
-            <ul class="list-disc list-inside space-y-1.5 text-gray-600 dark:text-gray-400">
-              <li>go back to <a href="https://translate.google.com" target="_blank" rel="noopener noreferrer" class="underline text-gray-900 dark:text-white hover:opacity-80">Google Translate</a></li>
-              <li>click on the "Saved" star icon</li>
-              <li>click on the three-vertical-dot icon</li>
-              <li>click on "Clear all saved"</li>
-              <li>click on "Delete"</li>
-              <li class="italic">start collecting phrases again!</li>
-            </ul>
-          </div>
         </div>
       </div>
       <div v-else class="mt-8 flex flex-col items-center justify-center text-center p-6 bg-gray-50/10 dark:bg-gray-950/5 rounded-3xl border border-gray-200/50 dark:border-gray-850/40">

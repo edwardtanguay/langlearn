@@ -36,10 +36,14 @@ function parseCSVOrTSVLine(line: string): string[] {
   return result.map(val => val.replace(/^"|"$/g, '').trim())
 }
 
-const KNOWN_LANGS = new Set(['french', 'english', 'german', 'spanish', 'italian', 'dutch', 'polish', 'russian', 'icelandic', 'danish', 'greek', 'fr', 'en', 'de', 'es', 'it', 'nl', 'pl', 'ru', 'is', 'da', 'el'])
+import { identifyLanguage } from './language-identifier'
 
-function isLanguage(str: string): boolean {
-  return KNOWN_LANGS.has(str.trim().toLowerCase())
+function looksLikeLanguageColumn(str: string): boolean {
+  if (!str) return false
+  const s = str.trim()
+  if (s.length === 0 || s.length > 35) return false
+  if (s.startsWith('http://') || s.startsWith('https://') || /[.?!;:/\\]/.test(s)) return false
+  return true
 }
 
 export function parseImportText(text: string): ParsedRow[] {
@@ -66,7 +70,7 @@ export function parseImportText(text: string): ParsedRow[] {
       const headerLine = lines[i]!
       const headerCols = parseCSVOrTSVLine(headerLine)
 
-      if (headerCols.length >= 2 && isLanguage(headerCols[0]!) && isLanguage(headerCols[1]!)) {
+      if (headerCols.length >= 2 && looksLikeLanguageColumn(headerCols[0]!) && looksLikeLanguageColumn(headerCols[1]!)) {
         const lang1 = headerCols[0]!
         const lang2 = headerCols[1]!
 
@@ -116,7 +120,7 @@ export function parseImportText(text: string): ParsedRow[] {
 
     // Single-line CSV/TSV format check
     const cols = parseCSVOrTSVLine(line)
-    if (cols.length >= 4 && isLanguage(cols[0]!) && isLanguage(cols[1]!)) {
+    if (cols.length >= 4 && looksLikeLanguageColumn(cols[0]!) && looksLikeLanguageColumn(cols[1]!)) {
       rows.push(buildParsedRow(cols[0]!, cols[1]!, cols[2]!, cols[3]!))
       i++
       continue
@@ -141,10 +145,13 @@ function buildParsedRow(lang1: string, lang2: string, text1: string, text2: stri
   const meta1 = parseMetadata(cleanText1)
   const meta2 = parseMetadata(cleanText2)
 
+  const lang1Code = identifyLanguage(lang1)
+  const lang2Code = identifyLanguage(lang2)
+
   let frontClean = ''
-  if (lang1.toLowerCase() === 'english') {
+  if (lang1Code === 'en') {
     frontClean = meta1.cleanText
-  } else if (lang2.toLowerCase() === 'english') {
+  } else if (lang2Code === 'en') {
     frontClean = meta2.cleanText
   } else {
     frontClean = meta1.cleanText
@@ -159,12 +166,12 @@ function buildParsedRow(lang1: string, lang2: string, text1: string, text2: stri
   let text1Final = cleanText1
   let text2Final = cleanText2
 
-  if (lang1.toLowerCase() === 'english') {
+  if (lang1Code === 'en') {
     const clean = meta2.cleanText.replace(/\*/g, '').trim()
     if (clean.length > 0 && !/\s/.test(clean)) {
       text2Final = `*${clean}*`
     }
-  } else if (lang2.toLowerCase() === 'english') {
+  } else if (lang2Code === 'en') {
     const clean = meta1.cleanText.replace(/\*/g, '').trim()
     if (clean.length > 0 && !/\s/.test(clean)) {
       text1Final = `*${clean}*`
