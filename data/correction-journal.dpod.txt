@@ -185,5 +185,38 @@ j'ai experimenté un peu plus avec [le format d'exercises;les formats d'exercice
 2026-10-18
 ---
 Merci pour le lien, je l'ai ajouté [dans le;à ma] liste [de infos;d'infomations] pour 2027. [Ici;Voici] un lien [de la;vers le] même groupe, mais avec [toutes;tous] les événements à venir 
+---
+2026-10-20
+---
+Salut Clarisse !
 
+Nous avons [une;notre] dernière [session;séance] ce soir à 22 h 30. Je peux [faire;te faire] une [présentation;presentation] avec mes fotos de ma semaine à Dijon, [le marathon;du marathon] et [ma deux;de mes deux] jours à Paris. Si tu peux [poser les;me poser des] questions [en française vite;rapidement en français], je crois [serait;que ce serait] [une bonne;un bon] exercice. 
+
+Dis-moi si, [comme professeur;en tant que professeure] de langues, tu [as l'interèsse;t'intéresses] [aussi sur comment un peux;à la manière dont on peut] utiliser l'AI pour créer [les exercises;des exercices] sur [sites de web;des sites web] pour les [elèves;élèves]. Je peux te [le un peu montrer comment;montrer un peu comment] on peut [commencer avec ça;s'y prendre pour commencer]. C'est un peu [technische;technique] : [on doit;il faut avoir] un [compte de GitHub;compte GitHub] et un compte Vercel, [tu doit apprendre un peux;appredre quelques notions] de Git, et installer un [éditor;éditeur] (Antigravity), mais [toutes;tout] ces outils sont [gratuites;gratuits]. 
+
+Pour créer [les sites avec pas;des sites sans] limites, j'ai un [compte;abonnement] Google AI Pro (21,99 € par mois). [Mais pour ça;Avec cet abonnement],on [recoît;bénéficie] aussi [5 TB;de 5 To de] stockage [à;sur] Google Drive et tu [peux;peut] regarder YouTube sans [avertisements;publicité], [que;ce qui] est [bonne pour les apprentisages des;pratique pour apprendre les] langues. Mais le [grand truc est : tu dois;plus intéressant, c'est qu'on n'a] absolutement pas [coder;de savoir coder] [et peux néanmoins;pour] créer des sites [de webs;webs] assez [compliqués;complexes] et pratiques.
+
+Après ce soir, je aurai terminé avec mes cours [en;de] français sur Reply. [Alors je vais supprimer mes;Je vais donc résilier mon] abonemment [afin que;pour éviter que] Preply [ne peut pas retirer;continue à prélever] de l'argent [de;sur] mon compte PayPal. Je [crois;pense] que tu vas recevoir [un message sur ça;une notification à ce sujet], alors ne [laisse;t'inquiète] pas [cela te déranger;si c'est le cas]. 
+
+Je [vais commencer avec;reprendrai] les courses sur Reply en janvier, mais [avec espanol;cette fois-ci en espagnol]. [Je dois retourner avant ça au niveux;D'ici là, je dois d'abord retrouver mon niveau] B1.
+
+À plus [tard à;tard, à] 22 h 30 !
+---
+Salut Clarisse,
+
+Je suis désolé [d'écouter de tes;que tu as des] problèmes de santé. J'espère que tu [vas être;iras] mieux [dans le prochaine avenir;très bientôt].
+
+Comme tu [requètes;me l'as demandé], je vais [supprimer;annuler] le cours que tu as reprogrammé [sur;pour] vendredi.
+
+Je [te voulais;voulais te] dire que j'ai [apprécié beaucoup;beaucoup apprécié] [notres;nos] cours ensemble, [especialement pour;notamment] ta flexibilité [quand;lorsque] j'ai [constantement;constamment] changé le [contente et format de cours;contenu et le format des cours]. [Notre;Nos] cours m'ont [aidé beaucoup;beaucoup aidé] [comme préparation;à me préparer] pour ma semaine à [Dijon, merci.;Dijon. Merci pour ça !]
+
+Si, en tant que professeure, tu [t'interesse dans;t'intéresses à l'idée] de créer des exercices [comme site;sous forme de sites] web pour tes elèves [avec;à l'aide de] l'AI, j'ai [un communité sur;une communauté] Discord de [developpeurs;développeurs] et [professeurs;de professeurs] de langues : https://fastfollow.vercel.app nous y [discuter notres;discutons de nos] projets et pouvons t'aider [de commencer avec les outils de créer le sites pour elèves;à te lancer dans la création de sites web éducatifs] avec l'AI. 
+
+C'est vraiment incroyable ce qu'on peut créer aujourd'hui avec l'AI, [especialement;notamment] pour [apprendres;apprendre] et enseigner les langes.
+
+Désolé, [j'ai;je n'ai] vu ton lien de [semaine;la semaine] dernière [juste aujourd'hui;qu'aujourd'hui] et, [maintenant;malheureusement] il ne fonctionne plus : https://sondages.univ-perp.fr/index.php/237725
+
+Bon rétablissement et restons en contact !
+
+Edward 
 

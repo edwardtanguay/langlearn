@@ -120,4 +120,35 @@ German\tFrench\tder Baum\tl'arbre`
     expect(analysis.willNotImport[0]?.backLanguage).toBe('fr')
     expect(analysis.willNotImport[0]?.reason).toBe('Neither language matches your source language (ES)')
   })
+
+  it('recognizes language names in 5 languages and skips unidentifiable language names with appropriate reason', () => {
+    const text = `1
+Englisch\tSpanisch\tbook\tlibro
+2
+Español\tAllemand\tgato\tKatze
+3
+Spaans\tEnglish\thallo\thello
+4
+English\tTedesco\tdog\tHund`
+
+    const rows = parseImportText(text)
+    expect(rows).toHaveLength(4)
+
+    const analysis = analyzeImportRows(new Set(), rows, 'en')
+    // Row 1: Englisch (en) / Spanisch (es) -> matches source lang 'en', imported!
+    // Row 2: Español (es) / Allemand (de) -> neither is English, skipped!
+    // Row 3: Spaans (unrecognized) / English (en) -> skipped because "Spaans not identifiable as a language"!
+    // Row 4: English (en) / Tedesco (de) -> matches source lang 'en', imported!
+
+    const spaansSkip = analysis.willNotImport.find(c => c.reason?.includes('Spaans'))
+    expect(spaansSkip).toBeDefined()
+    expect(spaansSkip?.reason).toBe('Spaans not identifiable as a language')
+
+    const imported = analysis.willImport
+    expect(imported).toHaveLength(2)
+    expect(imported[0]?.front).toBe('book')
+    expect(imported[0]?.back).toBe('*libro*')
+    expect(imported[1]?.front).toBe('dog')
+    expect(imported[1]?.back).toBe('*Hund*')
+  })
 })

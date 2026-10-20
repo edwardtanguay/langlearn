@@ -4,15 +4,10 @@ import { calculateOptimalRank } from './rank-config'
 import crypto from 'crypto'
 import type { ParsedRow } from './import-parser'
 
-function mapLanguage(lang: string): string {
-  const l = lang.trim().toLowerCase()
-  if (l === 'english') return 'en'
-  if (l === 'french') return 'fr'
-  if (l === 'german') return 'de'
-  if (l === 'italian') return 'it'
-  if (l === 'dutch') return 'nl'
-  if (l === 'spanish') return 'es'
-  return l.substring(0, 2)
+import { identifyLanguage } from './language-identifier'
+
+function mapLanguage(lang: string): string | null {
+  return identifyLanguage(lang)
 }
 
 export interface CardDetail {
@@ -62,7 +57,7 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], s
   const payloadSet = new Set<string>()
   const willImport: CardDetail[] = []
   const willNotImport: SkippedCardDetail[] = []
-  const userSourceLang = mapLanguage(sourceLanguage || 'en')
+  const userSourceLang = mapLanguage(sourceLanguage || 'en') || 'en'
 
   for (const row of rows) {
     if (!row.lang1 || !row.lang2 || !row.text1 || !row.text2) {
@@ -82,6 +77,30 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], s
       continue
     }
 
+    const lang1Code = mapLanguage(row.lang1)
+    if (!lang1Code) {
+      willNotImport.push({
+        front: row.text1 || '(empty)',
+        back: row.text2 || '(empty)',
+        frontLanguage: row.lang1,
+        backLanguage: row.lang2,
+        reason: `${row.lang1} not identifiable as a language`
+      })
+      continue
+    }
+
+    const lang2Code = mapLanguage(row.lang2)
+    if (!lang2Code) {
+      willNotImport.push({
+        front: row.text1 || '(empty)',
+        back: row.text2 || '(empty)',
+        frontLanguage: row.lang1,
+        backLanguage: row.lang2,
+        reason: `${row.lang2} not identifiable as a language`
+      })
+      continue
+    }
+
     const meta1 = parseMetadata(row.text1)
     const meta2 = parseMetadata(row.text2)
 
@@ -89,9 +108,6 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], s
     let back = ''
     let frontLanguage = ''
     let backLanguage = ''
-
-    const lang1Code = mapLanguage(row.lang1)
-    const lang2Code = mapLanguage(row.lang2)
 
     if (lang1Code === userSourceLang) {
       front = meta1.cleanText
@@ -107,8 +123,8 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], s
       willNotImport.push({
         front: meta1.cleanText || row.text1 || '(empty)',
         back: meta2.cleanText || row.text2 || '(empty)',
-        frontLanguage: lang1Code || row.lang1,
-        backLanguage: lang2Code || row.lang2,
+        frontLanguage: lang1Code,
+        backLanguage: lang2Code,
         reason: `Neither language matches your source language (${userSourceLang.toUpperCase()})`
       })
       continue

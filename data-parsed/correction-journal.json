@@ -3440,9 +3440,886 @@
       ],
       "totalWords": 27,
       "totalFlashcards": 5
+    },
+    {
+      "date": "2026-10-20",
+      "sections": [
+        {
+          "id": "2026-10-20-sec-1",
+          "day": "2026-10-20",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "Salut Clarisse !\n\nNous avons [une;notre] dernière [session;séance] ce soir à 22 h 30. Je peux [faire;te faire] une [présentation;presentation] avec mes fotos de ma semaine à Dijon, [le marathon;du marathon] et [ma deux;de mes deux] jours à Paris. Si tu peux [poser les;me poser des] questions [en française vite;rapidement en français], je crois [serait;que ce serait] [une bonne;un bon] exercice.\n\nDis-moi si, [comme professeur;en tant que professeure] de langues, tu [as l'interèsse;t'intéresses] [aussi sur comment un peux;à la manière dont on peut] utiliser l'AI pour créer [les exercises;des exercices] sur [sites de web;des sites web] pour les [elèves;élèves]. Je peux te [le un peu montrer comment;montrer un peu comment] on peut [commencer avec ça;s'y prendre pour commencer]. C'est un peu [technische;technique] : [on doit;il faut avoir] un [compte de GitHub;compte GitHub] et un compte Vercel, [tu doit apprendre un peux;appredre quelques notions] de Git, et installer un [éditor;éditeur] (Antigravity), mais [toutes;tout] ces outils sont [gratuites;gratuits].\n\nPour créer [les sites avec pas;des sites sans] limites, j'ai un [compte;abonnement] Google AI Pro (21,99 € par mois). [Mais pour ça;Avec cet abonnement],on [recoît;bénéficie] aussi [5 TB;de 5 To de] stockage [à;sur] Google Drive et tu [peux;peut] regarder YouTube sans [avertisements;publicité], [que;ce qui] est [bonne pour les apprentisages des;pratique pour apprendre les] langues. Mais le [grand truc est : tu dois;plus intéressant, c'est qu'on n'a] absolutement pas [coder;de savoir coder] [et peux néanmoins;pour] créer des sites [de webs;webs] assez [compliqués;complexes] et pratiques.\n\nAprès ce soir, je aurai terminé avec mes cours [en;de] français sur Reply. [Alors je vais supprimer mes;Je vais donc résilier mon] abonemment [afin que;pour éviter que] Preply [ne peut pas retirer;continue à prélever] de l'argent [de;sur] mon compte PayPal. Je [crois;pense] que tu vas recevoir [un message sur ça;une notification à ce sujet], alors ne [laisse;t'inquiète] pas [cela te déranger;si c'est le cas].\n\nJe [vais commencer avec;reprendrai] les courses sur Reply en janvier, mais [avec espanol;cette fois-ci en espagnol]. [Je dois retourner avant ça au niveux;D'ici là, je dois d'abord retrouver mon niveau] B1.\n\nÀ plus [tard à;tard, à] 22 h 30 !",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Salut Clarisse !\n\nNous avons "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-1",
+              "incorrect": "une",
+              "correct": "notre"
+            },
+            {
+              "type": "text",
+              "text": " dernière "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-2",
+              "incorrect": "session",
+              "correct": "séance"
+            },
+            {
+              "type": "text",
+              "text": " ce soir à 22 h 30. Je peux "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-3",
+              "incorrect": "faire",
+              "correct": "te faire"
+            },
+            {
+              "type": "text",
+              "text": " une "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-4",
+              "incorrect": "présentation",
+              "correct": "presentation"
+            },
+            {
+              "type": "text",
+              "text": " avec mes fotos de ma semaine à Dijon, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-5",
+              "incorrect": "le marathon",
+              "correct": "du marathon"
+            },
+            {
+              "type": "text",
+              "text": " et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-6",
+              "incorrect": "ma deux",
+              "correct": "de mes deux"
+            },
+            {
+              "type": "text",
+              "text": " jours à Paris. Si tu peux "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-7",
+              "incorrect": "poser les",
+              "correct": "me poser des"
+            },
+            {
+              "type": "text",
+              "text": " questions "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-8",
+              "incorrect": "en française vite",
+              "correct": "rapidement en français"
+            },
+            {
+              "type": "text",
+              "text": ", je crois "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-9",
+              "incorrect": "serait",
+              "correct": "que ce serait"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-10",
+              "incorrect": "une bonne",
+              "correct": "un bon"
+            },
+            {
+              "type": "text",
+              "text": " exercice.\n\nDis-moi si, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-11",
+              "incorrect": "comme professeur",
+              "correct": "en tant que professeure"
+            },
+            {
+              "type": "text",
+              "text": " de langues, tu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-12",
+              "incorrect": "as l'interèsse",
+              "correct": "t'intéresses"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-13",
+              "incorrect": "aussi sur comment un peux",
+              "correct": "à la manière dont on peut"
+            },
+            {
+              "type": "text",
+              "text": " utiliser l'AI pour créer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-14",
+              "incorrect": "les exercises",
+              "correct": "des exercices"
+            },
+            {
+              "type": "text",
+              "text": " sur "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-15",
+              "incorrect": "sites de web",
+              "correct": "des sites web"
+            },
+            {
+              "type": "text",
+              "text": " pour les "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-16",
+              "incorrect": "elèves",
+              "correct": "élèves"
+            },
+            {
+              "type": "text",
+              "text": ". Je peux te "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-17",
+              "incorrect": "le un peu montrer comment",
+              "correct": "montrer un peu comment"
+            },
+            {
+              "type": "text",
+              "text": " on peut "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-18",
+              "incorrect": "commencer avec ça",
+              "correct": "s'y prendre pour commencer"
+            },
+            {
+              "type": "text",
+              "text": ". C'est un peu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-19",
+              "incorrect": "technische",
+              "correct": "technique"
+            },
+            {
+              "type": "text",
+              "text": " : "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-20",
+              "incorrect": "on doit",
+              "correct": "il faut avoir"
+            },
+            {
+              "type": "text",
+              "text": " un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-21",
+              "incorrect": "compte de GitHub",
+              "correct": "compte GitHub"
+            },
+            {
+              "type": "text",
+              "text": " et un compte Vercel, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-22",
+              "incorrect": "tu doit apprendre un peux",
+              "correct": "appredre quelques notions"
+            },
+            {
+              "type": "text",
+              "text": " de Git, et installer un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-23",
+              "incorrect": "éditor",
+              "correct": "éditeur"
+            },
+            {
+              "type": "text",
+              "text": " (Antigravity), mais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-24",
+              "incorrect": "toutes",
+              "correct": "tout"
+            },
+            {
+              "type": "text",
+              "text": " ces outils sont "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-25",
+              "incorrect": "gratuites",
+              "correct": "gratuits"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nPour créer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-26",
+              "incorrect": "les sites avec pas",
+              "correct": "des sites sans"
+            },
+            {
+              "type": "text",
+              "text": " limites, j'ai un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-27",
+              "incorrect": "compte",
+              "correct": "abonnement"
+            },
+            {
+              "type": "text",
+              "text": " Google AI Pro (21,99 € par mois). "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-28",
+              "incorrect": "Mais pour ça",
+              "correct": "Avec cet abonnement"
+            },
+            {
+              "type": "text",
+              "text": ",on "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-29",
+              "incorrect": "recoît",
+              "correct": "bénéficie"
+            },
+            {
+              "type": "text",
+              "text": " aussi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-30",
+              "incorrect": "5 TB",
+              "correct": "de 5 To de"
+            },
+            {
+              "type": "text",
+              "text": " stockage "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-31",
+              "incorrect": "à",
+              "correct": "sur"
+            },
+            {
+              "type": "text",
+              "text": " Google Drive et tu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-32",
+              "incorrect": "peux",
+              "correct": "peut"
+            },
+            {
+              "type": "text",
+              "text": " regarder YouTube sans "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-33",
+              "incorrect": "avertisements",
+              "correct": "publicité"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-34",
+              "incorrect": "que",
+              "correct": "ce qui"
+            },
+            {
+              "type": "text",
+              "text": " est "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-35",
+              "incorrect": "bonne pour les apprentisages des",
+              "correct": "pratique pour apprendre les"
+            },
+            {
+              "type": "text",
+              "text": " langues. Mais le "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-36",
+              "incorrect": "grand truc est : tu dois",
+              "correct": "plus intéressant, c'est qu'on n'a"
+            },
+            {
+              "type": "text",
+              "text": " absolutement pas "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-37",
+              "incorrect": "coder",
+              "correct": "de savoir coder"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-38",
+              "incorrect": "et peux néanmoins",
+              "correct": "pour"
+            },
+            {
+              "type": "text",
+              "text": " créer des sites "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-39",
+              "incorrect": "de webs",
+              "correct": "webs"
+            },
+            {
+              "type": "text",
+              "text": " assez "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-40",
+              "incorrect": "compliqués",
+              "correct": "complexes"
+            },
+            {
+              "type": "text",
+              "text": " et pratiques.\n\nAprès ce soir, je aurai terminé avec mes cours "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-41",
+              "incorrect": "en",
+              "correct": "de"
+            },
+            {
+              "type": "text",
+              "text": " français sur Reply. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-42",
+              "incorrect": "Alors je vais supprimer mes",
+              "correct": "Je vais donc résilier mon"
+            },
+            {
+              "type": "text",
+              "text": " abonemment "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-43",
+              "incorrect": "afin que",
+              "correct": "pour éviter que"
+            },
+            {
+              "type": "text",
+              "text": " Preply "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-44",
+              "incorrect": "ne peut pas retirer",
+              "correct": "continue à prélever"
+            },
+            {
+              "type": "text",
+              "text": " de l'argent "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-45",
+              "incorrect": "de",
+              "correct": "sur"
+            },
+            {
+              "type": "text",
+              "text": " mon compte PayPal. Je "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-46",
+              "incorrect": "crois",
+              "correct": "pense"
+            },
+            {
+              "type": "text",
+              "text": " que tu vas recevoir "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-47",
+              "incorrect": "un message sur ça",
+              "correct": "une notification à ce sujet"
+            },
+            {
+              "type": "text",
+              "text": ", alors ne "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-48",
+              "incorrect": "laisse",
+              "correct": "t'inquiète"
+            },
+            {
+              "type": "text",
+              "text": " pas "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-49",
+              "incorrect": "cela te déranger",
+              "correct": "si c'est le cas"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nJe "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-50",
+              "incorrect": "vais commencer avec",
+              "correct": "reprendrai"
+            },
+            {
+              "type": "text",
+              "text": " les courses sur Reply en janvier, mais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-51",
+              "incorrect": "avec espanol",
+              "correct": "cette fois-ci en espagnol"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-52",
+              "incorrect": "Je dois retourner avant ça au niveux",
+              "correct": "D'ici là, je dois d'abord retrouver mon niveau"
+            },
+            {
+              "type": "text",
+              "text": " B1.\n\nÀ plus "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-1-fc-53",
+              "incorrect": "tard à",
+              "correct": "tard, à"
+            },
+            {
+              "type": "text",
+              "text": " 22 h 30 !"
+            }
+          ],
+          "flashcardsCount": 53,
+          "wordCount": 274
+        },
+        {
+          "id": "2026-10-20-sec-2",
+          "day": "2026-10-20",
+          "sectionIndex": 2,
+          "language": "fr",
+          "rawText": "Salut Clarisse,\n\nJe suis désolé [d'écouter de tes;que tu as des] problèmes de santé. J'espère que tu [vas être;iras] mieux [dans le prochaine avenir;très bientôt].\n\nComme tu [requètes;me l'as demandé], je vais [supprimer;annuler] le cours que tu as reprogrammé [sur;pour] vendredi.\n\nJe [te voulais;voulais te] dire que j'ai [apprécié beaucoup;beaucoup apprécié] [notres;nos] cours ensemble, [especialement pour;notamment] ta flexibilité [quand;lorsque] j'ai [constantement;constamment] changé le [contente et format de cours;contenu et le format des cours]. [Notre;Nos] cours m'ont [aidé beaucoup;beaucoup aidé] [comme préparation;à me préparer] pour ma semaine à [Dijon, merci.;Dijon. Merci pour ça !]\n\nSi, en tant que professeure, tu [t'interesse dans;t'intéresses à l'idée] de créer des exercices [comme site;sous forme de sites] web pour tes elèves [avec;à l'aide de] l'AI, j'ai [un communité sur;une communauté] Discord de [developpeurs;développeurs] et [professeurs;de professeurs] de langues : https://fastfollow.vercel.app nous y [discuter notres;discutons de nos] projets et pouvons t'aider [de commencer avec les outils de créer le sites pour elèves;à te lancer dans la création de sites web éducatifs] avec l'AI.\n\nC'est vraiment incroyable ce qu'on peut créer aujourd'hui avec l'AI, [especialement;notamment] pour [apprendres;apprendre] et enseigner les langes.\n\nDésolé, [j'ai;je n'ai] vu ton lien de [semaine;la semaine] dernière [juste aujourd'hui;qu'aujourd'hui] et, [maintenant;malheureusement] il ne fonctionne plus : https://sondages.univ-perp.fr/index.php/237725\n\nBon rétablissement et restons en contact !\n\nEdward",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Salut Clarisse,\n\nJe suis désolé "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-1",
+              "incorrect": "d'écouter de tes",
+              "correct": "que tu as des"
+            },
+            {
+              "type": "text",
+              "text": " problèmes de santé. J'espère que tu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-2",
+              "incorrect": "vas être",
+              "correct": "iras"
+            },
+            {
+              "type": "text",
+              "text": " mieux "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-3",
+              "incorrect": "dans le prochaine avenir",
+              "correct": "très bientôt"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nComme tu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-4",
+              "incorrect": "requètes",
+              "correct": "me l'as demandé"
+            },
+            {
+              "type": "text",
+              "text": ", je vais "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-5",
+              "incorrect": "supprimer",
+              "correct": "annuler"
+            },
+            {
+              "type": "text",
+              "text": " le cours que tu as reprogrammé "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-6",
+              "incorrect": "sur",
+              "correct": "pour"
+            },
+            {
+              "type": "text",
+              "text": " vendredi.\n\nJe "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-7",
+              "incorrect": "te voulais",
+              "correct": "voulais te"
+            },
+            {
+              "type": "text",
+              "text": " dire que j'ai "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-8",
+              "incorrect": "apprécié beaucoup",
+              "correct": "beaucoup apprécié"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-9",
+              "incorrect": "notres",
+              "correct": "nos"
+            },
+            {
+              "type": "text",
+              "text": " cours ensemble, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-10",
+              "incorrect": "especialement pour",
+              "correct": "notamment"
+            },
+            {
+              "type": "text",
+              "text": " ta flexibilité "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-11",
+              "incorrect": "quand",
+              "correct": "lorsque"
+            },
+            {
+              "type": "text",
+              "text": " j'ai "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-12",
+              "incorrect": "constantement",
+              "correct": "constamment"
+            },
+            {
+              "type": "text",
+              "text": " changé le "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-13",
+              "incorrect": "contente et format de cours",
+              "correct": "contenu et le format des cours"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-14",
+              "incorrect": "Notre",
+              "correct": "Nos"
+            },
+            {
+              "type": "text",
+              "text": " cours m'ont "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-15",
+              "incorrect": "aidé beaucoup",
+              "correct": "beaucoup aidé"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-16",
+              "incorrect": "comme préparation",
+              "correct": "à me préparer"
+            },
+            {
+              "type": "text",
+              "text": " pour ma semaine à "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-17",
+              "incorrect": "Dijon, merci.",
+              "correct": "Dijon. Merci pour ça !"
+            },
+            {
+              "type": "text",
+              "text": "\n\nSi, en tant que professeure, tu "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-18",
+              "incorrect": "t'interesse dans",
+              "correct": "t'intéresses à l'idée"
+            },
+            {
+              "type": "text",
+              "text": " de créer des exercices "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-19",
+              "incorrect": "comme site",
+              "correct": "sous forme de sites"
+            },
+            {
+              "type": "text",
+              "text": " web pour tes elèves "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-20",
+              "incorrect": "avec",
+              "correct": "à l'aide de"
+            },
+            {
+              "type": "text",
+              "text": " l'AI, j'ai "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-21",
+              "incorrect": "un communité sur",
+              "correct": "une communauté"
+            },
+            {
+              "type": "text",
+              "text": " Discord de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-22",
+              "incorrect": "developpeurs",
+              "correct": "développeurs"
+            },
+            {
+              "type": "text",
+              "text": " et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-23",
+              "incorrect": "professeurs",
+              "correct": "de professeurs"
+            },
+            {
+              "type": "text",
+              "text": " de langues : https://fastfollow.vercel.app nous y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-24",
+              "incorrect": "discuter notres",
+              "correct": "discutons de nos"
+            },
+            {
+              "type": "text",
+              "text": " projets et pouvons t'aider "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-25",
+              "incorrect": "de commencer avec les outils de créer le sites pour elèves",
+              "correct": "à te lancer dans la création de sites web éducatifs"
+            },
+            {
+              "type": "text",
+              "text": " avec l'AI.\n\nC'est vraiment incroyable ce qu'on peut créer aujourd'hui avec l'AI, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-26",
+              "incorrect": "especialement",
+              "correct": "notamment"
+            },
+            {
+              "type": "text",
+              "text": " pour "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-27",
+              "incorrect": "apprendres",
+              "correct": "apprendre"
+            },
+            {
+              "type": "text",
+              "text": " et enseigner les langes.\n\nDésolé, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-28",
+              "incorrect": "j'ai",
+              "correct": "je n'ai"
+            },
+            {
+              "type": "text",
+              "text": " vu ton lien de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-29",
+              "incorrect": "semaine",
+              "correct": "la semaine"
+            },
+            {
+              "type": "text",
+              "text": " dernière "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-30",
+              "incorrect": "juste aujourd'hui",
+              "correct": "qu'aujourd'hui"
+            },
+            {
+              "type": "text",
+              "text": " et, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-20-sec-2-fc-31",
+              "incorrect": "maintenant",
+              "correct": "malheureusement"
+            },
+            {
+              "type": "text",
+              "text": " il ne fonctionne plus : https://sondages.univ-perp.fr/index.php/237725\n\nBon rétablissement et restons en contact !\n\nEdward"
+            }
+          ],
+          "flashcardsCount": 31,
+          "wordCount": 180
+        }
+      ],
+      "totalWords": 454,
+      "totalFlashcards": 84
     }
   ],
-  "totalSections": 29,
-  "totalWords": 2403,
-  "totalFlashcards": 295
+  "totalSections": 31,
+  "totalWords": 2857,
+  "totalFlashcards": 379
 }
