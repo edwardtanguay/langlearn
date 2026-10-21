@@ -1,0 +1,3215 @@
+- activities
+	- 500 phrases a day
+	- each time you record a phrase, alter it many times slightly by adding words, etc.
+	- listen to the audio on the phrases you look up
+	- say phrase again in full-speed Italian accent
+- todo
+	- x 5.9 https://learnamo.com/verbo-venire-usi-particolari/
+	- x 5.9 https://learnamo.com/verbi-preposizioni-italiano/
+	- x 5.9 https://learnamo.com/tutti-tempi-passati-italiano/
+	- x 5.9 https://learnamo.com/quando-non-usare-congiuntivo-quando-usare-indicativo/
+	- x 5.9 https://learnamo.com/pronomi-complemento/
+	- x 5.9 https://learnamo.com/preposizioni-articolate/
+	- x 5.9 https://learnamo.com/passato-remoto-italiano/
+	- x 5.9 https://learnamo.com/passato-prossimo-participio-passato/
+	- x 5.9 https://learnamo.com/modo-infinito-italiano/
+	- x 5.9 https://learnamo.com/migliorare-accento-italiano/
+	- x 5.9 https://learnamo.com/lezione-sul-condizionale-italiano/
+	- x 5.9 https://learnamo.com/indicativo-imperfetto-morfologia/
+	- x 5.9 https://learnamo.com/come-quando-usare-indicativo-imperfetto/
+	- x 5.9 https://learnamo.com/come-quando-usare-ne/
+	- x 5.9 https://learnamo.com/imperativo-italiano/
+	- x 5.9 https://learnamo.com/il-futuro-in-italiano/
+	- x 5.9 https://learnamo.com/ci-ne-particelle-italiano/
+	- x 5.9 https://learnamo.com/essere-vs-stare-quali-sono-le-differenze-e-come-si-usano/
+	- x 5.9 https://learnamo.com/come-usare-gerundio/
+	- x 5.9 https://learnamo.com/congiuntivo-presente-passato/
+	- .. 5.9 https://learnamo.com/come-quando-usare-congiuntivo/
+
+	- 5.9 https://learnamo.com/en/andare-and-venire-difference/
+	- 5.9 https://learnamo.com/congiuntivo-imperfetto-trapassato/
+	- 5.9 https://learnamo.com/quando-non-usare-congiuntivo-quando-usare-indicativo/
+	- 5.9 https://learnamo.com/consecutio-temporum-indicativo-congiuntivo-condizionale/
+	- 5.9 https://learnamo.com/analisi-grammaticale-italiano/
+	- 5.9 https://learnamo.com/espressioni-esprimere-opinioni/
+	- 5.8 https://learnamo.com/venire-derivati/
+	- 5.8 https://learnamo.com/tutte-congiunzioni-italiane/
+	- 5.8 https://learnamo.com/trapassato-italiano-tempo-verbale/
+	- 5.8 https://learnamo.com/sentire-ascoltare-udire-origliare/
+	- 5.8 https://learnamo.com/regole-grammaticali-italiano/
+	- 5.8 https://learnamo.com/pronomi-relativi/
+	- 5.8 https://learnamo.com/pronomi-diretti-indiretti/
+	- 5.8 https://learnamo.com/preposizioni-italiano-tempo/
+	- 5.8 https://learnamo.com/essere-avere/
+	- 5.8 https://learnamo.com/modi-tempi-verbali-italiani/
+	- 5.8 https://learnamo.com/il-passivo/
+	- 5.8 https://learnamo.com/il-discorso-indiretto/
+	- 5.8 https://learnamo.com/grammatica-livello-intermedio/
+	- 5.8 https://learnamo.com/appena-significato-italiano/
+	- 5.8 https://learnamo.com/ci-italiano/
+	- 5.8 https://learnamo.com/ci-cambia-significato/
+	- 5.8 https://learnamo.com/gia-o-ancora-spiegazione/
+	- 5.8 https://learnamo.com/futuro-passato-italiano/
+	- 5.8 https://learnamo.com/essere-stare-usi-differenze/
+	- 5.8 https://learnamo.com/errori-comuni-si-impersonale/
+	- 5.8 https://learnamo.com/coppie-parole-creano-confusione/
+	- 5.8 https://learnamo.com/congiuntivo-si-o-no/
+	- 5.8 https://learnamo.com/congiuntivo-errori/
+	- 5.8 https://learnamo.com/come-quando-usare-indicativo-presente/
+	- 5.4 https://learnamo.com/frasi-concessive/ #mentioned
+	- 5.8 https://learnamo.com/ancora-o-gia-spiegazione/
+	- 5.8 https://learnamo.com/alternative-voglio-italiano/
+	- 5.8 https://learnamo.com/alternative-perche-italiano/
+	- 5.7 https://learnamo.com/verbi-modali-italiano-errori/
+	- 5.7 https://learnamo.com/sinonimi-per-esempio/
+	- 5.7 https://learnamo.com/sinonimi-non-piace-italiano/
+	- 5.7 https://learnamo.com/significato-magari/
+	- 5.7 https://learnamo.com/imperfetto-passato-prossimo/
+	- 5.7 https://learnamo.com/pure-spiegazione-uso/
+	- 5.7 https://learnamo.com/piuttosto-significato/
+	- 5.7 https://learnamo.com/ora-oramai-ormai/
+	- 5.7 https://learnamo.com/nord-vs-sud/
+	- 5.7 https://learnamo.com/ma-pero-tuttavia-eppure-bensi/
+	- 5.7 https://learnamo.com/indicativo-presente/
+	- 5.7 https://learnamo.com/essere-avere-guida-completa/
+	- 5.7 https://learnamo.com/errori-commettono-italiani/
+	- 5.7 https://learnamo.com/egli-in-italiano/
+	- 5.7 https://learnamo.com/congiuntivo-indipendente/
+	- 5.7 https://learnamo.com/concordanza-tempi-italiano/
+	- 5.7 https://learnamo.com/cambia-significato-per-una-lettera/
+	- 5.7 https://learnamo.com/bastare-italiano/
+	- 5.7 https://learnamo.com/alternative-ok-italiano/
+	- 5.6 https://learnamo.com/volerci-metterci/
+	- 5.6 https://learnamo.com/verbi-correre-italiano/
+	- 5.6 https://learnamo.com/verbi-causativi-fattitivi/
+	- 5.6 https://learnamo.com/succedere-e-simili/
+	- 5.6 https://learnamo.com/significato-allora-italiano/
+	- 5.6 https://learnamo.com/riempitivi-italiano/
+	- 5.6 https://learnamo.com/prima-dopo-italiano/
+	- 5.6 https://learnamo.com/potere-riuscire-sapere-conoscere/
+	- 5.6 https://learnamo.com/mentre-vs-durante-italiano/
+	- 5.6 https://learnamo.com/italiano-formale-vs-informale/
+	- 5.6 https://learnamo.com/errori-con-andare/
+	- 5.6 https://learnamo.com/congiunzioni-temporali/
+	- 5.6 https://learnamo.com/chiedere-e-dare-indicazioni-stradali/
+	- 5.6 https://learnamo.com/anzi-significato/
+	- 5.6 https://learnamo.com/alternative-a-molto/
+	- 5.6 https://learnamo.com/aggettivi-possessivi/
+	- 5.5 https://learnamo.com/verbi-sintagmatici/
+	- 5.5 https://learnamo.com/verbi-doppio-ausiliare/
+	- 5.5 https://learnamo.com/significato-piu-italiano/
+	- 5.5 https://learnamo.com/preposizioni/
+	- 5.5 https://learnamo.com/prefissi-negativi-italiano/
+	- 5.5 https://learnamo.com/perche-poiche-purche-differenze/
+	- 5.5 https://learnamo.com/particelle-ci-vi/
+	- 5.5 https://learnamo.com/parole-conversazioni-italiano/
+	- 5.5 https://learnamo.com/fermare-smettere/
+	- 5.5 https://learnamo.com/dimostrativi-identificativi/
+	- 5.5 https://learnamo.com/connettori-italiano/
+	- 5.5 https://learnamo.com/ce-o-ci-sono/
+	- 5.5 https://learnamo.com/articoli-determinativi-uso/
+	- 5.5 https://learnamo.com/andare-venire/
+	- 5.5 https://learnamo.com/aggettivi-indefiniti/
+	- 5.5 https://learnamo.com/aggettivi-indefiniti-guida/
+	- 5.4 https://learnamo.com/si-impersonale-italiano/
+	- 5.4 https://learnamo.com/periodo-ipotetico-italiano/
+	- 5.4 https://learnamo.com/parla-italiano-vero/
+	- 5.4 https://learnamo.com/mica-significato/
+	- 5.4 https://learnamo.com/locuzioni-avverbi-italiano/
+	- 5.4 https://learnamo.com/la-frase-scissa/
+	- 5.4 https://learnamo.com/esclamazioni-italiane/
+	- 5.4 https://learnamo.com/errori-comuni-aggettivi/
+	- 5.4 https://learnamo.com/dativo-etico-italiano/
+	- 5.4 https://learnamo.com/bisognare/
+	- 5.4 https://learnamo.com/aggettivi-indefiniti-italiano/
+	- 5.3 https://learnamo.com/verbi-parasintetici/
+	- 5.3 https://learnamo.com/valere-la-pena-italiano/
+	- 5.3 https://learnamo.com/usare-articolo-italiano/
+	- 5.3 https://learnamo.com/suoni-difficili-italiano/
+	- 5.3 https://learnamo.com/pronomi-soggetto-riflessivi/
+	- 5.3 https://learnamo.com/parlare-italiano-fluentemente/
+	- 5.3 https://learnamo.com/non-si-dice-in-italiano/
+	- 5.3 https://learnamo.com/formale-informale-italiano/
+	- 5.3 https://learnamo.com/espressioni-italiane-fare/
+	- 5.3 https://learnamo.com/errori-comuni-pronomi-italiano/
+	- 5.3 https://learnamo.com/ecco-italiano/
+	- 5.3 https://learnamo.com/appunto-italiano/
+	- 5.3 https://learnamo.com/analisi-del-periodo-italiano/
+	- 5.3 https://learnamo.com/5-parole-utili/
+	- 5.2 https://learnamo.com/rendere-fare-italiano/
+	- 5.2 https://learnamo.com/manco-avverbio-italiano/
+	- 5.2 https://learnamo.com/lapostrofo/
+	- 5.2 https://learnamo.com/guida-periodo-ipotetico-facile/
+	- 5.2 https://learnamo.com/espressioni-italiane-chiedere/
+	- 5.2 https://learnamo.com/errori-verbo-succedere-italiano/
+	- 5.2 https://learnamo.com/concordanza-a-senso/
+	- 5.2 https://learnamo.com/analisi-logica-italiano/
+	- 5.2 https://learnamo.com/almeno-perlomeno-italiano/
+	- 5.1 https://learnamo.com/verbo-dare-espressioni/
+	- 5.1 https://learnamo.com/verbi-riflessivi-reciproci/
+	- 5.1 https://learnamo.com/verbi-difettivi-italiano/
+	- 5.1 https://learnamo.com/sovra-sopra-prefissi/
+	- 5.1 https://learnamo.com/proprio/
+	- 5.1 https://learnamo.com/parole-intraducibili/
+	- 5.1 https://learnamo.com/parole-espressioni-difficili/
+	- 5.1 https://learnamo.com/parla-italiano-avanzato/
+	- 5.1 https://learnamo.com/meglio-migliore/
+	- 5.1 https://learnamo.com/infine-finalmente-significato/
+	- 5.1 https://learnamo.com/frasi-italiano-formali/
+	- 5.1 https://learnamo.com/essere-vaghi-in-italiano/
+	- 5.1 https://learnamo.com/espressione-trattarsi-di/
+	- 5.1 https://learnamo.com/da-principiante-a-avanzato/
+	- 5.1 https://learnamo.com/alternative-forse-italiano/
+	- 5.1 https://learnamo.com/aggettivi-italiano-carattere/
+	- the Italian book, record notes here
+	- 4.9 https://learnamo.com/macche/
+	- 4.9 https://learnamo.com/esprimere-gradimento/
+	- 4.9 https://learnamo.com/dubbi-italiano/
+	- 4.9 https://learnamo.com/alternative-cosa/
+	- 4.8 https://learnamo.com/verso-circa-differenze/
+	- 4.8 https://learnamo.com/verbi-vista/
+	- 4.8 https://learnamo.com/tanto-significato/
+	- 4.8 https://learnamo.com/regole-facoltative-italiano/
+	- 4.8 https://learnamo.com/frasi-italiano-intermedio/
+	- 4.8 https://learnamo.com/essere-ritardo-alternative/
+	- 4.8 https://learnamo.com/esprimere-stupore-italiano/
+	- 4.8 https://learnamo.com/espressioni-preposizione-a/
+	- 4.8 https://learnamo.com/espressioni-italiane-madrelingua/
+	- 4.8 https://learnamo.com/espressione-vabbe-italiano/
+	- 4.8 https://learnamo.com/errori-comuni-italiano/
+	- 4.8 https://learnamo.com/cose-libri-grammatica-non-dicono/
+	- 4.8 https://learnamo.com/come-dire-scusa/
+	- 4.8 https://learnamo.com/alternative-davvero-italiano/
+	- 4.7 https://learnamo.com/sinonimi-tanto-italiano/
+	- 4.7 https://learnamo.com/regole-punteggiatura/
+	- 4.7 https://learnamo.com/raccomandare/
+	- 4.7 https://learnamo.com/pronuncia-italiano-parole/
+	- 4.7 https://learnamo.com/pronto-presto-rapido-italiano/
+	- 4.7 https://learnamo.com/neologismi-italiani/
+	- 4.7 https://learnamo.com/linguaggio-giovanile/
+	- 4.7 https://learnamo.com/intelligenza-artificiale-basta/
+	- 4.7 https://learnamo.com/iniziare-conversazione-italiano/
+	- 4.7 https://learnamo.com/errori-comuni-verbi-italiani/
+	- 4.7 https://learnamo.com/enantiosemia-italiano/
+	- 4.7 https://learnamo.com/dialogo-italiano-farmacia/
+	- 4.7 https://learnamo.com/descrivere-oggetti-italiano/
+	- 4.7 https://learnamo.com/come-fare-colpo/
+	- 4.7 https://learnamo.com/alternative-stanco-italiano/
+	- 4.7 https://learnamo.com/alternative-si-no-italiano/
+	- 4.7 https://learnamo.com/alternative-anglicismi-italiano/
+	- 4.7 https://learnamo.com/affittare-noleggiare-prendere-in-prestito/
+	- 4.6 https://learnamo.com/torta-cioccolato-pere/
+	- 4.6 https://learnamo.com/sinonimi-sono-felice-italiano/
+	- 4.6 https://learnamo.com/parole-parlare-altro-italiano/
+	- 4.6 https://learnamo.com/impara-italiano-online/
+	- 4.6 https://learnamo.com/errori-grammaticali-comuni/
+	- 4.6 https://learnamo.com/anche-io-neanche-io/
+	- 4.5 https://learnamo.com/vocabolario-italiano-incertezza/
+	- 4.5 https://learnamo.com/verbo-piacere-italiano/
+	- 4.5 https://learnamo.com/verbo-ingannare-italiano-alternative/
+	- 4.5 https://learnamo.com/verbi-pronominali-in-italiano/
+	- 4.5 https://learnamo.com/verbi-italiani-conversazione/
+	- 4.5 https://learnamo.com/pronuncia-italiana/
+	- 4.5 https://learnamo.com/preposizioni-luogo/
+	- 4.5 https://learnamo.com/parole-italiane-simili/
+	- 4.5 https://learnamo.com/parla-italiano-frasi-comuni/
+	- 4.5 https://learnamo.com/omissione-articolo-italiano/
+	- 4.5 https://learnamo.com/nomi-collettivi/
+	- 4.5 https://learnamo.com/frasi-italiano-principianti/
+	- 4.5 https://learnamo.com/falsi-amici-in-italiano/
+	- 4.5 https://learnamo.com/espressioni-alternative-wow-italiano/
+	- 4.5 https://learnamo.com/consonanti-doppie-italiano/
+	- 4.5 https://learnamo.com/comparativo-superlativo/
+	- 4.5 https://learnamo.com/comparativi-superlativi-guida/
+	- 4.5 https://learnamo.com/come-ringraziare-italiano/
+	- 4.5 https://learnamo.com/come-dire-prego/
+	- 4.5 https://learnamo.com/bene-bravo-bello-buono/
+	- 4.5 https://learnamo.com/avverbi-luogo/
+	- 4.5 https://learnamo.com/alternative-e-facile/
+	- 4.5 https://learnamo.com/alternative-a-come-stai/
+	- 4.5 https://learnamo.com/aggettivi-numerali/
+	- 4.4 https://learnamo.com/sinonimi-occupato-italiano/
+	- 4.4 https://learnamo.com/qualcosa-errori-italiano/
+	- 4.4 https://learnamo.com/prendere-treno-italia/
+	- 4.4 https://learnamo.com/parola-tipo-italiano/
+	- 4.4 https://learnamo.com/parlare-amore-italiano/
+	- 4.4 https://learnamo.com/errori-comuni-preposizioni-italiane/
+	- 4.4 https://learnamo.com/alternative-ho-sonno/
+	- 4.4 https://learnamo.com/alternative-dire-italiano/
+	- 4.4 https://learnamo.com/alternative-circa-italiano/
+	- 4.3 https://learnamo.com/sinonimi-pigro-italiano/
+	- 4.3 https://learnamo.com/pronome-di-cortesia-italiano/
+	- 4.3 https://learnamo.com/persona-indeterminata-italiano/
+	- 4.3 https://learnamo.com/lessico-finanza-economia/
+	- 4.3 https://learnamo.com/dialogo-italiano-stadio-calcio/
+	- 4.3 https://learnamo.com/descrivere-qualcuno-italiano/
+	- 4.3 https://learnamo.com/conversazione-negozio-scarpe-italiano/
+	- 4.2 https://learnamo.com/misteri-lingua-italiana/
+	- 4.2 https://learnamo.com/lessico-palestra-italiano/
+	- 4.2 https://learnamo.com/italiano-omonime-polisemiche/
+	- 4.2 https://learnamo.com/frasi-italiane-arrabbiare/
+	- 4.2 https://learnamo.com/espressioni-tristezza-italiano/
+	- 4.2 https://learnamo.com/espressioni-facciali-italiano/
+	- 4.2 https://learnamo.com/dubbi-forma-di-cortesia/
+	- 4.2 https://learnamo.com/come-manipolare/
+	- 4.2 https://learnamo.com/alternanza-genere-significato/
+	- 4.1 https://learnamo.com/sintassi-italiano/
+	- 4.1 https://learnamo.com/parole-chiave-arte-italiano/
+	- 4.1 https://learnamo.com/lessico-mezzi-trasporto/
+	- 4.1 https://learnamo.com/lessico-macchina-italiano/
+	- 4.1 https://learnamo.com/errori-email-italiano/
+	- 4.1 https://learnamo.com/addirittura-o-a-dirittura-qual-e-la-differenza/
+	- 3.9 https://learnamo.com/situazioni-difficili-lavoro/
+	- 3.9 https://learnamo.com/alternative-a-sono-arrabbiato/
+	- 3.8 https://learnamo.com/vocabolario-matematica-italiano/
+	- 3.8 https://learnamo.com/taxi-italia-espressioni/
+	- 3.8 https://learnamo.com/plurali-doppi-italiano/
+	- 3.8 https://learnamo.com/parolacce/
+	- 3.8 https://learnamo.com/lessico-italiano-musica/
+	- 3.8 https://learnamo.com/lessico-casa-italiano/
+	- 3.8 https://learnamo.com/intervista-colloquio-provino/
+	- 3.8 https://learnamo.com/gossip-lessico-italiano/
+	- 3.8 https://learnamo.com/alternative-verbo-litigare/
+	- 3.7 https://learnamo.com/verbi-cucinare-italiano/
+	- 3.7 https://learnamo.com/scrivere-email/
+	- 3.7 https://learnamo.com/risposte-sarcastiche/
+	- 3.7 https://learnamo.com/lessico-dentista-italiano/
+	- 3.7 https://learnamo.com/auguri-congratulazioni-complimenti/
+	- 3.6 https://learnamo.com/buon-compleanno-anniversario/
+	- 3.5 https://learnamo.com/vocabolario-famiglia-italiano/
+	- 3.5 https://learnamo.com/verbi-per-viaggio-in-italia/
+	- 3.5 https://learnamo.com/risorse-gratuite-italiano/
+	- 3.5 https://learnamo.com/parole-italiane-piu-usate/
+	- 3.5 https://learnamo.com/nomi-citta-estere-italiano/
+	- 3.5 https://learnamo.com/meteo-in-italiano/
+	- 3.5 https://learnamo.com/maiuscole-minuscole-italiano/
+	- 3.5 https://learnamo.com/lessico-spiaggia-italia/
+	- 3.5 https://learnamo.com/lessico-animali-italiano/
+	- 3.5 https://learnamo.com/dialogo-italiano-supermercato/
+	- 3.5 https://learnamo.com/congratularsi-italiano/
+	- 3.5 https://learnamo.com/come-salutare-italiano/
+	- 3.5 https://learnamo.com/10-mila-iscritti-su-youtube/
+	- 3.4 https://learnamo.com/poliglotta-impara-italiano/
+	- 3.4 https://learnamo.com/parole-inventate-da-scrittori/
+	- 3.4 https://learnamo.com/italiano-errori-punteggiatura/
+	- 3.4 https://learnamo.com/gli-alterati-italiano/
+	- 3.4 https://learnamo.com/10-espressioni-italiane-comuni/
+	- 3.3 https://learnamo.com/lessico-trucchi-italiano/
+	- 3.2 https://learnamo.com/senso-umorismo-italiano/
+	- 3.2 https://learnamo.com/parole-inventate-dante/
+	- 3.1 https://learnamo.com/sinonimi-di-mangiare/
+	- 3.1 https://learnamo.com/recensione-libro-gattopardo/
+	- 2.9 https://learnamo.com/suoni-bocca-italiano/
+	- 2.9 https://learnamo.com/parole-italiane-corte/
+	- 2.9 https://learnamo.com/faccende-domestiche-italiano/
+	- 2.9 https://learnamo.com/espressioni-italiane-cibo/
+	- 2.8 https://learnamo.com/parole-straniere/
+	- 2.8 https://learnamo.com/lessico-giornalistico-italiano/
+	- 2.7 https://learnamo.com/significato-gesti-italiani/
+	- 2.7 https://learnamo.com/lessico-aeroporto-italiano/
+	- 2.7 https://learnamo.com/falsi-amici-italiano-inglese/
+	- 2.6 https://learnamo.com/lavori-in-italiano/
+	- 2.5 https://learnamo.com/vocabolario-cucina-italiano/
+	- 2.5 https://learnamo.com/vocabolario-corpo-umano/
+	- 2.5 https://learnamo.com/versi-animali-italiano/
+	- 2.5 https://learnamo.com/presentarsi-italiano-avanzato/
+	- 2.5 https://learnamo.com/paesi-nazionalita-italiano/
+	- 2.5 https://learnamo.com/lessico-dei-gialli/
+	- 2.5 https://learnamo.com/frutta-verdura-italiano/
+	- 2.5 https://learnamo.com/espressioni-da-favola/
+	- 2.5 https://learnamo.com/dialogo-hotel-italiano/
+	- 2.5 https://learnamo.com/come-pronunciare-marchi-italiani/
+	- 2.5 https://learnamo.com/come-iniziare-imparare-italiano/
+	- 2.4 https://learnamo.com/lessico-scolastico-italiano/
+	- 2.4 https://learnamo.com/frasi-fatte-in-italiano/
+	- 2.3 https://learnamo.com/sostantivi-aggettivi-invariabili/
+	- 2.3 https://learnamo.com/pronunciare-lettera-r/
+	- 2.3 https://learnamo.com/italiano-non-ha-senso/
+	- 2.2 https://learnamo.com/linguaggio-giovani-slang-rap/
+	- 2.2 https://learnamo.com/accento-italiano/
+	- 2.1 https://learnamo.com/parole-strane-italiano/
+	- 2.1 https://learnamo.com/parole-espressioni-latine/
+	- 1.9 https://learnamo.com/timidezza-lingue-straniere/
+	- 1.9 https://learnamo.com/dialogo-cinema-italiano/
+	- 1.8 https://learnamo.com/vocabolario-criminalita-legge/
+	- 1.8 https://learnamo.com/parole-italiane-belle/
+	- 1.8 https://learnamo.com/imparare-parole-lingua-straniera/
+	- 1.7 https://learnamo.com/scioglilingua-italiani-famosi/
+	- 1.6 https://learnamo.com/vocabolario-parrucchiere-italiano/
+	- 1.6 https://learnamo.com/parlare-italiano-bene/
+	- 1.5 https://learnamo.com/lessico-abbigliamento-italiano/
+	- 1.5 https://learnamo.com/italiano-bambini-stranieri/
+	- 1.5 https://learnamo.com/grammatiche-italiane/
+	- 1.5 https://learnamo.com/dare-pareri-abbigliamento/
+	- 1.2 https://learnamo.com/proverbi-italiani-matrimonio/
+
+- vlogs
+	- https://learnamo.com/cosa-fare-torino/ (con Davide)
+	- https://learnamo.com/bologna-vlog/
+	- https://learnamo.com/vlog-verona/
+	- https://learnamo.com/cosa-fare-padova-veneto/
+
+
+- alphabet
+	- pronounce all 26 letters
+		- ah, bee, chee, dee, eh, effeh, gee, ahka, ee, jay, kappa, elleh, emmeh, enneh, oh, pee, koo, erreh, esseh, tee, oo, vee, DOHP-ya-voo (voo-DOHP-ya), eeks, IP-see-lon, ZEH-teh
+	- which letters have "eh" at the end
+		- F, L, M, N, R, S, Z
+	- what are the foreign letters, and examples of foreign words with those letters
+		- j, k, w, x, y
+		- Jeans, Ketchup, Wurstel, Xbox, Yogurt
+	- which letter is silent but changes the pronunciation of two other letters
+		- H changes C and G
+	- when is C pronounced "ch" and when "k"
+		- ch before e,i
+		- k before a,o,u
+	- when is G pronounced soft and hard
+		- soft before e,i
+		- hard before a,o,u (gw, g)
+	- which letter has accent grave and acuto
+		- e
+- numbers
+	- count from 1 to 10
+		- uno, due, tre, quattro, cinque, sei, sette, otto, nove, dieci
+	- count from 11 to 20
+		- undici, dodici, tredici, quattordici, quindici, sedici, diciassette, diciotto, diciannove, venti
+	- count from 10 to 90 by tens
+		- dieci, venti, trenta, quaranta, cinquanta, sessanta, settanta, ottanta, novanta
+	- i numeri da 20 a 29
+		- venti, ventuno*, ventidue, ventitré, ventiquattro, venticinque, ventisei, ventisette, ventotto*, ventinove
+	- pronounce seven
+		- SETT-eh (not -ay)
+	- pronounce 15
+		- QUEEN-dee-chee
+	- pronounce 17
+		- DEE-chah-SET-eh
+	- which numbers are pronounced different
+		- over 20 that end in 1 or 8 
+	- how to form numbers 100-900
+		- cento
+		- then number + "cento": duecento, trecento, etc.
+	- how to form numbers 1000-9000
+		- mille
+		- then number + "mila": duemila, tremila, etc.
+	- how to form numbers 1 million to 2 million
+		- milione
+		- then number + "milioni": due milioini, tre milioni, etc.
+	- list the numbers 1-21
+		- primo, secondo, terzo, quarto, quinto, sesto, settimo, ottavo, nono, decimo
+		- undicesimo, dodicesimo, tredicesimo, quattordicesimo, quindicesimo, sedicesimo, diciassettesimo, diciottesimo, diciannovesimo, ventesimo, ventunesimo
+	- how do you spell 17
+		- diciassette
+		- with double s
+	- how do you spell 10
+		- diciannove
+		- with double s
+	- spell 88
+		- ottantotto
+	- spell 81
+		- ottantuno
+	- spell 41
+		- quarantuno
+- indicazioni
+	- sinistra, destra
+	- guarda in alto, guarda in basso
+- i giorni della settimana
+	- giorni della settimana
+		- lunedì
+		- martedì
+		- mercoledì
+		- giovedì
+		- venerdì
+		- sabato
+		- domenica
+	- quali giorni hanno l'accento alla fine
+		- i primi 5
+	- si scrivono tutti con la lettera minuscola?
+		- sì
+	- sono tutti maschili, tranne per quale giorno
+		- la domenica
+	- come descrivere un'abitudine
+		- dall' articolo determinativo
+		- dalla preposizione di
+		- esempio: la domenica mangio sempre molto, però di lunedì vado in palestra
+	- come riferirsi a qualcosa che accade in un certo giorno
+		- non useremo né l’articolo né la preposizione
+		- esempio: martedì sono andata dal medico, mentre venerdì ho cenato al ristorante
+- le date
+	- nomina tutti i mesi
+		- gennaio
+		- febbraio
+		- marzo
+		- aprile
+		- maggio
+		- guigno
+		- luglio
+		- agosto
+		- settembre
+		- ottobre
+		- novembre
+		- dicembre
+	- i mesi si scrivono sempre con la lettera minuscola?
+		- sì
+	- sono solitamente preceduti da quale preposizione?
+		- dalla preposizione: a
+		- esempio: a luglio vanno tutti al mare
+	- in che ordine si scrivono le date in italiano?
+		- l'ordine per scrivere o dire le date in italiano è: giorno + mese + anno
+		- esempio: 5 maggio 2024
+- dire l'ora
+	- quali sono alcune frasi per chiedere che ora sono
+		- che ora è?
+		- che ore sono?
+		- sai che ore sono?
+		- mi dici che ore sono?
+		- potresti dirmi che ore sono?	
+	- come dire l'ora del giorno quando è proprio l'ora
+		- sono le dieci
+		- sono le quattro
+		- ma è l'una
+	- come dire l'ora del giorno aggiungendo o sottraendo minuti
+		- sono le quattro e cinque
+		- sono le quattro e mezza
+		- sono le quattro e un quarto
+		- sono le cinque meno dieci
+		- sono le otto meno un quarto
+	- come dire l'ora del giorno utilizzando i periodi della giornata
+		- le dieci del mattina
+		- le quattro del pomeriggio
+		- le nove di sera
+		- le due di notte
+		- è mezzogiorno
+		- è mezzanotte
+	- qual è un modo per abbreviare le frasi che indicano l'ora
+		- puoi omettere la parola "sono"
+		- esempi
+			- che ore sono / le quattro e mezza
+			- che ore sono / le dieci del mattino
+- le stagioni
+	- quali sono le quattro stagioni
+		- primavera
+		- estate
+		- autunno
+		- inverno
+	- quale preposizione dobbiamo usare con le stagioni?
+		- la preposizione in
+		- esempio: in estate le giornate sono più luminose
+- momenti della giornata
+	- quale preposizione usiamo con le parole: alba, tramonto
+		- la preposizione: a
+		- esempio: all'alba c'è sempre un'atmosfera di pace, mentre al tramonto c'è un'atmosfera romantica
+	- quale preposizione usiamo con le parole: mattina, pomeriggio, sera, notte
+		- la preposizione: di
+		- esempio: preferisco lavorare di mattina piuttosto che la sera perché ho più energie
+	- quale preposizione usiamo con secoli e anni, e con la parola: weekend
+		- la preposizione: nel
+		- esempio: la Guerra del Golfo è scoppiata nel XX secolo, più precisamente nel 1990
+		- esempio: vado sempre in pizzeria nel weekend
+	- compila lo spazio vuoto: Maria arriva ___ mezzogiorno
+		- con le ore precise si usa sempre: a
+	- compila lo spazio vuoto: ci vediamo ___ settimana prossima
+		- la risposta corretta è: la
+		- con "prossima/scorsa" si usa l'articolo determinativo
+	- scrivi la preposizione corretta: studio italiano ___ due anni
+		- la risposta corretta è: da
+- pezzi di abbigliamento
+	- cosa indossi ai piedi
+		- indossi una scarpa su un piede e due scarpe su due piedi
+	- cosa indossi in testa
+		- indossi un cappello
+	- cosa indossi dentro le scarpe
+		- indossi i calzini dentro le scarpe
+	- cosa indossi quando il sole splende troppo forte
+		- ti metti gli occhiali da sole
+	- quale capo di abbigliamento indossi sulla parte superiore del corpo
+		- indossi una maglia sulla parte superiore del corpo, e puoi possedere molte maglia
+	- quali sono le tre parole per "shirt" (e i plurali) in italiano
+		- t-shirt: maglietta, magliette
+		- shirt (genearl): maglia, maglie
+		- shirt (formal): camicia, camicie
+- i colori
+	- lista le tredici parole più utilizzate per i colori in italiano
+		- bianco
+		- nero
+		- rosso
+		- blu
+		- verde
+		- giallo
+		- marrone
+		- grigio
+		- rosa
+		- arancione
+		- viola
+		- azzurro/celeste
+	- quali colori terminano con "o" come aggettivo
+		- bianco, rosso, nero, giallo, grigio terminano per -o, dunque variano sia per genere che per numero
+		- esempi
+			- il maglione bianco 
+			- la gonna rossa
+			- i pantaloni gialli 
+			- le scarpe nere
+	- quali colori terminano con "e" come aggettivo
+		- arancione, verde, celeste e marrone terminano per -e, dunque variano solo per numero e non per genere
+		- esempi
+			- il maglione arancione
+			– la gonna verde
+			- i pantaloni celesti 
+			- le scarpe marroni
+	- quali colori terminano con "a" come aggettivo
+		- blu, viola, rosa e bordeaux restano invariabili
+		- esempi
+			- il maglione blu
+			- la gonna viola
+			- i pantaloni rosa
+			- le scarpe bordeaux
+	- quali colori non cambiano en al plurale
+		- rosa, arancione, viola, beige
+		- esempio: due maglie rosa
+	- vero o falso: i colori composti non cambiano
+		- vero
+		- esempio
+			- una maglietta rossa
+			- ma una maglietta rosso scuro
+		- esempio
+			- scarpe verde chiaro
+			- ma scarpe verdi
+- gli articoli 
+	- quali sono le regole per l'articolo determinativo femminile
+		- metti "la" prima di nomi femminili: 
+			- la casa, la strada, la rosa, la spaggia
+		- eccetto i nomi che iniziano con un suono vocalico
+			- l'isola, l'ancora, l'iniziativa
+			- eccezione
+				- la iena
+	- quali sono le regole per l'articolo determinativo maschile
+		- metti "le" prima di nomi maschile
+			- il cane, il ristorante, il quadro
+		- eccetto i nomi che iniziano con uno di questi
+			- vocale
+				- ma qui vale la stessa regola di "la" con le parole che iniziano con un valore
+				- quindi invece di "lo albero", hai "l'albero"
+			- x, y, z
+				- lo yogurt, lo zucchero
+			- x + consonante
+				- lo sport
+			- gn, pn, ps:
+				- lo gnomo, lo pneumatico, lo psicologo
+			- i + vocale
+				- lo iato
+	- qual è l'articolo determinativo plurale femminile
+		- le
+		- esempi
+			- le case, le strade, le rose
+		- anche davanti alle parole che iniziano per vocale
+			- l'isola, le isole
+	- quali sono gli articoli determinativi per i nomi maschili?
+		- se l'articolo singolare è "il" allora usa "i"
+			- i cani, i ristoranti, i quadri
+		- se l'articolo singolare è "lo" allora usa "gli"
+			- gli alberi, gli zuccheri, gli sport, gli psicologi
+	- quali sono le regole per gli articoli indeterminati
+		- "la" diventa "una" o "un'"
+			- una casa, una strada, una rosa
+			- un'amica
+		- "il" diventa "un" 
+			- un cane, un ristorante, un quadro
+		- "il" diventa "un" anche per i nomi che iniziano con una vocale
+			- l'albero ma un albero
+		- per il resto dei casi speciali, usa "uno"
+			- uno yogurt, uno zucchero, uno zaino
+			- uno sport
+			- uno gnomo, uno pneumatico, uno psicologo
+			- uno iato
+	- quali sono le regole per gli articoli partitivi
+		- "la" diventa "della"
+			- della pasta, della marmellata 
+		- "il/lo" diventono "del/dello"
+			- del pane, del formaggio 
+			- dello zucchero, dello stufato
+		- "le" diventa "delle"
+			- delle case, delle strade, delle rose, delle isole
+		- "i/gli" diventono "dei/degli"
+			- nel parco ci sono dei cani che giocano vicino al lago
+			- a scuola abbiamo parlato degli sport più seguiti in Italia
+	- quali sono le regole generali di utilizzo degli articoli
+		- non prima di un nome
+			- Maria ma la signora Maria 
+		- prima di un cognome
+			- i Rossi / i Bruno
+- genere
+	- quali sono le eccezioni alla regola a=femminile / o=maschile?
+		- il problema, il tema, il pianista
+		- la mano, l’eco
+	- quali gruppi di nomi tendono ad essere femminili
+		- di frutti
+			- la mela, la banana, la fragola
+		- di scienze e discipline
+			- la matematica, la fisica, la pedagogia
+		- di attività militari
+			- la guardia, la pattuglia
+		- di città, isole, regioni, stati, continenti
+			- la Corsica, la Germania, la Puglia, l'Australia
+	- quali gruppi di nomi tendono ad essere maschile
+		- di alberi: il pero, il pesco, il mandorlo, il pino
+		- di metalli ed elementi chimici: il piombo, l’azoto, l’idrogeno
+		- di mesi e giorni: un bel maggio, un bel giovedì
+	- a quali parole aggiungi -esse per renderle femminili
+		- professore → professoressa
+		- studente → studentessa
+	- quali parole maschili si traducono in -trice al femminile
+		- attore → attrice
+		- traduttore → traduttrice
+	- quali sono nomi di genere comune
+		- il/la giornalista, il/la turista, un/un’insegnante, il/la giudice
+- singolare e plurale 
+	- quale percentuale di nomi italiani terminano con una vocale
+		- 98%
+	- quali sono i tre modi per formare il plurale
+		- nomi uscenti in -a
+			- maschile: -i
+				- il pianista, i pianisti
+				- ca -> chi: il monarca -> i monarchi
+			- femminile: -e
+				- la montagna, le montagne
+				- cia -> cie: la farmacia -> le farmacie
+				- ca -> che: l'amica -> le amiche
+				- ga -> ghe: la bottega -> le botteghe
+				- gia -> ge: la pioggia -> piogge
+				- scia -> sce: la fascia -> la fasce
+		- nomi uscenti in -e
+			- maschile: -i
+				- il maglione, i maglioni
+			- femminile: -i
+				- la classe, le classi
+		- nomi uscenti in -o
+			- maschile: -i
+				- il tavolo, i tavoli
+				- co -> chi: il pacco -> i pacchi
+				- cio -> ci: il bacio -> il baci
+			- femminile: -i
+				- la mano, le mani
+		- eccezioni
+			- il dito – le dita
+			- il ginocchio – le ginocchia
+			- l'uovo – le uova
+			- il lenzuolo – le lenzuola
+			- l'osso – le ossa
+			- l'orecchio – le orecchie
+			- il migliaio – le migliaia
+			- il centinaio – le centinaia
+			- il braccio – le braccia  
+			- l'uomo – gli uomini
+			- l'arma – le armi
+	- nomi che non cambiano al plurale
+		- nomi composti da una sola sillaba
+			- il re / i re
+		- nomi che terminano con una vocale accentata
+			- l'attività / le attività
+		- nomi che terminano in -i
+			- la crisi / le crisi
+		- alcuni nomi maschili che terminano in -a: 
+			- il sosia / i sosia
+		- nomi femminili che terminano in -ie
+			- la carie / le carie 
+			- tranne 
+				- la moglie / le mogli 
+				- la superficie / le superfici
+		- nomi che sono abbreviazioni di altri
+			- la foto(grafia) / le foto
+			- la moto(cicletta) / le moto
+		- nomi stranieri e terminanti per consonante
+			- il computer / i computer
+			- il dvd / i dvd
+			- il bar / i bar
+	- quali nomi hanno solo il singolare
+		- nomi non numerabili
+			- il sonno, la fame
+		- molti nomi che esprimono qualità, sentimenti, entità astratte
+			- il coraggio, la generosità
+		- nomi appartenenti a linguaggi settoriali
+			- la fisica, l’azoto, la matematica
+	- quali nomi hanno solo il plurale
+		- nomi che si riferiscono a oggetti formati da due componenti o a gruppi di componenti dello stesso genere
+			- i forbici, i calzoni, le stoviglie, i viveri
+		- molti nomi che vengono dal latino
+			- le ferie
+	- qual è il plurale di "amica"
+		- amiche
+	- qual è il plurale di "uomo"
+		- uomini
+	- qual è il plurale di "bacio"
+		- baci
+- ## gli aggettivi
+	- TODO: research this more
+		- ChatGPT: In italiano esistono due grandi classi di aggettivi, aggettivi in -o, aggettivi in -e
+		- ChatGPT: Alcuni aggettivi che terminano in -ista (es. ottimista, pessimista, nazionalista) sono uguali per maschile e femminile al singolare e cambiano solo al plurale (-i/-e).
+	- a good resource to look up adjectives
+		- 
+	- quali sono i tre gruppi
+		- GRUPPO 1: car(o) --> masc o/i, fem a/e
+			- 60%
+			- un caro studente, due cari studenti 
+			- una cara studentessa, due care studentesse
+			- esempi
+				- caro, rumeroso, moderno, rosso, alto, bello, buono, nuovo, vecchio, basso, piccolo, pieno, vuoto, lungo, corto, povero, ricco, freddo, caldo, chiaro, scuro, blanco, nero, deserto, sorpreso, vecchio
+			- tipi di parole
+				- parole più brevi, sensoriali, fisiche
+				- latino/italiano di base, non da prestiti successivi
+				- monosillabiche o bisillabiche
+		- GRUPPO 2: trist(e) --> masc e/i, fem e/i
+			- 35%
+			- uno studente triste, due studenti tristi
+			- una studentessa triste, due studentesse tristi
+			- esempi
+				- forte/debole, dolce, triste, veloce/lente, grande
+				- fedele, intelligente, importante, differente, recente, frequente, efficiente, paziente, felice, gentile, difficile/facile, possibile
+			- tipi di parole
+				- più lunghi, spesso derivati ​​o presi in prestito
+				- stati soggettivi astratti, soggettivi, intellettuali, morali o complessi: importante
+			- non distinguono il genere
+		- GRUPPO 3: egotist(a) --> masc a/i, fem a/e
+			- 5%
+			- uno studente egoista, due studenti egoisti
+			- una studentessa egoista, due studentesse egoiste
+			- esempi
+				- ottimista/pessimista, artista, socialista, entusiasta, ipocrita, analista, atleta
+			- tipi di parole
+				- quasi tutte sono parole con -ista
+		- invariable
+			- blu, rosa, viola, arancione, beige, lavanda
+		- scoperta
+			- -a
+				- (a)-masc-sing
+				- (a)-femi-sing
+				- (o)-femi-sing
+			- -e
+				- (a)-femi-plur
+				- (e)-masc-sing
+				- (e)-femi-sing
+				- (o)-femi-plur
+			- -o
+				- (o)-masc-sing
+			- -i
+				- (a)-masc-plur
+				- (e)-masc-plur
+				- (o)-masc-plur
+				- (e)-femi-plur
+		- le regole
+			- -o = masc-sing
+			- -a = sing
+			- -i = plur
+			- -e = anything
+	- cosa succede con due o più nomi
+		- same
+			- la rosa e la margherita sono belle 
+			- il tulipano e il ciclamino sono belli 
+		- different (masc)
+			- Maria e Paolo sono simpatici
+			- la rosa e il tulipano sono belli
+	- qual è la posizione normale dell'aggettivo in italiano?
+		- dopo il nome
+	- un esempio di come l'ortografia dell'aggettivo cambia quando viene posizionato prima o dopo un sostantivo
+		- buon 
+			- un ragazzo buono
+			- un buon ragazzo
+	- scrivi il plurale femminile di "lungo"
+		- lunghe
+	- quando l'aggettivo aggettiv viene messo prima o dopo un sostantivo
+		- alto
+			- un dirigente alto = a tall executive
+			- un alto dirigente = senior executive
+		- vecchio
+			- un amico vecchio = a friend who is old
+			- un vecchio amico = an old frend
+			- un amico grande = un grande amico
+	- aggettivi che vanno sempre dopo il nome
+		- nazionalità
+			- la capitale francese
+		- appartenenza a una categoria
+			- un pittore impressionista
+		- luogo e posizione
+			- la mano destra
+		- colore, forma, materia
+			- una rosa blu, una tovaglia tonda
+- aggettivi interrogativi 
+	- qual tipo di parola segue sempre un aggettivo interrogato
+		- un sostativo
+	- come coniugare i tre aggettivi interrogativi 
+		- che: (invariabile)
+			- che tempo farà domani
+		- quale: masc quale/quali, fem quale/quali
+			- quale vestito preferisci
+		- quanto: masc quanto/quanti, fem quanta/quante
+			- quanto tempo ci resta
+	- come si usano per fare un'esclamazione
+		- che bugiardo che sei
+		- quale onore parlare con lei
+		- quanto freddo fa oggi
+- venire
+	- quali due casi ha il verbo venire
+		- 1) esprime provenienza
+			- Carlos viene da Madrid
+			- l'aereo è venuto da Rio
+		- 2) muoversi nella direzione della persona che parla o della persona con cui si parla
+			- vieni, è pronto il caffè
+			- la prossima settimana veniamo a trovarti nella tua nuova casa
+	- per costruire il tempo passivo, quando puoi sostituire "essere" con "venire"
+		- quando "essere" ha una coniugazione semplice, ma non quando ha una coniugazione composta
+		- questo è permesso
+			- le esibizioni saranno valutate dai giudici
+				- le esibizioni verranno valutate dai giudici
+			- la casa è costruita
+				- la casa viene costruita
+		- questo non è permesso
+			- il libro è stato scritto da Mattia
+				- NON CORRETTO: il libro è venuto scritto da Mattia
+	- qual è la piccola differenza tra l'uso di "essere" o "venire" per il tempo passivo
+		- le porte del negozio sono chiuse alle 8 ogni sera
+			- non è chiaro se il blocco avviene alle 8 o prima
+			- magari l'azione è successa molto prima
+		- le porte del negozio vengono chiuse alle 8 ogni sera
+			- è chiaro che il blocco avviene alle 8
+	- come si può usare "venire" con "fuori"
+		- per esprimere il significato: venire alla luce, essere scoperto 
+			- dalle indagini sono venuti fuori dei dettagli molto preoccupanti
+			- prima o poi la notizia della loro separazione verrà fuori
+		- per esprimere il significato: avere delle uscite inaspettate
+			- Luigi viene sempre fuori con una battuta delle sue
+			- sei proprio strano, vieni sempre fuori con certi discorsi filosofici! Ti ricordo che stiamo giocando a tennis! 
+	- come usare "venire" in questo modo con il significato di "apprendere" o "acquisire conoscenza"
+		- siamo venuti a scoprire che ci avete tradito, perciò non possiamo fare altro che licenziarvi
+		- sono venuto a sapere da lei quello che hai fatto, ma non ti vergogni neanche un po'
+		- era venuta a conoscenza della loro relazione: per questo era su tutte le furie
+	- come usare "venire" per indicare la comparsa di qualche cosa, che è stata provocata da qualcos'altro
+		- con un oggetto indiretto (mi, a lei, mi) + un nome 
+			- mi viene la nausea quando mangio una torta troppo dolce
+			- a lei è venuto il mal di testa, per questo è andata a letto
+			- non mi viene in mente il nome di quello scienziato di cui stavamo parlando
+		- con un oggetto indiretto (che indica la persona) + "da" + un verbo all'infinito
+			- ogni volta che ascolto questa canzone mi viene da piangere
+			- se entro in quella stanza polverosa, mi verrà da starnutire
+		- nella costruzione "far venire", quando il soggetto della frase è ciò che provoca la cosa in questione (oggetto diretto) + oggetto indiretto, ma è possibile SOLO quando si conosce la causa di ciò che compare
+			- mi viene la nausea quando mangio una torta troppo dolce
+				- una torta troppo dolce mi fa venire la nausea
+			- ogni volta che ascolto questa canzone mi viene da piangere
+				- questa canzone mi fa venire da piangere ogni volta
+			- se entro in quella stanza polverosa, mi verrà da starnutire
+				- quella stanza polverosa mi farà venire da starnutire
+	- come usare "venire" per esprimere il prezzo di qualcosa
+		- bella questa lampada: quanto viene
+		- se decidessi di far riparare a lei la mia macchina, quanto mi verrebbe
+		- preferisco comprare i vestiti su internet perché mi vengono a costare molto meno
+		- dunque, la camicia verrebbe 50€, ma siccome lei può usufruire dello sconto, le viene solo 35
+		- quanto viene questa pizza
+	- come usare "venire" per esprimere i risultati
+		- come è venuto il mio disegno secondo te
+		- a me non piace proprio come è venuto
+		- questo problema di matematica proprio non mi viene
+		- secondo il libro, viene 55, ma a me viene 245
+	- come si dice "get to the point"
+		- venire al dunque
+	- come si dice "it makes me laugh"
+		- mi viene da ridere
+	- come si dice "it comes to mind that..."
+		- mi viene in mente che...
+- verbi-preposizioni
+	- verbi che reggono la preposizione di + infinito
+		- (mneumonic: Friedhofsturm)
+		- accettato di
+			- il mio capo ha accettato di darmi un aumento 
+		- accontentarsi di
+			- non ci accontentiamo di guadagnare 1000€, noi vogliamo essere ricchi
+		- ammettere di
+			- finalmente dopo un litigio di due ore ha ammesso di aver sbagliato
+		- augurare/augurarsi di
+			- ti auguro di trovare la tua anima gemella e di vivere una vita felice
+			- mi auguro di stare meglio domani così posso partecipare al vostro matrimonio
+		- cercare/tentare di
+			- hanno cercato di fermarlo, ma non ha voluto sentire ragioni
+			- ha tentato di farlo
+			- ma --> provare a
+				- ha provato a trovarlo
+		- chiedere di
+			- non ti chiedo di perdonare, ma solo di capire le sue azioni
+			- mi ha chiesto di restituire il libro
+		- credere di
+			- crediamo di sapere la ragione per cui lei non è venuta alla festa
+			- credono di aver trovato l'assassino
+			- crediamo di avere ragione
+			- nota se soggetto/oggetto non sono la stessa cosa
+				- crediamo che voi abbiate ragione
+		- decidere di
+			- ho deciso di dargli una seconda possibilità
+			- ha deciso di creare un'app
+		- dimenticarsi di
+			- mi sono dimenticata di spegnere le luci quando sono uscita di casa
+			- ci siamo dimenticati di iscriverci alla gara
+		- dire di
+			- gli ho detto di andare via per il suo bene
+			- ci diranno di restituire le bottiglie
+		- dispiacere di
+			- gli dispiaceva di non aver comprato dei fiori per sua madre
+			- gli dispiaceva di aver speso così ta  nto
+			- mi è dispiaciuto aver speso così tanto
+		- evitare di
+			- evitiamo di parlare di quest'argomento in futuro
+			- eviteranno di fumare sigarette in futuro
+		- fingere di 
+			- fingeremo di non conoscerlo durante il colloquio
+			- stavano fingendo di dormire quando lei è arrivata
+		- finire di
+			- ho appena finito di lavorare al nuovo progetto: è pronto
+			- finirò di lavorare a mezzogiorno oggi
+		- minacciare
+			- ha minacciato di dire tutta la verità alla polizia
+			- minaccerebbe di usare la forza se necessario
+		- ordinare
+			- ci hanno ordinato di tenere la bocca chiusa
+			- gli è stato ordinato di lasciare l'edificio
+		- pensare
+			- penso di dover andare dal medico per questo dolore
+			- pensavo di partire domani, però ora non ne sono più sicuro
+			- pensiamo di cambiare approccio
+			- penseremo di tornare quando saremo lì
+		- permettere / proibire
+			- ci hanno permesso di vederlo, ma ci hanno proibito di parlargli
+			- la legge ti proibisce di andartene
+		- promettere
+			- ti ha promesso di venire stasera
+			- promettono di arrivare presto ma non lo faranno
+		- ricordare / ricordarsi
+			- si è appena ricordato di essere allergico ai pistacchi
+			- si ricordavano di aver pranzato qui prima
+		- ripetere
+			- la professoressa ci ripete sempre di praticare l'italiano il più possibile
+			- I told him to call me before arriving
+		- rischiare
+			- lavandosi i denti due volte, rischiava di arrivare in ritardo
+			- ho rischiato di rompermi un braccio per recuperare la palla sull'albero
+		- sapere
+			- lei sa di essere più simpatica di sua sorella
+			- sanno di fare più del necessario
+		- smettere
+			- smetti di parlare per favore
+			- smetteresti di correre se ti facessi male
+		- sperare
+			- sperano di fare una vacanza tutti insieme quest'estate
+			- sperando di partire presto, preparò lo zaino (ha preparato)
+		- temere
+			- temo di essere ripetitivo ma ho bisogno di sapere cosa ne pensi
+		- terminare
+			- se terminate presto di fare i compiti, potrete giocare
+			- finiranno di discutere tra dieci minuti
+		- essere + sentimento
+			- sono felice di conoscere tua sorella
+			- siamo lieti di vedere che state bene
+			- siamo fieri di fare parte del vostro team
+			- è orgogliosa di mostrare a tutti il suo lavoro
+			- siamo tristi di ascoltare la brutta notizia 
+			- sono preoccupati di non riuscire a pagare l'affitto 
+	- verbi che reggono la preposizione a + infinito
+		- INFO
+			- (mneumonic: Frau Meister)
+		- abituarsi
+			- mi sono abituato ad andare a letto presto
+				- a + andare → ad andare
+			- sono abituato a leggere dieci pagine al giorno
+		- accompagnare
+			- ho accompagnato i turisti a visitare la piazza della città
+		- aiutare
+			- l'ho appena aiutata a sistemare il suo armadio
+			- li aiuterò a scrivere quei documenti
+		- andare
+			- non siamo ancora andati a fare la spesa
+			- andremo a correre tra 15 minuti
+		- arrivare
+			- non sono ancora arrivati a darsi del tu
+			- ma: finalmente è arrivato al punto di pulire la sua stanza (Google Translate)
+			- "'arrivare al punto a' non esiste in italiano standard" (ChatGPT)
+		- cominciare / iniziare
+			- ho cominciato a scrivere un libro quando loro hanno iniziato a lavorare
+			- cominciò a contare fino a dieci (ho cominciato)
+		- continuare
+			- avete continuato a scambiarvi messaggi anche dopo la lite
+			- abbiamo intenzione di continuare a guidare per ore
+		- imparare / insegnare
+			- ho imparato a cucinare grazie a mia nonna
+			- il ragazzo ha imparato ad andare in bicicletta
+			- vi sto insegnando a usare i verbi con le giuste preposizioni
+			- ci insegneranno a cucinare
+		- limitarsi
+			- non ti limitare a scrivergli un messaggio: chiamalo
+		- mandare
+			- ho mandato il bambino a lavarsi i denti
+		- mettersi
+			- tutti si sono messi a ridere quando mi sono messa a cantare
+		- provare
+			- se vuoi dimagrire, prova a mangiare più verdure
+			- prova a continuare a lavorare da casa
+		- rimanere / restare
+			- cercare di rimanere a galla nell'acqua
+			- è rimasto a lavorare fino a tardi
+			- se piove, restiamo a studiare invece di uscire	
+		- ricominciare
+			- ha ricominciato a fumare
+		- riuscire
+			- non riesco a camminare perché ho dolore al piede
+		- uscire
+			- esci a fare due passi
+		- venire 
+			- vengo a prenderti alle 6 per andare al cinema
+	- esempi di "per + infinito" per esprimere un obiettivo per cui si fa qualcosa
+		- medito ogni giorno per alleviare lo stress
+		- comprerò tutti gli ingredienti per preparare la torta che ti piace tanto
+	- esempi con "da" dpop "niente", "qualcosa", "nessuno"
+		- oggi non ho niente da fare
+		- c'è qualcosa da mangiare in frigo
+		- non c'è nessuno da visitare oggi
+	- UNORDERED
+		- i bambini hanno paura __ restare soli al buio
+			- di
+		- Luigi è partito da Roma stamattina alle 8
+			- da
+
+- passato prossimo
+	- quali sono gli usi di passato prossimo
+		- per indicare un fatto che ha avuto luogo in un passato recente 
+			- ieri sono andata alla festa
+			- poi il dj ha messo la musica 
+		- per indicare un fatto che ha avuto luogo nel passato ma che ha conseguenze nel presente
+			- ho perso le chiavi
+				- l'azione è passata, ma la conseguenza è presente: ora non puoi entrare
+			- hai rotto il telefono
+				- il gesto è passato, ma il problema esiste nel presente: il telefono non funziona
+- imperfetto
+	- quali sono gli usi di imperfetto 
+		- per indicare abitudini del passato
+			- da piccola non amava festeggiare
+		    - da bambino faceva spesso arrabbiare i suoi genitori
+			- l'anno scorso tutti usavano i pantaloni a sigaretta
+		- per descrizioni nel passato
+			- la festa era in un locale molto bello
+			- nel locale c'erano molti palloncini 
+			- gli invitati erano moltissimi
+			- la casa era molto grande e disponeva di quattro bagni
+			- la ragazza aveva i capelli neri e gli occhi scuri e indossava una salopette di jeans
+			- nella stanza c'erano molti quadri e mobili antichi
+		- per esprimere contemporaneità nel passato
+			- mentre tu parlavi, io scrivevo una lettera
+			- quando era piccolo, mangiava spesso le caramelle
+			- io ero per terra e tutti ridevano
+		- per esprimere azioni in svolgimento nel passato interrotte da altre 
+			- mentre entravo con il mio vestito nuovo sono inciampata
+			- mentre ero al telefono con te, Mario mi ha mandato un messaggio
+			- nuotava in piscina, quando ha sentito sua moglie chiamare il suo nome
+			- mentre andavo all'università, ho incontrato Luca
+
+- trapassato prossimo
+	- quali sono gli usi di trapassato prossimo
+		- per esprimere un'azione avvenuta prima di un'altra nel passato (espressa con imperfetto, passato prossimo o passato remoto).
+			- io avevo comprato un bel vestito per l'occasione
+			- non avevo mai partecipato ad una festa così straordinaria
+- passato remoto (#remoto)
+	- sfondo (Davide)
+		- aspetto
+			- perfettivo
+				- azione conclusa
+				- vista nella sua interezza
+				- passato remoto è qui
+			- imperfettivo
+				- azione in corso
+				- vista nel suo svolgersi
+	- quali sono gli usi di passato remoto
+		- per indicare un fatto avvenuto e concluso nel passato
+			- si svegliò, si ricordò di non dover andare a lavoro e si addormentò di nuovo
+		- si usa quando si recitano testi narrativi
+	- quali regioni d’italia parlano le persone usando il passato remoto
+		- soprattutto nel Sud Italia
+		- ma non è uniforme, né obbligatorio
+		- dipende dal contesto, dall’età, dal registro
+		- Sud Italia: è usato qui
+			- Sicilia 
+				- uso molto frequente anche nel parlato informale
+			- Calabria 
+				- abbastanza comune nel parlato
+			- Puglia 
+				- soprattutto nel racconto di fatti lontani
+			- Campania 
+				- usato, ma meno sistematicamente
+			- Basilicata
+				- presente, specie nei racconti
+		- Sardegna
+			- il passato remoto nel parlato italiano è poco usato
+			- la Sardegna fa storia a sé
+				- il sardo ha strutture diverse dall'italiano
+				- quando i sardi parlano italiano tendono a usare forme più vicine all'italiano standard, cioè il passato prossimo
+			- la differenza tra le isole
+				- Sicilia: andai è naturale
+				- Sardegna: sono andato è naturale
+		- Lazio
+			- l’uso del passato remoto nel parlato è raro
+			- a Roma e dintorni → si usa quasi sempre il passato prossimo, anche per fatti lontani
+			- il Lazio non si comporta come il Sud classico
+			- ti verrebbe naturale dire “andai ieri” a Roma? No. Diresti “sono andato”.
+		- Centro Italia
+			- Toscana, Umbria, Marche
+			- si capisce bene, ma nel parlato quotidiano si preferisce il passato prossimo
+		- Nord Italia 
+			- Lombardia, Veneto, Piemonte, Emilia-Romagna, ecc.
+			- il passato remoto quasi non si usa parlando
+			- resta confinato allo scritto (letteratura, storia)
+			- qui ci si chiede: perché usare il remoto se il prossimo funziona per tutto
+	- come si coniuga la passato remoto per i verbi -are
+		- ai, asti, ò, ammo, aste, arono
+	- come si coniuga la passato remoto per i verbi -ere
+		- etti, esti, ette, emmo, este, ettero
+		- ei, ------, é, -------, ----, erono
+	- come si coniuga la passato remoto per i verbi -ire
+		- ii, isti, ì, immo, iste, irono
+	- come si coniuga la passato remoto per il verbo essere
+		- fui, fosti, fu, fummo, foste, furono
+	- come si coniuga la passato remoto per il verbo avere
+		- ebbi, avesti, ebbe, avemmo, aveste, ebbero
+	- come si coniuga la passato remoto per il verbo volere
+		- volli, volesti, volle, volemmo, voleste, vollero
+	- come si coniuga la passato remoto per il verbo fare
+		- feci, facesti, fece, facemmo, faceste, fecero
+	- come si coniuga la passato remoto per il verbo stare
+		- stetti, stesti, stette, stemmo, steste, stettero
+	- come si coniuga la passato remoto per il verbo dare
+		- diedi, desti, diede, demmo, deste, dettero
+			- molto più usato (standard moderno)
+		- detti, -----, dette, -----,, -----, -------
+			- raro, letterario, oggi quasi in disuso
+	- come si coniuga la passato remoto per il verbo dire
+		- dissi, dicesti, disse, dicemmo, diceste, dissero
+	- come si coniuga la passato remoto per il verbo andare
+		- andai, andasti, andò, andammo, andaste, andarono
+	- come si coniuga la passato remoto per il verbo venire
+		- venni, venisti, venne, venimmo, veniste, vennero
+	- come si coniuga la passato remoto per il verbo nascere
+		- nacqui, nascesti, nacque, nasquemmo, nasceste, nasquero
+	- come si coniuga la passato remoto per il verbo sapere
+		- seppi, sapesti, seppe, sapemmo, sapeste, seppero
+	- come si coniuga la passato remoto per il verbo scrivere
+		- scrissi, scrivesti, scrisse, scrivemmo, scriveste, scrissero
+	- come si coniuga la passato remoto per il verbo vivere
+		- vissi, vivesti, visse, vivemmo, viveste, vissero
+- trapassato remoto
+	- quali sono gli usi di trapassato prossimo
+		- per esprime un fatto avvenuto prima di un altro passato (espresso al passato remoto)
+			- non appena ebbe finito il progetto, lo consegnò al suo capo
+				- il fatto di finire il progetto è accaduto prima di quello di consegnarlo
+				- spero che io vada a Firenze a maggio 
+
+- congiuntivo
+	- quando non si usa il congiuntivo
+		- non si usa quando il soggetto della principale e il soggetto della subordinata sono uguali 
+			- usiamo invece l'infinito introdotto da "di"
+			- NO: spero che io vada a Firenze a maggio 
+				- sì: spero che di andare a Firenze a maggio
+			- NO: credete che siate in ritardo 
+				- sì: credete di essere in ritardo
+		- non si usa con le espressioni: secondo me, probabilmente, forse, anche se 
+			- nonostante non indichino certezza
+			- spero che abbia il libro
+				- secondo me ha il libro
+			- dubito che lui ce l'abbia
+				- ma probabilmente ce l'ha lei
+			- temo che non sia puntuale
+				- forse non è puntuale
+			- dubito che vada a lavorare
+				- anche se non ne ha voglia, va a lavorare
+				- MA: anche se vivessi in California, non vorrei andare a lavoro
+		- non si usa con le espressioni: poiché, siccome, dopo che, dato che 
+			- dubito che ce l'abbia
+				- poiché nessun altro ce l'ha, ce l'ha lui
+				- perché nessun altro ce l'ha, ce l'ha lui
+			- temo che non si parlino più
+				- Siccome hanno litigato, ora non si parlano più
+			- dubito che possiate giocare 
+				- dopo che fate i compiti, potete giocare
+			- lui ha paura che io non vada a fare la spesa
+				- dato che ne ho abbastanza, non vado a fare la spesa
+		- non si usa con aggettivi che esprimono certezza: certo, sicuro, convinto, chiaro, evidente, ovvio
+			- dubito che abbiate avuto abbastanza tempo
+				- è ovvio che non avete avuto abbastanza tempo: altrimenti avreste finito il progetto
+			- dubito che i bambini amassero giocare nel parco
+				- era evidente che i bambini amavano giocare nel parco
+		- non si usa con verbi dichiarativi (affermare, confermare, dichiarare, dire, giurare, promettere, rispondere, scrivere, sostenere, spiegare)
+			- dice che non siete andati alla sua festa
+			- hanno risposto che non sono andati perché dovevano lavorare
+		- non si usa con verbi che esprimono percezione: accorgersi, intuire, notare, percepire, scoprire, sentire, vedere
+			- vi siete accorti che hanno trasferito il negozio
+			- ho scoperto che hai comprato una casa in montagna
+			- vedo che non hai ascoltato i miei consigli
+	- quali verbi che prendono sia l'indicativo che il congiuntivo, con significati diversi
+		- ammettere
+			- ha ammesso che la fidanzata lo ha lasciato (riconoscere)
+			- ammettendo che lui stia dicendo la verità, ci sono ancora troppi lati oscuri nella vicenda (supporre)
+		- capire
+			- ho capito che avevi ragione (rendersi conto)
+			- capiamo che tu voglia andare via, ma ora è presto (trovare naturale)
+		- considerare
+			- considera che avete già preso un giorno libero, non ne avrete un altro (tener conto)
+			- state considerando che possano tornare prima del previsto (supporre)
+	- mi sembra che tu ___ ragione
+		- hai
+	- voglio che tu ___ ragione
+		- abbia
+- pronomi complemento
+	- come usare pronomi complemento dopo una preposizione
+		- usa semplicemente il pronome base: me, te, lui, lei, noi, voi, loro
+		- ha sempre parlato bene di sua sorella
+			- di lei
+		- vado sempre a teatro con il mio fidanzato
+			- con lui
+		- hanno portato un pacco per i miei zii 
+			- per loro 
+		- devi dire tutto a me e alla mia amica 
+			- a noi 
+	- come usare pronomi complemento quando rispondono alla domanda "Chi? Che cosa?"
+		- senza "a"
+		- usa questi pronome: mi, ti, lo, la, ci, vi, li, le
+		- Paolo sogna (me)
+			- Paolo mi sogna
+		- Paolo accusa (te)
+			- Paolo ti accusa
+		- Paolo compra il libro (=lui)
+			- Paolo lo compra
+		- Paolo ascolta sua madre (=lui)
+			- Paolo la ascolta
+		- Paolo indica me e Carlo (=noi)
+			- Paolo ci indica
+		- Paolo sogna te e il tuo cane (=voi)
+			- Paolo vi sogna
+		- Paolo rimprovera i suoi figli (=loro)
+			- Paolo li rimprovera
+		- Paolo mangia le patatine (=loro)
+			- Paolo le mangia
+	- come usare pronomi complemento quando rispondono alla domanda "A chi? A che cosa?"
+		- usa questi pronome: mi, ti, gli, le, ci, vi, loro (segue il verbo)
+		- Paolo pensa (a me) 
+			- Paolo mi pensa
+		- Paolo parla (a te)
+			- Paolo ti parla
+		- Paolo scrive a suo fratello (= a lui)
+			- Paolo gli scrive
+		- Paolo scrive a sua sorella (= a lei)
+			- Paolo le scrive
+		- Paolo pensa a me e al mio cane (= a noi) 
+			- Paolo ci pensa
+		- Paolo parla a te e alla tua amica (= a voi) 
+			- Paolo vi parla
+		- Paolo scrive ai suoi genitori (= a loro)
+			- Paolo scrive loro (NON: Paolo loro scrive)
+			- Paolo gli scrive
+			- ieri gli ha scritto
+	- cosa succede se i due tipi di pronomi complemento si trovano insieme nella stessa frase
+		- mi, ti, ci, vi seguiti dai pronomi lo, la, li, le diventano me, te, ce, ve
+		- Francesco dice (a me) la notizia (lei) 
+			- Francesco me la dice
+		- io racconto (a te) il mio segreto (lui)
+			- io te lo racconto 
+		- mio fratello dà a me e ai miei genitori (a noi) dei regali (loro) 
+			- mio fratello ce li dà
+		- io do a te e a tua sorella (a voi) le mie borse (loro)
+			- io ve le do
+		- Paola regala l'orologio (lui) al suo fidanzato (a lui) 
+			- Paola glielo regala (NON: Paola gli lo regala)
+		- Federico compra dei fiori (loro) alla sua fidanzata (a lei) 
+			- Federico glieli compra (NON: Federico gli li compra)
+		- Roberta regala a loro le sue scarpe (loro) 
+			- Roberta le regala loro
+		- Maria porta il libro a sua sorella
+			- Maria glielo
+				- gli (a lei) + lo (il libro)
+	- quale pronome sostituisce correttamente "di questa storia" in "sono stanco di questa storia"
+		- ne
+- ## preposizioni articolate
+	- quali preposizioni semplici possono formare preposizioni articolate
+		- di, a, da, in, su
+	- come si formano le preposizioni articolate
+		- of, to, from, in, out
+		- --->(li/lo) (la/l') (i/gli/le)
+		- di: (del/dello) (della/dell') (dei/degli/delle)
+		- a:  ( al/ allo) ( alla/ all') ( ai/ agli/ alle)
+		- da: (dal/dallo) (dalla/dall') (dai/dagli/dalle)
+		- in: (nel/nello) (nella/nell') (nei/negli/nelle)
+		- su: (sul/sullo) (sulla/sull') (sui/sugli/sulle)
+	- quando usiamo le preposizioni articolate 
+		- quando il nome che segue è al plurale
+			- vado negli Stati Uniti a Natale
+				- MA: vado in Francia a Natale (singulare)
+			- questa è la scatola delle scarpe
+				- MA: ho voglio di cioccolato (singulare)
+				- MA: per esprimere la provenienza o il ritorno da uno Stato 
+					- vengo dall' Italia
+					- sono appena tornato dalla Francia
+		- quando il sostantivo che segue è determinato, specifico e non generico
+			- vivo nell’ Italia del Sud
+				- MA: vivo in Italia (generico)
+			- vado alla scuola di mia figlia
+			- lui va alla scuola in città
+				- MA: io vado a scuola (generico)
+		- davanti mari, fiumi, laghi, montagne
+			- vado in vacanza sulle Alpi
+			- faccio una crociera nel Mediterraneo
+			- mi bagno nel fiume Po
+			- MA: bisogna usare le preposizioni semplici con i nomi di città
+				- vado a Bologna
+				- parto per Parigi
+				- torno da Milano
+	- quale altra preposizione semplice può essere scritta come a preposizione articolata
+		- con: (col/collo) (colla/coll') (coi/cogli/colle)
+		- sbuccio la mela con il coltello (comunu)
+			- sbuccio la mela col coltello (anche correto)
+	- il libro __ studente è sul tavolo
+		- dello
+- pasato remoto
+	- i verbi regolari in -are
+		- test|are
+		- riscontr|are
+			- ai, asti, ò, ammo, aste, arono
+	- i verbi regolari in -ere
+		- tem|ere
+		- ricev|ere
+			- etti, esti, ette, emmo, este, ettero
+			- ei, ---, é, ---, ---, erono (meno commune)
+	- i verbi regolari in -ire
+		- part|ire
+		- consent|ire
+			- ii, isti, ì, immo, iste, irono
+	- essere
+		- fui, fosti, fu, fummo, foste, furono
+	- avere
+		- ebbi, avesti, ebbe, avemmo, aveste, ebbero
+	- il resto dei verbi
+		- i, esti, e, emmo, este, ero
+		- v, m, r, t, gg, rr --> "ss"
+			- leggere
+				- lessi, leggesti, lesse, leggemmo, leggeste, lessero
+		- rr --> "ss"
+			- correre
+				- corsi, corresti, corse, corremmo, correste, corsero
+		- n, v, nd --> "s"
+			- rispondere
+				- risposi, rispondesti, rispose, rispondemmo, rispondeste, risposero
+		- d --> "s"
+			- chiedere
+				- chiesi, chiedesti, chiese, chiedemmo, chiedeste, chiesero
+		- c, sc --> "cqu"
+			- piacere
+				- piacqui, piacesti, piacque, piacemmo, piaceste, piacquero
+		- sc --> "bb"
+			- conoscere
+				- conobbi, conoscesti, conobbe, conoscemmo, conosceste, conobbero
+		- ng --> "ns"
+			- fingere
+				- finsi, fingesti, finse, fingemmo, fingeste, finsero
+		- gli --> "ls"
+			- scegliere
+				- scelsi, scegliesti, scelse, scegliemmo, sceglieste, scelsero
+		- rg --> "rs"
+			- immergere
+				- immersi, immergesti, immerse, immergemmo, immergeste, immersero
+		- raddoppiare l'ultima consonante
+			- cadere
+				- caddi, cadesti, cadde, cademmo, cadeste, caddero
+		- raddoppiare l'ultima consonante + cambiano la radice
+			- sapere
+				- seppi, sapesti, seppe, sapemmo, sapeste, seppero				
+- passoto prossimo
+	- quali sono i participi passati dei tre tipi di verbi
+		- are: -ato
+		- ere: -uto
+		- ire: -ito
+	- Quando l'ausiliare è essere, cosa succede al participio passato 
+		- si accorda sempre in genere e numero con il soggetto 
+		- Laura è stata brava, invece Paolo e Luca sono stati cattivi
+		- lui è partito alle 6
+		- lei è partita alle 6
+		- loro sono partiti alle 6
+	- quali sono i participi passati irregolari più usati
+		- accendere 
+			- avete acceso la luce?
+		- aprire
+			- hanno aperto il negozio
+		- bere
+			- ho bevuto un litro d'acqua
+		- chiedere
+			- mi hai chiesto
+		- chiudere
+			- lei ha chiuso la scatola
+		- correre
+			- ho corso una maratona
+			- sono corso al negozio tre volte oggi
+			- lei è corsa al negozio due volte
+			- sono corsi al negozio cinque volte
+		- decidere
+			- abbiamo deciso di restare a casa
+		- dire
+			- mi hai detto
+		- discutere
+			- hanno discusso di molti argomenti
+		- dividere
+			- abbiamo diviso il capitolo in due parti
+		- fare 
+			- l'artista l'ha fatto
+		- leggere
+			- ha letto tutto il libro
+		- mettere
+			- mettono i cucchiai insieme alle forchette
+		- morire
+			- lui è morto nel 2001
+			- lei è morta nel 2001
+			- sono morti nel 2001
+		- nascere
+			- lui è morto nel 1977
+			- lei è morta nel 1977
+			- sono morti nel 1977
+		- offendere
+			- lei lo ha offeso
+		- perdere 
+			- aveva il portafoglio, ma lo ha perso
+		- piacere
+			- i pasti in hotel gli sono piaciuti
+			- la pasta al ristorante gli è piaciuta
+		- piangere
+			- lei ha pianto per questo
+		- prendere
+			- l'hanno preso con la forza
+		- ridere
+			- mi ha fatto male, ma ci ho riso sopra
+		- rimanere
+			- sono rimasti sull'isola
+		- rispondere
+			- abbiamo risposto affermativamente
+		- rompere
+			- il bambino ha rotto la finestra
+		- scegliere
+			- avete scelto quello verde
+		- scendere
+			- sei sceso dal treno a Parigi
+			- lei è scesa dal treno a Parigi
+			- loro sono scesi dal treno a Parigi
+		- soffrire
+			- abbiamo sofferto per tre anni
+		- spegnere
+			- ha spento la radio
+		- stare
+			- sono stato a casa tutto il giorno
+		- tradurre
+			- ha tradotto la lettera
+		- vedere
+			- hanno visto l'aereo atterrare
+		- venire
+			- lei è venuta, lui è venuto e loro sono venuti
+		- vincere
+			- abbiamo vinto l'ultima partita
+		- vivere
+			- abbiamo vinto l'ultima partita
+	- quali sono i participi passati dei verbi modali
+		- dovere
+			- ha dovuto lasciare il lavoro per dei litigi
+		- volere 
+			- oggi devi fare quello che non hai voluto fare ieri
+		- potere
+			- non ho potuto dirglielo perché era andato via
+		- sapere 
+			- come hanno saputo del vostro divorzio
+- infinito
+	- quali sono gli usi dell’infinito
+		- esprimere la forma base del verbo
+			- quella che si trova sul dizionario
+		- in frasi indipendenti
+			- esprimere un dubbio
+				- che fare?
+				- che dire?
+			- sottolineare un fatto improvviso, come se lo si stesse indicando 
+				- ecco arrivare il capo
+			- esprimere un desiderio che non si può realizzare 
+				- avere 10 anni adesso, starei sempre al parco a giocare con i miei amici
+		- con verbi modali
+			- l'infinito si usa subito dopo i verbi modali: volere, dovere, potere, sapere
+				- oggi devo lavorare
+				- ieri non ho potuto guardare il film
+				- il capo non vorrà darti l'aumento
+			- quando ci troviamo in presenza di un infinito accompagnato da un pronome, questo andrà messo subito dopo l'infinito, formando un'unica parola (l'infinito, in questo caso, perde la -e)
+				- spero di vederti domani, anche solo per pochi minuti
+				- so che è difficile, ma devi farlo senza rimandare ancora
+				- devo mangiarle oggi, altrimenti queste fragole andranno a male
+				- dopo essersi svegliato, ha iniziato a vestirsi in silenzio
+				- posso capirlo
+		- preceduto le preposizioni
+			- dipende da un sostantivo
+				- ho raccolto dei vestiti da donare in beneficienza
+				- abbiamo terminato il progetto da consegnare al cliente domenica
+				- hanno appena scritto una lettera da inviare ai loro parenti
+			- dipende da un verbo
+				- vado a fare la spesa al supermercato tutte le settimane
+				- prova a dormire almeno 8 ore per notte
+				- ricordami di innaffiare le piante
+				- non riesco a dormire
+		- nelle forme implicite
+			- so di essere molto alta
+			- credo di avere la febbre
+			- penso di aver esagerato con il vino
+		- con alcune congiunzioni: dopo, senza, primi di
+			- potrai uscire con i tuoi amici solo dopo aver fatto i compiti
+			- questa mattina sono uscita di casa senza essermi pettinata i capelli
+			- prima di cenare, dobbiamo chiamare la nonna
+			- mangia senza fare rumore
+		- infinito sostantivato
+			- se i verbi non hanno un sostantivo derivato o se questo è poco usato
+				- ho chiuso con lo svegliarmi presto la mattina
+				- con il passare del tempo, abbiamo notato dei cambiamenti in lui
+				- considero il tuo bere un po' eccessivo
+		- per istruzioni e ordini
+			- si trova spesso in ricette oppure in manuali d'istruzione
+				- versare il latte nella ciotola
+				- rompere le uova
+				- attaccare il dispositivo alla corrente
+				- accendere l'interruttore blu
+			- usiamo anche nell’imperativo negativo di 2 persona singolare
+				- non mangiare
+				- non bere
+				- non fumare
+- pronunciation
+	- pronunciare tutte le lettere
+		- questa è la regola d'oro
+		- ogni singola lettera scritta deve essere articolata con chiarezza
+		- con ogni sillaba ben distinta
+		- senza mai mangiare le lettere finali
+		- ogni lettera deve risuonare chiaramente
+		- creando quella musicalità tipica della lingua italiana
+	- la pronuncia delle vocali consecutive
+		- la paura [pa-OO-rah]
+		- tuoi [too-OH-ee]
+		- l'aiuola [ah-ee-oo-OH-la]
+	- le doppie consonanti
+		- il cuore della pronuncia italiana
+		- rendi più corta la vocale che precede la doppia consonante
+		- la consonante doppia stessa deve essere tenuta più a lungo
+			- caro e carro
+			- pala e palla
+			- pene e penne
+			- nono e nonno
+		- nei verbi
+			- partiremo / partiremmo 
+			- andremo / andremmo
+			- vedremo / vedremmo
+			- usciremo / usciremmo
+	- la n finale di non, in, con
+		- quando queste parole sono seguite da una parola che inizia con b (come bologna) o p, la n finale si trasforma in m 
+			- non parlo molto
+			- abito in periferia
+			- vengo con Barbara
+			- non bevo caffè
+			- lavoro in banca
+			- studio con Paolo
+	- i pronomi doppi
+		- l'accento rimane sempre sulla stessa sillaba del verbo
+		- dammelo [DAH-mel-oh]
+		- raccontamelo [rac-con-TAH-me-loh]
+		- compratelo [COM-prah-teh-loh]
+		- scrivigli [SKREE-vee-lee]
+		- portaglielo [PORT-ah-lee-loh]
+		- dicimelo [DEE-chee-meh-loh]
+		- restituiscimelo [REH-stee-too-ee-shee-may-loh]
+		- spiegatecela [speh-EGG-ah-tech-ah-la]
+	- il suono z
+		- [ts]
+			- esempi
+				- zucchero (tsucchero) – lo zucchero che metti nel caffè
+				- grazie (gratsie) – la parola di ringraziamento più usata
+				- pazzo (patso) – aggettivo che indica follia
+				- stazione (statsione) – dove arrivano treni e autobus
+				- azione (atsione) – un'attività o un movimento
+				- pezzo (petso) – una parte di qualcosa
+				- piazza (piatsa) – lo spazio pubblico aperto
+				- tazza (tatsa) – il contenitore per il caffè
+			- tendenza
+				- "zz"
+					- pizza, pazzo, piazza, tazza, pezzo
+				- suffisso -zione
+					- stazione, azione, nazione, lezione
+		- [ds]
+			- esempi
+				- zaino (dsaino) – una borsa che indossi sulla schiena
+				- romanzo (romandso) – un libro narrativo lungo
+				- mezzo (medso) – metà 
+				- azzurro (adsurro) – il colore blu chiaro
+				- zanzara (dsandsara) – l'insetto fastidioso
+				- zona (dsona) – un'area o territorio
+				- pranzo (prandso) – il pasto di mezzogiorno
+			- tendenza
+				- all'inizio di parola
+					- zaino, zero, zanzara, zona
+				- in mezzo a parola dopo "n"
+					- pranzo, danza, stanza, bonzo
+				- suffisso -anza/-enza
+					- stanza, danza, speranza, presenza
+	- il/del/sul/dal/al
+		- il + parola che inizia con "l"
+			- il limone → [illimone] (ho comprato illimone al mercato)
+			- il lavoro → [illavoro] (illavoro è molto importante)
+			- il lessico → [illessico] (illessico italiano è vasto)
+			- il lampione → [illampione] (illampione è rotto)
+			- il libro → [illibro] (illibro è sul tavolo)
+			- il latte → [illatte] (illatte è fresco)
+		- il + parola che inizia con "r"
+			- il riso → [ir riso] (ir riso è un cereale importante)
+			- il regalo → [ir regalo] (ir regalo è bellissimo)
+			- il rosso → [ir rosso] (ir rosso è il mio colore preferito)
+			- il ragazzo → [ir ragazzo] (ir ragazzo è simpatico)
+			- il ristorante → [ir ristorante] (ir ristorante è vicino)
+			- il rumore → [ir rumore] (ir rumore è fastidioso)
+		- è lo stesso con del/sul/dal/all
+			- del limone --> dellimone
+			- del riso --> der riso
+		- frasi con queste regole di pronuncia applicate
+			- il ragazzo porta il limone al ristorante
+				- [ir ragazzo porta illimone ar ristorante]
+			- del riso e del latte
+				- [der riso e dellatte]
+	- la schwa italiana
+		- aggiungere un suono "eh" alla fine di tutte le parole straniere che terminano con una consonante
+			- email --> e-mail-"eh"
+			- hotel --> oh-tell-"eh"
+		- frasi complete
+			- il mio managerə e io siamo andati a Milano questo weekendə
+			- devo rispondere a questa emailə urgente
+			- faccio marketingə per un'azienda di sportə
+			- sono un followerə del tuo blogə
+- conditionale
+	- come formare tutti il condizionale presente
+		- come formare la base
+			- regolare: rimuovi l'ultima lettera
+				- parlare --> parler- (a diventa e)
+					- i verbi che terminano in -care e -gare prendono una h dopo la -c e la -g in tutte le persone
+						- pagare --> pagher-
+						- comunicare --> comunicher-
+					- i verbi in -ciare e -giare perdono la -i in tutte le persone
+						- cominciare --> comincer-
+						- mangiare --> manger-
+				- leggere --> legger-
+				- dormire --> dormir- 	
+		- aggiungere le desinenze
+			- ei
+			- esti
+			- ebbe
+			- emmo
+			- este
+			- ebbero
+	- quali sono le basi dei verbi irregolari
+		- are
+			- stare --> star-
+			- dare --> dar-
+			- fare --> far-
+			- andare --> andr-
+		- ere core
+			- essere --> sar-
+			- avere --> avr-
+			- volere --> vorr- ("rr")
+			- dovere --> dovr-
+			- potere --> potr-
+			- sapere --> sapr-
+		- ere altre
+			- vedere --> vedr-
+			- cadere --> cadr-
+			- vivere --> vivr-
+		- ere "rr"
+			- rimanere --> rimarr-
+			- mantenere --> manterr-
+			- tenere --> terr-
+			- bere --> berr-
+		- ire
+			- venire --> verr
+	- quando usare il condizionale presente
+		- per esprimere un desiderio
+			- mi piacerebbe tanto visitare Paris
+			- quanto vorrei che fosse già estate
+		- per esprimere cortesia
+			- vorrei un caffè per favore
+			- mi daresti il tuo numero di telefono, gentilmente
+		- per esprimere opinioni personali
+			- lucia vuole organizzare una festa a sorpresa per suo fratello, sarebbe una cosa carina a mio parere
+		- per esprimere un consiglio
+			- secondo me, dovresti impegnarti di più nel tuo lavoro
+		- in una frase ipotetica per esprimere possibilità
+			- se fossi ricca, comprerei una villa a Cannes
+			- se chiedesse scusa, lo perdonerei
+		- per esprimere un dubbio
+			- come potrei fare per risolvere questo problema adesso
+			- e quest'uomo chi sarebbe
+			- tra le vittime del disastro aereo ci sarebbero 5 italiani 
+	- come formare tutti il condizionale passato
+		- usando il presente condizionale dell’ausiliare essere o avere + il participio passato del verbo
+			- lui/lei sarebbe andato/a
+			- lui/lei avrebbe finito
+	- quando usare il condizionale passato in italiano
+		- negli stessi casi del presente, ma in riferimento ad azioni ed eventi passati, salvo con l'espressione di cortesia
+			- quando sono stata alla festa, mi sarebbe piaciuto fare più foto, ma purtroppo avevo il cellulare scarico
+			- peccato che quella festa sia saltata, sarebbe stata divertente secondo me
+			- non avresti dovuto lasciarlo andare
+			- se tu avessi chiamato Luca, ti avrebbe detto la verità
+			- quando è andata via, ho pianto tanto, ma cos'altro avrei potuto fare per fermarla
+			- il criminale sarebbe stato avvistato al confine con la Svizzera
+		- per esprimere il futuro nel passato
+			- mi ha detto che avrebbe fatto tardi
+- imperfetto
+	- come si coniuga essere et avere
+		- essere: ero, eri, era, eravamo, eravate, erano
+		- avere: avevo, avevi, avevamo, avevate, avevano
+	- come si coniugono -are, -ere, -ire
+		- are: avo, avi, ava, avamo, avate, avano
+		- ere: evo, evi, eva, evamo, evate, evano
+		- ire: ivo, ivi, iva, ivamo, ivate, ivano
+	- come si coniuga dare
+		- davo, davi, dava, davamo, davate, davano
+		- da giovane, Luigi dava sempre una mano ai suoi amici
+	- come si coniuga rimanere
+		- rimanevo, rimanevi, rimaneva, rimanevamo, rimanevate, rimanevano
+		- quando faceva freddo, rimanevamo sempre a casa
+	- come si coniuga finire
+		- finivo, finivi, finiva, finivamo, finivate, finivano
+		- quando finivano di lavorare, passavano dal mio negozio
+	- cosa rende l'imperfetto facile da ricordare
+		- molti verbi che al presente indicativo sono irregolari assumono una coniugazione completamente regolare all'imperfetto
+		- ad esempio: andare, tenere, uscire
+	- i verbi di quattro lettere sono irregolari
+		- fare: facevo, facevi, faceva, facevamo, facevate, facevano
+			- da piccola, facevo sempre i compiti dopo pranzo
+		- bere: bevevo, bevevi, beveva, bevevamo, bevevate, bevevano
+			- voi bevevate sempre il caffè ma ora preferite il tè
+		- dire: dicevo, dicevi, diceva, dicevamo, dicevate, dicevano
+			- dicevano che avevi sbagliato
+	- come si coniugono i verbi modali
+		- volere: volevo, volevi, voleva, volevamo, volevate, volevano
+			- volevate quell'appartamento o questo
+		- dovere: dovevo, dovevi, doveva, dovevamo, dovevate, dovevano
+			- quando eravamo piccoli, dovevamo usare la lira e non l'euro
+		- potere: potevo, potevi, poteva, potevamo, potevate, potevano
+			- prima si poteva fumare nei bar, ora no
+		- sapere: sapevo, sapevi, sapeva, sapevamo, sapevate, sapevano
+			- come mai sapevate del suo licenziamento
+- ne
+	- quando usiamo ne
+		- per sostituire di/da + una cosa o una persona
+			- hai conosciuto il nuovo fidanzato di sara, che ne pensi 
+				- di lui
+			- sì, l'ho conosciuto e ne sono rimasta affascinata
+				- da lui
+			- hai paura dei ragni / sì, ne ho paura
+				- di loro
+			- sono andata in banca alle 8 e ne sono uscita solo alle 11
+				- dalla banca
+		- per indicare parte di una quantità
+			- quanti caffè hai bevuto / ne ho bevuti solo due 
+				- di caffè
+			- ho comprato sette riviste ma ne ho lette solo tre
+				- di riviste
+		- per sostituisce una quantità zero
+			- quanti caffè hai bevuto / non ne ho bevuto nessuno
+				- di caffè
+			- quante riviste hai letto / non ne ho letta nessuna
+				- di riviste
+		- per sostituire un'intera frase detta prima
+			- oggi è una bella giornata, potremmo andare al mare, che ne pensi
+				- di quell'idea
+		- per dare maggiore enfasi a quanto viene dopo, usato come un pleonastico (cioè inutile, superfluo, non necessario) 
+			- che ne dici di andare al mare
+		- per usare espressioni che si formano con il ne
+			- andarsene (andare via, partire dal posto in cui ci si trova)
+				- basta, me ne vado
+					- dal posto in cui mi trovo
+				- (to get out of here)
+				- qualcuno se ne va e poi non si ritrova più
+			- non poterne più (essere stanchi di qualcosa)
+				- sei di nuovo in ritardo, non ne posso più
+					- del tuo ritardo
+				- (can't take it anymore)
+			- valerne la pena (qualcosa è degna degli sforzi e dell'impegno, li merita)
+				- visitare Firenze in un giorno è stato faticoso ma ne è valsa la pena
+					- della fatica che abbiamo fatto per vederla in un giorno
+				- (worth it)
+			- volerne a qualcuno (essere arrabbiati con qualcuno)
+				- non me ne volere ma penso che tu stia sbagliando
+					- non essere arrabbiato con me ma penso che tu stia sbagliando
+			- farne di tutti i colori (combinare pasticci, guai)
+				– i figli di mario sono delle pesti, ne fanno sempre di tutti i colori
+			- dirne di tutti i colori (dire molte cose spiacevoli su qualcuno)
+				- dopo aver litigato col fidanzato, Roberta ne ha dette di tutti i colori su di lui
+	- dove si colloca "ne" in relazione ad altri pronomi
+		- me ne vado (I'm leaving)
+		- me ne dai (give me some)
+- ne o ci o ce// #ne #ce #ci ``ne ``ce ``ci
+	- esercizi
+		- Ne and Ci: Practice
+			- spiegazioni, domande e risposte
+			- https://learnitalian.web.unc.edu/home/pronouns/ne-and-ci/ne-and-ci-practice
+				- pensi spesso alla tua familia?
+					- sì, ce penso spesso
+	- a cosa servono
+		- la loro funzione principale è quella di sostituire parole o intere parti di una frase, evitando così ripetizioni inutili
+	- dove sono posizionati
+		- prima del verbo
+	- panoramica delle regole
+		- ne substitutes for a preposition + noun in expressions with the preposition di or da
+			- avere bisogno di
+			- avere voglia di
+			- avere paura di
+		- ci substitutes for a preposition + noun in expressions with the prepositions a, in, da, su, (un luogo)
+			- a
+				- pensare a
+				- arrivare a
+				- credere a
+				- andare a
+			- su
+				- salire su
+			- luogo
+				- essere in Italia
+	- ne
+		- indica una parte di una quantità
+			- esempi generali
+				- prendo cinque cioccolatini 
+					- ne prendo cinque
+				- assaggia un po' di torta 
+					- assaggiane un po'
+				- mancano molti documenti
+					- ne mancano molti
+				- non voglio del miele
+					- non ne voglio
+				- Luca ha 5 fratelli ma io non ne ho nessuno
+				- allora ne prendiamo quattro
+				- ne prenderò quattro
+				- vorrei comprarne uno per mia sorella
+				- ce ne sono tanti, scegli quello che ti piace
+				- ce ne sono troppi, scegli quello che preferisci
+				- perché questa volta ne ho di meno
+			- esempi che non fanno riferimento a nulla prima della frase
+				- scusi, ce ne porta quattro cappuccini e due brioche?
+			- con un participio passato, bisogna concordare il participio passato in genere e numero con il sostantivo sostituito da "ne"
+				- quante valigie hai portato
+					- ne ho portata una sola
+					- ne ho portate solo due
+				- quanti gelati hai mangiato
+					- ne ho mangiati tre
+			- quanti libri prendi?
+				- ne prendo tre
+			- hai mangiato tutta la pizza?
+				- ne ho mangiato tanta
+			- vuoi del latte?
+				- no, non ne prendo
+			- note you have to agree with the noun
+				- quanti chili di banana hai comprato?
+					- ne ho comprati due
+				- hai preso dell'acqua?
+					- sì, ne ho presa
+			- quanti corse segui?
+				- ne seguo cinque
+			- quanti email scrivi al giorno?
+				- ne scrivo dieci al giorno
+		- sostituisce "di qualcuno / di qualcosa / di questo / di quella cosa / di questa cosa / di ciò"
+			- hai bisogno di aiuto? / no, non ne ho bisogno
+			- mi ricordo di Maria / me ne anche ricordo 
+			- parliamo del problema / sì, ne parliamo
+			- non so nulla di questa storia e non ne voglio sapere niente
+			- me ne sono appena ricordato
+				- "ne" sostituisce "di qualcosa"
+				- il verbo è "ricordarsi di qualcosa"
+			- il motivo è che non ce n'è abbastanza
+			- così ce ne ricordiamo per sempre
+				- ce = a noi / per noi stessi, cioè indica chi si ricorda
+			- me ne ricordo
+				- io mi ricordo di questo
+			- te ne ricordi?
+				- tu ti ricordi di questo?
+			- ce ne ricordiamo
+				- noi ci ricordiamo di questo
+			- è stata lunga, ma ne è valsa la pena
+				- ne = "di questa cosa / di ciò" (riferito allo sforzo, alla situazione, all'esperienza)
+				- qui "valsa" è il participio passato del verbo "valere", che significa essere utile, meritare, avere valore
+			- io non me ne intendo molto 
+				- non sono molto esperto di qualcosa
+				- non so molto su un certo argomento
+				- altri esempi
+					- io me ne intendo di tecnologia
+					- lui non se ne intende di cucina
+					- voi ve ne intendete di arte?
+			- rendersi conto
+				- ci si rende conto di quanto fosse importante questo luogo
+			- e non me ne dimenticherò facilmente
+			- parlate del libro?
+				- sì, ne parliamo 
+				- no, non ne stiamo parlando
+			- hai bisogno degli occhiali?
+				- no, non ne ho bisogno
+				- sì, ne ho bisogno
+			- avete voglia di un gelato?
+				- sì, ne abbiamo voglia
+			- parlano spesso di politica?
+				- sì, ne parlano spesso
+			- ne è valsa la pena
+				- è valsa la pena di questo
+		- sostituisce "da qualcuno / da qualcosa / da qui / da qualche parte"
+			- vengo da Milano / ne anche vengo
+			- usciamo dal ristorante / sì, ne usciamo
+			- mi allontano da quella situazione / me ne allontano
+			- va bene, ce ne stiamo qui
+				- ce = a noi / per noi stessi (riflessivo)
+				- ne = da qui / da qualche parte
+			- domani ce ne andiamo a fare un'altra avventura
+				- ce ne andiamo = andiamo via da qui
+			- vado via da qui
+				- me ne vado 
+			- torniamo a casa da qui
+				- ce ne torniamo a casa
+			- sono andati via da qui prima
+				- se ne sono andati prima
+			- che cosa hai preso dalla pasticceria?
+				- ne ho preso una torta
+			- a che ora esci dall'ufficio
+				- ne esco alle 6:00
+		- andarsene: (da un luogo) = andare via
+			- non me ne voglio più andare da qui
+			- no, grazie, me ne vado così
+				- indica da questo luogo / da qui / via da qui
+			- Ragazzi, ce ne andiamo subito o vogliamo fare colazione prima?
+			- poi ce ne andiamo con calma
+		- starsene: stare lì senza fare niente (e questo dà fastidio)
+			- non starsene lì ferma
+				- stare lì ferma
+					- neutro
+					- stand there still
+				- starsene lì ferma 
+					- più espressivo: stare lì senza fare niente (e questo dà fastidio)
+			- non starsene lì ferma
+		- fregarsene: fregarsene di qualcosa = non importarsene
+			- non me ne frego della dieta
+				- "ne" sostituisce "di essa / di quella cosa", riferendosi alla dieta
+				- il verbo fregarsene richiede sempre "ne" quando indica di cosa non ti importa.
+				- se togli "ne", la frase perde il senso e diventa grammaticalmente scorretta
+				- io non mi preoccupo della dieta 
+		- importarsene: 
+			- non me ne importa della dieta
+		- io me ne intendo un po' di storia
+			- senza il "ne", la frase non è corretta
+			- intendersi di qualcosa non esiste senza "ne"
+		- elemento che si usa spesso per rendere la frase più naturale e fluida nella forma impersonale
+			- ci si rende conto di quanto fosse importante questo luogo
+				- si rende conto → corretto ma meno frequente
+				- ci si rende conto → standard, più naturale
+		- è richiesto per una frase fissa
+			- me ne sono reso conto
+				- mi sono reso conto di qualcosa
+				- ma "me sono reso conto" è sbagliato, poiché manca "di cosa"
+	- ci
+		- un pronome riflessivo per noi
+			- quando siamo in vacanza, ci svegliamo sempre molto tardi
+			- non ci vediamo da molto tempo, ma ci incontreremo di nuovo dopodomani
+		- un pronome che sostituisce noi o a noi
+			- Paolo ha accompagnato me e mia sorella all'aeroporto
+				- Paolo ci ha accompagnato all’aeroporto
+			- Mia nonna ha sempre dato buoni consigli a me e ai miei cugini
+				- mia nonna ci ha sempre dato buoni consigli
+			- Scusi, ci può dire come arrivarci
+			- Cosa ci consiglia?
+			- facciamoci una foto
+				- facciamo una foto a noi stessi
+				- facciamo una foto insieme
+			- dai, proviamoci
+			- fermarsi
+				- io direi di fermarci qui
+					- fermare noi stessi
+					- mi fermo qui
+					- ci fermiamo un attimo
+					- il treno si ferma alla stazione				
+		- si riferisce a un luogo (sostituisce "qui", "lì", "in questo luogo", "in quel luogo"...), sostituisce un luogo già noto nel contesto
+			- vado a Torino domani
+				- ci vado domani
+			- non stiamo mai in casa il sabato sera
+				- non ci stiamo mai il sabato sera
+			- con chi sei andato alle Hawaii l'anno scorso
+				- con chi ci sei andato
+			- a che ora sei arrivato in ufficio?
+				- ce sono arrivato alle nove
+			- Scusi, ci può dire come arrivarci
+			- certo, ci andate sempre dritto e poi girate a sinistra
+			- non ci vedo bene in questa stanza, c'è poca luce
+			- a che ora andiamo al ristorante?
+				- ci andiamo alle otto
+			- sei mai stata in Sicilia?
+				- no, non ci sono mai stata
+		- sostituisce "a qualcosa"
+			- hai pensato a un piano
+				- ci hai pensato
+			- non fare caso alle sue parole
+				- non farci caso
+			- prova a cucinare il pollo
+				- ci prova
+			- ma voglio provarci
+			- Ragazzi, ci pensate
+			- non so perché ci metta così tanto
+				- "ci" sostituisce "a fare questa cosa"
+			- non ci credo, è fantastico
+				- significa in esso / in quello / a questa cosa
+				- Non credo a questa cosa = non ci credo
+			- e tutti ci credono davvero 
+			- Luca ci pensa un attimo
+			- pensi molto agli errori del passato?
+				- sì, ci penso spesso
+			- credi alla magia?
+				- no, non ci credo molto
+		- sostituisce "in qualcuno/qualcosa"
+			- non crede in Dio
+				- non ci crede
+			- Lea è cascata nello scherzo
+				- Lea ci è cascata
+		- sostituisce "con qualcuno/qualcosa"
+			- parlo sempre con mia sorella
+				- ci parlo sempre
+			- non giocavo spesso con le bambole
+				- non ci giocavo spesso
+		- sostituisce "su qualcuno/qualcosa"
+			- scommetto 10 euro su questo fatto
+				- ci scommetto 10 euro
+			- possiamo contare su di lui?
+				- sì, possiamo contarci
+			- siete saliti sul treno?
+				- sì, ci siamo saliti
+		- sostituisce "per questo / per fare questa cosa"
+			- Quanto tempo ci vuole?		
+		- unisce ad alcuni verbi per formarne degli altri dal significato diverso
+			- metterci
+				- indica tempo o impegno necessario
+					- per finire questo esercizio ci metti almeno mezz'ora
+					- ci = it, metti = takes
+			- esserci
+				- indica presenza o disponibilità
+					- domani sera ci sei o lavori
+			- volerci
+				- indica necessità (impersonale)
+					- per capire questo concetto ci vogliono pazienza e tempo
+			- vederci
+				- indica capacità visiva o chiarezza
+					- senza occhiali non ci vedo bene
+			- viverci 
+				- Bisogna viverci questi momenti
+			- ci + la = ce (per ragioni fonetiche, non logiche)
+				- farcela
+					- indica riuscire
+						- è difficile, ma ce la fai se studi con costanza
+				- avercela
+					- indica essere arrabbiati con qualcuno
+						- perché ce l'hai con me
+		- serve come elemento grammaticale quando ne è presente insieme ad altri pronomi
+			- sì, grazie, ce ne porti anche una bottiglia d’acqua
+				- ne = di qualcosa
+					- ne porti una bottiglia = porti una bottiglia di quella cosa
+		- pone l'accento sul successo
+			- la facciamo → focus sull’azione, più semplice e neutro
+			- ce la facciamo → focus su riuscire, possibile difficoltà
+		- cambia leggermente il significato
+			- se ci penso
+				- se ci penso
+					- pensiero generale
+					- se ci penso, non era una buona idea
+				- se penso
+					- pensare a una cosa specifica
+					- se penso a te, sorrido
+					- se penso al futuro, mi preoccupo
+		- 
+	- ci si
+		- costruzione standard dei verbi riflessivi/impersonali quando si parla di sensazioni o stati generali
+			- ci si sente liberi
+				- altri esempi
+					- ci si sente liberi quando si cammina in montagna
+					- ci si diverte sempre al parco
+				- raro o errato
+					- si sente liberi
+					- ma è corretto: Luca si sente libero
+						- corretto perché Luca è un soggetto definito
+	- ce
+		- farcela = riuscire
+			- Mah, io non so se ce la faccio
+		- "ci" cambia forma in "ce" quando è combinato con "ne" (o altri pronomi come lo, la, li, le)
+			- Ah sì? Allora ce ne parli dopo
+				- Non si dice "ci ne",  → è grammaticalmente sbagliato.
+		- rende la costruzione idiomatica
+			- ce la facciamo
+				- non significa "ci" in senso di luogo
+			- la differenza tra “ce la facciamo” e “la facciamo” è sottile ma importante
+				- ce la facciamo
+					- riusciamo a farcela
+					- siamo in grado di farlo
+					- esemplio: ce la facciamo a finire il progetto entro domani
+				- la facciamo
+					- facciamo quella cosa
+					- compiamo quell'azione (accomplish)
+					- esempi
+						- la facciamo domani?
+						- la facciamo insieme
+		- aggiunge una sfumatura di presenza
+			- sì, ce li ho in tasca
+				- "ci li" = ce
+				- sì, li ho in tasca 
+					- frase semplice, naturale è anche corretto
+				- ma "ce li ho" aggiunge una sfumatura di presenza
+					- disponibilità “qui con me”
+					- spesso implica: “li ho già con me, tranquillo”
+
+- l'imperativo
+	- come formare l'imperativo per tu e voi
+		- si usa il coniugazione presente indicativo
+			- prendi il mio cellulare
+			- state attenti alla lezione di oggi
+			- ECCEZIONE: con i verbi -are, usare "a" invece di "i"
+				- passa la palla
+	- come formare l'imperativo per noi e Lei
+		- si usa il congiuntivo presente
+			- iniziamo subito 
+				- (NOTARE CHE: di solito uguale al presente)
+			- prego, vada avanti
+	- come formare l'imperativo negativo per Lei, noi, voi
+		- seguire le regole di cui sopra aggiungendo "non"
+			- non vada
+			- non prendiamo
+			- non mangiate
+	- come formare l'imperativo negativo per tu
+		- con "non" + infinito
+			- non prendere
+			- non andare
+			- non dormire
+	- cosa succede se hai un pronome con l'imperativo "tu"
+		- il pronome di solito si unisce al verbo in una sola parola
+			- prendi il quaderno --> prendilo
+			- parla a me --> parlami
+		- alla forma negativa, però, il pronome può andare sia dopo il verbo, sia tra il verbo e la negazione
+			- non prenderlo = non lo prendere
+			- non parlatemi = non mi parlate
+	- quali sono i verbi irregolari all'imperativo (tu/voi)
+		- essere: sii, siate
+		- avere: abbi, abbiate
+		- sapere: sappi, sappiate
+		- stare: sta'
+		- fare: fa'
+		- andare: va'
+		- dare: da'
+
+- futuro
+	- come formare tutti il condizionale presente
+		- come formare la base
+			- regolare: rimuovi l'ultima lettera
+				- parlare --> parler- (a diventa e)
+					- i verbi che terminano in -care e -gare prendono una h dopo la -c e la -g in tutte le persone
+						- pagare --> pagher-
+						- comunicare --> comunicher-
+					- i verbi in -ciare e -giare perdono la -i in tutte le persone
+						- cominciare --> comincer-
+						- mangiare --> manger-
+				- leggere --> legger-
+				- dormire --> dormir- 	
+		- aggiungere le desinenze
+			- ò
+			- ai
+			- à
+			- emo
+			- ete
+			- anno
+	- quali sono le basi dei verbi irregolari
+		- are
+			- stare --> star-
+			- dare --> dar-
+			- fare --> far-
+			- andare --> andr-
+		- ere core
+			- essere --> sar-
+			- avere --> avr-
+			- volere --> vorr- ("rr")
+			- dovere --> dovr-
+			- potere --> potr-
+			- sapere --> sapr-
+		- ere altre
+			- vedere --> vedr-
+			- cadere --> cadr-
+			- vivere --> vivr-
+		- ere "rr"
+			- rimanere --> rimarr-
+			- mantenere --> manterr-
+			- tenere --> terr-
+			- bere --> berr-
+		- ire
+			- venire --> verr
+	- quando usare il futuro
+		- per esprimere azioni ancora da compiere
+			- l'anno prossimo andrò in Brasile
+			- il presente venga utilizzato anche per esprimere eventi futuri
+				- domani incontreremo il Presidente
+				- domani incontriamo il Presidente
+		- per esprimere insicurezza, dubbi
+			- è buio fuori, sembra molto tardi, che ore saranno
+		- per esprimere ipotesi
+			- questo vestito costerà almeno 400 euro, non posso permettermelo
+		- per togliere importanza ad un argomento
+			- Luisa sarà anche una brava ragazza, ma proprio non la sopporto
+- futuro anteriore
+	- come formare futuro anteriore
+		- usare il futuro del verbo essere o avere + il participio passato del verbo
+			- io sarò andato/a
+			- io avrò finito
+	- quando usare
+		- per esprimere due azioni di cui una accade dopo l’altra 
+			- quando avrai finito di mangiare, andremo al cinema
+			- non appena saremo arrivati a parigi, visiteremo la torre eiffel
+		- negli stessi casi in cui abbiamo il futuro semplice, ma per esprimere un'azione al passato
+			- oggi luigi ha mal di testa, sicuramente avrà dormito poco ieri sera
+
+- essere vs stare
+	- quando viene utilizzato "essere"
+		- si usa per esprimere l'esistenza, la qualità o la condizione 
+			- Rocco è allegro oggi
+			- la penna è blu
+			- lei è un'insegnante
+		- per indicare la posizione 
+			- Rocco è in bagno
+		- per esprimere la presenza con "c'è" o "ci sono"
+			- c'è un quaderno su questa scrivania
+			- ci sono due quaderni su questa scrivania
+			- ci sei fin qui? (è tutto chiaro finora?)
+		- per eventi/date
+			- la festa è sabato sera
+	- quando viene utilizzato "stare"
+		- per esprimere una condizione temporanea che può essere fisica, psicologica o estetica
+			- con i nuovi occhiali da sole, lui sta molto bene
+			- lei ha la febbre: sta male
+		- per indicare la posizione abituale di qualcosa
+			- il cucchiaio sta nel cassetto
+		- per esprimere comportamenti temporanei
+			- stare attenti
+			- stare in ansia
+			- stare zitti
+			- stare in silenzio	
+		- "starci" può significare essere d’accordo o entrarci 
+			- andiamo in pizzeria? / sì, ci sto
+			- il mio cellulare nella tasca proprio non ci sta
+		- "stare + gerundio" indica un'azione in corso di svolgimento
+			- in questo momento, stai leggendo un articolo 
+		- "stare per + infinito" indica quello che si farà tra pochissimo tempo
+			- stai per finire questa lezione
+
+- ciascun vs ogni
+	- ciascun [cha-SKOON]
+		- mette l’accento sull’individualità
+			- ciascun verbo ha la propria coniugazione
+				- ogni singolo verbo, preso separatamente
+	- ogni
+		- è più generale, più neutro
+			- ogni verbo italiano ha un infinito
+				- qui non stai distinguendo i verbi uno per uno: fai un’affermazione generale
+
+- gerundio
+	- come formi gerundio presente
+		- are: -ando
+			- mangiare → mangiando
+			- parlare → parlando
+		- ere: -endo
+			- scrivere → scrivendo
+			- leggere → leggendo 
+		- ire: -endo
+			- partire → partendo
+			- finire → finendo 
+		- cambia queste radici verbali
+			- dire --> dicendo
+			- bere --> bevendo
+	- come formi gerundio passato
+		- gerundio presente degli ausiliari (essendo e avendo) + participio passato
+			- avendo fatto 
+				- having done
+			- essendo andato
+				- having gone
+	- come e quando usare il gerundio
+		- per esprimere la maniera in cui avviene qualcosa
+			- sono dimagrita mangiando solo verdura
+		- per esprimere una causa
+			- avendo avuto la febbre, Marta non è uscita di casa per giorni
+		- per esprimere una condizione		
+			- ascoltando i consigli di chi ha più esperienza, si arriva lontano
+		- con significato temporale, esprimere contemporaneità
+			- facendo la doccia, Laura pensa alle sue esperienze passate
+			- andando in bici, ho incontrato Paolo
+			- camminando, ascoltava la musica
+		- per esprimere una concessione
+			- pur non avendo fame, ho mangiato
+				- nonostante non avessi fame, ho mangiato
+		- quando abbiamo soggetti diversi, tendiamo a non usare il gerundio
+			- mentre io faccio la doccia, Laura pensa alle esperienze passate
+			- in realtà, sarebbe possibile, ma bisogna esplicitarli
+				- avendo Marta avuto la febbre, siamo andati tutti a trovarla
+				- pur non avendo io fame, mia madre ha mangiato
+		- "stare + gerundio" indica un'azione in corso di svolgimento in un determinato momento
+			- che fai / sto mangiando un panino
+			- quando mi hai chiamato, stavo parlando con Luca
+		- "andare + gerundio" indica un'azione che si svolge in un tempo non definito
+			- Giovanni va dicendo che la sua fidanzata lo tradiva
+
+- congiuntivo
+	- come si coniuga "essere" e "avere" per il presente congiuntivo
+		- sia, sia, sia, siamo, siate, siano
+			- penso che siate molto intelligenti
+		- abbia, abbia, abbia, abbiamo, abbiate, abbiano
+			- penso che tu abbia una casa splendida
+	- come si coniuga tutti gli altri verbi per il presente congiuntivo
+		- togliere loro le desinenze dell'infinito (-are, -ere, -ire)
+			- parlare --> parl-
+				- mangiare --> mang-
+			- vedere --> ved-
+			- dormire --> dorm-
+		- aggiungere quelle del congiuntivo presente
+			- ARE: i, i, i, iamo, iate, ino
+			- ERE: a, a, a, iamo, iate, ano
+			- IRE: a, a, a, iamo, iate, ano 
+				- (finire, pulire, impedire, ...) 
+					- isca, isca, isca, iamo, iate, iscano 
+		- verbi irregolari
+			- ARE
+				- stare: stia, stia, stia, stiamo, stiate, stiano
+					- credi che Francesco stia ancora dal dentista
+				- fare: faccia, faccia, faccia, facciamo, facciate, facciano
+					- non so se i miei amici facciano o meno un party per Capodanno
+				- andare: vada, vada, vada, andiamo, andiate, vadano
+					- penso che vadano al ristorante ogni sabato
+				- dare: dia, dia, dia, diamo, diate, diano
+					- non penso che in quel negozio diano qualcosa in omaggio
+			- ERE
+				- volere: voglia, voglia, voglia, vogliamo, vogliate, vogliano
+					- non so se Federica voglia partecipare al progetto
+				- dovere: debba, debba, debba, debiamo, debiate, debbano
+					- credi che debbano fare una pausa
+				- potere: possa, possa, possa, possiamo, possiate, possano
+					- non penso che possiate farlo
+				- sapere: sappia, sappia, sappia, sappiamo, sappiate, sappiano
+					- che io sappia, l'autobus è già passato
+				- tenere: tenga, tenga, tenga, teniamo, teniate, tengano
+					- è importante che io tenga tutto sotto controllo
+				- mantenere: mantenga, mantenga, mantenga, manteniamo, manteniate, mantengano
+					- è fondamentale che mantengano la calma durante la crisi
+			- IRE
+				- uscire: esca, esca, esca, usciamo, usciate, escano
+					- è bene che tu non esca con questo freddo, potresti ammalarti
+				- venire: venga, venga, venga, veniamo, veniate, vengano
+					- credo che vengano anche Marco e suo fratello in gita con noi
+				- dire: dica, dica, dica, diciamo, diciate, dicano
+					- voglio che dicano la verità
+	- punti da ricordare riguardo al presente congiuntivo
+		- il verbo delle tre persone singolari è uguale, perciò abbiamo bisogno di esplicitare il pronome personale soggetto per evitare equivoci
+			- che io parli chiaramente è importante
+			- dubito che tu venga domani
+			- penso che lui sappia la verità
+		- il verbo della prima persona plurale è uguale a quello della prima persona plurale del presente indicativo
+			- siamo --> siamo
+			- abbiamo --> abbiamo
+		- il verbo della terza persona plurale è uguale a quello delle persone singolari +no
+			- sia --> siano
+			- abbia --> abbiano
+	- come si forma il congiuntivo passato 
+		- essere
+			- sia stato/a
+			- sia stato/a
+			- sia stato/a
+				- Marco non è venuto: che sia stato trattenuto a lavoro?
+			- siamo stati/e
+			- siate stati/e
+			- siano stati/e
+		- avere
+			- abbia avuto
+			- abbia avuto
+			- abbia avuto
+				- Marco non è venuto: che abbia avuto un imprevisto?
+			- abbiamo avuto
+			- abbiate avuto
+			- abbiano avuto
+		- andare
+			- sia andato/a
+			- sia andato/a
+			- sia andato/a
+				- non credo che lui sia andato a Roma
+			- siamo andati/e
+			- siate andati/e
+			- siano andati/e
+		- fare
+			- abbia fatto
+			- abbia fatto
+			- abbia fatto
+			- abbiamo fatto
+				- pensiamo che tu abbia fatto bene a trovare questo nuovo lavoro
+			- abbiate fatto
+			- abbiano fatto
+	- quando usi il congiuntivo passato
+		- con verbi che esprimono un'opinione 
+			- pensare, credere/ritenere (believe), supporre, immaginare, avere l'impressione che
+				- oggi farà molto freddo
+					- credo che faccia molto freddo oggi
+				- questo vestito mi sta bene
+					- pensi che questo vestito mi stia bene?
+				- il suo fidanzato la tradisce
+					- lei ha l'impressione che il suo fidanzato la tradisca
+		- con verbi che esprimono volontà, desiderio
+			- volere, desiderare, preferire, gradire (like/enjoy) che
+				- vado a casa sua stasera
+					- vuole che io vada a casa sua stasera
+				- Marco viene e mi chiede scusa
+					- desidero che Marco venga a chiedermi scusa
+				- voi parlate meno
+					- preferiamo che voi parliate di meno
+		- con verbi che esprimono speranza o paura 
+			- sperare/augurarsi (hope), aspettarsi (expect), temere (fear), aver paura che (to be afraid that)
+				- questo brutto periodo finirà presto
+					- spero che questo brutto periodo finisca presto
+				- suo figlio si laureerà quest'estate
+					- Francesca si augura che suo figlio si laurei in estate
+					- laureare (to graduate)
+					- conditionale: si laureerei
+				- hai la febbre
+					- temo che tu abbia la febbre
+				- non riescano a venire stasera (non potranno venire stasera)
+					- ho paura che non riescano a venire stasera
+		- con verbi che esprimono incertezza, dubbio, irrealtà 
+			- esempi
+				- non essere sicuri che
+				- non essere certi che
+				- dubitare che
+				- fingere che (pretend that)
+			- questa è la scelta migliore
+				- non sono certa che sia la scelta migliore
+			- non ne sono capace
+				- dubiti che io ne sia capace
+		- con verbi che esprimono stati d'animo
+			- esempi
+				- essere felice che
+				- essere contento che
+				- far piacere (to please)
+				- essere dispiaciuto
+				- rallegrarsi che
+			- sei qui
+				- mi fa piacere che tu sia qui
+				- sono felice che tu sia qui
+			- non ha avuto il coraggio di parlare
+				- mi dispiace che lui non abbia avuto il coraggio di parlare
+	- quando usi l'infinito preceduto da "di"
+		- se il soggetto della frase principale e il soggetto della frase dipendente sono uguali
+			- raggiungi i tuoi obiettivi
+				- spero che tu raggiunga i tuoi obiettivi 
+					- spero di raggiungere i miei obiettivi
+			- lui è il migliore
+				- credete che lui sia il migliore
+					- credete di essere il migliore
+			- siete venuti
+				- lei è contenta che voi siate venuti 
+					- lei è contenta di essere venuta
+	- quando si usa "sapere", quando si usa il congiuntivo
+		- quando introduce incertezza, dubbio
+			- non so che cosa tu voglia
+			- non so che lui sia arrivato
+			- non so che decisione abbiano preso
+		- non quando significa non ricordo / non mi è stato detto, ma il fatto è reale
+			- non so che ore sono
+			- non so che giorno è oggi
+			- non so che strada porta al centro
+	- CONTINUE: "IL CONGIUNTIVO IN FORME IMPERSONALI…"
+- differenze di parole
+	- ciascuna vs ogni
+		- qual è la differenza tra "ciascuna" e "ogni"
+			- "ciascuna" significa ogni singola persona o cosa, considerata separatamente
+			- "ogni" significa tutti gli elementi di un insieme, ma senza insistere sulla separazione individuale
+		- fai un esempio per mostrare chiaramente la differenza tra "ciascuna" e "ognia
+			- ogni studente deve firmare 
+				- semplicemente un fatto
+			- ciascun studente deve firmare
+				- dà l'impressione che gli studenti debbano firmare uno alla volta
+- avverbi
+	- gli avverbi cambiano quando li usi?
+		- non, gli avverbi in italiano non cambiano genere o numero come fanno gli aggettivi
+		- esempi
+			- le giornate erano molto belle
+- andare + participio passato
+	- che cosa fa questa costruzione: andare + participio passato
+		- indica un obbligo o una necessità, simile a "deve essere"
+	- quali sono tre esempi di questo e gli equivalenti con "deve essere"
+		- questo problema va risolto subito
+			- questo problema deve essere risolto subito
+		- le istruzioni vanno seguite con attenzione
+			- le istruzioni devono essere seguite con attenzione
+		- il modulo va compilato prima dell'inizio del corso
+			- il modulo deve essere compilato prima dell'inizio del corso
+- quando si usa di/da ``di/``da
+	- di + infinito
+		- dopo molti verbi per indica contenuto, intenzione, opinione, sentimento
+			- pensare 
+				- stavo pensando di fare qualcosa
+				- penso di andare al lago.
+			- credere/pensare
+				- credo di avere ragione
+				- penso di avere ragione
+			- decidere 
+				- ho deciso di studiare
+				- penso che decideranno di andarsene presto
+			- promettere
+				- prometto di studiare
+				- ti prometto di arrivare puntuale domani
+			- dire
+				- ti dico di venire subito
+			- sperare
+				- spero di passare l'esame
+				- spero di finire questo progetto entro stasera
+			- ricordare
+				- ricordati di chiudere la porta
+			- finire
+				- finisco di lavorare alle sei	
+				- ho finito di studiare solo pochi minuti fa
+			- dimenticarsi
+				- mi sono dimenticato di chiamare il medico
+				- si è dimenticato di portarmi il libro
+			- rimandare
+				- il direttore ha deciso di rimandare la riunione
+			- affermare
+				- il testimone afferma di aver visto l'imputato uscire dal palazzo
+			- pregare
+				- ti prego di non dire a nessuno quello che hai visto
+			- domandare
+			- chiedere
+		- dopo aggettivi
+			- sono felice di vederti
+			- è difficile di capire 
+			- sono contento di essere qui
+			- l'insegnante è stanca di ripetere sempre le stesse cose
+		- dopo nomi
+			- la voglia di viaggiare
+			- il bisogno di dormire
+			- ho bisogno di mangiare
+		- avere il sapore o l'odore di qualcosa
+			- questo vino sa di tappo/sughero
+		- indica una qualità intrinseca di una persona o di una cosa
+			- è un uomo di parola
+			- è una persona di grande esperienza
+			- sono momenti di pura felicità
+			- ha un cuore di pietra
+		- frasi fisse
+			- non vedo l'ora di partire
+	- da + infinito
+		- per esprimere qualcosa da fare (obbligo o compito o necessità)
+			- ho molto lavoro da finire
+			- c'è una mail da scrivere
+			- questi sono documenti da firmare con urgenza
+			- c'è molto da fare prima delle vacanze
+			- è un problema difficile da risolvere
+		- dopo "essere" (deve essere fatto / vale la pena / è consigliata / degna di nota)
+			- questo esercizio è da rifare
+			- il film è da vedere
+			- è un film da non perdere assolutamente
+			- è un'occasione da non lasciarsi sfuggire per niente al mondo
+		- indica l'uso o lo scopo, simile a "per"
+			- occhiali da sole (per proteggere dal sole)
+			- occhiali da vista
+			- macchina da sc rivere
+			- un vestito da sera
+			- è un comportamento da pazzi
+			- abbiamo comprato un tavolo da cucina
+			- scarpe da ginnastica
+		- indica il modo o il ruolo che qualcuno assume 
+			- si è vestito da pirata per la festa
+			- si è comportato a gran signore
+		- indica la possibilità o la necessità di subire un'azione
+			- questo libro è facile da leggere
+		- indica una qualità di scarso valore o entità
+			- si è trattato di un errore da poco
+		- indica una conseguenza o un effetto
+			- si tratta di un film da brividi
+			- è un film da ridere
+		- per descrivere caratteristiche fisiche distintive o ornamentali di una persona
+			- è una ragazza dai capelli rossi
+		- dopo parole specifiche
+			- niente
+				- non c'è niente da mangiare nel frigorifero
+			- qualcosa
+				- c'è ancora qualcosa da fare
+			- qualcuno
+				- cerco qualcuno da aiutarmi a traslocare questo fine settimana
+		- altre
+			- quella povera donna non ha nemmeno gli occhi da piangere
+		- indicare un'azione iniziata nel passato che continua ancora nel presente
+			- vivo a Roma da tre anni
+- which verbs required which prepositions
+	- a
+		- molti verbi di spinta o movimento verso un obiettivo
+			- convincere
+				- l'ho convinto a venire con noi
+				- ho cercato di convincerlo a venire con noi al cinema
+				- non riesco a convincermi che sia la scelta giusta
+		- molti verbi di privazione o scelta
+			- rinunciare
+				- ha dovuto rinunciare al suo sogno
+		- molti verbi che indicano un movimento o un incitamento verso un'azione
+			- spronare
+				- il professore ci ha spronato a studiare di più
+				- il coach mi sprona a migliorare ogni giorno
+				- i miei amici mi hanno spronato a partecipare alla gara
+				- questa esperienza ti spronerà a uscire dalla tua zona di comfort
+		- others
+			- compri le scarpe a tuo figlio?
+	- di
+		- molti verbi di percezione mentale 
+			- accorgersi
+				- non mi ero accorto della tua presenza
+		
+		
+- aggettivi/pronomi/avverbi interrogativi e aggettivi dimostrativi: `qual `cosa `questo [memory: astorcarpack]
+	- panoramica
+		- pronomi interrogativi: che, cosa, che cosa, chi, quale/quali, quanto/quanta/quanti/quante
+		- avverbi interrogativi: dove, quando, come, perché
+		- aggettivi interrogativi: che, quali/quale (+qual), quanto/quanta/quanti/quante
+		- pronomi dimostrativi: questo/questa/questi/queste, quello/quella/quelli/quelle, stesso/stessa/stessi/stesse
+		- aggetivi dimostrativi: questo/questa/questi/queste, quello(+quel/quell')/quella(+quell')/quelli(quei/quegli)/quelle, stesso/stessa/stessi/stesse
+		- aggettivo indefinito: qualche
+	- interrogativi
+		- pronomi interrogativi
+			- che
+				- che hai fatto?
+			- che cosa
+				- che cosa vuoi?
+				- che cosa significa?
+			- cosa
+				- cosa fai? 
+				- cosa stanno facendo lì a desso?
+				- ora ho dimenticato cosa stavo per scrivere
+				- Non so cosa significhi
+			- chi
+				- chi viene con te?
+				- chi ha parlato?
+			- qual
+				- qual è il problema?
+				- qual era l'idea? 
+				- qual è la risposta?
+				- qual era la soluzione?
+				- qual è questo tra quelli?
+				- qual è questo libro?
+				- qual è il tuo colore preferito?
+				- qual è stata la tua impressione?
+				- qual era lo scopo della riunione?
+			- quale (singulare)
+				- quale preferisci?
+				- quale dei due ragazzi è tuo fratello?
+				- non ricordo quale dei due film ho visto
+				- quale di questi è un avverbio interrogativo?
+			- quali (plurale)
+				- quali scegli?
+				- quali sono le probleme?
+				- quali sono le tue ragioni?
+			- quanto
+				- quanto costa?
+			- quanta
+				- quanta ne vuoi?
+				- quanta hai bevuto?
+				- quanta resta?
+			- quanti
+				- quanti vuoi?
+				- quanti ne hai comprati?
+				- quanti sono arrivati?
+			- quante
+				- quante ne vuoi?
+				- quante hai visto?
+				- quante sono rimaste?
+		- pronomi relativi
+			- quale (singulare)
+				- il lago, sul quale splende il sole
+		- avverbi interrogativi
+			- dove
+				- dove abiti?
+			- quando
+				- quando parti?
+			- come
+				- come stai?
+			- perché
+				- perché studi italiano?
+		- aggettivi interrogativi
+			- che
+				- che libro leggi?
+			- quale (singulare)
+				- domande dirette
+					- quale film preferisci? (un film)
+					- quale strada prendi?
+					- a quale piano abiti?
+					- quale libro preferisci?
+					- quale frase contiene un aggettivo?
+				- domande indirette
+					- non so proprio quale strada prendere
+					- pensa a quale informazione
+			- quali (plurale)				
+				- quali film preferisci?  (più film)
+				- quali film guardi?
+				- non sapeva quali pesci pigliare
+				- quali preposizioni si abbinano a quali verbi
+			- quanto
+				- quanto tempo hai?
+				- quanto tempo hai? / ho due ore
+			- quanta
+				- quanta acqua bevi?
+				- quanta acqua bevi al giorno? / bevo circa due litri
+			- quanti
+				- quanti libri leggi?
+				- quanti libri leggi al mese? / leggo tre o quattro libri
+				- quanti libri hai?
+			- quante
+				- quante persone arrivano?
+				- voglio iniziare quante più conversazioni possibili
+				- quante frasi abbiamo adesso?
+				- quante persone sono arrivate? / sono arrivate dieci persone
+		- pronomi dimostrativi
+			- questo
+				- questo è il libro che cerco
+				- sono ossessionato da questo
+			- questa
+				- questa è la mia casa
+			- questi
+				- questi sono i miei amici
+				- quale di questi è un avverbio interrogativo?
+			- queste
+				- queste sono le chiavi
+			- quello
+				- quello è il ristorante migliore
+				- quello è il mio telefono
+				- non è simile a quello
+				- preferisco quello
+				- quello che dici è vero
+				- prendi quello, è più nuovo
+			- quella
+				- quella è la strada giusta
+				- quella è la parola corretta
+			- quelli
+				- quelli sono i tuoi documenti
+				- quelli sono i miei genitori
+			- quelle
+				- quelle sono le montagne
+			- stesso
+				- voglio lo stesso di ieri
+				- non voglio il tè, prendo lo stesso
+			- stessa
+				- non ho la tua penna, uso la stessa
+			- stessi
+				- non abbiamo amici diversi, abbiamo gli stessi
+			- stesse
+				- non frequento altre scuole, frequento le stesse	
+				- non andiamo in altre scuole, andiamo sempre nelle stesse.
+		- aggetivi dimostrativi
+			- qual è la differenza tra questo, codesto, quello
+				- questo = vicino a me (chi parla)
+				- codesto = vicino a te (chi ascolta, ma formale o regionale della Toscana)
+				- quello = lontano da entrambi	
+			- questo
+				- questo libro è interessante
+				- quando rimuovo questo codice qui
+				- questo libro e quel libro
+				- questo ristorante è buono
+			- questa
+				- questa casa è molto vecchia
+				- questa città è bellissima
+				- si usa questa forma 
+			- questi
+				- questi studenti sono preparati
+				- questi studenti sono molto bravi
+			- queste
+				- queste scarpe sono nuove
+				- queste case sono nuove
+				- queste scarpe sono molto comode
+				- queste domande sono difficili
+				- queste regole non sono chiare
+			- quello
+				- quello studente è molto intelligente
+				- quello zaino è pesante
+				- quello psicologo lavora in ospedale
+				- quello gnomo è una decorazione del giardino
+				- quello xilofono è rotto
+				- quello scoglio è molto scivoloso
+			- quel
+				- quel ragazzo è mio amico
+				- questo libro e quel libro
+				- quel libro è mio
+				- prendi quel vestito lì nell'armadio
+				- guarda quel cane laggiù
+				- posso usare Skyr in quel contenitore
+				- in quel modo
+				- guarda quel monte in lontananza
+			- quell'
+				- femminile
+					- quell'amica è molto gentile
+					- quell'idea non mi convince
+					- quell'attrice ha vinto un premio importante	
+				- maschile
+					- quell'amico mi ha aiutato ieri
+					- quell'albero è molto vecchio
+					- quell'edificio è stato ristrutturato da poco
+					- non vedo quell'uomo da molto tempo
+					- puoi passarmi quell'orologio che è sul tavolo?
+			- quella
+				- quella macchina è veloce
+				- quella montagna è alta
+				- quella casa è vecchia
+				- non voglio quella tazza
+				- non riconoscevo quella parola
+			- quelli
+				- !! ("quelli" non esiste come aggetivo dimostrativo, vedi quei)
+			- quei
+				- quei film sono noiosi
+				- quei libri sono grandi
+			- quegli
+				- quegli alberi sono molto alti
+				- quegli alberi sono molto vecchi
+				- quegli zaini sono molto vecchi
+				- quegli studenti sono in ritardo
+			- quelle
+				- quelle case sono lontane
+				- quelle case sono grandi ma quei libri sono piccoli
+				- quelle scuole sono molto vecchie
+				- quelle scarpe sono nuove
+			- stesso
+				- voglio lo stesso gelato
+			- stessa
+				- penso che significhi la stessa cosa
+				- indossa la stessa giacca
+			- stessi
+				- abbiamo gli stessi interessi
+			- stesse
+				- frequentiamo le stesse scuole
+				- indossa la stessa giacca di ieri		
+		- aggettivi indefiniti
+			- qualche
+				- posso aspettare qualche minuto
+				- ho comprato qualche libro interessante
+				- qualche studente è assente
+				- ho letto qualche libro interessante
+				- ho comprato qualche mela rossa
+				- c'è qualche persona fuori
+			- alcuno/alcuna/alcuni/alcune
+				- non ho visto alcuna persona in piazza
+				- posso aspettare alcuni minuti
+				- ho comprato alcuni libri interessanti
+				- alcuni studenti sono assenti
+				- ho letto alcuni libri interessanti
+				- ho comprato alcuni mele rosse
+				- ci sono alcune persone fuori
+			- ogni (si usa solo al singolare)
+				- ogni mattina corro nel parco vicino a casa
+				- ogni studente deve consegnare il compito entro venerdì
+				- ogni volta che piove, il traffico diventa più lento
+		- pronomi indefiniti
+			- molti 
+				- molti sono partiti
+			- alcuno/alcuna/alcuni/alcune
+				- ho letto molti libri, ma ne preferisco alcuni
+	- grazie
+	- grazie mille
+	- grazie davvero
+	- mille grazie
+	- ti ringrazio
+	- grazie di cuore
+- praise frases
+	- eccellente
+	- perfetto
+	- fantastico
+	- magnifico
+	- superbo
+	- impeccabile
+	- eccezionale
+- TODO: verb/proposition combinations
+	- credere a → Credo a quello che dici.
+	- pensare a → Penso spesso a te.
+	- rinunciare a → Rinuncio a uscire stasera.
+	- partecipare a → Partecipo a una riunione.
+	- riuscire a → Riesco a finire il lavoro.
+	- avere bisogno di → Ho bisogno di aiuto.
+	- avere paura di → Ho paura di sbagliare.
+	- parlare di → Parliamo di politica.
+	- dimenticarsi di → Mi dimentico di chiamarti.
+	- smettere di → Smetto di fumare.
+	- andare a → Vado a lavorare.
+	- imparare a → Imparo a guidare.
+	- provare a → Provo a spiegare meglio.
+	- continuare a → Continuo a studiare.
+	- iniziare a → Inizio a leggere.
+	- finire di → Finisco di mangiare.
+	- decidere di → Decido di partire.
+	- promettere di → Prometto di aiutarti.
+	- cercare di → Cerco di capire.
+	- riuscire in → Riesco nel mio intento.
+- volere, venire, vedere
+	- presente io
+		- voglio, vengo, vedo
+	- participio passato
+		- voluto, venuto, visto
+	- passe remoto (io)
+		- volli, venni, vidi
+	- radice futura/condizionale
+		- vorr-, verr-, vedr-
+- servirsi di vs.servire
+	- servirsi di = usare qualcosa
+	- servire essere utile 
+- importante per la coniugazione
+	- avere
+		- imperfetto
+			- avevo, avevi, aveva, avevamo, avevate, avevano
+		- future
+			- avrò, avrai, avrà, avremo, avrete, avaranno
+		- conditional
+			- avrei, avresti, avrebbe, avremmo, avreste, avrebbero
+		- trapassato remoto
+			- ebbi, avesti, ebbe, avemmo, aveste, ebbero   
+	- essere
+		- imperfetto
+			- ero, eri, era, eramo, eravate, erano
+		- future
+			- sarò, sarai, sarà, saremo, sarete, saranno
+		- conditional
+			- sarei, saresti, sarebbe, saremmo, sareste, sarebbero
+		- trapassato remoto
+			- fui, fosti, fu, fummo, foste, furono
+- evita il congiuntivo, et "di aver" al generale
+	- penso di avere una buona idea
+	- pensavo di aver capito questo meglio
+	- credo di aver bisogno di un po' di caffè
+	- spero di non essere troppo in ritardo
+	- dubito di spendere così tanti soldi ogni mese
+	- non ricordo di averlo fatto
+		- ma: non ricordo cosa volevo fare
+	- credo di poter dire di aver finito con questa cosa
+	- credo di essere diventato fluente da qualche parte lungo il lago
+	- ho la sensazione di dover controllare i miei messaggi
+	- credo di essere pronto
+	- credo di dover leggere questo blocco di testo ora
+	- sono contento di non doverlo fare da solo
+- use of "da"
+	- avevo due parole da cercare
+	- non parlo da molti minuti
+- altri modi per dire grazie
+	- grazie mille 
+	- molte grazie
+	- mille grazie
+	- grazie davvero
+	- grazie di cuore
+	- grazie infinite
+	- grazie davvero tanto
+	- ti ringrazio molto
+	- La ringrazio molto
+- riuscire
+	- siamo riusciti a riprodurlo
+- congiuntivo passato vs congiuntivo trapassato
+	- congiuntivo passato
+		- indica un’azione compiuta nel passato, ma collegata al presente o comunque non dipendente da una condizione irreale
+			- non credo che io sia tornato a casa così tardi ieri
+			- non credo che tu abbia finito il lavoro così in fretta
+			- è possibile che loro siano partiti ieri sera senza avvisare
+	- congiuntivo trapassato
+		- indica un’azione passata rispetto a un altro passato (irrealtà, ipotesi non realizzata)
+			- pensava che io fossi ritornato già da una settimana
+			- pensavo che tu avessi finito il lavoro già la settimana scorsa
+			- se loro fossero partiti prima, avrebbero evitato il traffico
+- special use of "e"
+	- Ho invitato tutti e tre i miei amici.
+	- Entrambi e due erano stanchi. (meno comune)
+	- Tutte e cinque le ragazze sono arrivate.
+- "ne"
+	- di farlo / di ascoltare l’audio
+		- È importante ascoltare l'audio, se ne hai l'occasione.
+		 
+		
+===TODO===		
+- parole importanti
+	- pur non avendo fame, ho mangiato
+	- nonostante non avessi fame, ho mangiato
+- parole utili per parlare del tempo
+	sempre → always
+	quasi sempre → almost always
+	di solito / generalmente → usually
+	spesso → often
+	molto spesso → very often
+	a volte / talvolta / qualche volta → sometimes
+	raramente / di rado → rarely
+	quasi mai → almost never
+	mai → never
+- common words
+	- sometimes
+		- a volte
+- falsi amici
+	- la comparsa di qualche cosa
+	- la causa di ciò che compare
+	- È ancora un bambino: non possiamo pretendere troppo da lui!
+	- portare: non puoi portarmelo via
+	- individuando dove 
+	- Le consonanti doppie sono facoltative
+	- dopo aver licenziato Lucrezia, il suo capo si è reso conto di averne bisogno
+
+
+- important words
+	- ovunque 
+	- purtroppo
+
+- phrases with ne
+	- per saperne di più riguardo questi 
+
+- high register
+	- la sfumatura 
+- special use of andare
+	- va detto che nell’Italia del sud 
+	- dunque, nella maggior parte dei casi vanno imparate a memoria
+	- è proprio quella che nei tutorial viene chiamata “Claude app”
+	- il complemento va messo dopo il verbo
+	- queste espressioni vanno imparate a memoria
+	- il presente venga utilizzato anche per esprimere eventi futuri
+	- in questo caso, vanno messe dopo, formando una sola parola
+	- quando viene utilizzato
+
+- pronoun examples
+	- uno degli aspetti 
+	- dalla gestione delle doppie consonanti 
+	- alle particolarità delle parole straniere adattate alla nostra lingua
+	- guida completa alla pronuncia italiana
+	- prestando particolare attenzione alla parte finale
+	- anche alle parole più lunghe 
+	- più caratteristico e distintivo della pronuncia italiana
+	- Come potete vedere dalla tabella
+	- della prima persona 
+
+- esempi per congiuntivo
+	- è strano che
+	
+- congiunzione 
+	- a meno che
+	- siccome
+	- sebbene
+	- affinché
+- false friends
+	- il direttore ha deciso di rimandare la riunione
+	- succedere
+	- Posso confrontare i due libri
+- reflexive that shows obbligation "needs to be..."
+	- questo libro va letto entro domani
+- fornisce esempi della regola: per esprimere un'azione futura rispetto a un momento passato, l'italiano utilizza il condizionale passato
+	- sapevo che entro la sera avrei finito il lavoro
+	- pensavo che sarei arrivato in tempo
+	- diceva che avrebbe finito il lavoro entro sera
+	- credevamo che loro avrebbero accettato l'offerta
+	- mi aveva promesso che mi avrebbe chiamato il giorno dopo
+	- speravi che tutto sarebbe andato meglio
+- differenciate
+	- anche, appena, adesso, ancora
+	- il caso / i casi, la casa / le case
+- quick phrases
+	- allora vediamo
+- gli articoli
+	- di (some, about, of)
+		- di+il = del
+			- some
+				- ho comprato del pane fresco stamattina
+				- vorrei del vino rosso, per favore
+				- ho comprato del pane per la colazione
+			- about
+				- parliamo del film che abbiamo visto ieri
+				- parliamo del problema domani
+				- sentito una notizia del film nuovo
+			- of
+				- il titolo del film è famoso
+				- la porta del negozio è chiusa
+				- il sapore del caffè è forte
+		- di+lo = dello
+			- some
+				- ho comprato dello zucchero al supermercato
+				- bevo sempre dello succo d'arancia a colazione
+				- c'è ancora dello spazio libero qui
+			- about
+				- parliamo dello sport che pratichi
+				- ho letto un articolo dello sci
+				- discutiamo dello studente nuovo
+			- of
+				- il colore dello zaino è blu
+				- il suono dello strumento è forte
+				- il nome dello studente è difficile da ricordare
+		- di+l' = dell'
+			- some
+				- ho comprato dell'acqua fresca
+				- vuoi dell'insalata con il pranzo?
+				- c'è dell'aria fredda che entra dalla finestra
+		- di+la = della
+			- some
+				- ho preso della pasta al supermercato
+				- vuoi della carne o del pesce?
+				- c'è della luce che entra dalla finestra
+		- di+i = dei
+			- some
+				- ho comprato dei libri nuovi
+				- ho incontrato dei ragazzi al parco
+				- ci sono dei problemi da risolvere
+		- di+gli = degli
+			- some
+				- ho visto degli amici ieri sera
+				- ci sono degli alberi molto alti nel parco
+				- ho mangiato degli spaghetti buonissimi
+		- di+le = delle
+			- some
+				- ho comprato delle mele al mercato
+				- ci sono delle persone che aspettano fuori
+				- ho visto delle case molto grandi in quella zona
+	- a (to, in)
+		- a+il = al
+			- to
+				- vado al supermercato dopo il lavoro
+				- ho parlato al professore ieri
+				- torniamo al ristorante dove abbiamo mangiato bene
+			- in 
+				- vivo al nord dell’Italia
+			- at
+				- siamo al mare per le vacanze
+			- on
+				- lavoro al computer tutto il giorno
+		- a+lo = allo
+			-
+			-
+			-
+		- a+l' = all'
+			-
+			-
+			-
+		- a+la = alla
+			-
+			-
+			-
+		- a+i = ai
+			-
+			-
+			-
+		- a+gli = agli
+			-
+			-
+			-
+		- a+le = alle
+			-
+			-
+			-
+	- da (from, by, since)
+		- da+il = dal
+			- from
+				- esco dal lavoro
+				- vengo dal centro
+				- torno dal supermercato
+	- in
+		- lui è caduto nella trappola
+	- su
+	
+- combined words
+	- mettercela
+- todo
+	- create words with "già" and put them in pronuncation
+- quizzes
+	- regarding "serve" e.g. "ti serve un pronome"
+	- crea un quiz su argomenti qual, quel, quello, quale, qualche, etc.
+	- difference between volere, venire, vedere 
+
