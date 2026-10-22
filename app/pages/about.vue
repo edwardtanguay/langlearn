@@ -299,6 +299,7 @@ const sortedCategoriesForDropdown = computed(() => {
 })
 
 const recentlyEditedItemId = ref<string | null>(null)
+const recentlyEditedVersionId = ref<string | null>(null)
 
 function getVersionColorClass(status: string | undefined): string {
   if (!status) return ''
@@ -402,6 +403,16 @@ function sortItemsByRankAndType(items: VersionItem[]): VersionItem[] {
 }
 
 const groupedItemsCache = new WeakMap<VersionItem[], { isAllGeneral: boolean; groups: CategoryGroup[]; allItems: VersionItem[] }>()
+
+function invalidateVersionCache(verOrItems?: Version | VersionItem[] | null) {
+  if (!verOrItems) return
+  if (Array.isArray(verOrItems)) {
+    groupedItemsCache.delete(verOrItems)
+  } else if (verOrItems.versionItems) {
+    groupedItemsCache.delete(verOrItems.versionItems)
+    verOrItems.versionItems = [...verOrItems.versionItems]
+  }
+}
 
 function getGroupedItemsForVersion(items: VersionItem[]): { isAllGeneral: boolean; groups: CategoryGroup[]; allItems: VersionItem[] } {
   if (!items || items.length === 0) {
@@ -603,6 +614,8 @@ const saveAdminVersion = async () => {
 
   const snapshot = JSON.parse(JSON.stringify(versions.value))
 
+  let tempVersionId: string | null = null
+
   // Optimistic update & immediate smooth close
   if (!isNewVersion.value) {
     const existing = versions.value.find(v => v.id === editingVersion.value.id)
@@ -612,15 +625,47 @@ const saveAdminVersion = async () => {
       existing.status = payload.status
       existing.publishDate = payload.publishDate
     }
+  } else {
+    tempVersionId = `temp-${Date.now()}`
+    const newVer: Version = {
+      id: tempVersionId,
+      versionNumber: payload.versionNumber,
+      title: payload.title || '',
+      status: payload.status,
+      publishDate: payload.publishDate,
+      versionItems: []
+    }
+    versions.value = [...versions.value, newVer]
   }
   showEditVersionModal.value = false
 
+  if (tempVersionId) {
+    recentlyEditedVersionId.value = tempVersionId
+    nextTick(() => {
+      scrollToVersion(tempVersionId!)
+    })
+    setTimeout(() => {
+      if (recentlyEditedVersionId.value === tempVersionId) {
+        recentlyEditedVersionId.value = null
+      }
+    }, 2200)
+  }
+
   try {
     if (isNewVersion.value) {
-      await $fetch<Version>('/api/dev/versions', {
+      const created = await $fetch<Version>('/api/dev/versions', {
         method: 'POST',
         body: payload
       })
+      if (created?.id && tempVersionId) {
+        const found = versions.value.find(v => v.id === tempVersionId)
+        if (found) {
+          found.id = created.id
+        }
+        if (recentlyEditedVersionId.value === tempVersionId) {
+          recentlyEditedVersionId.value = created.id
+        }
+      }
     } else {
       await $fetch<Version>(`/api/dev/versions/${editingVersion.value.id}`, {
         method: 'PUT',
@@ -705,7 +750,7 @@ const openEditItem = (item: VersionItem) => {
 const handleItemCategoryChange = (event: Event) => {
   const val = (event.target as HTMLSelectElement).value
   if (val === 'NEW_CATEGORY') {
-    openAddCategory()
+    openAddCategory(null, true)
   }
 }
 
@@ -722,6 +767,8 @@ const saveAdminItem = async () => {
 
   const snapshotVersions = JSON.parse(JSON.stringify(versions.value))
   const snapshotUnassigned = JSON.parse(JSON.stringify(unassignedItems.value))
+
+  let tempItemId: string | null = null
 
   // Optimistic update & immediate smooth close
   if (!isNewItem.value) {
@@ -754,6 +801,7 @@ const saveAdminItem = async () => {
         // Remove from old location
         if (parentVer) {
           parentVer.versionItems = parentVer.versionItems.filter(i => i.id !== payload.id)
+          invalidateVersionCache(parentVer)
         } else {
           unassignedItems.value = unassignedItems.value.filter(i => i.id !== payload.id)
         }
@@ -765,18 +813,18 @@ const saveAdminItem = async () => {
           const targetVer = versions.value.find(v => v.id === payload.versionId)
           if (targetVer) {
             targetVer.versionItems = [...targetVer.versionItems, found]
+            invalidateVersionCache(targetVer)
           }
         }
       } else if (parentVer) {
-        // Force Vue reactivity trigger for getGroupedItemsForVersion
-        parentVer.versionItems = [...parentVer.versionItems]
+        invalidateVersionCache(parentVer)
       }
     }
   } else {
-    const tempId = `temp-${Date.now()}`
+    tempItemId = `temp-${Date.now()}`
     const targetCat = categories.value.find(c => c.id === payload.versionCategoryId) || null
     const newItemObj: VersionItem = {
-      id: tempId,
+      id: tempItemId,
       versionId: payload.versionId,
       versionCategoryId: payload.versionCategoryId,
       versionCategory: targetCat,
@@ -789,21 +837,27 @@ const saveAdminItem = async () => {
       const incomingVer = versions.value.find(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
       if (incomingVer) {
         incomingVer.versionItems.unshift(newItemObj)
+        invalidateVersionCache(incomingVer)
       }
       unassignedItems.value.unshift(newItemObj)
     } else {
       const targetVer = versions.value.find(v => v.id === payload.versionId)
       if (targetVer) {
         targetVer.versionItems.unshift(newItemObj)
+        invalidateVersionCache(targetVer)
       }
     }
   }
 
   showEditItemModal.value = false
-  const targetId = payload.id
+  const targetId = payload.id || tempItemId
   if (targetId) {
     recentlyEditedItemId.value = targetId
-    setTimeout(() => { recentlyEditedItemId.value = null }, 1800)
+    setTimeout(() => {
+      if (recentlyEditedItemId.value === targetId) {
+        recentlyEditedItemId.value = null
+      }
+    }, 1800)
   }
 
   try {
@@ -812,16 +866,27 @@ const saveAdminItem = async () => {
         method: 'POST',
         body: payload
       })
-      if (created?.id) {
+      if (created?.id && tempItemId) {
         recentlyEditedItemId.value = created.id
-        setTimeout(() => { recentlyEditedItemId.value = null }, 1800)
+        setTimeout(() => {
+          if (recentlyEditedItemId.value === created.id) {
+            recentlyEditedItemId.value = null
+          }
+        }, 1800)
         if (!payload.versionId) {
-          const item = unassignedItems.value.find(i => i.body === payload.body)
+          const item = unassignedItems.value.find(i => i.id === tempItemId || i.body === payload.body)
           if (item) item.id = created.id
+          const incomingVer = versions.value.find(v => v.status === 'INCOMING' || v.status === 'PROPOSED_ITEMS' || v.versionNumber === '0.0.0')
+          if (incomingVer) {
+            const vItem = incomingVer.versionItems.find(i => i.id === tempItemId || i.body === payload.body)
+            if (vItem) vItem.id = created.id
+            invalidateVersionCache(incomingVer)
+          }
         } else {
           const targetVer = versions.value.find(v => v.id === payload.versionId)
-          const item = targetVer?.versionItems.find(i => i.body === payload.body)
+          const item = targetVer?.versionItems.find(i => i.id === tempItemId || i.body === payload.body)
           if (item) item.id = created.id
+          if (targetVer) invalidateVersionCache(targetVer)
         }
       }
     } else {
@@ -836,7 +901,7 @@ const saveAdminItem = async () => {
             item.body = updated.body
             item.versionCategoryId = updated.versionCategoryId
             item.versionCategory = updated.versionCategory || categories.value.find(c => c.id === updated.versionCategoryId) || null
-            v.versionItems = [...v.versionItems]
+            invalidateVersionCache(v)
             break
           }
         }
@@ -845,6 +910,9 @@ const saveAdminItem = async () => {
   } catch (err: any) {
     versions.value = snapshotVersions
     unassignedItems.value = snapshotUnassigned
+    for (const v of versions.value) {
+      invalidateVersionCache(v)
+    }
     alert(err.data?.statusMessage || 'Failed to save item')
   }
 }
@@ -855,7 +923,7 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string,
   }
   if (!categoryId || categoryId === item.versionCategoryId) return
   if (categoryId === 'NEW_CATEGORY') {
-    openAddCategory()
+    openAddCategory(item, false)
     return
   }
   const oldCatId = item.versionCategoryId
@@ -866,6 +934,20 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string,
   item.versionCategoryId = categoryId || null
   item.versionCategory = newCat
 
+  const parentVer = versions.value.find(v => v.versionItems.some(i => i.id === item.id))
+  if (parentVer) {
+    invalidateVersionCache(parentVer)
+  } else {
+    unassignedItems.value = [...unassignedItems.value]
+  }
+
+  recentlyEditedItemId.value = item.id
+  setTimeout(() => {
+    if (recentlyEditedItemId.value === item.id) {
+      recentlyEditedItemId.value = null
+    }
+  }, 1800)
+
   try {
     await $fetch(`/api/dev/version-items/${item.id}`, {
       method: 'PUT',
@@ -875,6 +957,9 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string,
   } catch (err: any) {
     item.versionCategoryId = oldCatId
     item.versionCategory = oldCatObj
+    if (parentVer) {
+      invalidateVersionCache(parentVer)
+    }
     alert(err.data?.statusMessage || 'Failed to update item category')
   }
 }
@@ -919,6 +1004,7 @@ const updateItemVersionDirectly = async (item: VersionItem, versionId: string, e
       const oldVer = versions.value.find(v => v.id === oldVerId)
       if (oldVer) {
         oldVer.versionItems = oldVer.versionItems.filter(i => i.id !== item.id)
+        invalidateVersionCache(oldVer)
       }
     }
     // Add to new location
@@ -928,6 +1014,7 @@ const updateItemVersionDirectly = async (item: VersionItem, versionId: string, e
       const targetVer = versions.value.find(v => v.id === targetVerId)
       if (targetVer) {
         targetVer.versionItems.push(item)
+        invalidateVersionCache(targetVer)
       }
     }
   }
@@ -1095,13 +1182,33 @@ const deleteItem = async (item: VersionItem) => {
 }
 
 // Category Management Functions
-const openAddCategory = () => {
+const itemPendingCategoryMove = ref<VersionItem | null>(null)
+const cameFromItemModal = ref<boolean>(false)
+const previousItemModalCategoryId = ref<string>('')
+
+const openAddCategory = (item?: VersionItem | null, fromItemModal: boolean = false) => {
+  itemPendingCategoryMove.value = item || null
+  cameFromItemModal.value = fromItemModal
+  if (fromItemModal) {
+    previousItemModalCategoryId.value = editingItem.value.versionCategoryId || ''
+    showEditItemModal.value = false
+  }
   isNewCategory.value = true
   categorySaveError.value = ''
   categoryRankStr.value = '2.5'
   editingCategory.value = { id: '', title: '', rank: 2.5, abbreviations: '' }
   showCategoryModal.value = true
   focusFirstModalInput()
+}
+
+const closeCategoryModal = () => {
+  showCategoryModal.value = false
+  if (cameFromItemModal.value) {
+    editingItem.value.versionCategoryId = previousItemModalCategoryId.value
+    showEditItemModal.value = true
+  }
+  itemPendingCategoryMove.value = null
+  cameFromItemModal.value = false
 }
 
 const openEditCategory = (catId: string) => {
@@ -1132,7 +1239,19 @@ const saveCategory = async () => {
     .map(s => s.trim())
     .filter(Boolean)
 
-  const snapshot = JSON.parse(JSON.stringify(categories.value))
+  const snapshotCategories = JSON.parse(JSON.stringify(categories.value))
+  const snapshotVersions = JSON.parse(JSON.stringify(versions.value))
+
+  const targetItem = itemPendingCategoryMove.value
+  const fromModal = cameFromItemModal.value
+  const tempCatId = isNewCategory.value ? `temp-cat-${Date.now()}` : editingCategory.value.id
+
+  const newCatObj: VersionCategory = {
+    id: tempCatId,
+    title,
+    rank: rankVal,
+    abbreviations: abbrArray.map(a => ({ id: `temp-abbr-${Math.random()}`, abbreviationText: a, versionCategoryId: tempCatId }))
+  }
 
   // Optimistic update & immediate smooth close
   if (!isNewCategory.value) {
@@ -1141,9 +1260,41 @@ const saveCategory = async () => {
       existing.title = title
       existing.rank = rankVal
     }
+  } else {
+    categories.value = [...categories.value, newCatObj]
+  }
+
+  let parentVer: Version | undefined = undefined
+  let oldCatId: string | null | undefined = undefined
+  let oldCatObj: VersionCategory | null | undefined = undefined
+
+  if (targetItem) {
+    oldCatId = targetItem.versionCategoryId
+    oldCatObj = targetItem.versionCategory
+    targetItem.versionCategoryId = tempCatId
+    targetItem.versionCategory = newCatObj
+
+    parentVer = versions.value.find(v => v.versionItems.some(i => i.id === targetItem.id))
+    if (parentVer) {
+      invalidateVersionCache(parentVer)
+    }
+
+    recentlyEditedItemId.value = targetItem.id
+    setTimeout(() => {
+      if (recentlyEditedItemId.value === targetItem.id) {
+        recentlyEditedItemId.value = null
+      }
+    }, 1800)
+  }
+
+  if (fromModal) {
+    editingItem.value.versionCategoryId = tempCatId
+    showEditItemModal.value = true
   }
 
   showCategoryModal.value = false
+  itemPendingCategoryMove.value = null
+  cameFromItemModal.value = false
 
   try {
     if (isNewCategory.value) {
@@ -1151,8 +1302,21 @@ const saveCategory = async () => {
         method: 'POST',
         body: { title, rank: rankVal, abbreviations: abbrArray }
       })
-      if (editingItem.value) {
-        editingItem.value.versionCategoryId = created.id
+      if (created?.id) {
+        const catInList = categories.value.find(c => c.id === tempCatId)
+        if (catInList) {
+          catInList.id = created.id
+        }
+        if (editingItem.value?.versionCategoryId === tempCatId) {
+          editingItem.value.versionCategoryId = created.id
+        }
+        if (targetItem) {
+          targetItem.versionCategoryId = created.id
+          await $fetch(`/api/dev/version-items/${targetItem.id}`, {
+            method: 'PUT',
+            body: { versionCategoryId: created.id }
+          })
+        }
       }
     } else {
       await $fetch(`/api/dev/categories/${editingCategory.value.id}`, {
@@ -1162,8 +1326,17 @@ const saveCategory = async () => {
     }
     await loadData(false)
   } catch (err: any) {
-    categories.value = snapshot
+    categories.value = snapshotCategories
+    versions.value = snapshotVersions
+    if (targetItem) {
+      targetItem.versionCategoryId = oldCatId
+      targetItem.versionCategory = oldCatObj
+    }
+    if (parentVer) {
+      invalidateVersionCache(parentVer)
+    }
     categorySaveError.value = err.data?.statusMessage || err.message || 'Failed to save category'
+    alert(err.data?.statusMessage || err.message || 'Failed to save category')
   }
 }
 
@@ -1446,7 +1619,8 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versionsForDisplay" :key="ver.id" :id="`version-${ver.id}`" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md scroll-mt-24" :class="[
+        <div v-for="ver in versionsForDisplay" :key="ver.id" :id="`version-${ver.id}`" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md scroll-mt-24 transition-all" :class="[
+          recentlyEditedVersionId === ver.id ? 'ring-4 ring-amber-400 dark:ring-amber-500' : '',
           isSearchActive ? 'border-2 border-orange-500' : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? 'border-2 border-dashed border-red-500 dark:border-red-600' : ver.status === 'IN_PROGRESS' ? 'border-2 border-dashed border-amber-500 dark:border-amber-600' : 'border border-gray-200 dark:border-gray-700/80'
         ]">
           <!-- Full-Width Version Panel Card Header -->
@@ -1924,7 +2098,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
     </div>
 
     <!-- Category & Abbreviation Management Modal -->
-    <div v-if="showCategoryModal && editingCategory" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+    <div v-if="showCategoryModal && editingCategory" @click.self="closeCategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl space-y-4">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewCategory ? 'Add Category' : 'Edit Category' }}</h3>
 
@@ -1987,7 +2161,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
               </button>
             </div>
             <div class="flex space-x-2">
-              <button type="button" @click="showCategoryModal = false" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
+              <button type="button" @click="closeCategoryModal" class="px-3 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Cancel</button>
               <button type="submit" class="px-4 py-1.5 text-xs text-white bg-amber-600 hover:bg-amber-700 rounded font-semibold flex items-center gap-1.5">
                 <span>Save Category</span>
               </button>
