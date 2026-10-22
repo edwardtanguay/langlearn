@@ -3449,11 +3449,11 @@
           "day": "2026-10-20",
           "sectionIndex": 1,
           "language": "fr",
-          "rawText": "Salut Clarisse !\n\nNous avons [une;notre] dernière [session;séance] ce soir à 22 h 30. Je peux [faire;te faire] une [présentation;presentation] avec mes fotos de ma semaine à Dijon, [le marathon;du marathon] et [ma deux;de mes deux] jours à Paris. Si tu peux [poser les;me poser des] questions [en française vite;rapidement en français], je crois [serait;que ce serait] [une bonne;un bon] exercice.\n\nDis-moi si, [comme professeur;en tant que professeure] de langues, tu [as l'interèsse;t'intéresses] [aussi sur comment un peux;à la manière dont on peut] utiliser l'AI pour créer [les exercises;des exercices] sur [sites de web;des sites web] pour les [elèves;élèves]. Je peux te [le un peu montrer comment;montrer un peu comment] on peut [commencer avec ça;s'y prendre pour commencer]. C'est un peu [technische;technique] : [on doit;il faut avoir] un [compte de GitHub;compte GitHub] et un compte Vercel, [tu doit apprendre un peux;appredre quelques notions] de Git, et installer un [éditor;éditeur] (Antigravity), mais [toutes;tout] ces outils sont [gratuites;gratuits].\n\nPour créer [les sites avec pas;des sites sans] limites, j'ai un [compte;abonnement] Google AI Pro (21,99 € par mois). [Mais pour ça;Avec cet abonnement],on [recoît;bénéficie] aussi [5 TB;de 5 To de] stockage [à;sur] Google Drive et tu [peux;peut] regarder YouTube sans [avertisements;publicité], [que;ce qui] est [bonne pour les apprentisages des;pratique pour apprendre les] langues. Mais le [grand truc est : tu dois;plus intéressant, c'est qu'on n'a] absolutement pas [coder;de savoir coder] [et peux néanmoins;pour] créer des sites [de webs;webs] assez [compliqués;complexes] et pratiques.\n\nAprès ce soir, je aurai terminé avec mes cours [en;de] français sur Reply. [Alors je vais supprimer mes;Je vais donc résilier mon] abonemment [afin que;pour éviter que] Preply [ne peut pas retirer;continue à prélever] de l'argent [de;sur] mon compte PayPal. Je [crois;pense] que tu vas recevoir [un message sur ça;une notification à ce sujet], alors ne [laisse;t'inquiète] pas [cela te déranger;si c'est le cas].\n\nJe [vais commencer avec;reprendrai] les courses sur Reply en janvier, mais [avec espanol;cette fois-ci en espagnol]. [Je dois retourner avant ça au niveux;D'ici là, je dois d'abord retrouver mon niveau] B1.\n\nÀ plus [tard à;tard, à] 22 h 30 !",
+          "rawText": "Nous avons [une;notre] dernière [session;séance] ce soir à 22 h 30. Je peux [faire;te faire] une [présentation;presentation] avec mes fotos de ma semaine à Dijon, [le marathon;du marathon] et [ma deux;de mes deux] jours à Paris. Si tu peux [poser les;me poser des] questions [en française vite;rapidement en français], je crois [serait;que ce serait] [une bonne;un bon] exercice.\n\nDis-moi si, [comme professeur;en tant que professeure] de langues, tu [as l'interèsse;t'intéresses] [aussi sur comment un peux;à la manière dont on peut] utiliser l'AI pour créer [les exercises;des exercices] sur [sites de web;des sites web] pour les [elèves;élèves]. Je peux te [le un peu montrer comment;montrer un peu comment] on peut [commencer avec ça;s'y prendre pour commencer]. C'est un peu [technische;technique] : [on doit;il faut avoir] un [compte de GitHub;compte GitHub] et un compte Vercel, [tu doit apprendre un peux;appredre quelques notions] de Git, et installer un [éditor;éditeur] (Antigravity), mais [toutes;tout] ces outils sont [gratuites;gratuits].\n\nPour créer [les sites avec pas;des sites sans] limites, j'ai un [compte;abonnement] Google AI Pro (21,99 € par mois). [Mais pour ça;Avec cet abonnement],on [recoît;bénéficie] aussi [5 TB;de 5 To de] stockage [à;sur] Google Drive et tu [peux;peut] regarder YouTube sans [avertisements;publicité], [que;ce qui] est [bonne pour les apprentisages des;pratique pour apprendre les] langues. Mais le [grand truc est : tu dois;plus intéressant, c'est qu'on n'a] absolutement pas [coder;de savoir coder] [et peux néanmoins;pour] créer des sites [de webs;webs] assez [compliqués;complexes] et pratiques.\n\nAprès ce soir, je aurai terminé avec mes cours [en;de] français sur Reply. [Alors je vais supprimer mes;Je vais donc résilier mon] abonemment [afin que;pour éviter que] Preply [ne peut pas retirer;continue à prélever] de l'argent [de;sur] mon compte PayPal. Je [crois;pense] que tu vas recevoir [un message sur ça;une notification à ce sujet], alors ne [laisse;t'inquiète] pas [cela te déranger;si c'est le cas].\n\nJe [vais commencer avec;reprendrai] les courses sur Reply en janvier, mais [avec espanol;cette fois-ci en espagnol]. [Je dois retourner avant ça au niveux;D'ici là, je dois d'abord retrouver mon niveau] B1.\n\nÀ plus [tard à;tard, à] 22 h 30 !",
           "bits": [
             {
               "type": "text",
-              "text": "Salut Clarisse !\n\nNous avons "
+              "text": "Nous avons "
             },
             {
               "type": "flashcard",
@@ -3987,18 +3987,18 @@
             }
           ],
           "flashcardsCount": 53,
-          "wordCount": 274
+          "wordCount": 271
         },
         {
           "id": "2026-10-20-sec-2",
           "day": "2026-10-20",
           "sectionIndex": 2,
           "language": "fr",
-          "rawText": "Salut Clarisse,\n\nJe suis désolé [d'écouter de tes;que tu as des] problèmes de santé. J'espère que tu [vas être;iras] mieux [dans le prochaine avenir;très bientôt].\n\nComme tu [requètes;me l'as demandé], je vais [supprimer;annuler] le cours que tu as reprogrammé [sur;pour] vendredi.\n\nJe [te voulais;voulais te] dire que j'ai [apprécié beaucoup;beaucoup apprécié] [notres;nos] cours ensemble, [especialement pour;notamment] ta flexibilité [quand;lorsque] j'ai [constantement;constamment] changé le [contente et format de cours;contenu et le format des cours]. [Notre;Nos] cours m'ont [aidé beaucoup;beaucoup aidé] [comme préparation;à me préparer] pour ma semaine à [Dijon, merci.;Dijon. Merci pour ça !]\n\nSi, en tant que professeure, tu [t'interesse dans;t'intéresses à l'idée] de créer des exercices [comme site;sous forme de sites] web pour tes elèves [avec;à l'aide de] l'AI, j'ai [un communité sur;une communauté] Discord de [developpeurs;développeurs] et [professeurs;de professeurs] de langues : https://fastfollow.vercel.app nous y [discuter notres;discutons de nos] projets et pouvons t'aider [de commencer avec les outils de créer le sites pour elèves;à te lancer dans la création de sites web éducatifs] avec l'AI.\n\nC'est vraiment incroyable ce qu'on peut créer aujourd'hui avec l'AI, [especialement;notamment] pour [apprendres;apprendre] et enseigner les langes.\n\nDésolé, [j'ai;je n'ai] vu ton lien de [semaine;la semaine] dernière [juste aujourd'hui;qu'aujourd'hui] et, [maintenant;malheureusement] il ne fonctionne plus : https://sondages.univ-perp.fr/index.php/237725\n\nBon rétablissement et restons en contact !\n\nEdward",
+          "rawText": "Je suis désolé [d'écouter de tes;que tu as des] problèmes de santé. J'espère que tu [vas être;iras] mieux [dans le prochaine avenir;très bientôt].\n\nComme tu [requètes;me l'as demandé], je vais [supprimer;annuler] le cours que tu as reprogrammé [sur;pour] vendredi.\n\nJe [te voulais;voulais te] dire que j'ai [apprécié beaucoup;beaucoup apprécié] [notres;nos] cours ensemble, [especialement pour;notamment] ta flexibilité [quand;lorsque] j'ai [constantement;constamment] changé le [contente et format de cours;contenu et le format des cours]. [Notre;Nos] cours m'ont [aidé beaucoup;beaucoup aidé] [comme préparation;à me préparer] pour ma semaine à [Dijon, merci.;Dijon. Merci pour ça !]\n\nSi, en tant que professeure, tu [t'interesse dans;t'intéresses à l'idée] de créer des exercices [comme site;sous forme de sites] web pour tes elèves [avec;à l'aide de] l'AI, j'ai [un communité sur;une communauté] Discord de [developpeurs;développeurs] et [professeurs;de professeurs] de langues : https://fastfollow.vercel.app nous y [discuter notres;discutons de nos] projets et pouvons t'aider [de commencer avec les outils de créer le sites pour elèves;à te lancer dans la création de sites web éducatifs] avec l'AI.\n\nC'est vraiment incroyable ce qu'on peut créer aujourd'hui avec l'AI, [especialement;notamment] pour [apprendres;apprendre] et enseigner les langes.\n\nDésolé, [j'ai;je n'ai] vu ton lien de [semaine;la semaine] dernière [juste aujourd'hui;qu'aujourd'hui] et, [maintenant;malheureusement] il ne fonctionne plus : https://sondages.univ-perp.fr/index.php/237725\n\nBon rétablissement et restons en contact !",
           "bits": [
             {
               "type": "text",
-              "text": "Salut Clarisse,\n\nJe suis désolé "
+              "text": "Je suis désolé "
             },
             {
               "type": "flashcard",
@@ -4308,18 +4308,210 @@
             },
             {
               "type": "text",
-              "text": " il ne fonctionne plus : https://sondages.univ-perp.fr/index.php/237725\n\nBon rétablissement et restons en contact !\n\nEdward"
+              "text": " il ne fonctionne plus : https://sondages.univ-perp.fr/index.php/237725\n\nBon rétablissement et restons en contact !"
             }
           ],
           "flashcardsCount": 31,
-          "wordCount": 180
+          "wordCount": 177
         }
       ],
-      "totalWords": 454,
+      "totalWords": 448,
       "totalFlashcards": 84
+    },
+    {
+      "date": "2026-10-21",
+      "sections": [
+        {
+          "id": "2026-10-21-sec-1",
+          "day": "2026-10-21",
+          "sectionIndex": 1,
+          "language": "fr",
+          "rawText": "Salut Karl-Heinz !\n\nPour [ma;mon] application LangLearn, je [planifie d'integrire;prévoir d'intégrer] les \"notes de correction\" [qui;que] les utilisateurs [pour sauvegarder quand ils ont les;peuvent prendre pendant leurs] séances de [tandems ou enseigner;tandem ou leurs cours de langue].\n\nPour [experimenter;expérimenter] avec [le;la] syntaxe, j'ai [commencé encore de;recommencé à] prendre [les;des] notes pendant [notre tandems;nos séances de tandem].\n\nDans l'esprit de \"Datapod\" je prends [les;ces] notes dans un [syntax qui on peut lire;format lisible par un humain], mes [que;qui] peut aussi [été parser pour;être analysé automatiquement afin de les présenter] plus tard [montrer dans l'application dans un moyen interactiv;de manière interactive dans l'application].\n\nPour cette raison, je peux [te déjà envoyer;déjà t'envoyer] les notes dans [la version raw;leur version brute] :",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Salut Karl-Heinz !\n\nPour "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-1",
+              "incorrect": "ma",
+              "correct": "mon"
+            },
+            {
+              "type": "text",
+              "text": " application LangLearn, je "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-2",
+              "incorrect": "planifie d'integrire",
+              "correct": "prévoir d'intégrer"
+            },
+            {
+              "type": "text",
+              "text": " les \"notes de correction\" "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-3",
+              "incorrect": "qui",
+              "correct": "que"
+            },
+            {
+              "type": "text",
+              "text": " les utilisateurs "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-4",
+              "incorrect": "pour sauvegarder quand ils ont les",
+              "correct": "peuvent prendre pendant leurs"
+            },
+            {
+              "type": "text",
+              "text": " séances de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-5",
+              "incorrect": "tandems ou enseigner",
+              "correct": "tandem ou leurs cours de langue"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nPour "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-6",
+              "incorrect": "experimenter",
+              "correct": "expérimenter"
+            },
+            {
+              "type": "text",
+              "text": " avec "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-7",
+              "incorrect": "le",
+              "correct": "la"
+            },
+            {
+              "type": "text",
+              "text": " syntaxe, j'ai "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-8",
+              "incorrect": "commencé encore de",
+              "correct": "recommencé à"
+            },
+            {
+              "type": "text",
+              "text": " prendre "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-9",
+              "incorrect": "les",
+              "correct": "des"
+            },
+            {
+              "type": "text",
+              "text": " notes pendant "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-10",
+              "incorrect": "notre tandems",
+              "correct": "nos séances de tandem"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nDans l'esprit de \"Datapod\" je prends "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-11",
+              "incorrect": "les",
+              "correct": "ces"
+            },
+            {
+              "type": "text",
+              "text": " notes dans un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-12",
+              "incorrect": "syntax qui on peut lire",
+              "correct": "format lisible par un humain"
+            },
+            {
+              "type": "text",
+              "text": ", mes "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-13",
+              "incorrect": "que",
+              "correct": "qui"
+            },
+            {
+              "type": "text",
+              "text": " peut aussi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-14",
+              "incorrect": "été parser pour",
+              "correct": "être analysé automatiquement afin de les présenter"
+            },
+            {
+              "type": "text",
+              "text": " plus tard "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-15",
+              "incorrect": "montrer dans l'application dans un moyen interactiv",
+              "correct": "de manière interactive dans l'application"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nPour cette raison, je peux "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-16",
+              "incorrect": "te déjà envoyer",
+              "correct": "déjà t'envoyer"
+            },
+            {
+              "type": "text",
+              "text": " les notes dans "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-21-sec-1-fc-17",
+              "incorrect": "la version raw",
+              "correct": "leur version brute"
+            },
+            {
+              "type": "text",
+              "text": " :"
+            }
+          ],
+          "flashcardsCount": 17,
+          "wordCount": 92
+        }
+      ],
+      "totalWords": 92,
+      "totalFlashcards": 17
     }
   ],
-  "totalSections": 31,
-  "totalWords": 2857,
-  "totalFlashcards": 379
+  "totalSections": 32,
+  "totalWords": 2943,
+  "totalFlashcards": 396
 }
