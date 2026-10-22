@@ -188,8 +188,6 @@ Merci pour le lien, je l'ai ajouté [dans le;à ma] liste [de infos;d'infomation
 ---
 2026-10-20
 ---
-Salut Clarisse !
-
 Nous avons [une;notre] dernière [session;séance] ce soir à 22 h 30. Je peux [faire;te faire] une [présentation;presentation] avec mes fotos de ma semaine à Dijon, [le marathon;du marathon] et [ma deux;de mes deux] jours à Paris. Si tu peux [poser les;me poser des] questions [en française vite;rapidement en français], je crois [serait;que ce serait] [une bonne;un bon] exercice. 
 
 Dis-moi si, [comme professeur;en tant que professeure] de langues, tu [as l'interèsse;t'intéresses] [aussi sur comment un peux;à la manière dont on peut] utiliser l'AI pour créer [les exercises;des exercices] sur [sites de web;des sites web] pour les [elèves;élèves]. Je peux te [le un peu montrer comment;montrer un peu comment] on peut [commencer avec ça;s'y prendre pour commencer]. C'est un peu [technische;technique] : [on doit;il faut avoir] un [compte de GitHub;compte GitHub] et un compte Vercel, [tu doit apprendre un peux;appredre quelques notions] de Git, et installer un [éditor;éditeur] (Antigravity), mais [toutes;tout] ces outils sont [gratuites;gratuits]. 
@@ -202,8 +200,6 @@ Je [vais commencer avec;reprendrai] les courses sur Reply en janvier, mais [avec
 
 À plus [tard à;tard, à] 22 h 30 !
 ---
-Salut Clarisse,
-
 Je suis désolé [d'écouter de tes;que tu as des] problèmes de santé. J'espère que tu [vas être;iras] mieux [dans le prochaine avenir;très bientôt].
 
 Comme tu [requètes;me l'as demandé], je vais [supprimer;annuler] le cours que tu as reprogrammé [sur;pour] vendredi.
@@ -217,6 +213,19 @@ C'est vraiment incroyable ce qu'on peut créer aujourd'hui avec l'AI, [especiale
 Désolé, [j'ai;je n'ai] vu ton lien de [semaine;la semaine] dernière [juste aujourd'hui;qu'aujourd'hui] et, [maintenant;malheureusement] il ne fonctionne plus : https://sondages.univ-perp.fr/index.php/237725
 
 Bon rétablissement et restons en contact !
+---
+2026-10-21
+---
+Salut Karl-Heinz !
 
-Edward 
+Pour [ma;mon] application LangLearn, je [planifie d'integrire;prévoir d'intégrer] les "notes de correction" [qui;que] les utilisateurs [pour sauvegarder quand ils ont les;peuvent prendre pendant leurs] séances de [tandems ou enseigner;tandem ou leurs cours de langue]. 
+
+Pour [experimenter;expérimenter] avec [le;la] syntaxe, j'ai [commencé encore de;recommencé à] prendre [les;des] notes pendant [notre tandems;nos séances de tandem]. 
+
+Dans l'esprit de "Datapod" je prends [les;ces] notes dans un [syntax qui on peut lire;format lisible par un humain], mes [que;qui] peut aussi [été parser pour;être analysé automatiquement afin de les présenter] plus tard [montrer dans l'application dans un moyen interactiv;de manière interactive dans l'application]. 
+
+Pour cette raison, je peux [te déjà envoyer;déjà t'envoyer] les notes dans [la version raw;leur version brute] :
+
+
+
 
