@@ -59,6 +59,9 @@ export default defineEventHandler(async (event) => {
   if (body.publishDate !== undefined) {
     dataToUpdate.publishDate = body.publishDate ? new Date(body.publishDate) : null
   }
+  if (body.description !== undefined) {
+    dataToUpdate.description = body.description ? body.description.trim() : null
+  }
 
   const updated = await prisma.version.update({
     where: { id },

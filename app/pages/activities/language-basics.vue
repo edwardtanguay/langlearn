@@ -302,6 +302,7 @@ function loadRanksFromLocalStorage() {
             allRanksMap.value.set(k, v)
           }
         }
+        allRanksMap.value = new Map(allRanksMap.value)
       }
     } catch {}
   }
@@ -481,6 +482,15 @@ async function loadPronunciations() {
         }
       }
 
+      // Reassign to trigger Vue reactivity
+      allRanksMap.value = new Map(allRanksMap.value)
+      allPronunciationsMap.value = {
+        fr: new Map(allPronunciationsMap.value.fr),
+        es: new Map(allPronunciationsMap.value.es),
+        it: new Map(allPronunciationsMap.value.it),
+        nl: new Map(allPronunciationsMap.value.nl),
+      }
+
       // Sync any local-only pronunciation tips up to the database
       for (const l of languages) {
         const localMap = allPronunciationsMap.value[l.code]
@@ -514,6 +524,17 @@ async function loadPronunciations() {
   } catch {
     // If offline or unauthenticated, local map remains active
   }
+}
+
+function getLetterChar(item: BasicItem): string {
+  const match = item.id.match(/^letters-(\d+)$/)
+  if (match && match[1]) {
+    const num = parseInt(match[1], 10)
+    if (num >= 1 && num <= 26) {
+      return String.fromCharCode(64 + num)
+    }
+  }
+  return ''
 }
 
 function savePronunciationToLocalStorage(langCode: LangCode) {
@@ -1393,12 +1414,16 @@ function isFlashcardOpen(itemId: string): boolean {
           :key="item.id"
           @click="toggleTestPronunciationItem(item.id)"
           class="p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#151d2c] flex items-center justify-between gap-2 cursor-pointer hover:border-amber-500/50 transition-all select-none shadow-xs"
+          :style="{ borderColor: `color-mix(in srgb, ${currentColor} 35%, transparent)` }"
         >
           <div class="min-w-0 flex-1">
-            <div class="text-sm font-bold text-gray-900 dark:text-white truncate">
-              {{ item[selectedLang] || item.en }}
+            <div class="text-sm font-bold truncate flex items-center gap-1.5" :style="{ color: brightColor }">
+              <span class="text-[10px] font-extrabold uppercase px-1.5 py-0.2 rounded" :style="{ backgroundColor: `color-mix(in srgb, ${currentColor} 18%, transparent)`, color: brightColor }">
+                {{ selectedLang }}
+              </span>
+              <span>{{ item[selectedLang] || item.en }}</span>
             </div>
-            <div class="text-xs text-gray-400 dark:text-gray-500 truncate">
+            <div class="text-xs text-gray-400 dark:text-gray-500 truncate mt-0.5">
               {{ item.en }}
             </div>
           </div>
@@ -1946,6 +1971,12 @@ function isFlashcardOpen(itemId: string): boolean {
               >
                 <span class="font-medium text-gray-600 dark:text-gray-300">
                   {{ item.en }}
+                </span>
+                <span
+                  v-if="cat.id === 'letters'"
+                  class="w-7 h-5 flex items-center justify-center font-bold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-xs shrink-0"
+                >
+                  {{ getLetterChar(item) }}
                 </span>
                 <span class="font-semibold" :style="{ color: brightColor }">
                   {{ item[selectedLang] || item.en }}

@@ -176,7 +176,7 @@ const navItems = computed(() => {
   const items = []
   if (loggedIn.value) {
     if (isAdmin.value) {
-      items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
+      items.push({ name: 'Flashcards', path: '/flashcards', icon: DocumentTextIcon })
       items.push({ name: 'Batches', path: '/batches', icon: QueueListIcon })
       items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
@@ -186,7 +186,7 @@ const navItems = computed(() => {
       }
       items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     } else {
-      items.push({ name: 'Flashcards', path: '/flashcard', icon: DocumentTextIcon })
+      items.push({ name: 'Flashcards', path: '/flashcards', icon: DocumentTextIcon })
       items.push({ name: 'Batches', path: '/batches', icon: QueueListIcon })
       items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
       items.push({ name: 'Activities', path: '/activities/gemini-quiz', icon: SparklesIcon })
@@ -209,10 +209,10 @@ const navItems = computed(() => {
        :class="{ 'celebration-mode': isCelebrationMode }">
     <div class="container-custom">
       <div class="flex justify-between items-center h-16" @click="mobileMenuOpen = false">
-        <!-- Logo / User Profile (Navigates to /user for both members and admins) -->
+        <!-- Logo / User Profile (Navigates to /profile for both members and admins) -->
         <div class="flex items-center space-x-3">
           <ClientOnly>
-            <NuxtLink :to="loggedIn ? '/user' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
+            <NuxtLink :to="loggedIn ? '/profile' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
               <div class="flex flex-row items-center gap-2.5">
                 <template v-if="loggedIn">
                   <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs">

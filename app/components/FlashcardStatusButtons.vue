@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   (e: 'action', actionTaken: string, newStatus?: string): void
   (e: 'update-phrase', newPhrase: string): void
+  (e: 'toggle-first-letter'): void
 }>()
 
 const isHighlighting = ref(false)
@@ -107,8 +108,12 @@ function toggleWordAt(index: number) {
           Delete
         </button>
         <button @click="isHighlighting = true"
-          class="px-5 sm:px-6 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
-          Highlight words
+          class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
+          Highlight
+        </button>
+        <button type="button" @click="$emit('toggle-first-letter')"
+          class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
+          First letter
         </button>
       </div>
 

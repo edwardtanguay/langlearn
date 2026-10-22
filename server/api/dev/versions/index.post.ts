@@ -35,6 +35,7 @@ export default defineEventHandler(async (event) => {
     data: {
       versionNumber: verNum,
       title: body.title ? body.title.trim() : null,
+      description: body.description ? body.description.trim() : null,
       status: body.status || 'IN_PROGRESS',
       publishDate: body.publishDate ? new Date(body.publishDate) : null
     }

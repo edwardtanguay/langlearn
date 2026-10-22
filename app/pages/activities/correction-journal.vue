@@ -454,12 +454,12 @@ const languageTextColors: Record<string, string> = {
   it: 'text-[#194d19] dark:text-emerald-400',
   nl: 'text-[#d97706] dark:text-amber-400',
   pl: 'text-gray-600 dark:text-gray-300',
-  de: 'text-[#7e4402] dark:text-amber-500',
+  de: 'text-[#ea580c] dark:text-orange-400',
   ru: 'text-[#3f3f46] dark:text-zinc-400',
   is: 'text-[#0891b2] dark:text-cyan-400',
   da: 'text-[#ff1493] dark:text-pink-400',
   en: 'text-[#9333ea] dark:text-purple-400',
-  el: 'text-[#ea580c] dark:text-orange-400'
+  el: 'text-[#7e4402] dark:text-amber-600'
 }
 
 function getLanguageTextColor(langCode: string): string {
@@ -732,7 +732,17 @@ onMounted(() => {
               </span>
             </template>
           </USelectMenu>
+
+          <!-- Desktop note to the right of the dropdown -->
+          <span v-if="sectionSelectItems.length > 0" class="hidden sm:inline-block text-xs font-semibold text-gray-500 dark:text-gray-400 ml-2 select-none">
+            Text {{ currentSectionIndex }} of {{ sectionSelectItems.length }}
+          </span>
         </div>
+      </div>
+
+      <!-- Mobile centered note between the dropdown and the text card -->
+      <div v-if="sectionSelectItems.length > 0" class="sm:hidden text-center text-xs font-semibold text-gray-500 dark:text-gray-400 -my-1 select-none">
+        Text {{ currentSectionIndex }} of {{ sectionSelectItems.length }}
       </div>
 
       <!-- Section Text Card -->

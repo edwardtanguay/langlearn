@@ -77,6 +77,16 @@ const fetchBatches = async () => {
   }
 }
 
+function extractDate(batchTime: string): string {
+  const parts = batchTime.split(' ')
+  return parts[0] || batchTime
+}
+
+function extractTime(batchTime: string): string {
+  const parts = batchTime.split(' ')
+  return parts.length > 1 ? parts.slice(1).join(' ') : ''
+}
+
 onMounted(() => {
   fetchBatches()
 })
@@ -148,8 +158,16 @@ onMounted(() => {
           class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer select-none"
         >
           <div class="flex items-center gap-3">
-            <span class="font-mono text-sm sm:text-base font-bold text-gray-900 dark:text-white">
-              {{ batch.batchTime }} => {{ batch.count }} {{ batch.count === 1 ? 'flashcard' : 'flashcards' }}
+            <span class="font-mono text-sm sm:text-base font-bold text-gray-900 dark:text-white flex flex-wrap items-center gap-1.5">
+              <span class="text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded-md font-bold">
+                {{ extractDate(batch.batchTime) }}
+              </span>
+              <span v-if="extractTime(batch.batchTime)">{{ extractTime(batch.batchTime) }}</span>
+              <span class="text-gray-400">=></span>
+              <span class="text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded-md font-bold">
+                {{ batch.count }}
+              </span>
+              <span>{{ batch.count === 1 ? 'flashcard' : 'flashcards' }}</span>
             </span>
           </div>
 

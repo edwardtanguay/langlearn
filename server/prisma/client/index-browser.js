@@ -145,6 +145,7 @@ exports.Prisma.VersionScalarFieldEnum = {
   id: 'id',
   versionNumber: 'versionNumber',
   title: 'title',
+  description: 'description',
   status: 'status',
   publishDate: 'publishDate',
   createdAt: 'createdAt',

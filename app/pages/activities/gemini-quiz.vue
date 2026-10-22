@@ -55,8 +55,19 @@ const languageNames: Record<string, string> = {
 
 import { languageColors } from '~/utils/languageColors'
 
-const { loggedIn, userRole } = useCurrentUser()
 const memberTargetLanguages = ref<string[]>([])
+const selectedLanguageFilter = ref<string>('all')
+
+const availableTargetLanguages = computed(() => {
+  if (loggedIn.value && memberTargetLanguages.value.length > 0) {
+    return memberTargetLanguages.value.map(l => l.toLowerCase())
+  }
+  const set = new Set<string>()
+  for (const p of prompts.value) {
+    if (p.language) set.add(p.language.toLowerCase())
+  }
+  return Array.from(set)
+})
 
 // Modal State
 const showModal = ref(false)
@@ -102,7 +113,7 @@ onUnmounted(() => {
   window.removeEventListener('click', closeCrudToolbar)
 })
 
-// Grouped prompts by language (filtered for members)
+// Grouped prompts by language (filtered for members and active target language filter)
 const groupedPrompts = computed(() => {
   const groups: Record<string, ChatbotPromptItem[]> = {}
   
@@ -113,6 +124,9 @@ const groupedPrompts = computed(() => {
   for (const p of prompts.value) {
     const lang = p.language.toLowerCase()
     if (isTargetFiltered && !targetSet.has(lang)) {
+      continue
+    }
+    if (selectedLanguageFilter.value !== 'all' && lang !== selectedLanguageFilter.value.toLowerCase()) {
       continue
     }
     if (!groups[lang]) {
@@ -334,7 +348,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-8 space-y-8">
+  <div class="max-w-4xl mx-auto px-3 sm:px-4 py-5 sm:py-6 space-y-5 sm:space-y-6">
     <!-- Top Navigation & Header -->
     <div class="flex items-center justify-between">
       <NuxtLink to="/activities" class="text-sm font-semibold !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white opacity-50 hover:opacity-100 transition-all">
@@ -343,10 +357,42 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     </div>
 
     <div>
-      <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Gemini Quiz Prompts</h1>
-      <p class="text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Gemini Quiz Prompts</h1>
+      <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
         Click any prompt's <strong class="text-white font-semibold">Copy and Paste</strong> button below to copy the prompt to your clipboard and automatically open <span class="whitespace-nowrap font-medium text-white">Gemini&nbsp;AI</span> in a new tab where you can paste it to generate an interactive quiz.
       </p>
+    </div>
+
+    <!-- Target Language Filter Buttons -->
+    <div v-if="availableTargetLanguages.length > 1" class="flex flex-wrap items-center gap-2 pt-0.5 pb-0.5">
+      <button
+        type="button"
+        @click="selectedLanguageFilter = 'all'"
+        class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
+        :class="selectedLanguageFilter === 'all'
+          ? 'bg-gray-900 text-white border-gray-900 dark:bg-white dark:text-gray-900 dark:border-white'
+          : 'bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
+      >
+        All
+      </button>
+      <button
+        v-for="code in availableTargetLanguages"
+        :key="code"
+        type="button"
+        @click="selectedLanguageFilter = code"
+        class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
+        :style="selectedLanguageFilter === code ? {
+          backgroundColor: languageColors[code] || '#6366f1',
+          borderColor: languageColors[code] || '#6366f1',
+          color: '#ffffff'
+        } : {
+          borderColor: `color-mix(in srgb, ${languageColors[code] || '#6366f1'} 50%, transparent)`,
+          color: languageColors[code] || '#6366f1',
+          backgroundColor: `color-mix(in srgb, ${languageColors[code] || '#6366f1'} 10%, transparent)`
+        }"
+      >
+        {{ languageNames[code] || code.toUpperCase() }}
+      </button>
     </div>
 
     <!-- Loading Skeleton -->
@@ -362,17 +408,17 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <!-- Empty State -->
     <div v-else-if="groupedPrompts.length === 0" class="py-16 text-center space-y-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
       <p class="text-gray-700 dark:text-gray-300 font-medium">No quiz prompts available for your selected target languages.</p>
-      <NuxtLink v-if="loggedIn" to="/user" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
+      <NuxtLink v-if="loggedIn" to="/profile" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
         Configure Target Languages on your Profile &rarr;
       </NuxtLink>
     </div>
 
     <!-- Grouped Prompts by Language -->
-    <div v-else class="space-y-10">
-      <div v-for="group in groupedPrompts" :key="group.code" class="space-y-4">
+    <div v-else class="space-y-6">
+      <div v-for="group in groupedPrompts" :key="group.code" class="space-y-3">
         <!-- Language Group Header: Word with thick full-width underline directly under text with ZERO space, with Add button on far right for admin -->
         <div class="border-b-2 w-full border-t-0 pt-0 pb-0 flex items-center justify-between" :style="{ borderColor: group.color }">
-          <div class="text-2xl text-gray-900 dark:text-white tracking-tight p-0 mb-2 leading-none inline-block translate-y-[2px]">
+          <div class="text-xl sm:text-2xl text-gray-900 dark:text-white tracking-tight p-0 mb-1.5 leading-none inline-block translate-y-[2px]">
             {{ group.name }}
           </div>
           <!-- Add Prompt in this language button (Admin only) -->
@@ -380,20 +426,20 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
             v-if="isAdmin"
             @click="openAddModal(group.code)"
             title="Add prompt in this language"
-            class="text-xs font-semibold px-2.5 py-1.5 mb-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-800 dark:text-white flex items-center gap-1 cursor-pointer transition-colors"
+            class="text-xs font-semibold px-2.5 py-1 mb-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-800 dark:text-white flex items-center gap-1 cursor-pointer transition-colors"
           >
             <UIcon name="lucide:plus" class="w-3.5 h-3.5" />
             <span>Add</span>
           </button>
         </div>
 
-        <!-- Prompts Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Prompts Grid (denser panels for more items on page) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
           <div
             v-for="(p, idx) in group.items"
             :key="p.id"
             @click="handleCopyAndPaste(p.prompt, p.id)"
-            class="group relative p-4 rounded-xl border shadow-xs flex flex-col justify-between space-y-4 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.01] active:scale-[0.99]"
+            class="group relative p-3 rounded-xl border shadow-xs flex flex-col justify-between space-y-3 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.01] active:scale-[0.99]"
             :style="{
               borderColor: copiedPromptId === p.id ? '#059669' : (group.color + '66'),
               backgroundColor: copiedPromptId === p.id ? '#05966928' : (group.color + '40')

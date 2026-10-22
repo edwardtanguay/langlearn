@@ -71,6 +71,26 @@ const languageBreakdown = computed(() => {
   return breakdown
 })
 
+const selectedImportFilter = ref<string>('all')
+
+const filteredWillImport = computed(() => {
+  if (!previewResult.value?.willImport) return []
+  if (selectedImportFilter.value === 'all') return previewResult.value.willImport
+  return previewResult.value.willImport.filter(card => {
+    const lang = (card.backLanguage || card.frontLanguage || '').toLowerCase()
+    return lang === selectedImportFilter.value
+  })
+})
+
+const filteredWillNotImport = computed(() => {
+  if (!previewResult.value?.willNotImport) return []
+  if (selectedImportFilter.value === 'all') return previewResult.value.willNotImport
+  return previewResult.value.willNotImport.filter(card => {
+    const lang = (card.backLanguage || card.frontLanguage || '').toLowerCase()
+    return lang === selectedImportFilter.value
+  })
+})
+
 const checkMobile = () => {
   if (typeof window !== 'undefined') {
     isMobile.value = window.innerWidth < 768
@@ -293,7 +313,7 @@ onBeforeUnmount(() => {
                   Import More Cards
                 </button>
                 <NuxtLink
-                  to="/flashcard"
+                  to="/flashcards"
                   class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
                 >
                   <span>Continue to Flashcards &rarr;</span>
@@ -401,17 +421,75 @@ onBeforeUnmount(() => {
               {{ importError }}
             </div>
 
-            <!-- (1) Cards that WILL NOT be imported -->
-            <div v-if="previewResult.willNotImport.length > 0" class="space-y-3">
+            <!-- (1) Overall Report Summary Box + Import Action Button at the Top -->
+            <div class="p-4 bg-black dark:bg-black border border-gray-800 rounded-2xl shadow-xs space-y-3 text-xs text-gray-200">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-gray-100 uppercase tracking-wider text-[11px]">Overall Import Report</span>
+                <span class="text-gray-400 font-mono text-[11px]">{{ previewResult.totalParsed }} found</span>
+              </div>
+              <div class="flex items-center justify-between text-gray-300">
+                <span>Ready to import:</span>
+                <span class="font-bold font-mono text-emerald-400">{{ previewResult.willImport.length }}</span>
+              </div>
+              <div v-if="previewResult.willNotImport.length > 0" class="flex items-center justify-between text-gray-300">
+                <span>Skipped:</span>
+                <span class="font-bold font-mono text-rose-400">{{ previewResult.willNotImport.length }}</span>
+              </div>
+
+              <!-- Top Primary Import Action Button -->
+              <div v-if="previewResult.willImport.length > 0" class="pt-1">
+                <button
+                  @click="handleConfirmImport"
+                  :disabled="isConfirming"
+                  class="w-full py-3 px-6 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
+                >
+                  <span v-if="isConfirming" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  <span>Import {{ previewResult.willImport.length }} {{ previewResult.willImport.length === 1 ? 'flashcard' : 'flashcards' }}</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- (2) Language Filter Buttons directly below summary -->
+            <div class="flex flex-wrap items-center gap-2 pt-0.5">
+              <button
+                type="button"
+                @click="selectedImportFilter = 'all'"
+                class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
+                :class="selectedImportFilter === 'all' ? 'bg-gray-900 text-white border-gray-900 dark:bg-white dark:text-gray-900 dark:border-white' : 'bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
+              >
+                {{ previewResult.willImport.length }} total
+              </button>
+              <button
+                v-for="(count, lang) in languageBreakdown"
+                :key="lang"
+                type="button"
+                @click="selectedImportFilter = lang"
+                class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
+                :style="selectedImportFilter === lang ? {
+                  backgroundColor: languageColors[lang] || '#6366f1',
+                  borderColor: languageColors[lang] || '#6366f1',
+                  color: '#ffffff'
+                } : {
+                  borderColor: `color-mix(in srgb, ${languageColors[lang] || '#6366f1'} 50%, transparent)`,
+                  color: languageColors[lang] || '#6366f1',
+                  backgroundColor: `color-mix(in srgb, ${languageColors[lang] || '#6366f1'} 10%, transparent)`
+                }"
+              >
+                {{ count }} {{ lang.toUpperCase() }}
+              </button>
+            </div>
+
+            <!-- (3) Cards that WILL NOT be imported -->
+            <div v-if="filteredWillNotImport.length > 0" class="space-y-3">
               <div class="pt-1 pb-0.5">
                 <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
-                  {{ previewResult.willNotImport.length }} {{ previewResult.willNotImport.length === 1 ? 'card' : 'cards' }} will not be imported
+                  {{ filteredWillNotImport.length }} {{ filteredWillNotImport.length === 1 ? 'card' : 'cards' }} will not be imported
                 </h2>
               </div>
 
               <div class="space-y-2.5">
                 <div
-                  v-for="(card, idx) in previewResult.willNotImport"
+                  v-for="(card, idx) in filteredWillNotImport"
                   :key="idx"
                   class="p-3.5 bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/50 rounded-2xl space-y-2 text-xs shadow-xs"
                 >
@@ -449,17 +527,17 @@ onBeforeUnmount(() => {
               </div>
             </div>
 
-            <!-- (2) Cards that WILL be imported -->
-            <div v-if="previewResult.willImport.length > 0" class="space-y-3">
+            <!-- (4) Cards that WILL be imported -->
+            <div v-if="filteredWillImport.length > 0" class="space-y-3">
               <div class="pt-1 pb-0.5">
                 <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  {{ previewResult.willImport.length }} {{ previewResult.willImport.length === 1 ? 'card' : 'cards' }} ready to import
+                  {{ filteredWillImport.length }} {{ filteredWillImport.length === 1 ? 'card' : 'cards' }} ready to import
                 </h2>
               </div>
 
               <div class="space-y-2.5">
                 <div
-                  v-for="(card, idx) in previewResult.willImport"
+                  v-for="(card, idx) in filteredWillImport"
                   :key="idx"
                   class="p-3.5 bg-white dark:bg-gray-900 border rounded-2xl space-y-2 text-xs shadow-xs transition-all"
                   :style="{ borderColor: `color-mix(in srgb, ${getCardLanguageColor(card)} 35%, transparent)` }"
@@ -532,49 +610,6 @@ onBeforeUnmount(() => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <!-- Overall Report Summary Box at the Bottom -->
-            <div class="p-4 bg-black dark:bg-black border border-gray-800 rounded-2xl shadow-xs space-y-2 text-xs text-gray-200">
-              <div class="font-bold text-gray-100 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-                <span>Overall Import Report</span>
-              </div>
-              <div class="flex items-center justify-between text-gray-300">
-                <span>Total cards found:</span>
-                <span class="font-bold font-mono">{{ previewResult.totalParsed }}</span>
-              </div>
-              <div class="flex items-center justify-between text-gray-300">
-                <span>Ready to import:</span>
-                <span class="font-bold font-mono text-emerald-400">{{ previewResult.willImport.length }}</span>
-              </div>
-              <div class="flex items-center justify-between text-gray-300">
-                <span>Skipped:</span>
-                <span class="font-bold font-mono text-rose-400">{{ previewResult.willNotImport.length }}</span>
-              </div>
-              <div v-if="Object.keys(languageBreakdown).length > 0" class="pt-2 border-t border-gray-800 flex flex-wrap items-center gap-1.5">
-                <span class="text-gray-400 text-[11px] font-semibold">Languages:</span>
-                <span
-                  v-for="(count, lang) in languageBreakdown"
-                  :key="lang"
-                  class="px-2 py-0.5 rounded-md text-[11px] font-bold text-white shadow-xs"
-                  :style="{ backgroundColor: languageColors[lang] || '#6366f1' }"
-                >
-                  {{ (lang || 'unknown').toUpperCase() }}: {{ count }}
-                </span>
-              </div>
-            </div>
-
-            <!-- Confirm Action Buttons -->
-            <div class="pt-2">
-              <button
-                v-if="previewResult.willImport.length > 0"
-                @click="handleConfirmImport"
-                :disabled="isConfirming"
-                class="w-full py-3 px-6 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span v-if="isConfirming" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                <span>Confirm Import ({{ previewResult.willImport.length }} {{ previewResult.willImport.length === 1 ? 'card' : 'cards' }})</span>
-              </button>
             </div>
           </div>
 

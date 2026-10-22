@@ -43,6 +43,7 @@ model Version {
   id            String        @id @default(uuid())
   versionNumber String        @unique
   title         String?
+  description   String?
   status        String        @default("IN_PROGRESS")
   publishDate   DateTime?
   createdAt     DateTime      @default(now())
