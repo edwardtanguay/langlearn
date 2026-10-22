@@ -243,6 +243,22 @@ function scrollToVersion(verId: string) {
   }
 }
 
+function scrollToItem(itemId: string) {
+  if (typeof document !== 'undefined') {
+    const el = document.getElementById(`version-item-${itemId}`)
+    if (el) {
+      const navOffset = 110
+      const elementPosition = el.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }
+}
+
+
 const displayedVersions = computed(() => {
   if (!adminEditMode.value) {
     // Admin mode OFF: show ONLY PUBLISHED versions with at least one item, descending by version number
@@ -284,18 +300,9 @@ const versionsForDisplay = computed(() => {
     .filter(v => v.versionItems.length > 0)
 })
 
-// Sorted categories for dropdowns: General first, then by descending rank
+// Sorted categories for dropdowns: pure alphabetical order (A-Z)
 const sortedCategoriesForDropdown = computed(() => {
-  const generalCat = categories.value.find(c => c.title === 'General')
-  const cleanAssignCat = categories.value.find(c => c.title === 'Clean and assign')
-  const rest = categories.value
-    .filter(c => c.title !== 'General' && c.title !== 'Clean and assign')
-    .sort((a, b) => (b.rank ?? 2.5) - (a.rank ?? 2.5))
-  return [
-    ...(cleanAssignCat ? [cleanAssignCat] : []),
-    ...(generalCat ? [generalCat] : []),
-    ...rest
-  ]
+  return [...categories.value].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }))
 })
 
 const recentlyEditedItemId = ref<string | null>(null)
@@ -648,7 +655,7 @@ const saveAdminVersion = async () => {
       if (recentlyEditedVersionId.value === tempVersionId) {
         recentlyEditedVersionId.value = null
       }
-    }, 2200)
+    }, 1000)
   }
 
   try {
@@ -853,6 +860,9 @@ const saveAdminItem = async () => {
   const targetId = payload.id || tempItemId
   if (targetId) {
     recentlyEditedItemId.value = targetId
+    nextTick(() => {
+      scrollToItem(targetId)
+    })
     setTimeout(() => {
       if (recentlyEditedItemId.value === targetId) {
         recentlyEditedItemId.value = null
@@ -942,6 +952,9 @@ const updateItemCategoryDirectly = async (item: VersionItem, categoryId: string,
   }
 
   recentlyEditedItemId.value = item.id
+  nextTick(() => {
+    scrollToItem(item.id)
+  })
   setTimeout(() => {
     if (recentlyEditedItemId.value === item.id) {
       recentlyEditedItemId.value = null
@@ -1280,6 +1293,9 @@ const saveCategory = async () => {
     }
 
     recentlyEditedItemId.value = targetItem.id
+    nextTick(() => {
+      scrollToItem(targetItem.id)
+    })
     setTimeout(() => {
       if (recentlyEditedItemId.value === targetItem.id) {
         recentlyEditedItemId.value = null
@@ -1620,8 +1636,15 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
         <div v-for="ver in versionsForDisplay" :key="ver.id" :id="`version-${ver.id}`" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md scroll-mt-24 transition-all" :class="[
-          recentlyEditedVersionId === ver.id ? 'ring-4 ring-amber-400 dark:ring-amber-500' : '',
-          isSearchActive ? 'border-2 border-orange-500' : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') ? 'border-2 border-dashed border-red-500 dark:border-red-600' : ver.status === 'IN_PROGRESS' ? 'border-2 border-dashed border-amber-500 dark:border-amber-600' : 'border border-gray-200 dark:border-gray-700/80'
+          recentlyEditedVersionId === ver.id
+            ? 'border-4 border-dashed border-amber-500 dark:border-amber-600'
+            : isSearchActive
+              ? 'border-2 border-orange-500'
+              : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0')
+                ? 'border-2 border-dashed border-red-500 dark:border-red-600'
+                : ver.status === 'IN_PROGRESS'
+                  ? 'border-2 border-dashed border-amber-500 dark:border-amber-600'
+                  : 'border border-gray-200 dark:border-gray-700/80'
         ]">
           <!-- Full-Width Version Panel Card Header -->
           <div class="bg-gray-100 dark:bg-gray-900/50 p-3 md:p-3.5 border-b border-gray-200 dark:border-gray-700/80 space-y-2">
@@ -1715,7 +1738,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             <!-- Case A: ALL items belong to General -> list directly without category group header -->
             <div v-else-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral" class="space-y-1.5">
                 <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
-                  <li v-for="(item, itemIdx) in ver.versionItems" :key="item.id" class="flex items-start justify-between gap-3 py-0.5 rounded transition-all" :class="{ 'animate-subtle-bounce border-l-4 border-amber-500 pl-2': recentlyEditedItemId === item.id }">
+                  <li v-for="(item, itemIdx) in ver.versionItems" :key="item.id" :id="`version-item-${item.id}`" class="flex items-start justify-between gap-3 py-0.5 px-1.5 border-l-4 border-transparent rounded transition-all duration-500" :class="{ '!border-amber-500 bg-amber-100/70 dark:bg-amber-950/40': recentlyEditedItemId === item.id }">
                     <div class="flex items-start gap-2 flex-1 min-w-0">
                       <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block leading-tight mt-0.5" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-orange-100 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-700/60 text-orange-800 dark:text-orange-300 font-normal'">
                         {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
@@ -1854,7 +1877,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
                   <!-- Category Group Items (Indented) -->
                   <ul class="space-y-1.5 text-xs text-gray-700 dark:text-gray-300 pl-3">
-                    <li v-for="(item, itemIdx) in group.items" :key="item.id" class="flex items-start justify-between gap-3 py-0.5 rounded transition-all" :class="{ 'animate-subtle-bounce border-l-4 border-amber-500 pl-2': recentlyEditedItemId === item.id }">
+                    <li v-for="(item, itemIdx) in group.items" :key="item.id" :id="`version-item-${item.id}`" class="flex items-start justify-between gap-3 py-0.5 px-1.5 border-l-4 border-transparent rounded transition-all duration-500" :class="{ '!border-amber-500 bg-amber-100/70 dark:bg-amber-950/40': recentlyEditedItemId === item.id }">
                       <div class="flex items-start gap-2 flex-1 min-w-0">
                         <span class="shrink-0 font-mono text-[10px] px-1.5 py-0.5 rounded tracking-wide uppercase inline-block leading-tight mt-0.5" :class="item.type === 'FEATURE' ? 'bg-emerald-100 dark:bg-emerald-900/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-800 dark:text-emerald-100 font-normal shadow-sm' : 'bg-orange-100 dark:bg-orange-950/40 border border-orange-300 dark:border-orange-700/60 text-orange-800 dark:text-orange-300 font-normal'">
                           {{ item.type === 'FEATURE' ? 'FEATURE' : 'BUG FIX' }}
