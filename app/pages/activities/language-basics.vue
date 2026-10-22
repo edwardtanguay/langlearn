@@ -1416,7 +1416,7 @@ function isFlashcardOpen(itemId: string): boolean {
           class="p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#151d2c] flex items-center justify-between gap-2 cursor-pointer hover:border-amber-500/50 transition-all select-none shadow-xs"
           :style="{ borderColor: `color-mix(in srgb, ${currentColor} 35%, transparent)` }"
         >
-          <div class="min-w-0 flex-1">
+          <div v-if="!testPronunciationRevealed.has(item.id)" class="min-w-0 flex-1">
             <div class="text-sm font-bold truncate flex items-center gap-1.5" :style="{ color: brightColor }">
               <span class="text-[10px] font-extrabold uppercase px-1.5 py-0.2 rounded" :style="{ backgroundColor: `color-mix(in srgb, ${currentColor} 18%, transparent)`, color: brightColor }">
                 {{ selectedLang }}
@@ -1428,7 +1428,7 @@ function isFlashcardOpen(itemId: string): boolean {
             </div>
           </div>
 
-          <div class="shrink-0 flex items-center gap-2 justify-end">
+          <div class="flex-1 flex items-center gap-2 justify-end min-h-[38px]">
             <template v-if="testPronunciationRevealed.has(item.id)">
               <!-- Action Icons (Star, Google Translate, P, C, R) side-by-side with stop propagation -->
               <div class="flex items-center gap-1 shrink-0" @click.stop>
@@ -1491,10 +1491,9 @@ function isFlashcardOpen(itemId: string): boolean {
               </span>
             </template>
             <span
-              v-else
-              class="text-[11px] font-semibold text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 italic min-w-[90px] text-right"
+              class="text-[11px] font-semibold text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 italic min-w-[90px] text-right shrink-0"
             >
-              Click to reveal
+              {{ testPronunciationRevealed.has(item.id) ? 'Click to hide' : 'Click to reveal' }}
             </span>
           </div>
         </div>
@@ -1969,14 +1968,14 @@ function isFlashcardOpen(itemId: string): boolean {
                 :key="item.id"
                 class="flex items-center justify-between gap-3 px-3 py-1.5 rounded-xl border border-gray-200/70 dark:border-gray-800/80 bg-white dark:bg-[#182030] shadow-xs text-xs"
               >
-                <span class="font-medium text-gray-600 dark:text-gray-300">
-                  {{ item.en }}
-                </span>
                 <span
                   v-if="cat.id === 'letters'"
                   class="w-7 h-5 flex items-center justify-center font-bold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-xs shrink-0"
                 >
                   {{ getLetterChar(item) }}
+                </span>
+                <span v-else class="font-medium text-gray-600 dark:text-gray-300">
+                  {{ item.en }}
                 </span>
                 <span class="font-semibold" :style="{ color: brightColor }">
                   {{ item[selectedLang] || item.en }}

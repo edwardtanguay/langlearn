@@ -206,12 +206,58 @@ function toggleFirstLetter(text: string): string {
   return text.slice(0, idx) + toggled + text.slice(idx + 1)
 }
 
+const frontActionMessage = ref<string | null>(null)
+let frontActionTimeout: ReturnType<typeof setTimeout> | null = null
+
+function showFrontActionNote(msg: string) {
+  frontActionMessage.value = msg
+  if (frontActionTimeout) clearTimeout(frontActionTimeout)
+  frontActionTimeout = setTimeout(() => {
+    frontActionMessage.value = null
+  }, 2000)
+}
+
+function cleanPunctuationFromEnds(text: string): string {
+  if (!text) return ''
+  return text.replace(/^[\s\p{P}\p{S}]+|[\s\p{P}\p{S}]+$/gu, '').trim()
+}
+
+async function cleanCurrentCardFront() {
+  if (!currentCard.value) return
+  const original = currentCard.value.front
+  const cleaned = cleanPunctuationFromEnds(original)
+  if (cleaned === original) {
+    showFrontActionNote('no punctuation to clean')
+    return
+  }
+  currentCard.value.front = cleaned
+  editFront.value = cleaned
+  showFrontActionNote('cleaned punctuation from ends')
+
+  try {
+    await $fetch(`/api/flashcards/${currentCard.value.id}`, {
+      method: 'PUT',
+      body: {
+        front: currentCard.value.front,
+        back: currentCard.value.back,
+        pronunciation: currentCard.value.pronunciation,
+        memoryHook: currentCard.value.memoryHook
+      }
+    })
+  } catch (err) {
+    console.error('Failed to save cleaned front text:', err)
+  }
+}
+
 async function toggleCurrentCardFirstLetter() {
   if (!currentCard.value) return
   if (!isFlipped.value) {
     const updated = toggleFirstLetter(currentCard.value.front)
     currentCard.value.front = updated
     editFront.value = updated
+    const match = updated.match(/\p{L}/u)
+    const isNowUpper = match ? match[0] === match[0].toUpperCase() && match[0] !== match[0].toLowerCase() : false
+    showFrontActionNote(isNowUpper ? 'toggled first letter to uppercase' : 'toggled first letter to lowercase')
   } else {
     const updated = toggleFirstLetter(currentCard.value.back)
     currentCard.value.back = updated
@@ -238,7 +284,7 @@ function handleOpenExamplesFromWord(word: string) {
   const sourceCode = currentCard.value.frontLanguage || 'en'
   const targetName = (languageNames[targetCode] || targetCode).toLowerCase()
   const sourceName = (languageNames[sourceCode] || sourceCode).toLowerCase()
-  const query = `create 3 examples in ${targetName} with "${word}", and translate/explain these examples in ${sourceName}`
+  const query = `create 3 examples in ${targetName} with "${word}", give translation in ${sourceName}, but all explanations and meta-language is in ${targetName}`
   const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
 }
@@ -735,7 +781,7 @@ function openExampleSentences() {
   const sourceCode = currentCard.value.frontLanguage || 'en'
   const targetName = (languageNames[targetCode] || targetCode).toLowerCase()
   const sourceName = (languageNames[sourceCode] || sourceCode).toLowerCase()
-  const query = `create 3 examples in ${targetName} with "${targetText}", and translate/explain these examples in ${sourceName}`
+  const query = `create 3 examples in ${targetName} with "${targetText}", give translation in ${sourceName}, but all explanations and meta-language is in ${targetName}`
   const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
 }
@@ -1212,7 +1258,7 @@ onBeforeUnmount(() => {
         <!-- Unified Search & Controls Container with light outline -->
         <div 
           v-show="showControls"
-          class="max-w-lg mx-auto w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-2.5 shadow-xs space-y-2 mb-2"
+          class="max-w-lg mx-auto w-full bg-gray-100/80 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/70 rounded-2xl p-2.5 shadow-xs space-y-2 mb-2"
         >
           <SearchBox v-model="searchQuery" :stats="cardStats" @search="handleSearch" />
 
@@ -1510,22 +1556,37 @@ onBeforeUnmount(() => {
               </Transition>
             </div>
 
-            <!-- Standalone First letter button below front card -->
-            <div v-if="!isLoadingQueue && currentCard && !isFlipped && !isBatchComplete" class="w-full flex justify-end px-2 pt-0.5">
-              <button
-                @click.stop="toggleCurrentCardFirstLetter"
-                type="button"
-                class="px-2.5 py-1 text-xs font-medium rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors cursor-pointer shadow-xs"
-                title="Toggle first letter between uppercase and lowercase"
-              >
-                First letter
-              </button>
-            </div>
-
             <!-- Nuanced info outside bottom of card: import date (left) and status (right) -->
             <div v-if="!isLoadingQueue && currentCard && !isBatchComplete" class="w-full flex items-center justify-between px-3 -mt-1 text-[10px] sm:text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
               <span class="tracking-wider uppercase">{{ formatImportDate(currentCard.createdAt) }}</span>
               <span class="tracking-wider uppercase">{{ cardStatusLabel }}</span>
+            </div>
+
+            <!-- Front Card Actions Panel (First letter & Clean) inside dark panel -->
+            <div v-if="!isLoadingQueue && currentCard && !isFlipped && !isEditing && !isBatchComplete" class="w-full bg-gray-50 dark:bg-gray-950 p-2 sm:p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 space-y-1.5">
+              <div class="flex justify-center items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  @click.stop="toggleCurrentCardFirstLetter"
+                  class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer"
+                  title="Toggle first letter between uppercase and lowercase"
+                >
+                  First letter
+                </button>
+                <button
+                  type="button"
+                  @click.stop="cleanCurrentCardFront"
+                  class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer"
+                  title="Clean punctuation marks from both ends"
+                >
+                  Clean
+                </button>
+              </div>
+
+              <!-- 2-second feedback note in yellow below buttons inside dark panel -->
+              <div v-if="frontActionMessage" class="text-xs font-mono text-yellow-500 dark:text-yellow-400 text-center font-medium">
+                ({{ frontActionMessage }})
+              </div>
             </div>
 
             <!-- Single compact panel — visible when card is flipped and not editing -->

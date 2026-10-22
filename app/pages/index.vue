@@ -51,17 +51,17 @@ if (loggedIn.value) {
       <div class="flex flex-col sm:flex-row md:flex-col gap-3 w-full sm:w-auto shrink-0">
         <a
           href="/api/login"
-          class="px-6 py-3.5 sm:py-3 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-black sm:font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition-all flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-center"
+          class="px-6 py-3.5 sm:py-3 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium rounded-2xl shadow-lg shadow-indigo-600/30 transition-all flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-center"
         >
           <!-- Desktop icon (hidden on mobile) -->
           <ArrowLeftEndOnRectangleIcon class="hidden sm:block w-5 h-5 shrink-0" />
           <!-- Mobile 2-line layout without icon -->
-          <div class="block sm:hidden text-lg leading-tight font-extrabold tracking-tight">
+          <div class="block sm:hidden text-lg leading-tight font-medium">
             <div>Login with your</div>
             <div>Google Account</div>
           </div>
           <!-- Desktop single line -->
-          <span class="hidden sm:inline text-sm whitespace-nowrap">Login with your Google Account</span>
+          <span class="hidden sm:inline text-base whitespace-nowrap font-medium">Login with your Google Account</span>
         </a>
       </div>
     </div>

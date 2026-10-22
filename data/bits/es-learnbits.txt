@@ -2,8 +2,9 @@
 	- por
 		- price / exchange
 			- compré estos tres cuadernos usados por cinco euros 
-		- debido a una causa o razón
+		- FOR A REASON, DUE TO, BECAUSE: debido a una causa o razón
 			- no pudimos asistir al concierto por culpa del tráfico intenso
+			- recibieron una multa por exceder el límite de velocidad
 		- para indicar la duración de una acción en el tiempo
 			- estudiamos en la biblioteca pour cuatro horas continuas
 		- movement through
@@ -11,15 +12,47 @@
 			- el paquete urgente fue enviado ayer por correo certificado
 		- multiplication
 		- on behalf of
-		- el espacio físico a través del cual o a lo largo del cual se transita
+		- ALONG THE SHORE: el espacio físico a través a lo largo del cual se transita
 			- caminaron despacio por la orilla del río al atardecer
+		- TRADE YOU FOR: para expresar intercambios
+			- te cambio mi bolígrafo rojo por tu lápiz negro
+		- ON TRACK 5: para designar la vía por donde sale o pasa un vehículo
+			- el tren con destino a Valencia saldrá por la vía tres
+		- BY A PERSON: introduce el agente que realiza la acción en la voz pasiva
+			- el cuadro fue restaurado cuidadosamente por un experto del museo
+		- THROUGH: indica el lugar o conducto a través del cual se realiza un movimiento
+			- el ladrón intentó escapar saltando por la ventana
+		- FOR THAT PERSON: expresa el beneficio, causa o motivación emocional que impulsa a actuar a favor de alguien
+			- hizo todo el sacrificio por sus hijos
+		- IN THE MORNING: expresa la parte del día de forma indeterminada (por la mañana/tarde/noche)
+			- nos veremos por la tarde, cuando baje el calor
+		- BY FAX: para especificar el medio de comunicación o transporte empleado
+			- mandé el contrato firmado por fax hace unos minutos
+		- HAS TO BE: "estar por + infinitivo" denota una acción pendiente que aún no se ha realizado
+			- la casa está todavía por pintar, las paredes están desnudas
 	--para
-		- para indicar el propósito (purpose) o finalidad de una acción (in order to)
+		- IN ORDER TO: para indicar el propósito (purpose) o finalidad de una acción
 			- viajamos a París para pasar nuestras vacaciones de verano
-		- destination
-		- deadline (by Friday)
-		- recipient (for you)
-		- introducir una opinión o perspectiva personal
+			- para llegar temprano a la reunión, tuve que levantarme a las cinco
+			- tuvimos que detenernos para repostar gasolina en la autopista
+		- AS FOR ME: introducir una opinión o perspectiva personal
 			- para mí, la propuesta presentada carece de fundamentos sólidos
-		- para establecer una comparación con una norma o expectativa
+		- FOR A BEGINNER: para establecer una comparación con una norma o expectativa
 			- para un principiante, tocas la guitarra con mucha soltura
+		- BY THEN: para marcar una fecha límite en el futuro (by March 15th)
+			- debo entregar la solicitud de beca para el 15 de marzo
+		- IT IS FOR: indica la función, uso o utilidad de un objeto
+			- la taza sirve para tomar café o té caliente
+		- WORKS FOR: para indicar el empleador o empresa que contrata a alguien
+			- my uncle works for a well-known multinational technology company
+		- TO A PLACE: expresa dirección hacia un destino específico
+			- este autobús va para el aeropuerto internacional
+		- READY TO: "estar para + infinitivo" significa estar a punto de ocurrir o en disposición inminente de suceder
+			- el tren está para salir, suban de inmediato
+		- FOR HIM: señala al destinatario o receptor final de un objeto o acción
+			- compré este regalo especial para ti
+			
+			
+			
+			
+			

@@ -9,7 +9,7 @@ export const languageColors: Record<string, string> = {
   ru: '#94a3b8',
   is: '#0891b2',
   da: '#ff1493',
-  el: '#92400e'
+  el: '#0d9488'
 }
 
 export function getLanguageColor(lang?: string): string {

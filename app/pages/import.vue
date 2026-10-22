@@ -75,6 +75,7 @@ const selectedImportFilter = ref<string>('all')
 
 const filteredWillImport = computed(() => {
   if (!previewResult.value?.willImport) return []
+  if (selectedImportFilter.value === 'skip') return []
   if (selectedImportFilter.value === 'all') return previewResult.value.willImport
   return previewResult.value.willImport.filter(card => {
     const lang = (card.backLanguage || card.frontLanguage || '').toLowerCase()
@@ -84,11 +85,8 @@ const filteredWillImport = computed(() => {
 
 const filteredWillNotImport = computed(() => {
   if (!previewResult.value?.willNotImport) return []
-  if (selectedImportFilter.value === 'all') return previewResult.value.willNotImport
-  return previewResult.value.willNotImport.filter(card => {
-    const lang = (card.backLanguage || card.frontLanguage || '').toLowerCase()
-    return lang === selectedImportFilter.value
-  })
+  if (selectedImportFilter.value === 'skip') return previewResult.value.willNotImport
+  return []
 })
 
 const checkMobile = () => {
@@ -403,10 +401,6 @@ onBeforeUnmount(() => {
             <div class="flex items-center justify-between gap-2 border-b border-gray-200 dark:border-gray-800 pb-3">
               <div>
                 <h1 class="text-xl font-extrabold text-gray-900 dark:text-white">Import Preview</h1>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ previewResult.totalParsed }} {{ previewResult.totalParsed === 1 ? 'card' : 'cards' }} found
-                  <span v-if="uploadedFileName" class="ml-1 text-gray-400">({{ uploadedFileName }})</span>
-                </p>
               </div>
               <button
                 @click="cancelPreview"
@@ -432,7 +426,7 @@ onBeforeUnmount(() => {
                 <span class="font-bold font-mono text-emerald-400">{{ previewResult.willImport.length }}</span>
               </div>
               <div v-if="previewResult.willNotImport.length > 0" class="flex items-center justify-between text-gray-300">
-                <span>Skipped:</span>
+                <span>Will be skipped:</span>
                 <span class="font-bold font-mono text-rose-400">{{ previewResult.willNotImport.length }}</span>
               </div>
 
@@ -449,43 +443,53 @@ onBeforeUnmount(() => {
               </div>
             </div>
 
-            <!-- (2) Language Filter Buttons directly below summary -->
-            <div class="flex flex-wrap items-center gap-2 pt-0.5">
+            <!-- (2) Language Filter Tabs directly below summary -->
+            <div class="flex flex-wrap items-center gap-2 pt-0.5 border-b border-gray-200 dark:border-gray-800 pb-2">
               <button
                 type="button"
                 @click="selectedImportFilter = 'all'"
-                class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
-                :class="selectedImportFilter === 'all' ? 'bg-gray-900 text-white border-gray-900 dark:bg-white dark:text-gray-900 dark:border-white' : 'bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
+                class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border"
+                :class="selectedImportFilter === 'all'
+                  ? 'bg-gray-200/90 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-400 dark:border-gray-600 shadow-md ring-2 ring-gray-400/30'
+                  : 'bg-gray-100 dark:bg-gray-900/60 text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-800 hover:text-gray-600 dark:hover:text-gray-300'"
               >
-                {{ previewResult.willImport.length }} total
+                {{ previewResult.willImport.length }} to import
               </button>
               <button
                 v-for="(count, lang) in languageBreakdown"
                 :key="lang"
                 type="button"
                 @click="selectedImportFilter = lang"
-                class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
+                class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border"
                 :style="selectedImportFilter === lang ? {
-                  backgroundColor: languageColors[lang] || '#6366f1',
+                  backgroundColor: `color-mix(in srgb, ${languageColors[lang] || '#6366f1'} 22%, transparent)`,
                   borderColor: languageColors[lang] || '#6366f1',
-                  color: '#ffffff'
-                } : {
-                  borderColor: `color-mix(in srgb, ${languageColors[lang] || '#6366f1'} 50%, transparent)`,
                   color: languageColors[lang] || '#6366f1',
-                  backgroundColor: `color-mix(in srgb, ${languageColors[lang] || '#6366f1'} 10%, transparent)`
+                  boxShadow: `0 3px 6px -1px color-mix(in srgb, ${languageColors[lang] || '#6366f1'} 35%, transparent)`
+                } : {
+                  borderColor: `color-mix(in srgb, ${languageColors[lang] || '#6366f1'} 30%, transparent)`,
+                  color: languageColors[lang] || '#6366f1',
+                  backgroundColor: `color-mix(in srgb, ${languageColors[lang] || '#6366f1'} 8%, transparent)`
                 }"
               >
                 {{ count }} {{ lang.toUpperCase() }}
+              </button>
+              <button
+                v-if="previewResult.willNotImport.length > 0"
+                type="button"
+                @click="selectedImportFilter = 'skip'"
+                class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border"
+                :class="selectedImportFilter === 'skip'
+                  ? 'bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border-rose-500 dark:border-rose-600 shadow-md ring-2 ring-rose-400/30'
+                  : 'bg-gray-100 dark:bg-gray-900/60 text-rose-500/80 dark:text-rose-400/80 border-gray-200 dark:border-gray-800 hover:text-rose-600 dark:hover:text-rose-300'"
+              >
+                {{ previewResult.willNotImport.length }} to skip
               </button>
             </div>
 
             <!-- (3) Cards that WILL NOT be imported -->
             <div v-if="filteredWillNotImport.length > 0" class="space-y-3">
-              <div class="pt-1 pb-0.5">
-                <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
-                  {{ filteredWillNotImport.length }} {{ filteredWillNotImport.length === 1 ? 'card' : 'cards' }} will not be imported
-                </h2>
-              </div>
+
 
               <div class="space-y-2.5">
                 <div
@@ -529,11 +533,7 @@ onBeforeUnmount(() => {
 
             <!-- (4) Cards that WILL be imported -->
             <div v-if="filteredWillImport.length > 0" class="space-y-3">
-              <div class="pt-1 pb-0.5">
-                <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  {{ filteredWillImport.length }} {{ filteredWillImport.length === 1 ? 'card' : 'cards' }} ready to import
-                </h2>
-              </div>
+
 
               <div class="space-y-2.5">
                 <div

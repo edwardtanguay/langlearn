@@ -506,6 +506,11 @@ const currentSectionSelectItem = computed(() => {
   return sectionSelectItems.value.find(item => item.id === activeSectionId.value) || null
 })
 
+const currentSectionIndex = computed(() => {
+  const idx = sectionSelectItems.value.findIndex(item => item.id === activeSectionId.value)
+  return idx !== -1 ? idx + 1 : 1
+})
+
 // Reset modal state
 const showResetModal = ref(false)
 

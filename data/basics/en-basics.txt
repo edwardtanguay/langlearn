@@ -94,3 +94,5 @@
 	- period, comma, semicolon, colon, exclamation mark, question mark, quotation marks, guillemets, apostrophe, hyphen, dash, parentheses, square brackets, curly brackets, ellipsis, slash, backslash, underscore, tilde, ampersand
 - language
 	- noun, verb, adjective, adverb, pronoun, preposition, conjunction, article, subject, object, tense, conjugation, grammar, vocabulary, pronunciation, syllable, sentence, paragraph, singular, plural, grave accent, acute accent
+- starters
+	- anyway, whatever, in the meantime, be that as it may, that said, at any rate, moving on, long story short, for what it's worth, all the same, come to think of it, by the way, on second thought, either way, having said that, speaking of which, in any case, for better or worse

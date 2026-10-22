@@ -31,7 +31,7 @@ const languageTextColors: Record<string, string> = {
   ru: '#94a3b8',
   da: '#ff1493',
   en: '#a855f7',
-  el: '#92400e' // Greek = rich brown
+  el: '#0d9488' // Greek = teal / emerald
 }
 
 function getLanguageColor(lang?: string): string {
@@ -95,7 +95,7 @@ const percent = computed(() => {
 </script>
 
 <template>
-  <div class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-2.5 sm:p-3 shadow-xs transition-all">
+  <div class="w-full px-1 py-1 transition-all">
     <!-- Capsule Pills Row with language abbreviation above each box -->
     <div v-if="slots.length > 0" class="flex items-start gap-1 sm:gap-1.5 w-full">
       <div

@@ -100,20 +100,33 @@ async function moveLink(categoryLinks: LinkItem[], index: number, direction: 'up
   }
 }
 
+const TARGET_LANG_ORDER = ['fr', 'es', 'de', 'nl', 'it']
+
+function sortLanguagesByTargetOrder(langs: string[]): string[] {
+  return [...langs].sort((a, b) => {
+    const idxA = TARGET_LANG_ORDER.indexOf(a)
+    const idxB = TARGET_LANG_ORDER.indexOf(b)
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB
+    if (idxA !== -1) return -1
+    if (idxB !== -1) return 1
+    return a.localeCompare(b)
+  })
+}
+
 const links = ref<LinkItem[]>([])
 const isLoading = ref(true)
 const memberTargetLanguages = ref<string[]>([])
-const selectedLanguageFilter = ref<string>('all')
+const selectedLanguageFilter = ref<string>('fr')
 
 const availableTargetLanguages = computed(() => {
   if (loggedIn.value && memberTargetLanguages.value.length > 0) {
-    return memberTargetLanguages.value.map(l => l.toLowerCase())
+    return sortLanguagesByTargetOrder(memberTargetLanguages.value.map(l => l.toLowerCase()))
   }
   const set = new Set<string>()
   for (const l of links.value) {
     if (l.language) set.add(l.language.toLowerCase())
   }
-  return Array.from(set)
+  return sortLanguagesByTargetOrder(Array.from(set))
 })
 
 const loadLinks = async () => {
@@ -124,8 +137,12 @@ const loadLinks = async () => {
       loggedIn.value ? $fetch<{ targetLanguages?: string[] }>('/api/user/me').catch(() => null) : null
     ])
     links.value = linksData || []
-    if (meData?.targetLanguages) {
+    if (meData?.targetLanguages && meData.targetLanguages.length > 0) {
       memberTargetLanguages.value = meData.targetLanguages
+      const sorted = sortLanguagesByTargetOrder(meData.targetLanguages.map((l: string) => l.toLowerCase()))
+      if (!sorted.includes(selectedLanguageFilter.value)) {
+        selectedLanguageFilter.value = sorted[0] || 'fr'
+      }
     }
   } catch (err) {
     console.error('Failed to load links:', err)
@@ -224,7 +241,14 @@ const groupedCategories = computed(() => {
         links: groups[lang] ?? []
       }
     })
-    .sort((a, b) => b.links.length - a.links.length)
+    .sort((a, b) => {
+      const idxA = TARGET_LANG_ORDER.indexOf(a.langKey)
+      const idxB = TARGET_LANG_ORDER.indexOf(b.langKey)
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB
+      if (idxA !== -1) return -1
+      if (idxB !== -1) return 1
+      return b.links.length - a.links.length
+    })
 })
 
 // Admin CRUD Modal state
@@ -339,16 +363,6 @@ const executeDelete = async () => {
 
     <!-- Target Language Filter Buttons -->
     <div v-if="availableTargetLanguages.length > 1" class="flex flex-wrap items-center gap-2 pt-1 pb-1">
-      <button
-        type="button"
-        @click="selectedLanguageFilter = 'all'"
-        class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
-        :class="selectedLanguageFilter === 'all'
-          ? 'bg-gray-900 text-white border-gray-900 dark:bg-white dark:text-gray-900 dark:border-white'
-          : 'bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
-      >
-        All
-      </button>
       <button
         v-for="code in availableTargetLanguages"
         :key="code"
