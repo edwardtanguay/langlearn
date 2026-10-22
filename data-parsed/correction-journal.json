@@ -1677,7 +1677,7 @@
           "day": "2026-09-29",
           "sectionIndex": 4,
           "language": "es",
-          "rawText": "Ha corrido [tres vez el maraton;el maratón tres veces] [in Espagne;en España], y cade vez [ho apprendo;ha apprendido] español [par;durante] ocho meses [avantes de marathon;antes del maratón].",
+          "rawText": "Ha corrido [tres vez el maraton;el maratón tres veces] [in Espagne;en España], y cada vez [ho apprendo;ha apprendido] español [par;durante] ocho meses [avantes de marathon;antes del maratón].",
           "bits": [
             {
               "type": "text",
@@ -1701,7 +1701,7 @@
             },
             {
               "type": "text",
-              "text": ", y cade vez "
+              "text": ", y cada vez "
             },
             {
               "type": "flashcard",
@@ -1869,7 +1869,7 @@
           "day": "2026-09-30",
           "sectionIndex": 2,
           "language": "fr",
-          "rawText": "Voici un nouveau prompt pour un texte pour notre prochain cours. [N'hésites pas;N'hésite pas] [de le changer ou ajouter;à le modifier ou à ajouter] [l'autres thème grammaire;d'autres thèmes de grammaire] etc. si tu veux.\n\nJe doit surtout pratiquer [prononciation et discussion;la prononciation et la discussion]. Je crois que ma prononciation [s'améliorer;s'améliore] lentement (tes conseils son très utiles !) mais [j'ai besoin plus;j'ai besoin de plus] d'experience [pour discuter;pour pouvoir discuter] [sur n'importe quoi sujet;de n'importe quel sujet] avec [l'autres;d'autres] personnes : comprendre [tout que;tout ce que] l'autre personne dit et [répondre assez rapide;répondre assez rapidement] pour avoir une conversation [interessante;intéressante].\n\n[Serait cool;Ce serait cool] [si nous pouvons faire le lire;si nous pouvions commencer par une lecture] à voix haute [plus correction;avec des corrections], [et après ça simplement;puis simplement avoir] une conversation libre sur le sujet, etc.\n\nTu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à] tous [les sujets sur France;les sujets concernant la France] et la culture française, par exemple quelque chose [que t'aimes;que tu aimes], une ville, un région, [un custom fraicais;une coutume fraicaise] qui te plaît, etc.\n\n[J'ai programmer;J'ai programmé] plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.",
+          "rawText": "Voici un nouveau prompt pour un texte pour notre prochain cours. [N'hésites pas;N'hésite pas] [de le changer ou ajouter;à le modifier ou à ajouter] [l'autres thème grammaire;d'autres thèmes de grammaire] etc. si tu veux.\n\nJe doit surtout pratiquer [prononciation et discussion;la prononciation et la discussion]. Je crois que ma prononciation [s'améliorer;s'améliore] lentement (tes conseils son très utiles !) mais [j'ai besoin plus;j'ai besoin de plus] d'experience [pour discuter;pour pouvoir discuter] [sur n'importe quoi sujet;de n'importe quel sujet] avec [l'autres;d'autres] personnes : comprendre [tout que;tout ce que] l'autre personne dit et [répondre assez rapide;répondre assez rapidement] pour avoir une conversation [interessante;intéressante].\n\n[Serait cool;Ce serait cool] [si nous pouvons faire le lire;si nous pouvions commencer par une lecture] à voix haute [plus correction;avec des corrections], [et après ça simplement;puis simplement avoir] une conversation libre sur le sujet, etc.\n\nTu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à] tous [les sujets sur France;les sujets concernant la France] et la culture française, par exemple quelque chose [que t'aimes;que tu aimes], une ville, un région, [un custom fraicais;une coutume fraiçaise] qui te plaît, etc.\n\n[J'ai programmer;J'ai programmé] plus de trois cours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.",
           "bits": [
             {
               "type": "text",
@@ -2069,7 +2069,7 @@
               "type": "flashcard",
               "id": "2026-09-30-sec-2-fc-20",
               "incorrect": "un custom fraicais",
-              "correct": "une coutume fraicaise"
+              "correct": "une coutume fraiçaise"
             },
             {
               "type": "text",
@@ -2083,7 +2083,7 @@
             },
             {
               "type": "text",
-              "text": " plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais "
+              "text": " plus de trois cours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais "
             },
             {
               "type": "flashcard",
@@ -4326,11 +4326,11 @@
           "day": "2026-10-21",
           "sectionIndex": 1,
           "language": "fr",
-          "rawText": "Salut Karl-Heinz !\n\nPour [ma;mon] application LangLearn, je [planifie d'integrire;prévoir d'intégrer] les \"notes de correction\" [qui;que] les utilisateurs [pour sauvegarder quand ils ont les;peuvent prendre pendant leurs] séances de [tandems ou enseigner;tandem ou leurs cours de langue].\n\nPour [experimenter;expérimenter] avec [le;la] syntaxe, j'ai [commencé encore de;recommencé à] prendre [les;des] notes pendant [notre tandems;nos séances de tandem].\n\nDans l'esprit de \"Datapod\" je prends [les;ces] notes dans un [syntax qui on peut lire;format lisible par un humain], mes [que;qui] peut aussi [été parser pour;être analysé automatiquement afin de les présenter] plus tard [montrer dans l'application dans un moyen interactiv;de manière interactive dans l'application].\n\nPour cette raison, je peux [te déjà envoyer;déjà t'envoyer] les notes dans [la version raw;leur version brute] :",
+          "rawText": "Pour [ma;mon] application LangLearn, je [planifie d'integrire;prévoir d'intégrer] les \"notes de correction\" [qui;que] les utilisateurs [pour sauvegarder quand ils ont les;peuvent prendre pendant leurs] séances de [tandems ou enseigner;tandem ou leurs cours de langue].\n\nPour [experimenter;expérimenter] avec [le;la] syntaxe, j'ai [commencé encore de;recommencé à] prendre [les;des] notes pendant [notre tandems;nos séances de tandem].\n\nDans l'esprit de \"Datapod\" je prends [les;ces] notes dans un [syntax qui on peut lire;format lisible par un humain], mes [que;qui] peut aussi [été parser pour;être analysé automatiquement afin de les présenter] plus tard [montrer dans l'application dans un moyen interactiv;de manière interactive dans l'application].\n\nPour cette raison, je peux [te déjà envoyer;déjà t'envoyer] les notes dans [la version raw;leur version brute] :",
           "bits": [
             {
               "type": "text",
-              "text": "Salut Karl-Heinz !\n\nPour "
+              "text": "Pour "
             },
             {
               "type": "flashcard",
@@ -4504,14 +4504,14 @@
             }
           ],
           "flashcardsCount": 17,
-          "wordCount": 92
+          "wordCount": 89
         }
       ],
-      "totalWords": 92,
+      "totalWords": 89,
       "totalFlashcards": 17
     }
   ],
   "totalSections": 32,
-  "totalWords": 2943,
+  "totalWords": 2940,
   "totalFlashcards": 396
 }
