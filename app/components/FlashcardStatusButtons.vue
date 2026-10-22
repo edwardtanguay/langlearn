@@ -3,8 +3,10 @@ import { ref, computed, watch, onUnmounted } from 'vue'
 
 const props = withDefaults(defineProps<{
   phrase?: string
+  actionNote?: string | null
 }>(), {
-  phrase: ''
+  phrase: '',
+  actionNote: null
 })
 
 const emit = defineEmits<{
@@ -115,6 +117,11 @@ function toggleWordAt(index: number) {
           class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
           First letter
         </button>
+      </div>
+
+      <!-- 2-second feedback note in yellow below buttons inside dark panel -->
+      <div v-if="actionNote" class="text-xs font-mono text-yellow-500 dark:text-yellow-400 text-center font-medium pt-1.5">
+        ({{ actionNote }})
       </div>
 
       <!-- Highlight words replacement row: 1, 2, 3... [back icon] -->

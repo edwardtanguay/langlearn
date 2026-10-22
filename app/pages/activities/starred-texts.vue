@@ -97,6 +97,23 @@ const currentLanguageColor = computed(() => {
   return languageColors[currentLanguageCode.value] || '#d97706'
 })
 
+function getContrastTextColor(hexColor?: string): string {
+  if (!hexColor) return '#ffffff'
+  const hex = hexColor.replace('#', '')
+  if (hex.length === 6) {
+    const r = parseInt(hex.substring(0, 2), 16)
+    const g = parseInt(hex.substring(2, 4), 16)
+    const b = parseInt(hex.substring(4, 6), 16)
+    const yiq = (r * 299 + g * 587 + b * 114) / 1000
+    return yiq >= 150 ? '#0f172a' : '#ffffff'
+  }
+  return '#ffffff'
+}
+
+const currentLanguageTextColor = computed(() => {
+  return getContrastTextColor(currentLanguageColor.value)
+})
+
 const currentPillStyle = computed(() => {
   return languagePillStyles[currentLanguageCode.value] || { bg: 'bg-indigo-600', color: 'text-white', border: 'border-indigo-400' }
 })
@@ -507,7 +524,7 @@ onMounted(() => {
                       ? currentLanguageColor 
                       : '#9ca3af',
                     color: item.currentPlacedAnswer === item.answerText 
-                      ? '#ffffff' 
+                      ? currentLanguageTextColor 
                       : '#000000',
                     borderColor: item.currentPlacedAnswer === item.answerText 
                       ? currentLanguageColor 
@@ -580,8 +597,8 @@ onMounted(() => {
         <button
           v-if="!isWordsRevealed"
           @click="isWordsRevealed = true"
-          class="w-full py-3 px-4 rounded-xl text-sm font-bold text-white shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2 border border-white/20"
-          :style="{ backgroundColor: currentLanguageColor }"
+          class="w-full py-3 px-4 rounded-xl text-sm font-bold shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2 border border-black/10 dark:border-white/20"
+          :style="{ backgroundColor: currentLanguageColor, color: currentLanguageTextColor }"
         >
           <span>Click to reveal the words to drag</span>
         </button>
@@ -601,7 +618,7 @@ onMounted(() => {
             class="px-2.5 py-1 rounded text-sm md:text-base font-semibold transition-all cursor-grab active:cursor-grabbing shadow-xs inline-flex items-center justify-center leading-none border select-none touch-none"
             :style="{
               backgroundColor: currentLanguageColor,
-              color: '#ffffff',
+              color: currentLanguageTextColor,
               borderColor: currentLanguageColor
             }"
           >
@@ -618,7 +635,7 @@ onMounted(() => {
           left: `${touchGhostPos.x}px`,
           top: `${touchGhostPos.y}px`,
           backgroundColor: currentLanguageColor,
-          color: '#ffffff',
+          color: currentLanguageTextColor,
           borderColor: currentLanguageColor
         }"
       >

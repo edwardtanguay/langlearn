@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 
 useHead({
   title: 'LangLearn - Gemini Quiz Prompts',
@@ -7,6 +7,8 @@ useHead({
     { name: 'description', content: 'Prompts to copy and paste into Gemini AI to generate custom language quizzes.' }
   ]
 })
+
+const { loggedIn, isAdmin, userRole } = useCurrentUser()
 
 interface ChatbotPromptItem {
   id: string
@@ -21,7 +23,6 @@ interface ChatbotPromptItem {
 
 const prompts = ref<ChatbotPromptItem[]>([])
 const isLoading = ref(true)
-const isAdmin = ref(false)
 const copiedPromptId = ref<string | null>(null)
 const activeCrudPromptId = ref<string | null>(null)
 
@@ -90,10 +91,9 @@ async function loadData() {
   try {
     const [data, me] = await Promise.all([
       $fetch<ChatbotPromptItem[]>('/api/chatbot-prompts?category=geminiQuizPrompts'),
-      loggedIn.value ? $fetch<{ role: string; targetLanguages?: string[] }>('/api/user/me').catch((): { role: string; targetLanguages?: string[] } => ({ role: 'member' })) : null
+      loggedIn.value ? $fetch<{ role?: string; targetLanguages?: string[] }>('/api/user/me').catch((): { role?: string; targetLanguages?: string[] } => ({ role: 'member' })) : null
     ])
     prompts.value = data || []
-    isAdmin.value = me?.role === 'admin'
     if (me?.targetLanguages) {
       memberTargetLanguages.value = me.targetLanguages
     }
@@ -104,7 +104,19 @@ async function loadData() {
   }
 }
 
+watch(selectedLanguageFilter, (val) => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    localStorage.setItem('langlearn_gemini_quiz_language', val)
+  }
+})
+
 onMounted(() => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const saved = localStorage.getItem('langlearn_gemini_quiz_language')
+    if (saved) {
+      selectedLanguageFilter.value = saved
+    }
+  }
   loadData()
   window.addEventListener('click', closeCrudToolbar)
 })

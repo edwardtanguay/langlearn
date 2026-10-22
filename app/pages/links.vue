@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import {
   ArrowTopRightOnSquareIcon,
   PlusIcon,
@@ -186,7 +186,19 @@ function handleClickOutside(e: MouseEvent) {
   }
 }
 
+watch(selectedLanguageFilter, (val) => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    localStorage.setItem('langlearn_links_language', val)
+  }
+})
+
 onMounted(() => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const saved = localStorage.getItem('langlearn_links_language')
+    if (saved) {
+      selectedLanguageFilter.value = saved
+    }
+  }
   loadLinks()
   if (import.meta.client) {
     window.addEventListener('click', handleClickOutside)

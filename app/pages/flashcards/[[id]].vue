@@ -201,6 +201,7 @@ function toggleFirstLetter(text: string): string {
   if (!match || match.index === undefined) return text
   const idx = match.index
   const char = text[idx]
+  if (!char) return text
   const isUpper = char === char.toUpperCase() && char !== char.toLowerCase()
   const toggled = isUpper ? char.toLowerCase() : char.toUpperCase()
   return text.slice(0, idx) + toggled + text.slice(idx + 1)
@@ -217,6 +218,17 @@ function showFrontActionNote(msg: string) {
   }, 2000)
 }
 
+const backActionMessage = ref<string | null>(null)
+let backActionTimeout: ReturnType<typeof setTimeout> | null = null
+
+function showBackActionNote(msg: string) {
+  backActionMessage.value = msg
+  if (backActionTimeout) clearTimeout(backActionTimeout)
+  backActionTimeout = setTimeout(() => {
+    backActionMessage.value = null
+  }, 2000)
+}
+
 function cleanPunctuationFromEnds(text: string): string {
   if (!text) return ''
   return text.replace(/^[\s\p{P}\p{S}]+|[\s\p{P}\p{S}]+$/gu, '').trim()
@@ -224,15 +236,14 @@ function cleanPunctuationFromEnds(text: string): string {
 
 async function cleanCurrentCardFront() {
   if (!currentCard.value) return
+  showFrontActionNote('removes punctuation on either side of text')
   const original = currentCard.value.front
   const cleaned = cleanPunctuationFromEnds(original)
   if (cleaned === original) {
-    showFrontActionNote('no punctuation to clean')
     return
   }
   currentCard.value.front = cleaned
   editFront.value = cleaned
-  showFrontActionNote('cleaned punctuation from ends')
 
   try {
     await $fetch(`/api/flashcards/${currentCard.value.id}`, {
@@ -255,13 +266,12 @@ async function toggleCurrentCardFirstLetter() {
     const updated = toggleFirstLetter(currentCard.value.front)
     currentCard.value.front = updated
     editFront.value = updated
-    const match = updated.match(/\p{L}/u)
-    const isNowUpper = match ? match[0] === match[0].toUpperCase() && match[0] !== match[0].toLowerCase() : false
-    showFrontActionNote(isNowUpper ? 'toggled first letter to uppercase' : 'toggled first letter to lowercase')
+    showFrontActionNote('toggles first letter lowercase/uppercase')
   } else {
     const updated = toggleFirstLetter(currentCard.value.back)
     currentCard.value.back = updated
     editBack.value = updated
+    showBackActionNote('toggles first letter lowercase/uppercase')
   }
   try {
     await $fetch(`/api/flashcards/${currentCard.value.id}`, {
@@ -1597,7 +1607,7 @@ onBeforeUnmount(() => {
                 <FlashcardRankSlider v-model="sliderValue" @save-rank="debouncedSaveRank" />
 
                 <!-- Status buttons Section -->
-                <FlashcardStatusButtons :phrase="currentCard?.back" @action="markAction" @update-phrase="handleUpdatePhrase" @toggle-first-letter="toggleCurrentCardFirstLetter" />
+                <FlashcardStatusButtons :phrase="currentCard?.back" :action-note="backActionMessage" @action="markAction" @update-phrase="handleUpdatePhrase" @toggle-first-letter="toggleCurrentCardFirstLetter" />
 
                 <!-- Action Buttons Box (3 examples, convert vous to tu & verb conjugation) -->
                 <div v-if="showExampleSentencesButton || isFrenchCardWithVous || verbMatch" class="bg-gray-50 dark:bg-gray-950 p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex flex-wrap gap-2 items-center justify-center">
