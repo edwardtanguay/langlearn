@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
-import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon, ArrowUpIcon, LinkIcon } from '@heroicons/vue/24/outline'
+import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon, ArrowUpIcon, LinkIcon, ArrowPathRoundedSquareIcon } from '@heroicons/vue/24/outline'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'
 import { compareSemVerDesc, compareSemVerAsc } from '~~/shared/utils/semver'
 
@@ -340,18 +340,6 @@ const versionsForDisplay = computed(() => {
     .filter(v => v.versionItems.length > 0)
 })
 
-const versionHistoryHeading = computed(() => {
-  if (!isSingleVersionView.value) {
-    return 'Version History'
-  }
-  const firstVersion = versionsForDisplay.value[0]
-  if (firstVersion) {
-    return firstVersion.title
-      ? `v${firstVersion.versionNumber} - ${firstVersion.title}`
-      : `Version ${targetVersionNumber.value}`
-  }
-  return `Version ${targetVersionNumber.value}`
-})
 
 // Sorted categories for dropdowns: pure alphabetical order (A-Z)
 const sortedCategoriesForDropdown = computed(() => {
@@ -1868,9 +1856,9 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
     <!-- 2. VERSIONS DISPLAY -->
     <div class="space-y-6">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-          <span>{{ versionHistoryHeading }}</span>
+      <div v-if="!isSingleVersionView || isAdmin" class="flex items-start" :class="isSingleVersionView ? 'justify-end' : 'justify-between'">
+        <h2 v-if="!isSingleVersionView" class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+          <span>Version History</span>
         </h2>
         <div v-if="isAdmin" class="hidden md:flex items-center space-x-3">
           <button
@@ -2380,6 +2368,17 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                 </div>
               </div>
 
+            </div>
+
+            <!-- Subtle Flip Hint Icon (Lower right-hand corner) -->
+            <div
+              v-if="!adminEditMode && ver.description && ver.description.trim()"
+              class="absolute bottom-2 right-2.5 z-10 flex items-center justify-center p-1 rounded-md text-gray-400/50 hover:text-amber-500 dark:text-gray-500/50 dark:hover:text-amber-400 group-hover/card:text-gray-400 dark:group-hover/card:text-gray-400 transition-colors cursor-pointer select-none"
+              :title="shouldShowVersionDescription(ver) ? 'Click card to view items' : 'Click card to view description'"
+              role="button"
+              :aria-label="shouldShowVersionDescription(ver) ? 'Click card to view items' : 'Click card to view description'"
+            >
+              <ArrowPathRoundedSquareIcon class="w-4 h-4 transition-transform duration-500 group-hover/card:rotate-180" />
             </div>
           </div>
         </div>

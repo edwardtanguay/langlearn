@@ -223,7 +223,7 @@ Pour [experimenter;expérimenter] avec [le;la] syntaxe, j'ai [commencé encore d
 Dans l'esprit de "Datapod" je prends [les;ces] notes dans un [syntax qui on peut lire;format lisible par un humain], mes [que;qui] peut aussi [été parser pour;être analysé automatiquement afin de les présenter] plus tard [montrer dans l'application dans un moyen interactiv;de manière interactive dans l'application]. 
 
 Pour cette raison, je peux [te déjà envoyer;déjà t'envoyer] les notes dans [la version raw;leur version brute] :
-
+---
 
 
 
