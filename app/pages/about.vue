@@ -1,11 +1,29 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
-import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon, ArrowUpIcon } from '@heroicons/vue/24/outline'
+import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon, ArrowUpIcon, LinkIcon } from '@heroicons/vue/24/outline'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'
 import { compareSemVerDesc, compareSemVerAsc } from '~~/shared/utils/semver'
 
+const route = useRoute()
+
+const targetVersionNumber = computed(() => {
+  const param = route.params.versionNumber
+  if (!param) return null
+  const value = Array.isArray(param) ? param[0] : String(param)
+  return value?.trim() || null
+})
+
+const isSingleVersionView = computed(() => Boolean(targetVersionNumber.value))
+
+const pageTitle = computed(() => {
+  if (isSingleVersionView.value && targetVersionNumber.value) {
+    return `LangLearn - Version ${targetVersionNumber.value}`
+  }
+  return 'LangLearn - About & Roadmap'
+})
+
 useHead({
-  title: 'LangLearn - About & Roadmap',
+  title: pageTitle,
   meta: [
     { name: 'description', content: 'LangLearn integrates modern, no-cost tools like Google Translate and AI search into your language learning flow to help you learn languages faster and with a self-directed, personal approach.' }
   ]
@@ -270,6 +288,18 @@ function scrollToItem(itemId: string) {
 
 
 const displayedVersions = computed(() => {
+  if (isSingleVersionView.value && targetVersionNumber.value) {
+    const rawTarget = targetVersionNumber.value.replace(/^v/i, '')
+    const match = versions.value.find(v => v.versionNumber.replace(/^v/i, '') === rawTarget)
+    if (!match) return []
+
+    // If not admin, only show if PUBLISHED
+    if (!isAdmin.value && match.status !== 'PUBLISHED') {
+      return []
+    }
+    return [match]
+  }
+
   if (!adminEditMode.value) {
     // Admin mode OFF: show ONLY PUBLISHED versions with at least one item, descending by version number
     return versions.value
@@ -308,6 +338,19 @@ const versionsForDisplay = computed(() => {
       versionItems: v.versionItems.filter(item => item.body.toLowerCase().includes(q))
     }))
     .filter(v => v.versionItems.length > 0)
+})
+
+const versionHistoryHeading = computed(() => {
+  if (!isSingleVersionView.value) {
+    return 'Version History'
+  }
+  const firstVersion = versionsForDisplay.value[0]
+  if (firstVersion) {
+    return firstVersion.title
+      ? `v${firstVersion.versionNumber} - ${firstVersion.title}`
+      : `Version ${targetVersionNumber.value}`
+  }
+  return `Version ${targetVersionNumber.value}`
 })
 
 // Sorted categories for dropdowns: pure alphabetical order (A-Z)
@@ -1385,11 +1428,10 @@ const saveCategory = async () => {
       })
     }
     await loadData(false)
-    const highlightTargetId = createdId || editingCategory.value.id
-    if (highlightTargetId) {
-      recentlyEditedCategoryId.value = highlightTargetId
+    if (createdId) {
+      recentlyEditedCategoryId.value = createdId
       setTimeout(() => {
-        if (recentlyEditedCategoryId.value === highlightTargetId) {
+        if (recentlyEditedCategoryId.value === createdId) {
           recentlyEditedCategoryId.value = null
         }
       }, 2000)
@@ -1514,6 +1556,27 @@ async function copyBranchName(ver: Version) {
 const copiedPromptVersionId = ref<string | null>(null)
 let copiedPromptTimeout: ReturnType<typeof setTimeout> | null = null
 
+const copiedPermalinkVersionId = ref<string | null>(null)
+let copiedPermalinkTimeout: ReturnType<typeof setTimeout> | null = null
+
+async function copyPermalink(ver: Version) {
+  if (typeof window === 'undefined') return
+  const origin = window.location.origin
+  const url = `${origin}/version/${ver.versionNumber}`
+  try {
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(url)
+    }
+    copiedPermalinkVersionId.value = ver.id
+    if (copiedPermalinkTimeout) clearTimeout(copiedPermalinkTimeout)
+    copiedPermalinkTimeout = setTimeout(() => {
+      copiedPermalinkVersionId.value = null
+    }, 2000)
+  } catch (err) {
+    console.error('Failed to copy permalink to clipboard', err)
+  }
+}
+
 function generateVersionPrompt(ver: Version): string {
   let itemsMd = ''
   const grouped = getGroupedItemsForVersion(ver.versionItems)
@@ -1564,7 +1627,8 @@ const versionViewMode = ref<Record<string, 'description' | 'items'>>({})
 function shouldShowVersionDescription(ver: Version): boolean {
   if (adminEditMode.value) return false
   if (!ver.description || !ver.description.trim()) return false
-  const mode = versionViewMode.value[ver.id] || 'description'
+  const defaultMode = isSingleVersionView.value ? 'items' : 'description'
+  const mode = versionViewMode.value[ver.id] || defaultMode
   return mode === 'description'
 }
 
@@ -1580,7 +1644,8 @@ function handleVersionCardClick(ver: Version, event: MouseEvent) {
   const target = event.target as HTMLElement
   if (target.closest('a, button, input, textarea, select')) return
 
-  const current = versionViewMode.value[ver.id] || 'description'
+  const defaultMode = isSingleVersionView.value ? 'items' : 'description'
+  const current = versionViewMode.value[ver.id] || defaultMode
   versionViewMode.value[ver.id] = current === 'description' ? 'items' : 'description'
 }
 
@@ -1668,12 +1733,6 @@ async function saveInlineCategoryName(catId: string) {
       body: { title: newTitle }
     })
     await loadData(false)
-    recentlyEditedCategoryId.value = catId
-    setTimeout(() => {
-      if (recentlyEditedCategoryId.value === catId) {
-        recentlyEditedCategoryId.value = null
-      }
-    }, 2000)
   } catch (err: any) {
     cat.title = oldTitle
     for (const v of versions.value) {
@@ -1744,9 +1803,20 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto py-10 px-4 min-h-[600px] space-y-12">
-    <!-- 1. INTRODUCTORY HERO SECTION -->
-    <div class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-700/60 flex flex-col md:flex-row items-center md:items-start gap-3 md:gap-8">
+  <div class="max-w-4xl mx-auto py-10 px-4 min-h-[600px]" :class="isSingleVersionView ? 'space-y-6' : 'space-y-12'">
+    <!-- Single Version Navigation Link -->
+    <div v-if="isSingleVersionView" class="pt-2">
+      <NuxtLink
+        to="/about"
+        class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors"
+      >
+        <span>&larr;</span>
+        <span>View all versions</span>
+      </NuxtLink>
+    </div>
+
+    <!-- 1. INTRODUCTORY HERO SECTION (Only on /about, hidden in single version view) -->
+    <div v-if="!isSingleVersionView" class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-700/60 flex flex-col md:flex-row items-center md:items-start gap-3 md:gap-8">
       <!-- Left: Fast Flashcards Symbol -->
       <div class="shrink-0 relative group flex items-center justify-center p-2">
         <div class="absolute -top-1 -right-1 z-10">
@@ -1800,11 +1870,11 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
     <div class="space-y-6">
       <div class="flex items-start justify-between">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-          <span>Version History</span>
+          <span>{{ versionHistoryHeading }}</span>
         </h2>
         <div v-if="isAdmin" class="hidden md:flex items-center space-x-3">
           <button
-            v-if="adminEditMode"
+            v-if="adminEditMode && !isSingleVersionView"
             @click="openAddVersion"
             class="px-2.5 py-1 text-xs text-gray-300 dark:text-gray-400 hover:text-white bg-gray-800 dark:bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 transition-colors"
           >
@@ -1823,7 +1893,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       </div>
 
       <!-- Search box (admin mode only) -->
-      <div v-if="isAdmin && adminEditMode" class="mt-2">
+      <div v-if="isAdmin && adminEditMode && !isSingleVersionView" class="mt-2">
         <input
           v-model="searchQuery"
           type="text"
@@ -1834,7 +1904,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       </div>
 
       <!-- Toggle link for Future Versions and IN_PROGRESS links in Admin Mode -->
-      <div v-if="!isLoading && isAdmin && adminEditMode" class="pt-1 mb-3 flex flex-wrap items-center gap-3">
+      <div v-if="!isLoading && isAdmin && adminEditMode && !isSingleVersionView" class="pt-1 mb-3 flex flex-wrap items-center gap-3">
         <button
           v-if="futureVersionsCount > 0"
           type="button"
@@ -1861,11 +1931,21 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       </div>
 
       <div v-if="isLoading" class="text-center py-12 text-sm text-gray-500 font-mono">
-        Loading version history...
+        {{ isSingleVersionView ? 'Loading version details...' : 'Loading version history...' }}
       </div>
 
-      <div v-else-if="versionsForDisplay.length === 0" class="py-6 text-gray-500 text-sm">
-        No versions published yet.
+      <div v-else-if="versionsForDisplay.length === 0" class="py-12 text-center space-y-3">
+        <p class="text-gray-500 dark:text-gray-400 text-sm">
+          {{ isSingleVersionView ? `Version ${targetVersionNumber} not found or not published.` : 'No versions published yet.' }}
+        </p>
+        <div v-if="isSingleVersionView">
+          <NuxtLink
+            to="/about"
+            class="inline-block px-3 py-1.5 text-xs font-mono font-medium text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 underline"
+          >
+            &larr; View all versions
+          </NuxtLink>
+        </div>
       </div>
 
       <!-- Version Cards List -->
@@ -1966,6 +2046,16 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                     <CheckIcon v-if="copiedPromptVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <BoltIcon v-else class="w-3.5 h-3.5" />
                     <span>{{ copiedPromptVersionId === ver.id ? 'Copied!' : 'Version prompt' }}</span>
+                  </button>
+
+                  <button
+                    @click="copyPermalink(ver)"
+                    title="Copy permalink to this version"
+                    class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
+                  >
+                    <CheckIcon v-if="copiedPermalinkVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <LinkIcon v-else class="w-3.5 h-3.5" />
+                    <span>{{ copiedPermalinkVersionId === ver.id ? 'Copied!' : 'Permalink' }}</span>
                   </button>
                 </div>
                 <div v-else></div>

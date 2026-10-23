@@ -27,14 +27,18 @@ export default defineNuxtRouteMiddleware(async (to) => {
       return navigateTo('/', { replace: true })
     }
 
-    const unknownAllowedPaths = [
-      '/',
-      '/links',
-      '/about',
-      '/activities/gemini-quiz'
-    ]
+    const isUnknownAllowed = (path: string) => {
+      if (path.startsWith('/version/') || path === '/version') return true
+      const unknownAllowedPaths = [
+        '/',
+        '/links',
+        '/about',
+        '/activities/gemini-quiz'
+      ]
+      return unknownAllowedPaths.includes(path)
+    }
 
-    if (!unknownAllowedPaths.includes(to.path)) {
+    if (!isUnknownAllowed(to.path)) {
       returnUrlCookie.value = to.fullPath
       return navigateTo('/api/login', { external: true })
     }
@@ -60,6 +64,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const isPathAllowedForMember = (path: string) => {
     if (path.startsWith('/flashcards') || path.startsWith('/flashcard')) return true
+    if (path.startsWith('/version/') || path === '/version') return true
     const memberAllowedPaths = [
       '/member',
       '/batches',

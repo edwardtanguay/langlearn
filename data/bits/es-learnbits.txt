@@ -1,3 +1,21 @@
+- quedar vs. quedarse
+	- quedar
+		- fijar una cita o ponerse de acuerdo para verse
+			- ¿A qué hora quedamos mañana para tomar un café en la plaza?
+		- expresar cómo sienta o favorece una prenda
+			- esa camisa azul te queda muy bien con los pantalones grises
+		- señalar la ubicación geográfica o situación física de un lugar inanimado
+			- el museo queda a tres manzanas de la estación central
+		- indicar retención, posesión definitiva o elección de un objeto
+			- te gusta este libro o prefieres que me lo quede yo
+		- "quedar en + infinitivo" significado de pactar o acordar hacer algo
+			- la reunión estaba prevista para las diez, pero al final quedamos en vernos a las doce
+	- quedarse
+		- paso a un estado emocional o físico resultante
+			- al enterarse de la noticia, ella se quedó totalmente sorprendida
+		- indicar permanencia o estancia en un sitio específico
+			- este fin de semana estoy muy cansado, así que voy a quedarme en casa descansando
+
 - por vs. para
 	- por
 		- FOR 5 DOLLARS: para especificar el precio en transacciones comerciales
