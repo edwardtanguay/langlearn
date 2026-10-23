@@ -1293,6 +1293,21 @@ const saveCategory = async () => {
       existing.title = title
       existing.rank = rankVal
     }
+    for (const v of versions.value) {
+      for (const item of v.versionItems) {
+        if (item.versionCategoryId === editingCategory.value.id && item.versionCategory) {
+          item.versionCategory.title = title
+          item.versionCategory.rank = rankVal
+        }
+      }
+      invalidateVersionCache(v)
+    }
+    for (const item of unassignedItems.value) {
+      if (item.versionCategoryId === editingCategory.value.id && item.versionCategory) {
+        item.versionCategory.title = title
+        item.versionCategory.rank = rankVal
+      }
+    }
   } else {
     categories.value = [...categories.value, newCatObj]
   }
@@ -1340,12 +1355,14 @@ const saveCategory = async () => {
   cameFromItemModal.value = false
 
   try {
+    let createdId: string | null = null
     if (isNewCategory.value) {
       const created = await $fetch<VersionCategory>('/api/dev/categories', {
         method: 'POST',
         body: { title, rank: rankVal, abbreviations: abbrArray }
       })
       if (created?.id) {
+        createdId = created.id
         const catInList = categories.value.find(c => c.id === tempCatId)
         if (catInList) {
           catInList.id = created.id
@@ -1368,6 +1385,15 @@ const saveCategory = async () => {
       })
     }
     await loadData(false)
+    const highlightTargetId = createdId || editingCategory.value.id
+    if (highlightTargetId) {
+      recentlyEditedCategoryId.value = highlightTargetId
+      setTimeout(() => {
+        if (recentlyEditedCategoryId.value === highlightTargetId) {
+          recentlyEditedCategoryId.value = null
+        }
+      }, 2000)
+    }
   } catch (err: any) {
     categories.value = snapshotCategories
     versions.value = snapshotVersions
@@ -1509,7 +1535,11 @@ function generateVersionPrompt(ver: Version): string {
     }
   }
 
-  return `Summarize the changes in this version into one title (50 characters or less) and a description paragraph (150 words or less): \n\n${itemsMd.trim()}`
+  const featureCount = ver.versionItems.filter(i => i.type === 'FEATURE').length
+  const bugfixCount = ver.versionItems.filter(i => i.type !== 'FEATURE').length
+  const countSummary = `(Total: ${featureCount} feature${featureCount === 1 ? '' : 's'}, ${bugfixCount} bug fix${bugfixCount === 1 ? '' : 'es'})`
+
+  return `Summarize the changes in this version into one title (50 characters or less) and a description paragraph (150 words or less). Mention how many bug fixes and features there are in that version ${countSummary}:\n\n${itemsMd.trim()}`
 }
 
 async function copyVersionPrompt(ver: Version) {
@@ -1612,7 +1642,17 @@ async function saveInlineCategoryName(catId: string) {
   cat.title = newTitle
 
   for (const v of versions.value) {
+    for (const item of v.versionItems) {
+      if (item.versionCategoryId === catId && item.versionCategory) {
+        item.versionCategory.title = newTitle
+      }
+    }
     invalidateVersionCache(v)
+  }
+  for (const item of unassignedItems.value) {
+    if (item.versionCategoryId === catId && item.versionCategory) {
+      item.versionCategory.title = newTitle
+    }
   }
 
   recentlyEditedCategoryId.value = catId
@@ -1628,10 +1668,26 @@ async function saveInlineCategoryName(catId: string) {
       body: { title: newTitle }
     })
     await loadData(false)
+    recentlyEditedCategoryId.value = catId
+    setTimeout(() => {
+      if (recentlyEditedCategoryId.value === catId) {
+        recentlyEditedCategoryId.value = null
+      }
+    }, 2000)
   } catch (err: any) {
     cat.title = oldTitle
     for (const v of versions.value) {
+      for (const item of v.versionItems) {
+        if (item.versionCategoryId === catId && item.versionCategory) {
+          item.versionCategory.title = oldTitle
+        }
+      }
       invalidateVersionCache(v)
+    }
+    for (const item of unassignedItems.value) {
+      if (item.versionCategoryId === catId && item.versionCategory) {
+        item.versionCategory.title = oldTitle
+      }
     }
     alert(err.data?.statusMessage || err.message || 'Failed to update category name')
   }

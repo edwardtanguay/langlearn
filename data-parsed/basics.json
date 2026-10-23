@@ -5146,6 +5146,30 @@
         "es": "para bien o para mal",
         "it": "nel bene o nel male",
         "nl": "ten goede of ten kwade"
+      },
+      {
+        "id": "starters-19",
+        "en": "besides",
+        "fr": "en plus",
+        "es": "además",
+        "it": "inoltre",
+        "nl": "bovendien"
+      },
+      {
+        "id": "starters-20",
+        "en": "in other words",
+        "fr": "c'est-à-dire",
+        "es": "o sea",
+        "it": "cioè",
+        "nl": "oftewel"
+      },
+      {
+        "id": "starters-21",
+        "en": "apparently",
+        "fr": "apparemment",
+        "es": "por lo visto",
+        "it": "a quanto pare",
+        "nl": "blijkbaar"
       }
     ]
   }

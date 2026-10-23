@@ -1572,17 +1572,9 @@ onBeforeUnmount(() => {
               <span class="tracking-wider uppercase">{{ cardStatusLabel }}</span>
             </div>
 
-            <!-- Front Card Actions Panel (First letter & Clean) inside dark panel -->
+            <!-- Front Card Actions Panel (Clean & First letter) inside dark panel -->
             <div v-if="!isLoadingQueue && currentCard && !isFlipped && !isEditing && !isBatchComplete" class="w-full bg-gray-50 dark:bg-gray-950 p-2 sm:p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 space-y-1.5">
               <div class="flex justify-center items-center gap-2 flex-wrap">
-                <button
-                  type="button"
-                  @click.stop="toggleCurrentCardFirstLetter"
-                  class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer"
-                  title="Toggle first letter between uppercase and lowercase"
-                >
-                  First letter
-                </button>
                 <button
                   type="button"
                   @click.stop="cleanCurrentCardFront"
@@ -1591,11 +1583,19 @@ onBeforeUnmount(() => {
                 >
                   Clean
                 </button>
+                <button
+                  type="button"
+                  @click.stop="toggleCurrentCardFirstLetter"
+                  class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer"
+                  title="Toggle first letter between uppercase and lowercase"
+                >
+                  First letter
+                </button>
               </div>
 
               <!-- 2-second feedback note in yellow below buttons inside dark panel -->
-              <div v-if="frontActionMessage" class="text-xs font-mono text-yellow-500 dark:text-yellow-400 text-center font-medium">
-                ({{ frontActionMessage }})
+              <div v-if="frontActionMessage" class="w-full flex justify-center text-center text-xs font-mono text-yellow-500 dark:text-yellow-400 font-medium">
+                <span>({{ frontActionMessage }})</span>
               </div>
             </div>
 

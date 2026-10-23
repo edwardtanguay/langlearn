@@ -99,4 +99,4 @@
 - language
 	- het zelfstandig naamwoord, het werkwoord, het bijvoeglijk naamwoord, het bijwoord, het voornaamwoord, het voorzetsel, het voegwoord, het lidwoord, het onderwerp, het lijdend voorwerp, de werkwoordstijd, de vervoeging, de grammatica, de woordenschat, de uitspraak, de lettergreep, de zin, de alinea, het enkelvoud, het meervoud, het accent grave, het accent aigu
 - starters
-	- hoe dan ook, wat dan ook, ondertussen, hoe het ook zij, dat gezegd hebbende, in ieder geval, verdergaand, kort gezegd, voor wat het waard is, desondanks, nu ik erover nadenk, trouwens, bij nader inzien, in beide gevallen, afgezien daarvan, daarover gesproken, in elk geval, ten goede of ten kwade
+	- hoe dan ook, wat dan ook, ondertussen, hoe het ook zij, dat gezegd hebbende, in ieder geval, verdergaand, kort gezegd, voor wat het waard is, desondanks, nu ik erover nadenk, trouwens, bij nader inzien, in beide gevallen, afgezien daarvan, daarover gesproken, in elk geval, ten goede of ten kwade, bovendien, oftewel, blijkbaar

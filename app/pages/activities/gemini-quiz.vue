@@ -359,7 +359,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <div>
       <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Gemini Quiz Prompts</h1>
       <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
-        Click card, Gemini opens, paste text
+        Click card, Gemini opens, paste text, take quiz
       </p>
     </div>
 
@@ -397,7 +397,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
       <li
         v-for="(p, idx) in currentLanguagePrompts"
         :key="p.id"
-        @click="handleCopyAndPaste(p.prompt)"
+        @click="activeCrudPromptId === p.id ? (activeCrudPromptId = null) : handleCopyAndPaste(p.prompt)"
         class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
         :style="{
           backgroundColor: `color-mix(in srgb, ${currentLanguageColor} 14%, #111827)`,
@@ -405,11 +405,11 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
         }"
       >
         <div class="space-y-1.5 min-w-0 flex-1">
-          <!-- Active Admin CRUD Tools (overlay on card) -->
+          <!-- Active Admin CRUD Tools on Mobile (centered overlay on card, dismissable by tapping black area or card) -->
           <div
             v-if="isAdmin && activeCrudPromptId === p.id"
-            @click.stop
-            class="crud-toolbar flex items-center gap-1.5 bg-black/95 px-3 py-1.5 rounded-xl text-xs shadow-md border border-gray-700 w-full cursor-pointer"
+            @click.stop="activeCrudPromptId = null"
+            class="sm:hidden crud-toolbar flex items-center justify-center gap-2 bg-black/95 px-3 py-1.5 rounded-xl text-xs shadow-md border border-gray-700 w-full cursor-pointer"
           >
             <template v-if="currentLanguagePrompts.length > 1">
               <!-- Reorder Up -->
@@ -463,7 +463,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
             </button>
           </div>
 
-          <!-- Normal Title line -->
+          <!-- Normal Title line + Desktop Admin Tools -->
           <div
             v-else
             class="flex items-center justify-between gap-2 w-full"
@@ -475,13 +475,61 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               <span class="truncate">{{ p.title.trim() }}</span>
             </div>
 
-            <!-- Ellipsis icon on far right for admin to toggle manage bar -->
+            <!-- Desktop Admin CRUD Tools (always visible on desktop, no ellipsis) -->
+            <div
+              v-if="isAdmin"
+              class="hidden sm:flex items-center gap-1 shrink-0"
+              @click.stop
+            >
+              <template v-if="currentLanguagePrompts.length > 1">
+                <button
+                  @click.stop="movePrompt(currentLanguagePrompts, idx, 'up')"
+                  :disabled="idx === 0"
+                  title="Move Up"
+                  class="p-1 text-white/70 hover:text-white disabled:opacity-20 cursor-pointer transition-colors rounded hover:bg-white/10"
+                >
+                  <UIcon name="lucide:arrow-up" class="w-4 h-4 stroke-[2.5]" />
+                </button>
+                <button
+                  @click.stop="movePrompt(currentLanguagePrompts, idx, 'down')"
+                  :disabled="idx === currentLanguagePrompts.length - 1"
+                  title="Move Down"
+                  class="p-1 text-white/70 hover:text-white disabled:opacity-20 cursor-pointer transition-colors rounded hover:bg-white/10"
+                >
+                  <UIcon name="lucide:arrow-down" class="w-4 h-4 stroke-[2.5]" />
+                </button>
+                <span class="h-3 w-px bg-white/20 mx-0.5 self-center"></span>
+              </template>
+              <button
+                @click.stop="openEditModal(p)"
+                title="Edit Prompt"
+                class="p-1 text-amber-300 hover:text-amber-200 cursor-pointer transition-colors rounded hover:bg-white/10"
+              >
+                <UIcon name="lucide:pencil" class="w-4 h-4" />
+              </button>
+              <button
+                @click.stop="openCopyModal(p)"
+                title="Duplicate Prompt"
+                class="p-1 text-blue-300 hover:text-blue-200 cursor-pointer transition-colors rounded hover:bg-white/10"
+              >
+                <UIcon name="lucide:copy" class="w-4 h-4" />
+              </button>
+              <button
+                @click.stop="confirmDelete(p)"
+                title="Delete Prompt"
+                class="p-1 text-red-400 hover:text-red-300 cursor-pointer transition-colors rounded hover:bg-white/10"
+              >
+                <UIcon name="lucide:trash-2" class="w-4 h-4" />
+              </button>
+            </div>
+
+            <!-- Ellipsis icon on far right for admin to toggle manage bar on mobile only -->
             <button
               v-if="isAdmin"
               type="button"
               @click.stop="toggleCrudToolbar(p.id, $event)"
               title="Manage prompt"
-              class="p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
+              class="sm:hidden p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
             >
               <UIcon name="lucide:more-horizontal" class="w-5 h-5" />
             </button>

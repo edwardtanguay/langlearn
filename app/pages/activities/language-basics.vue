@@ -1222,12 +1222,14 @@ function isFlashcardOpen(itemId: string): boolean {
           <span>{{ lang.label }}</span>
           <span
             class="text-[11px] font-semibold px-1.5 py-0.2 rounded"
-            :class="[
-              isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100',
-              selectedLang === lang.code ? 'bg-black/25 text-white/95' : 'bg-black/10 dark:bg-white/10 text-inherit'
-            ]"
+            :class="selectedLang === lang.code ? 'bg-black/25 text-white/95' : 'bg-black/10 dark:bg-white/10 text-inherit'"
           >
-            {{ isStatsLoading ? '0%' : `${allLangProgress[lang.code]}%` }}
+            <span
+              class="transition-all duration-200 inline-block"
+              :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
+            >
+              {{ `${allLangProgress[lang.code]}%` }}
+            </span>
           </span>
         </button>
       </div>
