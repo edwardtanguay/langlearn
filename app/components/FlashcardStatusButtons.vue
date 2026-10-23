@@ -100,29 +100,31 @@ function toggleWordAt(index: number) {
     <!-- Second row: Park, Delete, Highlight words in their own separate dark cell -->
     <div class="bg-gray-50 dark:bg-gray-950 p-2 sm:p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60">
       <!-- Normal second row: Park, Delete, Highlight words -->
-      <div v-if="!isHighlighting" class="flex justify-center items-center gap-2 flex-wrap">
-        <button @click="$emit('action', 'MARKED_AS_PARKED', 'PARKED')"
-          class="px-5 sm:px-6 py-1.5 sm:py-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-600 dark:text-amber-400 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
-          Park
-        </button>
-        <button @click="$emit('action', 'MARKED_AS_DELETED', 'DELETED')"
-          class="px-5 sm:px-6 py-1.5 sm:py-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
-          Delete
-        </button>
-        <button @click="isHighlighting = true"
-          class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
-          Highlight
-        </button>
-        <button type="button" @click="$emit('toggle-first-letter')"
-          class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
-          First letter
-        </button>
-      </div>
+      <template v-if="!isHighlighting">
+        <div class="flex justify-center items-center gap-2 flex-wrap">
+          <button @click="$emit('action', 'MARKED_AS_PARKED', 'PARKED')"
+            class="px-5 sm:px-6 py-1.5 sm:py-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-600 dark:text-amber-400 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
+            Park
+          </button>
+          <button @click="$emit('action', 'MARKED_AS_DELETED', 'DELETED')"
+            class="px-5 sm:px-6 py-1.5 sm:py-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
+            Delete
+          </button>
+          <button @click="isHighlighting = true"
+            class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
+            Highlight
+          </button>
+          <button type="button" @click="$emit('toggle-first-letter')"
+            class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer">
+            First letter
+          </button>
+        </div>
 
-      <!-- 2-second feedback note in yellow below buttons inside dark panel -->
-      <div v-if="actionNote" class="text-xs font-mono text-yellow-500 dark:text-yellow-400 text-center font-medium pt-1.5">
-        ({{ actionNote }})
-      </div>
+        <!-- 2-second feedback note in yellow below buttons inside dark panel -->
+        <div v-if="actionNote" class="text-xs font-mono text-yellow-500 dark:text-yellow-400 text-center font-medium pt-1.5">
+          ({{ actionNote }})
+        </div>
+      </template>
 
       <!-- Highlight words replacement row: 1, 2, 3... [back icon] -->
       <div ref="highlightContainerRef" v-else class="flex justify-center items-center gap-1.5 flex-wrap py-0.5">

@@ -374,26 +374,12 @@ const executeDelete = async () => {
     <h1 class="sr-only">Links</h1>
 
     <!-- Target Language Filter Buttons -->
-    <div v-if="availableTargetLanguages.length > 1" class="flex flex-wrap items-center gap-2 pt-1 pb-1">
-      <button
-        v-for="code in availableTargetLanguages"
-        :key="code"
-        type="button"
-        @click="selectedLanguageFilter = code"
-        class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
-        :style="selectedLanguageFilter === code ? {
-          backgroundColor: languageColors[code] || '#6366f1',
-          borderColor: languageColors[code] || '#6366f1',
-          color: '#ffffff'
-        } : {
-          borderColor: `color-mix(in srgb, ${languageColors[code] || '#6366f1'} 50%, transparent)`,
-          color: languageColors[code] || '#6366f1',
-          backgroundColor: `color-mix(in srgb, ${languageColors[code] || '#6366f1'} 10%, transparent)`
-        }"
-      >
-        {{ languageTitles[code] || code.toUpperCase() }}
-      </button>
-    </div>
+    <LanguageFilterMenu
+      v-if="availableTargetLanguages.length > 1"
+      v-model="selectedLanguageFilter"
+      :languages="availableTargetLanguages"
+      :language-titles="languageTitles"
+    />
 
     <!-- Loading State -->
     <div v-if="isLoading" class="py-16 flex flex-col items-center justify-center space-y-3">

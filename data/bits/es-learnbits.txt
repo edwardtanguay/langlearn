@@ -29,6 +29,7 @@
 			- el ladrón intentó escapar saltando por la ventana
 			- enviaron las invitaciones de la boda por correo postal tradicional
 			- ellos salieron corriendo por el parque en dirección a la estación
+			- el niño miraba con asombro por el telescopio astronómico
 		- FOR THAT PERSON: expresa el beneficio, causa o motivación emocional que impulsa a actuar a favor de alguien
 			- hizo todo el sacrificio por sus hijos
 		- INSTEAD OF YOU: para indicar sustitución o representación de otra persona
@@ -55,6 +56,10 @@
 			- la autopista está cerrada, así que iremos por el camino de tierra
 		- KM PER HOUR: para expresar tasas, proporciones, velocidad o unidades de medida
 			- el ciclista pedaleaba a cincuenta kilómetros por hora
+		- APPARENTLY: "por lo visto" es una locución fija que expresa una deducción o evidencia aparente
+			- por lo visto, la reunión se cancelará debido a la falta de quórum
+		- FOR XMAS: se usa con festividades o épocas para expresar una fecha aproximada
+			- nos veremos aproximadamente por Navidad si las circunstancias lo permiten
 	--para
 		- IN ORDER TO: para indicar el propósito (purpose) o finalidad de una acción
 			- viajamos a París para pasar nuestras vacaciones de verano
@@ -88,6 +93,8 @@
 			- el agua no es apta para el consumo humano
 		- IT'S GOOD FOR THAT: "Bueno para + infinitivo/sustantivo" indica la finalidad o afección que remedia un fármaco
 			- esa medicina es muy buena para combatir el dolor de cabeza
+		- WILL BE USED FOR: "servir para + infinitivo" expresa el destino o finalidad práctica a la que se destinarán los fondos
+			- el dinero recaudado servirá para construir una escuela comunitaria
 			
 			
 			

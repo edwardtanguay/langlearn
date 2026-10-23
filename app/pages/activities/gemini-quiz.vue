@@ -56,18 +56,31 @@ const languageNames: Record<string, string> = {
 
 import { languageColors } from '~/utils/languageColors'
 
+const TARGET_LANG_ORDER = ['fr', 'es', 'it', 'nl', 'de', 'en', 'pl', 'ru', 'is', 'da', 'el']
+
+function sortLanguagesByTargetOrder(languages: string[]): string[] {
+  return [...languages].sort((a, b) => {
+    const idxA = TARGET_LANG_ORDER.indexOf(a)
+    const idxB = TARGET_LANG_ORDER.indexOf(b)
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB
+    if (idxA !== -1) return -1
+    if (idxB !== -1) return 1
+    return a.localeCompare(b)
+  })
+}
+
 const memberTargetLanguages = ref<string[]>([])
-const selectedLanguageFilter = ref<string>('all')
+const selectedLanguageFilter = ref<string>('fr')
 
 const availableTargetLanguages = computed(() => {
   if (loggedIn.value && memberTargetLanguages.value.length > 0) {
-    return memberTargetLanguages.value.map(l => l.toLowerCase())
+    return sortLanguagesByTargetOrder(memberTargetLanguages.value.map(l => l.toLowerCase()))
   }
   const set = new Set<string>()
   for (const p of prompts.value) {
     if (p.language) set.add(p.language.toLowerCase())
   }
-  return Array.from(set)
+  return sortLanguagesByTargetOrder(Array.from(set))
 })
 
 // Modal State
@@ -94,8 +107,14 @@ async function loadData() {
       loggedIn.value ? $fetch<{ role?: string; targetLanguages?: string[] }>('/api/user/me').catch((): { role?: string; targetLanguages?: string[] } => ({ role: 'member' })) : null
     ])
     prompts.value = data || []
-    if (me?.targetLanguages) {
+    if (me?.targetLanguages && me.targetLanguages.length > 0) {
       memberTargetLanguages.value = me.targetLanguages
+      const sorted = sortLanguagesByTargetOrder(me.targetLanguages.map((l: string) => l.toLowerCase()))
+      if (!sorted.includes(selectedLanguageFilter.value)) {
+        selectedLanguageFilter.value = sorted[0] || 'fr'
+      }
+    } else if (availableTargetLanguages.value.length > 0 && !availableTargetLanguages.value.includes(selectedLanguageFilter.value)) {
+      selectedLanguageFilter.value = availableTargetLanguages.value[0] || 'fr'
     }
   } catch (err) {
     console.error('Failed to load chatbot prompts:', err)
@@ -113,7 +132,7 @@ watch(selectedLanguageFilter, (val) => {
 onMounted(() => {
   if (typeof window !== 'undefined' && window.localStorage) {
     const saved = localStorage.getItem('langlearn_gemini_quiz_language')
-    if (saved) {
+    if (saved && saved !== 'all') {
       selectedLanguageFilter.value = saved
     }
   }
@@ -125,45 +144,20 @@ onUnmounted(() => {
   window.removeEventListener('click', closeCrudToolbar)
 })
 
-// Grouped prompts by language (filtered for members and active target language filter)
-const groupedPrompts = computed(() => {
-  const groups: Record<string, ChatbotPromptItem[]> = {}
-  
-  // For logged in users (members & admins): filter by target languages. For unknownUsers (logged out): show all
-  const isTargetFiltered = loggedIn.value && userRole.value !== 'unknownUser'
-  const targetSet = new Set(memberTargetLanguages.value.map(l => l.toLowerCase()))
+const currentLanguageCode = computed(() => selectedLanguageFilter.value.toLowerCase())
 
-  for (const p of prompts.value) {
-    const lang = p.language.toLowerCase()
-    if (isTargetFiltered && !targetSet.has(lang)) {
-      continue
-    }
-    if (selectedLanguageFilter.value !== 'all' && lang !== selectedLanguageFilter.value.toLowerCase()) {
-      continue
-    }
-    if (!groups[lang]) {
-      groups[lang] = []
-    }
-    groups[lang].push(p)
-  }
-
-  // Sort items within each group by rank ascending
-  for (const lang in groups) {
-    groups[lang]?.sort((a, b) => a.rank - b.rank)
-  }
-
-  return Object.keys(groups)
-    .map(lang => ({
-      code: lang,
-      name: languageNames[lang] || lang.toUpperCase(),
-      color: languageColors[lang] || '#333388',
-      items: groups[lang] ?? []
-    }))
-    .sort((a, b) => b.items.length - a.items.length)
+const currentLanguagePrompts = computed(() => {
+  const code = currentLanguageCode.value
+  return prompts.value
+    .filter(p => p.language.toLowerCase() === code)
+    .sort((a, b) => a.rank - b.rank)
 })
 
+const currentLanguageColor = computed(() => languageColors[currentLanguageCode.value] || '#6366f1')
+const currentLanguageName = computed(() => languageNames[currentLanguageCode.value] || currentLanguageCode.value.toUpperCase())
+
 // Action: Copy text to clipboard & open Gemini AI in new tab
-async function handleCopyAndPaste(text: string, promptId: string) {
+async function handleCopyAndPaste(text: string) {
   if (typeof window !== 'undefined') {
     const selection = window.getSelection()?.toString().trim()
     if (selection && selection.length > 0) {
@@ -172,12 +166,6 @@ async function handleCopyAndPaste(text: string, promptId: string) {
   }
   try {
     await navigator.clipboard.writeText(text)
-    copiedPromptId.value = promptId
-    setTimeout(() => {
-      if (copiedPromptId.value === promptId) {
-        copiedPromptId.value = null
-      }
-    }, 2000)
     window.open('https://gemini.google.com', '_blank')
   } catch (err) {
     console.error('Failed to copy prompt to clipboard:', err)
@@ -371,209 +359,136 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
     <div>
       <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Gemini Quiz Prompts</h1>
       <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
-        Click any prompt's <strong class="text-white font-semibold">Copy and Paste</strong> button below to copy the prompt to your clipboard and automatically open <span class="whitespace-nowrap font-medium text-white">Gemini&nbsp;AI</span> in a new tab where you can paste it to generate an interactive quiz.
+        Click card, Gemini opens, paste text
       </p>
     </div>
 
     <!-- Target Language Filter Buttons -->
-    <div v-if="availableTargetLanguages.length > 1" class="flex flex-wrap items-center gap-2 pt-0.5 pb-0.5">
-      <button
-        type="button"
-        @click="selectedLanguageFilter = 'all'"
-        class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
-        :class="selectedLanguageFilter === 'all'
-          ? 'bg-gray-900 text-white border-gray-900 dark:bg-white dark:text-gray-900 dark:border-white'
-          : 'bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
-      >
-        All
-      </button>
-      <button
-        v-for="code in availableTargetLanguages"
-        :key="code"
-        type="button"
-        @click="selectedLanguageFilter = code"
-        class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs border"
-        :style="selectedLanguageFilter === code ? {
-          backgroundColor: languageColors[code] || '#6366f1',
-          borderColor: languageColors[code] || '#6366f1',
-          color: '#ffffff'
-        } : {
-          borderColor: `color-mix(in srgb, ${languageColors[code] || '#6366f1'} 50%, transparent)`,
-          color: languageColors[code] || '#6366f1',
-          backgroundColor: `color-mix(in srgb, ${languageColors[code] || '#6366f1'} 10%, transparent)`
-        }"
-      >
-        {{ languageNames[code] || code.toUpperCase() }}
-      </button>
-    </div>
+    <LanguageFilterMenu
+      v-if="availableTargetLanguages.length > 1"
+      v-model="selectedLanguageFilter"
+      :languages="availableTargetLanguages"
+      :language-titles="languageNames"
+    />
 
-    <!-- Loading Skeleton -->
-    <div v-if="isLoading" class="space-y-6">
-      <div v-for="i in 2" :key="i" class="animate-pulse space-y-4">
-        <div class="h-6 w-32 bg-gray-200 dark:bg-gray-800 rounded"></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div v-for="j in 2" :key="j" class="h-40 bg-gray-100 dark:bg-gray-900 rounded-xl"></div>
-        </div>
-      </div>
+    <!-- Loading State -->
+    <div v-if="isLoading" class="py-16 flex flex-col items-center justify-center space-y-3">
+      <div class="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 font-mono">Loading quiz prompts...</p>
     </div>
 
     <!-- Empty State -->
-    <div v-else-if="groupedPrompts.length === 0" class="py-16 text-center space-y-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
-      <p class="text-gray-700 dark:text-gray-300 font-medium">No quiz prompts available for your selected target languages.</p>
-      <NuxtLink v-if="loggedIn" to="/profile" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
-        Configure Target Languages on your Profile &rarr;
-      </NuxtLink>
-    </div>
-
-    <!-- Grouped Prompts by Language -->
-    <div v-else class="space-y-6">
-      <div v-for="group in groupedPrompts" :key="group.code" class="space-y-3">
-        <!-- Language Group Header: Word with thick full-width underline directly under text with ZERO space, with Add button on far right for admin -->
-        <div class="border-b-2 w-full border-t-0 pt-0 pb-0 flex items-center justify-between" :style="{ borderColor: group.color }">
-          <div class="text-xl sm:text-2xl text-gray-900 dark:text-white tracking-tight p-0 mb-1.5 leading-none inline-block translate-y-[2px]">
-            {{ group.name }}
-          </div>
-          <!-- Add Prompt in this language button (Admin only) -->
-          <button
-            v-if="isAdmin"
-            @click="openAddModal(group.code)"
-            title="Add prompt in this language"
-            class="text-xs font-semibold px-2.5 py-1 mb-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-800 dark:text-white flex items-center gap-1 cursor-pointer transition-colors"
-          >
-            <UIcon name="lucide:plus" class="w-3.5 h-3.5" />
-            <span>Add</span>
-          </button>
-        </div>
-
-        <!-- Prompts Grid (denser panels for more items on page) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
-          <div
-            v-for="(p, idx) in group.items"
-            :key="p.id"
-            @click="handleCopyAndPaste(p.prompt, p.id)"
-            class="group relative p-3 rounded-xl border shadow-xs flex flex-col justify-between space-y-3 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.01] active:scale-[0.99]"
-            :style="{
-              borderColor: copiedPromptId === p.id ? '#059669' : (group.color + '66'),
-              backgroundColor: copiedPromptId === p.id ? '#05966928' : (group.color + '40')
-            }"
-            title="Click anywhere to copy prompt and open Gemini AI"
-          >
-            <div class="space-y-3 flex-1 flex flex-col">
-              <!-- Prompt Card Header Container -->
-              <div class="relative min-h-[36px] flex items-center justify-between gap-2">
-                <!-- Card Title Container -->
-                <div class="flex items-center justify-start gap-1.5 py-1 px-1 select-none min-w-0 max-w-full rounded-lg">
-                  <h3
-                    class="text-base font-black tracking-wide truncate"
-                    :style="{ color: group.color }"
-                  >
-                    {{ p.title }}
-                  </h3>
-                </div>
-
-                <!-- Small icon on far right with ellipsis to toggle manage bar for admin -->
-                <button
-                  v-if="isAdmin"
-                  type="button"
-                  @click.stop="toggleCrudToolbar(p.id, $event)"
-                  title="Manage prompt"
-                  class="p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
-                >
-                  <UIcon name="lucide:more-horizontal" class="w-5 h-5" />
-                </button>
-
-                <!-- Desktop Admin CRUD Tools (Displayed on title click; click bar area closes it; solid black bg, no border) -->
-                <div
-                  v-if="isAdmin && activeCrudPromptId === p.id"
-                  @click.stop="toggleCrudToolbar(p.id, $event)"
-                  class="absolute inset-0 flex items-center justify-center gap-1 bg-black/95 px-3 py-1 rounded-xl text-xs shadow-md transition-all duration-200 z-10 cursor-pointer border border-gray-700"
-                >
-                  <!-- Add New Prompt in this language -->
-                  <button
-                    @click.stop="openAddModal(group.code)"
-                    title="Add Prompt"
-                    class="p-1 text-white/80 hover:text-white cursor-pointer transition-colors"
-                  >
-                    <UIcon name="lucide:plus" class="w-4 h-4" />
-                  </button>
-
-                  <template v-if="group.items.length > 1">
-                    <span class="h-3 w-px bg-white/15 mx-1 self-center -translate-y-[1px]"></span>
-
-                    <!-- Reorder Up -->
-                    <button
-                      @click.stop="movePrompt(group.items, idx, 'up')"
-                      :disabled="idx === 0"
-                      title="Move Up"
-                      class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
-                    >
-                      <UIcon name="lucide:arrow-up" class="w-4 h-4 stroke-[2.5]" />
-                    </button>
-
-                    <!-- Reorder Down -->
-                    <button
-                      @click.stop="movePrompt(group.items, idx, 'down')"
-                      :disabled="idx === group.items.length - 1"
-                      title="Move Down"
-                      class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
-                    >
-                      <UIcon name="lucide:arrow-down" class="w-4 h-4 stroke-[2.5]" />
-                    </button>
-                  </template>
-
-                  <span class="h-3 w-px bg-white/15 mx-1 self-center -translate-y-[1px]"></span>
-
-                  <!-- Edit -->
-                  <button
-                    @click.stop="openEditModal(p)"
-                    title="Edit Prompt"
-                    class="p-1 text-amber-300 hover:text-amber-200 cursor-pointer transition-colors"
-                  >
-                    <UIcon name="lucide:pencil" class="w-4 h-4" />
-                  </button>
-
-                  <!-- Copy -->
-                  <button
-                    @click.stop="openCopyModal(p)"
-                    title="Duplicate Prompt"
-                    class="p-1 text-blue-300 hover:text-blue-200 cursor-pointer transition-colors"
-                  >
-                    <UIcon name="lucide:copy" class="w-4 h-4" />
-                  </button>
-
-                  <!-- Delete (Dark red link, hard to click, requests confirmation) -->
-                  <button
-                    @click.stop="confirmDelete(p)"
-                    title="Delete Prompt"
-                    class="p-1 text-red-900/80 hover:text-red-700 cursor-pointer transition-colors text-xs font-semibold underline decoration-red-950"
-                  >
-                    <UIcon name="lucide:trash-2" class="w-4 h-4 text-red-900" />
-                  </button>
-                </div>
-              </div>
-
-              <!-- Black prompt area extended down to fill space -->
-              <p class="text-xs text-gray-700 dark:text-gray-300 font-mono bg-white/70 dark:bg-gray-950/80 p-3 rounded-lg border border-gray-200/60 dark:border-gray-800/80 leading-relaxed flex-1 flex items-start select-text">
-                {{ p.prompt }}
-              </p>
-            </div>
-
-            <!-- Action Status Helper Footer (Integrated text, not a button) -->
-            <div
-              class="w-full pt-1 text-xs font-semibold text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1.5 pointer-events-none transition-colors"
-            >
-              <template v-if="copiedPromptId === p.id">
-                <UIcon name="lucide:check" class="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
-                <span class="text-emerald-600 dark:text-emerald-300 font-bold">Copied! Opening Gemini&nbsp;AI...</span>
-              </template>
-              <template v-else>
-                <span>Click card, Gemini opens, paste text</span>
-              </template>
-            </div>
-          </div>
-        </div>
+    <div v-else-if="currentLanguagePrompts.length === 0" class="py-12 text-center space-y-4 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
+      <p class="text-gray-700 dark:text-gray-300 font-medium">No quiz prompts available for {{ currentLanguageName }}.</p>
+      <div v-if="isAdmin">
+        <button
+          type="button"
+          @click="openAddModal(currentLanguageCode)"
+          class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shadow-xs cursor-pointer transition-colors"
+        >
+          <UIcon name="lucide:plus" class="w-4 h-4" />
+          <span>Add Prompt</span>
+        </button>
       </div>
     </div>
+
+    <!-- Prompts List (Single-column stacked list matching Links UX) -->
+    <ul v-else class="space-y-2 text-sm">
+      <li
+        v-for="(p, idx) in currentLanguagePrompts"
+        :key="p.id"
+        @click="handleCopyAndPaste(p.prompt)"
+        class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
+        :style="{
+          backgroundColor: `color-mix(in srgb, ${currentLanguageColor} 14%, #111827)`,
+          borderColor: `color-mix(in srgb, ${currentLanguageColor} 30%, #374151)`
+        }"
+      >
+        <div class="space-y-1.5 min-w-0 flex-1">
+          <!-- Active Admin CRUD Tools (overlay on card) -->
+          <div
+            v-if="isAdmin && activeCrudPromptId === p.id"
+            @click.stop
+            class="crud-toolbar flex items-center gap-1.5 bg-black/95 px-3 py-1.5 rounded-xl text-xs shadow-md border border-gray-700 w-full cursor-pointer"
+          >
+            <template v-if="currentLanguagePrompts.length > 1">
+              <!-- Reorder Up -->
+              <button
+                @click.stop="movePrompt(currentLanguagePrompts, idx, 'up')"
+                :disabled="idx === 0"
+                title="Move Up"
+                class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
+              >
+                <UIcon name="lucide:arrow-up" class="w-4 h-4 stroke-[2.5]" />
+              </button>
+
+              <!-- Reorder Down -->
+              <button
+                @click.stop="movePrompt(currentLanguagePrompts, idx, 'down')"
+                :disabled="idx === currentLanguagePrompts.length - 1"
+                title="Move Down"
+                class="p-1 text-white/80 hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
+              >
+                <UIcon name="lucide:arrow-down" class="w-4 h-4 stroke-[2.5]" />
+              </button>
+            </template>
+
+            <span v-if="currentLanguagePrompts.length > 1" class="h-3 w-px bg-white/20 mx-1 self-center"></span>
+
+            <!-- Edit -->
+            <button
+              @click.stop="openEditModal(p)"
+              title="Edit Prompt"
+              class="p-1 text-amber-300 hover:text-amber-200 cursor-pointer transition-colors"
+            >
+              <UIcon name="lucide:pencil" class="w-4 h-4" />
+            </button>
+
+            <!-- Duplicate / Copy -->
+            <button
+              @click.stop="openCopyModal(p)"
+              title="Duplicate Prompt"
+              class="p-1 text-blue-300 hover:text-blue-200 cursor-pointer transition-colors"
+            >
+              <UIcon name="lucide:copy" class="w-4 h-4" />
+            </button>
+
+            <!-- Delete -->
+            <button
+              @click.stop="confirmDelete(p)"
+              title="Delete Prompt"
+              class="p-1 text-red-400 hover:text-red-300 cursor-pointer transition-colors"
+            >
+              <UIcon name="lucide:trash-2" class="w-4 h-4" />
+            </button>
+          </div>
+
+          <!-- Normal Title line -->
+          <div
+            v-else
+            class="flex items-center justify-between gap-2 w-full"
+          >
+            <div
+              class="font-bold text-base leading-snug flex items-center gap-2 min-w-0"
+              :style="{ color: currentLanguageColor }"
+            >
+              <span class="truncate">{{ p.title.trim() }}</span>
+            </div>
+
+            <!-- Ellipsis icon on far right for admin to toggle manage bar -->
+            <button
+              v-if="isAdmin"
+              type="button"
+              @click.stop="toggleCrudToolbar(p.id, $event)"
+              title="Manage prompt"
+              class="p-1 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
+            >
+              <UIcon name="lucide:more-horizontal" class="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
 
     <!-- Admin Add/Edit/Copy Modal -->
     <div
