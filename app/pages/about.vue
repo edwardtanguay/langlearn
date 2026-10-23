@@ -1,11 +1,29 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
-import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
+import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon, ArrowUpIcon, LinkIcon, ArrowPathIcon } from '@heroicons/vue/24/outline'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'
-import { compareSemVerDesc } from '~~/shared/utils/semver'
+import { compareSemVerDesc, compareSemVerAsc } from '~~/shared/utils/semver'
+
+const route = useRoute()
+
+const targetVersionNumber = computed(() => {
+  const param = route.params.versionNumber
+  if (!param) return null
+  const value = Array.isArray(param) ? param[0] : String(param)
+  return value?.trim() || null
+})
+
+const isSingleVersionView = computed(() => Boolean(targetVersionNumber.value))
+
+const pageTitle = computed(() => {
+  if (isSingleVersionView.value && targetVersionNumber.value) {
+    return `LangLearn - Version ${targetVersionNumber.value}`
+  }
+  return 'LangLearn - About & Roadmap'
+})
 
 useHead({
-  title: 'LangLearn - About & Roadmap',
+  title: pageTitle,
   meta: [
     { name: 'description', content: 'LangLearn integrates modern, no-cost tools like Google Translate and AI search into your language learning flow to help you learn languages faster and with a self-directed, personal approach.' }
   ]
@@ -40,6 +58,7 @@ interface Version {
   id: string
   versionNumber: string
   title?: string | null
+  description?: string | null
   status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE_VERSION' | 'INCOMING' | 'PROPOSED_ITEMS'
   publishDate?: string | null
   versionItems: VersionItem[]
@@ -83,8 +102,8 @@ const itemRankStr = ref('2.5')
 const isNewItem = ref(false)
 
 const showEditVersionModal = ref(false)
-const editingVersion = ref<{ id: string; versionNumber: string; title: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE_VERSION' | 'INCOMING' | 'PROPOSED_ITEMS'; publishDate: string }>({
-  id: '', versionNumber: '', title: '', status: 'IN_PROGRESS', publishDate: ''
+const editingVersion = ref<{ id: string; versionNumber: string; title: string; description: string; status: 'PUBLISHED' | 'IN_PROGRESS' | 'FUTURE_VERSION' | 'INCOMING' | 'PROPOSED_ITEMS'; publishDate: string }>({
+  id: '', versionNumber: '', title: '', description: '', status: 'IN_PROGRESS', publishDate: ''
 })
 const isNewVersion = ref(false)
 
@@ -225,7 +244,7 @@ const futureVersionsCount = computed(() => {
 const inProgressVersions = computed(() => {
   return versions.value
     .filter(v => v.status === 'IN_PROGRESS')
-    .sort((a, b) => compareSemVerDesc(a.versionNumber, b.versionNumber))
+    .sort((a, b) => compareSemVerAsc(a.versionNumber, b.versionNumber))
 })
 
 function scrollToVersion(verId: string) {
@@ -240,6 +259,15 @@ function scrollToVersion(verId: string) {
         behavior: 'smooth'
       })
     }
+  }
+}
+
+function scrollToTop() {
+  if (typeof window !== 'undefined') {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
   }
 }
 
@@ -260,6 +288,18 @@ function scrollToItem(itemId: string) {
 
 
 const displayedVersions = computed(() => {
+  if (isSingleVersionView.value && targetVersionNumber.value) {
+    const rawTarget = targetVersionNumber.value.replace(/^v/i, '')
+    const match = versions.value.find(v => v.versionNumber.replace(/^v/i, '') === rawTarget)
+    if (!match) return []
+
+    // If not admin, only show if PUBLISHED
+    if (!isAdmin.value && match.status !== 'PUBLISHED') {
+      return []
+    }
+    return [match]
+  }
+
   if (!adminEditMode.value) {
     // Admin mode OFF: show ONLY PUBLISHED versions with at least one item, descending by version number
     return versions.value
@@ -299,6 +339,7 @@ const versionsForDisplay = computed(() => {
     }))
     .filter(v => v.versionItems.length > 0)
 })
+
 
 // Sorted categories for dropdowns: pure alphabetical order (A-Z)
 const sortedCategoriesForDropdown = computed(() => {
@@ -573,6 +614,7 @@ const openAddVersion = () => {
     id: '',
     versionNumber: calculateNextVersionNumber(),
     title: '',
+    description: '',
     status: 'IN_PROGRESS',
     publishDate: todayStr
   }
@@ -585,7 +627,14 @@ const openEditVersion = (ver: Version) => {
   isNewVersion.value = false
   versionSaveError.value = ''
   const formattedDate = formatPublishDate(ver.publishDate)
-  editingVersion.value = { id: ver.id, versionNumber: ver.versionNumber, title: ver.title || '', status: ver.status as any, publishDate: formattedDate }
+  editingVersion.value = {
+    id: ver.id,
+    versionNumber: ver.versionNumber,
+    title: ver.title || '',
+    description: ver.description || '',
+    status: ver.status as any,
+    publishDate: formattedDate
+  }
   showEditVersionModal.value = true
   focusFirstModalInput()
 }
@@ -629,6 +678,7 @@ const saveAdminVersion = async () => {
     if (existing) {
       existing.versionNumber = payload.versionNumber
       existing.title = payload.title
+      existing.description = payload.description
       existing.status = payload.status
       existing.publishDate = payload.publishDate
     }
@@ -638,6 +688,7 @@ const saveAdminVersion = async () => {
       id: tempVersionId,
       versionNumber: payload.versionNumber,
       title: payload.title || '',
+      description: payload.description || '',
       status: payload.status,
       publishDate: payload.publishDate,
       versionItems: []
@@ -1273,9 +1324,31 @@ const saveCategory = async () => {
       existing.title = title
       existing.rank = rankVal
     }
+    for (const v of versions.value) {
+      for (const item of v.versionItems) {
+        if (item.versionCategoryId === editingCategory.value.id && item.versionCategory) {
+          item.versionCategory.title = title
+          item.versionCategory.rank = rankVal
+        }
+      }
+      invalidateVersionCache(v)
+    }
+    for (const item of unassignedItems.value) {
+      if (item.versionCategoryId === editingCategory.value.id && item.versionCategory) {
+        item.versionCategory.title = title
+        item.versionCategory.rank = rankVal
+      }
+    }
   } else {
     categories.value = [...categories.value, newCatObj]
   }
+
+  recentlyEditedCategoryId.value = tempCatId
+  setTimeout(() => {
+    if (recentlyEditedCategoryId.value === tempCatId) {
+      recentlyEditedCategoryId.value = null
+    }
+  }, 2000)
 
   let parentVer: Version | undefined = undefined
   let oldCatId: string | null | undefined = undefined
@@ -1313,12 +1386,14 @@ const saveCategory = async () => {
   cameFromItemModal.value = false
 
   try {
+    let createdId: string | null = null
     if (isNewCategory.value) {
       const created = await $fetch<VersionCategory>('/api/dev/categories', {
         method: 'POST',
         body: { title, rank: rankVal, abbreviations: abbrArray }
       })
       if (created?.id) {
+        createdId = created.id
         const catInList = categories.value.find(c => c.id === tempCatId)
         if (catInList) {
           catInList.id = created.id
@@ -1341,6 +1416,14 @@ const saveCategory = async () => {
       })
     }
     await loadData(false)
+    if (createdId) {
+      recentlyEditedCategoryId.value = createdId
+      setTimeout(() => {
+        if (recentlyEditedCategoryId.value === createdId) {
+          recentlyEditedCategoryId.value = null
+        }
+      }, 2000)
+    }
   } catch (err: any) {
     categories.value = snapshotCategories
     versions.value = snapshotVersions
@@ -1458,6 +1541,211 @@ async function copyBranchName(ver: Version) {
   }
 }
 
+const copiedPromptVersionId = ref<string | null>(null)
+let copiedPromptTimeout: ReturnType<typeof setTimeout> | null = null
+
+const copiedPermalinkVersionId = ref<string | null>(null)
+let copiedPermalinkTimeout: ReturnType<typeof setTimeout> | null = null
+
+async function copyPermalink(ver: Version) {
+  if (typeof window === 'undefined') return
+  const origin = window.location.origin
+  const url = `${origin}/version/${ver.versionNumber}`
+  try {
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(url)
+    }
+    copiedPermalinkVersionId.value = ver.id
+    if (copiedPermalinkTimeout) clearTimeout(copiedPermalinkTimeout)
+    copiedPermalinkTimeout = setTimeout(() => {
+      copiedPermalinkVersionId.value = null
+    }, 2000)
+  } catch (err) {
+    console.error('Failed to copy permalink to clipboard', err)
+  }
+}
+
+function generateVersionPrompt(ver: Version): string {
+  let itemsMd = ''
+  const grouped = getGroupedItemsForVersion(ver.versionItems)
+  if (grouped.isAllGeneral) {
+    if (grouped.allItems.length > 0) {
+      itemsMd += `## General\n\n`
+      for (const item of grouped.allItems) {
+        const prefix = item.type === 'FEATURE' ? 'FEATURE' : 'BUG-FIX'
+        itemsMd += `- ${prefix}: ${formatSentenceCase(item.body)}\n\n`
+      }
+    }
+  } else {
+    for (const group of grouped.groups) {
+      itemsMd += `## ${group.categoryTitle}\n\n`
+      for (const item of group.items) {
+        const prefix = item.type === 'FEATURE' ? 'FEATURE' : 'BUG-FIX'
+        itemsMd += `- ${prefix}: ${formatSentenceCase(item.body)}\n\n`
+      }
+    }
+  }
+
+  const featureCount = ver.versionItems.filter(i => i.type === 'FEATURE').length
+  const bugfixCount = ver.versionItems.filter(i => i.type !== 'FEATURE').length
+  const countSummary = `(Total: ${featureCount} feature${featureCount === 1 ? '' : 's'}, ${bugfixCount} bug fix${bugfixCount === 1 ? '' : 'es'})`
+
+  return `Summarize the changes in this version into one title (50 characters or less) and a description paragraph (150 words or less). Mention how many bug fixes and features there are in that version ${countSummary}:\n\n${itemsMd.trim()}`
+}
+
+async function copyVersionPrompt(ver: Version) {
+  const promptText = generateVersionPrompt(ver)
+  try {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      await navigator.clipboard.writeText(promptText)
+    }
+    copiedPromptVersionId.value = ver.id
+    if (copiedPromptTimeout) clearTimeout(copiedPromptTimeout)
+    copiedPromptTimeout = setTimeout(() => {
+      copiedPromptVersionId.value = null
+    }, 2500)
+  } catch (err) {
+    console.error('Failed to copy version prompt to clipboard', err)
+  }
+}
+
+// Non-admin card view mode (description vs items)
+const versionViewMode = ref<Record<string, 'description' | 'items'>>({})
+
+function shouldShowVersionDescription(ver: Version): boolean {
+  if (adminEditMode.value) return false
+  if (!ver.description || !ver.description.trim()) return false
+  const defaultMode = isSingleVersionView.value ? 'items' : 'description'
+  const mode = versionViewMode.value[ver.id] || defaultMode
+  return mode === 'description'
+}
+
+function toggleVersionCardFlip(ver: Version) {
+  if (adminEditMode.value) return
+  if (!ver.description || !ver.description.trim()) return
+  const defaultMode = isSingleVersionView.value ? 'items' : 'description'
+  const current = versionViewMode.value[ver.id] || defaultMode
+  versionViewMode.value[ver.id] = current === 'description' ? 'items' : 'description'
+}
+
+function handleVersionCardClick(ver: Version, event: MouseEvent) {
+  if (adminEditMode.value) return
+  if (!ver.description || !ver.description.trim()) return
+
+  // Don't toggle if user was selecting text
+  const selection = window.getSelection()?.toString()
+  if (selection && selection.trim().length > 0) return
+
+  // Don't toggle if clicking an interactive element
+  const target = event.target as HTMLElement
+  if (target.closest('a, button, input, textarea, select')) return
+
+  toggleVersionCardFlip(ver)
+}
+
+// Admin mode description editor state & handlers
+const adminDescOpenMap = ref<Record<string, boolean>>({})
+const adminDescSavedId = ref<string | null>(null)
+let adminDescSaveTimeout: ReturnType<typeof setTimeout> | null = null
+
+function toggleAdminDescOpen(verId: string) {
+  adminDescOpenMap.value[verId] = !adminDescOpenMap.value[verId]
+}
+
+function handleAdminDescInput(ver: Version, val: string) {
+  ver.description = val
+}
+
+async function saveAdminDesc(ver: Version) {
+  const trimmed = ver.description ? ver.description.trim() : null
+  ver.description = trimmed
+  try {
+    await $fetch(`/api/dev/versions/${ver.id}`, {
+      method: 'PUT',
+      body: { description: trimmed }
+    })
+    adminDescSavedId.value = ver.id
+    if (adminDescSaveTimeout) clearTimeout(adminDescSaveTimeout)
+    adminDescSaveTimeout = setTimeout(() => {
+      adminDescSavedId.value = null
+    }, 2000)
+  } catch (err) {
+    console.error('Failed to save version description', err)
+  }
+}
+
+// Category Title Editing (Inline & Modal) Attention Grabber
+const recentlyEditedCategoryId = ref<string | null>(null)
+const inlineEditingCategoryId = ref<string | null>(null)
+const inlineCategoryTitle = ref('')
+
+function startInlineCategoryEdit(catId: string, currentTitle: string) {
+  inlineEditingCategoryId.value = catId
+  inlineCategoryTitle.value = currentTitle
+  nextTick(() => {
+    const input = document.querySelector(`input[data-cat-edit="${catId}"]`) as HTMLInputElement | null
+    if (input) input.focus()
+  })
+}
+
+async function saveInlineCategoryName(catId: string) {
+  if (inlineEditingCategoryId.value !== catId) return
+  const newTitle = inlineCategoryTitle.value.trim()
+  inlineEditingCategoryId.value = null
+  if (!newTitle) return
+
+  const cat = categories.value.find(c => c.id === catId)
+  if (!cat || cat.title === newTitle) return
+
+  const oldTitle = cat.title
+  cat.title = newTitle
+
+  for (const v of versions.value) {
+    for (const item of v.versionItems) {
+      if (item.versionCategoryId === catId && item.versionCategory) {
+        item.versionCategory.title = newTitle
+      }
+    }
+    invalidateVersionCache(v)
+  }
+  for (const item of unassignedItems.value) {
+    if (item.versionCategoryId === catId && item.versionCategory) {
+      item.versionCategory.title = newTitle
+    }
+  }
+
+  recentlyEditedCategoryId.value = catId
+  setTimeout(() => {
+    if (recentlyEditedCategoryId.value === catId) {
+      recentlyEditedCategoryId.value = null
+    }
+  }, 2000)
+
+  try {
+    await $fetch(`/api/dev/categories/${catId}`, {
+      method: 'PUT',
+      body: { title: newTitle }
+    })
+    await loadData(false)
+  } catch (err: any) {
+    cat.title = oldTitle
+    for (const v of versions.value) {
+      for (const item of v.versionItems) {
+        if (item.versionCategoryId === catId && item.versionCategory) {
+          item.versionCategory.title = oldTitle
+        }
+      }
+      invalidateVersionCache(v)
+    }
+    for (const item of unassignedItems.value) {
+      if (item.versionCategoryId === catId && item.versionCategory) {
+        item.versionCategory.title = oldTitle
+      }
+    }
+    alert(err.data?.statusMessage || err.message || 'Failed to update category name')
+  }
+}
+
 // Item Rank Redistribution Handlers (UP / DOWN)
 async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: VersionItem[]) {
   const currentIndex = list.findIndex(i => i.id === item.id)
@@ -1509,9 +1797,20 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto py-10 px-4 min-h-[600px] space-y-12">
-    <!-- 1. INTRODUCTORY HERO SECTION -->
-    <div class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-700/60 flex flex-col md:flex-row items-center md:items-start gap-3 md:gap-8">
+  <div class="max-w-4xl mx-auto py-10 px-4 min-h-[600px]" :class="isSingleVersionView ? 'space-y-6' : 'space-y-12'">
+    <!-- Single Version Navigation Link -->
+    <div v-if="isSingleVersionView" class="pt-2">
+      <NuxtLink
+        to="/about"
+        class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors"
+      >
+        <span>&larr;</span>
+        <span>View all versions</span>
+      </NuxtLink>
+    </div>
+
+    <!-- 1. INTRODUCTORY HERO SECTION (Only on /about, hidden in single version view) -->
+    <div v-if="!isSingleVersionView" class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-950 rounded-2xl p-6 md:p-8 text-white shadow-xl border border-gray-700/60 flex flex-col md:flex-row items-center md:items-start gap-3 md:gap-8">
       <!-- Left: Fast Flashcards Symbol -->
       <div class="shrink-0 relative group flex items-center justify-center p-2">
         <div class="absolute -top-1 -right-1 z-10">
@@ -1563,13 +1862,13 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
     <!-- 2. VERSIONS DISPLAY -->
     <div class="space-y-6">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+      <div v-if="!isSingleVersionView || isAdmin" class="flex items-start" :class="isSingleVersionView ? 'justify-end' : 'justify-between'">
+        <h2 v-if="!isSingleVersionView" class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <span>Version History</span>
         </h2>
         <div v-if="isAdmin" class="hidden md:flex items-center space-x-3">
           <button
-            v-if="adminEditMode"
+            v-if="adminEditMode && !isSingleVersionView"
             @click="openAddVersion"
             class="px-2.5 py-1 text-xs text-gray-300 dark:text-gray-400 hover:text-white bg-gray-800 dark:bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 transition-colors"
           >
@@ -1588,7 +1887,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       </div>
 
       <!-- Search box (admin mode only) -->
-      <div v-if="isAdmin && adminEditMode" class="mt-2">
+      <div v-if="isAdmin && adminEditMode && !isSingleVersionView" class="mt-2">
         <input
           v-model="searchQuery"
           type="text"
@@ -1599,7 +1898,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       </div>
 
       <!-- Toggle link for Future Versions and IN_PROGRESS links in Admin Mode -->
-      <div v-if="!isLoading && isAdmin && adminEditMode" class="pt-1 mb-3 flex flex-wrap items-center gap-3">
+      <div v-if="!isLoading && isAdmin && adminEditMode && !isSingleVersionView" class="pt-1 mb-3 flex flex-wrap items-center gap-3">
         <button
           v-if="futureVersionsCount > 0"
           type="button"
@@ -1626,53 +1925,97 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
       </div>
 
       <div v-if="isLoading" class="text-center py-12 text-sm text-gray-500 font-mono">
-        Loading version history...
+        {{ isSingleVersionView ? 'Loading version details...' : 'Loading version history...' }}
       </div>
 
-      <div v-else-if="versionsForDisplay.length === 0" class="py-6 text-gray-500 text-sm">
-        No versions published yet.
+      <div v-else-if="versionsForDisplay.length === 0" class="py-12 text-center space-y-3">
+        <p class="text-gray-500 dark:text-gray-400 text-sm">
+          {{ isSingleVersionView ? `Version ${targetVersionNumber} not found or not published.` : 'No versions published yet.' }}
+        </p>
+        <div v-if="isSingleVersionView">
+          <NuxtLink
+            to="/about"
+            class="inline-block px-3 py-1.5 text-xs font-mono font-medium text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 underline"
+          >
+            &larr; View all versions
+          </NuxtLink>
+        </div>
       </div>
 
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versionsForDisplay" :key="ver.id" :id="`version-${ver.id}`" class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md scroll-mt-24 transition-all" :class="[
-          recentlyEditedVersionId === ver.id
-            ? 'border-4 border-dashed border-amber-500 dark:border-amber-600'
-            : isSearchActive
-              ? 'border-2 border-orange-500'
-              : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0')
-                ? 'border-2 border-dashed border-red-500 dark:border-red-600'
-                : ver.status === 'IN_PROGRESS'
-                  ? 'border-2 border-dashed border-amber-500 dark:border-amber-600'
-                  : 'border border-gray-200 dark:border-gray-700/80'
-        ]">
-          <!-- Full-Width Version Panel Card Header -->
-          <div class="bg-gray-100 dark:bg-gray-900/50 p-3 md:p-3.5 border-b border-gray-200 dark:border-gray-700/80 space-y-2">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
-              <div class="flex items-center space-x-2.5 flex-wrap gap-y-1">
-                <span v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="font-bold italic text-red-500 dark:text-red-400 text-base md:text-lg">
-                  INCOMING IDEAS (clean, group, reassign to other versions)
-                </span>
-                <template v-else-if="ver.status === 'FUTURE_VERSION'">
-                  <span class="font-bold text-gray-900 dark:text-white text-base md:text-lg">
-                    {{ ver.title || 'Future Version' }}
-                  </span>
-                </template>
-                <template v-else>
-                  <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-base md:text-lg">
-                    v{{ ver.versionNumber }}
-                  </span>
-                  <span v-if="ver.title" class="font-bold text-gray-900 dark:text-white text-base md:text-lg">
-                    {{ ver.title }}
-                  </span>
-                </template>
+        <div v-for="ver in versionsForDisplay" :key="ver.id" class="relative group/card">
+          <!-- Outside Top Button in Admin Mode -->
+          <button
+            v-if="isAdmin && adminEditMode"
+            type="button"
+            @click.stop="scrollToTop"
+            class="absolute -top-3 right-2 md:-right-8 md:top-2 w-6 h-6 rounded-full bg-white hover:bg-amber-50 dark:bg-gray-800 dark:hover:bg-amber-950/80 border border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400 flex items-center justify-center shadow-xs hover:shadow-md hover:scale-110 active:scale-95 transition-all cursor-pointer z-20 group"
+            title="Scroll back to top"
+          >
+            <ArrowUpIcon class="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
+          </button>
 
-                <!-- Issue Markdown and Branch name buttons for IN_PROGRESS versions in Admin mode -->
-                <div v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="inline-flex items-center gap-1.5 ml-2">
+          <div :id="`version-${ver.id}`"
+            @click="handleVersionCardClick(ver, $event)"
+            class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md scroll-mt-24 transition-all"
+            :class="[
+              recentlyEditedVersionId === ver.id
+                ? 'border-4 border-dashed border-amber-500 dark:border-amber-600'
+                : isSearchActive
+                  ? 'border-2 border-orange-500'
+                  : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0')
+                    ? 'border-2 border-dashed border-red-500 dark:border-red-600'
+                    : ver.status === 'IN_PROGRESS'
+                      ? 'border-2 border-dashed border-amber-500 dark:border-amber-600'
+                      : 'border border-gray-200 dark:border-gray-700/80',
+              !adminEditMode && ver.description && ver.description.trim() ? 'cursor-pointer select-text' : ''
+            ]"
+          >
+            <!-- Full-Width Version Panel Card Header -->
+            <div class="bg-gray-100 dark:bg-gray-900/50 p-3 md:p-3.5 border-b border-gray-200 dark:border-gray-700/80 space-y-2.5">
+              <!-- Top Row: Title and Date/Status -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
+                <div class="flex items-center space-x-2.5 flex-wrap gap-y-1">
+                  <span v-if="ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'" class="font-bold italic text-red-500 dark:text-red-400 text-base md:text-lg">
+                    INCOMING IDEAS (clean, group, reassign to other versions)
+                  </span>
+                  <template v-else-if="ver.status === 'FUTURE_VERSION'">
+                    <span class="font-bold text-gray-900 dark:text-white text-base md:text-lg">
+                      {{ ver.title || 'Future Version' }}
+                    </span>
+                  </template>
+                  <template v-else>
+                    <span class="font-mono font-bold text-amber-600 dark:text-amber-400 text-base md:text-lg">
+                      v{{ ver.versionNumber }}
+                    </span>
+                    <span v-if="ver.title" class="font-bold text-gray-900 dark:text-white text-base md:text-lg">
+                      {{ ver.title }}
+                    </span>
+                  </template>
+                </div>
+
+                <!-- Header Status / Date (description/items pill removed) -->
+                <div v-if="isAdmin && adminEditMode && ver.status === 'IN_PROGRESS'" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono font-bold shrink-0 uppercase tracking-wider">
+                  IN PROGRESS
+                </div>
+                <div v-else-if="isAdmin && adminEditMode && ver.status === 'FUTURE_VERSION'" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-mono font-bold shrink-0 uppercase tracking-wider">
+                  FUTURE VERSION
+                </div>
+                <div v-else class="flex items-center gap-2 shrink-0">
+                  <span v-if="ver.publishDate" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono font-bold">
+                    {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Action Bar in Admin Mode: Left: 3 copy buttons, Right: edit | delete | add item + move dropdown, directly under title -->
+              <div v-if="isAdmin && adminEditMode && ver.versionNumber !== '0.0.0'" class="flex items-center justify-between flex-wrap gap-2 pt-1 border-b border-gray-200 dark:border-gray-700/60 pb-2">
+                <div v-if="ver.status === 'IN_PROGRESS' || ver.status === 'PUBLISHED'" class="flex items-center flex-wrap gap-2">
                   <button
                     @click="copyIssueMarkdown(ver)"
                     title="Copy issue markdown to clipboard"
-                    class="px-2 py-0.5 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
+                    class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
                   >
                     <CheckIcon v-if="copiedVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <DocumentTextIcon v-else class="w-3.5 h-3.5" />
@@ -1682,57 +2025,88 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   <button
                     @click="copyBranchName(ver)"
                     :title="getBranchName(ver)"
-                    class="px-2 py-0.5 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
+                    class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
                   >
                     <CheckIcon v-if="copiedBranchVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <ClipboardDocumentIcon v-else class="w-3.5 h-3.5" />
                     <span>{{ copiedBranchVersionId === ver.id ? 'Copied!' : 'Branch name' }}</span>
                   </button>
+
+                  <button
+                    @click="copyVersionPrompt(ver)"
+                    title="Copy version summary prompt for AI"
+                    class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
+                  >
+                    <CheckIcon v-if="copiedPromptVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <BoltIcon v-else class="w-3.5 h-3.5" />
+                    <span>{{ copiedPromptVersionId === ver.id ? 'Copied!' : 'Version prompt' }}</span>
+                  </button>
+
+                  <button
+                    @click="copyPermalink(ver)"
+                    title="Copy permalink to this version"
+                    class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
+                  >
+                    <CheckIcon v-if="copiedPermalinkVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <LinkIcon v-else class="w-3.5 h-3.5" />
+                    <span>{{ copiedPermalinkVersionId === ver.id ? 'Copied!' : 'Permalink' }}</span>
+                  </button>
+                </div>
+                <div v-else></div>
+
+                <!-- Right-aligned Version CRUD Actions -->
+                <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 shrink-0 font-mono ml-auto">
+                  <span>( <button @click="openEditVersion(ver)" class="hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-600 dark:text-red-400 hover:text-red-500 font-medium cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 cursor-pointer transition-colors">add item</button> )</span>
+
+                  <!-- Move all general items dropdown inline -->
+                  <select
+                    v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral && ver.versionItems.length > 0"
+                    @change="moveAllVersionItemsToVersion(ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
+                    class="px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[220px] truncate"
+                  >
+                    <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">➔ move all items to version</option>
+                    <option value="NEW_VERSION" class="font-serif italic text-gray-500 dark:text-gray-400">➔ move to new version</option>
+                    <option
+                      v-for="opt in getVersionsForDropdownOptions(ver.id)"
+                      :key="opt.id"
+                      :value="opt.id"
+                      :class="getVersionColorClass(opt.status)"
+                    >
+                      {{ opt.label }}
+                    </option>
+                  </select>
                 </div>
               </div>
-              <div v-if="ver.status === 'IN_PROGRESS'" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono font-bold shrink-0 uppercase tracking-wider">
-                IN PROGRESS
-              </div>
-              <div v-else-if="ver.status === 'FUTURE_VERSION'" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-mono font-bold shrink-0 uppercase tracking-wider">
-                FUTURE VERSION
-              </div>
-              <div v-else-if="ver.publishDate" class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-mono font-bold shrink-0">
-                {{ formatPublishDate(ver.publishDate) }} {{ getRelativeDateStr(ver.publishDate) }}
+
+              <!-- Description for INCOMING changes section -->
+              <p v-if="ver.versionNumber === '0.0.0'" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed italic pt-1">
+                These are raw ideas for new features and bug-fixes which come from website users and developers. They need to be examined, verified, written in the past tense, then assigned a category and a version. 
+              </p>
+
+              <!-- Full Description in Admin Mode (plain text, no arrow/toggle, edited via 'edit', below dividing line) -->
+              <div v-if="isAdmin && adminEditMode && ver.description && ver.description.trim() && ver.versionNumber !== '0.0.0'" class="pt-1 text-xs md:text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                {{ ver.description }}
               </div>
             </div>
 
-            <!-- Description for INCOMING changes section -->
-            <p v-if="ver.versionNumber === '0.0.0'" class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed italic pt-1">
-              These are raw ideas for new features and bug-fixes which come from website users and developers. They need to be examined, verified, written in the past tense, then assigned a category and a version. 
-            </p>
-
-            <!-- Right-aligned Version CRUD Actions (Excluding INCOMING) -->
-            <div v-if="isAdmin && adminEditMode && ver.versionNumber !== '0.0.0'" class="flex items-center justify-end gap-2 text-xs text-gray-500 dark:text-gray-400 shrink-0 font-mono pt-1">
-              <span>( <button @click="openEditVersion(ver)" class="hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors">edit</button> | <button @click="deleteVersion(ver)" class="text-red-600 dark:text-red-400 hover:text-red-500 font-medium cursor-pointer transition-colors">delete</button> | <button @click="openAddItem(ver.id, 'TOP')" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 cursor-pointer transition-colors">add item</button> )</span>
-
-              <!-- Move all general items dropdown inline -->
-              <select
-                v-if="getGroupedItemsForVersion(ver.versionItems).isAllGeneral && ver.versionItems.length > 0"
-                @change="moveAllVersionItemsToVersion(ver.id, ($event.target as HTMLSelectElement).value); ($event.target as HTMLSelectElement).value = ''"
-                class="px-1.5 py-0.5 bg-white dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded text-[10px] text-amber-700 dark:text-amber-300 focus:outline-none cursor-pointer max-w-[220px] truncate"
-              >
-                <option value="" disabled selected class="font-serif italic text-gray-500 dark:text-gray-400">➔ move all items to version</option>
-                <option value="NEW_VERSION" class="font-serif italic text-gray-500 dark:text-gray-400">➔ move to new version</option>
-                <option
-                  v-for="opt in getVersionsForDropdownOptions(ver.id)"
-                  :key="opt.id"
-                  :value="opt.id"
-                  :class="getVersionColorClass(opt.status)"
-                >
-                  {{ opt.label }}
-                </option>
-              </select>
+          <!-- Card Content Body (Instant, without animation) -->
+          <div class="relative overflow-hidden">
+            <!-- Non-Admin View: Description (when present and selected) -->
+            <div
+              v-if="shouldShowVersionDescription(ver)"
+              class="p-5 md:p-7 space-y-4 bg-white dark:bg-gray-800/40 select-text"
+            >
+              <div class="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                {{ ver.description }}
+              </div>
             </div>
-          </div>
 
-          <!-- Version Items Display with Smart Category Grouping -->
-          <div class="p-3 md:p-4 space-y-4 bg-white dark:bg-gray-800/40">
-            <div v-if="(ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') && ver.versionItems.length === 0" class="text-sm font-medium text-gray-500 dark:text-gray-400 italic py-4 text-center border border-dashed border-gray-300 dark:border-gray-700 rounded-lg">
+            <!-- Items View (Non-admin toggled or no description, or Admin mode) -->
+            <div
+              v-else
+              class="p-3 md:p-4 space-y-4 bg-white dark:bg-gray-800/40"
+            >
+                <div v-if="(ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0') && ver.versionItems.length === 0" class="text-sm font-medium text-gray-500 dark:text-gray-400 italic py-4 text-center border border-dashed border-gray-300 dark:border-gray-700 rounded-lg">
               All current ideas have been processed. Waiting for new ideas.
             </div>
             <!-- Case A: ALL items belong to General -> list directly without category group header -->
@@ -1842,9 +2216,32 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                 <div v-for="group in getGroupedItemsForVersion(ver.versionItems).groups" :key="group.categoryId" class="space-y-2">
                   <!-- Category Header -->
                   <div class="flex items-center gap-2 border-b border-gray-200 dark:border-gray-700/50 pb-1">
-                    <h4 class="text-xs font-bold uppercase tracking-wider" :class="group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? 'italic' : ''" :style="{ color: group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? '#ef4444' : '#d97706' }">
-                      {{ group.categoryTitle }}
-                    </h4>
+                    <template v-if="inlineEditingCategoryId === group.categoryId">
+                      <input
+                        v-model="inlineCategoryTitle"
+                        :data-cat-edit="group.categoryId"
+                        @blur="saveInlineCategoryName(group.categoryId)"
+                        @keydown.enter.prevent="saveInlineCategoryName(group.categoryId)"
+                        @keydown.esc.prevent="inlineEditingCategoryId = null"
+                        type="text"
+                        class="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 bg-white dark:bg-gray-800 border-2 border-amber-500 rounded text-amber-700 dark:text-amber-300 outline-none"
+                        autofocus
+                      />
+                    </template>
+                    <template v-else>
+                      <h4
+                        class="text-xs font-bold uppercase tracking-wider transition-all duration-500 rounded px-1.5 py-0.5"
+                        :class="[
+                          group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? 'italic' : '',
+                          recentlyEditedCategoryId === group.categoryId ? 'bg-amber-100/70 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400' : ''
+                        ]"
+                        :style="{ color: recentlyEditedCategoryId === group.categoryId ? undefined : (group.categoryTitle.toLowerCase().trim() === 'clean and assign' ? '#ef4444' : '#d97706') }"
+                        @dblclick="isAdmin && adminEditMode && group.categoryTitle !== 'Clean and assign' && group.categoryTitle !== 'General' && startInlineCategoryEdit(group.categoryId, group.categoryTitle)"
+                        :title="isAdmin && adminEditMode && group.categoryTitle !== 'Clean and assign' && group.categoryTitle !== 'General' ? 'Double click to edit category name inline' : undefined"
+                      >
+                        {{ group.categoryTitle }}
+                      </h4>
+                    </template>
                     <span v-if="isAdmin && adminEditMode && group.categoryTitle !== 'Clean and assign' && group.categoryTitle !== 'General'" class="text-[10px] text-gray-500 dark:text-gray-400 font-mono">
                       (rank: {{ group.categoryRank }})
                     </span>
@@ -1976,10 +2373,26 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   </ul>
                 </div>
               </div>
+
+            </div>
+
+            <!-- Subtle Flip Hint Icon (Lower right-hand corner) -->
+            <button
+              v-if="!adminEditMode && ver.description && ver.description.trim()"
+              type="button"
+              @click.stop="toggleVersionCardFlip(ver)"
+              class="absolute bottom-2.5 right-2.5 z-10 w-6 h-6 rounded-full flex items-center justify-center bg-white/90 hover:bg-amber-50 dark:bg-gray-800/90 dark:hover:bg-amber-950/80 border border-gray-200/80 hover:border-amber-300 dark:border-gray-700/80 dark:hover:border-amber-700/80 text-gray-400 hover:text-amber-600 dark:text-gray-400 dark:hover:text-amber-400 shadow-xs hover:shadow-sm hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer select-none backdrop-blur-xs group/flip"
+              :class="shouldShowVersionDescription(ver) ? 'border-amber-300/80 dark:border-amber-700/80 text-amber-600 dark:text-amber-400 bg-amber-50/60 dark:bg-amber-950/40' : ''"
+              :title="shouldShowVersionDescription(ver) ? 'Click to view version items' : 'Click to view version description'"
+              :aria-label="shouldShowVersionDescription(ver) ? 'Click to view version items' : 'Click to view version description'"
+            >
+              <ArrowPathIcon class="w-3.5 h-3.5 transition-transform duration-500 group-hover/card:rotate-180" />
+            </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
     <!-- Admin Edit Version Modal -->
     <div v-if="showEditVersionModal && editingVersion" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
@@ -1998,6 +2411,10 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Version Title</label>
             <input v-model="editingVersion.title" @keydown.enter.exact.prevent="saveAdminVersion" type="text" placeholder="Version feature description" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono" />
+          </div>
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1">Description</label>
+            <textarea v-model="editingVersion.description" rows="3" placeholder="Paragraph summarizing this version..." class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded text-gray-900 dark:text-white font-mono leading-relaxed text-xs"></textarea>
           </div>
           <div>
             <label class="block text-gray-700 dark:text-gray-300 mb-1">Publish Date (YYYY-MM-DD)</label>
@@ -2207,6 +2624,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 .animate-subtle-bounce {
   animation: subtleBounce 0.6s ease-in-out;
 }
+
 </style>
 
 

@@ -1,9 +1,31 @@
+- quedar vs. quedarse
+	- quedar
+		- fijar una cita o ponerse de acuerdo para verse
+			- ¿A qué hora quedamos mañana para tomar un café en la plaza?
+		- expresar cómo sienta o favorece una prenda
+			- esa camisa azul te queda muy bien con los pantalones grises
+		- señalar la ubicación geográfica o situación física de un lugar inanimado
+			- el museo queda a tres manzanas de la estación central
+		- indicar retención, posesión definitiva o elección de un objeto
+			- te gusta este libro o prefieres que me lo quede yo
+		- "quedar en + infinitivo" significado de pactar o acordar hacer algo
+			- la reunión estaba prevista para las diez, pero al final quedamos en vernos a las doce
+	- quedarse
+		- paso a un estado emocional o físico resultante
+			- al enterarse de la noticia, ella se quedó totalmente sorprendida
+		- indicar permanencia o estancia en un sitio específico
+			- este fin de semana estoy muy cansado, así que voy a quedarme en casa descansando
+		-  describir la transición accidental o natural hacia el estado de sueño
+			- la película era tan aburrida que Juan se quedó dormido en los primeros veinte minutos
+
 - por vs. para
 	- por
-		- price / exchange
+		- FOR 5 DOLLARS: para especificar el precio en transacciones comerciales
 			- compré estos tres cuadernos usados por cinco euros 
-		- debido a una causa o razón
+			- vendido por un millón de dólares en una prestigiosa subasta
+		- FOR A REASON, DUE TO, BECAUSE: debido a una causa o razón
 			- no pudimos asistir al concierto por culpa del tráfico intenso
+			- recibieron una multa por exceder el límite de velocidad
 		- para indicar la duración de una acción en el tiempo
 			- estudiamos en la biblioteca pour cuatro horas continuas
 		- movement through
@@ -11,15 +33,90 @@
 			- el paquete urgente fue enviado ayer por correo certificado
 		- multiplication
 		- on behalf of
-		- el espacio físico a través del cual o a lo largo del cual se transita
+		- FOR TWO NIGHTS: expresa la duración de tiempo que durará una estancia o actividad
+			- nos quedaremos en este hotel solamente por dos noches
+		- ALONG THE SHORE: el espacio físico a través a lo largo del cual se transita
 			- caminaron despacio por la orilla del río al atardecer
+		- TRADE YOU FOR: para expresar intercambios
+			- te cambio mi bolígrafo rojo por tu lápiz negro
+		- ON TRACK 5: para designar la vía por donde sale o pasa un vehículo
+			- el tren con destino a Valencia saldrá por la vía tres
+			- el avión con destino a Bogotá sale por la puerta número doce
+		- BY A PERSON: introduce el agente que realiza la acción en la voz pasiva
+			- el cuadro fue restaurado cuidadosamente por un experto del museo
+			- ese edificio fue diseñado por un arquitecto de renombre internacional
+		- THROUGH/VIA: indica el lugar o conducto a través del cual se realiza un movimiento
+			- el ladrón intentó escapar saltando por la ventana
+			- enviaron las invitaciones de la boda por correo postal tradicional
+			- ellos salieron corriendo por el parque en dirección a la estación
+			- el niño miraba con asombro por el telescopio astronómico
+		- FOR THAT PERSON: expresa el beneficio, causa o motivación emocional que impulsa a actuar a favor de alguien
+			- hizo todo el sacrificio por sus hijos
+		- INSTEAD OF YOU: para indicar sustitución o representación de otra persona
+			- no te preocupes si no puedes ir a la junta; yo hablaré por ti
+		- IN THE MORNING: expresa la parte del día de forma indeterminada (por la mañana/tarde/noche)
+			- nos veremos por la tarde, cuando baje el calor
+		- BY FAX: para especificar el medio de comunicación o transporte empleado
+			- mandé el contrato firmado por fax hace unos minutos
+		- HAS TO BE: "estar por + infinitivo" denota una acción pendiente que aún no se ha realizado
+			- la casa está todavía por pintar, las paredes están desnudas
+		- FOR NOW: "Por ahora" es una locución temporal que significa provisionalmente o por el momento
+			- no puedo dar una respuesta concluyente por ahora
+		- FIGHT TO SURVIVE: con verbos de lucha y esfuerzo (luchar, pelear, esforzarse), "por" introduce la meta o causa por la que se combate
+			- el alpinista luchó bravamente por sobrevivir en la tormenta
+		- FINALLY: "Por fin" es una locución adverbial fija que denota que algo largamente esperado se ha consumado
+			- por fin hemos terminado todo el proyecto de investigación
+		- ON TOP OF: "por encima de" indica ubicación o paso superior
+			- el avión vuela a diez mil metros por encima de las nubes
+		- THANKS FOR YOUR HELP: el verbo "agradecer" rige "por" para introducir el motivo del agradecimiento
+			- le agradecí profundamente por toda su valiosa ayuda
+		- FOR FEAR OF: "para miedo" no tiene sentido, pues el miedo es la causa interna y no el fin perseguido
+			- el testigo habló con el juez por miedo a represalias
+		- TAKE THE DIRT ROAD: designa la ruta o vía física elegida para transitar
+			- la autopista está cerrada, así que iremos por el camino de tierra
+		- KM PER HOUR: para expresar tasas, proporciones, velocidad o unidades de medida
+			- el ciclista pedaleaba a cincuenta kilómetros por hora
+		- APPARENTLY: "por lo visto" es una locución fija que expresa una deducción o evidencia aparente
+			- por lo visto, la reunión se cancelará debido a la falta de quórum
+		- FOR XMAS: se usa con festividades o épocas para expresar una fecha aproximada
+			- nos veremos aproximadamente por Navidad si las circunstancias lo permiten
 	--para
-		- para indicar el propósito (purpose) o finalidad de una acción (in order to)
+		- IN ORDER TO: para indicar el propósito (purpose) o finalidad de una acción
 			- viajamos a París para pasar nuestras vacaciones de verano
-		- destination
-		- deadline (by Friday)
-		- recipient (for you)
-		- introducir una opinión o perspectiva personal
+			- para llegar temprano a la reunión, tuve que levantarme a las cinco
+			- tuvimos que detenernos para repostar gasolina en la autopista
+			- compré harina y levadura para hacer pan casero el domingo
+			- este software fue programado específicamente para optimizar bases de datos
+		- FOR 4 O'CLOCK: para fijar una hora o momento previsto para un evento específico
+			- tengo una cita médica concertada para las cuatro de la tarde
+		- BY THEN: para marcar una fecha límite en el futuro (by March 15th)
+			- debo entregar la solicitud de beca para el 15 de marzo
+		- AS FOR ME: introducir una opinión o perspectiva personal
 			- para mí, la propuesta presentada carece de fundamentos sólidos
-		- para establecer una comparación con una norma o expectativa
+			- para mí, la honestidad es el valor más importante en una amistad
+		- FOR A BEGINNER: para establecer una comparación con una norma o expectativa
 			- para un principiante, tocas la guitarra con mucha soltura
+			- para ser tan joven, demuestra una gran madurez emocional
+		- IT IS FOR: indica la función, uso o utilidad de un objeto
+			- la taza sirve para tomar café o té caliente
+		- WORKS FOR: para indicar el empleador o empresa que contrata a alguien
+			- my uncle works for a well-known multinational technology company
+		- TO A PLACE: expresa dirección hacia un destino específico
+			- este autobús va para el aeropuerto internacional
+		- READY TO: "estar para + infinitivo" significa estar a punto de ocurrir o en disposición inminente de suceder
+			- el tren está para salir, suban de inmediato
+		- FOR HIM: señala al destinatario o receptor final de un objeto o acción
+			- compré este regalo especial para ti
+		- FOR TOMORROW: indica el momento futuro asignado o aplazado para realizar una actividad
+			- dejemos este asunto pendiente para mañana por la mañana
+		- SUITABLE FOR: el adjetivo "apto" rige la preposición "para" para denotar la finalidad o uso al que se adecúa algo
+			- el agua no es apta para el consumo humano
+		- IT'S GOOD FOR THAT: "Bueno para + infinitivo/sustantivo" indica la finalidad o afección que remedia un fármaco
+			- esa medicina es muy buena para combatir el dolor de cabeza
+		- WILL BE USED FOR: "servir para + infinitivo" expresa el destino o finalidad práctica a la que se destinarán los fondos
+			- el dinero recaudado servirá para construir una escuela comunitaria
+			
+			
+			
+			
+			

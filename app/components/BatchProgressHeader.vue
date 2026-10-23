@@ -27,11 +27,11 @@ const languageTextColors: Record<string, string> = {
   es: '#ef4444', // Spanish = brighter red
   nl: '#eab308', // Dutch = brighter yellow
   pl: '#cbd5e1', // Polish = brighter gray
-  de: '#92400e', // German = warm rich brown
+  de: '#ea580c', // German = warm orange
   ru: '#94a3b8',
   da: '#ff1493',
   en: '#a855f7',
-  el: '#f97316'
+  el: '#0d9488' // Greek = teal / emerald
 }
 
 function getLanguageColor(lang?: string): string {
@@ -95,25 +95,21 @@ const percent = computed(() => {
 </script>
 
 <template>
-  <div class="w-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 rounded-2xl p-3 shadow-xs transition-all">
-    <!-- Header Summary Row -->
-    <div class="flex items-center justify-between mb-2.5">
-      <div class="flex items-center gap-2">
-        <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Batch</span>
-      </div>
-
-      <div class="text-xs font-bold text-gray-400 dark:text-gray-500 font-mono">
-        {{ percent }}%
-      </div>
-    </div>
-
-    <!-- Capsule Pills Row -->
+  <div class="w-full px-1 py-1 transition-all">
+    <!-- Capsule Pills Row with language abbreviation above each box -->
     <div v-if="slots.length > 0" class="flex items-start gap-1 sm:gap-1.5 w-full">
       <div
         v-for="slot in slots"
         :key="slot.id"
         class="flex-1 min-w-0 flex flex-col items-center"
       >
+        <!-- Language abbreviation above the box in its language color -->
+        <span
+          class="text-[10px] sm:text-xs font-mono font-bold mb-1 select-none tracking-wider"
+          :style="{ color: getLanguageColor(slot.language) }"
+        >
+          {{ (slot.language || 'FR').toUpperCase() }}
+        </span>
         <!-- The Pill Capsule -->
         <div
           @click="!isBatchComplete && emit('selectSlot', slot.id)"

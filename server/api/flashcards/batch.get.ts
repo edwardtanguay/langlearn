@@ -69,7 +69,7 @@ export default defineEventHandler(async (event) => {
       orderBy = [{ rank: 'desc' }, { id: 'asc' }]
     }
 
-    const flashcards = await prisma.flashcard.findMany({
+    let flashcards = await prisma.flashcard.findMany({
       where,
       orderBy,
       take: limit,
@@ -78,6 +78,22 @@ export default defineEventHandler(async (event) => {
         tags: { include: { tag: true } }
       }
     })
+
+    // If last_imported cards ran out, automatically test cards that are still open and were not marked as learned
+    if (strategy === 'last_imported' && flashcards.length === 0) {
+      delete where.nextTestTime
+      where.status = 'LEARNING'
+      orderBy = [{ rank: 'desc' }, { id: 'asc' }]
+      flashcards = await prisma.flashcard.findMany({
+        where,
+        orderBy,
+        take: limit,
+        include: {
+          owner: true,
+          tags: { include: { tag: true } }
+        }
+      })
+    }
 
     // If excludeIds caused too few cards, fallback without excludeIds to satisfy the batch
     if (flashcards.length < limit && excludeIds.length > 0) {

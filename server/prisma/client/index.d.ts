@@ -4680,6 +4680,7 @@ export namespace Prisma {
     id: string | null
     versionNumber: string | null
     title: string | null
+    description: string | null
     status: string | null
     publishDate: Date | null
     createdAt: Date | null
@@ -4690,6 +4691,7 @@ export namespace Prisma {
     id: string | null
     versionNumber: string | null
     title: string | null
+    description: string | null
     status: string | null
     publishDate: Date | null
     createdAt: Date | null
@@ -4700,6 +4702,7 @@ export namespace Prisma {
     id: number
     versionNumber: number
     title: number
+    description: number
     status: number
     publishDate: number
     createdAt: number
@@ -4712,6 +4715,7 @@ export namespace Prisma {
     id?: true
     versionNumber?: true
     title?: true
+    description?: true
     status?: true
     publishDate?: true
     createdAt?: true
@@ -4722,6 +4726,7 @@ export namespace Prisma {
     id?: true
     versionNumber?: true
     title?: true
+    description?: true
     status?: true
     publishDate?: true
     createdAt?: true
@@ -4732,6 +4737,7 @@ export namespace Prisma {
     id?: true
     versionNumber?: true
     title?: true
+    description?: true
     status?: true
     publishDate?: true
     createdAt?: true
@@ -4815,6 +4821,7 @@ export namespace Prisma {
     id: string
     versionNumber: string
     title: string | null
+    description: string | null
     status: string
     publishDate: Date | null
     createdAt: Date
@@ -4842,6 +4849,7 @@ export namespace Prisma {
     id?: boolean
     versionNumber?: boolean
     title?: boolean
+    description?: boolean
     status?: boolean
     publishDate?: boolean
     createdAt?: boolean
@@ -4854,6 +4862,7 @@ export namespace Prisma {
     id?: boolean
     versionNumber?: boolean
     title?: boolean
+    description?: boolean
     status?: boolean
     publishDate?: boolean
     createdAt?: boolean
@@ -4864,6 +4873,7 @@ export namespace Prisma {
     id?: boolean
     versionNumber?: boolean
     title?: boolean
+    description?: boolean
     status?: boolean
     publishDate?: boolean
     createdAt?: boolean
@@ -4874,13 +4884,14 @@ export namespace Prisma {
     id?: boolean
     versionNumber?: boolean
     title?: boolean
+    description?: boolean
     status?: boolean
     publishDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionNumber" | "title" | "status" | "publishDate" | "createdAt" | "updatedAt", ExtArgs["result"]["version"]>
+  export type VersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "versionNumber" | "title" | "description" | "status" | "publishDate" | "createdAt" | "updatedAt", ExtArgs["result"]["version"]>
   export type VersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     versionItems?: boolean | Version$versionItemsArgs<ExtArgs>
     _count?: boolean | VersionCountOutputTypeDefaultArgs<ExtArgs>
@@ -4897,6 +4908,7 @@ export namespace Prisma {
       id: string
       versionNumber: string
       title: string | null
+      description: string | null
       status: string
       publishDate: Date | null
       createdAt: Date
@@ -5328,6 +5340,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Version", 'String'>
     readonly versionNumber: FieldRef<"Version", 'String'>
     readonly title: FieldRef<"Version", 'String'>
+    readonly description: FieldRef<"Version", 'String'>
     readonly status: FieldRef<"Version", 'String'>
     readonly publishDate: FieldRef<"Version", 'DateTime'>
     readonly createdAt: FieldRef<"Version", 'DateTime'>
@@ -18200,6 +18213,7 @@ export namespace Prisma {
     id: 'id',
     versionNumber: 'versionNumber',
     title: 'title',
+    description: 'description',
     status: 'status',
     publishDate: 'publishDate',
     createdAt: 'createdAt',
@@ -18586,6 +18600,7 @@ export namespace Prisma {
     id?: StringFilter<"Version"> | string
     versionNumber?: StringFilter<"Version"> | string
     title?: StringNullableFilter<"Version"> | string | null
+    description?: StringNullableFilter<"Version"> | string | null
     status?: StringFilter<"Version"> | string
     publishDate?: DateTimeNullableFilter<"Version"> | Date | string | null
     createdAt?: DateTimeFilter<"Version"> | Date | string
@@ -18597,6 +18612,7 @@ export namespace Prisma {
     id?: SortOrder
     versionNumber?: SortOrder
     title?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     status?: SortOrder
     publishDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -18611,6 +18627,7 @@ export namespace Prisma {
     OR?: VersionWhereInput[]
     NOT?: VersionWhereInput | VersionWhereInput[]
     title?: StringNullableFilter<"Version"> | string | null
+    description?: StringNullableFilter<"Version"> | string | null
     status?: StringFilter<"Version"> | string
     publishDate?: DateTimeNullableFilter<"Version"> | Date | string | null
     createdAt?: DateTimeFilter<"Version"> | Date | string
@@ -18622,6 +18639,7 @@ export namespace Prisma {
     id?: SortOrder
     versionNumber?: SortOrder
     title?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     status?: SortOrder
     publishDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -18638,6 +18656,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Version"> | string
     versionNumber?: StringWithAggregatesFilter<"Version"> | string
     title?: StringNullableWithAggregatesFilter<"Version"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Version"> | string | null
     status?: StringWithAggregatesFilter<"Version"> | string
     publishDate?: DateTimeNullableWithAggregatesFilter<"Version"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Version"> | Date | string
@@ -19604,6 +19623,7 @@ export namespace Prisma {
     id?: string
     versionNumber: string
     title?: string | null
+    description?: string | null
     status?: string
     publishDate?: Date | string | null
     createdAt?: Date | string
@@ -19615,6 +19635,7 @@ export namespace Prisma {
     id?: string
     versionNumber: string
     title?: string | null
+    description?: string | null
     status?: string
     publishDate?: Date | string | null
     createdAt?: Date | string
@@ -19626,6 +19647,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     versionNumber?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19637,6 +19659,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     versionNumber?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19648,6 +19671,7 @@ export namespace Prisma {
     id?: string
     versionNumber: string
     title?: string | null
+    description?: string | null
     status?: string
     publishDate?: Date | string | null
     createdAt?: Date | string
@@ -19658,6 +19682,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     versionNumber?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19668,6 +19693,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     versionNumber?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20782,6 +20808,7 @@ export namespace Prisma {
     id?: SortOrder
     versionNumber?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     status?: SortOrder
     publishDate?: SortOrder
     createdAt?: SortOrder
@@ -20792,6 +20819,7 @@ export namespace Prisma {
     id?: SortOrder
     versionNumber?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     status?: SortOrder
     publishDate?: SortOrder
     createdAt?: SortOrder
@@ -20802,6 +20830,7 @@ export namespace Prisma {
     id?: SortOrder
     versionNumber?: SortOrder
     title?: SortOrder
+    description?: SortOrder
     status?: SortOrder
     publishDate?: SortOrder
     createdAt?: SortOrder
@@ -22914,6 +22943,7 @@ export namespace Prisma {
     id?: string
     versionNumber: string
     title?: string | null
+    description?: string | null
     status?: string
     publishDate?: Date | string | null
     createdAt?: Date | string
@@ -22924,6 +22954,7 @@ export namespace Prisma {
     id?: string
     versionNumber: string
     title?: string | null
+    description?: string | null
     status?: string
     publishDate?: Date | string | null
     createdAt?: Date | string
@@ -23014,6 +23045,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     versionNumber?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23024,6 +23056,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     versionNumber?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     publishDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

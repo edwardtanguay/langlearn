@@ -97,3 +97,5 @@
 	- le point, la virgule, le point-virgule, les deux-points, le point d'exclamation, le point d'interrogation, les guillemets, les guillemets français, l'apostrophe (f), le trait d'union, le tiret, les parenthèses, les crochets, les accolades, les points de suspension, la barre oblique, la barre oblique inverse, le tiret bas, le tilde, l'esperluette (f)
 - language
 	- le nom, le verbe, l'adjectif (m), l'adverbe (m), le pronom, la préposition, la conjonction, l'article (m), le sujet, le complément, le temps, la conjugaison, la grammaire, le vocabulaire, la prononciation, la syllabe, la phrase, le paragraphe, le singulier, le pluriel, l'accent grave (m), l'accent aigu (m)
+- starters
+	- de toute façon, peu importe, en attendant, quoi qu'il en soit, cela dit, en tout cas, passons, pour faire court, pour ce que ça vaut, quand même, à bien y penser, au fait, à la réflexion, dans les deux cas, ceci étant dit, à ce propos, dans tous les cas, pour le meilleur ou pour le pire, en plus, c'est-à-dire, apparemment

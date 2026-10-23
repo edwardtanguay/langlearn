@@ -4998,5 +4998,179 @@
         "nl": "het accent aigu"
       }
     ]
+  },
+  {
+    "id": "starters",
+    "title": "Starters",
+    "items": [
+      {
+        "id": "starters-1",
+        "en": "anyway",
+        "fr": "de toute façon",
+        "es": "de todos modos",
+        "it": "comunque",
+        "nl": "hoe dan ook"
+      },
+      {
+        "id": "starters-2",
+        "en": "whatever",
+        "fr": "peu importe",
+        "es": "lo que sea",
+        "it": "non importa",
+        "nl": "wat dan ook"
+      },
+      {
+        "id": "starters-3",
+        "en": "in the meantime",
+        "fr": "en attendant",
+        "es": "mientras tanto",
+        "it": "nel frattempo",
+        "nl": "ondertussen"
+      },
+      {
+        "id": "starters-4",
+        "en": "be that as it may",
+        "fr": "quoi qu'il en soit",
+        "es": "sea como fuere",
+        "it": "sia come sia",
+        "nl": "hoe het ook zij"
+      },
+      {
+        "id": "starters-5",
+        "en": "that said",
+        "fr": "cela dit",
+        "es": "dicho esto",
+        "it": "detto questo",
+        "nl": "dat gezegd hebbende"
+      },
+      {
+        "id": "starters-6",
+        "en": "at any rate",
+        "fr": "en tout cas",
+        "es": "de todas formas",
+        "it": "ad ogni modo",
+        "nl": "in ieder geval"
+      },
+      {
+        "id": "starters-7",
+        "en": "moving on",
+        "fr": "passons",
+        "es": "continuemos",
+        "it": "andiamo avanti",
+        "nl": "verdergaand"
+      },
+      {
+        "id": "starters-8",
+        "en": "long story short",
+        "fr": "pour faire court",
+        "es": "en pocas palabras",
+        "it": "per farla breve",
+        "nl": "kort gezegd"
+      },
+      {
+        "id": "starters-9",
+        "en": "for what it's worth",
+        "fr": "pour ce que ça vaut",
+        "es": "por si sirve de algo",
+        "it": "per quel che vale",
+        "nl": "voor wat het waard is"
+      },
+      {
+        "id": "starters-10",
+        "en": "all the same",
+        "fr": "quand même",
+        "es": "aun así",
+        "it": "nondimeno",
+        "nl": "desondanks"
+      },
+      {
+        "id": "starters-11",
+        "en": "come to think of it",
+        "fr": "à bien y penser",
+        "es": "ahora que lo pienso",
+        "it": "a pensarci bene",
+        "nl": "nu ik erover nadenk"
+      },
+      {
+        "id": "starters-12",
+        "en": "by the way",
+        "fr": "au fait",
+        "es": "por cierto",
+        "it": "a proposito",
+        "nl": "trouwens"
+      },
+      {
+        "id": "starters-13",
+        "en": "on second thought",
+        "fr": "à la réflexion",
+        "es": "pensándolo bien",
+        "it": "ripensandoci",
+        "nl": "bij nader inzien"
+      },
+      {
+        "id": "starters-14",
+        "en": "either way",
+        "fr": "dans les deux cas",
+        "es": "de cualquier manera",
+        "it": "in entrambi i casi",
+        "nl": "in beide gevallen"
+      },
+      {
+        "id": "starters-15",
+        "en": "having said that",
+        "fr": "ceci étant dit",
+        "es": "habiendo dicho eso",
+        "it": "ciò premesso",
+        "nl": "afgezien daarvan"
+      },
+      {
+        "id": "starters-16",
+        "en": "speaking of which",
+        "fr": "à ce propos",
+        "es": "hablando de eso",
+        "it": "parlando di questo",
+        "nl": "daarover gesproken"
+      },
+      {
+        "id": "starters-17",
+        "en": "in any case",
+        "fr": "dans tous les cas",
+        "es": "en todo caso",
+        "it": "in ogni caso",
+        "nl": "in elk geval"
+      },
+      {
+        "id": "starters-18",
+        "en": "for better or worse",
+        "fr": "pour le meilleur ou pour le pire",
+        "es": "para bien o para mal",
+        "it": "nel bene o nel male",
+        "nl": "ten goede of ten kwade"
+      },
+      {
+        "id": "starters-19",
+        "en": "besides",
+        "fr": "en plus",
+        "es": "además",
+        "it": "inoltre",
+        "nl": "bovendien"
+      },
+      {
+        "id": "starters-20",
+        "en": "in other words",
+        "fr": "c'est-à-dire",
+        "es": "o sea",
+        "it": "cioè",
+        "nl": "oftewel"
+      },
+      {
+        "id": "starters-21",
+        "en": "apparently",
+        "fr": "apparemment",
+        "es": "por lo visto",
+        "it": "a quanto pare",
+        "nl": "blijkbaar"
+      }
+    ]
   }
 ]

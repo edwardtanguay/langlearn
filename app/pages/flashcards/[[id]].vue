@@ -1,0 +1,1814 @@
+<script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { languageColors } from '~/utils/languageColors'
+
+useHead({
+  title: 'LangLearn - Flashcards Practice',
+  meta: [
+    { name: 'description', content: 'Practice and test your language flashcards with high-precision ranking.' }
+  ]
+})
+
+const route = useRoute()
+const router = useRouter()
+const fromPronunciation = ref(route.query.from === 'pronunciation')
+
+const config = useRuntimeConfig()
+const isBypass = config.public.bypassAuth
+
+const auth = !isBypass ? useAuth() : null
+const loggedIn = computed(() => isBypass ? true : (auth?.loggedIn ?? false))
+const user = computed(() => isBypass ? { given_name: 'Local', family_name: 'Developer', email: 'local.developer@example.com', picture: null } : (auth?.user ?? null))
+
+interface Tag {
+  id: string
+  abbreviation: string
+  description?: string
+  _count?: {
+    flashcards: number
+  }
+}
+
+interface FlashcardTag {
+  tag: Tag
+}
+
+interface Flashcard {
+  id: string
+  front: string
+  back: string
+  frontLanguage: string
+  backLanguage: string
+  pronunciation?: string | null
+  status: string
+  rank: number
+  memoryHook: string | null
+  nextTestTime?: string | Date | null
+  createdAt?: string | Date | null
+  tags: FlashcardTag[]
+}
+
+// State
+const searchQuery = ref('')
+const isSearching = ref(false)
+const testQueue = ref<Flashcard[]>([])
+const nextPrefetchedCards = ref<Flashcard[]>([])
+const searchResults = ref<Flashcard[]>([])
+const allTags = ref<Tag[]>([])
+const isLoadingQueue = ref(true)
+const isSearchPending = ref(false)
+const isInitialLoading = useState('isInitialLoading', () => true)
+
+// Batch Testing State & Strategies
+type StrategyId = 'most_important' | 'last_imported' | 'review_learned' | 'phrases_a_de'
+
+interface BatchSlot {
+  id: string
+  slotIndex: number
+  unsuccessfulCount: number
+  status: 'untested' | 'testing' | 'learned' | 'parked' | 'deleted'
+  language?: string
+}
+
+interface BatchLanguageItem {
+  code: string
+  name: string
+  count: number
+  isPartial?: boolean
+}
+
+const batchSlots = ref<BatchSlot[]>([])
+const selectedStrategy = ref<StrategyId>('last_imported')
+const selectedLanguage = ref<string>('all')
+const availableLanguages = ref<BatchLanguageItem[]>([])
+const isLoadingLanguages = ref(true)
+const userGroupSize = ref(7)
+const totalAvailableMatching = ref(0)
+const learnedInBatchCount = ref(0)
+const totalInBatch = ref(7)
+const isBatchComplete = ref(false)
+const currentBatchAllCards = ref<Flashcard[]>([])
+const lastCompletedBatchCardIds = ref<string[]>([])
+let activeBatchRequestId = 0
+
+// Random activities & Daily goal
+const allActivities = [
+  { title: 'Language Basics', path: '/activities/language-basics' },
+  { title: 'Pronunciation Practice', path: '/activities/pronunciation-practice' },
+  { title: 'Correction Journal', path: '/activities/correction-journal' },
+  { title: 'Drag/Drop Highlighted Words', path: '/activities/starred-texts' },
+  { title: 'Learn à/de', path: '/activities/learn-a-de' },
+  { title: 'Gemini Quiz Prompts', path: '/activities/gemini-quiz' }
+]
+const currentBatchRandomActivities = ref<Array<{ title: string; path: string }>>([])
+const batchCompleteRandomActivities = ref<Array<{ title: string; path: string }>>([])
+const userDailyGoal = ref(50)
+
+function pickRandomActivitiesForBatch() {
+  const shuffled = [...allActivities].sort(() => Math.random() - 0.5)
+  currentBatchRandomActivities.value = shuffled.slice(0, 3)
+  batchCompleteRandomActivities.value = [shuffled[0]!, shuffled[1]!]
+}
+
+const hasReachedDailyGoal = computed(() => {
+  const reviewed = cardStats.value?.todayReviewedCount ?? 0
+  return reviewed >= userDailyGoal.value
+})
+
+const strategyOptions = [
+  { id: 'last_imported', label: 'Newly imported untested' },
+  { id: 'most_important', label: 'Most important unlearned' },
+  { id: 'review_learned', label: 'Most important learned' },
+  { id: 'phrases_a_de', label: 'Phrases with à/de' }
+] as const
+
+const currentStrategyExplainer = computed(() => {
+  switch (selectedStrategy.value) {
+    case 'last_imported':
+      return "Testing newly imported cards that haven't been tested yet."
+    case 'most_important':
+      return "Practicing your highest-ranked unlearned flashcards."
+    case 'review_learned':
+      return "Refreshing flashcards you previously marked as learned."
+    case 'phrases_a_de':
+      return "Targeted practice on phrases containing prepositions à and de."
+    default:
+      return "Practicing your flashcards in focused batches."
+  }
+})
+
+// Search & Controls toggle: collapsed by default on both desktop and mobile
+const showControls = ref(false)
+
+function formatImportDate(dateStr?: string | Date | null): string {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return ''
+
+  const now = new Date()
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+  const dStart = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()
+  const diffDays = Math.round((todayStart - dStart) / (1000 * 60 * 60 * 24))
+
+  if (diffDays <= 0) {
+    return 'imported today'
+  }
+  if (diffDays === 1) {
+    return 'imported yesterday'
+  }
+  if (diffDays <= 7) {
+    return `imported ${diffDays} days ago`
+  }
+
+  const isCurrentYear = d.getFullYear() === now.getFullYear()
+  const dateFormatted = d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    ...(isCurrentYear ? {} : { year: 'numeric' })
+  })
+  return `imported ${dateFormatted}`
+}
+
+const cardStatusLabel = computed(() => {
+  if (!currentCard.value) return ''
+  const slot = batchSlots.value.find(s => s.id === currentCard.value?.id)
+  let label = ''
+  if (slot) {
+    if (slot.status === 'learned') label = 'learned'
+    else if (slot.status === 'testing') label = 'currently testing'
+    else if (slot.status === 'parked') label = 'parked'
+    else if (slot.status === 'untested') label = 'untested'
+  }
+  if (!label) {
+    const st = currentCard.value.status?.toLowerCase() || ''
+    if (st === 'learned') label = 'learned'
+    else if (st === 'learning') label = 'currently testing'
+    else label = st
+  }
+  return label.toUpperCase()
+})
+
+function handleCardFlip() {
+  if (isEditing.value) return
+  const selection = window.getSelection()?.toString().trim()
+  if (selection) return
+  isFlipped.value = !isFlipped.value
+}
+
+function toggleFirstLetter(text: string): string {
+  if (!text) return text
+  const match = text.match(/\p{L}/u)
+  if (!match || match.index === undefined) return text
+  const idx = match.index
+  const char = text[idx]
+  if (!char) return text
+  const isUpper = char === char.toUpperCase() && char !== char.toLowerCase()
+  const toggled = isUpper ? char.toLowerCase() : char.toUpperCase()
+  return text.slice(0, idx) + toggled + text.slice(idx + 1)
+}
+
+const frontActionMessage = ref<string | null>(null)
+let frontActionTimeout: ReturnType<typeof setTimeout> | null = null
+
+function showFrontActionNote(msg: string) {
+  frontActionMessage.value = msg
+  if (frontActionTimeout) clearTimeout(frontActionTimeout)
+  frontActionTimeout = setTimeout(() => {
+    frontActionMessage.value = null
+  }, 2000)
+}
+
+const backActionMessage = ref<string | null>(null)
+let backActionTimeout: ReturnType<typeof setTimeout> | null = null
+
+function showBackActionNote(msg: string) {
+  backActionMessage.value = msg
+  if (backActionTimeout) clearTimeout(backActionTimeout)
+  backActionTimeout = setTimeout(() => {
+    backActionMessage.value = null
+  }, 2000)
+}
+
+function cleanPunctuationFromEnds(text: string): string {
+  if (!text) return ''
+  return text.replace(/^[\s\p{P}\p{S}]+|[\s\p{P}\p{S}]+$/gu, '').trim()
+}
+
+async function cleanCurrentCardFront() {
+  if (!currentCard.value) return
+  showFrontActionNote('removes punctuation on either side of text')
+  const original = currentCard.value.front
+  const cleaned = cleanPunctuationFromEnds(original)
+  if (cleaned === original) {
+    return
+  }
+  currentCard.value.front = cleaned
+  editFront.value = cleaned
+
+  try {
+    await $fetch(`/api/flashcards/${currentCard.value.id}`, {
+      method: 'PUT',
+      body: {
+        front: currentCard.value.front,
+        back: currentCard.value.back,
+        pronunciation: currentCard.value.pronunciation,
+        memoryHook: currentCard.value.memoryHook
+      }
+    })
+  } catch (err) {
+    console.error('Failed to save cleaned front text:', err)
+  }
+}
+
+async function toggleCurrentCardFirstLetter() {
+  if (!currentCard.value) return
+  if (!isFlipped.value) {
+    const updated = toggleFirstLetter(currentCard.value.front)
+    currentCard.value.front = updated
+    editFront.value = updated
+    showFrontActionNote('toggles first letter lowercase/uppercase')
+  } else {
+    const updated = toggleFirstLetter(currentCard.value.back)
+    currentCard.value.back = updated
+    editBack.value = updated
+    showBackActionNote('toggles first letter lowercase/uppercase')
+  }
+  try {
+    await $fetch(`/api/flashcards/${currentCard.value.id}`, {
+      method: 'PUT',
+      body: {
+        front: currentCard.value.front,
+        back: currentCard.value.back,
+        pronunciation: currentCard.value.pronunciation,
+        memoryHook: currentCard.value.memoryHook
+      }
+    })
+  } catch (err) {
+    console.error('Failed to toggle first letter:', err)
+  }
+}
+
+function handleOpenExamplesFromWord(word: string) {
+  if (!currentCard.value) return
+  const targetCode = currentCard.value.backLanguage || 'fr'
+  const sourceCode = currentCard.value.frontLanguage || 'en'
+  const targetName = (languageNames[targetCode] || targetCode).toLowerCase()
+  const sourceName = (languageNames[sourceCode] || sourceCode).toLowerCase()
+  const query = `create 3 examples in ${targetName} with "${word}", give translation in ${sourceName}, but all explanations and meta-language is in ${targetName}`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
+
+const isLanguageDropdownOpen = ref(false)
+const languageDropdownRef = ref<HTMLElement | null>(null)
+
+const isStrategyDropdownOpen = ref(false)
+const strategyDropdownRef = ref<HTMLElement | null>(null)
+
+function toggleLanguageDropdown() {
+  if (isLoadingLanguages.value) return
+  isStrategyDropdownOpen.value = false
+  isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value
+}
+
+function selectLanguageOption(code: string) {
+  selectedLanguage.value = code
+  isLanguageDropdownOpen.value = false
+  onLanguageChange()
+}
+
+function toggleStrategyDropdown() {
+  isLanguageDropdownOpen.value = false
+  isStrategyDropdownOpen.value = !isStrategyDropdownOpen.value
+}
+
+function selectStrategyOption(strategyId: StrategyId) {
+  selectedStrategy.value = strategyId
+  isStrategyDropdownOpen.value = false
+  onStrategyChange()
+}
+
+const selectedStrategyLabel = computed(() => {
+  const item = strategyOptions.find(opt => opt.id === selectedStrategy.value)
+  return item ? item.label : 'Newly imported untested'
+})
+
+function handleClickOutsideDropdowns(e: MouseEvent) {
+  const target = e.target as Node
+  if (languageDropdownRef.value && !languageDropdownRef.value.contains(target)) {
+    isLanguageDropdownOpen.value = false
+  }
+  if (strategyDropdownRef.value && !strategyDropdownRef.value.contains(target)) {
+    isStrategyDropdownOpen.value = false
+  }
+}
+
+const selectedLanguageLabel = computed(() => {
+  if (selectedLanguage.value === 'all') {
+    const countStr = totalAvailableMatching.value < userGroupSize.value
+      ? `${totalAvailableMatching.value} of ${userGroupSize.value} cards`
+      : `${totalAvailableMatching.value}`
+    return `All languages (${countStr})`
+  }
+  const item = availableLanguages.value.find(l => l.code === selectedLanguage.value)
+  if (!item) return 'All languages'
+  const countStr = item.isPartial ? `${item.count} of ${userGroupSize.value} cards` : `${item.count}`
+  return `${item.name} (${countStr})`
+})
+
+const languageNames: Record<string, string> = {
+  en: 'ENGLISH',
+  fr: 'FRENCH',
+  de: 'GERMAN',
+  es: 'SPANISH',
+  it: 'ITALIAN',
+  nl: 'DUTCH',
+  pl: 'POLISH',
+  ru: 'RUSSIAN',
+  is: 'ICELANDIC',
+  da: 'DANISH',
+  el: 'GREEK'
+}
+
+const currentQueueIndex = ref(0)
+const isFlipped = ref(false)
+const sliderValue = ref(2.5)
+const cardAnimState = ref<'idle' | 'exiting' | 'entering'>('idle')
+const isEditing = ref(false)
+const editFront = ref('')
+const editBack = ref('')
+const editPronunciation = ref('')
+const editMemoryHook = ref('')
+const isSavingEdit = ref(false)
+const isAddingTag = ref(false)
+const newTagValue = ref('')
+let rankDebounceTimer: ReturnType<typeof setTimeout> | null = null
+let tagsDebounceTimer: ReturnType<typeof setTimeout> | null = null
+let searchDebounceTimer: ReturnType<typeof setTimeout> | null = null
+let headerDebounceTimer: ReturnType<typeof setTimeout> | null = null
+let currentSearchId = 0
+
+const savingFields = ref<Record<string, boolean>>({})
+
+// Fetch all available tags
+async function fetchTags() {
+  try {
+    allTags.value = await $fetch<Tag[]>('/api/tags')
+  } catch (err) {
+    console.error('Failed to load tags:', err)
+  }
+}
+
+// Fetch available languages that have >= userGroupSize cards for the active strategy
+async function fetchBatchLanguages(reqId?: number) {
+  const thisReqId = reqId ?? activeBatchRequestId
+  isLoadingLanguages.value = true
+  try {
+    const res = await $fetch<{
+      languages: BatchLanguageItem[]
+      threshold: number
+      totalAvailable: number
+    }>(`/api/flashcards/batch-languages?strategy=${selectedStrategy.value}`)
+
+    if (thisReqId !== activeBatchRequestId) return
+
+    availableLanguages.value = res.languages || []
+    if (res.threshold) userGroupSize.value = res.threshold === 10 ? 7 : res.threshold
+    totalAvailableMatching.value = res.totalAvailable || 0
+
+    // If current selected language is not in available languages and not 'all', fallback to 'all'
+    if (selectedLanguage.value !== 'all' && !availableLanguages.value.some(l => l.code === selectedLanguage.value)) {
+      selectedLanguage.value = 'all'
+      fetchBatch(false, true, thisReqId)
+    }
+  } catch (err) {
+    if (thisReqId === activeBatchRequestId) {
+      console.error('Failed to load batch languages:', err)
+    }
+  } finally {
+    if (thisReqId === activeBatchRequestId) {
+      isLoadingLanguages.value = false
+    }
+  }
+}
+
+// Fetch active batch of flashcards
+async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boolean = false, reqId?: number) {
+  const thisReqId = reqId ?? ++activeBatchRequestId
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  pickRandomActivitiesForBatch()
+
+  const minDelay = new Promise(resolve => setTimeout(resolve, 150))
+  try {
+    const cardIdFromRoute = !ignoreRouteId ? (route.params.id as string | undefined) : undefined
+
+    const excludeParam = excludePrevious && lastCompletedBatchCardIds.value.length > 0
+      ? `&excludeIds=${encodeURIComponent(lastCompletedBatchCardIds.value.join(','))}`
+      : ''
+    const langParam = selectedLanguage.value && selectedLanguage.value !== 'all'
+      ? `&language=${encodeURIComponent(selectedLanguage.value)}`
+      : ''
+
+    const batchUrl = `/api/flashcards/batch?strategy=${selectedStrategy.value}${langParam}${excludeParam}`
+
+    if (cardIdFromRoute) {
+      try {
+        const [specificCard, restQueue] = await Promise.all([
+          $fetch<Flashcard>(`/api/flashcards/${cardIdFromRoute}`),
+          $fetch<Flashcard[]>(batchUrl),
+          minDelay
+        ])
+        if (thisReqId !== activeBatchRequestId) return
+
+        // Always clean the address bar to /flashcards so future reloads pull the active batch cleanly
+        if (typeof window !== 'undefined' && window.history) {
+          window.history.replaceState(null, '', '/flashcards')
+        }
+
+        // Only pin specificCard if it matches the active strategy or arrived from pronunciation
+        const isEligibleForStrategy = specificCard && (
+          fromPronunciation.value || selectedStrategy.value !== 'last_imported' || (specificCard.status === 'LEARNING' && !specificCard.nextTestTime)
+        )
+
+        if (isEligibleForStrategy && specificCard.id) {
+          const otherCards = (restQueue || []).filter(c => c.id !== specificCard.id)
+          testQueue.value = [specificCard, ...otherCards]
+          currentBatchAllCards.value = [...testQueue.value]
+          batchSlots.value = testQueue.value.map((c, i) => ({
+            id: c.id,
+            language: c.backLanguage || c.frontLanguage || 'fr',
+            slotIndex: i,
+            unsuccessfulCount: 0,
+            status: 'untested'
+          }))
+          currentQueueIndex.value = 0
+          if (fromPronunciation.value) {
+            isFlipped.value = true
+          } else {
+            isFlipped.value = false
+          }
+          learnedInBatchCount.value = 0
+          totalInBatch.value = testQueue.value.length
+          sliderValue.value = specificCard.rank
+          if (testQueue.value.length > 0 && userGroupSize.value === 7) {
+            userGroupSize.value = testQueue.value.length
+          }
+          return
+        }
+      } catch (e) {
+        console.error('Failed to load specific card from permalink ID:', e)
+      }
+    }
+
+    const [results] = await Promise.all([
+      $fetch<Flashcard[]>(batchUrl),
+      minDelay
+    ])
+
+    if (thisReqId !== activeBatchRequestId) return
+
+    testQueue.value = results || []
+    currentBatchAllCards.value = [...testQueue.value]
+    batchSlots.value = (results || []).map((c, i) => ({
+      id: c.id,
+      language: c.backLanguage || c.frontLanguage || 'fr',
+      slotIndex: i,
+      unsuccessfulCount: 0,
+      status: 'untested'
+    }))
+    currentQueueIndex.value = 0
+    isFlipped.value = false
+    learnedInBatchCount.value = 0
+    totalInBatch.value = results ? results.length : 0
+
+    if (results && results.length > 0 && userGroupSize.value === 7) {
+      userGroupSize.value = results.length
+    }
+
+    const firstCard = testQueue.value[0]
+    if (firstCard) {
+      sliderValue.value = firstCard.rank
+    }
+  } catch (err) {
+    if (thisReqId === activeBatchRequestId) {
+      console.error('Failed to load flashcard batch:', err)
+    }
+  } finally {
+    if (thisReqId === activeBatchRequestId) {
+      isLoadingQueue.value = false
+    }
+  }
+}
+
+function triggerBatchCompletion() {
+  const allCompleted = batchSlots.value.length > 0 && batchSlots.value.every(s => s.status === 'learned' || s.status === 'parked' || s.status === 'deleted')
+  if (allCompleted) {
+    isBatchComplete.value = true
+    pickRandomActivitiesForBatch()
+  }
+}
+
+function handleSelectSlotCard(cardId: string) {
+  if (isBatchComplete.value) return
+  // If card is already in active testQueue, switch index to it
+  const idx = testQueue.value.findIndex(c => c.id === cardId)
+  if (idx !== -1) {
+    currentQueueIndex.value = idx
+    isFlipped.value = false
+    const card = testQueue.value[idx]
+    if (card) sliderValue.value = card.rank
+    return
+  }
+
+  // If card was removed because it was marked learned/parked/deleted, restore it to front of testQueue
+  const card = currentBatchAllCards.value.find(c => c.id === cardId)
+  if (card) {
+    testQueue.value.unshift(card)
+    currentQueueIndex.value = 0
+    isFlipped.value = false
+    sliderValue.value = card.rank
+  }
+}
+
+function startNextBatch() {
+  fetchBatch(true)
+}
+
+async function onStrategyChange() {
+  const reqId = ++activeBatchRequestId
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  learnedInBatchCount.value = 0
+  batchSlots.value = []
+
+  // Disregard previous URL permalink so new mode cleanly starts from top card
+  if (typeof window !== 'undefined' && window.history) {
+    window.history.replaceState(null, '', '/flashcards')
+  }
+
+  await Promise.all([
+    fetchBatchLanguages(reqId),
+    fetchBatch(false, true, reqId)
+  ])
+}
+
+async function onLanguageChange() {
+  const reqId = ++activeBatchRequestId
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  learnedInBatchCount.value = 0
+  batchSlots.value = []
+
+  if (typeof window !== 'undefined' && window.history) {
+    window.history.replaceState(null, '', '/flashcards')
+  }
+
+  await fetchBatch(false, true, reqId)
+}
+
+// Run search
+function handleSearch() {
+  const query = searchQuery.value.trim();
+  
+  if (!query) {
+    if (searchDebounceTimer) clearTimeout(searchDebounceTimer)
+    if (headerDebounceTimer) clearTimeout(headerDebounceTimer)
+    isSearching.value = false
+    isSearchPending.value = false
+    searchResults.value = []
+    return
+  }
+  
+  isSearching.value = true
+  isSearchPending.value = true
+  
+  if (searchDebounceTimer) clearTimeout(searchDebounceTimer)
+  if (headerDebounceTimer) clearTimeout(headerDebounceTimer)
+  
+  const reqId = ++currentSearchId;
+  let inactivityPassed = false;
+  let apiFinished = false;
+
+  const checkHeaderReady = () => {
+    if (inactivityPassed && apiFinished && reqId === currentSearchId) {
+      isSearchPending.value = false;
+    }
+  };
+  
+  searchDebounceTimer = setTimeout(async () => {
+    try {
+      const results = await $fetch<Flashcard[]>(`/api/flashcards/search?q=${encodeURIComponent(query)}`)
+      if (reqId === currentSearchId) {
+        searchResults.value = results.sort((a, b) => b.rank - a.rank)
+      }
+    } catch (err) {
+      if (reqId === currentSearchId) {
+        console.error('Failed to search cards:', err)
+      }
+    } finally {
+      if (reqId === currentSearchId) {
+        apiFinished = true;
+        checkHeaderReady();
+      }
+    }
+  }, 300) 
+
+  headerDebounceTimer = setTimeout(() => {
+    if (reqId === currentSearchId) {
+      inactivityPassed = true;
+      checkHeaderReady();
+    }
+  }, 2000)
+}
+
+// Active card computed properties
+const currentCard = computed<Flashcard | null>(() => {
+  if (isSearching.value) {
+    return null
+  }
+  if (testQueue.value.length === 0 || currentQueueIndex.value >= testQueue.value.length) {
+    return null
+  }
+  return testQueue.value[currentQueueIndex.value] ?? null
+})
+
+
+
+// Remove Tag
+function removeTag(tagAbbrev: string) {
+  if (!currentCard.value) return
+  currentCard.value.tags = currentCard.value.tags.filter(t => t.tag.abbreviation !== tagAbbrev)
+  debouncedSaveTags()
+}
+
+function hasTag(abbreviation: string) {
+  if (!currentCard.value) return false
+  return currentCard.value.tags.some(t => t.tag.abbreviation === abbreviation)
+}
+
+function toggleTag(tagAbbreviation: string) {
+  if (!currentCard.value) return
+  const currentTags = currentCard.value.tags.map(t => t.tag.abbreviation)
+  
+  if (currentTags.includes(tagAbbreviation)) {
+    currentCard.value.tags = currentCard.value.tags.filter(t => t.tag.abbreviation !== tagAbbreviation)
+  } else {
+    currentCard.value.tags = [
+      ...currentCard.value.tags,
+      { tag: { abbreviation: tagAbbreviation, name: tagAbbreviation, color: '#ccc' } } as any
+    ]
+  }
+  
+  debouncedSaveTags()
+}
+
+function stripAsterisks(text: string): string {
+  return text ? text.replace(/\*/g, '') : ''
+}
+
+function getHighlightedText(text: string): string {
+  if (!text) return ''
+  const match = text.match(/\*(.*?)\*/)
+  if (match && match[1] && match[1].trim()) {
+    return match[1].trim()
+  }
+  return stripAsterisks(text).trim()
+}
+
+function openAudio() {
+  if (!currentCard.value) return
+  const cleanBack = stripAsterisks(currentCard.value.back)
+  const url = `https://translate.google.com/?sl=${currentCard.value.backLanguage}&tl=${currentCard.value.frontLanguage}&text=${encodeURIComponent(cleanBack)}&op=translate`
+  window.open(url, '_blank')
+}
+
+const exampleTargetText = computed(() => {
+  if (!currentCard.value?.back) return ''
+  return getHighlightedText(currentCard.value.back)
+})
+
+const frontWordCount = computed(() => {
+  if (!currentCard.value?.front) return 0
+  return stripAsterisks(currentCard.value.front).trim().split(/\s+/).filter(Boolean).length
+})
+
+const backWordCount = computed(() => {
+  if (!exampleTargetText.value) return 0
+  return exampleTargetText.value.split(/\s+/).filter(Boolean).length
+})
+
+const hasMarkedWord = computed(() => {
+  const back = currentCard.value?.back || ''
+  return /\*[^*]+\*/.test(back)
+})
+
+const showExampleSentencesButton = computed(() => {
+  if (hasMarkedWord.value) return false
+  return (backWordCount.value >= 1 && backWordCount.value <= 2) || (frontWordCount.value >= 1 && frontWordCount.value <= 2)
+})
+
+const isFrenchCardWithVous = computed(() => {
+  if (!currentCard.value) return false
+  const lang = (currentCard.value.backLanguage || currentCard.value.frontLanguage || '').toLowerCase()
+  const back = currentCard.value.back || ''
+  return lang === 'fr' && /\bvous\b/i.test(back)
+})
+
+const verbMatch = computed(() => {
+  if (!currentCard.value?.back) return null
+  const match = currentCard.value.back.match(/<([^>]+)>/)
+  if (!match || !match[1]?.trim()) return null
+  return match[1].trim()
+})
+
+const cardLanguageCode = computed(() => {
+  if (!currentCard.value) return 'fr'
+  return (currentCard.value.backLanguage || currentCard.value.frontLanguage || 'fr').toLowerCase()
+})
+
+function openLawlessFrench(verb: string) {
+  const url = `https://www.lawlessfrench.com/verb-conjugations/${encodeURIComponent(verb.toLowerCase())}`
+  window.open(url, '_blank')
+}
+
+function openReversoConjugator(verb: string) {
+  const url = `https://conjugator.reverso.net/conjugation-french-verb-${encodeURIComponent(verb.toLowerCase())}.html`
+  window.open(url, '_blank')
+}
+
+function openGenericVerbConjugation(verb: string) {
+  const langName = languageNames[cardLanguageCode.value] || cardLanguageCode.value
+  const query = `conjugate the ${langName} verb "${verb}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
+
+function openExampleSentences() {
+  if (!currentCard.value) return
+  const targetText = exampleTargetText.value
+  const targetCode = currentCard.value.backLanguage || 'fr'
+  const sourceCode = currentCard.value.frontLanguage || 'en'
+  const targetName = (languageNames[targetCode] || targetCode).toLowerCase()
+  const sourceName = (languageNames[sourceCode] || sourceCode).toLowerCase()
+  const query = `create 3 examples in ${targetName} with "${targetText}", give translation in ${sourceName}, but all explanations and meta-language is in ${targetName}`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
+
+function openVousToTuSearch() {
+  if (!currentCard.value) return
+  const cleanBack = stripAsterisks(currentCard.value.back)
+  const query = `convert "vous" to "tu" for the following French phrase: "${cleanBack}"`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
+
+// Debounced rank save — silent, no activity log
+function debouncedSaveRank() {
+  if (rankDebounceTimer) clearTimeout(rankDebounceTimer)
+  rankDebounceTimer = setTimeout(async () => {
+    if (!currentCard.value) return
+    const originalRank = currentCard.value.rank
+    const newRank = parseFloat(sliderValue.value.toFixed(5))
+    currentCard.value.rank = newRank
+    try {
+      await $fetch(`/api/flashcards/${currentCard.value.id}/rank`, {
+        method: 'PATCH',
+        body: { rank: newRank }
+      })
+    } catch (err) {
+      console.error('Failed to save rank:', err)
+      if (currentCard.value) {
+        currentCard.value.rank = originalRank
+        sliderValue.value = originalRank
+      }
+    }
+  }, 700)
+}
+
+// Card action — logs activity, updates batch rotation, slides card out
+function markAction(actionTaken: string, newStatus?: string) {
+  if (!currentCard.value) return
+  const cardId = currentCard.value.id
+
+  const slot = batchSlots.value.find(s => s.id === cardId)
+  const isFirstActionOnCard = slot ? (slot.status === 'untested' && slot.unsuccessfulCount === 0) : true
+
+  if (slot) {
+    if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
+      slot.status = 'testing'
+    } else if (actionTaken === 'MARKED_AS_LEARNED') {
+      slot.status = 'learned'
+    } else if (actionTaken === 'MARKED_AS_PARKED') {
+      slot.status = 'parked'
+    } else if (actionTaken === 'MARKED_AS_DELETED') {
+      slot.status = 'deleted'
+    }
+  }
+
+  let shouldDecrement = false
+  if (selectedStrategy.value === 'last_imported') {
+    // In "Imported but not yet tested", a card leaves the untested pool on its very first interaction
+    // (whether Keep Testing, Learned, Parked, or Deleted)
+    if (isFirstActionOnCard) {
+      shouldDecrement = true
+    }
+  } else {
+    // In other strategies, only Learned, Parked, or Deleted permanently remove it from the active pool
+    if (['MARKED_AS_LEARNED', 'MARKED_AS_PARKED', 'MARKED_AS_DELETED'].includes(actionTaken)) {
+      shouldDecrement = true
+    }
+  }
+
+  if (shouldDecrement) {
+    if (totalAvailableMatching.value > 0) {
+      totalAvailableMatching.value--
+    }
+    const cardLang = (currentCard.value.backLanguage || currentCard.value.frontLanguage || '').toLowerCase()
+    const langItem = availableLanguages.value.find(l => l.code === cardLang)
+    if (langItem && langItem.count > 0) {
+      langItem.count--
+      langItem.isPartial = langItem.count < userGroupSize.value
+    }
+  }
+
+  if (cardStats.value) {
+    if (cardStats.value.readyCount > 0) {
+      cardStats.value.readyCount--
+    }
+    cardStats.value.waitingCount++
+    if (cardStats.value.todayReviewedCount !== undefined) {
+      cardStats.value.todayReviewedCount++
+    }
+    if (actionTaken === 'MARKED_AS_LEARNED' && cardStats.value.todayCorrectCount !== undefined) {
+      cardStats.value.todayCorrectCount++
+    }
+  }
+
+  cardAnimState.value = 'exiting'
+
+  setTimeout(() => {
+    const currentSlotIndex = slot ? slot.slotIndex : 0
+
+    if (actionTaken === 'MARKED_AS_KEEP_TESTING') {
+      if (slot) {
+        slot.unsuccessfulCount++
+      }
+    } else {
+      // Learned, Parked, or Deleted: remove card from active batch
+      const removeIdx = testQueue.value.findIndex(c => c.id === cardId)
+      if (removeIdx !== -1) {
+        const [removedCard] = testQueue.value.splice(removeIdx, 1)
+        if (removedCard) {
+          lastCompletedBatchCardIds.value.push(removedCard.id)
+        }
+      }
+      learnedInBatchCount.value++
+    }
+
+    isFlipped.value = false
+
+    // Check if batch is complete
+    const allCompleted = batchSlots.value.length > 0 && batchSlots.value.every(s => ['learned', 'parked', 'deleted'].includes(s.status))
+    if (allCompleted) {
+      cardAnimState.value = 'idle'
+      triggerBatchCompletion()
+      return
+    }
+
+    // Determine the next card to test:
+    // First, look for an unfinished slot ahead of currentSlotIndex in slot order
+    let nextSlot = batchSlots.value.find(s => s.slotIndex > currentSlotIndex && (s.status === 'untested' || s.status === 'testing'))
+    // If reached end of the batch, wrap back to the first unfinished slot in the batch (starting from slot 0 / box 1)
+    if (!nextSlot) {
+      nextSlot = batchSlots.value.find(s => s.status === 'untested' || s.status === 'testing')
+    }
+
+    if (nextSlot) {
+      let targetIndex = testQueue.value.findIndex(c => c.id === nextSlot!.id)
+      if (targetIndex === -1) {
+        const cardObj = currentBatchAllCards.value.find(c => c.id === nextSlot!.id)
+        if (cardObj) {
+          testQueue.value.push(cardObj)
+          targetIndex = testQueue.value.length - 1
+        }
+      }
+
+      if (targetIndex !== -1) {
+        currentQueueIndex.value = targetIndex
+        const nextCard = testQueue.value[currentQueueIndex.value]
+        if (nextCard) {
+          sliderValue.value = nextCard.rank
+        }
+      }
+    }
+
+    cardAnimState.value = 'entering'
+    setTimeout(() => { cardAnimState.value = 'idle' }, 220)
+  }, 200)
+
+  $fetch(`/api/flashcards/${cardId}/action`, {
+    method: 'POST',
+    body: { actionTaken, ...(newStatus ? { status: newStatus } : {}) }
+  }).then(() => {
+    fetchCardStats()
+    // Silent sync of batch language counts
+    $fetch<{
+      languages: BatchLanguageItem[]
+      threshold: number
+      totalAvailable: number
+    }>(`/api/flashcards/batch-languages?strategy=${selectedStrategy.value}`).then((res) => {
+      if (res && !isLoadingLanguages.value) {
+        availableLanguages.value = res.languages || []
+        totalAvailableMatching.value = res.totalAvailable || 0
+      }
+    }).catch(() => {})
+  }).catch((err) => {
+    console.error('Failed to record action:', err)
+  })
+}
+
+function nextCard() {
+  isFlipped.value = false
+  isEditing.value = false
+  isAddingTag.value = false
+  newTagValue.value = ''
+  currentQueueIndex.value++
+  if (currentCard.value) {
+    sliderValue.value = currentCard.value.rank
+  }
+}
+
+// Inline edit form
+function startEdit() {
+  if (!currentCard.value) return
+  editFront.value = currentCard.value.front
+  editBack.value = currentCard.value.back
+  editPronunciation.value = currentCard.value.pronunciation || ''
+  editMemoryHook.value = currentCard.value.memoryHook || ''
+  isEditing.value = true
+}
+
+function cancelEdit() {
+  isEditing.value = false
+}
+
+async function saveEdit() {
+  if (!currentCard.value || isSavingEdit.value) return
+  
+  const originalFront = currentCard.value.front
+  const originalBack = currentCard.value.back
+  const originalPronunciation = currentCard.value.pronunciation
+  const originalMemoryHook = currentCard.value.memoryHook
+  
+  const newFront = editFront.value.trim().replace(/\s+/g, ' ')
+  const newBack = editBack.value.trim().replace(/\s+/g, ' ')
+  const newPron = editPronunciation.value.trim().replace(/\s+/g, ' ') || null
+  const newMemoryHook = editMemoryHook.value.trim().replace(/\s+/g, ' ') || null
+
+  editFront.value = newFront
+  editBack.value = newBack
+  editPronunciation.value = newPron || ''
+  editMemoryHook.value = newMemoryHook || ''
+
+  currentCard.value.front = newFront
+  currentCard.value.back = newBack
+  currentCard.value.pronunciation = newPron
+  currentCard.value.memoryHook = newMemoryHook
+  isEditing.value = false
+
+  try {
+    await $fetch(`/api/flashcards/${currentCard.value.id}`, {
+      method: 'PUT',
+      body: {
+        front: newFront,
+        back: newBack,
+        pronunciation: newPron,
+        memoryHook: newMemoryHook
+      }
+    })
+  } catch (err) {
+    console.error('Failed to save edit:', err)
+    if (currentCard.value) {
+      currentCard.value.front = originalFront
+      currentCard.value.back = originalBack
+      currentCard.value.pronunciation = originalPronunciation
+      currentCard.value.memoryHook = originalMemoryHook
+      isEditing.value = true
+    }
+  }
+}
+
+async function handleUpdatePhrase(newPhrase: string) {
+  if (!currentCard.value) return
+  currentCard.value.back = newPhrase
+  editBack.value = newPhrase
+  try {
+    await $fetch(`/api/flashcards/${currentCard.value.id}`, {
+      method: 'PUT',
+      body: {
+        front: currentCard.value.front,
+        back: newPhrase,
+        pronunciation: currentCard.value.pronunciation,
+        memoryHook: currentCard.value.memoryHook
+      }
+    })
+  } catch (err) {
+    console.error('Failed to update flashcard phrase highlight:', err)
+  }
+}
+
+function submitNewTag() {
+  const val = newTagValue.value.trim().toLowerCase()
+  isAddingTag.value = false
+  newTagValue.value = ''
+  if (!val || !currentCard.value) return
+
+  const currentTags = currentCard.value.tags.map(t => t.tag.abbreviation)
+  
+  if (!currentTags.includes(val)) {
+    currentCard.value.tags = [
+      ...currentCard.value.tags,
+      { tag: { abbreviation: val, name: val, color: '#ccc' } } as any
+    ]
+    
+    if (!allTags.value.some(t => t.abbreviation === val)) {
+      allTags.value = [...allTags.value, { id: 'temp-' + Date.now(), abbreviation: val }]
+    }
+
+    debouncedSaveTags()
+  }
+}
+
+let tagRequestId = 0
+
+function debouncedSaveTags() {
+  if (tagsDebounceTimer) clearTimeout(tagsDebounceTimer)
+  
+  tagsDebounceTimer = setTimeout(async () => {
+    const card = currentCard.value
+    if (!card) return
+    
+    const currentTags = card.tags.map(t => t.tag.abbreviation)
+    const cardId = card.id
+    
+    const reqId = ++tagRequestId
+    
+    try {
+      const response: any = await $fetch(`/api/flashcards/${cardId}/tags`, {
+        method: 'POST',
+        body: { tags: currentTags }
+      })
+      
+      if (reqId === tagRequestId) {
+        if (response && response.tags && currentCard.value?.id === cardId) {
+          currentCard.value.tags = response.tags
+        }
+        fetchTags()
+      }
+    } catch (err) {
+      console.error('Failed to save tags:', err)
+    }
+  }, 500)
+}
+
+async function handleSelectCard(card: Flashcard) {
+  try {
+    const copyResult = await $fetch<Flashcard>(`/api/flashcards/${card.id}/copy`, {
+      method: 'POST'
+    })
+    
+    testQueue.value = [copyResult, ...testQueue.value.filter(c => c.id !== copyResult.id)]
+    if (!batchSlots.value.some(s => s.id === copyResult.id)) {
+      batchSlots.value = [
+        { id: copyResult.id, language: copyResult.backLanguage || copyResult.frontLanguage || 'fr', slotIndex: 0, unsuccessfulCount: 0, status: 'untested' as const },
+        ...batchSlots.value
+      ].map((s, idx) => ({ ...s, slotIndex: idx }))
+    }
+    currentQueueIndex.value = 0
+    isFlipped.value = false
+    sliderValue.value = copyResult.rank
+    
+    isSearching.value = false
+    isSearchPending.value = false
+  } catch (err) {
+    console.error('Failed to copy/select flashcard:', err)
+  }
+}
+
+function handleGlobalKeyDown(event: KeyboardEvent) {
+  if (isSearching.value || !currentCard.value) return
+
+  const activeEl = document.activeElement
+  const isFocusedOnInput = activeEl && (
+    ['input', 'textarea', 'select'].includes(activeEl.tagName.toLowerCase()) ||
+    activeEl.hasAttribute('contenteditable')
+  )
+
+  if (isFocusedOnInput) return
+
+  if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+    if (isFlipped.value && !isEditing.value) {
+      event.preventDefault()
+      startEdit()
+    }
+    return
+  }
+
+  if (event.key === 'Enter' && !event.ctrlKey && !event.altKey && !event.shiftKey && !event.metaKey) {
+    if (!isEditing.value) {
+      event.preventDefault()
+      isFlipped.value = !isFlipped.value
+    } else {
+      event.preventDefault()
+      saveEdit()
+    }
+  }
+}
+
+interface CardStats {
+  readyCount: number
+  waitingCount: number
+  totalCount?: number
+  todayReviewedCount?: number
+  todayCorrectCount?: number
+  todayImportedCount?: number
+}
+
+const cardStats = useState<CardStats | null>('flashcardStats', () => null)
+
+async function fetchCardStats() {
+  try {
+    const headers = useRequestHeaders(['cookie'])
+    cardStats.value = await $fetch<CardStats>('/api/flashcards/stats', { headers })
+  } catch (err: any) {
+    if (err?.statusCode !== 401 && err?.status !== 401 && err?.response?.status !== 401) {
+      console.error('Failed to load card stats:', err)
+    }
+  }
+}
+
+watch(() => route.params.id, (newId) => {
+  if (newId) {
+    const reqId = ++activeBatchRequestId
+    fetchBatch(false, false, reqId)
+  }
+})
+
+async function fetchUserSettings() {
+  try {
+    const data: any = await $fetch('/api/user/me')
+    if (data?.dailyTakeGoal) {
+      userDailyGoal.value = data.dailyTakeGoal
+    }
+  } catch {
+    userDailyGoal.value = 50
+  }
+}
+
+onMounted(async () => {
+  window.addEventListener('keydown', handleGlobalKeyDown)
+  document.addEventListener('click', handleClickOutsideDropdowns)
+  if (loggedIn.value) {
+    try {
+      const reqId = ++activeBatchRequestId
+      await Promise.all([
+        fetchUserSettings(),
+        fetchTags(),
+        fetchCardStats(),
+        fetchBatchLanguages(reqId),
+        fetchBatch(false, false, reqId)
+      ])
+    } catch (err) {
+      console.error('Failed to initialize page data:', err)
+    } finally {
+      isInitialLoading.value = false
+    }
+  } else {
+    isInitialLoading.value = false
+  }
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleGlobalKeyDown)
+  document.removeEventListener('click', handleClickOutsideDropdowns)
+})
+</script>
+
+<template>
+  <div 
+    class="max-w-4xl mx-auto px-4 pt-0 pb-8 space-y-4 sm:space-y-8 transition-all duration-300"
+  >
+    <ClientOnly>
+      <!-- Logged In: Flashcards View -->
+      <div 
+        v-if="loggedIn"
+      >
+        <!-- Toggle Link for Search & Controls (Both desktop and mobile) -->
+        <div class="flex justify-center pt-0 pb-1">
+          <button
+            type="button"
+            @click="showControls = !showControls"
+            class="inline-flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors py-1 cursor-pointer"
+          >
+            <span>{{ showControls ? 'Hide panel' : 'Search & Filter' }}</span>
+            <svg
+              class="w-3.5 h-3.5 transition-transform duration-200"
+              :class="{ 'rotate-180': showControls }"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Unified Search & Controls Container with light outline -->
+        <div 
+          v-show="showControls"
+          class="max-w-lg mx-auto w-full bg-gray-100/80 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/70 rounded-2xl p-2.5 shadow-xs space-y-2 mb-2"
+        >
+          <SearchBox v-model="searchQuery" :stats="cardStats" @search="handleSearch" />
+
+          <div class="flex flex-col sm:flex-row gap-2">
+            <!-- Language Filter Dropdown -->
+            <div class="flex-1" ref="languageDropdownRef">
+              <div class="relative">
+                <button
+                  type="button"
+                  @click="toggleLanguageDropdown"
+                  :disabled="isLoadingLanguages"
+                  class="w-full flex items-center justify-between pl-3 pr-2.5 py-1.5 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer text-left transition-all"
+                >
+                  <!-- When loading, show All languages with subtle slow-spinning spinner -->
+                  <div v-if="isLoadingLanguages" class="flex items-center gap-2 min-w-0">
+                    <span class="truncate">All languages</span>
+                    <svg
+                      class="animate-spin w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0"
+                      style="animation-duration: 2.2s;"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                  </div>
+                  <!-- When loaded, show selected language label -->
+                  <span v-else class="truncate">
+                    {{ selectedLanguageLabel }}
+                  </span>
+
+                  <!-- Right chevron arrow -->
+                  <div class="text-gray-400 shrink-0 ml-1">
+                    <svg
+                      class="h-3.5 w-3.5 transition-transform duration-200"
+                      :class="{ 'rotate-180': isLanguageDropdownOpen }"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </button>
+
+                <!-- Custom Dropdown Menu -->
+                <div
+                  v-if="isLanguageDropdownOpen"
+                  class="absolute left-0 right-0 top-full mt-1.5 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/80 rounded-xl shadow-xl py-1 max-h-60 overflow-y-auto text-xs [color-scheme:light] dark:[color-scheme:dark]"
+                >
+                  <button
+                    type="button"
+                    @click="selectLanguageOption('all')"
+                    class="w-full text-left px-3 py-2 flex items-center justify-between transition-colors cursor-pointer"
+                    :class="selectedLanguage === 'all' ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                  >
+                    <span>All languages</span>
+                    <span class="text-gray-400 dark:text-gray-400 font-normal">
+                      {{ totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching }}
+                    </span>
+                  </button>
+                  <button
+                    v-for="lang in availableLanguages"
+                    :key="lang.code"
+                    type="button"
+                    @click="selectLanguageOption(lang.code)"
+                    class="w-full text-left px-3 py-2 flex items-center justify-between transition-colors cursor-pointer"
+                    :class="selectedLanguage === lang.code ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                  >
+                    <span>{{ lang.name }}</span>
+                    <span class="text-gray-400 dark:text-gray-400 font-normal">
+                      {{ lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count }}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Strategy / Mode Dropdown -->
+            <div class="flex-1" ref="strategyDropdownRef">
+              <div class="relative">
+                <button
+                  type="button"
+                  @click="toggleStrategyDropdown"
+                  class="w-full flex items-center justify-between pl-3 pr-2.5 py-1.5 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer text-left transition-all"
+                >
+                  <span class="truncate">
+                    {{ selectedStrategyLabel }}
+                  </span>
+
+                  <!-- Right chevron arrow -->
+                  <div class="text-gray-400 shrink-0 ml-1">
+                    <svg
+                      class="h-3.5 w-3.5 transition-transform duration-200"
+                      :class="{ 'rotate-180': isStrategyDropdownOpen }"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </button>
+
+                <!-- Custom Dropdown Menu -->
+                <div
+                  v-if="isStrategyDropdownOpen"
+                  class="absolute left-0 right-0 top-full mt-1.5 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/80 rounded-xl shadow-xl py-1 max-h-60 overflow-y-auto text-xs [color-scheme:light] dark:[color-scheme:dark]"
+                >
+                  <button
+                    v-for="opt in strategyOptions"
+                    :key="opt.id"
+                    type="button"
+                    @click="selectStrategyOption(opt.id)"
+                    class="w-full text-left px-3 py-2 flex items-center justify-between transition-colors cursor-pointer"
+                    :class="selectedStrategy === opt.id ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                  >
+                    <span>{{ opt.label }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Practice Area -->
+        <div v-if="!isSearching" class="mt-2 sm:mt-4 flex flex-col items-center w-full min-h-[290px] justify-start pt-0">
+          
+          <div class="w-full max-w-lg space-y-2.5 sm:space-y-4">
+            
+            <NuxtLink 
+              v-if="route.query.fromActivity && !isLoadingQueue && !isInitialLoading" 
+              :to="route.query.fromActivity === 'learn-a-de' ? '/activities/learn-a-de' : '/activities/starred-texts'"
+              class="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 hover:underline mb-1 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              <span>Back to {{ route.query.fromActivity === 'learn-a-de' ? 'Learn à / de' : 'Starred Texts' }} activity</span>
+            </NuxtLink>
+
+            <button 
+              v-else-if="searchQuery && !isLoadingQueue && !isInitialLoading && currentCard" 
+              @click="isSearching = true" 
+              class="flex items-center gap-1 text-sm font-semibold text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-200 hover:underline mb-1 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              Back to search results
+            </button>
+
+            <!-- Batch Progress Header -->
+            <BatchProgressHeader
+              v-if="batchSlots.length > 0"
+              :slots="batchSlots"
+              :active-card-id="currentCard?.id"
+              :is-batch-complete="isBatchComplete"
+              @select-slot="handleSelectSlotCard"
+            />
+
+            <!-- Return to Pronunciation Activity Link (if navigated from pronunciation) -->
+            <div v-if="fromPronunciation" class="w-full flex items-center justify-end pb-1">
+              <NuxtLink
+                :to="`/activities/pronunciation-practice${currentCard?.id ? '?cardId=' + currentCard.id : ''}`"
+                class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-950/80 dark:hover:bg-emerald-900 border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200 text-xs font-bold shadow-xs transition-all"
+              >
+                <span>return to pronunciation activity</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </NuxtLink>
+            </div>
+
+            <!-- Relative card wrapper of fixed height that crossfades loading state and card -->
+            <div class="relative w-full h-[215px] sm:h-[256px]">
+              <Transition name="fade-layout">
+                
+                <!-- Card Placeholder / Language Loader -->
+                <div v-if="isLoadingQueue || isInitialLoading" key="loading" class="absolute inset-0 z-20 flex items-center justify-center placeholder-card bg-gray-50/20 dark:bg-gray-950/10 rounded-3xl border border-transparent">
+                  <div class="flex items-center justify-center">
+                    <svg class="w-14 h-14 text-gray-400 dark:text-gray-600" viewBox="0 0 48 48" fill="none">
+                      <path d="M14 30C14 30 11 33 8 33C8 30 7 28 7 27C4.5 25 3 21.8 3 18C3 10.8 10.6 5 20 5C29.4 5 37 10.8 37 18C37 25.2 29.4 31 20 31C17.9 31 15.9 30.7 14 30Z" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="animate-bubble-left" />
+                      <path d="M34 33C32.1 33.7 30.1 34 28 34C18.6 34 11 28.2 11 21C11 20.7 11 20.3 11.1 20M41 21C43.5 23 45 26.2 45 30C45 33.8 43.5 37 41 39C41 40 40 42 37 45C37 42 34 39 34 39C32.1 39.7 30.1 40 28 40C22.4 40 17.5 38.3 14.7 35.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="animate-bubble-right" />
+                      <text x="16" y="21" font-size="10" font-family="system-ui, -apple-system, sans-serif" fill="currentColor" class="animate-text-a font-semibold">A</text>
+                      <text x="27" y="32" font-size="10" font-family="system-ui, -apple-system, sans-serif" fill="currentColor" class="animate-text-b font-semibold">文</text>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Active Flashcard Frame -->
+                <div v-else-if="currentCard" key="card" class="absolute inset-0 z-10 card-perspective">
+                  <div :class="[cardAnimState === 'exiting' ? 'card-exit' : cardAnimState === 'entering' ? 'card-enter' : '']" class="h-full w-full preserve-3d">
+
+                    <!-- Flashcard -->
+                    <div
+                      @click="handleCardFlip"
+                      class="relative h-full w-full preserve-3d card-flip-transition"
+                      :style="{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }"
+                      :class="[isEditing ? 'cursor-default' : 'cursor-pointer']"
+                    >
+                      <!-- Front Side -->
+                      <FlashcardFront 
+                        :class="[isFlipped ? 'pointer-events-none' : '']"
+                        :style="{ transform: 'translateZ(1px)' }"
+                        :current-card="currentCard" 
+                        :language-names="languageNames" 
+                        :language-colors="languageColors" 
+                        :is-flipped="isFlipped"
+                        :is-editing="isEditing"
+                        @open-examples="handleOpenExamplesFromWord"
+                      />
+
+                      <!-- Back Side -->
+                      <FlashcardBack 
+                        :class="[!isFlipped ? 'pointer-events-none' : '']"
+                        :style="{ transform: 'rotateY(180deg) translateZ(1px)' }"
+                        :current-card="currentCard" 
+                        :language-names="languageNames" 
+                        :language-colors="languageColors" 
+                        :is-flipped="isFlipped"
+                        :is-editing="isEditing" 
+                        :is-saving-edit="isSavingEdit" 
+                        v-model:editFront="editFront" 
+                        v-model:editBack="editBack" 
+                        v-model:editPronunciation="editPronunciation" 
+                        v-model:editMemoryHook="editMemoryHook" 
+                        @open-audio="openAudio" 
+                        @start-edit="startEdit" 
+                        @cancel-edit="cancelEdit" 
+                        @save-edit="saveEdit" 
+                        @open-examples="handleOpenExamplesFromWord"
+                      />
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Batch Complete Overlay -->
+                <div v-else-if="isBatchComplete" key="complete" class="absolute inset-0 z-15 flex flex-col items-center justify-center text-center p-6 bg-white dark:bg-gray-900 rounded-3xl border border-emerald-100 dark:border-emerald-900/40 shadow-xl space-y-3.5">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl shadow-inner">
+                    🎉
+                  </div>
+                  <div class="space-y-1">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Batch Complete!</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 max-w-xs">
+                      You've learned all {{ totalInBatch }} cards in this batch.
+                    </p>
+                  </div>
+                  <div class="pt-1 flex flex-col items-center gap-2.5 w-full max-w-xs">
+                    <button
+                      @click="startNextBatch"
+                      class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Test next batch</span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </button>
+
+                    <!-- Two random activity buttons -->
+                    <div v-if="batchCompleteRandomActivities.length >= 2" class="w-full grid grid-cols-2 gap-2">
+                      <NuxtLink
+                        v-for="act in batchCompleteRandomActivities"
+                        :key="act.path"
+                        :to="act.path"
+                        class="py-2 px-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-xl text-[11px] transition-colors truncate text-center shadow-xs"
+                      >
+                        {{ act.title }}
+                      </NuxtLink>
+                    </div>
+
+                    <NuxtLink
+                      to="/activities"
+                      class="text-xs text-gray-500 dark:text-gray-400 hover:text-amber-500 underline transition-colors pt-0.5 cursor-pointer"
+                    >
+                      Activities
+                    </NuxtLink>
+                  </div>
+                </div>
+
+                <!-- Practice Session Completed -->
+                <div v-else key="empty" class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-xl space-y-3">
+                  <span class="text-base font-semibold text-gray-700 dark:text-gray-300">No cards to test</span>
+                  <div class="flex flex-col items-center gap-2 text-xs">
+                    <NuxtLink to="/import" class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
+                      Import cards from Google Translate
+                    </NuxtLink>
+                    <span class="text-gray-400 dark:text-gray-500 cursor-not-allowed select-none">
+                      Import cards from other users
+                    </span>
+                    <button 
+                      type="button"
+                      @click="selectStrategyOption('review_learned')"
+                      class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium cursor-pointer"
+                    >
+                      Retake cards you have learned
+                    </button>
+                  </div>
+                </div>
+
+              </Transition>
+            </div>
+
+            <!-- Nuanced info outside bottom of card: import date (left) and status (right) -->
+            <div v-if="!isLoadingQueue && currentCard && !isBatchComplete" class="w-full flex items-center justify-between px-3 -mt-1 text-[10px] sm:text-[11px] text-gray-400/80 dark:text-gray-500 font-medium select-none">
+              <span class="tracking-wider uppercase">{{ formatImportDate(currentCard.createdAt) }}</span>
+              <span class="tracking-wider uppercase">{{ cardStatusLabel }}</span>
+            </div>
+
+            <!-- Front Card Actions Panel (Clean & First letter) inside dark panel -->
+            <div v-if="!isLoadingQueue && currentCard && !isFlipped && !isEditing && !isBatchComplete" class="w-full bg-gray-50 dark:bg-gray-950 p-2 sm:p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 space-y-1.5">
+              <div class="flex justify-center items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  @click.stop="cleanCurrentCardFront"
+                  class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer"
+                  title="Clean punctuation marks from both ends"
+                >
+                  Clean
+                </button>
+                <button
+                  type="button"
+                  @click.stop="toggleCurrentCardFirstLetter"
+                  class="px-4 sm:px-5 py-1.5 sm:py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/40 dark:hover:bg-gray-800/60 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 text-[10px] font-bold rounded-xl transition-all cursor-pointer"
+                  title="Toggle first letter between uppercase and lowercase"
+                >
+                  First letter
+                </button>
+              </div>
+
+              <!-- 2-second feedback note in yellow below buttons inside dark panel -->
+              <div v-if="frontActionMessage" class="w-full flex justify-center text-center text-xs font-mono text-yellow-500 dark:text-yellow-400 font-medium">
+                <span>({{ frontActionMessage }})</span>
+              </div>
+            </div>
+
+            <!-- Single compact panel — visible when card is flipped and not editing -->
+            <Transition name="fade-layout">
+              <div v-if="!isLoadingQueue && currentCard && isFlipped && !isEditing" class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-2 sm:p-3 space-y-2 sm:space-y-3">
+
+                <!-- Rank Slider Section -->
+                <FlashcardRankSlider v-model="sliderValue" @save-rank="debouncedSaveRank" />
+
+                <!-- Status buttons Section -->
+                <FlashcardStatusButtons :phrase="currentCard?.back" :action-note="backActionMessage" @action="markAction" @update-phrase="handleUpdatePhrase" @toggle-first-letter="toggleCurrentCardFirstLetter" />
+
+                <!-- Action Buttons Box (3 examples, convert vous to tu & verb conjugation) -->
+                <div v-if="showExampleSentencesButton || isFrenchCardWithVous || verbMatch" class="bg-gray-50 dark:bg-gray-950 p-2.5 rounded-xl border border-gray-100 dark:border-gray-800/60 flex flex-wrap gap-2 items-center justify-center">
+                  <button
+                    v-if="showExampleSentencesButton"
+                    @click.stop="openExampleSentences"
+                    class="text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 dark:border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  >
+                    <span>3 examples with "{{ exampleTargetText }}"</span>
+                    <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  </button>
+
+                  <button
+                    v-if="isFrenchCardWithVous"
+                    @click.stop="openVousToTuSearch"
+                    class="text-xs px-3 py-1.5 rounded-lg border border-amber-500/40 dark:border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    title="Search Google on converting vous to tu for this phrase"
+                  >
+                    <span>convert vous to tu</span>
+                    <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  </button>
+
+                  <!-- French Verb Conjugation Buttons -->
+                  <template v-if="verbMatch && cardLanguageCode === 'fr'">
+                    <button
+                      @click.stop="openLawlessFrench(verbMatch)"
+                      class="text-xs px-3 py-1.5 rounded-lg border border-blue-500/40 dark:border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-blue-800 dark:text-blue-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                      title="Lawless French Conjugation"
+                    >
+                      <img src="https://www.lawlessfrench.com/favicon.ico" class="w-4 h-4 rounded-xs" alt="Lawless French" />
+                      <span>Lawless: {{ verbMatch }}</span>
+                    </button>
+
+                    <button
+                      @click.stop="openReversoConjugator(verbMatch)"
+                      class="text-xs px-3 py-1.5 rounded-lg border border-indigo-500/40 dark:border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-800 dark:text-indigo-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                      title="Reverso Conjugator"
+                    >
+                      <img src="https://www.google.com/s2/favicons?domain=reverso.net&sz=32" class="w-4 h-4 rounded-xs" alt="Reverso" />
+                      <span>Reverso: {{ verbMatch }}</span>
+                    </button>
+                  </template>
+
+                  <!-- Other Languages Verb Conjugation Button -->
+                  <template v-else-if="verbMatch">
+                    <button
+                      @click.stop="openGenericVerbConjugation(verbMatch)"
+                      class="text-xs px-3 py-1.5 rounded-lg border border-emerald-500/40 dark:border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    >
+                      <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                      <span>conjugate {{ verbMatch }}</span>
+                    </button>
+                  </template>
+                </div>
+
+                <!-- Tags Section -->
+                <FlashcardTags 
+                  :all-tags="allTags" 
+                  :current-card="currentCard" 
+                  :saving-fields="savingFields" 
+                  v-model:is-adding-tag="isAddingTag" 
+                  v-model:new-tag-value="newTagValue" 
+                  @toggle-tag="toggleTag" 
+                  @submit-new-tag="submitNewTag" 
+                />
+
+              </div>
+            </Transition>
+
+            <!-- Random activity links after 50 cards tested -->
+            <div
+              v-if="hasReachedDailyGoal && currentBatchRandomActivities.length > 0 && !isBatchComplete"
+              class="w-full flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2.5 pt-3 pb-1 text-sm text-gray-400 dark:text-gray-400"
+            >
+              <template v-for="(act, idx) in currentBatchRandomActivities" :key="act.path">
+                <NuxtLink
+                  :to="act.path"
+                  class="underline text-gray-400 hover:text-gray-200 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                >
+                  {{ act.title }}
+                </NuxtLink>
+                <span v-if="idx < currentBatchRandomActivities.length - 1" class="hidden sm:inline text-gray-500 opacity-60">|</span>
+              </template>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Search Results View -->
+        <SearchResults 
+          v-else 
+          class="mt-4"
+          :search-results="searchResults" 
+          :is-search-pending="isSearchPending" 
+          :language-colors="languageColors"
+          @select-card="handleSelectCard" 
+        />
+
+      </div>
+
+      <!-- Logged Out: Welcome & Landing View -->
+      <WelcomeScreen v-else />
+
+    </ClientOnly>
+  </div>
+</template>
+
+<style scoped>
+.card-perspective {
+  perspective: 1200px;
+}
+.card-flip-transition {
+  transition: transform 0.18s cubic-bezier(0.2, 0.85, 0.4, 1.15);
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes slideExitLeft {
+  0% {
+    transform: translateX(0) rotateZ(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-105%) rotateZ(-4deg) scale(0.94);
+    opacity: 0;
+  }
+}
+@keyframes slideEnterRight {
+  0% {
+    transform: translateX(105%) rotateZ(4deg) scale(0.94);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotateZ(0deg) scale(1);
+    opacity: 1;
+  }
+}
+.card-exit {
+  animation: slideExitLeft 0.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+.card-enter {
+  animation: slideEnterRight 0.22s cubic-bezier(0.2, 0.85, 0.4, 1.1) forwards;
+  will-change: transform, opacity;
+}
+
+.content-fade-enter-active,
+.content-fade-leave-active { transition: opacity 0.18s ease; }
+.content-fade-enter-from,
+.content-fade-leave-to     { opacity: 0; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.99) translateY(2px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.placeholder-card {}
+.dark .placeholder-card {}
+
+@keyframes pulse-bubble-left {
+  0%, 100% { opacity: 0.25; transform: scale(0.97); }
+  50% { opacity: 0.85; transform: scale(1.03); }
+}
+@keyframes pulse-bubble-right {
+  0%, 100% { opacity: 0.85; transform: scale(1.03); }
+  50% { opacity: 0.25; transform: scale(0.97); }
+}
+.animate-bubble-left, .animate-text-a {
+  animation: pulse-bubble-left 2.2s infinite ease-in-out;
+  transform-origin: 20px 18px;
+}
+.animate-bubble-right, .animate-text-b {
+  animation: pulse-bubble-right 2.2s infinite ease-in-out;
+  transform-origin: 28px 30px;
+}
+.loader-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.fade-layout-enter-active {
+  transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.fade-layout-leave-active {
+  transition: opacity 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.fade-layout-enter-from {
+  opacity: 0;
+}
+.fade-layout-leave-to {
+  opacity: 0;
+}
+</style>

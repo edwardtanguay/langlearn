@@ -103,7 +103,7 @@ vielen Dank für die Rechnung. Ich habe den QR-Code auf meinem Handy gescannt un
 
 Aber vielleicht wollen sie [schauen;nachschauen], warum das passiert ist. 
 ---es
-Ha corrido [tres vez el maraton;el maratón tres veces] [in Espagne;en España], y cade vez [ho apprendo;ha apprendido] español [par;durante] ocho meses [avantes de marathon;antes del maratón].
+Ha corrido [tres vez el maraton;el maratón tres veces] [in Espagne;en España], y cada vez [ho apprendo;ha apprendido] español [par;durante] ocho meses [avantes de marathon;antes del maratón].
 ---
 Nous avons discuté [chapitres;des chapitres] 1 et 2, mais je crois que pour le semaine prochaine, [il été;on avait] dit [qu'on doit;de] lire le chapitre 2 encore et chapitre 3. Je veux lire 1-4 pour [attrapper;ratrapper mon retard].
 ---
@@ -117,9 +117,9 @@ Je doit surtout pratiquer [prononciation et discussion;la prononciation et la di
 
 [Serait cool;Ce serait cool] [si nous pouvons faire le lire;si nous pouvions commencer par une lecture] à voix haute [plus correction;avec des corrections], [et après ça simplement;puis simplement avoir] une conversation libre sur le sujet, etc.
 
-Tu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à] tous [les sujets sur France;les sujets concernant la France] et la culture française, par exemple quelque chose [que t'aimes;que tu aimes], une ville, un région, [un custom fraicais;une coutume fraicaise] qui te plaît, etc.
+Tu peux choisir un sujet pour le texte, [je m'interessais sur;je m'intéresse à] tous [les sujets sur France;les sujets concernant la France] et la culture française, par exemple quelque chose [que t'aimes;que tu aimes], une ville, un région, [un custom fraicais;une coutume fraiçaise] qui te plaît, etc.
 
-[J'ai programmer;J'ai programmé] plus de trois ours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.
+[J'ai programmer;J'ai programmé] plus de trois cours avec toi avant mon départ pour Dijon le 8 octobre. J'espère qu'ils ne sont pas trop tard pour toi, mais [c'est presque le seuls crénaux;ce sont presque les seuls créneaux] disponibles dont je dispose actuellement.
 ---
 Pour chaque [sujet titre;titre de sujet], ajoute les dates [approximate;approximatives]
 
@@ -216,8 +216,6 @@ Bon rétablissement et restons en contact !
 ---
 2026-10-21
 ---
-Salut Karl-Heinz !
-
 Pour [ma;mon] application LangLearn, je [planifie d'integrire;prévoir d'intégrer] les "notes de correction" [qui;que] les utilisateurs [pour sauvegarder quand ils ont les;peuvent prendre pendant leurs] séances de [tandems ou enseigner;tandem ou leurs cours de langue]. 
 
 Pour [experimenter;expérimenter] avec [le;la] syntaxe, j'ai [commencé encore de;recommencé à] prendre [les;des] notes pendant [notre tandems;nos séances de tandem]. 
@@ -225,7 +223,7 @@ Pour [experimenter;expérimenter] avec [le;la] syntaxe, j'ai [commencé encore d
 Dans l'esprit de "Datapod" je prends [les;ces] notes dans un [syntax qui on peut lire;format lisible par un humain], mes [que;qui] peut aussi [été parser pour;être analysé automatiquement afin de les présenter] plus tard [montrer dans l'application dans un moyen interactiv;de manière interactive dans l'application]. 
 
 Pour cette raison, je peux [te déjà envoyer;déjà t'envoyer] les notes dans [la version raw;leur version brute] :
-
+---
 
 
 

@@ -141,6 +141,14 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], s
       continue
     }
 
+    // Strip upside-down Spanish punctuation (¿, ¡) for Spanish
+    if (frontLanguage === 'es') {
+      front = front.replace(/[¿¡]/g, '').trim()
+    }
+    if (backLanguage === 'es') {
+      back = back.replace(/[¿¡]/g, '').trim()
+    }
+
     // Clean front text: remove "my friend," prefix, asterisks, and trailing punctuation
     front = front.replace(/^my friend,\s*/i, '').replace(/\*/g, '').trim()
     front = cleanTrailingPunctuation(front)

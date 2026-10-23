@@ -154,6 +154,15 @@ async function main() {
     }
   }
 
+  // Ensure description column exists on Version table
+  try {
+    await client.execute("ALTER TABLE Version ADD COLUMN description TEXT;")
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
 
   client.close()

@@ -302,6 +302,7 @@ function loadRanksFromLocalStorage() {
             allRanksMap.value.set(k, v)
           }
         }
+        allRanksMap.value = new Map(allRanksMap.value)
       }
     } catch {}
   }
@@ -481,6 +482,15 @@ async function loadPronunciations() {
         }
       }
 
+      // Reassign to trigger Vue reactivity
+      allRanksMap.value = new Map(allRanksMap.value)
+      allPronunciationsMap.value = {
+        fr: new Map(allPronunciationsMap.value.fr),
+        es: new Map(allPronunciationsMap.value.es),
+        it: new Map(allPronunciationsMap.value.it),
+        nl: new Map(allPronunciationsMap.value.nl),
+      }
+
       // Sync any local-only pronunciation tips up to the database
       for (const l of languages) {
         const localMap = allPronunciationsMap.value[l.code]
@@ -514,6 +524,17 @@ async function loadPronunciations() {
   } catch {
     // If offline or unauthenticated, local map remains active
   }
+}
+
+function getLetterChar(item: BasicItem): string {
+  const match = item.id.match(/^letters-(\d+)$/)
+  if (match && match[1]) {
+    const num = parseInt(match[1], 10)
+    if (num >= 1 && num <= 26) {
+      return String.fromCharCode(64 + num)
+    }
+  }
+  return ''
 }
 
 function savePronunciationToLocalStorage(langCode: LangCode) {
@@ -1180,27 +1201,35 @@ function isFlashcardOpen(itemId: string): boolean {
         </NuxtLink>
       </div>
 
-      <!-- Full-width line of four buttons: French 3%, Spanish 12%, Italian 7%, Dutch 43% -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
+      <!-- Flexible line of four buttons matching Links UX -->
+      <div class="flex flex-wrap items-center gap-2 w-full">
         <button
           v-for="lang in languages"
           :key="lang.code"
           type="button"
           @click="selectLanguage(lang.code)"
-          class="py-2 px-3 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center justify-between transition-all cursor-pointer shadow-xs select-none border"
-          :class="selectedLang === lang.code ? 'border-gray-400/60 dark:border-gray-400/50' : 'border-transparent'"
-          :style="{
-            backgroundColor: languageColors[lang.code],
-            opacity: selectedLang === lang.code ? 1 : 0.45,
-            transform: selectedLang === lang.code ? 'scale(1.01)' : 'scale(1)'
+          class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs border inline-flex items-center gap-2 select-none"
+          :style="selectedLang === lang.code ? {
+            backgroundColor: languageColors[lang.code] || '#6366f1',
+            borderColor: languageColors[lang.code] || '#6366f1',
+            color: '#ffffff'
+          } : {
+            borderColor: `color-mix(in srgb, ${languageColors[lang.code] || '#6366f1'} 50%, transparent)`,
+            color: languageColors[lang.code] || '#6366f1',
+            backgroundColor: `color-mix(in srgb, ${languageColors[lang.code] || '#6366f1'} 10%, transparent)`
           }"
         >
-          <span class="truncate">{{ lang.label }}</span>
+          <span>{{ lang.label }}</span>
           <span
-            class="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-black/25 text-white/95 shrink-0 ml-1"
-            :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
+            class="text-[11px] font-semibold px-1.5 py-0.2 rounded"
+            :class="selectedLang === lang.code ? 'bg-black/25 text-white/95' : 'bg-black/10 dark:bg-white/10 text-inherit'"
           >
-            {{ isStatsLoading ? '0%' : `${allLangProgress[lang.code]}%` }}
+            <span
+              class="transition-all duration-200 inline-block"
+              :class="isStatsLoading ? 'blur-[2px] opacity-30 select-none' : 'blur-none opacity-100'"
+            >
+              {{ `${allLangProgress[lang.code]}%` }}
+            </span>
           </span>
         </button>
       </div>
@@ -1392,84 +1421,36 @@ function isFlashcardOpen(itemId: string): boolean {
           v-for="item in wordsWithPronunciation"
           :key="item.id"
           @click="toggleTestPronunciationItem(item.id)"
-          class="p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#151d2c] flex items-center justify-between gap-2 cursor-pointer hover:border-amber-500/50 transition-all select-none shadow-xs"
+          class="p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#151d2c] flex items-center justify-between gap-2 cursor-pointer hover:border-amber-500/50 transition-all select-none shadow-xs min-h-[58px]"
+          :style="{ borderColor: `color-mix(in srgb, ${currentColor} 35%, transparent)` }"
         >
-          <div class="min-w-0 flex-1">
-            <div class="text-sm font-bold text-gray-900 dark:text-white truncate">
-              {{ item[selectedLang] || item.en }}
-            </div>
-            <div class="text-xs text-gray-400 dark:text-gray-500 truncate">
-              {{ item.en }}
-            </div>
-          </div>
-
-          <div class="shrink-0 flex items-center gap-2 justify-end">
-            <template v-if="testPronunciationRevealed.has(item.id)">
-              <!-- Action Icons (Star, Google Translate, P, C, R) side-by-side with stop propagation -->
-              <div class="flex items-center gap-1 shrink-0" @click.stop>
-                <!-- Star icon: example sentences -->
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center w-5 h-5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer text-gray-700 dark:text-gray-200"
-                  title="Search for 3 example sentences"
-                  @click="handleExampleSearch(item, $event)"
-                >
-                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                </button>
-
-                <!-- Google Translate icon -->
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center w-5 h-5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer text-gray-700 dark:text-gray-200"
-                  title="Look up in Google Translate"
-                  @click="handleGoogleTranslate(item, $event)"
-                >
-                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
-                </button>
-
-                <!-- Pronunciation 'P' button -->
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer text-gray-700 dark:text-gray-200 hover:bg-black/10 dark:hover:bg-white/10"
-                  title="Add or edit pronunciation tip"
-                  @click="openPronunciationModal(item, $event)"
-                >
-                  P
-                </button>
-
-                <!-- Comparison 'C' button -->
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer text-gray-700 dark:text-gray-200 hover:bg-black/10 dark:hover:bg-white/10"
-                  title="Compare across all 4 languages"
-                  @click="openCrossLanguageModal(item, $event)"
-                >
-                  C
-                </button>
-
-                <!-- Rank 'R' button -->
-                <button
-                  type="button"
-                  class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold font-mono opacity-60 hover:opacity-100 transition-opacity rounded cursor-pointer text-gray-700 dark:text-gray-200 hover:bg-black/10 dark:hover:bg-white/10"
-                  title="Set rank (0 - 5)"
-                  @click="openRankModal(item, $event)"
-                >
-                  R
-                </button>
+          <!-- When NOT revealed: Target word and English translation on left, click to reveal on right -->
+          <template v-if="!testPronunciationRevealed.has(item.id)">
+            <div class="min-w-0 flex-1">
+              <div class="text-sm font-bold truncate flex items-center gap-1.5" :style="{ color: brightColor }">
+                <span class="text-[10px] font-extrabold uppercase px-1.5 py-0.2 rounded" :style="{ backgroundColor: `color-mix(in srgb, ${currentColor} 18%, transparent)`, color: brightColor }">
+                  {{ selectedLang }}
+                </span>
+                <span>{{ item[selectedLang] || item.en }}</span>
               </div>
+              <div class="text-xs text-gray-400 dark:text-gray-500 truncate mt-0.5">
+                {{ item.en }}
+              </div>
+            </div>
 
-              <!-- Pronunciation tag -->
-              <span
-                class="text-xs font-mono font-bold px-2 py-1 rounded bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 inline-block shrink-0"
-              >
-                [{{ pronunciationMap.get(item.id) }}]
+            <div class="shrink-0 text-right min-w-[85px]">
+              <span class="text-[11px] font-semibold text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 italic">
+                Click to reveal
               </span>
-            </template>
+            </div>
+          </template>
+
+          <!-- When REVEALED: Centered pronunciation text ONLY, no icons -->
+          <div v-else class="w-full flex items-center justify-center py-1">
             <span
-              v-else
-              class="text-[11px] font-semibold text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 italic min-w-[90px] text-right"
+              class="text-sm sm:text-base font-mono font-bold px-3 py-1.5 rounded-lg bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 shadow-xs text-center"
             >
-              Click to reveal
+              [{{ pronunciationMap.get(item.id) || '...' }}]
             </span>
           </div>
         </div>
@@ -1944,7 +1925,13 @@ function isFlashcardOpen(itemId: string): boolean {
                 :key="item.id"
                 class="flex items-center justify-between gap-3 px-3 py-1.5 rounded-xl border border-gray-200/70 dark:border-gray-800/80 bg-white dark:bg-[#182030] shadow-xs text-xs"
               >
-                <span class="font-medium text-gray-600 dark:text-gray-300">
+                <span
+                  v-if="cat.id === 'letters'"
+                  class="w-7 h-5 flex items-center justify-center font-bold text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-xs shrink-0"
+                >
+                  {{ getLetterChar(item) }}
+                </span>
+                <span v-else class="font-medium text-gray-600 dark:text-gray-300">
                   {{ item.en }}
                 </span>
                 <span class="font-semibold" :style="{ color: brightColor }">

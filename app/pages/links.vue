@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import {
   ArrowTopRightOnSquareIcon,
   PlusIcon,
@@ -100,9 +100,34 @@ async function moveLink(categoryLinks: LinkItem[], index: number, direction: 'up
   }
 }
 
+const TARGET_LANG_ORDER = ['fr', 'es', 'de', 'nl', 'it']
+
+function sortLanguagesByTargetOrder(langs: string[]): string[] {
+  return [...langs].sort((a, b) => {
+    const idxA = TARGET_LANG_ORDER.indexOf(a)
+    const idxB = TARGET_LANG_ORDER.indexOf(b)
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB
+    if (idxA !== -1) return -1
+    if (idxB !== -1) return 1
+    return a.localeCompare(b)
+  })
+}
+
 const links = ref<LinkItem[]>([])
 const isLoading = ref(true)
 const memberTargetLanguages = ref<string[]>([])
+const selectedLanguageFilter = ref<string>('fr')
+
+const availableTargetLanguages = computed(() => {
+  if (loggedIn.value && memberTargetLanguages.value.length > 0) {
+    return sortLanguagesByTargetOrder(memberTargetLanguages.value.map(l => l.toLowerCase()))
+  }
+  const set = new Set<string>()
+  for (const l of links.value) {
+    if (l.language) set.add(l.language.toLowerCase())
+  }
+  return sortLanguagesByTargetOrder(Array.from(set))
+})
 
 const loadLinks = async () => {
   isLoading.value = true
@@ -112,8 +137,12 @@ const loadLinks = async () => {
       loggedIn.value ? $fetch<{ targetLanguages?: string[] }>('/api/user/me').catch(() => null) : null
     ])
     links.value = linksData || []
-    if (meData?.targetLanguages) {
+    if (meData?.targetLanguages && meData.targetLanguages.length > 0) {
       memberTargetLanguages.value = meData.targetLanguages
+      const sorted = sortLanguagesByTargetOrder(meData.targetLanguages.map((l: string) => l.toLowerCase()))
+      if (!sorted.includes(selectedLanguageFilter.value)) {
+        selectedLanguageFilter.value = sorted[0] || 'fr'
+      }
     }
   } catch (err) {
     console.error('Failed to load links:', err)
@@ -157,7 +186,19 @@ function handleClickOutside(e: MouseEvent) {
   }
 }
 
+watch(selectedLanguageFilter, (val) => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    localStorage.setItem('langlearn_links_language', val)
+  }
+})
+
 onMounted(() => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const saved = localStorage.getItem('langlearn_links_language')
+    if (saved) {
+      selectedLanguageFilter.value = saved
+    }
+  }
   loadLinks()
   if (import.meta.client) {
     window.addEventListener('click', handleClickOutside)
@@ -170,15 +211,17 @@ onUnmounted(() => {
   }
 })
 
-// Filter links based on user role and target languages:
-// - unknownUsers (not logged in) see all languages
-// - logged-in users (members & admins) see ONLY their configured target languages
+// Filter links based on user role, target languages, and selected filter:
 const filteredLinks = computed(() => {
-  if (!loggedIn.value || userRole.value === 'unknownUser') {
-    return links.value
+  let list = links.value
+  if (loggedIn.value && userRole.value !== 'unknownUser') {
+    const targets = new Set(memberTargetLanguages.value.map(l => l.toLowerCase()))
+    list = list.filter(l => targets.has(l.language.toLowerCase()))
   }
-  const targets = new Set(memberTargetLanguages.value.map(l => l.toLowerCase()))
-  return links.value.filter(l => targets.has(l.language.toLowerCase()))
+  if (selectedLanguageFilter.value !== 'all') {
+    list = list.filter(l => l.language.toLowerCase() === selectedLanguageFilter.value.toLowerCase())
+  }
+  return list
 })
 
 // Group filtered links by language
@@ -210,7 +253,14 @@ const groupedCategories = computed(() => {
         links: groups[lang] ?? []
       }
     })
-    .sort((a, b) => b.links.length - a.links.length)
+    .sort((a, b) => {
+      const idxA = TARGET_LANG_ORDER.indexOf(a.langKey)
+      const idxB = TARGET_LANG_ORDER.indexOf(b.langKey)
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB
+      if (idxA !== -1) return -1
+      if (idxB !== -1) return 1
+      return b.links.length - a.links.length
+    })
 })
 
 // Admin CRUD Modal state
@@ -320,8 +370,16 @@ const executeDelete = async () => {
 </script>
 
 <template>
-  <div class="max-w-5xl mx-auto py-10 px-4 min-h-[600px] space-y-10">
+  <div class="max-w-5xl mx-auto py-6 px-3 sm:py-8 sm:px-4 min-h-[600px] space-y-6 sm:space-y-8">
     <h1 class="sr-only">Links</h1>
+
+    <!-- Target Language Filter Buttons -->
+    <LanguageFilterMenu
+      v-if="availableTargetLanguages.length > 1"
+      v-model="selectedLanguageFilter"
+      :languages="availableTargetLanguages"
+      :language-titles="languageTitles"
+    />
 
     <!-- Loading State -->
     <div v-if="isLoading" class="py-16 flex flex-col items-center justify-center space-y-3">
@@ -332,30 +390,30 @@ const executeDelete = async () => {
     <!-- Empty State -->
     <div v-else-if="groupedCategories.length === 0" class="py-16 text-center space-y-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8">
       <p class="text-gray-700 dark:text-gray-300 font-medium">No links available for your selected target languages.</p>
-      <NuxtLink v-if="loggedIn" to="/user" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
+      <NuxtLink v-if="loggedIn" to="/profile" class="inline-block text-xs font-bold text-indigo-600 dark:text-indigo-400 underline">
         Configure Target Languages on your Profile &rarr;
       </NuxtLink>
     </div>
 
     <!-- Language Link Categories -->
-    <div v-else v-for="category in groupedCategories" :key="category.code" class="space-y-4">
-      <!-- Category Header (Clean title without outer Add button) -->
-      <div class="w-full flex items-center justify-between px-1 py-1">
+    <div v-else v-for="category in groupedCategories" :key="category.code" class="space-y-2.5">
+      <!-- Category Header -->
+      <div class="w-full flex items-center justify-between px-1 py-0.5">
         <h2
-          class="text-2xl font-black tracking-tight leading-normal my-0"
+          class="text-xl sm:text-2xl font-black tracking-tight leading-normal my-0"
           :style="{ color: category.color }"
         >
           {{ category.title }}
         </h2>
       </div>
 
-      <!-- Links List (Whole panel clickable, colored background, colored title, capitalized description, no hover underline) -->
-      <ul class="space-y-3 text-sm">
+      <!-- Links List (denser panels for more items to fit on mobile and desktop) -->
+      <ul class="space-y-2 text-sm">
         <li
           v-for="(link, idx) in category.links"
           :key="link.id"
           @click="handleCardClick(link)"
-          class="p-4 rounded-xl border shadow-xs flex items-start justify-between gap-3 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
+          class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
           :style="{
             backgroundColor: `color-mix(in srgb, ${category.color} 14%, #111827)`,
             borderColor: `color-mix(in srgb, ${category.color} 30%, #374151)`

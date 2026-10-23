@@ -40,7 +40,18 @@ The languages currently active and supported in the application are:
 - Russian (`ru`): `#3f3f46` (dark grey)
 - Icelandic (`is`): `#06b6d4` (cyan / light blue)
 - Danish (`da`): `#ff1493` (hot pink)
-- Greek (`el`): `#ea580c` (orange-red)
+- Greek (`el`): `#0d9488` (teal / emerald)
+
+# target languages order
+
+The standard display order for target languages across the app is:
+1. French (`fr`)
+2. Spanish (`es`)
+3. German (`de`)
+4. Dutch (`nl`)
+5. Italian (`it`)
+
+Note: In the future, each user will be able to determine the custom order of their target languages.
 
 In general, don't use colors if they are not language related, e.g. don't make links blue, but rather white so that any color indicates a language.
 
