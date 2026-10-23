@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
-import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon, ArrowUpIcon, LinkIcon, ArrowPathRoundedSquareIcon } from '@heroicons/vue/24/outline'
+import { BoltIcon, PencilSquareIcon, PencilIcon, PlusIcon, TrashIcon, CheckIcon, DocumentTextIcon, ClipboardDocumentIcon, ArrowUpIcon, LinkIcon, ArrowPathIcon } from '@heroicons/vue/24/outline'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'
 import { compareSemVerDesc, compareSemVerAsc } from '~~/shared/utils/semver'
 
@@ -1620,6 +1620,14 @@ function shouldShowVersionDescription(ver: Version): boolean {
   return mode === 'description'
 }
 
+function toggleVersionCardFlip(ver: Version) {
+  if (adminEditMode.value) return
+  if (!ver.description || !ver.description.trim()) return
+  const defaultMode = isSingleVersionView.value ? 'items' : 'description'
+  const current = versionViewMode.value[ver.id] || defaultMode
+  versionViewMode.value[ver.id] = current === 'description' ? 'items' : 'description'
+}
+
 function handleVersionCardClick(ver: Version, event: MouseEvent) {
   if (adminEditMode.value) return
   if (!ver.description || !ver.description.trim()) return
@@ -1632,9 +1640,7 @@ function handleVersionCardClick(ver: Version, event: MouseEvent) {
   const target = event.target as HTMLElement
   if (target.closest('a, button, input, textarea, select')) return
 
-  const defaultMode = isSingleVersionView.value ? 'items' : 'description'
-  const current = versionViewMode.value[ver.id] || defaultMode
-  versionViewMode.value[ver.id] = current === 'description' ? 'items' : 'description'
+  toggleVersionCardFlip(ver)
 }
 
 // Admin mode description editor state & handlers
@@ -2371,15 +2377,17 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             </div>
 
             <!-- Subtle Flip Hint Icon (Lower right-hand corner) -->
-            <div
+            <button
               v-if="!adminEditMode && ver.description && ver.description.trim()"
-              class="absolute bottom-2 right-2.5 z-10 flex items-center justify-center p-1 rounded-md text-gray-400/50 hover:text-amber-500 dark:text-gray-500/50 dark:hover:text-amber-400 group-hover/card:text-gray-400 dark:group-hover/card:text-gray-400 transition-colors cursor-pointer select-none"
-              :title="shouldShowVersionDescription(ver) ? 'Click card to view items' : 'Click card to view description'"
-              role="button"
-              :aria-label="shouldShowVersionDescription(ver) ? 'Click card to view items' : 'Click card to view description'"
+              type="button"
+              @click.stop="toggleVersionCardFlip(ver)"
+              class="absolute bottom-2.5 right-2.5 z-10 w-6 h-6 rounded-full flex items-center justify-center bg-white/90 hover:bg-amber-50 dark:bg-gray-800/90 dark:hover:bg-amber-950/80 border border-gray-200/80 hover:border-amber-300 dark:border-gray-700/80 dark:hover:border-amber-700/80 text-gray-400 hover:text-amber-600 dark:text-gray-400 dark:hover:text-amber-400 shadow-xs hover:shadow-sm hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer select-none backdrop-blur-xs group/flip"
+              :class="shouldShowVersionDescription(ver) ? 'border-amber-300/80 dark:border-amber-700/80 text-amber-600 dark:text-amber-400 bg-amber-50/60 dark:bg-amber-950/40' : ''"
+              :title="shouldShowVersionDescription(ver) ? 'Click to view version items' : 'Click to view version description'"
+              :aria-label="shouldShowVersionDescription(ver) ? 'Click to view version items' : 'Click to view version description'"
             >
-              <ArrowPathRoundedSquareIcon class="w-4 h-4 transition-transform duration-500 group-hover/card:rotate-180" />
-            </div>
+              <ArrowPathIcon class="w-3.5 h-3.5 transition-transform duration-500 group-hover/card:rotate-180" />
+            </button>
           </div>
         </div>
       </div>
