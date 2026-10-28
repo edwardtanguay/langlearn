@@ -1,3 +1,90 @@
+- preply
+	- ESCRIBIR A
+		- TARIFA ECONÓMICA
+			- ,, Karla R.
+				- //psicóloga
+				- Colombia
+				- 6, 22+ lunes, ---, ---, jueves, ---, domingo
+				- https://preply.com/es/profesor/8726419
+				- hablante nativa de español de 
+				- soy psicóloga apasionada por la comunicación, las relaciones humanas y las diferentes culturas.
+				- 2019-2025 Universidad Pólitecnico Gran Colombiano
+			- Cesar M.
+				- //timo
+				- México
+				- 8, 22+ lunes, martes, miércoles, jueves, viernes, ---, domingo
+		- ESPAÑA
+			- Daniel S.
+				- //guy
+				- España
+				- 9, 22+ 6/7 lunes, ---, miércoles, jueves, viernes, sábado, domingo
+				- https://preply.com/es/profesor/8746468
+				- Me he graduado en Genética y ahora estoy haciendo un máster en Glasgow.
+		- DESARROLLADOR SOFTWARE
+			- ,, Timothy M.
+				- //rayray
+				- Ecuador
+				- 5, 22+ lunes, ---, miércoles, jueves, viernes, sábado, ---
+				- https://preply.com/es/profesor/8308695
+				- 2023-2025 Instituto Tecnológico Superior Compu Sur
+				- Toco el piano
+			- Alejandro P.
+				- //qubidudev
+				- Argentina
+				- 9, 22+ lunes, ---, miércoles, jueves, viernes, ---, ---
+				- 9 años desarrollador software
+				- Él enseña español e italiano.
+	- NO SELECCIONADO
+		- Irene L. 
+			- //Ludi
+			- 8, Mié, Jue, Vie, Dom: 23:00, 22:00
+			- 11 clases
+			- idioms
+				- inglés C2
+				- italiano C2
+				- holandés A1
+			- de Madrid
+				- ha vivido en Italia, Australia y Países Bajos, y he viajado mucho por Latinoamérica, Europa y Asia
+			- un espacio relajado
+			- Te ayudo a mejorar sin interrumpir constantemente la conversación, reformulando frases cuando sea útil
+			- *** Al final de la clase, también podemos repasar los errores más comunes para que sepas en qué centrarte
+			- tiene más de un año de experiencia enseñando español online en otras plataformas y presencialmente mientras viajo
+			- mis diez años de experiencia en una empresa Big Four y una multinacional, en áreas como finanzas, estrategia, gestión de proyectos y marketing
+			- hagamos que te sientas cada vez más cómodo/a al comunicarte!
+			- *** temas que te sacan de tu zona de confort
+			- *** two sentences same
+			- ella no respondió
+		- Sara M.
+			- //70s
+			- 6, Mar-Vie 23:00
+			- todavía no hay clases
+			- siempre viví en España
+			- Educación Primaria
+			- idiomas
+				- francés y español como lengua materna
+				- inglés: C1
+				- italiano: B2
+			- habla rápido
+			- está cursando el máster de ELE: Enseñanza de Español como Lengua Extranjera
+			- muy flexible
+			- Ella subió su precio.
+		- Laura R.
+			- //Sara
+			- 9, Mar-Dom 22:00
+			- de Sevilla
+			- idioms
+				- inglés C1
+				- francés B2
+			- Me gradué como Traductora de Español a Inglés y Francés hace 4 años
+			- Actualmente me encuentro en Reino Unido buscando trabajo
+			- ella subió su precio a 14
+		- Alejandra R.
+			- //annika
+			- 9, martes, miércoles, jeuves 21:00
+			- Me gusta adaptar las clases a cada persona
+			- Soy graduada en Educación Primaria
+			- 2018-2022 Universidad de Zaragoza
+			- no podía reunirse tarde con regularidad
 - quedar vs. quedarse
 	- quedar
 		- fijar una cita o ponerse de acuerdo para verse
@@ -8,8 +95,12 @@
 			- el museo queda a tres manzanas de la estación central
 		- indicar retención, posesión definitiva o elección de un objeto
 			- te gusta este libro o prefieres que me lo quede yo
-		- "quedar en + infinitivo" significado de pactar o acordar hacer algo
+		- WHERE: para indicar dónde se encuentra situado un lugar
+			- el supermercado queda a dos cuadras de aqu
+		- AGREE TO: "quedar en + infinitivo" significado de pactar o acordar hacer algo
 			- la reunión estaba prevista para las diez, pero al final quedamos en vernos a las doce
+		- ONLY ONE LEFT: para expresar la parte de un todo que todavía no se ha consumido o gastado
+			- solo queda un pedazo de pastel en la nevera
 	- quedarse
 		- paso a un estado emocional o físico resultante
 			- al enterarse de la noticia, ella se quedó totalmente sorprendida

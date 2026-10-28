@@ -4509,9 +4509,1594 @@
       ],
       "totalWords": 89,
       "totalFlashcards": 17
+    },
+    {
+      "date": "2026-10-26",
+      "sections": [
+        {
+          "id": "2026-10-26-sec-1",
+          "day": "2026-10-26",
+          "sectionIndex": 1,
+          "language": "es",
+          "rawText": "Gracias por [ti;tu] repuesta [rapida;rápida]!\n\nMe llamo Edward, estoy [developer;desarrollador] de software y tengo [el objectivo linguistico;un objetivo lingüistico] concreto: [de poder;poder] hablar español en [ligne;línea] con un [developer amigo;amigo desarrollador] [en Columbia;de Colombia] [hasta el fin de novembre;antes de finales de noviembre]. Trabamos juntos en un proyecto de [application de web;aplicación web] para aprender idiomas y, [quando encentramos;cuando nos encontremos], queremos hablar 50% [inglés;en inglés] et 50% en español, como tandem. [Son inglés es;Su inglés está] ahora [a nivel;en nivel] B1 y mi español está en nivel A1-A2, pero puedo aprender [rapido;rápido].\n\n[Grandí;Crecí] en Estados Unidos, [mi lingua naturel;así que mi lengua materna] es el inglés, pero he vivido [en alemagne por;en Alemania durante] 30 años, mi [allemán;alemán] es C1, mi frances B2 y conozco bastante holandés [por poder;como para] hablar con mi [daughter allemán;hija alemana], que [amore las niederlandes;ama los Países Bajos]. [Tengo también;También tengo] un [diplom master de;máster en] TESOL [et;y] me gusta mucho aprender idiomas.\n\n[Me gusta dos phrases;Me gustan dos frases] de la [description de profil;descripción de tu perfil]:\n\n1. \"al final de la clase, también podemos repasar los errores más comunes para que sepas en qué centrarte\"\n[este;este es] un [methódo;método] que [utiliso también;también utilizo] cuando enseño [las idiomas;idiomas]\n\n2. \"temas que te sacan de tu zona de confort\"\nes [exacto que;exactemente lo que] debo hacer [por;para] aprender bastante español en las próximas semanas\n\nSi [es okay por ti;te parece bien], como parte [mi;de mi] proyecto de [applicación;aplicación] [por;para] aprender idiomas, quiero [creer;crear] las actividades [por nos cours;para nuestras clases]. [Creo los;Las creo] con IA y experimento con la [structura et format;estructura y el formato] [por las optimiser de cours a cours;para optimizarlas de clase en clase]. Por [exemplo;ejemplo], hace dos semanas [ha visitado;visité] Dijon, [Frances;Francia], [dónde;donde] corrí un [marathón;maratón], y por mis [cours;clases] de Preply en [frances;francés] [ha creído las actividas sul las temas;creé actividades sobre] Dijon, [France;Francia], [marathons;maratones], etc.\n\nEn la Preply clase, yo he [liédo las texto;leído los textos] en [voca loud;voz alta], mis [professores mi han corrigidas;profesores me los han corregido], trabajamos [junta por las exercicios;juntos en los ejercicios] interactivos et [discusamos les temas junta;discutimos los temas juntos].\n\n[Por nos primero cour;Para nuestra primera clase], puedo crear [un activita sul el tema;una actividad sobre] Madrid.\n\n[Et la más bueno tiempo;Y el mejor momento] para mí [por encuentar;para encontrarnos] es [despues;después de las] 22:00 [cuándo;cuando] el día [es finito;ha terminado].\n\nSi [es okay para ti;te parece bien], [programmeré un cours;reservaré una clase]. :-)\n\nEspero que hasta pronto,",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Gracias por "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-1",
+              "incorrect": "ti",
+              "correct": "tu"
+            },
+            {
+              "type": "text",
+              "text": " repuesta "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-2",
+              "incorrect": "rapida",
+              "correct": "rápida"
+            },
+            {
+              "type": "text",
+              "text": "!\n\nMe llamo Edward, estoy "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-3",
+              "incorrect": "developer",
+              "correct": "desarrollador"
+            },
+            {
+              "type": "text",
+              "text": " de software y tengo "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-4",
+              "incorrect": "el objectivo linguistico",
+              "correct": "un objetivo lingüistico"
+            },
+            {
+              "type": "text",
+              "text": " concreto: "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-5",
+              "incorrect": "de poder",
+              "correct": "poder"
+            },
+            {
+              "type": "text",
+              "text": " hablar español en "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-6",
+              "incorrect": "ligne",
+              "correct": "línea"
+            },
+            {
+              "type": "text",
+              "text": " con un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-7",
+              "incorrect": "developer amigo",
+              "correct": "amigo desarrollador"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-8",
+              "incorrect": "en Columbia",
+              "correct": "de Colombia"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-9",
+              "incorrect": "hasta el fin de novembre",
+              "correct": "antes de finales de noviembre"
+            },
+            {
+              "type": "text",
+              "text": ". Trabamos juntos en un proyecto de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-10",
+              "incorrect": "application de web",
+              "correct": "aplicación web"
+            },
+            {
+              "type": "text",
+              "text": " para aprender idiomas y, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-11",
+              "incorrect": "quando encentramos",
+              "correct": "cuando nos encontremos"
+            },
+            {
+              "type": "text",
+              "text": ", queremos hablar 50% "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-12",
+              "incorrect": "inglés",
+              "correct": "en inglés"
+            },
+            {
+              "type": "text",
+              "text": " et 50% en español, como tandem. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-13",
+              "incorrect": "Son inglés es",
+              "correct": "Su inglés está"
+            },
+            {
+              "type": "text",
+              "text": " ahora "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-14",
+              "incorrect": "a nivel",
+              "correct": "en nivel"
+            },
+            {
+              "type": "text",
+              "text": " B1 y mi español está en nivel A1-A2, pero puedo aprender "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-15",
+              "incorrect": "rapido",
+              "correct": "rápido"
+            },
+            {
+              "type": "text",
+              "text": ".\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-16",
+              "incorrect": "Grandí",
+              "correct": "Crecí"
+            },
+            {
+              "type": "text",
+              "text": " en Estados Unidos, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-17",
+              "incorrect": "mi lingua naturel",
+              "correct": "así que mi lengua materna"
+            },
+            {
+              "type": "text",
+              "text": " es el inglés, pero he vivido "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-18",
+              "incorrect": "en alemagne por",
+              "correct": "en Alemania durante"
+            },
+            {
+              "type": "text",
+              "text": " 30 años, mi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-19",
+              "incorrect": "allemán",
+              "correct": "alemán"
+            },
+            {
+              "type": "text",
+              "text": " es C1, mi frances B2 y conozco bastante holandés "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-20",
+              "incorrect": "por poder",
+              "correct": "como para"
+            },
+            {
+              "type": "text",
+              "text": " hablar con mi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-21",
+              "incorrect": "daughter allemán",
+              "correct": "hija alemana"
+            },
+            {
+              "type": "text",
+              "text": ", que "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-22",
+              "incorrect": "amore las niederlandes",
+              "correct": "ama los Países Bajos"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-23",
+              "incorrect": "Tengo también",
+              "correct": "También tengo"
+            },
+            {
+              "type": "text",
+              "text": " un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-24",
+              "incorrect": "diplom master de",
+              "correct": "máster en"
+            },
+            {
+              "type": "text",
+              "text": " TESOL "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-25",
+              "incorrect": "et",
+              "correct": "y"
+            },
+            {
+              "type": "text",
+              "text": " me gusta mucho aprender idiomas.\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-26",
+              "incorrect": "Me gusta dos phrases",
+              "correct": "Me gustan dos frases"
+            },
+            {
+              "type": "text",
+              "text": " de la "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-27",
+              "incorrect": "description de profil",
+              "correct": "descripción de tu perfil"
+            },
+            {
+              "type": "text",
+              "text": ":\n\n1. \"al final de la clase, también podemos repasar los errores más comunes para que sepas en qué centrarte\"\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-28",
+              "incorrect": "este",
+              "correct": "este es"
+            },
+            {
+              "type": "text",
+              "text": " un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-29",
+              "incorrect": "methódo",
+              "correct": "método"
+            },
+            {
+              "type": "text",
+              "text": " que "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-30",
+              "incorrect": "utiliso también",
+              "correct": "también utilizo"
+            },
+            {
+              "type": "text",
+              "text": " cuando enseño "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-31",
+              "incorrect": "las idiomas",
+              "correct": "idiomas"
+            },
+            {
+              "type": "text",
+              "text": "\n\n2. \"temas que te sacan de tu zona de confort\"\nes "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-32",
+              "incorrect": "exacto que",
+              "correct": "exactemente lo que"
+            },
+            {
+              "type": "text",
+              "text": " debo hacer "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-33",
+              "incorrect": "por",
+              "correct": "para"
+            },
+            {
+              "type": "text",
+              "text": " aprender bastante español en las próximas semanas\n\nSi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-34",
+              "incorrect": "es okay por ti",
+              "correct": "te parece bien"
+            },
+            {
+              "type": "text",
+              "text": ", como parte "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-35",
+              "incorrect": "mi",
+              "correct": "de mi"
+            },
+            {
+              "type": "text",
+              "text": " proyecto de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-36",
+              "incorrect": "applicación",
+              "correct": "aplicación"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-37",
+              "incorrect": "por",
+              "correct": "para"
+            },
+            {
+              "type": "text",
+              "text": " aprender idiomas, quiero "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-38",
+              "incorrect": "creer",
+              "correct": "crear"
+            },
+            {
+              "type": "text",
+              "text": " las actividades "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-39",
+              "incorrect": "por nos cours",
+              "correct": "para nuestras clases"
+            },
+            {
+              "type": "text",
+              "text": ". "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-40",
+              "incorrect": "Creo los",
+              "correct": "Las creo"
+            },
+            {
+              "type": "text",
+              "text": " con IA y experimento con la "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-41",
+              "incorrect": "structura et format",
+              "correct": "estructura y el formato"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-42",
+              "incorrect": "por las optimiser de cours a cours",
+              "correct": "para optimizarlas de clase en clase"
+            },
+            {
+              "type": "text",
+              "text": ". Por "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-43",
+              "incorrect": "exemplo",
+              "correct": "ejemplo"
+            },
+            {
+              "type": "text",
+              "text": ", hace dos semanas "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-44",
+              "incorrect": "ha visitado",
+              "correct": "visité"
+            },
+            {
+              "type": "text",
+              "text": " Dijon, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-45",
+              "incorrect": "Frances",
+              "correct": "Francia"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-46",
+              "incorrect": "dónde",
+              "correct": "donde"
+            },
+            {
+              "type": "text",
+              "text": " corrí un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-47",
+              "incorrect": "marathón",
+              "correct": "maratón"
+            },
+            {
+              "type": "text",
+              "text": ", y por mis "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-48",
+              "incorrect": "cours",
+              "correct": "clases"
+            },
+            {
+              "type": "text",
+              "text": " de Preply en "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-49",
+              "incorrect": "frances",
+              "correct": "francés"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-50",
+              "incorrect": "ha creído las actividas sul las temas",
+              "correct": "creé actividades sobre"
+            },
+            {
+              "type": "text",
+              "text": " Dijon, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-51",
+              "incorrect": "France",
+              "correct": "Francia"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-52",
+              "incorrect": "marathons",
+              "correct": "maratones"
+            },
+            {
+              "type": "text",
+              "text": ", etc.\n\nEn la Preply clase, yo he "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-53",
+              "incorrect": "liédo las texto",
+              "correct": "leído los textos"
+            },
+            {
+              "type": "text",
+              "text": " en "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-54",
+              "incorrect": "voca loud",
+              "correct": "voz alta"
+            },
+            {
+              "type": "text",
+              "text": ", mis "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-55",
+              "incorrect": "professores mi han corrigidas",
+              "correct": "profesores me los han corregido"
+            },
+            {
+              "type": "text",
+              "text": ", trabajamos "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-56",
+              "incorrect": "junta por las exercicios",
+              "correct": "juntos en los ejercicios"
+            },
+            {
+              "type": "text",
+              "text": " interactivos et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-57",
+              "incorrect": "discusamos les temas junta",
+              "correct": "discutimos los temas juntos"
+            },
+            {
+              "type": "text",
+              "text": ".\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-58",
+              "incorrect": "Por nos primero cour",
+              "correct": "Para nuestra primera clase"
+            },
+            {
+              "type": "text",
+              "text": ", puedo crear "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-59",
+              "incorrect": "un activita sul el tema",
+              "correct": "una actividad sobre"
+            },
+            {
+              "type": "text",
+              "text": " Madrid.\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-60",
+              "incorrect": "Et la más bueno tiempo",
+              "correct": "Y el mejor momento"
+            },
+            {
+              "type": "text",
+              "text": " para mí "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-61",
+              "incorrect": "por encuentar",
+              "correct": "para encontrarnos"
+            },
+            {
+              "type": "text",
+              "text": " es "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-62",
+              "incorrect": "despues",
+              "correct": "después de las"
+            },
+            {
+              "type": "text",
+              "text": " 22:00 "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-63",
+              "incorrect": "cuándo",
+              "correct": "cuando"
+            },
+            {
+              "type": "text",
+              "text": " el día "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-64",
+              "incorrect": "es finito",
+              "correct": "ha terminado"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nSi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-65",
+              "incorrect": "es okay para ti",
+              "correct": "te parece bien"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-26-sec-1-fc-66",
+              "incorrect": "programmeré un cours",
+              "correct": "reservaré una clase"
+            },
+            {
+              "type": "text",
+              "text": ". :-)\n\nEspero que hasta pronto,"
+            }
+          ],
+          "flashcardsCount": 66,
+          "wordCount": 331
+        }
+      ],
+      "totalWords": 331,
+      "totalFlashcards": 66
+    },
+    {
+      "date": "2026-10-27",
+      "sections": [
+        {
+          "id": "2026-10-27-sec-1",
+          "day": "2026-10-27",
+          "sectionIndex": 1,
+          "language": "es",
+          "rawText": "Gracias por la respuesta rápida, me [llama;llamo] Edward, soy desarrollador software et [mon;mi] objetivo [lingüistico;lingüístico] es [para poder;poder] hablar español con un amigo desarrollador en línea [comenesando en;a partir de] diciembre.\n\n[Normalemente;Normalmente] hago las clases [Preply;de Preply] después [el;del] dia a las 22:00 o 23:00 cuando mi familia está en la cama. Cuando busqué [professores;profesores], teniá un [filtre por;filtro para] las clases [en;a las] 22:00 y 23:00, pero ahora veo que [tengas solomente las;solo tienes] clases [hasta;hasta las] 21:00.\n\nSería [posibile;posible] [también hacer clases;hacer clases también] a las 22:00?\n\nGracias [al avancia;de antemano]",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Gracias por la respuesta rápida, me "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-1",
+              "incorrect": "llama",
+              "correct": "llamo"
+            },
+            {
+              "type": "text",
+              "text": " Edward, soy desarrollador software et "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-2",
+              "incorrect": "mon",
+              "correct": "mi"
+            },
+            {
+              "type": "text",
+              "text": " objetivo "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-3",
+              "incorrect": "lingüistico",
+              "correct": "lingüístico"
+            },
+            {
+              "type": "text",
+              "text": " es "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-4",
+              "incorrect": "para poder",
+              "correct": "poder"
+            },
+            {
+              "type": "text",
+              "text": " hablar español con un amigo desarrollador en línea "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-5",
+              "incorrect": "comenesando en",
+              "correct": "a partir de"
+            },
+            {
+              "type": "text",
+              "text": " diciembre.\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-6",
+              "incorrect": "Normalemente",
+              "correct": "Normalmente"
+            },
+            {
+              "type": "text",
+              "text": " hago las clases "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-7",
+              "incorrect": "Preply",
+              "correct": "de Preply"
+            },
+            {
+              "type": "text",
+              "text": " después "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-8",
+              "incorrect": "el",
+              "correct": "del"
+            },
+            {
+              "type": "text",
+              "text": " dia a las 22:00 o 23:00 cuando mi familia está en la cama. Cuando busqué "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-9",
+              "incorrect": "professores",
+              "correct": "profesores"
+            },
+            {
+              "type": "text",
+              "text": ", teniá un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-10",
+              "incorrect": "filtre por",
+              "correct": "filtro para"
+            },
+            {
+              "type": "text",
+              "text": " las clases "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-11",
+              "incorrect": "en",
+              "correct": "a las"
+            },
+            {
+              "type": "text",
+              "text": " 22:00 y 23:00, pero ahora veo que "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-12",
+              "incorrect": "tengas solomente las",
+              "correct": "solo tienes"
+            },
+            {
+              "type": "text",
+              "text": " clases "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-13",
+              "incorrect": "hasta",
+              "correct": "hasta las"
+            },
+            {
+              "type": "text",
+              "text": " 21:00.\n\nSería "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-14",
+              "incorrect": "posibile",
+              "correct": "posible"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-15",
+              "incorrect": "también hacer clases",
+              "correct": "hacer clases también"
+            },
+            {
+              "type": "text",
+              "text": " a las 22:00?\n\nGracias "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-1-fc-16",
+              "incorrect": "al avancia",
+              "correct": "de antemano"
+            }
+          ],
+          "flashcardsCount": 16,
+          "wordCount": 85
+        },
+        {
+          "id": "2026-10-27-sec-2",
+          "day": "2026-10-27",
+          "sectionIndex": 2,
+          "language": "es",
+          "rawText": "Hola Sara, gracias por la respuesta rápida. Me llamo Edward, yo soy [un desarrollador;desarrollador de] software [que viva;y vivo] en Berlín. Mi nivel de español es casi B1, pero no tengo muchas oportunidades de [hablar;hablarlo], así que [quiero;me gustaría] [praticar;practicar] la conversación.\n\nNecesito español [por;para] hablar con collegas y amigos en línea de [Espagne;España] y Colombia. También corre los maratones y [en año proximo;el año que viene] quiero correr otro maratón en España.\n\nPara mi clases de [Preply en francés;francés en Preply], creo [los ejercicios;ejercicios] para [mi;mí] con IA y los profesores y yo [trabajandan;trabajamos] juntos [ayundandanme;para ayundarme] con la [prononciación;pronunciación], [compréhención;comprensión], etc. Como [desarrollador;soy desarrollador de] software, es [facíl;fácil] para [mi;mí], [et por los;y los] [professores;profesores] no necesitan [preparan;preparar] nada, así que es un win-win y funcion muy bien.\n\nSi te paracen bien, [reserveré;reservaré] una primera clase contigo.\n\nGracias de antemano",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Hola Sara, gracias por la respuesta rápida. Me llamo Edward, yo soy "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-1",
+              "incorrect": "un desarrollador",
+              "correct": "desarrollador de"
+            },
+            {
+              "type": "text",
+              "text": " software "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-2",
+              "incorrect": "que viva",
+              "correct": "y vivo"
+            },
+            {
+              "type": "text",
+              "text": " en Berlín. Mi nivel de español es casi B1, pero no tengo muchas oportunidades de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-3",
+              "incorrect": "hablar",
+              "correct": "hablarlo"
+            },
+            {
+              "type": "text",
+              "text": ", así que "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-4",
+              "incorrect": "quiero",
+              "correct": "me gustaría"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-5",
+              "incorrect": "praticar",
+              "correct": "practicar"
+            },
+            {
+              "type": "text",
+              "text": " la conversación.\n\nNecesito español "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-6",
+              "incorrect": "por",
+              "correct": "para"
+            },
+            {
+              "type": "text",
+              "text": " hablar con collegas y amigos en línea de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-7",
+              "incorrect": "Espagne",
+              "correct": "España"
+            },
+            {
+              "type": "text",
+              "text": " y Colombia. También corre los maratones y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-8",
+              "incorrect": "en año proximo",
+              "correct": "el año que viene"
+            },
+            {
+              "type": "text",
+              "text": " quiero correr otro maratón en España.\n\nPara mi clases de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-9",
+              "incorrect": "Preply en francés",
+              "correct": "francés en Preply"
+            },
+            {
+              "type": "text",
+              "text": ", creo "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-10",
+              "incorrect": "los ejercicios",
+              "correct": "ejercicios"
+            },
+            {
+              "type": "text",
+              "text": " para "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-11",
+              "incorrect": "mi",
+              "correct": "mí"
+            },
+            {
+              "type": "text",
+              "text": " con IA y los profesores y yo "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-12",
+              "incorrect": "trabajandan",
+              "correct": "trabajamos"
+            },
+            {
+              "type": "text",
+              "text": " juntos "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-13",
+              "incorrect": "ayundandanme",
+              "correct": "para ayundarme"
+            },
+            {
+              "type": "text",
+              "text": " con la "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-14",
+              "incorrect": "prononciación",
+              "correct": "pronunciación"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-15",
+              "incorrect": "compréhención",
+              "correct": "comprensión"
+            },
+            {
+              "type": "text",
+              "text": ", etc. Como "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-16",
+              "incorrect": "desarrollador",
+              "correct": "soy desarrollador de"
+            },
+            {
+              "type": "text",
+              "text": " software, es "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-17",
+              "incorrect": "facíl",
+              "correct": "fácil"
+            },
+            {
+              "type": "text",
+              "text": " para "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-18",
+              "incorrect": "mi",
+              "correct": "mí"
+            },
+            {
+              "type": "text",
+              "text": ", "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-19",
+              "incorrect": "et por los",
+              "correct": "y los"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-20",
+              "incorrect": "professores",
+              "correct": "profesores"
+            },
+            {
+              "type": "text",
+              "text": " no necesitan "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-21",
+              "incorrect": "preparan",
+              "correct": "preparar"
+            },
+            {
+              "type": "text",
+              "text": " nada, así que es un win-win y funcion muy bien.\n\nSi te paracen bien, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-2-fc-22",
+              "incorrect": "reserveré",
+              "correct": "reservaré"
+            },
+            {
+              "type": "text",
+              "text": " una primera clase contigo.\n\nGracias de antemano"
+            }
+          ],
+          "flashcardsCount": 22,
+          "wordCount": 133
+        },
+        {
+          "id": "2026-10-27-sec-3",
+          "day": "2026-10-27",
+          "sectionIndex": 3,
+          "language": "es",
+          "rawText": "Gracias por [los;la] información, y [congratulaciónes;enhorabuena] por [tan muchos;tener tantos] estudiantes!\n\nSí, tengo un máster en TESOL y creo mis [mismos;proprios] ejercicios, así que [busco solo algién;solo busco a alguien] que hable español y [puede correctar;pueda corrigir] mi pronunciación de vez en cuando. Te deseo lo mejor. Edward",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Gracias por "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-3-fc-1",
+              "incorrect": "los",
+              "correct": "la"
+            },
+            {
+              "type": "text",
+              "text": " información, y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-3-fc-2",
+              "incorrect": "congratulaciónes",
+              "correct": "enhorabuena"
+            },
+            {
+              "type": "text",
+              "text": " por "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-3-fc-3",
+              "incorrect": "tan muchos",
+              "correct": "tener tantos"
+            },
+            {
+              "type": "text",
+              "text": " estudiantes!\n\nSí, tengo un máster en TESOL y creo mis "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-3-fc-4",
+              "incorrect": "mismos",
+              "correct": "proprios"
+            },
+            {
+              "type": "text",
+              "text": " ejercicios, así que "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-3-fc-5",
+              "incorrect": "busco solo algién",
+              "correct": "solo busco a alguien"
+            },
+            {
+              "type": "text",
+              "text": " que hable español y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-3-fc-6",
+              "incorrect": "puede correctar",
+              "correct": "pueda corrigir"
+            },
+            {
+              "type": "text",
+              "text": " mi pronunciación de vez en cuando. Te deseo lo mejor. Edward"
+            }
+          ],
+          "flashcardsCount": 6,
+          "wordCount": 44
+        },
+        {
+          "id": "2026-10-27-sec-4",
+          "day": "2026-10-27",
+          "sectionIndex": 4,
+          "language": "es",
+          "rawText": "gracias por [la respuesta;responder tan] rápido. Me llamo Edward, soy desarrollador de software y vivo en Berlín.\n\nMi [objectivo;objetivo] [para;de] aprender español es que, [comenzando;a partir] de diciembre, [trabajo;voy a trabajar] en línea con un amigo desarrollador [en Colombia;que viva en Colombia] y queremos hablar en inglés y español sobre un proyecto de software. También corro [los marathones;maratones] y, [en;el] año que viene, quiero correr otro maratón en España y [hacer las vacaciones allí;pasar allí las vacaciones]. Ahora mismo tengo un nivel [hablando de A2;A2 al hablar] pero [está;estoy] muy motivado por las razones [antes mencionadas;que he mencionado].\n\nCrecí en Estados Unidos, así que mi lengua materna es inglés, pero llevo más de 30 años viviendo en Europa y hablo [C1 alemán;alemán a nivel C1] y [B2 francés;francés a nivel B2]. Tengo un máster [de;en] TESOL (Teaching English to Speakers of Other Languages) y he [trabajo;trabajado] como profesor de inglés [por;durante] más de 10 años. [Yo amo;Me encantan los] idiomas y [estoy interessiert en;me interesa mucho] los [methódes;méthodos] de [aprendenzas de linguas;aprendizaje de idiomas].\n\nEn los últimos meses he [utilizado;usado] Preply [por;para] practicar mi francés. [Por mi;Para mis] clases, utilizo IA [por;para] crear textos y ejercicios ([un;en un] sitio web) sobre temas que [interesieren nosotros;nos interesan]. En [la clase;clase], leo los textos en voz alta, los profesores [corrigan;corrigen] [mes;mis] [errores;errores de] pronunciación y, después, hacemos juntos [les;los] ejercicios y discutimos las [questiones;preguntas]. Como desarrollador, [es fácil para mí de;me resulta fácil] crear estas actividades interactivas, y los profesores [tengan;no tienen que] preparar nada [por;para] la clase. Así que es un win-win y [functione;funciona] muy bien.\n\nSi te parece bien, [voy;voy a] crear un texto y [ejercijios;ejercicios] interactivos sobre Colombia, por ejemplo, y [réservo;reservaré] una clase contigo y podemos probarlo. Quizás tengas ideas sobre cómo mejorar estos ejercicios, basándote en tu experiencia en la enseñanza y la psicología. Eso me interesaría.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "gracias por "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-1",
+              "incorrect": "la respuesta",
+              "correct": "responder tan"
+            },
+            {
+              "type": "text",
+              "text": " rápido. Me llamo Edward, soy desarrollador de software y vivo en Berlín.\n\nMi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-2",
+              "incorrect": "objectivo",
+              "correct": "objetivo"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-3",
+              "incorrect": "para",
+              "correct": "de"
+            },
+            {
+              "type": "text",
+              "text": " aprender español es que, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-4",
+              "incorrect": "comenzando",
+              "correct": "a partir"
+            },
+            {
+              "type": "text",
+              "text": " de diciembre, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-5",
+              "incorrect": "trabajo",
+              "correct": "voy a trabajar"
+            },
+            {
+              "type": "text",
+              "text": " en línea con un amigo desarrollador "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-6",
+              "incorrect": "en Colombia",
+              "correct": "que viva en Colombia"
+            },
+            {
+              "type": "text",
+              "text": " y queremos hablar en inglés y español sobre un proyecto de software. También corro "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-7",
+              "incorrect": "los marathones",
+              "correct": "maratones"
+            },
+            {
+              "type": "text",
+              "text": " y, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-8",
+              "incorrect": "en",
+              "correct": "el"
+            },
+            {
+              "type": "text",
+              "text": " año que viene, quiero correr otro maratón en España y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-9",
+              "incorrect": "hacer las vacaciones allí",
+              "correct": "pasar allí las vacaciones"
+            },
+            {
+              "type": "text",
+              "text": ". Ahora mismo tengo un nivel "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-10",
+              "incorrect": "hablando de A2",
+              "correct": "A2 al hablar"
+            },
+            {
+              "type": "text",
+              "text": " pero "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-11",
+              "incorrect": "está",
+              "correct": "estoy"
+            },
+            {
+              "type": "text",
+              "text": " muy motivado por las razones "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-12",
+              "incorrect": "antes mencionadas",
+              "correct": "que he mencionado"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nCrecí en Estados Unidos, así que mi lengua materna es inglés, pero llevo más de 30 años viviendo en Europa y hablo "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-13",
+              "incorrect": "C1 alemán",
+              "correct": "alemán a nivel C1"
+            },
+            {
+              "type": "text",
+              "text": " y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-14",
+              "incorrect": "B2 francés",
+              "correct": "francés a nivel B2"
+            },
+            {
+              "type": "text",
+              "text": ". Tengo un máster "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-15",
+              "incorrect": "de",
+              "correct": "en"
+            },
+            {
+              "type": "text",
+              "text": " TESOL (Teaching English to Speakers of Other Languages) y he "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-16",
+              "incorrect": "trabajo",
+              "correct": "trabajado"
+            },
+            {
+              "type": "text",
+              "text": " como profesor de inglés "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-17",
+              "incorrect": "por",
+              "correct": "durante"
+            },
+            {
+              "type": "text",
+              "text": " más de 10 años. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-18",
+              "incorrect": "Yo amo",
+              "correct": "Me encantan los"
+            },
+            {
+              "type": "text",
+              "text": " idiomas y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-19",
+              "incorrect": "estoy interessiert en",
+              "correct": "me interesa mucho"
+            },
+            {
+              "type": "text",
+              "text": " los "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-20",
+              "incorrect": "methódes",
+              "correct": "méthodos"
+            },
+            {
+              "type": "text",
+              "text": " de "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-21",
+              "incorrect": "aprendenzas de linguas",
+              "correct": "aprendizaje de idiomas"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nEn los últimos meses he "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-22",
+              "incorrect": "utilizado",
+              "correct": "usado"
+            },
+            {
+              "type": "text",
+              "text": " Preply "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-23",
+              "incorrect": "por",
+              "correct": "para"
+            },
+            {
+              "type": "text",
+              "text": " practicar mi francés. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-24",
+              "incorrect": "Por mi",
+              "correct": "Para mis"
+            },
+            {
+              "type": "text",
+              "text": " clases, utilizo IA "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-25",
+              "incorrect": "por",
+              "correct": "para"
+            },
+            {
+              "type": "text",
+              "text": " crear textos y ejercicios ("
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-26",
+              "incorrect": "un",
+              "correct": "en un"
+            },
+            {
+              "type": "text",
+              "text": " sitio web) sobre temas que "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-27",
+              "incorrect": "interesieren nosotros",
+              "correct": "nos interesan"
+            },
+            {
+              "type": "text",
+              "text": ". En "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-28",
+              "incorrect": "la clase",
+              "correct": "clase"
+            },
+            {
+              "type": "text",
+              "text": ", leo los textos en voz alta, los profesores "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-29",
+              "incorrect": "corrigan",
+              "correct": "corrigen"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-30",
+              "incorrect": "mes",
+              "correct": "mis"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-31",
+              "incorrect": "errores",
+              "correct": "errores de"
+            },
+            {
+              "type": "text",
+              "text": " pronunciación y, después, hacemos juntos "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-32",
+              "incorrect": "les",
+              "correct": "los"
+            },
+            {
+              "type": "text",
+              "text": " ejercicios y discutimos las "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-33",
+              "incorrect": "questiones",
+              "correct": "preguntas"
+            },
+            {
+              "type": "text",
+              "text": ". Como desarrollador, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-34",
+              "incorrect": "es fácil para mí de",
+              "correct": "me resulta fácil"
+            },
+            {
+              "type": "text",
+              "text": " crear estas actividades interactivas, y los profesores "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-35",
+              "incorrect": "tengan",
+              "correct": "no tienen que"
+            },
+            {
+              "type": "text",
+              "text": " preparar nada "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-36",
+              "incorrect": "por",
+              "correct": "para"
+            },
+            {
+              "type": "text",
+              "text": " la clase. Así que es un win-win y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-37",
+              "incorrect": "functione",
+              "correct": "funciona"
+            },
+            {
+              "type": "text",
+              "text": " muy bien.\n\nSi te parece bien, "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-38",
+              "incorrect": "voy",
+              "correct": "voy a"
+            },
+            {
+              "type": "text",
+              "text": " crear un texto y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-39",
+              "incorrect": "ejercijios",
+              "correct": "ejercicios"
+            },
+            {
+              "type": "text",
+              "text": " interactivos sobre Colombia, por ejemplo, y "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-4-fc-40",
+              "incorrect": "réservo",
+              "correct": "reservaré"
+            },
+            {
+              "type": "text",
+              "text": " una clase contigo y podemos probarlo. Quizás tengas ideas sobre cómo mejorar estos ejercicios, basándote en tu experiencia en la enseñanza y la psicología. Eso me interesaría."
+            }
+          ],
+          "flashcardsCount": 40,
+          "wordCount": 287
+        }
+      ],
+      "totalWords": 549,
+      "totalFlashcards": 84
     }
   ],
-  "totalSections": 32,
-  "totalWords": 2940,
-  "totalFlashcards": 396
+  "totalSections": 37,
+  "totalWords": 3820,
+  "totalFlashcards": 546
 }
