@@ -31,16 +31,16 @@ There are three user groups:
 
 The languages currently active and supported in the application are:
 - English (`en`): `#9333ea` (purple)
+- German (`de`): `#7e4402` (brown)
 - French (`fr`): `#333388` (dark blue)
 - Spanish (`es`): `#be185d` (magenta / pink-red)
 - Italian (`it`): `#194d19` (dark green / forest green)
 - Dutch (`nl`): `#d97706` (mustard-orange)
 - Polish (`pl`): `#b8b8b8` (light grey)
-- German (`de`): `#7e4402` (brown)
 - Russian (`ru`): `#3f3f46` (dark grey)
+- Greek (`el`): `#0d9488` (teal / emerald)
 - Icelandic (`is`): `#06b6d4` (cyan / light blue)
 - Danish (`da`): `#ff1493` (hot pink)
-- Greek (`el`): `#0d9488` (teal / emerald)
 
 # target languages order
 
