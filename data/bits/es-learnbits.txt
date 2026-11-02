@@ -1,90 +1,225 @@
-- preply
-	- ESCRIBIR A
-		- TARIFA ECONÓMICA
-			- ,, Karla R.
-				- //psicóloga
-				- Colombia
-				- 6, 22+ lunes, ---, ---, jueves, ---, domingo
-				- https://preply.com/es/profesor/8726419
-				- hablante nativa de español de 
-				- soy psicóloga apasionada por la comunicación, las relaciones humanas y las diferentes culturas.
-				- 2019-2025 Universidad Pólitecnico Gran Colombiano
-			- Cesar M.
-				- //timo
-				- México
-				- 8, 22+ lunes, martes, miércoles, jueves, viernes, ---, domingo
-		- ESPAÑA
-			- Daniel S.
-				- //guy
-				- España
-				- 9, 22+ 6/7 lunes, ---, miércoles, jueves, viernes, sábado, domingo
-				- https://preply.com/es/profesor/8746468
-				- Me he graduado en Genética y ahora estoy haciendo un máster en Glasgow.
-		- DESARROLLADOR SOFTWARE
-			- ,, Timothy M.
-				- //rayray
-				- Ecuador
-				- 5, 22+ lunes, ---, miércoles, jueves, viernes, sábado, ---
-				- https://preply.com/es/profesor/8308695
-				- 2023-2025 Instituto Tecnológico Superior Compu Sur
-				- Toco el piano
-			- Alejandro P.
-				- //qubidudev
-				- Argentina
-				- 9, 22+ lunes, ---, miércoles, jueves, viernes, ---, ---
-				- 9 años desarrollador software
-				- Él enseña español e italiano.
-	- NO SELECCIONADO
-		- Irene L. 
-			- //Ludi
-			- 8, Mié, Jue, Vie, Dom: 23:00, 22:00
-			- 11 clases
-			- idioms
-				- inglés C2
-				- italiano C2
-				- holandés A1
-			- de Madrid
-				- ha vivido en Italia, Australia y Países Bajos, y he viajado mucho por Latinoamérica, Europa y Asia
-			- un espacio relajado
-			- Te ayudo a mejorar sin interrumpir constantemente la conversación, reformulando frases cuando sea útil
-			- *** Al final de la clase, también podemos repasar los errores más comunes para que sepas en qué centrarte
-			- tiene más de un año de experiencia enseñando español online en otras plataformas y presencialmente mientras viajo
-			- mis diez años de experiencia en una empresa Big Four y una multinacional, en áreas como finanzas, estrategia, gestión de proyectos y marketing
-			- hagamos que te sientas cada vez más cómodo/a al comunicarte!
-			- *** temas que te sacan de tu zona de confort
-			- *** two sentences same
-			- ella no respondió
-		- Sara M.
-			- //70s
-			- 6, Mar-Vie 23:00
-			- todavía no hay clases
-			- siempre viví en España
-			- Educación Primaria
-			- idiomas
-				- francés y español como lengua materna
-				- inglés: C1
-				- italiano: B2
-			- habla rápido
-			- está cursando el máster de ELE: Enseñanza de Español como Lengua Extranjera
-			- muy flexible
-			- Ella subió su precio.
-		- Laura R.
-			- //Sara
-			- 9, Mar-Dom 22:00
-			- de Sevilla
-			- idioms
-				- inglés C1
-				- francés B2
-			- Me gradué como Traductora de Español a Inglés y Francés hace 4 años
-			- Actualmente me encuentro en Reino Unido buscando trabajo
-			- ella subió su precio a 14
-		- Alejandra R.
-			- //annika
-			- 9, martes, miércoles, jeuves 21:00
-			- Me gusta adaptar las clases a cada persona
-			- Soy graduada en Educación Primaria
-			- 2018-2022 Universidad de Zaragoza
-			- no podía reunirse tarde con regularidad
+- verbs
+	- hablar
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+	- comer
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+	- vivir
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+		- 
+	- ir
+		- voy, vas, va, vamos, vais, van
+		- iba, ibas, iba, íbamos, ibais, iban
+		- fui, fuiste, fue, fuimos, fuisteis, fueron
+		- iré, irás, irá, iremos, iréis, irán
+		- iría, irías, iría, iríamos, iríais, irían
+		- vaya, vayas, vaya, vayamos, vayáis, vayan
+		- fuera, fueras, fuera, fuéramos, fuerais, fueran
+		- yendo, ido
+	- ser
+		- soy, eres, es, somos, sois, son
+		- era, eras, era, éramos, erais, eran
+		- fui, fuiste, fue, fuimos, fuisteis, fueron
+		- seré, serás, será, seremos, seréis, serán
+		- sería, serías, sería, seríamos, seríais, serían
+		- sea, seas, sea, seamos, seáis, sean
+		- fuera, fueras, fuera, fuéramos, fuerais, fueran
+		- siendo, sido
+	- estar
+		- estoy, estás, está, estamos, estáis, están
+		- estaba, estabas, estaba, estábamos, estabais, estaban
+		- estuve, estuvista, estuvo, estuvimos, estisteis, estuvieron
+		- estaré, estarás, estará, estaremos, estaréis, estarán
+		- estaría, estarías, estaría, estaríamos, estaríais, estarían
+		- esté, estés, esté, estemos, estéis, estén
+		- estuviera, estuvieras, estuviera, estuviéramos, estuvierais, estuvieran
+		- estando, estado
+	- haber
+		- he, has, ha/hay, hemos, habéis, han
+		- había, habías, había, habíamos, habíais, habían
+		- hube, hubiste, hubo, hubimos, hubisteis, hubieron
+		- habré, habrás, habrá, habremos, habréis, habrán
+		- habría, habrían, habría, habríamos, habrías, habrían
+		- haya, hayas, haya, hayamos, hayáis, hayan
+		- hubiera, hubieras, hubiera, hubiéramos, hubierais, hubieran
+		- habiendo, habido
+	- tener
+		- tengo, tienes, tiene, tenemos, tenéis, tienen
+		- tenía, tenías, tenía, teníamos, teníais, tenían
+		- tuve, tuviste, tuvo, tuvimos, tuvisteis, tuvieron
+		- tendré, tendrás, tendrá, tendremos, tendréis, tendrán
+		- tendría, tendrías, tendría, tendríamos, tendríais, tendrían
+		- tenga, tengas, tenga, tengamos, tengáis, tengan
+		- tuviera, tuvieras, tuviera, tuviéramos, tuvierais, tuvieran
+	- hacer
+		- hago, haces, hace, hacemos, hacéis, hacen
+		- hacía, hacías, hacía, hacíamos, hacíais, hacían
+		- hice, hiciste, hizo, hicimos, hicisteis, hicieron
+		- haré, harás, hará, haremos, haréis, harán
+		- haría, harías, haría, haríamos, haríais, harían
+		- haga, hagas, haga, hagamos, hagáis, hagan
+		- hiciera, hicieras, hiciera, hiciéramos, hicierais, hicieran
+		- haciendo, hecho
+- moving on words
+	- gracias por el consejo, no lo sabía
+	- perfecto, pasemos a lo siguiente
+	- entendido, entonces, cuál es el siguiente punto
+	- vale, gracias, continuemos
+	- muy bien, vamos al siguiente tema
+	- gracias por eso, qué más hay
+	- de acuerdo, cambiemos de tema
+	- no lo sabía, interesante, sigamos
+	- claro, pasemos a lo próximo
+	- genial, cuál es el siguiente
+- hello how are you
+	- hola, cómo estás / bien, y tú
+	- hola, qué tal / todo bien, y tú
+	- buenos días, cómo está / bien, gracias y usted
+	- hola, cómo te va / bien, y a ti
+	- qué tal todo / todo bien, y tú
+	- hola, cómo andas / bien, y tú
+	- buenas, cómo estás / muy bien, y tú
+	- ey, qué hay / todo bien, y tú
+	- hola, todo bien / sí, todo bien, y tú
+	- buenas tardes, cómo le va / bien, gracias, y a usted
+- por vs. para
+	- por
+		- FOR A REASON, A CAUSE, DUE TO, BECAUSE: debido a una causa o razón
+			- no pudimos asistir al concierto por culpa del tráfico intenso
+			- recibieron una multa por exceder el límite de velocidad
+			- no fui a clase por la lluvia
+			- no salió de casa por vergüenza de hablar con sus vecinos
+			- cancelaron el viaje por falta de dinero
+			- no quiso subir al avión por temor a volar
+		- FOR 5 DOLLARS: para especificar el precio en transacciones comerciales
+			- compré estos tres cuadernos usados por cinco euros 
+			- vendido por un millón de dólares en una prestigiosa subasta
+		- FOR 2 HOURS: indica cuánto tiempo
+			- estudiamos en la biblioteca pour cuatro horas continuas
+			- estudié por dos horas
+			- nos quedaremos en este hotel solamente por dos noches
+		- BY TELEPHONE: el medio, canal o instrumento mediante
+			- el paquete urgente fue enviado ayer por correo certificado
+			- te llammo por teléfono
+			- mandé el contrato firmado por fax hace unos minutos
+		- IN THE CENTER: indica dónde se encuentra algo
+			- vivo por el centro
+				- PERO: viví en el centro (más preciso)
+		- THROUGH/VIA: indica el lugar o conducto a través del cual se realiza un movimiento
+			- el ladrón intentó escapar saltando por la ventana
+			- enviaron las invitaciones de la boda por correo postal tradicional
+			- ellos salieron corriendo por el parque en dirección a la estación
+			- el niño miraba con asombro por el telescopio astronómico
+		- ALONG THE SHORE: el espacio físico a través a lo largo del cual se transita
+			- caminaron despacio por la orilla del río al atardecer
+		- BY A PERSON: introduce el agente que realiza la acción en la voz pasiva
+			- el cuadro fue restaurado cuidadosamente por un experto del museo
+			- ese edificio fue diseñado por un arquitecto de renombre internacional
+			- este cuadro es de Picasso
+		- TWO TIMES FIVE: para expresar una multiplicación
+			- dos por cinco son diez
+		- TRADE YOU FOR: para expresar intercambios
+			- te cambio mi bolígrafo rojo por tu lápiz negro
+		- ON TRACK 5: para designar la vía por donde un vehículo llega, sale o pasa
+			- el tren con destino a Valencia saldrá por la vía tres
+			- el avión con destino a Bogotá sale por la puerta número doce
+		- FOR A PERSON: expresses the emotional motivation that drives one to act on someone's behalf
+			- hizo todo el sacrificio por sus hijos
+		- INSTEAD A PERSON: para indicar sustitución o representación de otra persona
+			- no te preocupes si no puedes ir a la junta; yo hablaré por ti
+		- IN THE MORNING: expresa la parte del día
+			- nos veremos por la tarde, cuando baje el calor
+		- TAKE THE DIRT ROAD: designa la ruta o vía física elegida para transitar
+			- la autopista está cerrada, así que iremos por el camino de tierra
+			- vamos por la carretera secundaria
+		--- FIXED ------------------------------------	
+		- HAS TO BE: "estar por + infinitivo" denota una acción pendiente que aún no se ha realizado
+			- la casa está todavía por pintar, las paredes están desnudas
+			- el coche está todavía por reparar, no podemos utilizarlo
+			- los documentos están por firmar; el director aún no los ha revisado
+			- la cena está por preparar; todavía no hemos empezado a cocinar
+		- FOR NOW: "Por ahora" es una locución temporal que significa provisionalmente o por el momento
+			- no puedo dar una respuesta concluyente por ahora
+		- FIGHT TO SURVIVE: con verbos de lucha y esfuerzo (luchar, pelear, esforzarse), "por" introduce la meta o causa por la que se combate
+			- el alpinista luchó bravamente por sobrevivir en la tormenta
+		- FINALLY: "Por fin" es una locución adverbial fija que denota que algo largamente esperado se ha consumado
+			- por fin hemos terminado todo el proyecto de investigación
+		- ON TOP OF: "por encima de" indica ubicación o paso superior
+			- el avión vuela a diez mil metros por encima de las nubes
+			- la temperatura está por encima de los 30 grados
+		- THANKS FOR YOUR HELP: el verbo "agradecer" rige "por" para introducir el motivo del agradecimiento
+			- le agradecí profundamente por toda su valiosa ayuda
+		- KM PER HOUR: para expresar tasas, proporciones, velocidad o unidades de medida
+			- el ciclista pedaleaba a cincuenta kilómetros por hora
+		- APPARENTLY: "por lo visto" es una locución fija que expresa una deducción o evidencia aparente
+			- por lo visto, la reunión se cancelará debido a la falta de quórum
+		- FOR XMAS: se usa con festividades o épocas para expresar una fecha aproximada
+			- nos veremos aproximadamente por Navidad si las circunstancias lo permiten
+	- para
+		- IN ORDER TO: para indicar el propósito (purpose) o finalidad de una acción
+			- viajamos a París para pasar nuestras vacaciones de verano
+			- para llegar temprano a la reunión, tuve que levantarme a las cinco
+			- tuvimos que detenernos para repostar gasolina en la autopista
+			- compré harina y levadura para hacer pan casero el domingo
+			- este software fue programado específicamente para optimizar bases de datos
+			- estudio español para trabajar en España
+			- PERO
+				- fui allí a comprar un cuaderno
+		- FOR HIM: señala al destinatario o receptor final de un objeto o acción
+			- compré este regalo especial para ti
+		- BY THEN: para marcar una fecha límite en el futuro (by March 15th)
+			- debo entregar la solicitud de beca para el 15 de marzo
+			- tienes que entregar el trabajo para el lunes
+		- AS FOR ME: introducir una opinión o perspectiva personal
+			- para mí, la propuesta presentada carece de fundamentos sólidos
+			- para mí, la honestidad es el valor más importante en una amistad
+			- para mí, es una buena idea
+		- IT IS FOR: indica la función, uso o utilidad de un objeto
+			- la taza sirve para tomar café o té caliente
+			- este cuchillo es para cortar pan
+		- TO A PLACE: expresa dirección hacia un destino específico
+			- este autobús va para el aeropuerto internacional
+			- vamos para Madrid
+		- FOR A BEGINNER: para establecer una comparación con una norma o expectativa
+			- para un principiante, tocas la guitarra con mucha soltura
+			- para ser tan joven, demuestra una gran madurez emocional
+			- es muy alto para su edad
+		- FOR EACH SECTION: expresa la finalidad o el destino de algo
+			- creé un título para cada sección
+		- FOR 4 O'CLOCK: para fijar una hora o momento previsto para un evento específico
+			- tengo una cita médica concertada para las cuatro de la tarde
+		- WORKS FOR: para indicar el empleador o empresa que contrata a alguien
+			- mi tío trabaja para una conocida empresa tecnológica multinacional
+		- SUITABLE FOR: el adjetivo "apto" rige la preposición "para" para denotar la finalidad o uso al que se adecúa algo
+			- el agua no es apta para el consumo humano
+		- FOR TOMORROW: indica el momento futuro asignado o aplazado para realizar una actividad
+			- dejemos este asunto pendiente para mañana por la mañana
+		--- FIXED -------------------------------
+		- READY TO: "estar para + infinitivo" significa estar a punto de ocurrir o en disposición inminente de suceder
+			- el tren está para salir, suban de inmediato
+		- IT'S GOOD FOR THAT: "Bueno para + infinitivo/sustantivo" indica la finalidad o afección que remedia un fármaco
+			- esa medicina es muy buena para combatir el dolor de cabeza
+		- WILL BE USED FOR: "servir para + infinitivo" expresa el destino o finalidad práctica a la que se destinarán los fondos
+			- el dinero recaudado servirá para construir una escuela comunitaria
 - quedar vs. quedarse
 	- quedar
 		- fijar una cita o ponerse de acuerdo para verse
@@ -108,106 +243,3 @@
 			- este fin de semana estoy muy cansado, así que voy a quedarme en casa descansando
 		-  describir la transición accidental o natural hacia el estado de sueño
 			- la película era tan aburrida que Juan se quedó dormido en los primeros veinte minutos
-
-- por vs. para
-	- por
-		- FOR 5 DOLLARS: para especificar el precio en transacciones comerciales
-			- compré estos tres cuadernos usados por cinco euros 
-			- vendido por un millón de dólares en una prestigiosa subasta
-		- FOR A REASON, DUE TO, BECAUSE: debido a una causa o razón
-			- no pudimos asistir al concierto por culpa del tráfico intenso
-			- recibieron una multa por exceder el límite de velocidad
-		- para indicar la duración de una acción en el tiempo
-			- estudiamos en la biblioteca pour cuatro horas continuas
-		- movement through
-		- el medio, canal o instrumento mediante el cual se efectúa una transmisión
-			- el paquete urgente fue enviado ayer por correo certificado
-		- multiplication
-		- on behalf of
-		- FOR TWO NIGHTS: expresa la duración de tiempo que durará una estancia o actividad
-			- nos quedaremos en este hotel solamente por dos noches
-		- ALONG THE SHORE: el espacio físico a través a lo largo del cual se transita
-			- caminaron despacio por la orilla del río al atardecer
-		- TRADE YOU FOR: para expresar intercambios
-			- te cambio mi bolígrafo rojo por tu lápiz negro
-		- ON TRACK 5: para designar la vía por donde sale o pasa un vehículo
-			- el tren con destino a Valencia saldrá por la vía tres
-			- el avión con destino a Bogotá sale por la puerta número doce
-		- BY A PERSON: introduce el agente que realiza la acción en la voz pasiva
-			- el cuadro fue restaurado cuidadosamente por un experto del museo
-			- ese edificio fue diseñado por un arquitecto de renombre internacional
-		- THROUGH/VIA: indica el lugar o conducto a través del cual se realiza un movimiento
-			- el ladrón intentó escapar saltando por la ventana
-			- enviaron las invitaciones de la boda por correo postal tradicional
-			- ellos salieron corriendo por el parque en dirección a la estación
-			- el niño miraba con asombro por el telescopio astronómico
-		- FOR THAT PERSON: expresa el beneficio, causa o motivación emocional que impulsa a actuar a favor de alguien
-			- hizo todo el sacrificio por sus hijos
-		- INSTEAD OF YOU: para indicar sustitución o representación de otra persona
-			- no te preocupes si no puedes ir a la junta; yo hablaré por ti
-		- IN THE MORNING: expresa la parte del día de forma indeterminada (por la mañana/tarde/noche)
-			- nos veremos por la tarde, cuando baje el calor
-		- BY FAX: para especificar el medio de comunicación o transporte empleado
-			- mandé el contrato firmado por fax hace unos minutos
-		- HAS TO BE: "estar por + infinitivo" denota una acción pendiente que aún no se ha realizado
-			- la casa está todavía por pintar, las paredes están desnudas
-		- FOR NOW: "Por ahora" es una locución temporal que significa provisionalmente o por el momento
-			- no puedo dar una respuesta concluyente por ahora
-		- FIGHT TO SURVIVE: con verbos de lucha y esfuerzo (luchar, pelear, esforzarse), "por" introduce la meta o causa por la que se combate
-			- el alpinista luchó bravamente por sobrevivir en la tormenta
-		- FINALLY: "Por fin" es una locución adverbial fija que denota que algo largamente esperado se ha consumado
-			- por fin hemos terminado todo el proyecto de investigación
-		- ON TOP OF: "por encima de" indica ubicación o paso superior
-			- el avión vuela a diez mil metros por encima de las nubes
-		- THANKS FOR YOUR HELP: el verbo "agradecer" rige "por" para introducir el motivo del agradecimiento
-			- le agradecí profundamente por toda su valiosa ayuda
-		- FOR FEAR OF: "para miedo" no tiene sentido, pues el miedo es la causa interna y no el fin perseguido
-			- el testigo habló con el juez por miedo a represalias
-		- TAKE THE DIRT ROAD: designa la ruta o vía física elegida para transitar
-			- la autopista está cerrada, así que iremos por el camino de tierra
-		- KM PER HOUR: para expresar tasas, proporciones, velocidad o unidades de medida
-			- el ciclista pedaleaba a cincuenta kilómetros por hora
-		- APPARENTLY: "por lo visto" es una locución fija que expresa una deducción o evidencia aparente
-			- por lo visto, la reunión se cancelará debido a la falta de quórum
-		- FOR XMAS: se usa con festividades o épocas para expresar una fecha aproximada
-			- nos veremos aproximadamente por Navidad si las circunstancias lo permiten
-	--para
-		- IN ORDER TO: para indicar el propósito (purpose) o finalidad de una acción
-			- viajamos a París para pasar nuestras vacaciones de verano
-			- para llegar temprano a la reunión, tuve que levantarme a las cinco
-			- tuvimos que detenernos para repostar gasolina en la autopista
-			- compré harina y levadura para hacer pan casero el domingo
-			- este software fue programado específicamente para optimizar bases de datos
-		- FOR 4 O'CLOCK: para fijar una hora o momento previsto para un evento específico
-			- tengo una cita médica concertada para las cuatro de la tarde
-		- BY THEN: para marcar una fecha límite en el futuro (by March 15th)
-			- debo entregar la solicitud de beca para el 15 de marzo
-		- AS FOR ME: introducir una opinión o perspectiva personal
-			- para mí, la propuesta presentada carece de fundamentos sólidos
-			- para mí, la honestidad es el valor más importante en una amistad
-		- FOR A BEGINNER: para establecer una comparación con una norma o expectativa
-			- para un principiante, tocas la guitarra con mucha soltura
-			- para ser tan joven, demuestra una gran madurez emocional
-		- IT IS FOR: indica la función, uso o utilidad de un objeto
-			- la taza sirve para tomar café o té caliente
-		- WORKS FOR: para indicar el empleador o empresa que contrata a alguien
-			- my uncle works for a well-known multinational technology company
-		- TO A PLACE: expresa dirección hacia un destino específico
-			- este autobús va para el aeropuerto internacional
-		- READY TO: "estar para + infinitivo" significa estar a punto de ocurrir o en disposición inminente de suceder
-			- el tren está para salir, suban de inmediato
-		- FOR HIM: señala al destinatario o receptor final de un objeto o acción
-			- compré este regalo especial para ti
-		- FOR TOMORROW: indica el momento futuro asignado o aplazado para realizar una actividad
-			- dejemos este asunto pendiente para mañana por la mañana
-		- SUITABLE FOR: el adjetivo "apto" rige la preposición "para" para denotar la finalidad o uso al que se adecúa algo
-			- el agua no es apta para el consumo humano
-		- IT'S GOOD FOR THAT: "Bueno para + infinitivo/sustantivo" indica la finalidad o afección que remedia un fármaco
-			- esa medicina es muy buena para combatir el dolor de cabeza
-		- WILL BE USED FOR: "servir para + infinitivo" expresa el destino o finalidad práctica a la que se destinarán los fondos
-			- el dinero recaudado servirá para construir una escuela comunitaria
-			
-			
-			
-			
-			

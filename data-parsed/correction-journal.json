@@ -6090,13 +6090,178 @@
           ],
           "flashcardsCount": 40,
           "wordCount": 287
+        },
+        {
+          "id": "2026-10-27-sec-5",
+          "day": "2026-10-27",
+          "sectionIndex": 5,
+          "language": "es",
+          "rawText": "Hola Timothy!\n\nGracias por responder tan rápido. Me llamo Edward, vivo en Berlín y soy desarrollador de software. Mi nivel de español es B1, pero necesito practicar mi [abilidad;capacidad] de hablar en conversaciones [por que;porque] quiero hablar con un amigo desarrollador en Colombia en línea en español y quiero pasar las vacaciones en España.\n\n[Uso;También uso] la [plataforme;plataforma] Preply para aprender francés. Para mis clases, uso IA [por;para] crear los textos y sitios web con ejercicios interactivos sobre temas que mi [professor;profesor] y yo [tenemos;encontramos] [interessen;interesantes]. Yo leo [le;el] texto en voz alta, mi profesor corrige mis errores pronunciación, hacemos los ejercicios juntos y, después, discutimos [les;las] preguntas sobre el texto. Para mí, como desarollador, es facíl crear estos sitios, y los profesores no [tengan;tienen] que preparar nada para la clase. Así que es un win-win y funciona muy bien.\n\nSi te parece bien, puedo [reserveré;reservar] una clase contigo. [Creo;Crearé] un [sito;sitio web] sobre, por ejemplo, Ecuador. Creo que sabes mucho sobre el tema, y me gustaría aprender más sobre [el pays;ese país].\n\nGracias de antemano, Edward\n\n\n\n\n@@@",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Hola Timothy!\n\nGracias por responder tan rápido. Me llamo Edward, vivo en Berlín y soy desarrollador de software. Mi nivel de español es B1, pero necesito practicar mi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-1",
+              "incorrect": "abilidad",
+              "correct": "capacidad"
+            },
+            {
+              "type": "text",
+              "text": " de hablar en conversaciones "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-2",
+              "incorrect": "por que",
+              "correct": "porque"
+            },
+            {
+              "type": "text",
+              "text": " quiero hablar con un amigo desarrollador en Colombia en línea en español y quiero pasar las vacaciones en España.\n\n"
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-3",
+              "incorrect": "Uso",
+              "correct": "También uso"
+            },
+            {
+              "type": "text",
+              "text": " la "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-4",
+              "incorrect": "plataforme",
+              "correct": "plataforma"
+            },
+            {
+              "type": "text",
+              "text": " Preply para aprender francés. Para mis clases, uso IA "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-5",
+              "incorrect": "por",
+              "correct": "para"
+            },
+            {
+              "type": "text",
+              "text": " crear los textos y sitios web con ejercicios interactivos sobre temas que mi "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-6",
+              "incorrect": "professor",
+              "correct": "profesor"
+            },
+            {
+              "type": "text",
+              "text": " y yo "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-7",
+              "incorrect": "tenemos",
+              "correct": "encontramos"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-8",
+              "incorrect": "interessen",
+              "correct": "interesantes"
+            },
+            {
+              "type": "text",
+              "text": ". Yo leo "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-9",
+              "incorrect": "le",
+              "correct": "el"
+            },
+            {
+              "type": "text",
+              "text": " texto en voz alta, mi profesor corrige mis errores pronunciación, hacemos los ejercicios juntos y, después, discutimos "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-10",
+              "incorrect": "les",
+              "correct": "las"
+            },
+            {
+              "type": "text",
+              "text": " preguntas sobre el texto. Para mí, como desarollador, es facíl crear estos sitios, y los profesores no "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-11",
+              "incorrect": "tengan",
+              "correct": "tienen"
+            },
+            {
+              "type": "text",
+              "text": " que preparar nada para la clase. Así que es un win-win y funciona muy bien.\n\nSi te parece bien, puedo "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-12",
+              "incorrect": "reserveré",
+              "correct": "reservar"
+            },
+            {
+              "type": "text",
+              "text": " una clase contigo. "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-13",
+              "incorrect": "Creo",
+              "correct": "Crearé"
+            },
+            {
+              "type": "text",
+              "text": " un "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-14",
+              "incorrect": "sito",
+              "correct": "sitio web"
+            },
+            {
+              "type": "text",
+              "text": " sobre, por ejemplo, Ecuador. Creo que sabes mucho sobre el tema, y me gustaría aprender más sobre "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-27-sec-5-fc-15",
+              "incorrect": "el pays",
+              "correct": "ese país"
+            },
+            {
+              "type": "text",
+              "text": ".\n\nGracias de antemano, Edward\n\n\n\n\n@@@"
+            }
+          ],
+          "flashcardsCount": 15,
+          "wordCount": 176
         }
       ],
-      "totalWords": 549,
-      "totalFlashcards": 84
+      "totalWords": 725,
+      "totalFlashcards": 99
     }
   ],
-  "totalSections": 37,
-  "totalWords": 3820,
-  "totalFlashcards": 546
+  "totalSections": 38,
+  "totalWords": 3996,
+  "totalFlashcards": 561
 }
