@@ -1,31 +1,31 @@
 - verbs
 	- hablar
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
+		- hablo, hablas, habla, hablamos, habláis, hablan
+		- hablaba, hablabas, hablaba, hablábamos, hablabais, hablaban
+		- hablé, hablaste, habló, hablamos, hablasteis, hablaron
+		- hablará, hablarás, hablará, hablaremos, hablaréis, hablarán
+		- hablaría, hablarías, hablaría, hablaríamos, hablarías, hablarían
+		- hable, hables, hable, hablemos, habléis, hablen
+		- hablara, hablaras, hablara, habláramos, hablarais, hablaran
+		- hablando, hablado
 	- comer
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
+		- como, comes, come, comemos, coméis, comen
+		- comía, comías, comía, comíamos, comíais, comían
+		- comí, comiste, comió, comimos, comisteis, comieron
+		- comeré, comerás, comerá, comeremos, comeréis, comerán
+		- comería, comerías, comería, comeríamos, comeríais, comerían
+		- coma, comas, coma, comamos, comáis, coman
+		- comiera, comieras, comiera, comiéramos, comierais, comieran
+		- comiendo, comido
 	- vivir
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
-		- 
+		- vivo, vives, vive, vivimos, vivís, viven
+		- viviá, vivías, vivía, vivíamos vivíais, vivían
+		- viví, viviste, vivió, vivimos, vivisteis, vivieron
+		- viviré, vivirás, vivirá, viviremos, viviréis, vivirán
+		- viviría, vivirías, viviría, viviríamos, viviríais, vivirían
+		- viva, vivas, viva, vivamos, viváis, vivan
+		- viviera, vivieras, viviera, viviéramos, vivierais, vivieran
+		- viviendo, vivido
 	- ir
 		- voy, vas, va, vamos, vais, van
 		- iba, ibas, iba, íbamos, ibais, iban
