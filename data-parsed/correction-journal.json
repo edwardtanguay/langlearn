@@ -6096,7 +6096,7 @@
           "day": "2026-10-27",
           "sectionIndex": 5,
           "language": "es",
-          "rawText": "Hola Timothy!\n\nGracias por responder tan rápido. Me llamo Edward, vivo en Berlín y soy desarrollador de software. Mi nivel de español es B1, pero necesito practicar mi [abilidad;capacidad] de hablar en conversaciones [por que;porque] quiero hablar con un amigo desarrollador en Colombia en línea en español y quiero pasar las vacaciones en España.\n\n[Uso;También uso] la [plataforme;plataforma] Preply para aprender francés. Para mis clases, uso IA [por;para] crear los textos y sitios web con ejercicios interactivos sobre temas que mi [professor;profesor] y yo [tenemos;encontramos] [interessen;interesantes]. Yo leo [le;el] texto en voz alta, mi profesor corrige mis errores pronunciación, hacemos los ejercicios juntos y, después, discutimos [les;las] preguntas sobre el texto. Para mí, como desarollador, es facíl crear estos sitios, y los profesores no [tengan;tienen] que preparar nada para la clase. Así que es un win-win y funciona muy bien.\n\nSi te parece bien, puedo [reserveré;reservar] una clase contigo. [Creo;Crearé] un [sito;sitio web] sobre, por ejemplo, Ecuador. Creo que sabes mucho sobre el tema, y me gustaría aprender más sobre [el pays;ese país].\n\nGracias de antemano, Edward\n\n\n\n\n@@@",
+          "rawText": "Hola Timothy!\n\nGracias por responder tan rápido. Me llamo Edward, vivo en Berlín y soy desarrollador de software. Mi nivel de español es B1, pero necesito practicar mi [abilidad;capacidad] de hablar en conversaciones [por que;porque] quiero hablar con un amigo desarrollador en Colombia en línea en español y quiero pasar las vacaciones en España.\n\n[Uso;También uso] la [plataforme;plataforma] Preply para aprender francés. Para mis clases, uso IA [por;para] crear los textos y sitios web con ejercicios interactivos sobre temas que mi [professor;profesor] y yo [tenemos;encontramos] [interessen;interesantes]. Yo leo [le;el] texto en voz alta, mi profesor corrige mis errores pronunciación, hacemos los ejercicios juntos y, después, discutimos [les;las] preguntas sobre el texto. Para mí, como desarollador, es facíl crear estos sitios, y los profesores no [tengan;tienen] que preparar nada para la clase. Así que es un win-win y funciona muy bien.\n\nSi te parece bien, puedo [reserveré;reservar] una clase contigo. [Creo;Crearé] un [sito;sitio web] sobre, por ejemplo, Ecuador. Creo que sabes mucho sobre el tema, y me gustaría aprender más sobre [el pays;ese país].\n\nGracias de antemano",
           "bits": [
             {
               "type": "text",
@@ -6250,18 +6250,180 @@
             },
             {
               "type": "text",
-              "text": ".\n\nGracias de antemano, Edward\n\n\n\n\n@@@"
+              "text": ".\n\nGracias de antemano"
             }
           ],
           "flashcardsCount": 15,
-          "wordCount": 176
+          "wordCount": 174
         }
       ],
-      "totalWords": 725,
+      "totalWords": 723,
       "totalFlashcards": 99
+    },
+    {
+      "date": "2026-10-30",
+      "sections": [
+        {
+          "id": "2026-10-30-sec-1",
+          "day": "2026-10-30",
+          "sectionIndex": 1,
+          "language": "es",
+          "rawText": "Gracias por [nuestra proximo sujeta;nuestro proximo tema], es una idea bacana! Aquí [es;está] la actividad [por;para] mañana:\n\nVolcanes de Ecuador: Rutas, Cumbres y Jerga Andina\nhttps://language-learning-activities.vercel.app/topics/volcanesecuador\n\nHe [programmado;programado] todas nuestras clases por las [proximas;próximas] semanas. Después de programar todas las clases, siempre cancelo mi suscripción para que Preply no pueda [realizar;hacer] cargos en mi cuenta de PayPal sin que yo lo sepa. Así que no te preocupes por los mensajes de cancelación que puedas recibir.\n\nHasta mañana!",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Gracias por "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-30-sec-1-fc-1",
+              "incorrect": "nuestra proximo sujeta",
+              "correct": "nuestro proximo tema"
+            },
+            {
+              "type": "text",
+              "text": ", es una idea bacana! Aquí "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-30-sec-1-fc-2",
+              "incorrect": "es",
+              "correct": "está"
+            },
+            {
+              "type": "text",
+              "text": " la actividad "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-30-sec-1-fc-3",
+              "incorrect": "por",
+              "correct": "para"
+            },
+            {
+              "type": "text",
+              "text": " mañana:\n\nVolcanes de Ecuador: Rutas, Cumbres y Jerga Andina\nhttps://language-learning-activities.vercel.app/topics/volcanesecuador\n\nHe "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-30-sec-1-fc-4",
+              "incorrect": "programmado",
+              "correct": "programado"
+            },
+            {
+              "type": "text",
+              "text": " todas nuestras clases por las "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-30-sec-1-fc-5",
+              "incorrect": "proximas",
+              "correct": "próximas"
+            },
+            {
+              "type": "text",
+              "text": " semanas. Después de programar todas las clases, siempre cancelo mi suscripción para que Preply no pueda "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-10-30-sec-1-fc-6",
+              "incorrect": "realizar",
+              "correct": "hacer"
+            },
+            {
+              "type": "text",
+              "text": " cargos en mi cuenta de PayPal sin que yo lo sepa. Así que no te preocupes por los mensajes de cancelación que puedas recibir.\n\nHasta mañana!"
+            }
+          ],
+          "flashcardsCount": 6,
+          "wordCount": 75
+        }
+      ],
+      "totalWords": 75,
+      "totalFlashcards": 6
+    },
+    {
+      "date": "2026-11-03",
+      "sections": [
+        {
+          "id": "2026-11-03-sec-1",
+          "day": "2026-11-03",
+          "sectionIndex": 1,
+          "language": "es",
+          "rawText": "[restructure;reestructura] el texto [así que hay;de manera que haya] diez [paráfos;párrafos] [donde cada tiene un titulo;cada uno con un título] como",
+          "bits": [
+            {
+              "type": "flashcard",
+              "id": "2026-11-03-sec-1-fc-1",
+              "incorrect": "restructure",
+              "correct": "reestructura"
+            },
+            {
+              "type": "text",
+              "text": " el texto "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-11-03-sec-1-fc-2",
+              "incorrect": "así que hay",
+              "correct": "de manera que haya"
+            },
+            {
+              "type": "text",
+              "text": " diez "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-11-03-sec-1-fc-3",
+              "incorrect": "paráfos",
+              "correct": "párrafos"
+            },
+            {
+              "type": "text",
+              "text": " "
+            },
+            {
+              "type": "flashcard",
+              "id": "2026-11-03-sec-1-fc-4",
+              "incorrect": "donde cada tiene un titulo",
+              "correct": "cada uno con un título"
+            },
+            {
+              "type": "text",
+              "text": " como"
+            }
+          ],
+          "flashcardsCount": 4,
+          "wordCount": 15
+        }
+      ],
+      "totalWords": 15,
+      "totalFlashcards": 4
+    },
+    {
+      "date": "2026-11-04",
+      "sections": [
+        {
+          "id": "2026-11-04-sec-1",
+          "day": "2026-11-04",
+          "sectionIndex": 1,
+          "language": "es",
+          "rawText": "Quando termino esa lista de palabras, comenzeré sobra mi tarea. Yo he hecho aproximante diez minutos sobre mi otra tarea.",
+          "bits": [
+            {
+              "type": "text",
+              "text": "Quando termino esa lista de palabras, comenzeré sobra mi tarea. Yo he hecho aproximante diez minutos sobre mi otra tarea."
+            }
+          ],
+          "flashcardsCount": 0,
+          "wordCount": 20
+        }
+      ],
+      "totalWords": 20,
+      "totalFlashcards": 0
     }
   ],
-  "totalSections": 38,
-  "totalWords": 3996,
-  "totalFlashcards": 561
+  "totalSections": 41,
+  "totalWords": 4104,
+  "totalFlashcards": 571
 }

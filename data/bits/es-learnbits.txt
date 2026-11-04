@@ -353,11 +353,23 @@
 			- esperar que
 				- mañana hace buen tiempo
 					- espero que mañana haga buen tiempo
+		- it's possible that
+			- es posible que
+				- mañana tenemos que trabajar hasta tarde
+					- es posible que mañana tengamos que trabajar hasta tarde
+		- 
+			- 
+		- 
+			- 
+		- 
+			- 
+		- 
+			- 
+		- 
+			- 
 		- 
 			- 
 	- ADD THESE
-				- Mañana tenemos que trabajar hasta tarde.
-					- Es posible que mañana tengamos que trabajar hasta tarde
 				- Todos los participantes llegan a tiempo.
 					- Es preciso que todos los participantes lleguen a tiempo (it's necessary)
 				- tu reservas el hotel con antelación para conseguir un buen precio.
