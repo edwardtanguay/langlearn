@@ -310,10 +310,7 @@ Hasta mañana!
 2026-11-03
 ---es
 [restructure;reestructura] el texto [así que hay;de manera que haya] diez [paráfos;párrafos] [donde cada tiene un titulo;cada uno con un título] como
-
-
-
-
-
-
-
+---
+2026-11-04
+---es
+Quando termino esa lista de palabras, comenzeré sobra mi tarea. Yo he hecho aproximante diez minutos sobre mi otra tarea. 
