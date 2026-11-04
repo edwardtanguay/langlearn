@@ -1193,10 +1193,10 @@ function isFlashcardOpen(itemId: string): boolean {
 </script>
 
 <template>
-  <div class="max-w-5xl mx-auto px-4 py-4">
+  <div class="max-w-5xl mx-auto px-4 pt-1 sm:pt-4 pb-4">
     <!-- Sticky Header -->
     <div
-      class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-2 pb-3.5 space-y-3 -mx-4 px-4 transition-all duration-200"
+      class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-1.5 sm:pt-2 pb-2.5 sm:pb-3.5 space-y-3 -mx-4 px-4 transition-all duration-200"
       :class="isScrolled
         ? 'shadow-md border-b border-gray-300 dark:border-gray-700'
         : 'shadow-xs border-b border-gray-200/80 dark:border-gray-800/80'"
@@ -1686,11 +1686,13 @@ function isFlashcardOpen(itemId: string): boolean {
               <!-- Visual indication when category is 100%: bold count and accomplished checkmark with fixed width -->
               <div
                 v-if="!isStatsLoading && getCategoryLearnedPercentage(cat) === 100"
-                class="flex items-center justify-center gap-1.5 w-24 sm:w-28 h-5 rounded-full font-black text-[11px] font-mono shrink-0 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800/60"
+                class="flex items-center justify-center gap-1.5 w-24 sm:w-28 h-5 rounded-full font-black text-[11px] font-mono shrink-0 shadow-xs border border-white/20"
+                :style="{ backgroundColor: currentColor }"
               >
-                <span class="text-emerald-600 dark:text-emerald-400">{{ cat.items.length }} of {{ cat.items.length }}</span>
-                <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                <span class="text-white drop-shadow-xs">{{ cat.items.length }} of {{ cat.items.length }}</span>
+                <svg class="w-3.5 h-3.5 text-white shrink-0 drop-shadow-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 12l2.5 2.5 5.5-5.5" />
                 </svg>
               </div>
 
