@@ -9,6 +9,8 @@ export interface LanguageMenuItem {
 }
 
 const defaultLanguageTitles: Record<string, string> = {
+  all: 'All',
+  general: 'General',
   fr: 'French',
   es: 'Spanish',
   it: 'Italian',
@@ -53,6 +55,8 @@ const normalizedLanguages = computed<LanguageMenuItem[]>(() => {
 })
 
 function getLangColor(code: string): string {
+  if (code === 'general') return '#71717a'
+  if (code === 'all') return '#6366f1'
   return props.colors[code] || defaultColors[code] || '#6366f1'
 }
 </script>

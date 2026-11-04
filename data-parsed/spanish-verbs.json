@@ -1,0 +1,612 @@
+[
+  {
+    "verb": "hablar",
+    "present": [
+      "hablo",
+      "hablas",
+      "habla",
+      "hablamos",
+      "habláis",
+      "hablan"
+    ],
+    "imperfect": [
+      "hablaba",
+      "hablabas",
+      "hablaba",
+      "hablábamos",
+      "hablabais",
+      "hablaban"
+    ],
+    "preterite": [
+      "hablé",
+      "hablaste",
+      "habló",
+      "hablamos",
+      "hablasteis",
+      "hablaron"
+    ],
+    "future": [
+      "hablaré",
+      "hablarás",
+      "hablará",
+      "hablaremos",
+      "hablaréis",
+      "hablarán"
+    ],
+    "conditional": [
+      "hablaría",
+      "hablarías",
+      "hablaría",
+      "hablaríamos",
+      "hablarías",
+      "hablarían"
+    ],
+    "presentSubjunctive": [
+      "hable",
+      "hables",
+      "hable",
+      "hablemos",
+      "habléis",
+      "hablen"
+    ],
+    "imperfectSubjunctive": [
+      "hablara",
+      "hablaras",
+      "hablara",
+      "habláramos",
+      "hablarais",
+      "hablaran"
+    ],
+    "gerund": "hablando",
+    "pastParticiple": "hablado"
+  },
+  {
+    "verb": "comer",
+    "present": [
+      "como",
+      "comes",
+      "come",
+      "comemos",
+      "coméis",
+      "comen"
+    ],
+    "imperfect": [
+      "comía",
+      "comías",
+      "comía",
+      "comíamos",
+      "comíais",
+      "comían"
+    ],
+    "preterite": [
+      "comí",
+      "comiste",
+      "comió",
+      "comimos",
+      "comisteis",
+      "comieron"
+    ],
+    "future": [
+      "comeré",
+      "comerás",
+      "comerá",
+      "comeremos",
+      "comeréis",
+      "comerán"
+    ],
+    "conditional": [
+      "comería",
+      "comerías",
+      "comería",
+      "comeríamos",
+      "comeríais",
+      "comerían"
+    ],
+    "presentSubjunctive": [
+      "coma",
+      "comas",
+      "coma",
+      "comamos",
+      "comáis",
+      "coman"
+    ],
+    "imperfectSubjunctive": [
+      "comiera",
+      "comieras",
+      "comiera",
+      "comiéramos",
+      "comierais",
+      "comieran"
+    ],
+    "gerund": "comiendo",
+    "pastParticiple": "comido"
+  },
+  {
+    "verb": "vivir",
+    "present": [
+      "vivo",
+      "vives",
+      "vive",
+      "vivimos",
+      "vivís",
+      "viven"
+    ],
+    "imperfect": [
+      "vivía",
+      "vivías",
+      "vivía",
+      "vivíamos",
+      "vivíais",
+      "vivían"
+    ],
+    "preterite": [
+      "viví",
+      "viviste",
+      "vivió",
+      "vivimos",
+      "vivisteis",
+      "vivieron"
+    ],
+    "future": [
+      "viviré",
+      "vivirás",
+      "vivirá",
+      "viviremos",
+      "viviréis",
+      "vivirán"
+    ],
+    "conditional": [
+      "viviría",
+      "vivirías",
+      "viviría",
+      "viviríamos",
+      "viviríais",
+      "vivirían"
+    ],
+    "presentSubjunctive": [
+      "viva",
+      "vivas",
+      "viva",
+      "vivamos",
+      "viváis",
+      "vivan"
+    ],
+    "imperfectSubjunctive": [
+      "viviera",
+      "vivieras",
+      "viviera",
+      "viviéramos",
+      "vivierais",
+      "vivieran"
+    ],
+    "gerund": "viviendo",
+    "pastParticiple": "vivido"
+  },
+  {
+    "verb": "ir",
+    "present": [
+      "voy",
+      "vas",
+      "va",
+      "vamos",
+      "vais",
+      "van"
+    ],
+    "imperfect": [
+      "iba",
+      "ibas",
+      "iba",
+      "íbamos",
+      "ibais",
+      "iban"
+    ],
+    "preterite": [
+      "fui",
+      "fuiste",
+      "fue",
+      "fuimos",
+      "fuisteis",
+      "fueron"
+    ],
+    "future": [
+      "iré",
+      "irás",
+      "irá",
+      "iremos",
+      "iréis",
+      "irán"
+    ],
+    "conditional": [
+      "iría",
+      "irías",
+      "iría",
+      "iríamos",
+      "iríais",
+      "irían"
+    ],
+    "presentSubjunctive": [
+      "vaya",
+      "vayas",
+      "vaya",
+      "vayamos",
+      "vayáis",
+      "vayan"
+    ],
+    "imperfectSubjunctive": [
+      "fuera",
+      "fueras",
+      "fuera",
+      "fuéramos",
+      "fuerais",
+      "fueran"
+    ],
+    "gerund": "yendo",
+    "pastParticiple": "ido"
+  },
+  {
+    "verb": "ser",
+    "present": [
+      "soy",
+      "eres",
+      "es",
+      "somos",
+      "sois",
+      "son"
+    ],
+    "imperfect": [
+      "era",
+      "eras",
+      "era",
+      "éramos",
+      "erais",
+      "eran"
+    ],
+    "preterite": [
+      "fui",
+      "fuiste",
+      "fue",
+      "fuimos",
+      "fuisteis",
+      "fueron"
+    ],
+    "future": [
+      "seré",
+      "serás",
+      "será",
+      "seremos",
+      "seréis",
+      "serán"
+    ],
+    "conditional": [
+      "sería",
+      "serías",
+      "sería",
+      "seríamos",
+      "seríais",
+      "serían"
+    ],
+    "presentSubjunctive": [
+      "sea",
+      "seas",
+      "sea",
+      "seamos",
+      "seáis",
+      "sean"
+    ],
+    "imperfectSubjunctive": [
+      "fuera",
+      "fueras",
+      "fuera",
+      "fuéramos",
+      "fuerais",
+      "fueran"
+    ],
+    "gerund": "siendo",
+    "pastParticiple": "sido"
+  },
+  {
+    "verb": "estar",
+    "present": [
+      "estoy",
+      "estás",
+      "está",
+      "estamos",
+      "estáis",
+      "están"
+    ],
+    "imperfect": [
+      "estaba",
+      "estabas",
+      "estaba",
+      "estábamos",
+      "estabais",
+      "estaban"
+    ],
+    "preterite": [
+      "estuve",
+      "estuviste",
+      "estuvo",
+      "estuvimos",
+      "estuvisteis",
+      "estuvieron"
+    ],
+    "future": [
+      "estaré",
+      "estarás",
+      "estará",
+      "estaremos",
+      "estaréis",
+      "estarán"
+    ],
+    "conditional": [
+      "estaría",
+      "estarías",
+      "estaría",
+      "estaríamos",
+      "estaríais",
+      "estarían"
+    ],
+    "presentSubjunctive": [
+      "esté",
+      "estés",
+      "esté",
+      "estemos",
+      "estéis",
+      "estén"
+    ],
+    "imperfectSubjunctive": [
+      "estuviera",
+      "estuvieras",
+      "estuviera",
+      "estuviéramos",
+      "estuvierais",
+      "estuvieran"
+    ],
+    "gerund": "estando",
+    "pastParticiple": "estado"
+  },
+  {
+    "verb": "haber",
+    "present": [
+      "he",
+      "has",
+      "ha/hay",
+      "hemos",
+      "habéis",
+      "han"
+    ],
+    "imperfect": [
+      "había",
+      "habías",
+      "había",
+      "habíamos",
+      "habíais",
+      "habían"
+    ],
+    "preterite": [
+      "hube",
+      "hubiste",
+      "hubo",
+      "hubimos",
+      "hubisteis",
+      "hubieron"
+    ],
+    "future": [
+      "habré",
+      "habrás",
+      "habrá",
+      "habremos",
+      "habréis",
+      "habrán"
+    ],
+    "conditional": [
+      "habría",
+      "habrías",
+      "habría",
+      "habríamos",
+      "habríais",
+      "habrían"
+    ],
+    "presentSubjunctive": [
+      "haya",
+      "hayas",
+      "haya",
+      "hayamos",
+      "hayáis",
+      "hayan"
+    ],
+    "imperfectSubjunctive": [
+      "hubiera",
+      "hubieras",
+      "hubiera",
+      "hubiéramos",
+      "hubierais",
+      "hubieran"
+    ],
+    "gerund": "habiendo",
+    "pastParticiple": "habido"
+  },
+  {
+    "verb": "tener",
+    "present": [
+      "tengo",
+      "tienes",
+      "tiene",
+      "tenemos",
+      "tenéis",
+      "tienen"
+    ],
+    "imperfect": [
+      "tenía",
+      "tenías",
+      "tenía",
+      "teníamos",
+      "teníais",
+      "tenían"
+    ],
+    "preterite": [
+      "tuve",
+      "tuviste",
+      "tuvo",
+      "tuvimos",
+      "tuvisteis",
+      "tuvieron"
+    ],
+    "future": [
+      "tendré",
+      "tendrás",
+      "tendrá",
+      "tendremos",
+      "tendréis",
+      "tendrán"
+    ],
+    "conditional": [
+      "tendría",
+      "tendrías",
+      "tendría",
+      "tendríamos",
+      "tendríais",
+      "tendrían"
+    ],
+    "presentSubjunctive": [
+      "tenga",
+      "tengas",
+      "tenga",
+      "tengamos",
+      "tengáis",
+      "tengan"
+    ],
+    "imperfectSubjunctive": [
+      "tuviera",
+      "tuvieras",
+      "tuviera",
+      "tuviéramos",
+      "tuvierais",
+      "tuvieran"
+    ],
+    "gerund": "teniendo",
+    "pastParticiple": "tenido"
+  },
+  {
+    "verb": "hacer",
+    "present": [
+      "hago",
+      "haces",
+      "hace",
+      "hacemos",
+      "hacéis",
+      "hacen"
+    ],
+    "imperfect": [
+      "hacía",
+      "hacías",
+      "hacía",
+      "hacíamos",
+      "hacíais",
+      "hacían"
+    ],
+    "preterite": [
+      "hice",
+      "hiciste",
+      "hizo",
+      "hicimos",
+      "hicisteis",
+      "hicieron"
+    ],
+    "future": [
+      "haré",
+      "harás",
+      "hará",
+      "haremos",
+      "haréis",
+      "harán"
+    ],
+    "conditional": [
+      "haría",
+      "harías",
+      "haría",
+      "haríamos",
+      "haríais",
+      "harían"
+    ],
+    "presentSubjunctive": [
+      "haga",
+      "hagas",
+      "haga",
+      "hagamos",
+      "hagáis",
+      "hagan"
+    ],
+    "imperfectSubjunctive": [
+      "hiciera",
+      "hicieras",
+      "hiciera",
+      "hiciéramos",
+      "hicierais",
+      "hicieran"
+    ],
+    "gerund": "haciendo",
+    "pastParticiple": "hecho"
+  },
+  {
+    "verb": "dar",
+    "present": [
+      "doy",
+      "das",
+      "da",
+      "damos",
+      "daís",
+      "dan"
+    ],
+    "imperfect": [
+      "daba",
+      "dabas",
+      "daba",
+      "dábamos",
+      "dabais",
+      "daban"
+    ],
+    "preterite": [
+      "di",
+      "diste",
+      "dio",
+      "dimos",
+      "disteis",
+      "dieron"
+    ],
+    "future": [
+      "daré",
+      "darás",
+      "dará",
+      "daremos",
+      "daréis",
+      "darán"
+    ],
+    "conditional": [
+      "daría",
+      "darías",
+      "daría",
+      "daríamos",
+      "daríais",
+      "darían"
+    ],
+    "presentSubjunctive": [
+      "dé",
+      "des",
+      "dé",
+      "demos",
+      "deis",
+      "den"
+    ],
+    "imperfectSubjunctive": [
+      "diera",
+      "dieras",
+      "diera",
+      "diéramos",
+      "dierais",
+      "dieran"
+    ],
+    "gerund": "dando",
+    "pastParticiple": "dado"
+  }
+]

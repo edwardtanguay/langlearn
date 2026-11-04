@@ -3,7 +3,7 @@
 		- hablo, hablas, habla, hablamos, habláis, hablan
 		- hablaba, hablabas, hablaba, hablábamos, hablabais, hablaban
 		- hablé, hablaste, habló, hablamos, hablasteis, hablaron
-		- hablará, hablarás, hablará, hablaremos, hablaréis, hablarán
+		- hablaré, hablarás, hablará, hablaremos, hablaréis, hablarán
 		- hablaría, hablarías, hablaría, hablaríamos, hablarías, hablarían
 		- hable, hables, hable, hablemos, habléis, hablen
 		- hablara, hablaras, hablara, habláramos, hablarais, hablaran
@@ -19,7 +19,7 @@
 		- comiendo, comido
 	- vivir
 		- vivo, vives, vive, vivimos, vivís, viven
-		- viviá, vivías, vivía, vivíamos vivíais, vivían
+		- vivía, vivías, vivía, vivíamos, vivíais, vivían
 		- viví, viviste, vivió, vivimos, vivisteis, vivieron
 		- viviré, vivirás, vivirá, viviremos, viviréis, vivirán
 		- viviría, vivirías, viviría, viviríamos, viviríais, vivirían
@@ -47,7 +47,7 @@
 	- estar
 		- estoy, estás, está, estamos, estáis, están
 		- estaba, estabas, estaba, estábamos, estabais, estaban
-		- estuve, estuvista, estuvo, estuvimos, estisteis, estuvieron
+		- estuve, estuviste, estuvo, estuvimos, estuvisteis, estuvieron
 		- estaré, estarás, estará, estaremos, estaréis, estarán
 		- estaría, estarías, estaría, estaríamos, estaríais, estarían
 		- esté, estés, esté, estemos, estéis, estén
@@ -58,7 +58,7 @@
 		- había, habías, había, habíamos, habíais, habían
 		- hube, hubiste, hubo, hubimos, hubisteis, hubieron
 		- habré, habrás, habrá, habremos, habréis, habrán
-		- habría, habrían, habría, habríamos, habrías, habrían
+		- habría, habrías, habría, habríamos, habríais, habrían
 		- haya, hayas, haya, hayamos, hayáis, hayan
 		- hubiera, hubieras, hubiera, hubiéramos, hubierais, hubieran
 		- habiendo, habido
@@ -86,7 +86,7 @@
 		- di, diste, dio, dimos, disteis, dieron
 		- daré, darás, dará, daremos, daréis, darán
 		- daría, darías, daría, daríamos, daríais, darían
-		- dé, des, dé, demos, deis, de
+		- dé, des, dé, demos, deis, den
 		- diera, dieras, diera, diéramos, dierais, dieran
 		- dando, dado
 	- ver
@@ -357,89 +357,23 @@
 			- es posible que
 				- mañana tenemos que trabajar hasta tarde
 					- es posible que mañana tengamos que trabajar hasta tarde
-		- 
-			- 
-		- 
-			- 
-		- 
-			- 
-		- 
-			- 
-		- 
-			- 
-		- 
-			- 
-	- ADD THESE
-				- Todos los participantes llegan a tiempo.
-					- Es preciso que todos los participantes lleguen a tiempo (it's necessary)
-				- tu reservas el hotel con antelación para conseguir un buen precio.
-					- es preferible que reserves el hotel con antelación para conseguir un buen precio
-				- Mañana llueve todo el día.
-					- Es probable que mañana llueva durante todo el día.
-				- El gobierno no hace nada para resolver este problema.
-					- Es ridículo que el Gobierno no haga nada para resolver este problema
-				- Sus amigos vienen a visitarlo mañana.
-					- Está contento de que sus amigos vengan a visitarlo mañana
-				- Muchos personas mueren en guerras cada año.
-					- Es terrible que tantas personas mueran en guerras cada año
-				- Todos están presentes.
-					- No podemos empezar la reunión hasta que todos estén presentes (until)
-				- Estudio español todos los días.
-					- Mi profesor insiste en que estudie español todos los días
-				- Los estudiantes entregan sus tareas el viernes.
-					- El profesor mandó que los estudiantes entregaran sus trabajos el viernes (instructed someone to)
-				- tu sales temprano
-					- Más vale que salgas temprano si no quieres llegar tarde al trabajo.
-				- El político no ha cometido ningún delito.
-					- El político niega que haya cometido ningún delito (denied)
-				- Mañana hará buen tiempo.
-					- No creo que mañana haga buen tiempo
-				- Nosotros hemos perdido el tren.
-					- No es cierto que hayamos perdido el tren
-				- Esta es la mejor solución al problema.
-					- No estoy convencido de que esta sea la mejor solución al problema
-				- Mañana tendremos tiempo suficiente para visitar el museo.
-					- No estoy seguro de que mañana tengamos suficiente tiempo para visitar el museo.
-				- Es cierto que ella ha dejado su trabajo.
-					- No es verdad que ella haya dejado su trabajo.
-				- Me imagino que podemos terminar todo el trabajo en un solo día.
-					- No me imagino que podamos terminar todo el trabajo en un solo día
-				- Parece que mañana va a llover.
-					- No parece que vaya a llover mañana
-				- Creo que tiene razón.
-					- No pienso que tenga razón
-				- Supongo que es verdad.
-					- No supongo que sea verdad
-				- Mañana hace buen tiempo, así que puedo salir a correr.
-					- Ojalá que mañana haga buen tiempo para poder salir a correr
-				- Lo entiendes mejor.
-					- Te explicaré la gramática otra vez para que la entiendas mejor
-				- Mi profesor corrige mis errores cuando hablo español.
-					- Le pido a mi profesor que me corrija los errores cuando hablo español
-				- Vienes mañana.
-					- Prefiero que vengas mañana
-				- Los coches circulan por esta zona del centro de la ciudad.
-					- El Gobierno ha prohibido que los coches circulen por esta zona del centro
-				- Mañana lloverá.
-					- Puede ser que llueva mañana (might)
-				- tienes éxito.
-					- Queremos que tengas éxito.
-				- Visitas Dijon cuando viajas a Francia.
-					- Te recomiendo que visites Dijon si viajas a Francia
-				- Esperan unos minutos antes de entrar en la habitación.
-					- Les ruego que esperen unos minutos antes de entrar en la sala (to plead)
-				- No tenemos suficiente tiempo para terminar el proyecto.
-					- Siento que no tengamos suficiente tiempo para terminar el proyecto (sentir, regret that)
-				- sus padres no se dieron cuenta
-					- Salió de casa sin que sus padres se dieran cuenta (without)
-				- Practicas español todos los días para mejorar tu fluidez.
-					- Te sugiero que practiques español todos los días para mejorar tu fluidez
-				- Sé algo.
-					- Te avisaré tan pronto como sepa algo.
-				- Mañana lloverá y no podremos salir a correr.
-					- Temo que mañana llueva y no podamos salir a correr
-				- Mañana lloverá.
-					- Tengo miedo de que llueva mañana.
+		- it's necessary that
+			- es preciso que
+				- todos los participantes llegan a tiempo
+					- es preciso que todos los participantes lleguen a tiempo
+		- it's preferable that
+			- es preferible que
+				- tu reservas el hotel con antelación 
+					- es preferible que reserves el hotel con antelación 
+		- it's probable that
+			- es probable que
+				- mañana llueve todo el día
+					- es probable que mañana llueva durante todo el día
+nnn
+
+
+
+
 - moving on words
 	- gracias por el consejo, no lo sabía
 	- perfecto, pasemos a lo siguiente

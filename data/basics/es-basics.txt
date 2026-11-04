@@ -1,4 +1,4 @@
-- numbers
+- números
 	- https://www.youtube.com/watch?v=unbPV7l2_vI; 1-100 canción 
 	- https://www.youtube.com/watch?v=mU2MRmL2C_c; 1-100 karaoke
 	- cero, uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve
@@ -12,16 +12,16 @@
 	- ochenta, ochenta y uno, ochenta y dos, ochenta y tres, ochenta y cuatro, ochenta y cinco, ochenta y seis, ochenta y siete, ochenta y ocho, ochenta y nueve
 	- noventa, noventa y uno, noventa y dos, noventa y tres, noventa y cuatro, noventa y cinco, noventa y seis, noventa y siete, noventa y ocho, noventa y nueve
 	- cien
-- letters
+- letras
 	- https://youtu.be/8m-pQniffZw?t=24; A-Z
 	- ah, bay, say, day, ay, ayffeh, %eh, ah-chay, ee, %ohta, kah, elleh, emmeh, enneh, oh, pay, koo, erreh, esseh, tay, oo, vay, doh-blay-vay, eh-kees, ee-gray-gah , settah
-- question words
+- palabras interrogativas
 	- quién, qué, dónde, cuándo, por qué, cómo, cuál, cuántos, cuánto
-- weekdays
+- días de la semana
 	- lunes, martes, miércoles, jueves, viernes, sábado, domingo
-- months
+- meses
 	- enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre
-- time expressions
+- expresiones de tiempo
 	- es la una
 	- es la una y media
 	- es la una y cuarto
@@ -36,66 +36,66 @@
 	- por la noche
 	- a medianoche
 	- al mediodía
-- greetings
+- saludos
 	- hola, buenos días, buenas tardes, buenas noches, buenas noches, adiós, hasta luego
-- colors
+- colores
 	- rojo, azul, amarillo, verde, naranja, morado, rosa, marrón, negro, blanco, gris, plata, oro, bronce
-- opposites
-	- grande/pequeño, caliente/frío, bueno/malo, rápido/lento, viejo/nuevo, feliz/triste, fácil/difícil, rico/pobre, pesado/ligero, abierto/cerrado, temprano/tarde, joven/viejo, cerca/lejos, limpio/sucio, fuerte/débil, oscuro/claro, tranquilo/ruidoso, caro/barato, seguro/peligroso, vacío/lleno
-- family
+- opuestos
+	- grande/pequeño, caliente/frío, bueno/malo, rápido/lento, viejo/nuevo, feliz/triste, fácil/difícil, rico/pobre, pesado/ligero, abierto/cerrado, temprano/tarde, joven/viejo, cerca/lejos, limpio/sucio, fuerte/débil, oscuro/claro, tranquilo/ruidoso, caro/barato, seguro/peligroso, vacío/lleno, femenino/masculino, verdadero/falso, correcto/incorrecto
+- familia
 	- la madre, el padre, los padres, la hermana, el hermano, el hijo, la hija, la abuela, el abuelo, la tía, el tío, el primo / la prima, el marido, la mujer, el niño / los niños
-- jobs
+- profesiones
 	- el profesor / la profesora, el médico / la médica, el enfermero / la enfermera, el estudiante / la estudiante, el ingeniero / la ingeniera, el camarero / la camarera, el cocinero / la cocinera, el conductor / la conductora, el dependiente / la dependienta, el policía / la mujer policía, el bombero / la bombera, el agricultor / la agricultora, el oficinista / la oficinista, en paro, jubilado / jubilada
-- food and drink
+- comida y bebida
 	- el pan, el arroz, la pasta, la carne, el pollo, el pescado, el huevo, el queso, la fruta, la manzana, el plátano, la naranja, la verdura, la patata, el tomate, la ensalada, la sopa, el sándwich, la pizza
 	- la leche, el agua, el zumo, el café, el té, el pastel, el chocolate, el desayuno, el almuerzo, la cena
-- clothes
+- ropa
 	- la camiseta, la camisa, los pantalones, los vaqueros, la falda, el vestido, la chaqueta, el abrigo, el jersey, los zapatos, las botas, los calcetines, el sombrero, la bufanda, los guantes, el bolso
-- weather
+- clima
 	- soleado, lluvioso, nublado, ventoso, nevado, caluroso, cálido, frío, fresco
-- seasons
+- estaciones
 	- la primavera, el verano, el otoño, el invierno
-- body
+- cuerpo
 	- la cabeza, el pelo, la cara, el ojo, la oreja, la nariz, la boca, el diente / los dientes, el brazo, la mano, el dedo, la pierna, el pie / los pies, la espalda, el estómago
-- house
+- casa
 	- la casa, el piso / el apartamento, la habitación, el dormitorio, el cuarto de baño, la cocina, el salón, el jardín
-- furniture
+- muebles
 	- la cama, la mesa, la silla, el sofá, el escritorio, el armario, la nevera, la cocina, la ventana, la puerta, la pared, el suelo
-- places
+- lugares
 	- el colegio, el hospital, el supermercado, la tienda, el banco, la oficina de correos, el restaurante, la cafetería, el cine, el parque, el museo, la estación, el aeropuerto, el hotel, la biblioteca, el gimnasio
-- transport
+- transporte
 	- el coche, el autobús, el tren, el avión, la bicicleta / la bici, la moto, el taxi, el barco, el metro, a pie, en coche / en autobús
-- directions 
+- direcciones
 	- a la izquierda, a la derecha, todo recto, al lado de, enfrente de, entre, delante de, detrás de, cerca de, lejos de, en el semáforo, girar a la izquierda/a la derecha
-- routines
+- rutinas
 	- levantarse, desayunar, ir al trabajo/al colegio, empezar a trabajar, terminar de trabajar, comer, ir a casa, ver la televisión, ir a la cama, dormir
-- hobbies
+- pasatiempos
 	- jugar al fútbol/tenis, nadar, correr, bailar, leer, ver películas/la televisión, escuchar música, ir de compras, quedar con amigos, viajar, cocinar, jugar a videojuegos
-- sports
+- deportes
 	- el fútbol, el tenis, el baloncesto, la natación, correr, el ciclismo, el esquí, el yoga, el gimnasio
-- ordinals
+- ordinales
 	- primero, segundo, tercero, cuarto, quinto, sexto, séptimo, octavo, noveno, décimo
-- countries 
+- países
 	- Inglaterra / inglés, Estados Unidos / estadounidense, España / español, Francia / francés, Alemania / alemán, Italia / italiano, China / chino, Japón / japonés, Brasil / brasileño, Portugal / portugués, Rusia / ruso, México / mexicano, Canadá / canadiense, Australia / australiano, India / indio, Turquía / turco, Polonia / polaco, Grecia / griego, Egipto / egipcio, Argentina / argentino
-- emotions
+- emociones
 	- feliz, triste, enfadado, cansado, hambriento, sediento, aburrido, emocionado, preocupado, nervioso, sorprendido, relajado
-- adjectives
+- adjectivos
 	- bonito, feo, limpio, sucio, tranquilo, ruidoso, caro, barato, interesante, aburrido, importante, peligroso, seguro, amable, educado
-- frequency
+- frecuencia
 	- siempre, normalmente, habitualmente, frecuentemente, a menudo, a veces, de vez en cuando, raramente, casi nunca, nunca
-- tech
+- tecnología
 	- el teléfono, el ordenador, el portátil, el cargador, la llave, la cartera, el paraguas, los auriculares, la cámara, la tableta
-- school
+- escuela
 	- el inglés, las matemáticas, las ciencias, la historia, la geografía, el arte, la música, la biología, la química
-- animals
+- animales
 	- el perro, el gato, el pájaro, el pez, el conejo, el caballo, el león, el tigre, el elefante, el mono
-- kitchen
+- cocina
 	- la cuchara, el tenedor, el cuchillo, el plato, el tazón, el vaso, la taza, la olla, la sartén, el refrigerador, el congelador, el horno, la estufa, el microondas, el fregadero, el lavavajillas, la tabla de cortar, la servilleta, la botella, la tetera
-- office
+- oficina
 	- el clip, la grapadora, las tijeras, la carpeta, el bolígrafo, el lápiz, el teclado, el ratón, el escritorio, el monitor, la impresora, el cuaderno, la goma de borrar, la cinta adhesiva, el subrayador, el sobre, el calendario, la calculadora, el maletín, las notas adhesivas
-- writing
+- escritura
 	- el punto, la coma, el punto y coma, los dos puntos, el signo de exclamación, el signo de interrogación, las comillas, las comillas angulares, el apóstrofo, el guion, la raya, los paréntesis, los corchetes, las llaves, los puntos suspensivos, la barra, la barra invertida, el guion bajo, la virgulilla, el et
-- language
+- idioma
 	- el sustantivo, el verbo, el adjetivo, el adverbio, el pronombre, la preposición, la conjunción, el artículo, el sujeto, el objeto, el tiempo verbal, la conjugación, la gramática, el vocabulario, la pronunciación, la sílaba, la frase, el párrafo, el singular, el plural, el acento grave, el acento agudo
-- starters
+- iniciadores
 	- de todos modos, lo que sea, mientras tanto, sea como fuere, dicho esto, de todas formas, continuemos, en pocas palabras, por si sirve de algo, aun así, ahora que lo pienso, por cierto, pensándolo bien, de cualquier manera, habiendo dicho eso, hablando de eso, en todo caso, para bien o para mal, además, o sea, por lo visto

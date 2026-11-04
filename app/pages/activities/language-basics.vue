@@ -14,20 +14,22 @@ interface BasicItem {
 interface CategoryVideo {
   url: string
   title: string
+  titles?: Record<string, string>
 }
 
 interface BasicCategory {
   id: string
   title: string
+  titles?: Record<string, string>
   items: BasicItem[]
   videos?: Record<string, CategoryVideo[]>
 }
 
 const languages = [
-  { code: 'fr', label: 'French' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'it', label: 'Italian' },
-  { code: 'nl', label: 'Dutch' }
+  { code: 'fr', label: 'FR' },
+  { code: 'es', label: 'ES' },
+  { code: 'it', label: 'IT' },
+  { code: 'nl', label: 'NL' }
 ] as const
 
 type LangCode = typeof languages[number]['code']
@@ -56,6 +58,14 @@ const resetCategoryConfirmId = ref<string | null>(null)
 
 // Accordion open category (single-open structure; initial state is all closed)
 const openCategoryId = ref<string | null>(null)
+const isTopCollapsed = ref(true)
+
+function getCategoryTitle(cat: BasicCategory): string {
+  if (cat.titles && (cat.titles as any)[selectedLang.value]) {
+    return (cat.titles as any)[selectedLang.value]
+  }
+  return cat.title
+}
 
 // Current language color
 const currentColor = computed(() => languageColors[selectedLang.value] || '#333388')
@@ -965,7 +975,7 @@ const filteredCategories = computed(() => {
 
   return categories
     .map(cat => {
-      const titleMatches = canSearchCategoryTitle && cat.title.toLowerCase().includes(q)
+      const titleMatches = canSearchCategoryTitle && (getCategoryTitle(cat).toLowerCase().includes(q) || cat.title.toLowerCase().includes(q))
       if (titleMatches) return cat
 
       const matchingItems = cat.items.filter(item => {
@@ -1140,7 +1150,7 @@ function isItemFoundBySearch(item: BasicItem): boolean {
 function isCategoryFoundBySearch(cat: BasicCategory): boolean {
   const q = searchQuery.value.trim().toLowerCase()
   if (q.length < 4) return false
-  return cat.title.toLowerCase().includes(q)
+  return getCategoryTitle(cat).toLowerCase().includes(q) || cat.title.toLowerCase().includes(q)
 }
 
 // Determine if the item should currently be displayed as revealed (target language) or unrevealed (English)
@@ -1191,18 +1201,25 @@ function isFlashcardOpen(itemId: string): boolean {
         ? 'shadow-md border-b border-gray-300 dark:border-gray-700'
         : 'shadow-xs border-b border-gray-200/80 dark:border-gray-800/80'"
     >
-      <!-- Top Navigation Link: off-white to keep language colors meaningful -->
-      <div>
+      <!-- Top Navigation: "Back to Activities" on left and "Expand"/"Collapse" on right -->
+      <div class="flex items-center justify-between gap-2">
         <NuxtLink
           to="/activities"
           class="inline-flex items-center text-sm font-medium !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white opacity-50 hover:opacity-100 transition-all"
         >
           ← Back to Activities
         </NuxtLink>
+        <button
+          type="button"
+          @click="isTopCollapsed = !isTopCollapsed"
+          class="text-xs font-semibold px-2.5 py-1 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer select-none"
+        >
+          {{ isTopCollapsed ? 'Expand' : 'Collapse' }}
+        </button>
       </div>
 
       <!-- Flexible line of four buttons matching Links UX -->
-      <div class="flex flex-wrap items-center gap-2 w-full">
+      <div class="flex items-center gap-2 w-full">
         <button
           v-for="lang in languages"
           :key="lang.code"
@@ -1234,6 +1251,8 @@ function isFlashcardOpen(itemId: string): boolean {
         </button>
       </div>
 
+      <!-- Collapsible panel controlled by Expand/Collapse -->
+      <div v-show="!isTopCollapsed" class="space-y-3">
       <!-- Progress Panel: NO PERCENTAGE on left, stats + controls, then progress bar -->
       <div class="p-3.5 rounded-2xl bg-gray-50 dark:bg-[#182030] border border-gray-200/90 dark:border-gray-800 shadow-xs space-y-2">
         <div class="flex items-center justify-between gap-2 flex-wrap">
@@ -1400,6 +1419,7 @@ function isFlashcardOpen(itemId: string): boolean {
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
+      </div>
       </div>
     </div>
 
@@ -1658,7 +1678,7 @@ function isFlashcardOpen(itemId: string): boolean {
           >
             <div class="flex items-center gap-2 min-w-0 pr-2">
               <span class="text-sm font-bold text-gray-900 dark:text-white truncate">
-                {{ cat.title }}
+                {{ getCategoryTitle(cat) }}
               </span>
             </div>
 

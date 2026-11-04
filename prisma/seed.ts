@@ -312,6 +312,92 @@ async function main() {
     console.log('Seeded 7 initial ChatbotPrompts (French, German, Dutch)')
   }
 
+  // Ensure General Links exist
+  const generalLinks = [
+    {
+      language: 'general',
+      title: 'Language Learning Activities',
+      url: 'https://language-learning-activities.vercel.app',
+      description: 'General language learning activities and exercises',
+      rank: 3.0
+    },
+    {
+      language: 'general',
+      title: 'Trilingual Little Prince',
+      url: 'https://trilingual-little-prince.vercel.app',
+      description: 'Read The Little Prince in three languages simultaneously',
+      rank: 2.8
+    }
+  ]
+  for (const gl of generalLinks) {
+    const existing = await prisma.link.findFirst({ where: { url: gl.url } })
+    if (!existing) {
+      await prisma.link.create({ data: gl })
+    }
+  }
+
+  // Ensure Version 0.11.0 exists
+  const existingV11 = await prisma.version.findUnique({
+    where: { versionNumber: '0.11.0' },
+    include: { versionItems: true }
+  })
+  if (!existingV11) {
+    await prisma.version.create({
+      data: {
+        versionNumber: '0.11.0',
+        title: 'Spanish Verb Page',
+        status: 'PUBLISHED',
+        publishDate: new Date(),
+        versionItems: {
+          create: [
+            {
+              type: 'FEATURE',
+              isTested: true,
+              body: 'Created a new activity page called "Spanish Verbs" which reads the data-parsed\\spanish-verbs.json file and shows these verbs on the page as tables showing all the verb tenses left and pronouns along the top, there are controls which all the user to define which verbs he wants to show and which tenses and pronouns he wants to test on, when testing, the tenses/pronouns that should be tested are converted to input boxes and the user types in the answer, if correct it turns green, otherwise red, it is recorded in localstorage which tense/pronouns were answered incorrectly how many times, which can be listed by clicking a button "Retest difficult words".',
+              startedByUserId: user.id,
+              orderWithinVersion: 1
+            },
+            {
+              type: 'FEATURE',
+              isTested: true,
+              body: 'Extended "npm run pd" script to parse Spanish verbs, which reads the data\\bits\\es-learnbits.txt file, reads in all indented lines under "- verbs", creates a file data-parsed\\spanish-verbs.json which is an array of objects for each verb and all of the tenses present, imperfect, preterite, future, conditional, present subjunctive, imperfect subjunctive, gerund, past participle, it imports only verbs that have all 8 lines.',
+              startedByUserId: user.id,
+              orderWithinVersion: 2
+            },
+            {
+              type: 'BUGFIX',
+              isTested: true,
+              body: 'Reduced the amount of space at the top, now have "Back to Activities" on the left and on the right "Expand"/"Collapse" which shows/hides everything below the language buttons, the how many words learned bar, the four button and the search. Also, the language buttons are in one row since the names have been converted to capital language abbreviations, e.g. FR, SP, etc.',
+              startedByUserId: user.id,
+              orderWithinVersion: 3
+            },
+            {
+              type: 'FEATURE',
+              isTested: true,
+              body: 'Added "feminine/masculine" and "true/false" and "right/wrong" to opposites.',
+              startedByUserId: user.id,
+              orderWithinVersion: 4
+            },
+            {
+              type: 'BUGFIX',
+              isTested: true,
+              body: 'The names of the categories are now in the language that is being shown instead of always in English.',
+              startedByUserId: user.id,
+              orderWithinVersion: 5
+            },
+            {
+              type: 'FEATURE',
+              isTested: true,
+              body: 'Created a "General" section at top and https://language-learning-activities.vercel.app as "Language Learning Activities" and also added https://trilingual-little-prince.vercel.app as "Trilingual Little Prince".',
+              startedByUserId: user.id,
+              orderWithinVersion: 6
+            }
+          ]
+        }
+      }
+    })
+  }
+
   console.log(`Setup complete. Total flashcards in DB: ${flashcardCount}, ChatbotPrompts in DB: ${await prisma.chatbotPrompt.count()}`)
 }
 
