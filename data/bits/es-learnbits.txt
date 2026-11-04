@@ -70,6 +70,7 @@
 		- tendría, tendrías, tendría, tendríamos, tendríais, tendrían
 		- tenga, tengas, tenga, tengamos, tengáis, tengan
 		- tuviera, tuvieras, tuviera, tuviéramos, tuvierais, tuvieran
+		- teniendo, tenido
 	- hacer
 		- hago, haces, hace, hacemos, hacéis, hacen
 		- hacía, hacías, hacía, hacíamos, hacíais, hacían
@@ -79,6 +80,146 @@
 		- haga, hagas, haga, hagamos, hagáis, hagan
 		- hiciera, hicieras, hiciera, hiciéramos, hicierais, hicieran
 		- haciendo, hecho
+	- dar
+		- doy, das, da, damos, daís, dan
+		- daba, dabas, daba, dábamos, dabais, daban
+		- di, diste, dio, dimos, disteis, dieron
+		- daré, darás, dará, daremos, daréis, darán
+		- daría, darías, daría, daríamos, daríais, darían
+		- dé, des, dé, demos, deis, de
+		- diera, dieras, diera, diéramos, dierais, dieran
+		- dando, dado
+	- ver
+		- veo, ves, ve, vemos, veis, ven
+		- veía, veías, veía, veíamos, veíais, veían
+	- venir
+	- poner
+	- salir
+	- decir
+	- saber
+	- dormir
+	- oír
+	- corrija
+	- prohibir
+	- practicar
+
+- classroom speak
+	- suena muy claro
+	- Gracias por la explicación.
+- subjunctive trigger phrases
+	- a menos que se lo des a ella (unless...)
+	- antes de que haga eso
+	- siempre y cuando nos dé el dinero (provided that...)
+	- es recomendable que vayan temprano
+	- dudo que vayan
+	- vamos a Paris
+		- en caso de que vayamos a París
+	- nnn
+		- en cuanto nos den el dinero (as soon as...)
+	- rellenas este formulario todos los días
+		- es asconsejable que rellenes este formulario ahora (it's advisable that...)
+	- tenemos suficiente dinero
+		- es bueno que tengamos suficiente dinero
+	- él tiene que ir allí
+		- es difícil que él tenga que ir allí
+	- ellos llevan un disfraz en las fiestas
+		- pero es dudoso que lleven disfraz en esta fiesta
+	- te preparas para tus exámenes
+		- es fantástico que prepares tus propias comidas
+	- ellas nadan todos los dias
+		- es importante que naden todos los días
+	- él puede abrir esta puerta
+		- es imposible que alguien pueda abrir esta puerta
+	- No sabemos si mañana hará buen tiempo.
+		- Es incierto que mañana haga buen tiempo.
+	- Todavía hay personas que no utilizan Internet.
+		- Es increíble que todavía haya gente que no utilizan Internet
+	- Estas enferma
+		- Es una lástima que estés enfermo
+	- Comes demasiado azúcar.
+		- Es malo que comas demasiado azúcar
+	- salimos temprano para evitar el tráfico.
+		- es mejor que salgamos temprano para evitar el tráfico
+	- eres puntual
+		- es menester que seas puntual (it's necessary that)
+	- Haces ejercicio.
+		- Es necesario que hagas ejercicio
+	- Mañana hace buen tiempo.
+		- Espero que mañana haga buen tiempo
+	- Mañana tenemos que trabajar hasta tarde.
+		- Es posible que mañana tengamos que trabajar hasta tarde
+	- Todos los participantes llegan a tiempo.
+		- Es preciso que todos los participantes lleguen a tiempo (it's necessary)
+	- tu reservas el hotel con antelación para conseguir un buen precio.
+		- es preferible que reserves el hotel con antelación para conseguir un buen precio
+	- Mañana llueve todo el día.
+		- Es probable que mañana llueva durante todo el día.
+	- Pedro no ha venido a trabajar hoy.
+		- Es raro que Pedro no haya venido hoy a trabajar
+	- El gobierno no hace nada para resolver este problema.
+		- Es ridículo que el Gobierno no haga nada para resolver este problema
+	- Sus amigos vienen a visitarlo mañana.
+		- Está contento de que sus amigos vengan a visitarlo mañana
+	- Muchos personas mueren en guerras cada año.
+		- Es terrible que tantas personas mueran en guerras cada año
+	- Todos están presentes.
+		- No podemos empezar la reunión hasta que todos estén presentes (until)
+	- Estudio español todos los días.
+		- Mi profesor insiste en que estudie español todos los días
+	- Los estudiantes entregan sus tareas el viernes.
+		- El profesor mandó que los estudiantes entregaran sus trabajos el viernes (instructed someone to)
+	- tu sales temprano
+		- Más vale que salgas temprano si no quieres llegar tarde al trabajo.
+	- El político no ha cometido ningún delito.
+		- El político niega que haya cometido ningún delito (denied)
+	- Mañana hará buen tiempo.
+		- No creo que mañana haga buen tiempo
+	- Nosotros hemos perdido el tren.
+		- No es cierto que hayamos perdido el tren
+	- Esta es la mejor solución al problema.
+		- No estoy convencido de que esta sea la mejor solución al problema
+	- Mañana tendremos tiempo suficiente para visitar el museo.
+		- No estoy seguro de que mañana tengamos suficiente tiempo para visitar el museo.
+	- Es cierto que ella ha dejado su trabajo.
+		- No es verdad que ella haya dejado su trabajo.
+	- Me imagino que podemos terminar todo el trabajo en un solo día.
+		- No me imagino que podamos terminar todo el trabajo en un solo día
+	- Parece que mañana va a llover.
+		- No parece que vaya a llover mañana
+	- Creo que tiene razón.
+		- No pienso que tenga razón
+	- Supongo que es verdad.
+		- No supongo que sea verdad
+	- Mañana hace buen tiempo, así que puedo salir a correr.
+		- Ojalá que mañana haga buen tiempo para poder salir a correr
+	- Lo entiendes mejor.
+		- Te explicaré la gramática otra vez para que la entiendas mejor
+	- Mi profesor corrige mis errores cuando hablo español.
+		- Le pido a mi profesor que me corrija los errores cuando hablo español
+	- Vienes mañana.
+		- Prefiero que vengas mañana
+	- Los coches circulan por esta zona del centro de la ciudad.
+		- El Gobierno ha prohibido que los coches circulen por esta zona del centro
+	- Mañana lloverá.
+		- Puede ser que llueva mañana (might)
+	- tienes éxito.
+		- Queremos que tengas éxito.
+	- Visitas Dijon cuando viajas a Francia.
+		- Te recomiendo que visites Dijon si viajas a Francia
+	- Esperan unos minutos antes de entrar en la habitación.
+		- Les ruego que esperen unos minutos antes de entrar en la sala (to plead)
+	- No tenemos suficiente tiempo para terminar el proyecto.
+		- Siento que no tengamos suficiente tiempo para terminar el proyecto (sentir, regret that)
+	- sus padres no se dieron cuenta
+		- Salió de casa sin que sus padres se dieran cuenta (without)
+	- Practicas español todos los días para mejorar tu fluidez.
+		- Te sugiero que practiques español todos los días para mejorar tu fluidez
+	- Sé algo.
+		- Te avisaré tan pronto como sepa algo.
+	- Mañana lloverá y no podremos salir a correr.
+		- Temo que mañana llueva y no podamos salir a correr
+	- Mañana lloverá.
+		- Tengo miedo de que llueva mañana.
 - moving on words
 	- gracias por el consejo, no lo sabía
 	- perfecto, pasemos a lo siguiente
@@ -91,6 +232,7 @@
 	- claro, pasemos a lo próximo
 	- genial, cuál es el siguiente
 - hello how are you
+	- espero que estés bien
 	- hola, cómo estás / bien, y tú
 	- hola, qué tal / todo bien, y tú
 	- buenos días, cómo está / bien, gracias y usted
@@ -101,6 +243,18 @@
 	- ey, qué hay / todo bien, y tú
 	- hola, todo bien / sí, todo bien, y tú
 	- buenas tardes, cómo le va / bien, gracias, y a usted
+- saying goodbye at end of class
+	- hasta luego
+	- hasta la próxima
+	- nos vemos
+	- que tengas un buen día
+	- que tengas una buena semana
+	- ha sido un placer hablar contigo
+	- me ha gustado mucho la clase
+	- gracias por la clase de hoy
+	- nos vemos la próxima semana
+	- cuídate y hasta pronto
+
 - por vs. para
 	- por
 		- FOR A REASON, A CAUSE, DUE TO, BECAUSE: debido a una causa o razón
