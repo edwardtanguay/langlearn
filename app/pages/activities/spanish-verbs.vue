@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import rawSpanishVerbs from '../../../data-parsed/spanish-verbs.json'
 import {
   ArrowPathIcon,
@@ -97,6 +97,27 @@ const showRetestModal = ref(false)
 const difficultWords = ref<DifficultWord[]>([])
 const retestAnswers = ref<Record<string, string>>({})
 const retestStatuses = ref<Record<string, 'correct' | 'incorrect' | null>>({})
+
+// Random Test Mode State
+interface RandomTarget {
+  verb: SpanishVerb
+  tenseKey: string
+  tenseLabel: string
+  pronounIdx: number
+  pronounLabel: string
+  expected: string
+}
+
+const isRandomTestMode = ref(false)
+const currentRandomTarget = ref<RandomTarget | null>(null)
+const randomTestAnswer = ref('')
+const randomTestStatus = ref<'correct' | 'incorrect' | null>(null)
+const waitingForNextRandomKey = ref(false)
+
+const randomKey = computed(() => {
+  if (!currentRandomTarget.value) return ''
+  return `random-${currentRandomTarget.value.verb.verb}-${currentRandomTarget.value.tenseKey}-${currentRandomTarget.value.pronounIdx}`
+})
 
 // Hint state for ESC keypress
 const hintState = ref<{
@@ -341,6 +362,13 @@ function triggerHint(cellKey: string, expectedAnswer: string, event: KeyboardEve
   const inputEl = event.target as HTMLInputElement
   const cleanAnswer = expectedAnswer.split('/')[0].trim()
 
+  const isRandom = cellKey.startsWith('random-')
+  const getCurrentVal = () => isRandom ? randomTestAnswer.value : (userAnswers.value[cellKey] || '')
+  const setCurrentVal = (val: string) => {
+    if (isRandom) randomTestAnswer.value = val
+    else userAnswers.value[cellKey] = val
+  }
+
   if (hintState.value && hintState.value.cellKey === cellKey) {
     if (hintState.value.timer) clearTimeout(hintState.value.timer)
     let newCount = hintState.value.count + 1
@@ -349,9 +377,9 @@ function triggerHint(cellKey: string, expectedAnswer: string, event: KeyboardEve
     }
     hintState.value.count = newCount
     hintState.value.active = true
-    userAnswers.value[cellKey] = cleanAnswer.slice(0, newCount)
+    setCurrentVal(cleanAnswer.slice(0, newCount))
   } else {
-    const orig = userAnswers.value[cellKey] || ''
+    const orig = getCurrentVal()
     hintState.value = {
       cellKey,
       originalValue: orig,
@@ -359,22 +387,22 @@ function triggerHint(cellKey: string, expectedAnswer: string, event: KeyboardEve
       timer: null,
       active: true
     }
-    userAnswers.value[cellKey] = cleanAnswer.slice(0, 1)
+    setCurrentVal(cleanAnswer.slice(0, 1))
   }
 
   nextTick(() => {
     inputEl.focus()
-    const len = (userAnswers.value[cellKey] || '').length
+    const len = getCurrentVal().length
     inputEl.setSelectionRange(len, len)
   })
 
   hintState.value.timer = setTimeout(() => {
     if (hintState.value && hintState.value.cellKey === cellKey && hintState.value.active) {
-      userAnswers.value[cellKey] = hintState.value.originalValue
+      setCurrentVal(hintState.value.originalValue)
       hintState.value.active = false
       nextTick(() => {
         inputEl.focus()
-        const len = (userAnswers.value[cellKey] || '').length
+        const len = getCurrentVal().length
         inputEl.setSelectionRange(len, len)
       })
     }
@@ -515,8 +543,216 @@ function navigateVertical(
   }
 }
 
+function handleCellFocus(event: FocusEvent) {
+  if (!isTestMode.value && !isRandomTestMode.value) return
+  const el = event.target as HTMLElement | null
+  if (!el) return
+  const rect = el.getBoundingClientRect()
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight
+  const margin = 120
+  if (rect.top < margin || rect.bottom > viewportHeight - margin) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+}
+
+function startRandomTest() {
+  isRandomTestMode.value = true
+  isTestMode.value = false
+  if (import.meta.client) {
+    window.addEventListener('keydown', handleRandomGlobalKeyDown)
+  }
+  pickNextRandomTarget()
+}
+
+function exitRandomTest() {
+  isRandomTestMode.value = false
+  currentRandomTarget.value = null
+  randomTestAnswer.value = ''
+  randomTestStatus.value = null
+  waitingForNextRandomKey.value = false
+  if (import.meta.client) {
+    window.removeEventListener('keydown', handleRandomGlobalKeyDown)
+  }
+}
+
+function pickNextRandomTarget() {
+  waitingForNextRandomKey.value = false
+  randomTestStatus.value = null
+  randomTestAnswer.value = ''
+
+  const poolVerbs = verbs.filter(v => selectedVerbs.value.includes(v.verb))
+  const targetVerbs = poolVerbs.length > 0 ? poolVerbs : verbs
+
+  const candidates: RandomTarget[] = []
+
+  for (const v of targetVerbs) {
+    if (selectedTenses.value.includes('gerund') && v.gerund) {
+      candidates.push({
+        verb: v,
+        tenseKey: 'gerund',
+        tenseLabel: 'Gerund',
+        pronounIdx: 0,
+        pronounLabel: '',
+        expected: v.gerund
+      })
+    }
+    if (selectedTenses.value.includes('pastParticiple') && v.pastParticiple) {
+      candidates.push({
+        verb: v,
+        tenseKey: 'pastParticiple',
+        tenseLabel: 'Participle',
+        pronounIdx: 0,
+        pronounLabel: '',
+        expected: v.pastParticiple
+      })
+    }
+    for (const tense of FINITE_TENSES) {
+      if (selectedTenses.value.includes(tense.key)) {
+        const forms = (v as any)[tense.key] as string[] || []
+        for (const pIdx of selectedPronouns.value) {
+          if (forms[pIdx]) {
+            candidates.push({
+              verb: v,
+              tenseKey: tense.key,
+              tenseLabel: tense.label,
+              pronounIdx: pIdx,
+              pronounLabel: PRONOUNS[pIdx]?.label || '',
+              expected: forms[pIdx]
+            })
+          }
+        }
+      }
+    }
+  }
+
+  // Fallback if no candidate found with current filters
+  if (candidates.length === 0) {
+    for (const v of verbs) {
+      for (const tense of FINITE_TENSES) {
+        const forms = (v as any)[tense.key] as string[] || []
+        for (const p of PRONOUNS) {
+          if (forms[p.idx]) {
+            candidates.push({
+              verb: v,
+              tenseKey: tense.key,
+              tenseLabel: tense.label,
+              pronounIdx: p.idx,
+              pronounLabel: p.label,
+              expected: forms[p.idx]
+            })
+          }
+        }
+      }
+    }
+  }
+
+  let filteredCandidates = candidates
+  if (currentRandomTarget.value && candidates.length > 1) {
+    filteredCandidates = candidates.filter(
+      c => !(c.verb.verb === currentRandomTarget.value!.verb.verb &&
+             c.tenseKey === currentRandomTarget.value!.tenseKey &&
+             c.pronounIdx === currentRandomTarget.value!.pronounIdx)
+    )
+  }
+  const chosenList = filteredCandidates.length > 0 ? filteredCandidates : candidates
+  const randomIndex = Math.floor(Math.random() * chosenList.length)
+  currentRandomTarget.value = chosenList[randomIndex]
+
+  nextTick(() => {
+    const el = document.getElementById('random-test-input') as HTMLInputElement | null
+    if (el) {
+      el.focus()
+      handleCellFocus({ target: el } as any)
+    }
+  })
+}
+
+function validateRandomTest() {
+  if (!currentRandomTarget.value || waitingForNextRandomKey.value) return
+  const raw = randomTestAnswer.value
+  const trimmed = normalizeAnswer(raw)
+  if (!trimmed) {
+    randomTestStatus.value = null
+    return
+  }
+
+  const expectedOptions = normalizeAnswer(currentRandomTarget.value.expected).split('/').map(s => s.trim())
+  const isMatch = expectedOptions.includes(trimmed)
+
+  if (isMatch) {
+    randomTestStatus.value = 'correct'
+    waitingForNextRandomKey.value = true
+  } else {
+    randomTestStatus.value = 'incorrect'
+    recordError(
+      currentRandomTarget.value.verb.verb,
+      currentRandomTarget.value.tenseKey,
+      currentRandomTarget.value.tenseLabel,
+      currentRandomTarget.value.pronounIdx,
+      currentRandomTarget.value.pronounLabel,
+      currentRandomTarget.value.expected
+    )
+    nextTick(() => {
+      const el = document.getElementById('random-test-input') as HTMLInputElement | null
+      if (el) {
+        el.focus()
+        el.select()
+      }
+    })
+  }
+}
+
+function handleRandomBlur() {
+  if (waitingForNextRandomKey.value) return
+  validateRandomTest()
+}
+
+function handleRandomInput() {
+  if (randomTestStatus.value === 'incorrect') {
+    randomTestStatus.value = null
+  }
+  if (hintState.value && hintState.value.cellKey === randomKey.value) {
+    if (hintState.value.timer) clearTimeout(hintState.value.timer)
+    hintState.value = null
+  }
+}
+
+function handleRandomInputKeyDown(event: KeyboardEvent) {
+  if (waitingForNextRandomKey.value) {
+    if (['Shift', 'Control', 'Alt', 'Meta'].includes(event.key)) return
+    event.preventDefault()
+    pickNextRandomTarget()
+    return
+  }
+  if (event.key === 'Escape') {
+    if (!currentRandomTarget.value) return
+    triggerHint(randomKey.value, currentRandomTarget.value.expected, event)
+    return
+  }
+  if (event.key === 'Enter') {
+    event.preventDefault()
+    validateRandomTest()
+  }
+}
+
+function handleRandomGlobalKeyDown(e: KeyboardEvent) {
+  if (!isRandomTestMode.value) return
+  if (waitingForNextRandomKey.value) {
+    if (['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) return
+    e.preventDefault()
+    e.stopPropagation()
+    pickNextRandomTarget()
+  }
+}
+
 onMounted(() => {
   loadDifficultWords()
+})
+
+onUnmounted(() => {
+  if (import.meta.client) {
+    window.removeEventListener('keydown', handleRandomGlobalKeyDown)
+  }
 })
 </script>
 
@@ -545,6 +781,18 @@ onMounted(() => {
           >
             {{ activeDifficultWords.length }}
           </span>
+        </button>
+
+        <button
+          type="button"
+          @click="isRandomTestMode ? exitRandomTest() : startRandomTest()"
+          class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
+          :class="isRandomTestMode
+            ? 'bg-[#be185d] text-white border-[#be185d] hover:bg-[#a2134e]'
+            : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20'"
+        >
+          <SparklesIcon class="w-4 h-4" />
+          <span>{{ isRandomTestMode ? 'Exit Random Test' : 'Random Test' }}</span>
         </button>
 
         <button
@@ -581,7 +829,7 @@ onMounted(() => {
         <div class="flex items-center gap-3">
           <button
             type="button"
-            @click="isTestMode = !isTestMode"
+            @click="if (isRandomTestMode) exitRandomTest(); isTestMode = !isTestMode"
             class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer shadow-sm inline-flex items-center gap-2"
             :class="isTestMode
               ? 'bg-[#be185d] text-white hover:bg-[#a2134e]'
@@ -636,7 +884,7 @@ onMounted(() => {
           <button
             type="button"
             @click="toggleAllVerbs"
-            class="text-xs font-semibold text-[#be185d] dark:text-[#f43f5e] hover:underline cursor-pointer"
+            class="text-xs font-semibold text-white hover:underline cursor-pointer"
           >
             {{ selectedVerbs.length === verbs.length ? 'Deselect All' : 'Select All' }}
           </button>
@@ -666,7 +914,7 @@ onMounted(() => {
           <button
             type="button"
             @click="toggleAllTenses"
-            class="text-xs font-semibold text-[#be185d] dark:text-[#f43f5e] hover:underline cursor-pointer"
+            class="text-xs font-semibold text-white hover:underline cursor-pointer"
           >
             {{ selectedTenses.length === TENSES.length ? 'Deselect All' : 'Select All' }}
           </button>
@@ -696,7 +944,7 @@ onMounted(() => {
           <button
             type="button"
             @click="toggleAllPronouns"
-            class="text-xs font-semibold text-[#be185d] dark:text-[#f43f5e] hover:underline cursor-pointer"
+            class="text-xs font-semibold text-white hover:underline cursor-pointer"
           >
             {{ selectedPronouns.length === PRONOUNS.length ? 'Deselect All' : 'Select All' }}
           </button>
@@ -718,9 +966,202 @@ onMounted(() => {
       </div>
     </div>
 
+    <!-- Random Test View (when isRandomTestMode is true) -->
+    <div v-if="isRandomTestMode && currentRandomTarget" class="space-y-4">
+      <!-- Top banner / indicator -->
+      <div class="flex items-center justify-between gap-3 p-4 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-sm flex-wrap">
+        <div class="flex items-center gap-3">
+          <span class="px-2.5 py-1 rounded-lg text-xs font-black uppercase bg-[#be185d] text-white">
+            Random Test Mode
+          </span>
+          <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+            Conjugate the active cell. Press ESC for hint.
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span
+            v-if="waitingForNextRandomKey"
+            class="px-3 py-1 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-700 animate-pulse"
+          >
+            ✓ Correct! Press any key to move to next verb →
+          </span>
+          <button
+            type="button"
+            @click="exitRandomTest"
+            class="px-3 py-1.5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 transition-colors cursor-pointer"
+          >
+            Exit Random Test
+          </button>
+        </div>
+      </div>
+
+      <!-- Single Verb Table for Random Target -->
+      <div class="bg-white dark:bg-[#182030] rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+        <!-- Verb Header with Gerund & Participle -->
+        <div class="px-5 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex items-center justify-between gap-4 flex-wrap">
+          <div class="space-y-0.5">
+            <h2 class="text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight">
+              {{ currentRandomTarget.verb.verb }}
+            </h2>
+            <div class="text-xs text-gray-400 dark:text-gray-500 select-none">
+              press ESC for hint
+            </div>
+          </div>
+
+          <!-- Non-finite form tags directly above table -->
+          <div class="flex items-center gap-4 flex-wrap">
+            <!-- Gerund Box -->
+            <div class="flex flex-col items-center gap-1">
+              <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
+                Gerund
+              </span>
+
+              <!-- If this cell is the tested one -->
+              <div v-if="currentRandomTarget.tenseKey === 'gerund'" class="relative inline-block w-28 sm:w-32">
+                <input
+                  id="random-test-input"
+                  ref="randomTestInputRef"
+                  type="text"
+                  v-model="randomTestAnswer"
+                  @input="handleRandomInput"
+                  @keydown="handleRandomInputKeyDown"
+                  @blur="handleRandomBlur"
+                  @focus="handleCellFocus"
+                  placeholder="..."
+                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
+                  :class="{
+                    'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
+                    'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold ring-2 ring-white': isHintActive(randomKey),
+                    'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 ring-2 ring-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold': !isHintActive(randomKey) && randomTestStatus === 'correct',
+                    'bg-rose-50 dark:bg-rose-950/40 border-rose-500 ring-2 ring-rose-500 text-rose-800 dark:text-rose-200 font-bold': !isHintActive(randomKey) && randomTestStatus === 'incorrect'
+                  }"
+                />
+              </div>
+
+              <!-- Untested: shows '---' -->
+              <span
+                v-else
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold text-gray-400 dark:text-gray-500 select-none min-w-[90px] text-center"
+              >
+                ---
+              </span>
+            </div>
+
+            <!-- Participle Box -->
+            <div class="flex flex-col items-center gap-1">
+              <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
+                Participle
+              </span>
+
+              <!-- If this cell is the tested one -->
+              <div v-if="currentRandomTarget.tenseKey === 'pastParticiple'" class="relative inline-block w-28 sm:w-32">
+                <input
+                  id="random-test-input"
+                  ref="randomTestInputRef"
+                  type="text"
+                  v-model="randomTestAnswer"
+                  @input="handleRandomInput"
+                  @keydown="handleRandomInputKeyDown"
+                  @blur="handleRandomBlur"
+                  @focus="handleCellFocus"
+                  placeholder="..."
+                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
+                  :class="{
+                    'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
+                    'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold ring-2 ring-white': isHintActive(randomKey),
+                    'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 ring-2 ring-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold': !isHintActive(randomKey) && randomTestStatus === 'correct',
+                    'bg-rose-50 dark:bg-rose-950/40 border-rose-500 ring-2 ring-rose-500 text-rose-800 dark:text-rose-200 font-bold': !isHintActive(randomKey) && randomTestStatus === 'incorrect'
+                  }"
+                />
+              </div>
+
+              <!-- Untested: shows '---' -->
+              <span
+                v-else
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold text-gray-400 dark:text-gray-500 select-none min-w-[90px] text-center"
+              >
+                ---
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Finite Conjugation Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm border-collapse">
+            <thead>
+              <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
+                <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-36 shrink-0">
+                  Tense
+                </th>
+                <th
+                  v-for="p in PRONOUNS"
+                  :key="p.idx"
+                  class="py-2.5 px-2.5 sm:px-3 text-center min-w-[110px]"
+                >
+                  <span class="font-mono text-[11px]">{{ p.label }}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+              <tr
+                v-for="tense in FINITE_TENSES"
+                :key="tense.key"
+                class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
+              >
+                <td class="py-2.5 px-3 sm:px-4 font-semibold text-gray-900 dark:text-gray-200 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30">
+                  {{ tense.label }}
+                </td>
+
+                <td
+                  v-for="p in PRONOUNS"
+                  :key="p.idx"
+                  class="py-2 px-2 sm:px-3 text-center"
+                >
+                  <!-- If this cell is the tested one -->
+                  <div
+                    v-if="currentRandomTarget.tenseKey === tense.key && currentRandomTarget.pronounIdx === p.idx"
+                    class="relative inline-block w-full max-w-[130px]"
+                  >
+                    <input
+                      id="random-test-input"
+                      ref="randomTestInputRef"
+                      type="text"
+                      v-model="randomTestAnswer"
+                      @input="handleRandomInput"
+                      @keydown="handleRandomInputKeyDown"
+                      @blur="handleRandomBlur"
+                      @focus="handleCellFocus"
+                      placeholder="..."
+                      class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
+                      :class="{
+                        'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
+                        'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold ring-2 ring-white': isHintActive(randomKey),
+                        'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 ring-2 ring-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold': !isHintActive(randomKey) && randomTestStatus === 'correct',
+                        'bg-rose-50 dark:bg-rose-950/40 border-rose-500 ring-2 ring-rose-500 text-rose-800 dark:text-rose-200 font-bold': !isHintActive(randomKey) && randomTestStatus === 'incorrect'
+                      }"
+                    />
+                  </div>
+
+                  <!-- Untested cell in Random Test Mode: shows '---' -->
+                  <span
+                    v-else
+                    class="font-medium text-gray-400 dark:text-gray-500 select-none font-mono"
+                  >
+                    ---
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <!-- Empty State -->
     <div
-      v-if="filteredVerbList.length === 0"
+      v-else-if="filteredVerbList.length === 0"
       class="text-center py-16 bg-white dark:bg-[#182030] rounded-2xl border-2 border-gray-200 dark:border-gray-700 p-8 space-y-3"
     >
       <p class="text-gray-700 dark:text-gray-300 font-bold text-base">No verbs selected.</p>
@@ -753,12 +1194,12 @@ onMounted(() => {
 
           <!-- Non-finite form tags/cards directly above table -->
           <div
-            v-if="selectedTenses.includes('gerund') || selectedTenses.includes('pastParticiple')"
+            v-if="isTestMode || selectedTenses.includes('gerund') || selectedTenses.includes('pastParticiple')"
             class="flex items-center gap-4 flex-wrap"
           >
             <!-- Gerund Box -->
             <div
-              v-if="selectedTenses.includes('gerund')"
+              v-if="isTestMode || selectedTenses.includes('gerund')"
               class="flex flex-col items-center gap-1"
             >
               <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
@@ -766,7 +1207,7 @@ onMounted(() => {
               </span>
 
               <!-- Test Mode Input -->
-              <div v-if="isTestMode" class="relative inline-block w-28 sm:w-32">
+              <div v-if="isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-28 sm:w-32">
                 <input
                   :id="`input-${verb.verb}-gerund`"
                   type="text"
@@ -775,16 +1216,25 @@ onMounted(() => {
                   @keydown.enter="validateCell(verb, 'gerund', 0)"
                   @keydown="handleKeyDown(verbIdx, 'gerund', 0, verb, $event)"
                   @blur="handleBlur(verb, 'gerund', 0, $event)"
+                  @focus="handleCellFocus"
                   placeholder="..."
-                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 transition-all text-gray-900 dark:text-white"
+                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                   :class="{
-                    'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600 focus:ring-pink-500/30 focus:border-[#be185d]': !answerStatuses[getCellKey(verb.verb, 'gerund', 0)] && !isHintActive(getCellKey(verb.verb, 'gerund', 0)),
+                    'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, 'gerund', 0)] && !isHintActive(getCellKey(verb.verb, 'gerund', 0)),
                     'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold': isHintActive(getCellKey(verb.verb, 'gerund', 0)),
-                    'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold focus:ring-emerald-500/30': !isHintActive(getCellKey(verb.verb, 'gerund', 0)) && answerStatuses[getCellKey(verb.verb, 'gerund', 0)] === 'correct',
-                    'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-800 dark:text-rose-200 font-bold focus:ring-rose-500/30': !isHintActive(getCellKey(verb.verb, 'gerund', 0)) && answerStatuses[getCellKey(verb.verb, 'gerund', 0)] === 'incorrect'
+                    'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold': !isHintActive(getCellKey(verb.verb, 'gerund', 0)) && answerStatuses[getCellKey(verb.verb, 'gerund', 0)] === 'correct',
+                    'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-800 dark:text-rose-200 font-bold': !isHintActive(getCellKey(verb.verb, 'gerund', 0)) && answerStatuses[getCellKey(verb.verb, 'gerund', 0)] === 'incorrect'
                   }"
                 />
               </div>
+
+              <!-- Test Mode Untested: shows '---' -->
+              <span
+                v-else-if="isTestMode"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold text-gray-400 dark:text-gray-500 select-none min-w-[90px] text-center"
+              >
+                ---
+              </span>
 
               <!-- Static Display Mode: text is standard color as all others -->
               <span
@@ -797,7 +1247,7 @@ onMounted(() => {
 
             <!-- Participle Box -->
             <div
-              v-if="selectedTenses.includes('pastParticiple')"
+              v-if="isTestMode || selectedTenses.includes('pastParticiple')"
               class="flex flex-col items-center gap-1"
             >
               <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
@@ -805,7 +1255,7 @@ onMounted(() => {
               </span>
 
               <!-- Test Mode Input -->
-              <div v-if="isTestMode" class="relative inline-block w-28 sm:w-32">
+              <div v-if="isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-28 sm:w-32">
                 <input
                   :id="`input-${verb.verb}-pastParticiple`"
                   type="text"
@@ -814,16 +1264,25 @@ onMounted(() => {
                   @keydown.enter="validateCell(verb, 'pastParticiple', 0)"
                   @keydown="handleKeyDown(verbIdx, 'pastParticiple', 3, verb, $event)"
                   @blur="handleBlur(verb, 'pastParticiple', 0, $event)"
+                  @focus="handleCellFocus"
                   placeholder="..."
-                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 transition-all text-gray-900 dark:text-white"
+                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                   :class="{
-                    'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600 focus:ring-pink-500/30 focus:border-[#be185d]': !answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] && !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)),
+                    'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] && !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)),
                     'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold': isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)),
-                    'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold focus:ring-emerald-500/30': !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)) && answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] === 'correct',
-                    'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-800 dark:text-rose-200 font-bold focus:ring-rose-500/30': !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)) && answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] === 'incorrect'
+                    'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold': !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)) && answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] === 'correct',
+                    'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-800 dark:text-rose-200 font-bold': !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)) && answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] === 'incorrect'
                   }"
                 />
               </div>
+
+              <!-- Test Mode Untested: shows '---' -->
+              <span
+                v-else-if="isTestMode"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold text-gray-400 dark:text-gray-500 select-none min-w-[90px] text-center"
+              >
+                ---
+              </span>
 
               <!-- Static Display Mode: text is standard color as all others -->
               <span
@@ -880,13 +1339,14 @@ onMounted(() => {
                       @keydown.enter="validateCell(verb, tense.key, p.idx)"
                       @keydown="handleKeyDown(verbIdx, tenseIdx, p.idx, verb, $event)"
                       @blur="handleBlur(verb, tense.key, p.idx, $event)"
+                      @focus="handleCellFocus"
                       placeholder="..."
-                      class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 transition-all text-gray-900 dark:text-white"
+                      class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                       :class="{
-                        'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600 focus:ring-pink-500/30 focus:border-[#be185d]': !answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] && !isHintActive(getCellKey(verb.verb, tense.key, p.idx)),
+                        'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] && !isHintActive(getCellKey(verb.verb, tense.key, p.idx)),
                         'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold': isHintActive(getCellKey(verb.verb, tense.key, p.idx)),
-                        'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold focus:ring-emerald-500/30': !isHintActive(getCellKey(verb.verb, tense.key, p.idx)) && answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] === 'correct',
-                        'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-800 dark:text-rose-200 font-bold focus:ring-rose-500/30': !isHintActive(getCellKey(verb.verb, tense.key, p.idx)) && answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] === 'incorrect'
+                        'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold': !isHintActive(getCellKey(verb.verb, tense.key, p.idx)) && answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] === 'correct',
+                        'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-800 dark:text-rose-200 font-bold': !isHintActive(getCellKey(verb.verb, tense.key, p.idx)) && answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] === 'incorrect'
                       }"
                     />
                   </div>
@@ -894,9 +1354,10 @@ onMounted(() => {
                   <!-- Standard Static Conjugation Mode -->
                   <span
                     v-else
-                    class="font-medium text-gray-800 dark:text-gray-200"
+                    class="font-medium"
+                    :class="isTestMode ? 'text-gray-400 dark:text-gray-500 select-none font-mono' : 'text-gray-800 dark:text-gray-200'"
                   >
-                    {{ (verb as any)[tense.key]?.[p.idx] || '—' }}
+                    {{ isTestMode ? '---' : ((verb as any)[tense.key]?.[p.idx] || '—') }}
                   </span>
                 </td>
               </tr>
@@ -1008,10 +1469,11 @@ onMounted(() => {
                 @input="handleRetestInput(item.id)"
                 @keydown.enter="validateRetestItem(item)"
                 @blur="validateRetestItem(item)"
+                @focus="handleCellFocus"
                 placeholder="Type answer..."
-                class="px-3 py-1.5 text-xs rounded-xl border font-medium focus:outline-none focus:ring-2 w-36 transition-all text-gray-900 dark:text-white"
+                class="px-3 py-1.5 text-xs rounded-xl border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white w-36 transition-all text-gray-900 dark:text-white"
                 :class="{
-                  'bg-white dark:bg-[#182030] border-gray-300 dark:border-gray-600 focus:ring-pink-500/30 focus:border-[#be185d]': !retestStatuses[item.id],
+                  'bg-white dark:bg-[#182030] border-gray-300 dark:border-gray-600': !retestStatuses[item.id],
                   'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-800 dark:text-emerald-200 font-bold': retestStatuses[item.id] === 'correct',
                   'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-800 dark:text-rose-200 font-bold': retestStatuses[item.id] === 'incorrect'
                 }"
