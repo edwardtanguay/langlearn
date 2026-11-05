@@ -114,6 +114,19 @@ const randomTestAnswer = ref('')
 const randomTestStatus = ref<'correct' | 'incorrect' | null>(null)
 const waitingForNextRandomKey = ref(false)
 let ignoreNextRandomKey = false
+const isVerbJiggling = ref(false)
+let jiggleTimer: any = null
+
+function triggerVerbJiggle() {
+  if (jiggleTimer) clearTimeout(jiggleTimer)
+  isVerbJiggling.value = false
+  nextTick(() => {
+    isVerbJiggling.value = true
+    jiggleTimer = setTimeout(() => {
+      isVerbJiggling.value = false
+    }, 700)
+  })
+}
 
 const randomKey = computed(() => {
   if (!currentRandomTarget.value) return ''
@@ -702,6 +715,7 @@ function exitRandomTest() {
 }
 
 function pickNextRandomTarget() {
+  const prevVerb = currentRandomTarget.value?.verb?.verb
   waitingForNextRandomKey.value = false
   ignoreNextRandomKey = false
   randomTestStatus.value = null
@@ -784,6 +798,11 @@ function pickNextRandomTarget() {
   const chosenList = filteredCandidates.length > 0 ? filteredCandidates : candidates
   const randomIndex = Math.floor(Math.random() * chosenList.length)
   currentRandomTarget.value = chosenList[randomIndex]
+
+  const newVerb = currentRandomTarget.value?.verb?.verb
+  if (prevVerb && newVerb && prevVerb !== newVerb) {
+    triggerVerbJiggle()
+  }
 
   nextTick(() => {
     const el = document.getElementById('random-test-input') as HTMLInputElement | null
@@ -926,6 +945,7 @@ onUnmounted(() => {
   }
   if (peekTimer) clearTimeout(peekTimer)
   if (peekFadeTimer) clearTimeout(peekFadeTimer)
+  if (jiggleTimer) clearTimeout(jiggleTimer)
 })
 </script>
 
@@ -1176,7 +1196,10 @@ onUnmounted(() => {
         <!-- Verb Header with Gerund & Participle -->
         <div class="px-5 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex items-center justify-between gap-4 flex-wrap">
           <div class="space-y-0.5">
-            <h2 class="text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight">
+            <h2
+              class="text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight inline-block origin-left"
+              :class="{ 'animate-verb-jiggle': isVerbJiggling }"
+            >
               {{ currentRandomTarget.verb.verb }}
             </h2>
             <div class="text-xs text-gray-400 dark:text-gray-500 select-none">
@@ -1683,3 +1706,35 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes nuanced-verb-jiggle {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  15% {
+    transform: translateX(-5px) rotate(-1.5deg) scale(1.04);
+  }
+  30% {
+    transform: translateX(4px) rotate(1.2deg) scale(1.04);
+  }
+  45% {
+    transform: translateX(-3px) rotate(-0.8deg) scale(1.02);
+  }
+  60% {
+    transform: translateX(2px) rotate(0.4deg);
+  }
+  75% {
+    transform: translateX(-1px) rotate(-0.2deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg) scale(1);
+  }
+}
+
+.animate-verb-jiggle {
+  display: inline-block;
+  animation: nuanced-verb-jiggle 0.65s cubic-bezier(0.25, 1, 0.5, 1) both;
+  will-change: transform;
+}
+</style>
