@@ -113,6 +113,7 @@ const currentRandomTarget = ref<RandomTarget | null>(null)
 const randomTestAnswer = ref('')
 const randomTestStatus = ref<'correct' | 'incorrect' | null>(null)
 const waitingForNextRandomKey = ref(false)
+let ignoreNextRandomKey = false
 
 const randomKey = computed(() => {
   if (!currentRandomTarget.value) return ''
@@ -128,14 +129,81 @@ const hintState = ref<{
   active: boolean
 } | null>(null)
 
-// Peek state for CTRL-ESC keypress
+// Peek state for CTRL-ENTER keypress
 const isPeeking = ref(false)
 const peekFading = ref(false)
 let peekTimer: any = null
 let peekFadeTimer: any = null
 
+function blankActiveCell() {
+  if (import.meta.server) return
+
+  if (isRandomTestMode.value) {
+    if (waitingForNextRandomKey.value || randomTestStatus.value === 'correct') {
+      return
+    }
+    randomTestAnswer.value = ''
+    if (hintState.value && hintState.value.cellKey === randomKey.value) {
+      if (hintState.value.timer) clearTimeout(hintState.value.timer)
+      hintState.value = null
+    }
+    const el = document.getElementById('random-test-input') as HTMLInputElement | null
+    if (el) {
+      el.value = ''
+      el.setSelectionRange(0, 0)
+    }
+    return
+  }
+
+  const activeEl = document.activeElement as HTMLInputElement | null
+  if (!activeEl || !activeEl.id || !activeEl.id.startsWith('input-')) return
+
+  const rawId = activeEl.id.slice('input-'.length)
+  if (rawId.endsWith('-gerund')) {
+    const verbName = rawId.slice(0, -'-gerund'.length)
+    const cellKey = getCellKey(verbName, 'gerund', 0)
+    userAnswers.value[cellKey] = ''
+    answerStatuses.value[cellKey] = null
+    if (hintState.value && hintState.value.cellKey === cellKey) {
+      if (hintState.value.timer) clearTimeout(hintState.value.timer)
+      hintState.value = null
+    }
+  } else if (rawId.endsWith('-pastParticiple')) {
+    const verbName = rawId.slice(0, -'-pastParticiple'.length)
+    const cellKey = getCellKey(verbName, 'pastParticiple', 0)
+    userAnswers.value[cellKey] = ''
+    answerStatuses.value[cellKey] = null
+    if (hintState.value && hintState.value.cellKey === cellKey) {
+      if (hintState.value.timer) clearTimeout(hintState.value.timer)
+      hintState.value = null
+    }
+  } else {
+    const lastDash = rawId.lastIndexOf('-')
+    if (lastDash !== -1) {
+      const pIdx = parseInt(rawId.slice(lastDash + 1), 10)
+      const rest = rawId.slice(0, lastDash)
+      const secondLastDash = rest.lastIndexOf('-')
+      if (secondLastDash !== -1) {
+        const tenseKey = rest.slice(secondLastDash + 1)
+        const verbName = rest.slice(0, secondLastDash)
+        const cellKey = getCellKey(verbName, tenseKey, pIdx)
+        userAnswers.value[cellKey] = ''
+        answerStatuses.value[cellKey] = null
+        if (hintState.value && hintState.value.cellKey === cellKey) {
+          if (hintState.value.timer) clearTimeout(hintState.value.timer)
+          hintState.value = null
+        }
+      }
+    }
+  }
+
+  activeEl.value = ''
+  activeEl.setSelectionRange(0, 0)
+}
+
 function triggerPeek() {
   if (!isTestMode.value && !isRandomTestMode.value) return
+  blankActiveCell()
   if (peekTimer) clearTimeout(peekTimer)
   if (peekFadeTimer) clearTimeout(peekFadeTimer)
 
@@ -474,11 +542,6 @@ function handleKeyDown(
   event: KeyboardEvent
 ) {
   if (event.key === 'Escape') {
-    if (event.ctrlKey || event.metaKey) {
-      event.preventDefault()
-      triggerPeek()
-      return
-    }
     let expected = ''
     if (rowType === 'gerund') {
       expected = verb.gerund
@@ -501,6 +564,10 @@ function handleKeyDown(
 
   if (event.key === 'Enter') {
     event.preventDefault()
+    if (event.ctrlKey || event.metaKey) {
+      triggerPeek()
+      return
+    }
     ;(event.target as HTMLInputElement)?.blur()
     return
   }
@@ -636,6 +703,7 @@ function exitRandomTest() {
 
 function pickNextRandomTarget() {
   waitingForNextRandomKey.value = false
+  ignoreNextRandomKey = false
   randomTestStatus.value = null
   randomTestAnswer.value = ''
 
@@ -741,6 +809,10 @@ function validateRandomTest() {
   if (isMatch) {
     randomTestStatus.value = 'correct'
     waitingForNextRandomKey.value = true
+    ignoreNextRandomKey = true
+    setTimeout(() => {
+      ignoreNextRandomKey = false
+    }, 150)
   } else {
     randomTestStatus.value = 'incorrect'
     recordError(
@@ -785,23 +857,31 @@ function handleRandomInput() {
 
 function handleRandomInputKeyDown(event: KeyboardEvent) {
   if (waitingForNextRandomKey.value) {
+    if (ignoreNextRandomKey) return
     if (['Shift', 'Control', 'Alt', 'Meta'].includes(event.key)) return
+    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+      event.preventDefault()
+      event.stopPropagation()
+      triggerPeek()
+      return
+    }
     event.preventDefault()
+    event.stopPropagation()
     pickNextRandomTarget()
     return
   }
   if (event.key === 'Escape') {
-    if (event.ctrlKey || event.metaKey) {
-      event.preventDefault()
-      triggerPeek()
-      return
-    }
     if (!currentRandomTarget.value) return
     triggerHint(randomKey.value, currentRandomTarget.value.expected, event)
     return
   }
   if (event.key === 'Enter') {
     event.preventDefault()
+    event.stopPropagation()
+    if (event.ctrlKey || event.metaKey) {
+      triggerPeek()
+      return
+    }
     validateRandomTest()
     if (randomTestStatus.value === 'correct') {
       ;(event.target as HTMLInputElement)?.blur()
@@ -812,7 +892,11 @@ function handleRandomInputKeyDown(event: KeyboardEvent) {
 function handleRandomGlobalKeyDown(e: KeyboardEvent) {
   if (!isRandomTestMode.value) return
   if (waitingForNextRandomKey.value) {
+    if (ignoreNextRandomKey) return
     if (['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) return
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      return
+    }
     e.preventDefault()
     e.stopPropagation()
     pickNextRandomTarget()
@@ -820,7 +904,7 @@ function handleRandomGlobalKeyDown(e: KeyboardEvent) {
 }
 
 function handleGlobalKeyDown(e: KeyboardEvent) {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'Escape') {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
     if (isTestMode.value || isRandomTestMode.value) {
       e.preventDefault()
       triggerPeek()
@@ -1058,29 +1142,29 @@ onUnmounted(() => {
     <!-- Random Test View (when isRandomTestMode is true) -->
     <div v-if="isRandomTestMode && currentRandomTarget" class="space-y-4">
       <!-- Top banner / indicator -->
-      <div class="flex items-center justify-between gap-3 p-4 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-sm flex-wrap">
-        <div class="flex items-center gap-3">
-          <span class="px-2.5 py-1 rounded-lg text-xs font-black uppercase bg-[#be185d] text-white">
+      <div class="flex items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-sm min-h-[58px]">
+        <div class="flex items-center gap-3 shrink-0">
+          <span class="px-2.5 py-1 rounded-lg text-xs font-black uppercase bg-[#be185d] text-white shrink-0">
             Random Test Mode
           </span>
-          <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">
-            Conjugate the active cell. ESC for hint, CTRL-ESC to peek.
+          <span class="text-xs text-gray-500 dark:text-gray-400 font-medium whitespace-nowrap">
+            ESC for hint, CTRL-ENTER to peek
           </span>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2.5 shrink-0">
           <button
             type="button"
             v-if="waitingForNextRandomKey"
             @click="pickNextRandomTarget"
-            class="px-3 py-1 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-700 animate-pulse hover:bg-emerald-200 dark:hover:bg-emerald-900/60 cursor-pointer transition-colors"
+            class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-700 animate-pulse hover:bg-emerald-200 dark:hover:bg-emerald-900/60 cursor-pointer transition-colors whitespace-nowrap"
           >
-            ✓ Correct! Press any key or click to move to next verb →
+            ✓ Correct! Press any key or click to continue →
           </button>
           <button
             type="button"
             @click="exitRandomTest"
-            class="px-3 py-1.5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 transition-colors cursor-pointer"
+            class="px-3 py-1.5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-700 transition-colors cursor-pointer whitespace-nowrap"
           >
             Exit Random Test
           </button>
@@ -1096,7 +1180,7 @@ onUnmounted(() => {
               {{ currentRandomTarget.verb.verb }}
             </h2>
             <div class="text-xs text-gray-400 dark:text-gray-500 select-none">
-              ESC for hint, CTRL-ESC to peek
+              ESC for hint, CTRL-ENTER to peek
             </div>
           </div>
 
@@ -1282,7 +1366,7 @@ onUnmounted(() => {
               {{ verb.verb }}
             </h2>
             <div v-if="isTestMode" class="text-xs text-gray-400 dark:text-gray-500 select-none">
-              ESC for hint, CTRL-ESC to peek
+              ESC for hint, CTRL-ENTER to peek
             </div>
           </div>
 
