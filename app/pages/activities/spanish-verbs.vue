@@ -128,6 +128,29 @@ const hintState = ref<{
   active: boolean
 } | null>(null)
 
+// Peek state for CTRL-ESC keypress
+const isPeeking = ref(false)
+const peekFading = ref(false)
+let peekTimer: any = null
+let peekFadeTimer: any = null
+
+function triggerPeek() {
+  if (!isTestMode.value && !isRandomTestMode.value) return
+  if (peekTimer) clearTimeout(peekTimer)
+  if (peekFadeTimer) clearTimeout(peekFadeTimer)
+
+  isPeeking.value = true
+  peekFading.value = false
+
+  peekTimer = setTimeout(() => {
+    peekFading.value = true
+    peekFadeTimer = setTimeout(() => {
+      isPeeking.value = false
+      peekFading.value = false
+    }, 300)
+  }, 1000)
+}
+
 const STORAGE_DIFFICULT_KEY = 'langlearn_spanish_verb_difficulties'
 
 function loadDifficultWords() {
@@ -398,12 +421,11 @@ function triggerHint(cellKey: string, expectedAnswer: string, event: KeyboardEve
 
   hintState.value.timer = setTimeout(() => {
     if (hintState.value && hintState.value.cellKey === cellKey && hintState.value.active) {
-      setCurrentVal(hintState.value.originalValue)
+      setCurrentVal('')
       hintState.value.active = false
       nextTick(() => {
         inputEl.focus()
-        const len = getCurrentVal().length
-        inputEl.setSelectionRange(len, len)
+        inputEl.setSelectionRange(0, 0)
       })
     }
   }, 1000)
@@ -414,7 +436,7 @@ function handleBlur(verb: SpanishVerb, tenseKey: string, pronounIdx: number, eve
   if (hintState.value && hintState.value.cellKey === cellKey) {
     if (hintState.value.active) {
       if (hintState.value.timer) clearTimeout(hintState.value.timer)
-      userAnswers.value[cellKey] = hintState.value.originalValue
+      userAnswers.value[cellKey] = ''
     }
     hintState.value = null
   }
@@ -431,6 +453,19 @@ function focusCell(id: string): boolean {
   return false
 }
 
+function navigateHorizontal(currentInput: HTMLInputElement, direction: 'left' | 'right') {
+  const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('input[id^="input-"]'))
+  const currentIndex = inputs.indexOf(currentInput)
+  if (currentIndex === -1) return
+
+  const targetIndex = direction === 'left' ? currentIndex - 1 : currentIndex + 1
+  if (targetIndex >= 0 && targetIndex < inputs.length) {
+    const nextInput = inputs[targetIndex]
+    nextInput.focus()
+    nextInput.select()
+  }
+}
+
 function handleKeyDown(
   verbIndex: number,
   rowType: 'gerund' | 'pastParticiple' | number,
@@ -439,6 +474,11 @@ function handleKeyDown(
   event: KeyboardEvent
 ) {
   if (event.key === 'Escape') {
+    if (event.ctrlKey || event.metaKey) {
+      event.preventDefault()
+      triggerPeek()
+      return
+    }
     let expected = ''
     if (rowType === 'gerund') {
       expected = verb.gerund
@@ -459,12 +499,31 @@ function handleKeyDown(
     return
   }
 
+  if (event.key === 'Enter') {
+    event.preventDefault()
+    ;(event.target as HTMLInputElement)?.blur()
+    return
+  }
+
   if (event.key === 'ArrowUp') {
     event.preventDefault()
     navigateVertical(verbIndex, rowType, colIdx, 'up')
   } else if (event.key === 'ArrowDown') {
     event.preventDefault()
     navigateVertical(verbIndex, rowType, colIdx, 'down')
+  } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    const inputEl = event.target as HTMLInputElement
+    const val = inputEl.value || ''
+    const isLeft = event.key === 'ArrowLeft'
+    const isRight = event.key === 'ArrowRight'
+
+    const shouldMoveLeft = isLeft && (val.length === 0 || (inputEl.selectionStart === 0 && inputEl.selectionEnd === 0))
+    const shouldMoveRight = isRight && (val.length === 0 || (inputEl.selectionStart === val.length && inputEl.selectionEnd === val.length))
+
+    if (shouldMoveLeft || shouldMoveRight) {
+      event.preventDefault()
+      navigateHorizontal(inputEl, isLeft ? 'left' : 'right')
+    }
   }
 }
 
@@ -704,6 +763,13 @@ function validateRandomTest() {
 
 function handleRandomBlur() {
   if (waitingForNextRandomKey.value) return
+  if (hintState.value && hintState.value.cellKey === randomKey.value) {
+    if (hintState.value.active) {
+      if (hintState.value.timer) clearTimeout(hintState.value.timer)
+      randomTestAnswer.value = ''
+    }
+    hintState.value = null
+  }
   validateRandomTest()
 }
 
@@ -725,6 +791,11 @@ function handleRandomInputKeyDown(event: KeyboardEvent) {
     return
   }
   if (event.key === 'Escape') {
+    if (event.ctrlKey || event.metaKey) {
+      event.preventDefault()
+      triggerPeek()
+      return
+    }
     if (!currentRandomTarget.value) return
     triggerHint(randomKey.value, currentRandomTarget.value.expected, event)
     return
@@ -732,6 +803,9 @@ function handleRandomInputKeyDown(event: KeyboardEvent) {
   if (event.key === 'Enter') {
     event.preventDefault()
     validateRandomTest()
+    if (randomTestStatus.value === 'correct') {
+      ;(event.target as HTMLInputElement)?.blur()
+    }
   }
 }
 
@@ -745,14 +819,29 @@ function handleRandomGlobalKeyDown(e: KeyboardEvent) {
   }
 }
 
+function handleGlobalKeyDown(e: KeyboardEvent) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Escape') {
+    if (isTestMode.value || isRandomTestMode.value) {
+      e.preventDefault()
+      triggerPeek()
+    }
+  }
+}
+
 onMounted(() => {
   loadDifficultWords()
+  if (import.meta.client) {
+    window.addEventListener('keydown', handleGlobalKeyDown)
+  }
 })
 
 onUnmounted(() => {
   if (import.meta.client) {
     window.removeEventListener('keydown', handleRandomGlobalKeyDown)
+    window.removeEventListener('keydown', handleGlobalKeyDown)
   }
+  if (peekTimer) clearTimeout(peekTimer)
+  if (peekFadeTimer) clearTimeout(peekFadeTimer)
 })
 </script>
 
@@ -975,17 +1064,19 @@ onUnmounted(() => {
             Random Test Mode
           </span>
           <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">
-            Conjugate the active cell. Press ESC for hint.
+            Conjugate the active cell. ESC for hint, CTRL-ESC to peek.
           </span>
         </div>
 
         <div class="flex items-center gap-3">
-          <span
+          <button
+            type="button"
             v-if="waitingForNextRandomKey"
-            class="px-3 py-1 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-700 animate-pulse"
+            @click="pickNextRandomTarget"
+            class="px-3 py-1 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-700 animate-pulse hover:bg-emerald-200 dark:hover:bg-emerald-900/60 cursor-pointer transition-colors"
           >
-            ✓ Correct! Press any key to move to next verb →
-          </span>
+            ✓ Correct! Press any key or click to move to next verb →
+          </button>
           <button
             type="button"
             @click="exitRandomTest"
@@ -1005,7 +1096,7 @@ onUnmounted(() => {
               {{ currentRandomTarget.verb.verb }}
             </h2>
             <div class="text-xs text-gray-400 dark:text-gray-500 select-none">
-              press ESC for hint
+              ESC for hint, CTRL-ESC to peek
             </div>
           </div>
 
@@ -1039,12 +1130,13 @@ onUnmounted(() => {
                 />
               </div>
 
-              <!-- Untested: shows '---' -->
+              <!-- Untested: shows '---' or peeks answer -->
               <span
                 v-else
-                class="px-3 py-1 rounded-xl text-xs font-mono font-bold text-gray-400 dark:text-gray-500 select-none min-w-[90px] text-center"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
+                :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
-                ---
+                {{ isPeeking ? currentRandomTarget.verb.gerund : '---' }}
               </span>
             </div>
 
@@ -1076,12 +1168,13 @@ onUnmounted(() => {
                 />
               </div>
 
-              <!-- Untested: shows '---' -->
+              <!-- Untested: shows '---' or peeks answer -->
               <span
                 v-else
-                class="px-3 py-1 rounded-xl text-xs font-mono font-bold text-gray-400 dark:text-gray-500 select-none min-w-[90px] text-center"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
+                :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
-                ---
+                {{ isPeeking ? currentRandomTarget.verb.pastParticiple : '---' }}
               </span>
             </div>
           </div>
@@ -1144,12 +1237,13 @@ onUnmounted(() => {
                     />
                   </div>
 
-                  <!-- Untested cell in Random Test Mode: shows '---' -->
+                  <!-- Untested cell in Random Test Mode: shows '---' or peeks answer -->
                   <span
                     v-else
-                    class="font-medium text-gray-400 dark:text-gray-500 select-none font-mono"
+                    class="font-medium select-none font-mono transition-opacity duration-300"
+                    :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
                   >
-                    ---
+                    {{ isPeeking ? (((currentRandomTarget.verb as any)[tense.key] || [])[p.idx] || '—') : '---' }}
                   </span>
                 </td>
               </tr>
@@ -1188,7 +1282,7 @@ onUnmounted(() => {
               {{ verb.verb }}
             </h2>
             <div v-if="isTestMode" class="text-xs text-gray-400 dark:text-gray-500 select-none">
-              press ESC for hint
+              ESC for hint, CTRL-ESC to peek
             </div>
           </div>
 
@@ -1213,7 +1307,6 @@ onUnmounted(() => {
                   type="text"
                   v-model="userAnswers[getCellKey(verb.verb, 'gerund', 0)]"
                   @input="handleInput(getCellKey(verb.verb, 'gerund', 0))"
-                  @keydown.enter="validateCell(verb, 'gerund', 0)"
                   @keydown="handleKeyDown(verbIdx, 'gerund', 0, verb, $event)"
                   @blur="handleBlur(verb, 'gerund', 0, $event)"
                   @focus="handleCellFocus"
@@ -1228,12 +1321,13 @@ onUnmounted(() => {
                 />
               </div>
 
-              <!-- Test Mode Untested: shows '---' -->
+              <!-- Test Mode Untested: shows '---' or peeks answer -->
               <span
                 v-else-if="isTestMode"
-                class="px-3 py-1 rounded-xl text-xs font-mono font-bold text-gray-400 dark:text-gray-500 select-none min-w-[90px] text-center"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
+                :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
-                ---
+                {{ isPeeking ? verb.gerund : '---' }}
               </span>
 
               <!-- Static Display Mode: text is standard color as all others -->
@@ -1261,7 +1355,6 @@ onUnmounted(() => {
                   type="text"
                   v-model="userAnswers[getCellKey(verb.verb, 'pastParticiple', 0)]"
                   @input="handleInput(getCellKey(verb.verb, 'pastParticiple', 0))"
-                  @keydown.enter="validateCell(verb, 'pastParticiple', 0)"
                   @keydown="handleKeyDown(verbIdx, 'pastParticiple', 3, verb, $event)"
                   @blur="handleBlur(verb, 'pastParticiple', 0, $event)"
                   @focus="handleCellFocus"
@@ -1276,12 +1369,13 @@ onUnmounted(() => {
                 />
               </div>
 
-              <!-- Test Mode Untested: shows '---' -->
+              <!-- Test Mode Untested: shows '---' or peeks answer -->
               <span
                 v-else-if="isTestMode"
-                class="px-3 py-1 rounded-xl text-xs font-mono font-bold text-gray-400 dark:text-gray-500 select-none min-w-[90px] text-center"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
+                :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
-                ---
+                {{ isPeeking ? verb.pastParticiple : '---' }}
               </span>
 
               <!-- Static Display Mode: text is standard color as all others -->
@@ -1336,7 +1430,6 @@ onUnmounted(() => {
                       type="text"
                       v-model="userAnswers[getCellKey(verb.verb, tense.key, p.idx)]"
                       @input="handleInput(getCellKey(verb.verb, tense.key, p.idx))"
-                      @keydown.enter="validateCell(verb, tense.key, p.idx)"
                       @keydown="handleKeyDown(verbIdx, tenseIdx, p.idx, verb, $event)"
                       @blur="handleBlur(verb, tense.key, p.idx, $event)"
                       @focus="handleCellFocus"
@@ -1355,9 +1448,9 @@ onUnmounted(() => {
                   <span
                     v-else
                     class="font-medium"
-                    :class="isTestMode ? 'text-gray-400 dark:text-gray-500 select-none font-mono' : 'text-gray-800 dark:text-gray-200'"
+                    :class="isTestMode ? (isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-800 dark:text-gray-200'"
                   >
-                    {{ isTestMode ? '---' : ((verb as any)[tense.key]?.[p.idx] || '—') }}
+                    {{ isTestMode ? (isPeeking ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—') }}
                   </span>
                 </td>
               </tr>
