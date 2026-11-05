@@ -114,17 +114,17 @@ const randomTestAnswer = ref('')
 const randomTestStatus = ref<'correct' | 'incorrect' | null>(null)
 const waitingForNextRandomKey = ref(false)
 let ignoreNextRandomKey = false
-const isVerbJiggling = ref(false)
-let jiggleTimer: any = null
+const isVerbZooming = ref(false)
+let verbZoomTimer: any = null
 
-function triggerVerbJiggle() {
-  if (jiggleTimer) clearTimeout(jiggleTimer)
-  isVerbJiggling.value = false
+function triggerVerbZoom() {
+  if (verbZoomTimer) clearTimeout(verbZoomTimer)
+  isVerbZooming.value = false
   nextTick(() => {
-    isVerbJiggling.value = true
-    jiggleTimer = setTimeout(() => {
-      isVerbJiggling.value = false
-    }, 700)
+    isVerbZooming.value = true
+    verbZoomTimer = setTimeout(() => {
+      isVerbZooming.value = false
+    }, 1400)
   })
 }
 
@@ -801,7 +801,7 @@ function pickNextRandomTarget() {
 
   const newVerb = currentRandomTarget.value?.verb?.verb
   if (prevVerb && newVerb && prevVerb !== newVerb) {
-    triggerVerbJiggle()
+    triggerVerbZoom()
   }
 
   nextTick(() => {
@@ -945,7 +945,7 @@ onUnmounted(() => {
   }
   if (peekTimer) clearTimeout(peekTimer)
   if (peekFadeTimer) clearTimeout(peekFadeTimer)
-  if (jiggleTimer) clearTimeout(jiggleTimer)
+  if (verbZoomTimer) clearTimeout(verbZoomTimer)
 })
 </script>
 
@@ -1198,11 +1198,14 @@ onUnmounted(() => {
           <div class="space-y-0.5">
             <h2
               class="text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight inline-block origin-left"
-              :class="{ 'animate-verb-jiggle': isVerbJiggling }"
+              :class="{ 'animate-verb-zoom': isVerbZooming }"
             >
               {{ currentRandomTarget.verb.verb }}
             </h2>
-            <div class="text-xs text-gray-400 dark:text-gray-500 select-none">
+            <div
+              class="text-xs text-gray-400 dark:text-gray-500 select-none transition-opacity"
+              :class="{ 'animate-hint-fade-during-zoom': isVerbZooming }"
+            >
               ESC for hint, CTRL-ENTER to peek
             </div>
           </div>
@@ -1289,7 +1292,7 @@ onUnmounted(() => {
 
         <!-- Finite Conjugation Table -->
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs sm:text-sm border-collapse">
+          <table class="w-full table-fixed min-w-[760px] text-left text-xs sm:text-sm border-collapse">
             <thead>
               <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
                 <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-36 shrink-0">
@@ -1298,7 +1301,7 @@ onUnmounted(() => {
                 <th
                   v-for="p in PRONOUNS"
                   :key="p.idx"
-                  class="py-2.5 px-2.5 sm:px-3 text-center min-w-[110px]"
+                  class="py-2.5 px-2 text-center w-[14.285%]"
                 >
                   <span class="font-mono text-[11px]">{{ p.label }}</span>
                 </th>
@@ -1498,7 +1501,7 @@ onUnmounted(() => {
 
         <!-- Conjugation Table -->
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs sm:text-sm border-collapse">
+          <table class="w-full table-fixed min-w-[760px] text-left text-xs sm:text-sm border-collapse">
             <thead>
               <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
                 <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-36 shrink-0">
@@ -1507,7 +1510,7 @@ onUnmounted(() => {
                 <th
                   v-for="p in PRONOUNS"
                   :key="p.idx"
-                  class="py-2.5 px-2.5 sm:px-3 text-center min-w-[110px]"
+                  class="py-2.5 px-2 text-center w-[14.285%]"
                 >
                   <span class="font-mono text-[11px]">{{ p.label }}</span>
                 </th>
@@ -1708,33 +1711,49 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-@keyframes nuanced-verb-jiggle {
+@keyframes verb-zoom-highlight {
   0% {
-    transform: translateX(0) rotate(0deg);
+    transform: scale(1);
+    color: inherit;
   }
   15% {
-    transform: translateX(-5px) rotate(-1.5deg) scale(1.04);
+    transform: scale(2);
+    color: #facc15; /* bright yellow */
   }
-  30% {
-    transform: translateX(4px) rotate(1.2deg) scale(1.04);
-  }
-  45% {
-    transform: translateX(-3px) rotate(-0.8deg) scale(1.02);
-  }
-  60% {
-    transform: translateX(2px) rotate(0.4deg);
-  }
-  75% {
-    transform: translateX(-1px) rotate(-0.2deg);
+  85% {
+    transform: scale(2);
+    color: #facc15;
   }
   100% {
-    transform: translateX(0) rotate(0deg) scale(1);
+    transform: scale(1);
+    color: inherit;
   }
 }
 
-.animate-verb-jiggle {
+.animate-verb-zoom {
   display: inline-block;
-  animation: nuanced-verb-jiggle 0.65s cubic-bezier(0.25, 1, 0.5, 1) both;
-  will-change: transform;
+  animation: verb-zoom-highlight 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  will-change: transform, color;
+  z-index: 30;
+  position: relative;
+}
+
+@keyframes hint-fade-during-zoom {
+  0% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-hint-fade-during-zoom {
+  animation: hint-fade-during-zoom 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 </style>
