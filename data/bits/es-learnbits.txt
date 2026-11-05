@@ -92,6 +92,7 @@
 	- ver
 		- veo, ves, ve, vemos, veis, ven
 		- veía, veías, veía, veíamos, veíais, veían
+	- quedar
 	- venir
 	- poner
 	- salir
@@ -102,278 +103,248 @@
 	- corrija
 	- prohibir
 	- practicar
+	- caer
 
 - classroom speak
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
-	- WISHES
-		- nnn
-			- want/wish/desire
-				- desear
-			- to hope
-				- esperar
-					- Así que, esperamos que lo disfruten, que lo sepan gozar, pero eso sí de una manera muy sana
-			- to demand/require
-				-exigir
-			- to insist
-				- insistir
-			- to order
-				- mandar
-			- to need
-				- necesitar
-			- to order
-				- ordenar
-			- to ask
-				- pedir
-					- Solo te pido que me digas cuál de ellos es Triskas: 
-			- to prefer
-				- preferir
-			- to want
-				- querer
-					- yo quería que ustedes me ayudaran
-					- Si queremos que nuestro café sea más dulce podemos añadir azúcar
-	- EMOTIONS
-		- nnn
-			- to be happy/glad
-				- alegrarse
-					- Me alegro de que le guste. 
-			- to be angry
-				- enojarse
-			- to regret
-				- lamentar
-			- to bother
-				- molestar
-					- A mí lo que me molesta es que tú tengas la verdad de todo.
-			- to be sorry
-				- sentir
-			- to surprise
-				- sorpender
-			- me da tristeza que ustedes no se lleven bien
-			- encantar
-				- Encantada de que estés aquí
-	- IMPERSONAL EXPRESSIONS
-		- it's strange that
-			- es raro que
-				- Pedro no ha venido hoy a trabajar hoy
-					- es raro que Pedro no haya venido hoy a trabajar
-		- nnn
-			- it's nice that
-				- es agradable que
-			- it's good that
-				- es bueno que
-			- it's interesting that
-				- es curioso que
-			- it's doubtful that
-				- es dudoso que
-			- it's great that
-				- es estupendo que
-			- it's strange that
-				- es extraño que
-			- it's important that
-				- es importante que
-					- es importante que hable con usted
-			- it's amazing that
-				- es increíble que
-			- it's necessary that
-				- es necesario que
-					- No es necesario que mientas
-			- probable
-			- it's strange that
-				- es raro que
-					- y es raro que todavía no haya nadie
-			- it's urgent that
-				- es urgente que
-			- it's embarrassing that
-				- es vergonzoso que
-			- it's possible that
-				- es posible que no pueda ir
-	- REQUESTS AND RECOMMENDATIONS
-		- nnn
-			- les recomendé que vieran esta película
-			- to advise
-				- aconsejar
-					- les aconsejo que vayan a Zipaquirá
-			- to tell
-				- decir
-			- to allow
-				- dejar
-			- to demand
-				- exigir
-			- to make/force
-				- hacer
-			- to insist
-				- insistir
-			- to order
-				- mandar
-			- to order
-				- ordenar
-			- to forbid
-				- prohibir
-			- to propose
-				- proponer
-			- to recommend
-				- recomendar
-					- te recomiendo que muevas algunos muebles del salón a la cocina.
-			- to beg
-				- rogar
-			- to suggest
-				- sugerir
-					- les sugiero que visiten el sugestivo Museo del oro, 
-			- to beg
-				- suplicar
-			- 
-				- 
-			- 
-				- 
-	- DOUBTS AND DENIAL
-		- nnn
-			- to doubt
-				- dudar
-			- to not believe
-				- no creer
-					- no creo que David vaya a venir
-					- No creo que haga falta
-			- to not be sure
-				- no estar seguro
-			- to not seem
-				- no parecer
-			- to not think
-				- no pensar
-			- to not suppose
-				- no suponer
-				
-				
-	- OJAJÁ
-		- ojalá tengas un buen viaje
-		- Ojalá que todo siga así
-		- ojalá nos veamos pronto
-	- CONDITIONAL
-		- unless
-			- a menos que
-				- deja de llover
-					- No saldré a correr mañana a menos que deje de llover
-		- before
-			- antes de que
-				- empieza a llover
-					- salgamos antes de que empiece a llover
-		- provided that
-			- con tal de que
-				- me ayudas
-					- con tal de que me ayudes
-	- NEGATIVE
-		- No es un hecho que él esté enfermo (It's not a fact that he's sick) 
-	=== TODO ============================
-	- SORT
-		- it is advisable that
-			- conviene que
-				- comes demasiado antes de correr
-					- no conviene que comas demasiado antes de correr
-		- after
-			- después de que
-				- Llegaremos a París e iremos directamente al hotel.
-					- Después de que lleguemos a París, iremos directamente al hotel
-		- to doubt that
-			- dudar que
-				- podemos terminar el trabajo hoy
-					- ella duda que podamos terminar el trabajo hoy
-		- in case
-			- en caso que
-				- vamos a Paris
-					- en caso de que vayamos a París
-		- as soon as
-			- en cuanto
-				- ellos nos dan el dinero
-					- en cuanto nos den el dinero 
-		- it's advisable that
-			- es aconsejable que
-				- rellenas este formulario todos los días
-					- es asconsejable que rellenes este formulario ahora (it's advisable that...)
-		- it's good that
-			- es bueno que
-				- tenemos suficiente dinero
-					- es bueno que tengamos suficiente dinero
-		- it's unlikely that
-			- es difícil que
-				- él tiene que ir allí
-					- es difícil que él tenga que ir allí
-		- it is doubtful that
-			- es dudoso que
-				- ellos llevan un disfraz en esta fiesta
-					- es dudoso que lleven disfraz en esta fiesta
-		- it's likely that
-			- es fácil que
-				- mañana llueve en esta región
-					- es fácil que mañana llueva en esta región
-		- it's fantasic that
-			- es fantástico que
-				- te preparas para tus exámenes
-					- es fantástico que prepares tus propias comidas
-		- it's important that
-			- es importante que
-				- ellas nadan todos los dias
-					- es importante que naden todos los días
-		- it's impossible that
-			- es imposible que
-				- él puede abrir esta puerta
-					- es imposible que alguien pueda abrir esta puerta
-		- it's improbable that
-			- es improbable que
-				- encontramos un hotel barato en el centro de París
-					- es improbable que encontremos un hotel barato en el centro de París
-		- it's uncertain that
-			- es improbable que
-				- no sabemos si mañana hará buen tiempo
-					- es incierto que mañana haga buen tiempo
-		- it's incredible that
-			- es increíble que
-				- todavía hay personas que no utilizan Internet
-					- es increíble que todavía haya gente que no utilizan Internet
-		- it's a pity that
-			- es una lástima que
-				- estas enfermo
-					- es una lástima que estés enfermo
-		- it's bad that
-			- es malo que
-				- comes demasiado azúcar
-					- Es malo que comas demasiado azúcar
-		- it's better that
-			- es mejor que
-				- salimos temprano para evitar el tráfico
-					- es mejor que salgamos temprano para evitar el tráfico
-		- it's necessary that
-			- es menester que
-				- eres puntual
-					- es menester que seas puntual
-		- it's necessary that
-			- es necesario que
-				- haces ejercicio
-					- es necesario que hagas ejercicio
-		- to wish that
-			- esperar que
-				- mañana hace buen tiempo
-					- espero que mañana haga buen tiempo
-		- it's possible that
-			- es posible que
-				- mañana tenemos que trabajar hasta tarde
-					- es posible que mañana tengamos que trabajar hasta tarde
-		- it's necessary that
-			- es preciso que
-				- todos los participantes llegan a tiempo
-					- es preciso que todos los participantes lleguen a tiempo
-		- it's preferable that
-			- es preferible que
-				- tu reservas el hotel con antelación 
-					- es preferible que reserves el hotel con antelación 
-		- it's probable that
-			- es probable que
-				- mañana llueve todo el día
-					- es probable que mañana llueva durante todo el día
-nnn
-
-
-
-
+	- it is advisable that
+		- conviene que
+			- comes demasiado antes de correr
+				- no conviene que comas demasiado antes de correr
+	- after
+		- después de que
+			- Llegaremos a París e iremos directamente al hotel.
+				- Después de que lleguemos a París, iremos directamente al hotel
+	- to doubt that
+		- dudar que
+			- podemos terminar el trabajo hoy
+				- ella duda que podamos terminar el trabajo hoy
+	- in case
+		- en caso que
+			- vamos a Paris
+				- en caso de que vayamos a París
+	- as soon as
+		- en cuanto
+			- ellos nos dan el dinero
+				- en cuanto nos den el dinero 
+	- it's advisable that
+		- es aconsejable que
+			- rellenas este formulario todos los días
+				- es asconsejable que rellenes este formulario ahora (it's advisable that...)
+	- it's good that
+		- es bueno que
+			- tenemos suficiente dinero
+				- es bueno que tengamos suficiente dinero
+	- it's unlikely that
+		- es difícil que
+			- él tiene que ir allí
+				- es difícil que él tenga que ir allí
+	- it is doubtful that
+		- es dudoso que
+			- ellos llevan un disfraz en esta fiesta
+				- es dudoso que lleven disfraz en esta fiesta
+	- it's likely that
+		- es fácil que
+			- mañana llueve en esta región
+				- es fácil que mañana llueva en esta región
+	- it's fantasic that
+		- es fantástico que
+			- te preparas para tus exámenes
+				- es fantástico que prepares tus propias comidas
+	- it's important that
+		- es importante que
+			- ellas nadan todos los dias
+				- es importante que naden todos los días
+	- it's impossible that
+		- es imposible que
+			- él puede abrir esta puerta
+				- es imposible que alguien pueda abrir esta puerta
+	- it's improbable that
+		- es improbable que
+			- encontramos un hotel barato en el centro de París
+				- es improbable que encontremos un hotel barato en el centro de París
+	- it's uncertain that
+		- es improbable que
+			- no sabemos si mañana hará buen tiempo
+				- es incierto que mañana haga buen tiempo
+	- it's incredible that
+		- es increíble que
+			- todavía hay personas que no utilizan Internet
+				- es increíble que todavía haya gente que no utilizan Internet
+	- it's a pity that
+		- es una lástima que
+			- estas enfermo
+				- es una lástima que estés enfermo
+	- it's bad that
+		- es malo que
+			- comes demasiado azúcar
+				- Es malo que comas demasiado azúcar
+	- it's better that
+		- es mejor que
+			- salimos temprano para evitar el tráfico
+				- es mejor que salgamos temprano para evitar el tráfico
+	- it's necessary that
+		- es menester que
+			- eres puntual
+				- es menester que seas puntual
+	- it's necessary that
+		- es necesario que
+			- haces ejercicio
+				- es necesario que hagas ejercicio
+	- to wish that
+		- esperar que
+			- mañana hace buen tiempo
+				- espero que mañana haga buen tiempo
+	- it's possible that
+		- es posible que
+			- mañana tenemos que trabajar hasta tarde
+				- es posible que mañana tengamos que trabajar hasta tarde
+	- it's necessary that
+		- es preciso que
+			- todos los participantes llegan a tiempo
+				- es preciso que todos los participantes lleguen a tiempo
+	- it's preferable that
+		- es preferible que
+			- tu reservas el hotel con antelación 
+				- es preferible que reserves el hotel con antelación 
+	- it's probable that
+		- es probable que
+			- mañana llueve todo el día
+				- es probable que mañana llueva durante todo el día
+	- it's rare that
+		- es raro que
+			- Pedro no ha respondido todavía a mi mensaje
+				- es raro que Pedro no haya respondido todavía a mi mensaje
+	- it's ridiculous that
+		- es ridículo que
+			- el gobierno no hace nada para resolver este problema.
+				- es ridículo que el Gobierno no haga nada para resolver este problema
+	- to be happy that
+		- estar contento que
+			- sus amigos vienen a visitarlo mañana
+				- está contento de que sus amigos vengan a visitarlo mañana
+	- it's terrible that
+		- es terrible que 
+			- muchos personas mueren en guerras cada año
+				- es terrible que tantas personas mueran en guerras cada año
+	- until
+		- hasta que
+			- todos están presentes
+				- no podemos empezar la reunión hasta que todos estén presentes
+	- to insist that
+		- insistir en que
+			- estudio español todos los días
+				- mi profesor insiste en que estudie español todos los días
+	- to order that
+		- mandar que
+			- limpio mi habitación
+				- mi madre me manda que limpie mi habitación
+	- it's better that
+		- más vale que
+			- tu sales temprano
+				- más vale que salgas temprano si no quieres llegar tarde al trabajo					
+	- to deny that
+		- negar que
+			- el político no ha cometido ningún delito
+				- el político niega que haya cometido ningún delito
+	- not to believe that
+		- no creer que
+			- mañana hará buen tiempo
+				- no creo que mañana haga buen tiempo
+	- it's not certain that
+		- no es cierto que
+			- nosotros hemos perdido el tren
+				- no es cierto que hayamos perdido el tren
+	- to not be convinced that
+		- no estar convencido de que
+			- esta es la mejor solución al problema
+				- no estoy convencido de que esta sea la mejor solución al problema
+	- to not be sure that
+		- no estar seguro de que
+			- mañana tendremos tiempo suficiente para visitar el museo
+				- no estoy seguro de que mañana tengamos suficiente tiempo para visitar el museo
+	- it's not true that
+		- no es verdad que
+			- es cierto que ella ha dejado su trabajo
+				- no es verdad que ella haya dejado su trabajo
+	- to not imagine that
+		- no imaginarse que
+			- me imagino que podemos terminar todo el trabajo en un solo día
+				- no me imagino que podamos terminar todo el trabajo en un solo día
+	- to not seem that
+		- no parecer que
+			- parece que mañana va a llover
+				- no parece que vaya a llover mañana
+	- to not think that
+		- no pensar que
+			- pienso que tiene razón
+				- no pienso que tenga razón
+	- to not suppose that
+		- no suponer que
+			- supongo que es verdad
+				- no supongo que sea verdad
+	- hopefully
+		- ojalá que
+			- mañana hace buen tiempo, así que puedo salir a correr
+				- ojalá que mañana haga buen tiempo para poder salir a correr
+	- in order that
+		- para que
+			- lo entiendes mejor
+				- te explicaré la gramática otra vez para que la entiendas mejor
+	- to ask that
+		- pedir que
+			- mi profesor corrige mis errores cuando hablo español
+				- le pido a mi profesor que me corrija los errores cuando hablo español
+	- to prefer that
+		- preferir que
+			- vienes mañana
+				- prefiero que vengas mañana
+	- to prohibit that
+		- prohibir que
+			- los coches circulan por esta zona del centro de la ciudad
+				- el Gobierno ha prohibido que los coches circulen por esta zona del centro
+	- it may be that
+		- puede ser que
+			- mañana lloverá
+				- puede ser que mañana llueva
+	- to want that
+		- querer que
+			- tienes éxito
+				- queremos que tengas éxito
+	- to recommend that
+		- recomendar que
+			- visitas Dijon cuando viajas a Francia
+				- te recomiendo que visites Dijon si viajas a Francia
+	- to plead that
+		- rogar que
+			- esperan unos minutos antes de entrar en la sala
+				- les ruego que esperen unos minutos antes de entrar en la sala
+	- to feel that
+		- sentir que
+			- no tenemos suficiente tiempo para terminar el proyecto
+				- siento que no tengamos suficiente tiempo para terminar el proyecto
+	- without
+		- sin que
+			- sus padres no se dieron cuenta
+				- salió de casa sin que sus padres se dieran cuenta
+	- to suggest that
+		- sugerir que
+			- practicas español todos los días para mejorar tu fluidez
+				- te sugiero que practiques español todos los días para mejorar tu fluidez
+	- as soon as
+		- tan pronto como
+			- sé algo.
+				- te avisaré tan pronto como sepa algo
+	- to fear that
+		- temer que
+			- mañana lloverá y no podremos salir a correr
+				- temo que mañana llueva y no podamos salir a correr
+	- to be afraid that
+		- tener miedo de que
+			- mañana lloverá
+				- tengo miedo de que llueva mañana
 - moving on words
 	- gracias por el consejo, no lo sabía
 	- perfecto, pasemos a lo siguiente
