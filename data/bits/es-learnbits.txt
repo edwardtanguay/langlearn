@@ -2,6 +2,7 @@
 	- patterns
 		- «ir» y «ser» tienen un acento en las dos primeras filas, «estar» tiene cinco, todos incluyen la forma «nosotros»
 		- todas las palabras para «estar» empiezan con «e»
+		- para ir/ser/estar vosotros, los acentos están sólo en futu/cond/sub1, excepción estar pres
 	- hablar
 		- hablo, hablas, habla, hablamos, habláis, hablan
 		- hablaba, hablabas, hablaba, hablábamos, hablabais, hablaban

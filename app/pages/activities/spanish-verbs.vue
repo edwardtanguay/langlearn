@@ -303,6 +303,15 @@ function triggerPeek() {
   }, 1000)
 }
 
+function openGoogleExamples(rawWord: string) {
+  if (!rawWord || !import.meta.client) return
+  const cleanWord = rawWord.split('/')[0].trim()
+  if (!cleanWord || cleanWord === '—' || cleanWord === '---') return
+  const query = `give me three Spanish sentences using the word "${cleanWord}" with English translations`
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(url, '_blank')
+}
+
 const STORAGE_DIFFICULT_KEY = 'langlearn_spanish_verb_difficulties'
 
 function loadDifficultWords() {
@@ -646,6 +655,24 @@ function handleKeyDown(
     return
   }
 
+  if (event.altKey && event.key === 'Enter') {
+    let expected = ''
+    if (rowType === 'gerund') {
+      expected = verb.gerund
+    } else if (rowType === 'pastParticiple') {
+      expected = verb.pastParticiple
+    } else {
+      const finiteTense = FINITE_TENSES[rowType]
+      if (finiteTense) {
+        expected = ((verb as any)[finiteTense.key] || [])[colIdx] || ''
+      }
+    }
+    event.preventDefault()
+    event.stopPropagation()
+    openGoogleExamples(expected)
+    return
+  }
+
   if (event.key === 'Enter') {
     event.preventDefault()
     if (event.ctrlKey || event.metaKey) {
@@ -985,6 +1012,12 @@ function handleRandomInputKeyDown(event: KeyboardEvent) {
     triggerHint(randomKey.value, currentRandomTarget.value.expected, event)
     return
   }
+  if (event.altKey && event.key === 'Enter') {
+    event.preventDefault()
+    event.stopPropagation()
+    openGoogleExamples(currentRandomTarget.value?.expected || '')
+    return
+  }
   if (event.key === 'Enter') {
     event.preventDefault()
     event.stopPropagation()
@@ -1267,10 +1300,11 @@ onUnmounted(() => {
           <button
             type="button"
             v-if="waitingForNextRandomKey"
-            @click="pickNextRandomTarget"
+            @click.stop="openGoogleExamples(currentRandomTarget?.expected || '')"
             class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-700 animate-pulse hover:bg-emerald-200 dark:hover:bg-emerald-900/60 cursor-pointer transition-colors whitespace-nowrap"
+            title="Click to see example sentences in Google (or press any key to continue)"
           >
-            ✓ Correct! Press any key or click to continue →
+            ✓ Correct! (Click for examples · Press any key to continue →)
           </button>
           <button
             type="button"
@@ -1310,7 +1344,7 @@ onUnmounted(() => {
               </span>
 
               <!-- If this cell is the tested one -->
-              <div v-if="currentRandomTarget.tenseKey === 'gerund'" class="relative inline-block w-28 sm:w-32">
+              <div v-if="currentRandomTarget.tenseKey === 'gerund'" class="relative inline-block w-28 sm:w-32 h-[26px] align-middle">
                 <input
                   id="random-test-input"
                   ref="randomTestInputRef"
@@ -1320,8 +1354,9 @@ onUnmounted(() => {
                   @keydown="handleRandomInputKeyDown"
                   @blur="handleRandomBlur"
                   @focus="handleCellFocus"
+                  @dblclick="openGoogleExamples(currentRandomTarget.expected)"
                   placeholder="..."
-                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
+                  class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
                     'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold ring-2 ring-white': isHintActive(randomKey),
@@ -1334,7 +1369,8 @@ onUnmounted(() => {
               <!-- Untested: shows '---' or peeks answer -->
               <span
                 v-else
-                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
+                @click="openGoogleExamples(currentRandomTarget.verb.gerund)"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300 cursor-pointer"
                 :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
                 {{ isPeeking ? currentRandomTarget.verb.gerund : '---' }}
@@ -1348,7 +1384,7 @@ onUnmounted(() => {
               </span>
 
               <!-- If this cell is the tested one -->
-              <div v-if="currentRandomTarget.tenseKey === 'pastParticiple'" class="relative inline-block w-28 sm:w-32">
+              <div v-if="currentRandomTarget.tenseKey === 'pastParticiple'" class="relative inline-block w-28 sm:w-32 h-[26px] align-middle">
                 <input
                   id="random-test-input"
                   ref="randomTestInputRef"
@@ -1358,8 +1394,9 @@ onUnmounted(() => {
                   @keydown="handleRandomInputKeyDown"
                   @blur="handleRandomBlur"
                   @focus="handleCellFocus"
+                  @dblclick="openGoogleExamples(currentRandomTarget.expected)"
                   placeholder="..."
-                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
+                  class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
                     'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold ring-2 ring-white': isHintActive(randomKey),
@@ -1372,7 +1409,8 @@ onUnmounted(() => {
               <!-- Untested: shows '---' or peeks answer -->
               <span
                 v-else
-                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
+                @click="openGoogleExamples(currentRandomTarget.verb.pastParticiple)"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300 cursor-pointer"
                 :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
                 {{ isPeeking ? currentRandomTarget.verb.pastParticiple : '---' }}
@@ -1416,7 +1454,7 @@ onUnmounted(() => {
                   <!-- If this cell is the tested one -->
                   <div
                     v-if="currentRandomTarget.tenseKey === tense.key && currentRandomTarget.pronounIdx === p.idx"
-                    class="relative inline-block w-full max-w-[130px]"
+                    class="relative inline-block w-full max-w-[130px] h-[26px] align-middle text-center"
                   >
                     <input
                       id="random-test-input"
@@ -1427,8 +1465,9 @@ onUnmounted(() => {
                       @keydown="handleRandomInputKeyDown"
                       @blur="handleRandomBlur"
                       @focus="handleCellFocus"
+                      @dblclick="openGoogleExamples(currentRandomTarget.expected)"
                       placeholder="..."
-                      class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
+                      class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                       :class="{
                         'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
                         'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold ring-2 ring-white': isHintActive(randomKey),
@@ -1441,7 +1480,8 @@ onUnmounted(() => {
                   <!-- Untested cell in Random Test Mode: shows '---' or peeks answer -->
                   <span
                     v-else
-                    class="font-medium select-none font-mono transition-opacity duration-300"
+                    @click="openGoogleExamples(((currentRandomTarget.verb as any)[tense.key] || [])[p.idx])"
+                    class="font-medium select-none font-mono transition-opacity duration-300 cursor-pointer"
                     :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
                   >
                     {{ isPeeking ? (((currentRandomTarget.verb as any)[tense.key] || [])[p.idx] || '—') : '---' }}
@@ -1502,10 +1542,11 @@ onUnmounted(() => {
               </span>
 
               <!-- Test Mode Input -->
-              <div v-if="isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-28 sm:w-32 text-center">
+              <div v-if="isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-28 sm:w-32 h-[26px] text-center align-middle">
                 <span
                   v-if="isCellPeeking(`input-${verb.verb}-gerund`, verb.verb)"
-                  class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center inline-block transition-opacity duration-300"
+                  @click="openGoogleExamples(verb.gerund)"
+                  class="w-full h-[26px] px-2 py-1 text-xs leading-[16px] border border-transparent font-mono font-bold select-none min-w-[90px] text-center inline-flex items-center justify-center transition-opacity duration-300 cursor-pointer"
                   :class="peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100'"
                 >
                   {{ verb.gerund }}
@@ -1519,8 +1560,9 @@ onUnmounted(() => {
                   @keydown="handleKeyDown(verbIdx, 'gerund', 0, verb, $event)"
                   @blur="handleBlur(verb, 'gerund', 0, $event)"
                   @focus="handleCellFocus"
+                  @dblclick="openGoogleExamples(verb.gerund)"
                   placeholder="..."
-                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
+                  class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, 'gerund', 0)] && !isHintActive(getCellKey(verb.verb, 'gerund', 0)),
                     'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold': isHintActive(getCellKey(verb.verb, 'gerund', 0)),
@@ -1533,7 +1575,8 @@ onUnmounted(() => {
               <!-- Test Mode Untested: shows '---' or peeks answer -->
               <span
                 v-else-if="isTestMode"
-                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
+                @click="openGoogleExamples(verb.gerund)"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300 cursor-pointer"
                 :class="isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
                 {{ isVerbPeeking(verb.verb) ? verb.gerund : '---' }}
@@ -1542,7 +1585,8 @@ onUnmounted(() => {
               <!-- Static Display Mode: text is standard color as all others -->
               <span
                 v-else
-                class="px-3 py-1 rounded-xl text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[90px] text-center"
+                @click="openGoogleExamples(verb.gerund)"
+                class="px-3 py-1 rounded-xl text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[90px] text-center cursor-pointer"
               >
                 {{ verb.gerund }}
               </span>
@@ -1558,10 +1602,11 @@ onUnmounted(() => {
               </span>
 
               <!-- Test Mode Input -->
-              <div v-if="isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-28 sm:w-32 text-center">
+              <div v-if="isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-28 sm:w-32 h-[26px] text-center align-middle">
                 <span
                   v-if="isCellPeeking(`input-${verb.verb}-pastParticiple`, verb.verb)"
-                  class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center inline-block transition-opacity duration-300"
+                  @click="openGoogleExamples(verb.pastParticiple)"
+                  class="w-full h-[26px] px-2 py-1 text-xs leading-[16px] border border-transparent font-mono font-bold select-none min-w-[90px] text-center inline-flex items-center justify-center transition-opacity duration-300 cursor-pointer"
                   :class="peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100'"
                 >
                   {{ verb.pastParticiple }}
@@ -1575,8 +1620,9 @@ onUnmounted(() => {
                   @keydown="handleKeyDown(verbIdx, 'pastParticiple', 3, verb, $event)"
                   @blur="handleBlur(verb, 'pastParticiple', 0, $event)"
                   @focus="handleCellFocus"
+                  @dblclick="openGoogleExamples(verb.pastParticiple)"
                   placeholder="..."
-                  class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
+                  class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] && !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)),
                     'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold': isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)),
@@ -1589,7 +1635,8 @@ onUnmounted(() => {
               <!-- Test Mode Untested: shows '---' or peeks answer -->
               <span
                 v-else-if="isTestMode"
-                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
+                @click="openGoogleExamples(verb.pastParticiple)"
+                class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300 cursor-pointer"
                 :class="isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
                 {{ isVerbPeeking(verb.verb) ? verb.pastParticiple : '---' }}
@@ -1598,7 +1645,8 @@ onUnmounted(() => {
               <!-- Static Display Mode: text is standard color as all others -->
               <span
                 v-else
-                class="px-3 py-1 rounded-xl text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[90px] text-center"
+                @click="openGoogleExamples(verb.pastParticiple)"
+                class="px-3 py-1 rounded-xl text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[90px] text-center cursor-pointer"
               >
                 {{ verb.pastParticiple }}
               </span>
@@ -1641,10 +1689,11 @@ onUnmounted(() => {
                   class="py-2 px-2 sm:px-3 text-center"
                 >
                   <!-- Testing Input Mode -->
-                  <div v-if="isCellTested(tense.key, p.idx)" class="relative inline-block w-full max-w-[130px] text-center">
+                  <div v-if="isCellTested(tense.key, p.idx)" class="relative inline-block w-full max-w-[130px] h-[26px] text-center align-middle">
                     <span
                       v-if="isCellPeeking(`input-${verb.verb}-${tense.key}-${p.idx}`, verb.verb)"
-                      class="font-medium select-none font-mono transition-opacity duration-300 inline-block py-1"
+                      @click="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
+                      class="w-full h-[26px] px-2 py-1 text-xs leading-[16px] border border-transparent font-medium select-none font-mono transition-opacity duration-300 inline-flex items-center justify-center cursor-pointer"
                       :class="peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100'"
                     >
                       {{ ((verb as any)[tense.key] || [])[p.idx] || '—' }}
@@ -1658,8 +1707,9 @@ onUnmounted(() => {
                       @keydown="handleKeyDown(verbIdx, tenseIdx, p.idx, verb, $event)"
                       @blur="handleBlur(verb, tense.key, p.idx, $event)"
                       @focus="handleCellFocus"
+                      @dblclick="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
                       placeholder="..."
-                      class="w-full px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
+                      class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                       :class="{
                         'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] && !isHintActive(getCellKey(verb.verb, tense.key, p.idx)),
                         'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 !text-emerald-500 font-bold': isHintActive(getCellKey(verb.verb, tense.key, p.idx)),
@@ -1672,7 +1722,8 @@ onUnmounted(() => {
                   <!-- Standard Static Conjugation Mode -->
                   <span
                     v-else
-                    class="font-medium"
+                    @click="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
+                    class="font-medium cursor-pointer"
                     :class="isTestMode ? (isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-800 dark:text-gray-200'"
                   >
                     {{ isTestMode ? (isVerbPeeking(verb.verb) ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—') }}
@@ -1788,6 +1839,7 @@ onUnmounted(() => {
                 @keydown.enter="validateRetestItem(item)"
                 @blur="validateRetestItem(item)"
                 @focus="handleCellFocus"
+                @dblclick="openGoogleExamples(item.correctAnswer)"
                 placeholder="Type answer..."
                 class="px-3 py-1.5 text-xs rounded-xl border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white w-36 transition-all text-gray-900 dark:text-white"
                 :class="{
