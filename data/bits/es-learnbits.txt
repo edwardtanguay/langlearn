@@ -1,4 +1,7 @@
 - verbs
+	- patterns
+		- «ir» y «ser» tienen un acento en las dos primeras filas, «estar» tiene cinco, todos incluyen la forma «nosotros»
+		- todas las palabras para «estar» empiezan con «e»
 	- hablar
 		- hablo, hablas, habla, hablamos, habláis, hablan
 		- hablaba, hablabas, hablaba, hablábamos, hablabais, hablaban
@@ -94,6 +97,8 @@
 		- veía, veías, veía, veíamos, veíais, veían
 	- quedar
 	- venir
+	- deber
+	- poder
 	- poner
 	- salir
 	- decir
@@ -345,6 +350,10 @@
 		- tener miedo de que
 			- mañana lloverá
 				- tengo miedo de que llueva mañana
+	- PROCESS
+		- Quiero que sepas que
+		- que seáis muy felices
+		- que te mejores
 - moving on words
 	- gracias por el consejo, no lo sabía
 	- perfecto, pasemos a lo siguiente

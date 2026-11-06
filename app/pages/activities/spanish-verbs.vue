@@ -145,8 +145,22 @@ const hintState = ref<{
 // Peek state for CTRL-ENTER keypress
 const isPeeking = ref(false)
 const peekFading = ref(false)
+const peekingVerb = ref<string | null>(null)
+const lastFocusedVerb = ref('')
+const lastFocusedInputId = ref('')
 let peekTimer: any = null
 let peekFadeTimer: any = null
+
+function isVerbPeeking(verbName: string): boolean {
+  if (!isPeeking.value) return false
+  if (isRandomTestMode.value) {
+    return currentRandomTarget.value?.verb?.verb === verbName
+  }
+  if (isTestMode.value) {
+    return peekingVerb.value === verbName
+  }
+  return false
+}
 
 function blankActiveCell() {
   if (import.meta.server) return
@@ -216,7 +230,43 @@ function blankActiveCell() {
 
 function triggerPeek() {
   if (!isTestMode.value && !isRandomTestMode.value) return
+
+  let targetInputIdToRestore = ''
+  if (isRandomTestMode.value) {
+    peekingVerb.value = currentRandomTarget.value?.verb?.verb || null
+    targetInputIdToRestore = 'random-test-input'
+  } else {
+    const activeEl = typeof document !== 'undefined' ? (document.activeElement as HTMLElement | null) : null
+    let targetVerb = ''
+    if (activeEl && activeEl.id && activeEl.id.startsWith('input-')) {
+      targetInputIdToRestore = activeEl.id
+      const rawId = activeEl.id.slice('input-'.length)
+      if (rawId.endsWith('-gerund')) {
+        targetVerb = rawId.slice(0, -'-gerund'.length)
+      } else if (rawId.endsWith('-pastParticiple')) {
+        targetVerb = rawId.slice(0, -'-pastParticiple'.length)
+      } else {
+        const lastDash = rawId.lastIndexOf('-')
+        if (lastDash !== -1) {
+          const rest = rawId.slice(0, lastDash)
+          const secondLastDash = rest.lastIndexOf('-')
+          if (secondLastDash !== -1) {
+            targetVerb = rest.slice(0, secondLastDash)
+          }
+        }
+      }
+    }
+    if (!targetVerb) {
+      targetVerb = lastFocusedVerb.value || filteredVerbList.value[0]?.verb || ''
+      if (lastFocusedInputId.value) {
+        targetInputIdToRestore = lastFocusedInputId.value
+      }
+    }
+    peekingVerb.value = targetVerb
+  }
+
   blankActiveCell()
+
   if (peekTimer) clearTimeout(peekTimer)
   if (peekFadeTimer) clearTimeout(peekFadeTimer)
 
@@ -228,6 +278,15 @@ function triggerPeek() {
     peekFadeTimer = setTimeout(() => {
       isPeeking.value = false
       peekFading.value = false
+      peekingVerb.value = null
+      if (targetInputIdToRestore && typeof document !== 'undefined') {
+        nextTick(() => {
+          const el = document.getElementById(targetInputIdToRestore) as HTMLInputElement | null
+          if (el) {
+            el.focus()
+          }
+        })
+      }
     }, 300)
   }, 1000)
 }
@@ -686,6 +745,26 @@ function handleCellFocus(event: FocusEvent) {
   if (!isTestMode.value && !isRandomTestMode.value) return
   const el = event.target as HTMLElement | null
   if (!el) return
+  if (el.id) {
+    lastFocusedInputId.value = el.id
+    if (el.id.startsWith('input-')) {
+      const rawId = el.id.slice('input-'.length)
+      if (rawId.endsWith('-gerund')) {
+        lastFocusedVerb.value = rawId.slice(0, -'-gerund'.length)
+      } else if (rawId.endsWith('-pastParticiple')) {
+        lastFocusedVerb.value = rawId.slice(0, -'-pastParticiple'.length)
+      } else {
+        const lastDash = rawId.lastIndexOf('-')
+        if (lastDash !== -1) {
+          const rest = rawId.slice(0, lastDash)
+          const secondLastDash = rest.lastIndexOf('-')
+          if (secondLastDash !== -1) {
+            lastFocusedVerb.value = rest.slice(0, secondLastDash)
+          }
+        }
+      }
+    }
+  }
   const rect = el.getBoundingClientRect()
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight
   const margin = 120
@@ -1411,8 +1490,16 @@ onUnmounted(() => {
               </span>
 
               <!-- Test Mode Input -->
-              <div v-if="isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-28 sm:w-32">
+              <div v-if="isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-28 sm:w-32 text-center">
+                <span
+                  v-if="isVerbPeeking(verb.verb)"
+                  class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center inline-block transition-opacity duration-300"
+                  :class="peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100'"
+                >
+                  {{ verb.gerund }}
+                </span>
                 <input
+                  v-show="!isVerbPeeking(verb.verb)"
                   :id="`input-${verb.verb}-gerund`"
                   type="text"
                   v-model="userAnswers[getCellKey(verb.verb, 'gerund', 0)]"
@@ -1435,9 +1522,9 @@ onUnmounted(() => {
               <span
                 v-else-if="isTestMode"
                 class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
-                :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
+                :class="isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
-                {{ isPeeking ? verb.gerund : '---' }}
+                {{ isVerbPeeking(verb.verb) ? verb.gerund : '---' }}
               </span>
 
               <!-- Static Display Mode: text is standard color as all others -->
@@ -1459,8 +1546,16 @@ onUnmounted(() => {
               </span>
 
               <!-- Test Mode Input -->
-              <div v-if="isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-28 sm:w-32">
+              <div v-if="isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-28 sm:w-32 text-center">
+                <span
+                  v-if="isVerbPeeking(verb.verb)"
+                  class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center inline-block transition-opacity duration-300"
+                  :class="peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100'"
+                >
+                  {{ verb.pastParticiple }}
+                </span>
                 <input
+                  v-show="!isVerbPeeking(verb.verb)"
                   :id="`input-${verb.verb}-pastParticiple`"
                   type="text"
                   v-model="userAnswers[getCellKey(verb.verb, 'pastParticiple', 0)]"
@@ -1483,9 +1578,9 @@ onUnmounted(() => {
               <span
                 v-else-if="isTestMode"
                 class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300"
-                :class="isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
+                :class="isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
               >
-                {{ isPeeking ? verb.pastParticiple : '---' }}
+                {{ isVerbPeeking(verb.verb) ? verb.pastParticiple : '---' }}
               </span>
 
               <!-- Static Display Mode: text is standard color as all others -->
@@ -1534,8 +1629,16 @@ onUnmounted(() => {
                   class="py-2 px-2 sm:px-3 text-center"
                 >
                   <!-- Testing Input Mode -->
-                  <div v-if="isCellTested(tense.key, p.idx)" class="relative inline-block w-full max-w-[130px]">
+                  <div v-if="isCellTested(tense.key, p.idx)" class="relative inline-block w-full max-w-[130px] text-center">
+                    <span
+                      v-if="isVerbPeeking(verb.verb)"
+                      class="font-medium select-none font-mono transition-opacity duration-300 inline-block py-1"
+                      :class="peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100'"
+                    >
+                      {{ ((verb as any)[tense.key] || [])[p.idx] || '—' }}
+                    </span>
                     <input
+                      v-show="!isVerbPeeking(verb.verb)"
                       :id="`input-${verb.verb}-${tense.key}-${p.idx}`"
                       type="text"
                       v-model="userAnswers[getCellKey(verb.verb, tense.key, p.idx)]"
@@ -1558,9 +1661,9 @@ onUnmounted(() => {
                   <span
                     v-else
                     class="font-medium"
-                    :class="isTestMode ? (isPeeking ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-800 dark:text-gray-200'"
+                    :class="isTestMode ? (isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-800 dark:text-gray-200'"
                   >
-                    {{ isTestMode ? (isPeeking ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—') }}
+                    {{ isTestMode ? (isVerbPeeking(verb.verb) ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—') }}
                   </span>
                 </td>
               </tr>
