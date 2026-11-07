@@ -54,25 +54,25 @@ const PRONOUNS = [
 ]
 
 const FINITE_TENSES = [
-  { key: 'present', label: 'Present' },
-  { key: 'imperfect', label: 'Imperfect' },
-  { key: 'preterite', label: 'Preterite' },
-  { key: 'future', label: 'Future' },
-  { key: 'conditional', label: 'Conditional' },
-  { key: 'presentSubjunctive', label: 'Present Subjunctive' },
-  { key: 'imperfectSubjunctive', label: 'Imperfect Subjunctive' }
+  { key: 'present', label: 'Presente' },
+  { key: 'imperfect', label: 'Imperfecto' },
+  { key: 'preterite', label: 'Pretérito' },
+  { key: 'future', label: 'Futuro' },
+  { key: 'conditional', label: 'Condicional' },
+  { key: 'presentSubjunctive', label: 'Pres. subj.' },
+  { key: 'imperfectSubjunctive', label: 'Imp. subj.' }
 ] as const
 
 const TENSES = [
-  { key: 'present', label: 'Present' },
-  { key: 'imperfect', label: 'Imperfect' },
-  { key: 'preterite', label: 'Preterite' },
-  { key: 'future', label: 'Future' },
-  { key: 'conditional', label: 'Conditional' },
-  { key: 'presentSubjunctive', label: 'Present Subjunctive' },
-  { key: 'imperfectSubjunctive', label: 'Imperfect Subjunctive' },
-  { key: 'gerund', label: 'Gerund' },
-  { key: 'pastParticiple', label: 'Participle' }
+  { key: 'present', label: 'Presente' },
+  { key: 'imperfect', label: 'Imperfecto' },
+  { key: 'preterite', label: 'Pretérito' },
+  { key: 'future', label: 'Futuro' },
+  { key: 'conditional', label: 'Condicional' },
+  { key: 'presentSubjunctive', label: 'Pres. subj.' },
+  { key: 'imperfectSubjunctive', label: 'Imp. subj.' },
+  { key: 'gerund', label: 'Gerundio' },
+  { key: 'pastParticiple', label: 'Participio' }
 ] as const
 
 type TenseKey = typeof TENSES[number]['key']
@@ -424,11 +424,11 @@ function validateCell(verb: SpanishVerb, tenseKey: string, pronounIdx: number) {
 
   if (tenseKey === 'gerund') {
     expected = verb.gerund || ''
-    tenseLabel = 'Gerund'
+    tenseLabel = 'Gerundio'
     pronounLabel = ''
   } else if (tenseKey === 'pastParticiple') {
     expected = verb.pastParticiple || ''
-    tenseLabel = 'Participle'
+    tenseLabel = 'Participio'
     pronounLabel = ''
   } else {
     const expectedList = (verb as any)[tenseKey] || []
@@ -513,8 +513,8 @@ const filteredVerbList = computed(() => {
 })
 
 function formatDifficultWordTag(item: DifficultWord): string {
-  if (item.tenseKey === 'gerund') return 'gerund'
-  if (item.tenseKey === 'pastParticiple') return 'participle'
+  if (item.tenseKey === 'gerund') return 'gerundio'
+  if (item.tenseKey === 'pastParticiple') return 'participio'
   const tense = item.tenseLabel.toLowerCase()
   return item.pronounLabel ? `${tense} ${item.pronounLabel}` : tense
 }
@@ -849,7 +849,7 @@ function pickNextRandomTarget() {
       candidates.push({
         verb: v,
         tenseKey: 'gerund',
-        tenseLabel: 'Gerund',
+        tenseLabel: 'Gerundio',
         pronounIdx: 0,
         pronounLabel: '',
         expected: v.gerund
@@ -859,7 +859,7 @@ function pickNextRandomTarget() {
       candidates.push({
         verb: v,
         tenseKey: 'pastParticiple',
-        tenseLabel: 'Participle',
+        tenseLabel: 'Participio',
         pronounIdx: 0,
         pronounLabel: '',
         expected: v.pastParticiple
@@ -996,6 +996,12 @@ function handleRandomInputKeyDown(event: KeyboardEvent) {
   if (waitingForNextRandomKey.value) {
     if (ignoreNextRandomKey) return
     if (['Shift', 'Control', 'Alt', 'Meta'].includes(event.key)) return
+    if (event.altKey && event.key === 'Enter') {
+      event.preventDefault()
+      event.stopPropagation()
+      openGoogleExamples(currentRandomTarget.value?.expected || '')
+      return
+    }
     if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
       event.preventDefault()
       event.stopPropagation()
@@ -1037,6 +1043,12 @@ function handleRandomGlobalKeyDown(e: KeyboardEvent) {
   if (waitingForNextRandomKey.value) {
     if (ignoreNextRandomKey) return
     if (['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) return
+    if (e.altKey && e.key === 'Enter') {
+      e.preventDefault()
+      e.stopPropagation()
+      openGoogleExamples(currentRandomTarget.value?.expected || '')
+      return
+    }
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       return
     }
@@ -1300,11 +1312,11 @@ onUnmounted(() => {
           <button
             type="button"
             v-if="waitingForNextRandomKey"
-            @click.stop="openGoogleExamples(currentRandomTarget?.expected || '')"
+            @click.stop="pickNextRandomTarget()"
             class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-700 animate-pulse hover:bg-emerald-200 dark:hover:bg-emerald-900/60 cursor-pointer transition-colors whitespace-nowrap"
-            title="Click to see example sentences in Google (or press any key to continue)"
+            title="Click or press any key to continue · ALT-Enter for examples"
           >
-            ✓ Correct! (Click for examples · Press any key to continue →)
+            ✓ Correct! (Click for next · ALT-Enter for examples →)
           </button>
           <button
             type="button"
@@ -1340,7 +1352,7 @@ onUnmounted(() => {
             <!-- Gerund Box -->
             <div class="flex flex-col items-center gap-1">
               <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
-                Gerund
+                Gerundio
               </span>
 
               <!-- If this cell is the tested one -->
@@ -1355,7 +1367,6 @@ onUnmounted(() => {
                   @blur="handleRandomBlur"
                   @focus="handleCellFocus"
                   @dblclick="openGoogleExamples(currentRandomTarget.expected)"
-                  placeholder="..."
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
@@ -1380,7 +1391,7 @@ onUnmounted(() => {
             <!-- Participle Box -->
             <div class="flex flex-col items-center gap-1">
               <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
-                Participle
+                Participio
               </span>
 
               <!-- If this cell is the tested one -->
@@ -1395,7 +1406,6 @@ onUnmounted(() => {
                   @blur="handleRandomBlur"
                   @focus="handleCellFocus"
                   @dblclick="openGoogleExamples(currentRandomTarget.expected)"
-                  placeholder="..."
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
@@ -1425,12 +1435,13 @@ onUnmounted(() => {
             <thead>
               <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
                 <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-36 shrink-0">
-                  Tense
+                  Tiempo
                 </th>
                 <th
                   v-for="p in PRONOUNS"
                   :key="p.idx"
                   class="py-2.5 px-2 text-center w-[14.285%]"
+                  :class="{ 'border-r border-dotted border-gray-300 dark:border-gray-600': p.idx === 2 }"
                 >
                   <span class="font-mono text-[11px]">{{ p.label }}</span>
                 </th>
@@ -1450,6 +1461,7 @@ onUnmounted(() => {
                   v-for="p in PRONOUNS"
                   :key="p.idx"
                   class="py-2 px-2 sm:px-3 text-center"
+                  :class="{ 'border-r border-dotted border-gray-300 dark:border-gray-600': p.idx === 2 }"
                 >
                   <!-- If this cell is the tested one -->
                   <div
@@ -1466,7 +1478,6 @@ onUnmounted(() => {
                       @blur="handleRandomBlur"
                       @focus="handleCellFocus"
                       @dblclick="openGoogleExamples(currentRandomTarget.expected)"
-                      placeholder="..."
                       class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                       :class="{
                         'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
@@ -1538,7 +1549,7 @@ onUnmounted(() => {
               class="flex flex-col items-center gap-1"
             >
               <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
-                Gerund
+                Gerundio
               </span>
 
               <!-- Test Mode Input -->
@@ -1561,7 +1572,6 @@ onUnmounted(() => {
                   @blur="handleBlur(verb, 'gerund', 0, $event)"
                   @focus="handleCellFocus"
                   @dblclick="openGoogleExamples(verb.gerund)"
-                  placeholder="..."
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, 'gerund', 0)] && !isHintActive(getCellKey(verb.verb, 'gerund', 0)),
@@ -1598,7 +1608,7 @@ onUnmounted(() => {
               class="flex flex-col items-center gap-1"
             >
               <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
-                Participle
+                Participio
               </span>
 
               <!-- Test Mode Input -->
@@ -1621,7 +1631,6 @@ onUnmounted(() => {
                   @blur="handleBlur(verb, 'pastParticiple', 0, $event)"
                   @focus="handleCellFocus"
                   @dblclick="openGoogleExamples(verb.pastParticiple)"
-                  placeholder="..."
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] && !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)),
@@ -1660,12 +1669,13 @@ onUnmounted(() => {
             <thead>
               <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
                 <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-36 shrink-0">
-                  Tense
+                  Tiempo
                 </th>
                 <th
                   v-for="p in PRONOUNS"
                   :key="p.idx"
                   class="py-2.5 px-2 text-center w-[14.285%]"
+                  :class="{ 'border-r border-dotted border-gray-300 dark:border-gray-600': p.idx === 2 }"
                 >
                   <span class="font-mono text-[11px]">{{ p.label }}</span>
                 </th>
@@ -1687,6 +1697,7 @@ onUnmounted(() => {
                   v-for="p in PRONOUNS"
                   :key="p.idx"
                   class="py-2 px-2 sm:px-3 text-center"
+                  :class="{ 'border-r border-dotted border-gray-300 dark:border-gray-600': p.idx === 2 }"
                 >
                   <!-- Testing Input Mode -->
                   <div v-if="isCellTested(tense.key, p.idx)" class="relative inline-block w-full max-w-[130px] h-[26px] text-center align-middle">
@@ -1708,7 +1719,6 @@ onUnmounted(() => {
                       @blur="handleBlur(verb, tense.key, p.idx, $event)"
                       @focus="handleCellFocus"
                       @dblclick="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
-                      placeholder="..."
                       class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                       :class="{
                         'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] && !isHintActive(getCellKey(verb.verb, tense.key, p.idx)),
