@@ -129,6 +129,11 @@ const VERB_GROUPS: VerbGroup[] = [
     id: 'modal',
     name: 'Modal verbs',
     verbs: ['poder', 'deber', 'querer', 'saber', 'soler', 'tener', 'necesitar', 'gustar']
+  },
+  {
+    id: 'll-words',
+    name: 'LL-words',
+    verbs: ['llegar', 'llevar', 'llamar', 'llenar', 'llorar', 'llover']
   }
 ]
 
@@ -223,7 +228,7 @@ function verbMatchesSearch(v: SpanishVerb, normQuery: string): boolean {
   for (const tense of FINITE_TENSES) {
     const forms = (v as any)[tense.key] as string[] || []
     for (const form of forms) {
-      if (form && normalizeForSearch(form).includes(normQuery)) {
+      if (form && form !== '-' && normalizeForSearch(form).includes(normQuery)) {
         return true
       }
     }
@@ -563,7 +568,7 @@ function triggerPeek() {
 function openGoogleExamples(rawWord: string) {
   if (!rawWord || !import.meta.client) return
   const cleanWord = rawWord.split('/')[0].trim()
-  if (!cleanWord || cleanWord === '—' || cleanWord === '---') return
+  if (!cleanWord || cleanWord === '—' || cleanWord === '---' || cleanWord === '-' || cleanWord === 'n/a') return
   const query = `give me three Spanish sentences using the word "${cleanWord}" with English translations`
   const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
@@ -701,6 +706,10 @@ function validateCell(verb: SpanishVerb, tenseKey: string, pronounIdx: number) {
     const pronounObj = PRONOUNS.find(p => p.idx === pronounIdx)
     tenseLabel = tenseObj ? tenseObj.label : tenseKey
     pronounLabel = pronounObj ? pronounObj.label : `p${pronounIdx}`
+  }
+
+  if (!expected || expected === '-') {
+    return
   }
 
   const normalizedExpected = normalizeAnswer(expected)
@@ -1166,7 +1175,7 @@ function pickNextRandomTarget() {
       if (selectedTenses.value.includes(tense.key)) {
         const forms = (v as any)[tense.key] as string[] || []
         for (const pIdx of selectedPronouns.value) {
-          if (forms[pIdx]) {
+          if (forms[pIdx] && forms[pIdx] !== '-') {
             candidates.push({
               verb: v,
               tenseKey: tense.key,
@@ -1187,7 +1196,7 @@ function pickNextRandomTarget() {
       for (const tense of FINITE_TENSES) {
         const forms = (v as any)[tense.key] as string[] || []
         for (const p of PRONOUNS) {
-          if (forms[p.idx]) {
+          if (forms[p.idx] && forms[p.idx] !== '-') {
             candidates.push({
               verb: v,
               tenseKey: tense.key,
@@ -1846,9 +1855,17 @@ onUnmounted(() => {
                   class="py-2 px-2 sm:px-3 text-center"
                   :class="{ 'border-r border-dotted border-gray-300 dark:border-gray-600': p.idx === 2 }"
                 >
+                  <!-- Defective Form ('-') Displays 'n/a' in light grey -->
+                  <span
+                    v-if="(((currentRandomTarget.verb as any)[tense.key] || [])[p.idx]) === '-'"
+                    class="block py-1 text-xs font-mono select-none text-gray-400/60 dark:text-gray-600"
+                  >
+                    n/a
+                  </span>
+
                   <!-- If this cell is the tested one -->
                   <div
-                    v-if="currentRandomTarget.tenseKey === tense.key && currentRandomTarget.pronounIdx === p.idx"
+                    v-else-if="currentRandomTarget.tenseKey === tense.key && currentRandomTarget.pronounIdx === p.idx"
                     class="relative inline-block w-full max-w-[130px] h-[26px] align-middle text-center"
                   >
                     <input
@@ -2095,8 +2112,16 @@ onUnmounted(() => {
                   class="py-2 px-2 sm:px-3 text-center"
                   :class="{ 'border-r border-dotted border-gray-300 dark:border-gray-600': p.idx === 2 }"
                 >
+                  <!-- Defective Form ('-') Displays 'n/a' in light grey in all modes -->
+                  <span
+                    v-if="(((verb as any)[tense.key] || [])[p.idx]) === '-'"
+                    class="block py-1 text-xs font-mono select-none text-gray-400/60 dark:text-gray-600"
+                  >
+                    n/a
+                  </span>
+
                   <!-- Testing Input Mode -->
-                  <div v-if="isCellTested(tense.key, p.idx)" class="relative inline-block w-full max-w-[130px] h-[26px] text-center align-middle">
+                  <div v-else-if="isCellTested(tense.key, p.idx)" class="relative inline-block w-full max-w-[130px] h-[26px] text-center align-middle">
                     <span
                       v-if="isCellPeeking(`input-${verb.verb}-${tense.key}-${p.idx}`, verb.verb)"
                       @click="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"

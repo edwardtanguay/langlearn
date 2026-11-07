@@ -228,6 +228,150 @@
 		- caiga, caigas, caiga, caigamos, caigáis, caigan
 		- cayera, cayeras, cayera, cayéramos, cayerais, cayeran
 		- cayendo, caído
+	- querer
+		- quiero, quieres, quiere, queremos, queréis, quieren
+		- quería, querías, quería, queríamos, queríais, querían
+		- quise, quisiste, quiso, quisimos, quisisteis, quisieron
+		- querré, querrás, querrá, querremos, querréis, querrán
+		- querría, querrías, querría, querríamos, querríais, querrían
+		- quiera, quieras, quiera, queramos, queráis, quieran
+		- quisiera, quisieras, quisiera, quisiéramos, quisierais, quisieran
+		- queriendo, querido
+	- soler
+		- suelo, sueles, suele, solemos, soléis, suelen
+		- solía, solías, solía, solíamos, solíais, solían
+		- solí, soliste, solió, solimos, solisteis, solieron
+		- soleré, solerás, solerá, soleremos, soleréis, solerán
+		- solería, solerías, solería, soleríamos, soleríais, solerían
+		- suela, suelas, suela, solamos, soláis, suelan
+		- soliera, solieras, soliera, soliéramos, solierais, solieran
+		- soliendo, solido
+	- necesitar
+		- necesito, necesitas, necesita, necesitamos, necesitáis, necesitan
+		- necesitaba, necesitabas, necesitaba, necesitábamos, necesitabais, necesitaban
+		- necesité, necesitaste, necesitó, necesitamos, necesitasteis, necesitaron
+		- necesitaré, necesitarás, necesitará, necesitaremos, necesitaréis, necesitarán
+		- necesitaría, necesitarías, necesitaría, necesitaríamos, necesitaríais, necesitarían
+		- necesite, necesites, necesite, necesitemos, necesitéis, necesiten
+		- necesitara, necesitaras, necesitara, necesitáramos, necesitarais, necesitaran
+		- necesitando, necesitado
+	- gustar
+		- gusto, gustas, gusta, gustamos, gustáis, gustan
+		- gustaba, gustabas, gustaba, gustábamos, gustabais, gustaban
+		- gusté, gustaste, gustó, gustamos, gustasteis, gustaron
+		- gustaré, gustarás, gustará, gustaremos, gustaréis, gustarán
+		- gustaría, gustarías, gustaría, gustaríamos, gustaríais, gustarían
+		- guste, gustes, guste, gustemos, gustéis, gusten
+		- gustara, gustaras, gustara, gustáramos, gustarais, gustaran
+		- gustando, gustado
+	- trabajar
+		- trabajo, trabajas, trabaja, trabajamos, trabajáis, trabajan
+		- trabajaba, trabajabas, trabajaba, trabajábamos, trabajabais, trabajaban
+		- trabajé, trabajaste, trabajó, trabajamos, trabajasteis, trabajaron
+		- trabajaré, trabajarás, trabajará, trabajaremos, trabajaréis, trabajarán
+		- trabajaría, trabajarías, trabajaría, trabajaríamos, trabajaríais, trabajarían
+		- trabaje, trabajes, trabaje, trabajemos, trabajéis, trabajen
+		- trabajara, trabajaras, trabajara, trabajáramos, trabajarais, trabajaran
+		- trabajando, trabajado
+	- aprender
+		- aprendo, aprendes, aprende, aprendemos, aprendéis, aprenden
+		- aprendía, aprendías, aprendía, aprendíamos, aprendíais, aprendían
+		- aprendí, aprendiste, aprendió, aprendimos, aprendisteis, aprendieron
+		- aprenderé, aprenderás, aprenderá, aprenderemos, aprenderéis, aprenderán
+		- aprendería, aprenderías, aprendería, aprenderíamos, aprenderíais, aprenderían
+		- aprenda, aprendas, aprenda, aprendamos, aprendáis, aprendan
+		- aprendiera, aprendieras, aprendiera, aprendiéramos, aprendierais, aprendieran
+		- aprendiendo, aprendido
+	- abrir
+		- abro, abres, abre, abrimos, abrís, abren
+		- abría, abrías, abría, abríamos, abríais, abrían
+		- abrí, abriste, abrió, abrimos, abristeis, abrieron
+		- abriré, abrirás, abrirá, abriremos, abriréis, abrirán
+		- abriría, abrirías, abriría, abriríamos, abriríais, abrirían
+		- abra, abras, abra, abramos, abráis, abran
+		- abriera, abrieras, abriera, abriéramos, abrierais, abrieran
+		- abriendo, abierto
+	- tomar
+		- tomo, tomas, toma, tomamos, tomáis, toman
+		- tomaba, tomabas, tomaba, tomábamos, tomabais, tomaban
+		- tomé, tomaste, tomó, tomamos, tomasteis, tomaron
+		- tomaré, tomarás, tomará, tomaremos, tomaréis, tomarán
+		- tomaría, tomarías, tomaría, tomaríamos, tomaríais, tomarían
+		- tome, tomes, tome, tomemos, toméis, tomen
+		- tomara, tomaras, tomara, tomáramos, tomarais, tomaran
+		- tomando, tomado
+	- beber
+		- bebo, bebes, bebe, bebemos, bebéis, beben
+		- bebía, bebías, bebía, bebíamos, bebíais, bebían
+		- bebí, bebiste, bebió, bebimos, bebisteis, bebieron
+		- beberé, beberás, beberá, beberemos, beberéis, beberán
+		- bebería, beberías, bebería, beberíamos, beberíais, beberían
+		- beba, bebas, beba, bebamos, bebáis, beban
+		- bebiera, bebieras, bebiera, bebiéramos, bebierais, bebieran
+		- bebiendo, bebido
+	- escribir
+		- escribo, escribes, escribe, escribimos, escribís, escriben
+		- escribía, escribías, escribía, escribíamos, escribíais, escribían
+		- escribí, escribiste, escribió, escribimos, escribisteis, escribieron
+		- escribiré, escribirás, escribirá, escribiremos, escribiréis, escribirán
+		- escribiría, escribirías, escribiría, escribiríamos, escribiríais, escribirían
+		- escriba, escribas, escriba, escribamos, escribáis, escriban
+		- escribiera, escribieras, escribiera, escribiéramos, escribierais, escribieran
+		- escribiendo, escrito
+	- llegar
+		- llego, llegas, llega, llegamos, llegáis, llegan
+		- llegaba, llegabas, llegaba, llegábamos, llegabais, llegaban
+		- llegué, llegaste, llegó, llegamos, llegasteis, llegaron
+		- llegaré, llegarás, llegará, llegaremos, llegaréis, llegarán
+		- llegaría, llegarías, llegaría, llegaríamos, llegaríais, llegarían
+		- llegue, llegues, llegue, lleguemos, lleguéis, lleguen
+		- llegara, llegaras, llegara, llegáramos, llegarais, llegaran
+		- llegando, llegado
+	- llevar
+		- llevo, llevas, lleva, llevamos, lleváis, llevan
+		- llevaba, llevabas, llevaba, llevábamos, llevabais, llevaban
+		- llevé, llevaste, llevó, llevamos, llevasteis, llevaron
+		- llevaré, llevarás, llevará, llevaremos, llevaréis, llevarán
+		- llevaría, llevarías, llevaría, llevaríamos, llevaríais, llevarían
+		- lleve, lleves, lleve, llevemos, llevéis, lleven
+		- llevara, llevaras, llevara, lleváramos, llevarais, llevaran
+		- llevando, llevado
+	- llamar
+		- llamo, llamas, llama, llamamos, llamáis, llaman
+		- llamaba, llamabas, llamaba, llamábamos, llamabais, llamaban
+		- llamé, llamaste, llamó, llamamos, llamasteis, llamaron
+		- llamaré, llamarás, llamará, llamaremos, llamaréis, llamarán
+		- llamaría, llamarías, llamaría, llamaríamos, llamaríais, llamarían
+		- llame, llames, llame, llamemos, llaméis, llamen
+		- llamara, llamaras, llamara, llamáramos, llamarais, llamaran
+		- llamando, llamado
+	- llenar
+		- lleno, llenas, llena, llenamos, llenáis, llenan
+		- llenaba, llenabas, llenaba, llenábamos, llenabais, llenaban
+		- llené, llenaste, llenó, llenamos, llenasteis, llenaron
+		- llenaré, llenarás, llenará, llenaremos, llenaréis, llenarán
+		- llenaría, llenarías, llenaría, llenaríamos, llenaríais, llenarían
+		- llene, llenes, llene, llenemos, llenéis, llenen
+		- llenara, llenaras, llenara, llenáramos, llenarais, llenaran
+		- llenando, llenado
+	- llorar
+		- lloro, lloras, llora, lloramos, lloráis, lloran
+		- lloraba, llorabas, lloraba, llorábamos, llorabais, lloraban
+		- lloré, lloraste, lloró, lloramos, llorasteis, lloraron
+		- lloraré, llorarás, llorará, lloraremos, lloraréis, llorarán
+		- lloraría, llorarías, lloraría, lloraríamos, lloraríais, llorarían
+		- llore, llores, llore, lloremos, lloréis, lloren
+		- llorara, lloraras, llorara, lloráramos, llorarais, lloraran
+		- llorando, llorado
+	- llover
+		- -, -, llueve, -, -, -
+		- -, -, llovía, -, -, -
+		- -, -, llovió, -, -, -
+		- -, -, lloverá, -, -, -
+		- -, -, llovería, -, -, -
+		- -, -, llueva, -, -, -
+		- -, -, lloviera, -, -, -
+		- lloviendo, llovido
 - Spain vs. Latin America
 	- Tu - Amigos - Informal - misma edad
 	- Usted - personas mayores - jefes - respeto

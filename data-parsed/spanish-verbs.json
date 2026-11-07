@@ -2133,5 +2133,371 @@
     ],
     "gerund": "escribiendo",
     "pastParticiple": "escrito"
+  },
+  {
+    "verb": "llegar",
+    "present": [
+      "llego",
+      "llegas",
+      "llega",
+      "llegamos",
+      "llegáis",
+      "llegan"
+    ],
+    "imperfect": [
+      "llegaba",
+      "llegabas",
+      "llegaba",
+      "llegábamos",
+      "llegabais",
+      "llegaban"
+    ],
+    "preterite": [
+      "llegué",
+      "llegaste",
+      "llegó",
+      "llegamos",
+      "llegasteis",
+      "llegaron"
+    ],
+    "future": [
+      "llegaré",
+      "llegarás",
+      "llegará",
+      "llegaremos",
+      "llegaréis",
+      "llegarán"
+    ],
+    "conditional": [
+      "llegaría",
+      "llegarías",
+      "llegaría",
+      "llegaríamos",
+      "llegaríais",
+      "llegarían"
+    ],
+    "presentSubjunctive": [
+      "llegue",
+      "llegues",
+      "llegue",
+      "lleguemos",
+      "lleguéis",
+      "lleguen"
+    ],
+    "imperfectSubjunctive": [
+      "llegara",
+      "llegaras",
+      "llegara",
+      "llegáramos",
+      "llegarais",
+      "llegaran"
+    ],
+    "gerund": "llegando",
+    "pastParticiple": "llegado"
+  },
+  {
+    "verb": "llevar",
+    "present": [
+      "llevo",
+      "llevas",
+      "lleva",
+      "llevamos",
+      "lleváis",
+      "llevan"
+    ],
+    "imperfect": [
+      "llevaba",
+      "llevabas",
+      "llevaba",
+      "llevábamos",
+      "llevabais",
+      "llevaban"
+    ],
+    "preterite": [
+      "llevé",
+      "llevaste",
+      "llevó",
+      "llevamos",
+      "llevasteis",
+      "llevaron"
+    ],
+    "future": [
+      "llevaré",
+      "llevarás",
+      "llevará",
+      "llevaremos",
+      "llevaréis",
+      "llevarán"
+    ],
+    "conditional": [
+      "llevaría",
+      "llevarías",
+      "llevaría",
+      "llevaríamos",
+      "llevaríais",
+      "llevarían"
+    ],
+    "presentSubjunctive": [
+      "lleve",
+      "lleves",
+      "lleve",
+      "llevemos",
+      "llevéis",
+      "lleven"
+    ],
+    "imperfectSubjunctive": [
+      "llevara",
+      "llevaras",
+      "llevara",
+      "lleváramos",
+      "llevarais",
+      "llevaran"
+    ],
+    "gerund": "llevando",
+    "pastParticiple": "llevado"
+  },
+  {
+    "verb": "llamar",
+    "present": [
+      "llamo",
+      "llamas",
+      "llama",
+      "llamamos",
+      "llamáis",
+      "llaman"
+    ],
+    "imperfect": [
+      "llamaba",
+      "llamabas",
+      "llamaba",
+      "llamábamos",
+      "llamabais",
+      "llamaban"
+    ],
+    "preterite": [
+      "llamé",
+      "llamaste",
+      "llamó",
+      "llamamos",
+      "llamasteis",
+      "llamaron"
+    ],
+    "future": [
+      "llamaré",
+      "llamarás",
+      "llamará",
+      "llamaremos",
+      "llamaréis",
+      "llamarán"
+    ],
+    "conditional": [
+      "llamaría",
+      "llamarías",
+      "llamaría",
+      "llamaríamos",
+      "llamaríais",
+      "llamarían"
+    ],
+    "presentSubjunctive": [
+      "llame",
+      "llames",
+      "llame",
+      "llamemos",
+      "llaméis",
+      "llamen"
+    ],
+    "imperfectSubjunctive": [
+      "llamara",
+      "llamaras",
+      "llamara",
+      "llamáramos",
+      "llamarais",
+      "llamaran"
+    ],
+    "gerund": "llamando",
+    "pastParticiple": "llamado"
+  },
+  {
+    "verb": "llenar",
+    "present": [
+      "lleno",
+      "llenas",
+      "llena",
+      "llenamos",
+      "llenáis",
+      "llenan"
+    ],
+    "imperfect": [
+      "llenaba",
+      "llenabas",
+      "llenaba",
+      "llenábamos",
+      "llenabais",
+      "llenaban"
+    ],
+    "preterite": [
+      "llené",
+      "llenaste",
+      "llenó",
+      "llenamos",
+      "llenasteis",
+      "llenaron"
+    ],
+    "future": [
+      "llenaré",
+      "llenarás",
+      "llenará",
+      "llenaremos",
+      "llenaréis",
+      "llenarán"
+    ],
+    "conditional": [
+      "llenaría",
+      "llenarías",
+      "llenaría",
+      "llenaríamos",
+      "llenaríais",
+      "llenarían"
+    ],
+    "presentSubjunctive": [
+      "llene",
+      "llenes",
+      "llene",
+      "llenemos",
+      "llenéis",
+      "llenen"
+    ],
+    "imperfectSubjunctive": [
+      "llenara",
+      "llenaras",
+      "llenara",
+      "llenáramos",
+      "llenarais",
+      "llenaran"
+    ],
+    "gerund": "llenando",
+    "pastParticiple": "llenado"
+  },
+  {
+    "verb": "llorar",
+    "present": [
+      "lloro",
+      "lloras",
+      "llora",
+      "lloramos",
+      "lloráis",
+      "lloran"
+    ],
+    "imperfect": [
+      "lloraba",
+      "llorabas",
+      "lloraba",
+      "llorábamos",
+      "llorabais",
+      "lloraban"
+    ],
+    "preterite": [
+      "lloré",
+      "lloraste",
+      "lloró",
+      "lloramos",
+      "llorasteis",
+      "lloraron"
+    ],
+    "future": [
+      "lloraré",
+      "llorarás",
+      "llorará",
+      "lloraremos",
+      "lloraréis",
+      "llorarán"
+    ],
+    "conditional": [
+      "lloraría",
+      "llorarías",
+      "lloraría",
+      "lloraríamos",
+      "lloraríais",
+      "llorarían"
+    ],
+    "presentSubjunctive": [
+      "llore",
+      "llores",
+      "llore",
+      "lloremos",
+      "lloréis",
+      "lloren"
+    ],
+    "imperfectSubjunctive": [
+      "llorara",
+      "lloraras",
+      "llorara",
+      "lloráramos",
+      "llorarais",
+      "lloraran"
+    ],
+    "gerund": "llorando",
+    "pastParticiple": "llorado"
+  },
+  {
+    "verb": "llover",
+    "present": [
+      "-",
+      "-",
+      "llueve",
+      "-",
+      "-",
+      "-"
+    ],
+    "imperfect": [
+      "-",
+      "-",
+      "llovía",
+      "-",
+      "-",
+      "-"
+    ],
+    "preterite": [
+      "-",
+      "-",
+      "llovió",
+      "-",
+      "-",
+      "-"
+    ],
+    "future": [
+      "-",
+      "-",
+      "lloverá",
+      "-",
+      "-",
+      "-"
+    ],
+    "conditional": [
+      "-",
+      "-",
+      "llovería",
+      "-",
+      "-",
+      "-"
+    ],
+    "presentSubjunctive": [
+      "-",
+      "-",
+      "llueva",
+      "-",
+      "-",
+      "-"
+    ],
+    "imperfectSubjunctive": [
+      "-",
+      "-",
+      "lloviera",
+      "-",
+      "-",
+      "-"
+    ],
+    "gerund": "lloviendo",
+    "pastParticiple": "llovido"
   }
 ]
