@@ -93,6 +93,141 @@
 		- dé, des, dé, demos, deis, den
 		- diera, dieras, diera, diéramos, dierais, dieran
 		- dando, dado
+	- ver
+		- veo, ves, ve, vemos, veis, ven
+		- veía, veías, veía, veíamos, veíais, veían
+		- vi, viste, vio, vimos, visteis, vieron
+		- veré, verás, verá, veremos, veréis, verán
+		- vería, verías, vería, veríamos, veríais, verían
+		- vea, veas, vea, veamos, veáis, vean
+		- viera, vieras, viera, viéramos, vierais, vieran
+		- viendo, visto
+	- quedar
+		- quedo, quedas, queda, quedamos, quedáis, quedan
+		- quedaba, quedabas, quedaba, quedábamos, quedabais, quedaban
+		- quedé, quedaste, quedó, quedamos, quedasteis, quedaron
+		- quedaré, quedarás, quedará, quedaremos, quedaréis, quedarán
+		- quedaría, quedarías, quedaría, quedaríamos, quedaríais, quedarían
+		- quede, quedes, quede, quedemos, quedéis, queden
+		- quedara, quedaras, quedara, quedáramos, quedarais, quedaran
+		- quedando, quedado
+	- venir
+		- vengo, vienes, viene, venimos, venís, vienen
+		- venía, venías, venía, veníamos, veníais, venían
+		- vine, viniste, vino, vinimos, vinisteis, vinieron
+		- vendré, vendrás, vendrá, vendremos, vendréis, vendrán
+		- vendría, vendrías, vendría, vendríamos, vendríais, vendrían
+		- venga, vengas, venga, vengamos, vengáis, vengan
+		- viniera, vinieras, viniera, viniéramos, vinierais, vinieran
+		- viniendo, venido
+	- deber
+		- debo, debes, debe, debemos, debéis, deben
+		- debía, debías, debía, debíamos, debíais, debían
+		- debí, debiste, debió, debimos, debisteis, debieron
+		- deberé, deberás, deberá, deberemos, deberéis, deberán
+		- debería, deberías, debería, deberíamos, debíais, deberían
+		- deba, debas, deba, debamos, debáis, deban
+		- debiera, debieras, debiera, debiéramos, debierais, debieran
+		- debiendo, debido
+	- poder
+		- puedo, puedes, puede, podemos, podéis, pueden
+		- podía, podías, podía, podíamos, podíais, podían
+		- pude, pudiste, pudo, pudimos, pudisteis, pudieron
+		- podré, podrás, podrá, podremos, podréis, podrán
+		- podría, podrías, podría, podríamos, podríais, podrían
+		- pueda, puedas, pueda, podamos, podáis, puedan
+		- pudiera, pudieras, pudiera, pudiéramos, pudierais, pudieran
+		- pudiendo, podido
+	- poner
+		- pongo, pones, pone, ponemos, ponéis, ponen
+		- ponía, ponías, ponía, poníamos, poníais, ponían
+		- puse, pusiste, puso, pusimos, pusisteis, pusieron
+		- pondré, pondrás, pondrá, pondremos, pondréis, pondrán
+		- pondría, pondrías, pondría, pondríamos, pondríais, pondrían
+		- ponga, pongas, ponga, pongamos, pongáis, pongan
+		- pusiera, pusieras, pusiera, pusiéramos, pusierais, pusieran
+		- poniendo, puesto
+	- salir
+		- salgo, sales, sale, salimos, salís, salen
+		- salía, salías, salía, salíamos, salíais, salían
+		- salí, saliste, salió, salimos, salisteis, salieron
+		- saldré, saldrás, saldrá, saldremos, saldréis, saldrán
+		- saldría, saldrías, saldría, saldríamos, saldríais, saldrían
+		- salga, salgas, salga, salgamos, salgáis, salgan
+		- saliera, salieras, saliera, saliéramos, salierais, salieran
+		- saliendo, salido
+	- decir
+		- digo, dices, dice, decimos, decís, dicen
+		- decía, decías, decía, decíamos, decíais, decían
+		- dije, dijiste, dijo, dijimos, dijisteis, dijeron
+		- diré, dirás, dirá, diremos, diréis, dirán
+		- diría, dirías, diría, diríamos, diríais, dirían
+		- diga, digas, diga, digamos, digáis, digan
+		- dijera, dijeras, dijera, dijéramos, dijerais, dijeran
+		- diciendo, dicho
+	- saber
+		- sé, sabes, sabe, sabemos, sabéis, saben
+		- sabía, sabías, sabía, sabíamos, sabíais, sabían
+		- supe, supiste, supo, supimos, supisteis, supieron
+		- sabré, sabrás, sabrá, sabremos, sabréis, sabrán
+		- sabría, sabrías, sabría, sabríamos, sabríais, sabrían
+		- sepa, sepas, sepa, sepamos, sepáis, sepan
+		- supiera, supieras, supiera, supiéramos, supierais, supieran
+		- sabiendo, sabido
+	- dormir
+		- duermo, duermes, duerme, dormimos, dormís, duermen
+		- dormía, dormías, dormía, dormíamos, dormíais, dormían
+		- dormí, dormiste, durmió, dormimos, dormisteis, durmieron
+		- dormiré, dormirás, dormirá, dormiremos, dormiréis, dormirán
+		- dormiría, dormirías, dormiría, dormiríamos, dormiríais, dormirían
+		- duerma, duermas, duerma, durmamos, durmáis, duerman
+		- durmiera, durmieras, durmiera, durmiéramos, durmierais, durmieran
+		- durmiendo, dormido
+	- oír
+		- oigo, oyes, oye, oímos, oís, oyen
+		- oía, oías, oía, oíamos, oíais, oían
+		- oí, oíste, oyó, oímos, oísteis, oyeron
+		- oiré, oirás, oirá, oiremos, oiréis, oirán
+		- oiría, oirías, oiría, oiríamos, oiríais, oirían
+		- oiga, oigas, oiga, oigamos, oigáis, oigan
+		- oyera, oyeras, oyera, oyéramos, oyerais, oyeran
+		- oyendo, oído
+	- corregir
+		- corrijo, corriges, corrige, corregimos, corregís, corrigen
+		- corregía, corregías, corregía, corregíamos, corregíais, corregían
+		- corregí, corregiste, corrigió, corregimos, corregisteis, corrigieron
+		- corregiré, corregirás, corregirá, corregiremos, corregiréis, corregirán
+		- corregiría, corregirías, corregiría, corregiríamos, corregiríais, corregirían
+		- corrija, corrijas, corrija, corrijamos, corrijáis, corrijan
+		- corrigiera, corrigieras, corrigiera, corrigiéramos, corrigierais, corrigieran
+		- corrigiendo, corregido
+	- prohibir
+		- prohíbo, prohíbes, prohíbe, prohibimos, prohibís, prohíben
+		- prohibía, prohibías, prohibía, prohibíamos, prohibíais, prohibían
+		- prohibí, prohibiste, prohibió, prohibimos, prohibisteis, prohibieron
+		- prohibiré, prohibirás, prohibirá, prohibiremos, prohibiréis, prohibirán
+		- prohibiría, prohibirías, prohibiría, prohibiríamos, prohibiríais, prohibirían
+		- prohíba, prohíbas, prohíba, prohibamos, prohibáis, prohíban
+		- prohibiera, prohibieras, prohibiera, prohibiéramos, prohibierais, prohibieran
+		- prohibiendo, prohibido
+	- practicar
+		- practico, practicas, practica, practicamos, practicáis, practican
+		- practicaba, practicabas, practicaba, practicábamos, practicabais, practicaban
+		- practiqué, practicaste, practicó, practicamos, practicasteis, practicaron
+		- practicaré, practicarás, practicará, practicaremos, practicaréis, practicarán
+		- practicaría, practicarías, practicaría, practicaríamos, practicaríais, practicarían
+		- practique, practiques, practique, practiquemos, practiquéis, practiquen
+		- practicara, practicaras, practicara, practicáramos, practicarais, practicaran
+		- practicando, practicado
+	- caer
+		- caigo, caes, cae, caemos, caéis, caen
+		- caía, caías, caía, caíamos, caíais, caían
+		- caí, caíste, cayó, caímos, caísteis, cayeron
+		- caeré, caerás, caerá, caeremos, caeréis, caerán
+		- caería, caerías, caería, caeríamos, caeríais, caerían
+		- caiga, caigas, caiga, caigamos, caigáis, caigan
+		- cayera, cayeras, cayera, cayéramos, cayerais, cayeran
+		- cayendo, caído
 - Spain vs. Latin America
 	- Tu - Amigos - Informal - misma edad
 	- Usted - personas mayores - jefes - respeto
