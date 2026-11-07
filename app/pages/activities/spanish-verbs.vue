@@ -1532,7 +1532,7 @@ onUnmounted(() => {
             Random Test Mode
           </span>
           <span class="text-xs text-gray-500 dark:text-gray-400 font-medium whitespace-nowrap">
-            ESC for hint, CTRL-ENTER to peek
+            ESC for hint, CTRL-ENTER to peek, ALT-ENTER for examples
           </span>
         </div>
 
@@ -1571,7 +1571,7 @@ onUnmounted(() => {
               class="text-xs text-gray-400 dark:text-gray-500 select-none transition-opacity"
               :class="{ 'animate-hint-fade-during-zoom': isVerbZooming }"
             >
-              ESC for hint, CTRL-ENTER to peek
+              ESC for hint, CTRL-ENTER to peek, ALT-ENTER for examples
             </div>
           </div>
 
@@ -1775,7 +1775,7 @@ onUnmounted(() => {
               v-html="highlightText(verb.verb)"
             ></h2>
             <div v-if="isTestMode" class="text-xs text-gray-400 dark:text-gray-500 select-none">
-              ESC for hint, CTRL-ENTER to peek
+              ESC for hint, CTRL-ENTER to peek, ALT-ENTER for examples
             </div>
           </div>
 
