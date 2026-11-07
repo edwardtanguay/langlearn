@@ -6,8 +6,11 @@ import {
   CheckIcon,
   XMarkIcon,
   AcademicCapIcon,
-  AdjustmentsHorizontalIcon,
-  SparklesIcon
+  SparklesIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  MagnifyingGlassIcon,
+  PencilSquareIcon
 } from '@heroicons/vue/24/outline'
 
 interface SpanishVerb {
@@ -83,6 +86,162 @@ const selectedTenses = ref<string[]>(TENSES.map(t => t.key))
 const selectedPronouns = ref<number[]>(PRONOUNS.map(p => p.idx))
 const isTestMode = ref(false)
 const showControls = ref(true)
+
+// Verb Groups
+interface VerbGroup {
+  id: string
+  name: string
+  verbs: string[]
+}
+
+const VERB_GROUPS: VerbGroup[] = [
+  {
+    id: 'all',
+    name: 'All Verbs',
+    verbs: verbs.map(v => v.verb)
+  },
+  {
+    id: 'reg1',
+    name: 'Regular Verbs Set 1',
+    verbs: ['hablar', 'comer', 'vivir']
+  },
+  {
+    id: 'reg2',
+    name: 'Regular Verbs Set 2',
+    verbs: ['trabajar', 'aprender', 'abrir']
+  },
+  {
+    id: 'reg3',
+    name: 'Regular Verbs Set 3',
+    verbs: ['tomar', 'beber', 'escribir']
+  },
+  {
+    id: 'core1',
+    name: 'Core I verbs',
+    verbs: ['ir', 'ser', 'estar']
+  },
+  {
+    id: 'core2',
+    name: 'Core II verbs',
+    verbs: ['haber', 'hacer', 'quedar']
+  },
+  {
+    id: 'modal',
+    name: 'Modal verbs',
+    verbs: ['poder', 'deber', 'querer', 'saber', 'soler', 'tener', 'necesitar', 'gustar']
+  }
+]
+
+function selectVerbGroup(group: VerbGroup) {
+  if (group.id === 'all') {
+    selectedVerbs.value = verbs.map(v => v.verb)
+  } else {
+    selectedVerbs.value = [...group.verbs]
+  }
+}
+
+function isGroupActive(group: VerbGroup): boolean {
+  if (group.id === 'all') {
+    return selectedVerbs.value.length === verbs.length
+  }
+  if (selectedVerbs.value.length !== group.verbs.length) return false
+  return group.verbs.every(v => selectedVerbs.value.includes(v))
+}
+
+// Search state & helper functions
+const searchQuery = ref('')
+const previousShowControls = ref(true)
+
+function normalizeForSearch(str: string): string {
+  if (!str) return ''
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+}
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
+function highlightText(text: string): string {
+  if (!text || text === '—' || !searchQuery.value.trim()) {
+    return escapeHtml(text || '')
+  }
+
+  const query = searchQuery.value.trim()
+  const normQuery = normalizeForSearch(query)
+  if (!normQuery) return escapeHtml(text)
+
+  const normText = normalizeForSearch(text)
+  const idx = normText.indexOf(normQuery)
+  if (idx === -1) {
+    return escapeHtml(text)
+  }
+
+  let result = ''
+  let lastIndex = 0
+  let searchPos = 0
+
+  while ((searchPos = normText.indexOf(normQuery, lastIndex)) !== -1) {
+    result += escapeHtml(text.slice(lastIndex, searchPos))
+    const matchSlice = text.slice(searchPos, searchPos + normQuery.length)
+    result += `<mark class="bg-yellow-300 dark:bg-yellow-400 text-black px-0.5 rounded-xs font-semibold">${escapeHtml(matchSlice)}</mark>`
+    lastIndex = searchPos + normQuery.length
+  }
+  result += escapeHtml(text.slice(lastIndex))
+  return result
+}
+
+function verbMatchesSearch(v: SpanishVerb, normQuery: string): boolean {
+  if (normalizeForSearch(v.verb).includes(normQuery)) return true
+  if (v.gerund && normalizeForSearch(v.gerund).includes(normQuery)) return true
+  if (v.pastParticiple && normalizeForSearch(v.pastParticiple).includes(normQuery)) return true
+  for (const tense of FINITE_TENSES) {
+    const forms = (v as any)[tense.key] as string[] || []
+    for (const form of forms) {
+      if (form && normalizeForSearch(form).includes(normQuery)) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+const isSearching = computed(() => !!searchQuery.value.trim())
+
+const searchMatchingVerbs = computed(() => {
+  const q = normalizeForSearch(searchQuery.value.trim())
+  if (!q) return []
+  return verbs.filter(v => verbMatchesSearch(v, q))
+})
+
+function handleSearchInput() {
+  if (searchQuery.value.trim()) {
+    if (isRandomTestMode.value) {
+      exitRandomTest()
+    }
+    if (isTestMode.value) {
+      isTestMode.value = false
+    }
+    if (showControls.value) {
+      previousShowControls.value = true
+      showControls.value = false
+    }
+  } else {
+    showControls.value = previousShowControls.value
+  }
+}
+
+function clearSearch() {
+  searchQuery.value = ''
+  showControls.value = previousShowControls.value
+}
 
 // Clear confirmation states
 const confirmClearAnswers = ref(false)
@@ -312,6 +471,12 @@ function openGoogleExamples(rawWord: string) {
   window.open(url, '_blank')
 }
 
+function handleCellClick(event: MouseEvent, rawWord: string) {
+  if (event.detail === 3) {
+    openGoogleExamples(rawWord)
+  }
+}
+
 const STORAGE_DIFFICULT_KEY = 'langlearn_spanish_verb_difficulties'
 
 function loadDifficultWords() {
@@ -397,6 +562,7 @@ function getCellKey(verb: string, tenseKey: string, pronounIdx: number): string 
 }
 
 function isCellTested(tenseKey: string, pronounIdx: number): boolean {
+  if (isSearching.value) return false
   if (!isTestMode.value) return false
   if (tenseKey === 'gerund' || tenseKey === 'pastParticiple') {
     return selectedTenses.value.includes(tenseKey)
@@ -509,6 +675,9 @@ function toggleAllPronouns() {
 }
 
 const filteredVerbList = computed(() => {
+  if (isSearching.value) {
+    return searchMatchingVerbs.value
+  }
   return verbs.filter(v => selectedVerbs.value.includes(v.verb))
 })
 
@@ -1087,7 +1256,7 @@ onUnmounted(() => {
 
 <template>
   <div class="max-w-6xl mx-auto px-4 py-6 space-y-6">
-    <!-- Top Bar: Navigation & Difficult Words Button -->
+    <!-- Top Bar: Navigation & Search Box -->
     <div class="flex items-center justify-between gap-3 flex-wrap">
       <NuxtLink
         to="/activities"
@@ -1096,81 +1265,97 @@ onUnmounted(() => {
         ← Back to Activities
       </NuxtLink>
 
-      <div class="flex items-center gap-2">
+      <!-- Simple Search Box in Upper Right -->
+      <div class="relative w-full sm:w-72 md:w-80">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+          <MagnifyingGlassIcon class="w-4 h-4" />
+        </div>
+        <input
+          type="text"
+          v-model="searchQuery"
+          @input="handleSearchInput"
+          placeholder="Search conjugations..."
+          class="w-full pl-9 pr-8 py-1.5 text-xs sm:text-sm rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#be185d] focus:border-[#be185d] transition-all shadow-xs"
+        />
         <button
+          v-if="searchQuery"
           type="button"
-          @click="showRetestModal = true"
-          class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2 bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20"
+          @click="clearSearch"
+          class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
+          title="Clear search"
         >
-          <AcademicCapIcon class="w-4 h-4" />
-          <span>Retest difficult words</span>
-          <span
-            v-if="activeDifficultWords.length > 0"
-            class="px-1.5 py-0.2 rounded-full text-[11px] font-extrabold bg-[#be185d] text-white"
-          >
-            {{ activeDifficultWords.length }}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          @click="isRandomTestMode ? exitRandomTest() : startRandomTest()"
-          class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
-          :class="isRandomTestMode
-            ? 'bg-[#be185d] text-white border-[#be185d] hover:bg-[#a2134e]'
-            : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20'"
-        >
-          <SparklesIcon class="w-4 h-4" />
-          <span>{{ isRandomTestMode ? 'Exit Random Test' : 'Random Test' }}</span>
-        </button>
-
-        <button
-          type="button"
-          @click="showControls = !showControls"
-          class="p-2 rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-          :title="showControls ? 'Hide Controls' : 'Show Controls'"
-        >
-          <AdjustmentsHorizontalIcon class="w-5 h-5" />
+          <XMarkIcon class="w-4 h-4" />
         </button>
       </div>
     </div>
 
-    <!-- Header Section -->
-    <div class="space-y-1">
-      <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2.5">
+    <!-- Header Section with show/hide toggle in front -->
+    <div class="flex items-center gap-3">
+      <button
+        v-if="!searchQuery.trim()"
+        type="button"
+        @click="showControls = !showControls"
+        class="p-1.5 rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+        :title="showControls ? 'Hide Controls' : 'Show Controls'"
+      >
+        <ChevronDownIcon v-if="showControls" class="w-5 h-5 text-[#be185d] dark:text-[#f43f5e]" />
+        <ChevronRightIcon v-else class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+      </button>
+
+      <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
         <span class="text-[#be185d] dark:text-[#f43f5e]">Spanish Verbs</span>
-        <span class="text-xs px-2 py-0.5 rounded font-bold uppercase bg-[#be185d]/20 text-[#be185d] dark:text-[#f43f5e] border border-[#be185d]/30">
-          ES
-        </span>
       </h1>
-      <p class="text-sm text-gray-600 dark:text-gray-400">
-        Review conjugations, customize tenses and pronouns, and practice testing your recall.
-      </p>
     </div>
 
     <!-- Controls Panel -->
     <div
-      v-show="showControls"
+      v-show="showControls && !isSearching"
       class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-sm space-y-4"
     >
-      <!-- Top Action Row inside controls: Test Mode Toggle and Clear/Reset -->
+      <!-- Top Action Row inside controls: Random Test, Full Test, Retest Difficult Words & Clear/Reset -->
       <div class="flex items-center justify-between gap-3 flex-wrap pb-3 border-b border-gray-200 dark:border-gray-700">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+          <!-- 1. Random Test -->
+          <button
+            type="button"
+            @click="isRandomTestMode ? exitRandomTest() : startRandomTest()"
+            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
+            :class="isRandomTestMode
+              ? 'bg-[#be185d] text-white border-[#be185d] hover:bg-[#a2134e]'
+              : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20'"
+          >
+            <SparklesIcon class="w-4 h-4" />
+            <span>{{ isRandomTestMode ? 'Exit Random Test' : 'Random Test' }}</span>
+          </button>
+
+          <!-- 2. Full Test -->
           <button
             type="button"
             @click="if (isRandomTestMode) exitRandomTest(); isTestMode = !isTestMode"
-            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer shadow-sm inline-flex items-center gap-2"
+            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
             :class="isTestMode
-              ? 'bg-[#be185d] text-white hover:bg-[#a2134e]'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700'"
+              ? 'bg-[#be185d] text-white hover:bg-[#a2134e] border-[#be185d]'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700'"
           >
-            <SparklesIcon class="w-4 h-4" />
-            <span>{{ isTestMode ? 'Test Mode Active (Click to Study)' : 'Enter Test Mode' }}</span>
+            <PencilSquareIcon class="w-4 h-4" />
+            <span>{{ isTestMode ? 'Full Test Active (Click to Study)' : 'Full Test' }}</span>
           </button>
 
-          <span v-if="isTestMode" class="text-xs font-semibold text-gray-500 dark:text-gray-400">
-            Type your answers in the boxes below and hit Enter or click out to check.
-          </span>
+          <!-- 3. Retest Difficult Words -->
+          <button
+            type="button"
+            @click="showRetestModal = true"
+            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2 bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20"
+          >
+            <AcademicCapIcon class="w-4 h-4" />
+            <span>Retest Difficult Words</span>
+            <span
+              v-if="activeDifficultWords.length > 0"
+              class="px-1.5 py-0.2 rounded-full text-[11px] font-extrabold bg-[#be185d] text-white"
+            >
+              {{ activeDifficultWords.length }}
+            </span>
+          </button>
         </div>
 
         <!-- Inline Clear Answers Confirmation -->
@@ -1204,33 +1389,57 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <!-- Verbs Selector -->
-      <div class="space-y-2">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-            Verbs to Show ({{ selectedVerbs.length }} of {{ verbs.length }})
+      <!-- Verbs Selector with Groups -->
+      <div class="space-y-3">
+        <!-- Groups Section -->
+        <div class="space-y-1.5">
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            Groups
           </span>
-          <button
-            type="button"
-            @click="toggleAllVerbs"
-            class="text-xs font-semibold text-white hover:underline cursor-pointer"
-          >
-            {{ selectedVerbs.length === verbs.length ? 'Deselect All' : 'Select All' }}
-          </button>
+          <div class="flex flex-wrap gap-2">
+            <button
+              v-for="group in VERB_GROUPS"
+              :key="group.id"
+              type="button"
+              @click="selectVerbGroup(group)"
+              class="px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border select-none"
+              :class="isGroupActive(group)
+                ? 'bg-[#be185d] text-white border-[#be185d] shadow-xs'
+                : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+            >
+              {{ group.name }}
+            </button>
+          </div>
         </div>
-        <div class="flex flex-wrap gap-2">
-          <button
-            v-for="v in verbs"
-            :key="v.verb"
-            type="button"
-            @click="selectedVerbs.includes(v.verb) ? selectedVerbs = selectedVerbs.filter(x => x !== v.verb) : selectedVerbs.push(v.verb)"
-            class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border select-none"
-            :class="selectedVerbs.includes(v.verb)
-              ? 'bg-[#be185d] text-white border-[#be185d]'
-              : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
-          >
-            {{ v.verb }}
-          </button>
+
+        <!-- Individual Verbs List -->
+        <div class="space-y-1.5 pt-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+              Verbs to Show ({{ selectedVerbs.length }} of {{ verbs.length }})
+            </span>
+            <button
+              type="button"
+              @click="toggleAllVerbs"
+              class="text-xs font-semibold text-white hover:underline cursor-pointer"
+            >
+              {{ selectedVerbs.length === verbs.length ? 'Deselect All' : 'Select All' }}
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button
+              v-for="v in verbs"
+              :key="v.verb"
+              type="button"
+              @click="selectedVerbs.includes(v.verb) ? selectedVerbs = selectedVerbs.filter(x => x !== v.verb) : selectedVerbs.push(v.verb)"
+              class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border select-none"
+              :class="selectedVerbs.includes(v.verb)
+                ? 'bg-[#be185d] text-white border-[#be185d]'
+                : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+            >
+              {{ v.verb }}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1366,7 +1575,7 @@ onUnmounted(() => {
                   @keydown="handleRandomInputKeyDown"
                   @blur="handleRandomBlur"
                   @focus="handleCellFocus"
-                  @dblclick="openGoogleExamples(currentRandomTarget.expected)"
+                  @click="handleCellClick($event, currentRandomTarget.expected)"
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
@@ -1405,7 +1614,7 @@ onUnmounted(() => {
                   @keydown="handleRandomInputKeyDown"
                   @blur="handleRandomBlur"
                   @focus="handleCellFocus"
-                  @dblclick="openGoogleExamples(currentRandomTarget.expected)"
+                  @click="handleCellClick($event, currentRandomTarget.expected)"
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
@@ -1477,7 +1686,7 @@ onUnmounted(() => {
                       @keydown="handleRandomInputKeyDown"
                       @blur="handleRandomBlur"
                       @focus="handleCellFocus"
-                      @dblclick="openGoogleExamples(currentRandomTarget.expected)"
+                      @click="handleCellClick($event, currentRandomTarget.expected)"
                       class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                       :class="{
                         'bg-white dark:bg-[#121824] border-white ring-2 ring-white': !randomTestStatus && !isHintActive(randomKey),
@@ -1510,8 +1719,20 @@ onUnmounted(() => {
       v-else-if="filteredVerbList.length === 0"
       class="text-center py-16 bg-white dark:bg-[#182030] rounded-2xl border-2 border-gray-200 dark:border-gray-700 p-8 space-y-3"
     >
-      <p class="text-gray-700 dark:text-gray-300 font-bold text-base">No verbs selected.</p>
+      <p v-if="isSearching" class="text-gray-700 dark:text-gray-300 font-bold text-base">
+        No verbs or conjugations found matching "<span class="text-[#be185d] dark:text-[#f43f5e] font-extrabold">{{ searchQuery }}</span>"
+      </p>
+      <p v-else class="text-gray-700 dark:text-gray-300 font-bold text-base">No verbs selected.</p>
       <button
+        v-if="isSearching"
+        type="button"
+        @click="clearSearch"
+        class="px-4 py-2 rounded-xl text-xs font-bold bg-[#be185d] text-white hover:bg-[#a2134e] cursor-pointer"
+      >
+        Clear Search
+      </button>
+      <button
+        v-else
         type="button"
         @click="selectedVerbs = verbs.map(v => v.verb)"
         class="text-xs font-bold text-[#be185d] dark:text-[#f43f5e] underline cursor-pointer"
@@ -1530,9 +1751,10 @@ onUnmounted(() => {
         <!-- Verb Header with Gerund and Past Participle Badges/Inputs -->
         <div class="px-5 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex items-center justify-between gap-4 flex-wrap">
           <div class="space-y-0.5">
-            <h2 class="text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight">
-              {{ verb.verb }}
-            </h2>
+            <h2
+              class="text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight"
+              v-html="highlightText(verb.verb)"
+            ></h2>
             <div v-if="isTestMode" class="text-xs text-gray-400 dark:text-gray-500 select-none">
               ESC for hint, CTRL-ENTER to peek
             </div>
@@ -1540,12 +1762,12 @@ onUnmounted(() => {
 
           <!-- Non-finite form tags/cards directly above table -->
           <div
-            v-if="isTestMode || selectedTenses.includes('gerund') || selectedTenses.includes('pastParticiple')"
+            v-if="isTestMode || isSearching || selectedTenses.includes('gerund') || selectedTenses.includes('pastParticiple')"
             class="flex items-center gap-4 flex-wrap"
           >
             <!-- Gerund Box -->
             <div
-              v-if="isTestMode || selectedTenses.includes('gerund')"
+              v-if="isTestMode || isSearching || selectedTenses.includes('gerund')"
               class="flex flex-col items-center gap-1"
             >
               <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
@@ -1571,7 +1793,7 @@ onUnmounted(() => {
                   @keydown="handleKeyDown(verbIdx, 'gerund', 0, verb, $event)"
                   @blur="handleBlur(verb, 'gerund', 0, $event)"
                   @focus="handleCellFocus"
-                  @dblclick="openGoogleExamples(verb.gerund)"
+                  @click="handleCellClick($event, verb.gerund)"
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, 'gerund', 0)] && !isHintActive(getCellKey(verb.verb, 'gerund', 0)),
@@ -1597,14 +1819,14 @@ onUnmounted(() => {
                 v-else
                 @click="openGoogleExamples(verb.gerund)"
                 class="px-3 py-1 rounded-xl text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[90px] text-center cursor-pointer"
+                v-html="highlightText(verb.gerund)"
               >
-                {{ verb.gerund }}
               </span>
             </div>
 
             <!-- Participle Box -->
             <div
-              v-if="isTestMode || selectedTenses.includes('pastParticiple')"
+              v-if="isTestMode || isSearching || selectedTenses.includes('pastParticiple')"
               class="flex flex-col items-center gap-1"
             >
               <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
@@ -1630,7 +1852,7 @@ onUnmounted(() => {
                   @keydown="handleKeyDown(verbIdx, 'pastParticiple', 3, verb, $event)"
                   @blur="handleBlur(verb, 'pastParticiple', 0, $event)"
                   @focus="handleCellFocus"
-                  @dblclick="openGoogleExamples(verb.pastParticiple)"
+                  @click="handleCellClick($event, verb.pastParticiple)"
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                   :class="{
                     'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, 'pastParticiple', 0)] && !isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)),
@@ -1656,8 +1878,8 @@ onUnmounted(() => {
                 v-else
                 @click="openGoogleExamples(verb.pastParticiple)"
                 class="px-3 py-1 rounded-xl text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[90px] text-center cursor-pointer"
+                v-html="highlightText(verb.pastParticiple)"
               >
-                {{ verb.pastParticiple }}
               </span>
             </div>
           </div>
@@ -1718,7 +1940,7 @@ onUnmounted(() => {
                       @keydown="handleKeyDown(verbIdx, tenseIdx, p.idx, verb, $event)"
                       @blur="handleBlur(verb, tense.key, p.idx, $event)"
                       @focus="handleCellFocus"
-                      @dblclick="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
+                      @click="handleCellClick($event, ((verb as any)[tense.key] || [])[p.idx])"
                       class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-gray-900 dark:text-white"
                       :class="{
                         'bg-white dark:bg-[#121824] border-gray-300 dark:border-gray-600': !answerStatuses[getCellKey(verb.verb, tense.key, p.idx)] && !isHintActive(getCellKey(verb.verb, tense.key, p.idx)),
@@ -1735,8 +1957,8 @@ onUnmounted(() => {
                     @click="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
                     class="font-medium cursor-pointer"
                     :class="isTestMode ? (isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-800 dark:text-gray-200'"
+                    v-html="highlightText(isTestMode ? (isVerbPeeking(verb.verb) ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—'))"
                   >
-                    {{ isTestMode ? (isVerbPeeking(verb.verb) ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—') }}
                   </span>
                 </td>
               </tr>
@@ -1849,7 +2071,7 @@ onUnmounted(() => {
                 @keydown.enter="validateRetestItem(item)"
                 @blur="validateRetestItem(item)"
                 @focus="handleCellFocus"
-                @dblclick="openGoogleExamples(item.correctAnswer)"
+                @click="handleCellClick($event, item.correctAnswer)"
                 placeholder="Type answer..."
                 class="px-3 py-1.5 text-xs rounded-xl border font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white w-36 transition-all text-gray-900 dark:text-white"
                 :class="{
