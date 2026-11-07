@@ -1,8 +1,8 @@
+- verb-patterns
+	- «ir» y «ser» tienen un acento en las dos primeras filas, «estar» tiene cinco, todos incluyen la forma «nosotros»
+	- todas las palabras para «estar» empiezan con «e»
+	- para ir/ser/estar vosotros, los acentos están sólo en futu/cond/sub1, excepción estar pres
 - verbs
-	- patterns
-		- «ir» y «ser» tienen un acento en las dos primeras filas, «estar» tiene cinco, todos incluyen la forma «nosotros»
-		- todas las palabras para «estar» empiezan con «e»
-		- para ir/ser/estar vosotros, los acentos están sólo en futu/cond/sub1, excepción estar pres
 	- hablar
 		- hablo, hablas, habla, hablamos, habláis, hablan
 		- hablaba, hablabas, hablaba, hablábamos, hablabais, hablaban
@@ -93,23 +93,6 @@
 		- dé, des, dé, demos, deis, den
 		- diera, dieras, diera, diéramos, dierais, dieran
 		- dando, dado
-	- ver
-		- veo, ves, ve, vemos, veis, ven
-		- veía, veías, veía, veíamos, veíais, veían
-	- quedar
-	- venir
-	- deber
-	- poder
-	- poner
-	- salir
-	- decir
-	- saber
-	- dormir
-	- oír
-	- corrija
-	- prohibir
-	- practicar
-	- caer
 - Spain vs. Latin America
 	- Tu - Amigos - Informal - misma edad
 	- Usted - personas mayores - jefes - respeto
