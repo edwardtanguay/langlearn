@@ -151,6 +151,9 @@ function isGroupActive(group: VerbGroup): boolean {
 // Search state & helper functions
 const searchQuery = ref('')
 const previousShowControls = ref(true)
+const pausedRandomTest = ref(false)
+const pausedFullTest = ref(false)
+const savedFocusInputId = ref('')
 
 function normalizeForSearch(str: string): string {
   if (!str) return ''
@@ -169,6 +172,21 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#039;')
 }
 
+function highlightWordMatches(word: string, normQuery: string): string {
+  const normWord = normalizeForSearch(word)
+  let res = ''
+  let lastIdx = 0
+  let searchPos = 0
+  while ((searchPos = normWord.indexOf(normQuery, lastIdx)) !== -1) {
+    res += escapeHtml(word.slice(lastIdx, searchPos))
+    const matchSlice = word.slice(searchPos, searchPos + normQuery.length)
+    res += `<span class="bg-yellow-200/90 dark:bg-yellow-500/30 rounded-xs">${escapeHtml(matchSlice)}</span>`
+    lastIdx = searchPos + normQuery.length
+  }
+  res += escapeHtml(word.slice(lastIdx))
+  return `<span class="text-amber-600 dark:text-yellow-400 font-semibold">${res}</span>`
+}
+
 function highlightText(text: string): string {
   if (!text || text === '—' || !searchQuery.value.trim()) {
     return escapeHtml(text || '')
@@ -179,22 +197,22 @@ function highlightText(text: string): string {
   if (!normQuery) return escapeHtml(text)
 
   const normText = normalizeForSearch(text)
-  const idx = normText.indexOf(normQuery)
-  if (idx === -1) {
+  if (!normText.includes(normQuery)) {
     return escapeHtml(text)
   }
 
+  // Tokenize into words and delimiters (spaces, slashes, punctuation)
+  const tokens = text.split(/([^\p{L}\p{M}]+)/u)
   let result = ''
-  let lastIndex = 0
-  let searchPos = 0
-
-  while ((searchPos = normText.indexOf(normQuery, lastIndex)) !== -1) {
-    result += escapeHtml(text.slice(lastIndex, searchPos))
-    const matchSlice = text.slice(searchPos, searchPos + normQuery.length)
-    result += `<mark class="bg-yellow-300 dark:bg-yellow-400 text-black px-0.5 rounded-xs font-semibold">${escapeHtml(matchSlice)}</mark>`
-    lastIndex = searchPos + normQuery.length
+  for (const token of tokens) {
+    if (!token) continue
+    const normToken = normalizeForSearch(token)
+    if (normToken && normToken.includes(normQuery)) {
+      result += highlightWordMatches(token, normQuery)
+    } else {
+      result += escapeHtml(token)
+    }
   }
-  result += escapeHtml(text.slice(lastIndex))
   return result
 }
 
@@ -221,26 +239,79 @@ const searchMatchingVerbs = computed(() => {
   return verbs.filter(v => verbMatchesSearch(v, q))
 })
 
+function handleSearchFocus() {
+  const activeEl = typeof document !== 'undefined' ? (document.activeElement as HTMLElement | null) : null
+  if (activeEl && activeEl.id && activeEl.id !== 'verb-search-input') {
+    savedFocusInputId.value = activeEl.id
+  } else if (lastFocusedInputId.value && lastFocusedInputId.value !== 'verb-search-input') {
+    savedFocusInputId.value = lastFocusedInputId.value
+  }
+  if (isRandomTestMode.value) {
+    pausedRandomTest.value = true
+  }
+  if (isTestMode.value) {
+    pausedFullTest.value = true
+  }
+}
+
 function handleSearchInput() {
   if (searchQuery.value.trim()) {
     if (isRandomTestMode.value) {
-      exitRandomTest()
+      pausedRandomTest.value = true
     }
     if (isTestMode.value) {
-      isTestMode.value = false
+      pausedFullTest.value = true
     }
     if (showControls.value) {
       previousShowControls.value = true
       showControls.value = false
     }
   } else {
+    // When backspacing to empty, stay focused in the search box so the user can type a new word
     showControls.value = previousShowControls.value
+  }
+}
+
+function handleSearchBlur(event: FocusEvent) {
+  const related = event.relatedTarget as HTMLElement | null
+  if (related && (related.id === 'verb-search-clear-btn' || related.closest('#verb-search-clear-btn'))) {
+    return
+  }
+  if (!searchQuery.value.trim()) {
+    resumePausedTests()
+  }
+}
+
+function resumePausedTests() {
+  showControls.value = previousShowControls.value
+  if (pausedRandomTest.value) {
+    pausedRandomTest.value = false
+    nextTick(() => {
+      const el = document.getElementById('random-test-input') as HTMLInputElement | null
+      if (el) {
+        el.focus()
+        if (randomTestAnswer.value) {
+          const len = randomTestAnswer.value.length
+          el.setSelectionRange(len, len)
+        }
+      }
+    })
+  } else if (pausedFullTest.value) {
+    pausedFullTest.value = false
+    if (savedFocusInputId.value) {
+      nextTick(() => {
+        const el = document.getElementById(savedFocusInputId.value) as HTMLInputElement | null
+        if (el) {
+          el.focus()
+        }
+      })
+    }
   }
 }
 
 function clearSearch() {
   searchQuery.value = ''
-  showControls.value = previousShowControls.value
+  resumePausedTests()
 }
 
 // Clear confirmation states
@@ -285,6 +356,33 @@ function triggerVerbZoom() {
       isVerbZooming.value = false
     }, 1400)
   })
+}
+
+const isPillPulsing = ref(false)
+let pillPulseTimer: any = null
+let pillDelayTimer: any = null
+
+function triggerPillPulse() {
+  if (pillPulseTimer) clearTimeout(pillPulseTimer)
+  isPillPulsing.value = false
+  nextTick(() => {
+    isPillPulsing.value = true
+    pillPulseTimer = setTimeout(() => {
+      isPillPulsing.value = false
+    }, 700)
+  })
+}
+
+function schedulePillPulse(delayMs: number = 0) {
+  if (pillDelayTimer) clearTimeout(pillDelayTimer)
+  isPillPulsing.value = false
+  if (delayMs > 0) {
+    pillDelayTimer = setTimeout(() => {
+      triggerPillPulse()
+    }, delayMs)
+  } else {
+    triggerPillPulse()
+  }
 }
 
 const randomKey = computed(() => {
@@ -762,6 +860,16 @@ function triggerHint(cellKey: string, expectedAnswer: string, event: KeyboardEve
 }
 
 function handleBlur(verb: SpanishVerb, tenseKey: string, pronounIdx: number, event: FocusEvent) {
+  const related = event?.relatedTarget as HTMLElement | null
+  if (related && related.id === 'verb-search-input') {
+    return
+  }
+  if (typeof document !== 'undefined' && document.activeElement?.id === 'verb-search-input') {
+    return
+  }
+  if (isSearching.value) {
+    return
+  }
   const cellKey = getCellKey(verb.verb, tenseKey, pronounIdx)
   if (hintState.value && hintState.value.cellKey === cellKey) {
     if (hintState.value.active) {
@@ -955,6 +1063,9 @@ function handleCellFocus(event: FocusEvent) {
   if (!el) return
   if (el.id) {
     lastFocusedInputId.value = el.id
+    if (el.id !== 'verb-search-input') {
+      savedFocusInputId.value = el.id
+    }
     if (el.id.startsWith('input-')) {
       const rawId = el.id.slice('input-'.length)
       if (rawId.endsWith('-gerund')) {
@@ -992,6 +1103,7 @@ function startRandomTest() {
 
 function exitRandomTest() {
   isRandomTestMode.value = false
+  pausedRandomTest.value = false
   currentRandomTarget.value = null
   randomTestAnswer.value = ''
   randomTestStatus.value = null
@@ -1014,6 +1126,7 @@ function toggleFullTest() {
     exitRandomTest()
   }
   isTestMode.value = !isTestMode.value
+  pausedFullTest.value = false
 }
 
 function pickNextRandomTarget() {
@@ -1104,6 +1217,9 @@ function pickNextRandomTarget() {
   const newVerb = currentRandomTarget.value?.verb?.verb
   if (prevVerb && newVerb && prevVerb !== newVerb) {
     triggerVerbZoom()
+    schedulePillPulse(1400)
+  } else {
+    schedulePillPulse(0)
   }
 
   nextTick(() => {
@@ -1145,6 +1261,12 @@ function validateRandomTest() {
       currentRandomTarget.value.expected
     )
     nextTick(() => {
+      if (typeof document !== 'undefined' && document.activeElement?.id === 'verb-search-input') {
+        return
+      }
+      if (isSearching.value) {
+        return
+      }
       const el = document.getElementById('random-test-input') as HTMLInputElement | null
       if (el) {
         el.focus()
@@ -1154,8 +1276,18 @@ function validateRandomTest() {
   }
 }
 
-function handleRandomBlur() {
+function handleRandomBlur(event?: FocusEvent) {
   if (waitingForNextRandomKey.value) return
+  const related = event?.relatedTarget as HTMLElement | null
+  if (related && related.id === 'verb-search-input') {
+    return
+  }
+  if (typeof document !== 'undefined' && document.activeElement?.id === 'verb-search-input') {
+    return
+  }
+  if (isSearching.value) {
+    return
+  }
   if (hintState.value && hintState.value.cellKey === randomKey.value) {
     if (hintState.value.active) {
       if (hintState.value.timer) clearTimeout(hintState.value.timer)
@@ -1266,6 +1398,8 @@ onUnmounted(() => {
   if (peekTimer) clearTimeout(peekTimer)
   if (peekFadeTimer) clearTimeout(peekFadeTimer)
   if (verbZoomTimer) clearTimeout(verbZoomTimer)
+  if (pillPulseTimer) clearTimeout(pillPulseTimer)
+  if (pillDelayTimer) clearTimeout(pillDelayTimer)
 })
 </script>
 
@@ -1286,15 +1420,22 @@ onUnmounted(() => {
           <MagnifyingGlassIcon class="w-4 h-4" />
         </div>
         <input
+          id="verb-search-input"
           type="text"
           v-model="searchQuery"
           @input="handleSearchInput"
+          @focus="handleSearchFocus"
+          @blur="handleSearchBlur"
+          @mousedown="handleSearchFocus"
+          @keydown.esc="clearSearch"
           placeholder="Search conjugations..."
           class="w-full pl-9 pr-8 py-1.5 text-xs sm:text-sm rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#be185d] focus:border-[#be185d] transition-all shadow-xs"
         />
         <button
           v-if="searchQuery"
+          id="verb-search-clear-btn"
           type="button"
+          @mousedown.prevent
           @click="clearSearch"
           class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
           title="Clear search"
@@ -1523,8 +1664,8 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- Random Test View (when isRandomTestMode is true) -->
-    <div v-if="isRandomTestMode && currentRandomTarget" class="space-y-4">
+    <!-- Random Test View (when isRandomTestMode is true and not searching) -->
+    <div v-if="isRandomTestMode && currentRandomTarget && !isSearching" class="space-y-4">
       <!-- Top banner / indicator -->
       <div class="flex items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-sm min-h-[58px]">
         <div class="flex items-center gap-3 shrink-0">
@@ -1592,7 +1733,7 @@ onUnmounted(() => {
                   v-model="randomTestAnswer"
                   @input="handleRandomInput"
                   @keydown="handleRandomInputKeyDown"
-                  @blur="handleRandomBlur"
+                  @blur="handleRandomBlur($event)"
                   @focus="handleCellFocus"
                   @click="handleCellClick($event, currentRandomTarget.expected)"
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
@@ -1631,7 +1772,7 @@ onUnmounted(() => {
                   v-model="randomTestAnswer"
                   @input="handleRandomInput"
                   @keydown="handleRandomInputKeyDown"
-                  @blur="handleRandomBlur"
+                  @blur="handleRandomBlur($event)"
                   @focus="handleCellFocus"
                   @click="handleCellClick($event, currentRandomTarget.expected)"
                   class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
@@ -1671,7 +1812,14 @@ onUnmounted(() => {
                   class="py-2.5 px-2 text-center w-[14.285%]"
                   :class="{ 'border-r border-dotted border-gray-300 dark:border-gray-600': p.idx === 2 }"
                 >
-                  <span class="font-mono text-[11px]">{{ p.label }}</span>
+                  <span
+                    class="font-mono text-[11px] transition-all duration-300 inline-block"
+                    :class="currentRandomTarget.tenseKey !== 'gerund' && currentRandomTarget.tenseKey !== 'pastParticiple' && currentRandomTarget.pronounIdx === p.idx
+                      ? ['px-2.5 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-bold shadow-2xs', isPillPulsing ? 'animate-pulse-gentle' : '']
+                      : 'text-gray-600 dark:text-gray-400 font-bold'"
+                  >
+                    {{ p.label }}
+                  </span>
                 </th>
               </tr>
             </thead>
@@ -1682,7 +1830,14 @@ onUnmounted(() => {
                 class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
               >
                 <td class="py-2.5 px-3 sm:px-4 font-semibold text-gray-900 dark:text-gray-200 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30">
-                  {{ tense.label }}
+                  <span
+                    class="transition-all duration-300 inline-block"
+                    :class="currentRandomTarget.tenseKey === tense.key
+                      ? ['px-2.5 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-bold shadow-2xs', isPillPulsing ? 'animate-pulse-gentle' : '']
+                      : ''"
+                  >
+                    {{ tense.label }}
+                  </span>
                 </td>
 
                 <td
@@ -1703,7 +1858,7 @@ onUnmounted(() => {
                       v-model="randomTestAnswer"
                       @input="handleRandomInput"
                       @keydown="handleRandomInputKeyDown"
-                      @blur="handleRandomBlur"
+                      @blur="handleRandomBlur($event)"
                       @focus="handleCellFocus"
                       @click="handleCellClick($event, currentRandomTarget.expected)"
                       class="w-full h-[26px] px-2 py-1 text-xs text-center rounded-lg border font-medium transition-all text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
@@ -1774,7 +1929,7 @@ onUnmounted(() => {
               class="text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight"
               v-html="highlightText(verb.verb)"
             ></h2>
-            <div v-if="isTestMode" class="text-xs text-gray-400 dark:text-gray-500 select-none">
+            <div v-if="!isSearching && isTestMode" class="text-xs text-gray-400 dark:text-gray-500 select-none">
               ESC for hint, CTRL-ENTER to peek, ALT-ENTER for examples
             </div>
           </div>
@@ -1794,7 +1949,7 @@ onUnmounted(() => {
               </span>
 
               <!-- Test Mode Input -->
-              <div v-if="isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-28 sm:w-32 h-[26px] text-center align-middle">
+              <div v-if="!isSearching && isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-28 sm:w-32 h-[26px] text-center align-middle">
                 <span
                   v-if="isCellPeeking(`input-${verb.verb}-gerund`, verb.verb)"
                   @click="openGoogleExamples(verb.gerund)"
@@ -1825,7 +1980,7 @@ onUnmounted(() => {
 
               <!-- Test Mode Untested: shows '---' or peeks answer -->
               <span
-                v-else-if="isTestMode"
+                v-else-if="!isSearching && isTestMode"
                 @click="openGoogleExamples(verb.gerund)"
                 class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300 cursor-pointer"
                 :class="isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
@@ -1853,7 +2008,7 @@ onUnmounted(() => {
               </span>
 
               <!-- Test Mode Input -->
-              <div v-if="isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-28 sm:w-32 h-[26px] text-center align-middle">
+              <div v-if="!isSearching && isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-28 sm:w-32 h-[26px] text-center align-middle">
                 <span
                   v-if="isCellPeeking(`input-${verb.verb}-pastParticiple`, verb.verb)"
                   @click="openGoogleExamples(verb.pastParticiple)"
@@ -1884,7 +2039,7 @@ onUnmounted(() => {
 
               <!-- Test Mode Untested: shows '---' or peeks answer -->
               <span
-                v-else-if="isTestMode"
+                v-else-if="!isSearching && isTestMode"
                 @click="openGoogleExamples(verb.pastParticiple)"
                 class="px-3 py-1 rounded-xl text-xs font-mono font-bold select-none min-w-[90px] text-center transition-opacity duration-300 cursor-pointer"
                 :class="isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic opacity-0' : 'text-amber-500 dark:text-amber-400 italic opacity-100') : 'text-gray-400 dark:text-gray-500 opacity-100'"
@@ -1975,8 +2130,8 @@ onUnmounted(() => {
                     v-else
                     @click="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
                     class="font-medium cursor-pointer"
-                    :class="isTestMode ? (isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-800 dark:text-gray-200'"
-                    v-html="highlightText(isTestMode ? (isVerbPeeking(verb.verb) ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—'))"
+                    :class="(!isSearching && isTestMode) ? (isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-800 dark:text-gray-200'"
+                    v-html="highlightText((!isSearching && isTestMode) ? (isVerbPeeking(verb.verb) ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—'))"
                   >
                   </span>
                 </td>
@@ -2173,5 +2328,28 @@ onUnmounted(() => {
 
 .animate-hint-fade-during-zoom {
   animation: hint-fade-during-zoom 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes pulse-gentle {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  35% {
+    transform: scale(1.06);
+    filter: brightness(1.22);
+  }
+  70% {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 </style>
