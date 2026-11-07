@@ -2499,5 +2499,66 @@
     ],
     "gerund": "lloviendo",
     "pastParticiple": "llovido"
+  },
+  {
+    "verb": "echar",
+    "present": [
+      "echo",
+      "echas",
+      "echa",
+      "echamos",
+      "echáis",
+      "echan"
+    ],
+    "imperfect": [
+      "echaba",
+      "echabas",
+      "echaba",
+      "echábamos",
+      "echabais",
+      "echaban"
+    ],
+    "preterite": [
+      "eché",
+      "echaste",
+      "echó",
+      "echamos",
+      "echasteis",
+      "echaron"
+    ],
+    "future": [
+      "echaré",
+      "echarás",
+      "echará",
+      "echaremos",
+      "echaréis",
+      "echarán"
+    ],
+    "conditional": [
+      "echaría",
+      "echarías",
+      "echaría",
+      "echaríamos",
+      "echaríais",
+      "echarían"
+    ],
+    "presentSubjunctive": [
+      "eche",
+      "eches",
+      "eche",
+      "echemos",
+      "echéis",
+      "echen"
+    ],
+    "imperfectSubjunctive": [
+      "echara",
+      "echaras",
+      "echara",
+      "echáramos",
+      "echarais",
+      "echaran"
+    ],
+    "gerund": "echando",
+    "pastParticiple": "echado"
   }
 ]

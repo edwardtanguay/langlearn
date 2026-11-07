@@ -569,7 +569,7 @@ function openGoogleExamples(rawWord: string) {
   if (!rawWord || !import.meta.client) return
   const cleanWord = rawWord.split('/')[0].trim()
   if (!cleanWord || cleanWord === '—' || cleanWord === '---' || cleanWord === '-' || cleanWord === 'n/a') return
-  const query = `give me three Spanish sentences using the word "${cleanWord}" with English translations`
+  const query = `give me three Spanish sentences using the verb "${cleanWord}" with English translations`
   const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
 }
