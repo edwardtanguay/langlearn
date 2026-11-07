@@ -1001,6 +1001,21 @@ function exitRandomTest() {
   }
 }
 
+function toggleRandomTest() {
+  if (isRandomTestMode.value) {
+    exitRandomTest()
+  } else {
+    startRandomTest()
+  }
+}
+
+function toggleFullTest() {
+  if (isRandomTestMode.value) {
+    exitRandomTest()
+  }
+  isTestMode.value = !isTestMode.value
+}
+
 function pickNextRandomTarget() {
   const prevVerb = currentRandomTarget.value?.verb?.verb
   waitingForNextRandomKey.value = false
@@ -1312,42 +1327,76 @@ onUnmounted(() => {
       v-show="showControls && !isSearching"
       class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-sm space-y-4"
     >
-      <!-- Top Action Row inside controls: Random Test, Full Test, Retest Difficult Words & Clear/Reset -->
+      <!-- Top Action Row inside controls: Random Test & Full Test on left, Clear/Reset & Retest Link on right -->
       <div class="flex items-center justify-between gap-3 flex-wrap pb-3 border-b border-gray-200 dark:border-gray-700">
+        <!-- Left Side: Random Test and Full Test (look and act the same) -->
         <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
           <!-- 1. Random Test -->
           <button
             type="button"
-            @click="isRandomTestMode ? exitRandomTest() : startRandomTest()"
+            @click="toggleRandomTest"
             class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
             :class="isRandomTestMode
               ? 'bg-[#be185d] text-white border-[#be185d] hover:bg-[#a2134e]'
               : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20'"
           >
             <SparklesIcon class="w-4 h-4" />
-            <span>{{ isRandomTestMode ? 'Exit Random Test' : 'Random Test' }}</span>
+            <span>Random Test</span>
           </button>
 
           <!-- 2. Full Test -->
           <button
             type="button"
-            @click="if (isRandomTestMode) exitRandomTest(); isTestMode = !isTestMode"
+            @click="toggleFullTest"
             class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
             :class="isTestMode
-              ? 'bg-[#be185d] text-white hover:bg-[#a2134e] border-[#be185d]'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700'"
+              ? 'bg-[#be185d] text-white border-[#be185d] hover:bg-[#a2134e]'
+              : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20'"
           >
             <PencilSquareIcon class="w-4 h-4" />
-            <span>{{ isTestMode ? 'Full Test Active (Click to Study)' : 'Full Test' }}</span>
+            <span>Full Test</span>
           </button>
+        </div>
 
-          <!-- 3. Retest Difficult Words -->
+        <!-- Right Side: Clear Answers button & Retest Difficult Words link -->
+        <div class="flex items-center gap-4 flex-wrap">
+          <!-- Inline Clear Answers Confirmation -->
+          <div v-if="isTestMode" class="flex items-center gap-2">
+            <div v-if="!confirmClearAnswers">
+              <button
+                type="button"
+                @click="confirmClearAnswers = true"
+                class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-red-700 dark:hover:text-red-500 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer"
+              >
+                Clear Answers
+              </button>
+            </div>
+            <div v-else class="flex items-center gap-2 text-xs bg-red-50 dark:bg-red-950/40 px-2.5 py-1 rounded-lg border border-red-200 dark:border-red-900/50">
+              <span class="text-gray-700 dark:text-gray-300 font-medium">Are you sure?</span>
+              <button
+                type="button"
+                @click="resetTestInputs(); confirmClearAnswers = false"
+                class="font-bold text-red-800 dark:text-red-600 hover:underline cursor-pointer"
+              >
+                Yes, clear
+              </button>
+              <button
+                type="button"
+                @click="confirmClearAnswers = false"
+                class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 ml-1 cursor-pointer"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <!-- Retest Difficult Words as a link -->
           <button
             type="button"
             @click="showRetestModal = true"
-            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2 bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20"
+            class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:underline transition-colors cursor-pointer inline-flex items-center gap-1.5"
           >
-            <AcademicCapIcon class="w-4 h-4" />
+            <AcademicCapIcon class="w-4 h-4 text-gray-500 dark:text-gray-400" />
             <span>Retest Difficult Words</span>
             <span
               v-if="activeDifficultWords.length > 0"
@@ -1356,36 +1405,6 @@ onUnmounted(() => {
               {{ activeDifficultWords.length }}
             </span>
           </button>
-        </div>
-
-        <!-- Inline Clear Answers Confirmation -->
-        <div v-if="isTestMode" class="flex items-center gap-2">
-          <div v-if="!confirmClearAnswers">
-            <button
-              type="button"
-              @click="confirmClearAnswers = true"
-              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-red-700 dark:hover:text-red-500 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer"
-            >
-              Clear Answers
-            </button>
-          </div>
-          <div v-else class="flex items-center gap-2 text-xs bg-red-50 dark:bg-red-950/40 px-2.5 py-1 rounded-lg border border-red-200 dark:border-red-900/50">
-            <span class="text-gray-700 dark:text-gray-300 font-medium">Are you sure?</span>
-            <button
-              type="button"
-              @click="resetTestInputs(); confirmClearAnswers = false"
-              class="font-bold text-red-800 dark:text-red-600 hover:underline cursor-pointer"
-            >
-              Yes, clear
-            </button>
-            <button
-              type="button"
-              @click="confirmClearAnswers = false"
-              class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 ml-1 cursor-pointer"
-            >
-              Cancel
-            </button>
-          </div>
         </div>
       </div>
 
