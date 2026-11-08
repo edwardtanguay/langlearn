@@ -169,6 +169,10 @@ function capitalizeFirst(text?: string): string {
 
 function openLink(url: string) {
   if (typeof window !== 'undefined') {
+    const selection = window.getSelection()?.toString().trim()
+    if (selection && selection.length > 0) {
+      return
+    }
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 }
@@ -422,7 +426,7 @@ const executeDelete = async () => {
           v-for="(link, idx) in category.links"
           :key="link.id"
           @click="handleCardClick(link)"
-          class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
+          class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer hover:brightness-110 active:scale-[0.99]"
           :style="{
             backgroundColor: `color-mix(in srgb, ${category.color} 14%, #111827)`,
             borderColor: `color-mix(in srgb, ${category.color} 30%, #374151)`
@@ -506,7 +510,7 @@ const executeDelete = async () => {
                   </svg>
                   <DocumentTextIcon v-else class="w-4 h-4 text-gray-400 dark:text-gray-400" title="Web article" />
                 </span>
-                <span class="truncate">{{ link.title.trim() }}</span>
+                <span class="truncate select-text">{{ link.title.trim() }}</span>
               </div>
 
               <!-- Ellipsis icon on far right for admin to toggle manage bar -->
@@ -522,7 +526,7 @@ const executeDelete = async () => {
             </div>
 
             <!-- Description (forced capitalize first letter) -->
-            <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed">
+            <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed select-text">
               {{ capitalizeFirst(link.description) }}
             </p>
           </div>

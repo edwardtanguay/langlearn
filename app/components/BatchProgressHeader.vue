@@ -106,7 +106,8 @@ const percent = computed(() => {
         <!-- Language abbreviation above the box in its language color -->
         <span
           class="text-[10px] sm:text-xs font-mono font-bold mb-1 select-none tracking-wider"
-          :style="{ color: getLanguageColor(slot.language) }"
+          :class="slot.status === 'parked' || slot.status === 'deleted' ? '!text-gray-400 dark:!text-gray-500' : ''"
+          :style="slot.status === 'parked' || slot.status === 'deleted' ? {} : { color: getLanguageColor(slot.language) }"
         >
           {{ (slot.language || 'FR').toUpperCase() }}
         </span>

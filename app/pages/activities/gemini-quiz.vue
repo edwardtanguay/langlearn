@@ -398,7 +398,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
         v-for="(p, idx) in currentLanguagePrompts"
         :key="p.id"
         @click="activeCrudPromptId === p.id ? (activeCrudPromptId = null) : handleCopyAndPaste(p.prompt)"
-        class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
+        class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer hover:brightness-110 active:scale-[0.99]"
         :style="{
           backgroundColor: `color-mix(in srgb, ${currentLanguageColor} 14%, #111827)`,
           borderColor: `color-mix(in srgb, ${currentLanguageColor} 30%, #374151)`
@@ -472,7 +472,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               class="font-bold text-base leading-snug flex items-center gap-2 min-w-0"
               :style="{ color: currentLanguageColor }"
             >
-              <span class="truncate">{{ p.title.trim() }}</span>
+              <span class="truncate select-text">{{ p.title.trim() }}</span>
             </div>
 
             <!-- Desktop Admin CRUD Tools (always visible on desktop, no ellipsis) -->

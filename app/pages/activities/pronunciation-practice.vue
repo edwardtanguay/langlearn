@@ -239,7 +239,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
 </script>
 
 <template>
-  <div class="max-w-2xl mx-auto px-4 py-8 space-y-6">
+  <div class="max-w-2xl mx-auto px-4 py-5 sm:py-6 space-y-3.5">
     <!-- Back to Activities Link -->
     <div class="flex items-center justify-between">
       <NuxtLink
@@ -258,7 +258,7 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
     <!-- Header Summary Metrics: Learned, Testing, New -->
     <div class="grid grid-cols-3 gap-3">
       <!-- Learned Metric -->
-      <div class="bg-white dark:bg-gray-900 border border-emerald-200 dark:border-emerald-900/60 rounded-2xl p-3.5 text-center shadow-xs">
+      <div class="bg-white dark:bg-gray-900 border border-emerald-200 dark:border-emerald-900/60 rounded-2xl py-2 px-3 sm:py-2.5 text-center shadow-xs">
         <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-0.5">
           Learned
         </div>
@@ -268,13 +268,10 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         >
           {{ isLoading ? '88' : metrics.learned }}
         </div>
-        <div class="text-[10px] text-gray-400 dark:text-gray-500">
-          pronunciations mastered
-        </div>
       </div>
 
       <!-- Testing Metric -->
-      <div class="bg-white dark:bg-gray-900 border border-indigo-200 dark:border-indigo-900/60 rounded-2xl p-3.5 text-center shadow-xs">
+      <div class="bg-white dark:bg-gray-900 border border-indigo-200 dark:border-indigo-900/60 rounded-2xl py-2 px-3 sm:py-2.5 text-center shadow-xs">
         <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-0.5">
           Testing
         </div>
@@ -284,13 +281,10 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
         >
           {{ isLoading ? '88' : metrics.taken }}
         </div>
-        <div class="text-[10px] text-gray-400 dark:text-gray-500">
-          tested at least once
-        </div>
       </div>
 
       <!-- New Metric -->
-      <div class="bg-white dark:bg-gray-900 border border-amber-200 dark:border-amber-900/60 rounded-2xl p-3.5 text-center shadow-xs">
+      <div class="bg-white dark:bg-gray-900 border border-amber-200 dark:border-amber-900/60 rounded-2xl py-2 px-3 sm:py-2.5 text-center shadow-xs">
         <div class="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-0.5">
           New
         </div>
@@ -299,9 +293,6 @@ const handleAction = (action: 'LEARNED' | 'KEEP_TAKING') => {
           :class="isLoading ? 'blur-[4px] opacity-40 select-none' : 'blur-none opacity-100'"
         >
           {{ isLoading ? '88' : metrics.new }}
-        </div>
-        <div class="text-[10px] text-gray-400 dark:text-gray-500">
-          still need to be taken
         </div>
       </div>
     </div>

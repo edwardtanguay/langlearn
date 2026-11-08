@@ -83,7 +83,7 @@ const TENSES = [
 type TenseKey = typeof TENSES[number]['key']
 
 // Selection & Controls State
-const selectedVerbs = ref<string[]>(verbs.map(v => v.verb))
+const selectedVerbs = ref<string[]>(['hablar', 'comer', 'vivir'])
 const selectedTenses = ref<string[]>(TENSES.map(t => t.key))
 const selectedPronouns = ref<number[]>(PRONOUNS.map(p => p.idx))
 const isTestMode = ref(false)
@@ -107,6 +107,93 @@ function prevMobilePronoun() {
 
 function nextMobilePronoun() {
   currentMobilePronounIdx.value = (currentMobilePronounIdx.value + 1) % PRONOUNS.length
+}
+
+
+const mobileRevealedCells = ref<Record<string, boolean>>({})
+
+function revealMobileCell(cellKey: string) {
+  mobileRevealedCells.value[cellKey] = true
+}
+
+function isMobileCellRevealed(cellKey: string): boolean {
+  return !!mobileRevealedCells.value[cellKey]
+}
+
+function triggerMobileHint() {
+  if (isRandomTestMode.value && currentRandomTarget.value) {
+    const cleanAnswer = currentRandomTarget.value.expected.split('/')[0].trim()
+    const current = randomTestAnswer.value || ''
+    if (current.length < cleanAnswer.length) {
+      randomTestAnswer.value = cleanAnswer.slice(0, current.length + 1)
+      hintState.value = {
+        cellKey: randomKey.value,
+        originalValue: '',
+        count: current.length + 1,
+        timer: null,
+        active: true
+      }
+    } else {
+      randomTestAnswer.value = cleanAnswer
+      randomTestStatus.value = 'correct'
+      waitingForNextRandomKey.value = true
+    }
+  }
+}
+
+function revealMobileRandomTarget() {
+  if (isRandomTestMode.value && currentRandomTarget.value) {
+    randomTestAnswer.value = currentRandomTarget.value.expected.split('/')[0].trim()
+    randomTestStatus.value = 'correct'
+    waitingForNextRandomKey.value = true
+  }
+}
+
+function triggerMobileHintForVerb(verbName: string) {
+  const currentPronoun = PRONOUNS[currentMobilePronounIdx.value]
+  if (!currentPronoun) return
+  const pIdx = currentPronoun.idx
+  const v = verbs.find(x => x.verb === verbName)
+  if (!v) return
+
+  for (const tense of FINITE_TENSES) {
+    if (selectedTenses.value.includes(tense.key)) {
+      const cellKey = getCellKey(verbName, tense.key, pIdx)
+      if (!isMobileCellRevealed(cellKey)) {
+        const expected = (((v as any)[tense.key] || [])[pIdx] || '').split('/')[0].trim()
+        const current = userAnswers.value[cellKey] || ''
+        if (current.length < expected.length) {
+          userAnswers.value[cellKey] = expected.slice(0, current.length + 1)
+          hintState.value = {
+            cellKey,
+            originalValue: '',
+            count: current.length + 1,
+            timer: null,
+            active: true
+          }
+        } else {
+          revealMobileCell(cellKey)
+        }
+        return
+      }
+    }
+  }
+}
+
+function triggerPeekForVerb(verbName: string) {
+  peekingVerb.value = verbName
+  if (peekTimer) clearTimeout(peekTimer)
+  if (peekFadeTimer) clearTimeout(peekFadeTimer)
+  isPeeking.value = true
+  peekFading.value = false
+  peekTimer = setTimeout(() => {
+    peekFading.value = true
+    peekFadeTimer = setTimeout(() => {
+      isPeeking.value = false
+      peekFading.value = false
+      peekingVerb.value = null
+    }, 300)
+  }, 1000)
 }
 
 function setMobilePronoun(idx: number) {
@@ -137,33 +224,28 @@ interface VerbGroup {
 
 const VERB_GROUPS: VerbGroup[] = [
   {
-    id: 'all',
-    name: 'All Verbs',
-    verbs: verbs.map(v => v.verb)
-  },
-  {
     id: 'reg1',
-    name: 'Regular Verbs Set 1',
+    name: 'Regular Verbs 1',
     verbs: ['hablar', 'comer', 'vivir']
   },
   {
     id: 'reg2',
-    name: 'Regular Verbs Set 2',
+    name: 'Regular Verbs 2',
     verbs: ['trabajar', 'aprender', 'abrir']
   },
   {
     id: 'reg3',
-    name: 'Regular Verbs Set 3',
+    name: 'Regular Verbs 3',
     verbs: ['tomar', 'beber', 'escribir']
   },
   {
     id: 'core1',
-    name: 'Core I verbs',
+    name: 'Core Verbs 1',
     verbs: ['ir', 'ser', 'estar']
   },
   {
     id: 'core2',
-    name: 'Core II verbs',
+    name: 'Core Verbs 2',
     verbs: ['haber', 'hacer', 'quedar']
   },
   {
@@ -1539,6 +1621,30 @@ onUnmounted(() => {
         </div>
       </div>
 
+      <!-- Mobile Testing Buttons -->
+      <div v-if="!searchQuery.trim()" class="flex items-center gap-2">
+        <button
+          type="button"
+          @click="toggleFullTest"
+          class="flex-1 py-1 px-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer text-center shadow-xs select-none"
+          :class="isTestMode
+            ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
+            : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700'"
+        >
+          Normal Testing
+        </button>
+        <button
+          type="button"
+          @click="toggleRandomTest"
+          class="flex-1 py-1 px-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer text-center shadow-xs select-none"
+          :class="isRandomTestMode
+            ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
+            : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700'"
+        >
+          Random Testing
+        </button>
+      </div>
+
       <!-- Mobile Search Box -->
       <div class="relative w-full">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
@@ -1609,22 +1715,48 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- Header Section with show/hide toggle in front -->
-    <div class="hidden sm:flex items-center gap-3">
-      <button
-        v-if="!searchQuery.trim()"
-        type="button"
-        @click="showControls = !showControls"
-        class="p-1.5 rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-        :title="showControls ? 'Hide Controls' : 'Show Controls'"
-      >
-        <ChevronDownIcon v-if="showControls" class="w-5 h-5 text-[#be185d] dark:text-[#f43f5e]" />
-        <ChevronRightIcon v-else class="w-5 h-5 text-gray-500 dark:text-gray-400" />
-      </button>
+    <!-- Header Section with show/hide toggle in front and testing buttons -->
+    <div class="hidden sm:flex items-center justify-between gap-3 flex-wrap">
+      <div class="flex items-center gap-3">
+        <button
+          v-if="!searchQuery.trim()"
+          type="button"
+          @click="showControls = !showControls"
+          class="p-1.5 rounded-xl border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+          :title="showControls ? 'Hide Controls' : 'Show Controls'"
+        >
+          <ChevronDownIcon v-if="showControls" class="w-5 h-5 text-[#be185d] dark:text-[#f43f5e]" />
+          <ChevronRightIcon v-else class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+        </button>
 
-      <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
-        <span class="text-[#be185d] dark:text-[#f43f5e]">Spanish Verbs</span>
-      </h1>
+        <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+          <span class="text-[#be185d] dark:text-[#f43f5e]">Spanish Verbs</span>
+        </h1>
+      </div>
+
+      <!-- Test Mode Buttons (Desktop) -->
+      <div v-if="!searchQuery.trim()" class="flex items-center gap-2">
+        <button
+          type="button"
+          @click="toggleFullTest"
+          class="px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-xs select-none"
+          :class="isTestMode
+            ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
+            : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-[#be185d]'"
+        >
+          Normal Testing
+        </button>
+        <button
+          type="button"
+          @click="toggleRandomTest"
+          class="px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-xs select-none"
+          :class="isRandomTestMode
+            ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
+            : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-[#be185d]'"
+        >
+          Random Testing
+        </button>
+      </div>
     </div>
 
     <!-- Controls Panel -->
@@ -1930,10 +2062,27 @@ onUnmounted(() => {
               {{ currentRandomTarget.verb.verb }}
             </h2>
             <div
-              class="text-xs text-gray-400 dark:text-gray-500 select-none transition-opacity"
+              class="hidden sm:block text-xs text-gray-400 dark:text-gray-500 select-none transition-opacity"
               :class="{ 'animate-hint-fade-during-zoom': isVerbZooming }"
             >
               ESC for hint, CTRL-ENTER to peek, ALT-ENTER for examples
+            </div>
+            <!-- Mobile Peek and Hint buttons below infinitive name -->
+            <div class="sm:hidden flex items-center gap-2 pt-1">
+              <button
+                type="button"
+                @click.stop="triggerPeek"
+                class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 active:scale-95 transition-all cursor-pointer select-none"
+              >
+                Peek
+              </button>
+              <button
+                type="button"
+                @click.stop="triggerMobileHint"
+                class="px-3 py-1 rounded-lg text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 active:scale-95 transition-all cursor-pointer select-none"
+              >
+                Hint
+              </button>
             </div>
           </div>
 
@@ -2031,7 +2180,7 @@ onUnmounted(() => {
                 <button
                   type="button"
                   @click.stop="prevMobilePronoun"
-                  class="w-10 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                  class="w-14 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   title="Previous pronoun"
                 >
                   <ChevronLeftIcon class="w-4 h-4" />
@@ -2039,7 +2188,7 @@ onUnmounted(() => {
                 <button
                   type="button"
                   @click.stop="nextMobilePronoun"
-                  class="w-10 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                  class="w-14 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   title="Next pronoun"
                 >
                   <ChevronRightIcon class="w-4 h-4" />
@@ -2053,10 +2202,13 @@ onUnmounted(() => {
                 :key="p.idx"
                 type="button"
                 @click.stop="setMobilePronoun(p.idx)"
-                class="flex-1 py-1 rounded text-[11px] font-mono font-bold transition-all text-center cursor-pointer select-none"
-                :class="currentMobilePronounIdx === p.idx
-                  ? 'bg-[#be185d] text-white shadow-2xs'
-                  : 'bg-gray-200/50 dark:bg-gray-800/60 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'"
+                class="py-1 rounded text-[11px] font-mono font-bold transition-all text-center cursor-pointer select-none"
+                :class="[
+                  (p.idx === 0 || p.idx === 1 || p.idx === 2) ? 'flex-[0.75]' : (p.idx === 3 || p.idx === 4) ? 'flex-[1.4]' : 'flex-1',
+                  currentMobilePronounIdx === p.idx
+                    ? 'bg-[#be185d] text-white shadow-2xs'
+                    : 'bg-gray-200/50 dark:bg-gray-800/60 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                ]"
               >
                 {{ p.idx === 2 ? 'él' : p.idx === 5 ? 'ellos' : p.label.split('/')[0] }}
               </button>
@@ -2342,7 +2494,7 @@ onUnmounted(() => {
                 <button
                   type="button"
                   @click.stop="prevMobilePronoun"
-                  class="w-10 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                  class="w-14 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   title="Previous pronoun"
                 >
                   <ChevronLeftIcon class="w-4 h-4" />
@@ -2350,7 +2502,7 @@ onUnmounted(() => {
                 <button
                   type="button"
                   @click.stop="nextMobilePronoun"
-                  class="w-10 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                  class="w-14 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   title="Next pronoun"
                 >
                   <ChevronRightIcon class="w-4 h-4" />
@@ -2364,10 +2516,13 @@ onUnmounted(() => {
                 :key="p.idx"
                 type="button"
                 @click.stop="setMobilePronoun(p.idx)"
-                class="flex-1 py-1 rounded text-[11px] font-mono font-bold transition-all text-center cursor-pointer select-none"
-                :class="currentMobilePronounIdx === p.idx
-                  ? 'bg-[#be185d] text-white shadow-2xs'
-                  : 'bg-gray-200/50 dark:bg-gray-800/60 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'"
+                class="py-1 rounded text-[11px] font-mono font-bold transition-all text-center cursor-pointer select-none"
+                :class="[
+                  (p.idx === 0 || p.idx === 1 || p.idx === 2) ? 'flex-[0.75]' : (p.idx === 3 || p.idx === 4) ? 'flex-[1.4]' : 'flex-1',
+                  currentMobilePronounIdx === p.idx
+                    ? 'bg-[#be185d] text-white shadow-2xs'
+                    : 'bg-gray-200/50 dark:bg-gray-800/60 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                ]"
               >
                 {{ p.idx === 2 ? 'él' : p.idx === 5 ? 'ellos' : p.label.split('/')[0] }}
               </button>
@@ -2427,7 +2582,27 @@ onUnmounted(() => {
                       >
                         {{ ((verb as any)[tense.key] || [])[p.idx] || '—' }}
                       </span>
+                      <!-- Mobile: click verb cell to reveal -->
+                      <template v-else-if="isMobile">
+                        <button
+                          v-if="!isMobileCellRevealed(getCellKey(verb.verb, tense.key, p.idx))"
+                          type="button"
+                          @click.stop="revealMobileCell(getCellKey(verb.verb, tense.key, p.idx))"
+                          class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:text-[#be185d] active:scale-95 transition-all cursor-pointer select-none"
+                        >
+                          {{ userAnswers[getCellKey(verb.verb, tense.key, p.idx)] || '···' }}
+                        </button>
+                        <span
+                          v-else
+                          @click.stop="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
+                          class="w-full h-[26px] px-2 py-1 text-xs font-bold text-gray-900 dark:text-white inline-flex items-center justify-center cursor-pointer"
+                        >
+                          {{ ((verb as any)[tense.key] || [])[p.idx] || '—' }}
+                        </span>
+                      </template>
+                      <!-- Desktop: standard text input -->
                       <input
+                        v-else
                         v-show="!isCellPeeking(`input-${verb.verb}-${tense.key}-${p.idx}`, verb.verb)"
                         :id="`input-${verb.verb}-${tense.key}-${p.idx}`"
                         type="text"
