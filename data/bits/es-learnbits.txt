@@ -1,9 +1,13 @@
+- verb-patterns
+	- «ir» y «ser» tienen un acento en las dos primeras filas, «estar» tiene cinco, todos incluyen la forma «nosotros»
+	- todas las palabras para «estar» empiezan con «e»
+	- para ir/ser/estar vosotros, los acentos están sólo en futu/cond/sub1, excepción estar pres
 - verbs
 	- hablar
 		- hablo, hablas, habla, hablamos, habláis, hablan
 		- hablaba, hablabas, hablaba, hablábamos, hablabais, hablaban
 		- hablé, hablaste, habló, hablamos, hablasteis, hablaron
-		- hablará, hablarás, hablará, hablaremos, hablaréis, hablarán
+		- hablaré, hablarás, hablará, hablaremos, hablaréis, hablarán
 		- hablaría, hablarías, hablaría, hablaríamos, hablarías, hablarían
 		- hable, hables, hable, hablemos, habléis, hablen
 		- hablara, hablaras, hablara, habláramos, hablarais, hablaran
@@ -19,7 +23,7 @@
 		- comiendo, comido
 	- vivir
 		- vivo, vives, vive, vivimos, vivís, viven
-		- viviá, vivías, vivía, vivíamos vivíais, vivían
+		- vivía, vivías, vivía, vivíamos, vivíais, vivían
 		- viví, viviste, vivió, vivimos, vivisteis, vivieron
 		- viviré, vivirás, vivirá, viviremos, viviréis, vivirán
 		- viviría, vivirías, viviría, viviríamos, viviríais, vivirían
@@ -47,7 +51,7 @@
 	- estar
 		- estoy, estás, está, estamos, estáis, están
 		- estaba, estabas, estaba, estábamos, estabais, estaban
-		- estuve, estuvista, estuvo, estuvimos, estisteis, estuvieron
+		- estuve, estuviste, estuvo, estuvimos, estuvisteis, estuvieron
 		- estaré, estarás, estará, estaremos, estaréis, estarán
 		- estaría, estarías, estaría, estaríamos, estaríais, estarían
 		- esté, estés, esté, estemos, estéis, estén
@@ -58,7 +62,7 @@
 		- había, habías, había, habíamos, habíais, habían
 		- hube, hubiste, hubo, hubimos, hubisteis, hubieron
 		- habré, habrás, habrá, habremos, habréis, habrán
-		- habría, habrían, habría, habríamos, habrías, habrían
+		- habría, habrías, habría, habríamos, habríais, habrían
 		- haya, hayas, haya, hayamos, hayáis, hayan
 		- hubiera, hubieras, hubiera, hubiéramos, hubierais, hubieran
 		- habiendo, habido
@@ -86,360 +90,556 @@
 		- di, diste, dio, dimos, disteis, dieron
 		- daré, darás, dará, daremos, daréis, darán
 		- daría, darías, daría, daríamos, daríais, darían
-		- dé, des, dé, demos, deis, de
+		- dé, des, dé, demos, deis, den
 		- diera, dieras, diera, diéramos, dierais, dieran
 		- dando, dado
 	- ver
 		- veo, ves, ve, vemos, veis, ven
 		- veía, veías, veía, veíamos, veíais, veían
+		- vi, viste, vio, vimos, visteis, vieron
+		- veré, verás, verá, veremos, veréis, verán
+		- vería, verías, vería, veríamos, veríais, verían
+		- vea, veas, vea, veamos, veáis, vean
+		- viera, vieras, viera, viéramos, vierais, vieran
+		- viendo, visto
+	- quedar
+		- quedo, quedas, queda, quedamos, quedáis, quedan
+		- quedaba, quedabas, quedaba, quedábamos, quedabais, quedaban
+		- quedé, quedaste, quedó, quedamos, quedasteis, quedaron
+		- quedaré, quedarás, quedará, quedaremos, quedaréis, quedarán
+		- quedaría, quedarías, quedaría, quedaríamos, quedaríais, quedarían
+		- quede, quedes, quede, quedemos, quedéis, queden
+		- quedara, quedaras, quedara, quedáramos, quedarais, quedaran
+		- quedando, quedado
 	- venir
+		- vengo, vienes, viene, venimos, venís, vienen
+		- venía, venías, venía, veníamos, veníais, venían
+		- vine, viniste, vino, vinimos, vinisteis, vinieron
+		- vendré, vendrás, vendrá, vendremos, vendréis, vendrán
+		- vendría, vendrías, vendría, vendríamos, vendríais, vendrían
+		- venga, vengas, venga, vengamos, vengáis, vengan
+		- viniera, vinieras, viniera, viniéramos, vinierais, vinieran
+		- viniendo, venido
+	- deber
+		- debo, debes, debe, debemos, debéis, deben
+		- debía, debías, debía, debíamos, debíais, debían
+		- debí, debiste, debió, debimos, debisteis, debieron
+		- deberé, deberás, deberá, deberemos, deberéis, deberán
+		- debería, deberías, debería, deberíamos, debíais, deberían
+		- deba, debas, deba, debamos, debáis, deban
+		- debiera, debieras, debiera, debiéramos, debierais, debieran
+		- debiendo, debido
+	- poder
+		- puedo, puedes, puede, podemos, podéis, pueden
+		- podía, podías, podía, podíamos, podíais, podían
+		- pude, pudiste, pudo, pudimos, pudisteis, pudieron
+		- podré, podrás, podrá, podremos, podréis, podrán
+		- podría, podrías, podría, podríamos, podríais, podrían
+		- pueda, puedas, pueda, podamos, podáis, puedan
+		- pudiera, pudieras, pudiera, pudiéramos, pudierais, pudieran
+		- pudiendo, podido
 	- poner
+		- pongo, pones, pone, ponemos, ponéis, ponen
+		- ponía, ponías, ponía, poníamos, poníais, ponían
+		- puse, pusiste, puso, pusimos, pusisteis, pusieron
+		- pondré, pondrás, pondrá, pondremos, pondréis, pondrán
+		- pondría, pondrías, pondría, pondríamos, pondríais, pondrían
+		- ponga, pongas, ponga, pongamos, pongáis, pongan
+		- pusiera, pusieras, pusiera, pusiéramos, pusierais, pusieran
+		- poniendo, puesto
 	- salir
+		- salgo, sales, sale, salimos, salís, salen
+		- salía, salías, salía, salíamos, salíais, salían
+		- salí, saliste, salió, salimos, salisteis, salieron
+		- saldré, saldrás, saldrá, saldremos, saldréis, saldrán
+		- saldría, saldrías, saldría, saldríamos, saldríais, saldrían
+		- salga, salgas, salga, salgamos, salgáis, salgan
+		- saliera, salieras, saliera, saliéramos, salierais, salieran
+		- saliendo, salido
 	- decir
+		- digo, dices, dice, decimos, decís, dicen
+		- decía, decías, decía, decíamos, decíais, decían
+		- dije, dijiste, dijo, dijimos, dijisteis, dijeron
+		- diré, dirás, dirá, diremos, diréis, dirán
+		- diría, dirías, diría, diríamos, diríais, dirían
+		- diga, digas, diga, digamos, digáis, digan
+		- dijera, dijeras, dijera, dijéramos, dijerais, dijeran
+		- diciendo, dicho
 	- saber
+		- sé, sabes, sabe, sabemos, sabéis, saben
+		- sabía, sabías, sabía, sabíamos, sabíais, sabían
+		- supe, supiste, supo, supimos, supisteis, supieron
+		- sabré, sabrás, sabrá, sabremos, sabréis, sabrán
+		- sabría, sabrías, sabría, sabríamos, sabríais, sabrían
+		- sepa, sepas, sepa, sepamos, sepáis, sepan
+		- supiera, supieras, supiera, supiéramos, supierais, supieran
+		- sabiendo, sabido
 	- dormir
+		- duermo, duermes, duerme, dormimos, dormís, duermen
+		- dormía, dormías, dormía, dormíamos, dormíais, dormían
+		- dormí, dormiste, durmió, dormimos, dormisteis, durmieron
+		- dormiré, dormirás, dormirá, dormiremos, dormiréis, dormirán
+		- dormiría, dormirías, dormiría, dormiríamos, dormiríais, dormirían
+		- duerma, duermas, duerma, durmamos, durmáis, duerman
+		- durmiera, durmieras, durmiera, durmiéramos, durmierais, durmieran
+		- durmiendo, dormido
 	- oír
-	- corrija
+		- oigo, oyes, oye, oímos, oís, oyen
+		- oía, oías, oía, oíamos, oíais, oían
+		- oí, oíste, oyó, oímos, oísteis, oyeron
+		- oiré, oirás, oirá, oiremos, oiréis, oirán
+		- oiría, oirías, oiría, oiríamos, oiríais, oirían
+		- oiga, oigas, oiga, oigamos, oigáis, oigan
+		- oyera, oyeras, oyera, oyéramos, oyerais, oyeran
+		- oyendo, oído
+	- corregir
+		- corrijo, corriges, corrige, corregimos, corregís, corrigen
+		- corregía, corregías, corregía, corregíamos, corregíais, corregían
+		- corregí, corregiste, corrigió, corregimos, corregisteis, corrigieron
+		- corregiré, corregirás, corregirá, corregiremos, corregiréis, corregirán
+		- corregiría, corregirías, corregiría, corregiríamos, corregiríais, corregirían
+		- corrija, corrijas, corrija, corrijamos, corrijáis, corrijan
+		- corrigiera, corrigieras, corrigiera, corrigiéramos, corrigierais, corrigieran
+		- corrigiendo, corregido
 	- prohibir
+		- prohíbo, prohíbes, prohíbe, prohibimos, prohibís, prohíben
+		- prohibía, prohibías, prohibía, prohibíamos, prohibíais, prohibían
+		- prohibí, prohibiste, prohibió, prohibimos, prohibisteis, prohibieron
+		- prohibiré, prohibirás, prohibirá, prohibiremos, prohibiréis, prohibirán
+		- prohibiría, prohibirías, prohibiría, prohibiríamos, prohibiríais, prohibirían
+		- prohíba, prohíbas, prohíba, prohibamos, prohibáis, prohíban
+		- prohibiera, prohibieras, prohibiera, prohibiéramos, prohibierais, prohibieran
+		- prohibiendo, prohibido
 	- practicar
-
+		- practico, practicas, practica, practicamos, practicáis, practican
+		- practicaba, practicabas, practicaba, practicábamos, practicabais, practicaban
+		- practiqué, practicaste, practicó, practicamos, practicasteis, practicaron
+		- practicaré, practicarás, practicará, practicaremos, practicaréis, practicarán
+		- practicaría, practicarías, practicaría, practicaríamos, practicaríais, practicarían
+		- practique, practiques, practique, practiquemos, practiquéis, practiquen
+		- practicara, practicaras, practicara, practicáramos, practicarais, practicaran
+		- practicando, practicado
+	- caer
+		- caigo, caes, cae, caemos, caéis, caen
+		- caía, caías, caía, caíamos, caíais, caían
+		- caí, caíste, cayó, caímos, caísteis, cayeron
+		- caeré, caerás, caerá, caeremos, caeréis, caerán
+		- caería, caerías, caería, caeríamos, caeríais, caerían
+		- caiga, caigas, caiga, caigamos, caigáis, caigan
+		- cayera, cayeras, cayera, cayéramos, cayerais, cayeran
+		- cayendo, caído
+	- querer
+		- quiero, quieres, quiere, queremos, queréis, quieren
+		- quería, querías, quería, queríamos, queríais, querían
+		- quise, quisiste, quiso, quisimos, quisisteis, quisieron
+		- querré, querrás, querrá, querremos, querréis, querrán
+		- querría, querrías, querría, querríamos, querríais, querrían
+		- quiera, quieras, quiera, queramos, queráis, quieran
+		- quisiera, quisieras, quisiera, quisiéramos, quisierais, quisieran
+		- queriendo, querido
+	- soler
+		- suelo, sueles, suele, solemos, soléis, suelen
+		- solía, solías, solía, solíamos, solíais, solían
+		- solí, soliste, solió, solimos, solisteis, solieron
+		- soleré, solerás, solerá, soleremos, soleréis, solerán
+		- solería, solerías, solería, soleríamos, soleríais, solerían
+		- suela, suelas, suela, solamos, soláis, suelan
+		- soliera, solieras, soliera, soliéramos, solierais, solieran
+		- soliendo, solido
+	- necesitar
+		- necesito, necesitas, necesita, necesitamos, necesitáis, necesitan
+		- necesitaba, necesitabas, necesitaba, necesitábamos, necesitabais, necesitaban
+		- necesité, necesitaste, necesitó, necesitamos, necesitasteis, necesitaron
+		- necesitaré, necesitarás, necesitará, necesitaremos, necesitaréis, necesitarán
+		- necesitaría, necesitarías, necesitaría, necesitaríamos, necesitaríais, necesitarían
+		- necesite, necesites, necesite, necesitemos, necesitéis, necesiten
+		- necesitara, necesitaras, necesitara, necesitáramos, necesitarais, necesitaran
+		- necesitando, necesitado
+	- gustar
+		- gusto, gustas, gusta, gustamos, gustáis, gustan
+		- gustaba, gustabas, gustaba, gustábamos, gustabais, gustaban
+		- gusté, gustaste, gustó, gustamos, gustasteis, gustaron
+		- gustaré, gustarás, gustará, gustaremos, gustaréis, gustarán
+		- gustaría, gustarías, gustaría, gustaríamos, gustaríais, gustarían
+		- guste, gustes, guste, gustemos, gustéis, gusten
+		- gustara, gustaras, gustara, gustáramos, gustarais, gustaran
+		- gustando, gustado
+	- trabajar
+		- trabajo, trabajas, trabaja, trabajamos, trabajáis, trabajan
+		- trabajaba, trabajabas, trabajaba, trabajábamos, trabajabais, trabajaban
+		- trabajé, trabajaste, trabajó, trabajamos, trabajasteis, trabajaron
+		- trabajaré, trabajarás, trabajará, trabajaremos, trabajaréis, trabajarán
+		- trabajaría, trabajarías, trabajaría, trabajaríamos, trabajaríais, trabajarían
+		- trabaje, trabajes, trabaje, trabajemos, trabajéis, trabajen
+		- trabajara, trabajaras, trabajara, trabajáramos, trabajarais, trabajaran
+		- trabajando, trabajado
+	- aprender
+		- aprendo, aprendes, aprende, aprendemos, aprendéis, aprenden
+		- aprendía, aprendías, aprendía, aprendíamos, aprendíais, aprendían
+		- aprendí, aprendiste, aprendió, aprendimos, aprendisteis, aprendieron
+		- aprenderé, aprenderás, aprenderá, aprenderemos, aprenderéis, aprenderán
+		- aprendería, aprenderías, aprendería, aprenderíamos, aprenderíais, aprenderían
+		- aprenda, aprendas, aprenda, aprendamos, aprendáis, aprendan
+		- aprendiera, aprendieras, aprendiera, aprendiéramos, aprendierais, aprendieran
+		- aprendiendo, aprendido
+	- abrir
+		- abro, abres, abre, abrimos, abrís, abren
+		- abría, abrías, abría, abríamos, abríais, abrían
+		- abrí, abriste, abrió, abrimos, abristeis, abrieron
+		- abriré, abrirás, abrirá, abriremos, abriréis, abrirán
+		- abriría, abrirías, abriría, abriríamos, abriríais, abrirían
+		- abra, abras, abra, abramos, abráis, abran
+		- abriera, abrieras, abriera, abriéramos, abrierais, abrieran
+		- abriendo, abierto
+	- tomar
+		- tomo, tomas, toma, tomamos, tomáis, toman
+		- tomaba, tomabas, tomaba, tomábamos, tomabais, tomaban
+		- tomé, tomaste, tomó, tomamos, tomasteis, tomaron
+		- tomaré, tomarás, tomará, tomaremos, tomaréis, tomarán
+		- tomaría, tomarías, tomaría, tomaríamos, tomaríais, tomarían
+		- tome, tomes, tome, tomemos, toméis, tomen
+		- tomara, tomaras, tomara, tomáramos, tomarais, tomaran
+		- tomando, tomado
+	- beber
+		- bebo, bebes, bebe, bebemos, bebéis, beben
+		- bebía, bebías, bebía, bebíamos, bebíais, bebían
+		- bebí, bebiste, bebió, bebimos, bebisteis, bebieron
+		- beberé, beberás, beberá, beberemos, beberéis, beberán
+		- bebería, beberías, bebería, beberíamos, beberíais, beberían
+		- beba, bebas, beba, bebamos, bebáis, beban
+		- bebiera, bebieras, bebiera, bebiéramos, bebierais, bebieran
+		- bebiendo, bebido
+	- escribir
+		- escribo, escribes, escribe, escribimos, escribís, escriben
+		- escribía, escribías, escribía, escribíamos, escribíais, escribían
+		- escribí, escribiste, escribió, escribimos, escribisteis, escribieron
+		- escribiré, escribirás, escribirá, escribiremos, escribiréis, escribirán
+		- escribiría, escribirías, escribiría, escribiríamos, escribiríais, escribirían
+		- escriba, escribas, escriba, escribamos, escribáis, escriban
+		- escribiera, escribieras, escribiera, escribiéramos, escribierais, escribieran
+		- escribiendo, escrito
+	- llegar
+		- llego, llegas, llega, llegamos, llegáis, llegan
+		- llegaba, llegabas, llegaba, llegábamos, llegabais, llegaban
+		- llegué, llegaste, llegó, llegamos, llegasteis, llegaron
+		- llegaré, llegarás, llegará, llegaremos, llegaréis, llegarán
+		- llegaría, llegarías, llegaría, llegaríamos, llegaríais, llegarían
+		- llegue, llegues, llegue, lleguemos, lleguéis, lleguen
+		- llegara, llegaras, llegara, llegáramos, llegarais, llegaran
+		- llegando, llegado
+	- llevar
+		- llevo, llevas, lleva, llevamos, lleváis, llevan
+		- llevaba, llevabas, llevaba, llevábamos, llevabais, llevaban
+		- llevé, llevaste, llevó, llevamos, llevasteis, llevaron
+		- llevaré, llevarás, llevará, llevaremos, llevaréis, llevarán
+		- llevaría, llevarías, llevaría, llevaríamos, llevaríais, llevarían
+		- lleve, lleves, lleve, llevemos, llevéis, lleven
+		- llevara, llevaras, llevara, lleváramos, llevarais, llevaran
+		- llevando, llevado
+	- llamar
+		- llamo, llamas, llama, llamamos, llamáis, llaman
+		- llamaba, llamabas, llamaba, llamábamos, llamabais, llamaban
+		- llamé, llamaste, llamó, llamamos, llamasteis, llamaron
+		- llamaré, llamarás, llamará, llamaremos, llamaréis, llamarán
+		- llamaría, llamarías, llamaría, llamaríamos, llamaríais, llamarían
+		- llame, llames, llame, llamemos, llaméis, llamen
+		- llamara, llamaras, llamara, llamáramos, llamarais, llamaran
+		- llamando, llamado
+	- llenar
+		- lleno, llenas, llena, llenamos, llenáis, llenan
+		- llenaba, llenabas, llenaba, llenábamos, llenabais, llenaban
+		- llené, llenaste, llenó, llenamos, llenasteis, llenaron
+		- llenaré, llenarás, llenará, llenaremos, llenaréis, llenarán
+		- llenaría, llenarías, llenaría, llenaríamos, llenaríais, llenarían
+		- llene, llenes, llene, llenemos, llenéis, llenen
+		- llenara, llenaras, llenara, llenáramos, llenarais, llenaran
+		- llenando, llenado
+	- llorar
+		- lloro, lloras, llora, lloramos, lloráis, lloran
+		- lloraba, llorabas, lloraba, llorábamos, llorabais, lloraban
+		- lloré, lloraste, lloró, lloramos, llorasteis, lloraron
+		- lloraré, llorarás, llorará, lloraremos, lloraréis, llorarán
+		- lloraría, llorarías, lloraría, lloraríamos, lloraríais, llorarían
+		- llore, llores, llore, lloremos, lloréis, lloren
+		- llorara, lloraras, llorara, lloráramos, llorarais, lloraran
+		- llorando, llorado
+	- llover
+		- -, -, llueve, -, -, -
+		- -, -, llovía, -, -, -
+		- -, -, llovió, -, -, -
+		- -, -, lloverá, -, -, -
+		- -, -, llovería, -, -, -
+		- -, -, llueva, -, -, -
+		- -, -, lloviera, -, -, -
+		- lloviendo, llovido
+	- echar
+		- echo, echas, echa, echamos, echáis, echan
+		- echaba, echabas, echaba, echábamos, echabais, echaban
+		- eché, echaste, echó, echamos, echasteis, echaron
+		- echaré, echarás, echará, echaremos, echaréis, echarán
+		- echaría, echarías, echaría, echaríamos, echaríais, echarían
+		- eche, eches, eche, echemos, echéis, echen
+		- echara, echaras, echara, echáramos, echarais, echaran
+		- echando, echado
+- Spain vs. Latin America
+	- Tu - Amigos - Informal - misma edad
+	- Usted - personas mayores - jefes - respeto
+	- Vos = Tu
+	- Vosotros - Solo en españa
+	- Latinoamerica - Ustedes (Todos)
+	- Ustedes tienen - Latinoamerica
+	- Vostros teneis - Solo España
+	- Tú o Usted
+	- Puedes pasarme el telefono (tu)
+	- Puede pasarme el teléfono (usted)
+	- Ustedes pueden pasarme el teléfono (para todos)
+	- Tienen - Tenéis(X)
+	- Español España
+	- Español Latinoamerica
 - classroom speak
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
-	- WISHES
-		- nnn
-			- want/wish/desire
-				- desear
-			- to hope
-				- esperar
-					- Así que, esperamos que lo disfruten, que lo sepan gozar, pero eso sí de una manera muy sana
-			- to demand/require
-				-exigir
-			- to insist
-				- insistir
-			- to order
-				- mandar
-			- to need
-				- necesitar
-			- to order
-				- ordenar
-			- to ask
-				- pedir
-					- Solo te pido que me digas cuál de ellos es Triskas: 
-			- to prefer
-				- preferir
-			- to want
-				- querer
-					- yo quería que ustedes me ayudaran
-					- Si queremos que nuestro café sea más dulce podemos añadir azúcar
-	- EMOTIONS
-		- nnn
-			- to be happy/glad
-				- alegrarse
-					- Me alegro de que le guste. 
-			- to be angry
-				- enojarse
-			- to regret
-				- lamentar
-			- to bother
-				- molestar
-					- A mí lo que me molesta es que tú tengas la verdad de todo.
-			- to be sorry
-				- sentir
-			- to surprise
-				- sorpender
-			- me da tristeza que ustedes no se lleven bien
-			- encantar
-				- Encantada de que estés aquí
-	- IMPERSONAL EXPRESSIONS
-		- it's strange that
-			- es raro que
-				- Pedro no ha venido hoy a trabajar hoy
-					- es raro que Pedro no haya venido hoy a trabajar
-		- nnn
-			- it's nice that
-				- es agradable que
-			- it's good that
-				- es bueno que
-			- it's interesting that
-				- es curioso que
-			- it's doubtful that
-				- es dudoso que
-			- it's great that
-				- es estupendo que
-			- it's strange that
-				- es extraño que
-			- it's important that
-				- es importante que
-					- es importante que hable con usted
-			- it's amazing that
-				- es increíble que
-			- it's necessary that
-				- es necesario que
-					- No es necesario que mientas
-			- probable
-			- it's strange that
-				- es raro que
-					- y es raro que todavía no haya nadie
-			- it's urgent that
-				- es urgente que
-			- it's embarrassing that
-				- es vergonzoso que
-			- it's possible that
-				- es posible que no pueda ir
-	- REQUESTS AND RECOMMENDATIONS
-		- nnn
-			- les recomendé que vieran esta película
-			- to advise
-				- aconsejar
-					- les aconsejo que vayan a Zipaquirá
-			- to tell
-				- decir
-			- to allow
-				- dejar
-			- to demand
-				- exigir
-			- to make/force
-				- hacer
-			- to insist
-				- insistir
-			- to order
-				- mandar
-			- to order
-				- ordenar
-			- to forbid
-				- prohibir
-			- to propose
-				- proponer
-			- to recommend
-				- recomendar
-					- te recomiendo que muevas algunos muebles del salón a la cocina.
-			- to beg
-				- rogar
-			- to suggest
-				- sugerir
-					- les sugiero que visiten el sugestivo Museo del oro, 
-			- to beg
-				- suplicar
-			- 
-				- 
-			- 
-				- 
-	- DOUBTS AND DENIAL
-		- nnn
-			- to doubt
-				- dudar
-			- to not believe
-				- no creer
-					- no creo que David vaya a venir
-					- No creo que haga falta
-			- to not be sure
-				- no estar seguro
-			- to not seem
-				- no parecer
-			- to not think
-				- no pensar
-			- to not suppose
-				- no suponer
-				
-				
-	- OJAJÁ
-		- ojalá tengas un buen viaje
-		- Ojalá que todo siga así
-		- ojalá nos veamos pronto
-	- CONDITIONAL
-		- unless
-			- a menos que
-				- deja de llover
-					- No saldré a correr mañana a menos que deje de llover
-		- before
-			- antes de que
-				- empieza a llover
-					- salgamos antes de que empiece a llover
-		- provided that
-			- con tal de que
-				- me ayudas
-					- con tal de que me ayudes
-	- NEGATIVE
-		- No es un hecho que él esté enfermo (It's not a fact that he's sick) 
-	=== TODO ============================
-	- SORT
-		- it is advisable that
-			- conviene que
-				- comes demasiado antes de correr
-					- no conviene que comas demasiado antes de correr
-		- after
-			- después de que
-				- Llegaremos a París e iremos directamente al hotel.
-					- Después de que lleguemos a París, iremos directamente al hotel
-		- to doubt that
-			- dudar que
-				- podemos terminar el trabajo hoy
-					- ella duda que podamos terminar el trabajo hoy
-		- in case
-			- en caso que
-				- vamos a Paris
-					- en caso de que vayamos a París
-		- as soon as
-			- en cuanto
-				- ellos nos dan el dinero
-					- en cuanto nos den el dinero 
-		- it's advisable that
-			- es aconsejable que
-				- rellenas este formulario todos los días
-					- es asconsejable que rellenes este formulario ahora (it's advisable that...)
-		- it's good that
-			- es bueno que
-				- tenemos suficiente dinero
-					- es bueno que tengamos suficiente dinero
-		- it's unlikely that
-			- es difícil que
-				- él tiene que ir allí
-					- es difícil que él tenga que ir allí
-		- it is doubtful that
-			- es dudoso que
-				- ellos llevan un disfraz en esta fiesta
-					- es dudoso que lleven disfraz en esta fiesta
-		- it's likely that
-			- es fácil que
-				- mañana llueve en esta región
-					- es fácil que mañana llueva en esta región
-		- it's fantasic that
-			- es fantástico que
-				- te preparas para tus exámenes
-					- es fantástico que prepares tus propias comidas
-		- it's important that
-			- es importante que
-				- ellas nadan todos los dias
-					- es importante que naden todos los días
-		- it's impossible that
-			- es imposible que
-				- él puede abrir esta puerta
-					- es imposible que alguien pueda abrir esta puerta
-		- it's improbable that
-			- es improbable que
-				- encontramos un hotel barato en el centro de París
-					- es improbable que encontremos un hotel barato en el centro de París
-		- it's uncertain that
-			- es improbable que
-				- no sabemos si mañana hará buen tiempo
-					- es incierto que mañana haga buen tiempo
-		- it's incredible that
-			- es increíble que
-				- todavía hay personas que no utilizan Internet
-					- es increíble que todavía haya gente que no utilizan Internet
-		- it's a pity that
-			- es una lástima que
-				- estas enfermo
-					- es una lástima que estés enfermo
-		- it's bad that
-			- es malo que
-				- comes demasiado azúcar
-					- Es malo que comas demasiado azúcar
-		- it's better that
-			- es mejor que
-				- salimos temprano para evitar el tráfico
-					- es mejor que salgamos temprano para evitar el tráfico
-		- it's necessary that
-			- es menester que
-				- eres puntual
-					- es menester que seas puntual
-		- it's necessary that
-			- es necesario que
-				- haces ejercicio
-					- es necesario que hagas ejercicio
-		- to wish that
-			- esperar que
-				- mañana hace buen tiempo
-					- espero que mañana haga buen tiempo
-		- it's possible that
-			- es posible que
-				- mañana tenemos que trabajar hasta tarde
-					- es posible que mañana tengamos que trabajar hasta tarde
-		- 
-			- 
-		- 
-			- 
-		- 
-			- 
-		- 
-			- 
-		- 
-			- 
-		- 
-			- 
-	- ADD THESE
-				- Todos los participantes llegan a tiempo.
-					- Es preciso que todos los participantes lleguen a tiempo (it's necessary)
-				- tu reservas el hotel con antelación para conseguir un buen precio.
-					- es preferible que reserves el hotel con antelación para conseguir un buen precio
-				- Mañana llueve todo el día.
-					- Es probable que mañana llueva durante todo el día.
-				- El gobierno no hace nada para resolver este problema.
-					- Es ridículo que el Gobierno no haga nada para resolver este problema
-				- Sus amigos vienen a visitarlo mañana.
-					- Está contento de que sus amigos vengan a visitarlo mañana
-				- Muchos personas mueren en guerras cada año.
-					- Es terrible que tantas personas mueran en guerras cada año
-				- Todos están presentes.
-					- No podemos empezar la reunión hasta que todos estén presentes (until)
-				- Estudio español todos los días.
-					- Mi profesor insiste en que estudie español todos los días
-				- Los estudiantes entregan sus tareas el viernes.
-					- El profesor mandó que los estudiantes entregaran sus trabajos el viernes (instructed someone to)
-				- tu sales temprano
-					- Más vale que salgas temprano si no quieres llegar tarde al trabajo.
-				- El político no ha cometido ningún delito.
-					- El político niega que haya cometido ningún delito (denied)
-				- Mañana hará buen tiempo.
-					- No creo que mañana haga buen tiempo
-				- Nosotros hemos perdido el tren.
-					- No es cierto que hayamos perdido el tren
-				- Esta es la mejor solución al problema.
-					- No estoy convencido de que esta sea la mejor solución al problema
-				- Mañana tendremos tiempo suficiente para visitar el museo.
-					- No estoy seguro de que mañana tengamos suficiente tiempo para visitar el museo.
-				- Es cierto que ella ha dejado su trabajo.
-					- No es verdad que ella haya dejado su trabajo.
-				- Me imagino que podemos terminar todo el trabajo en un solo día.
-					- No me imagino que podamos terminar todo el trabajo en un solo día
-				- Parece que mañana va a llover.
-					- No parece que vaya a llover mañana
-				- Creo que tiene razón.
-					- No pienso que tenga razón
-				- Supongo que es verdad.
-					- No supongo que sea verdad
-				- Mañana hace buen tiempo, así que puedo salir a correr.
-					- Ojalá que mañana haga buen tiempo para poder salir a correr
-				- Lo entiendes mejor.
-					- Te explicaré la gramática otra vez para que la entiendas mejor
-				- Mi profesor corrige mis errores cuando hablo español.
-					- Le pido a mi profesor que me corrija los errores cuando hablo español
-				- Vienes mañana.
-					- Prefiero que vengas mañana
-				- Los coches circulan por esta zona del centro de la ciudad.
-					- El Gobierno ha prohibido que los coches circulen por esta zona del centro
-				- Mañana lloverá.
-					- Puede ser que llueva mañana (might)
-				- tienes éxito.
-					- Queremos que tengas éxito.
-				- Visitas Dijon cuando viajas a Francia.
-					- Te recomiendo que visites Dijon si viajas a Francia
-				- Esperan unos minutos antes de entrar en la habitación.
-					- Les ruego que esperen unos minutos antes de entrar en la sala (to plead)
-				- No tenemos suficiente tiempo para terminar el proyecto.
-					- Siento que no tengamos suficiente tiempo para terminar el proyecto (sentir, regret that)
-				- sus padres no se dieron cuenta
-					- Salió de casa sin que sus padres se dieran cuenta (without)
-				- Practicas español todos los días para mejorar tu fluidez.
-					- Te sugiero que practiques español todos los días para mejorar tu fluidez
-				- Sé algo.
-					- Te avisaré tan pronto como sepa algo.
-				- Mañana lloverá y no podremos salir a correr.
-					- Temo que mañana llueva y no podamos salir a correr
-				- Mañana lloverá.
-					- Tengo miedo de que llueva mañana.
+	- it is advisable that
+		- conviene que
+			- comes demasiado antes de correr
+				- no conviene que comas demasiado antes de correr
+	- after
+		- después de que
+			- Llegaremos a París e iremos directamente al hotel.
+				- Después de que lleguemos a París, iremos directamente al hotel
+	- to doubt that
+		- dudar que
+			- podemos terminar el trabajo hoy
+				- ella duda que podamos terminar el trabajo hoy
+	- in case
+		- en caso que
+			- vamos a Paris
+				- en caso de que vayamos a París
+	- as soon as
+		- en cuanto
+			- ellos nos dan el dinero
+				- en cuanto nos den el dinero 
+	- it's advisable that
+		- es aconsejable que
+			- rellenas este formulario todos los días
+				- es asconsejable que rellenes este formulario ahora (it's advisable that...)
+	- it's good that
+		- es bueno que
+			- tenemos suficiente dinero
+				- es bueno que tengamos suficiente dinero
+	- it's unlikely that
+		- es difícil que
+			- él tiene que ir allí
+				- es difícil que él tenga que ir allí
+	- it is doubtful that
+		- es dudoso que
+			- ellos llevan un disfraz en esta fiesta
+				- es dudoso que lleven disfraz en esta fiesta
+	- it's likely that
+		- es fácil que
+			- mañana llueve en esta región
+				- es fácil que mañana llueva en esta región
+	- it's fantasic that
+		- es fantástico que
+			- te preparas para tus exámenes
+				- es fantástico que prepares tus propias comidas
+	- it's important that
+		- es importante que
+			- ellas nadan todos los dias
+				- es importante que naden todos los días
+	- it's impossible that
+		- es imposible que
+			- él puede abrir esta puerta
+				- es imposible que alguien pueda abrir esta puerta
+	- it's improbable that
+		- es improbable que
+			- encontramos un hotel barato en el centro de París
+				- es improbable que encontremos un hotel barato en el centro de París
+	- it's uncertain that
+		- es improbable que
+			- no sabemos si mañana hará buen tiempo
+				- es incierto que mañana haga buen tiempo
+	- it's incredible that
+		- es increíble que
+			- todavía hay personas que no utilizan Internet
+				- es increíble que todavía haya gente que no utilizan Internet
+	- it's a pity that
+		- es una lástima que
+			- estas enfermo
+				- es una lástima que estés enfermo
+	- it's bad that
+		- es malo que
+			- comes demasiado azúcar
+				- Es malo que comas demasiado azúcar
+	- it's better that
+		- es mejor que
+			- salimos temprano para evitar el tráfico
+				- es mejor que salgamos temprano para evitar el tráfico
+	- it's necessary that
+		- es menester que
+			- eres puntual
+				- es menester que seas puntual
+	- it's necessary that
+		- es necesario que
+			- haces ejercicio
+				- es necesario que hagas ejercicio
+	- to wish that
+		- esperar que
+			- mañana hace buen tiempo
+				- espero que mañana haga buen tiempo
+	- it's possible that
+		- es posible que
+			- mañana tenemos que trabajar hasta tarde
+				- es posible que mañana tengamos que trabajar hasta tarde
+	- it's necessary that
+		- es preciso que
+			- todos los participantes llegan a tiempo
+				- es preciso que todos los participantes lleguen a tiempo
+	- it's preferable that
+		- es preferible que
+			- tu reservas el hotel con antelación 
+				- es preferible que reserves el hotel con antelación 
+	- it's probable that
+		- es probable que
+			- mañana llueve todo el día
+				- es probable que mañana llueva durante todo el día
+	- it's rare that
+		- es raro que
+			- Pedro no ha respondido todavía a mi mensaje
+				- es raro que Pedro no haya respondido todavía a mi mensaje
+	- it's ridiculous that
+		- es ridículo que
+			- el gobierno no hace nada para resolver este problema.
+				- es ridículo que el Gobierno no haga nada para resolver este problema
+	- to be happy that
+		- estar contento que
+			- sus amigos vienen a visitarlo mañana
+				- está contento de que sus amigos vengan a visitarlo mañana
+	- it's terrible that
+		- es terrible que 
+			- muchos personas mueren en guerras cada año
+				- es terrible que tantas personas mueran en guerras cada año
+	- until
+		- hasta que
+			- todos están presentes
+				- no podemos empezar la reunión hasta que todos estén presentes
+	- to insist that
+		- insistir en que
+			- estudio español todos los días
+				- mi profesor insiste en que estudie español todos los días
+	- to order that
+		- mandar que
+			- limpio mi habitación
+				- mi madre me manda que limpie mi habitación
+	- it's better that
+		- más vale que
+			- tu sales temprano
+				- más vale que salgas temprano si no quieres llegar tarde al trabajo					
+	- to deny that
+		- negar que
+			- el político no ha cometido ningún delito
+				- el político niega que haya cometido ningún delito
+	- not to believe that
+		- no creer que
+			- mañana hará buen tiempo
+				- no creo que mañana haga buen tiempo
+	- it's not certain that
+		- no es cierto que
+			- nosotros hemos perdido el tren
+				- no es cierto que hayamos perdido el tren
+	- to not be convinced that
+		- no estar convencido de que
+			- esta es la mejor solución al problema
+				- no estoy convencido de que esta sea la mejor solución al problema
+	- to not be sure that
+		- no estar seguro de que
+			- mañana tendremos tiempo suficiente para visitar el museo
+				- no estoy seguro de que mañana tengamos suficiente tiempo para visitar el museo
+	- it's not true that
+		- no es verdad que
+			- es cierto que ella ha dejado su trabajo
+				- no es verdad que ella haya dejado su trabajo
+	- to not imagine that
+		- no imaginarse que
+			- me imagino que podemos terminar todo el trabajo en un solo día
+				- no me imagino que podamos terminar todo el trabajo en un solo día
+	- to not seem that
+		- no parecer que
+			- parece que mañana va a llover
+				- no parece que vaya a llover mañana
+	- to not think that
+		- no pensar que
+			- pienso que tiene razón
+				- no pienso que tenga razón
+	- to not suppose that
+		- no suponer que
+			- supongo que es verdad
+				- no supongo que sea verdad
+	- hopefully
+		- ojalá que
+			- mañana hace buen tiempo, así que puedo salir a correr
+				- ojalá que mañana haga buen tiempo para poder salir a correr
+	- in order that
+		- para que
+			- lo entiendes mejor
+				- te explicaré la gramática otra vez para que la entiendas mejor
+	- to ask that
+		- pedir que
+			- mi profesor corrige mis errores cuando hablo español
+				- le pido a mi profesor que me corrija los errores cuando hablo español
+	- to prefer that
+		- preferir que
+			- vienes mañana
+				- prefiero que vengas mañana
+	- to prohibit that
+		- prohibir que
+			- los coches circulan por esta zona del centro de la ciudad
+				- el Gobierno ha prohibido que los coches circulen por esta zona del centro
+	- it may be that
+		- puede ser que
+			- mañana lloverá
+				- puede ser que mañana llueva
+	- to want that
+		- querer que
+			- tienes éxito
+				- queremos que tengas éxito
+	- to recommend that
+		- recomendar que
+			- visitas Dijon cuando viajas a Francia
+				- te recomiendo que visites Dijon si viajas a Francia
+	- to plead that
+		- rogar que
+			- esperan unos minutos antes de entrar en la sala
+				- les ruego que esperen unos minutos antes de entrar en la sala
+	- to feel that
+		- sentir que
+			- no tenemos suficiente tiempo para terminar el proyecto
+				- siento que no tengamos suficiente tiempo para terminar el proyecto
+	- without
+		- sin que
+			- sus padres no se dieron cuenta
+				- salió de casa sin que sus padres se dieran cuenta
+	- to suggest that
+		- sugerir que
+			- practicas español todos los días para mejorar tu fluidez
+				- te sugiero que practiques español todos los días para mejorar tu fluidez
+	- as soon as
+		- tan pronto como
+			- sé algo.
+				- te avisaré tan pronto como sepa algo
+	- to fear that
+		- temer que
+			- mañana lloverá y no podremos salir a correr
+				- temo que mañana llueva y no podamos salir a correr
+	- to be afraid that
+		- tener miedo de que
+			- mañana lloverá
+				- tengo miedo de que llueva mañana
+	- PROCESS
+		- Quiero que sepas que
+		- que seáis muy felices
+		- que te mejores
 - moving on words
 	- gracias por el consejo, no lo sabía
 	- perfecto, pasemos a lo siguiente
@@ -596,24 +796,54 @@
 			- el dinero recaudado servirá para construir una escuela comunitaria
 - quedar vs. quedarse
 	- quedar
-		- fijar una cita o ponerse de acuerdo para verse
-			- ¿A qué hora quedamos mañana para tomar un café en la plaza?
-		- expresar cómo sienta o favorece una prenda
-			- esa camisa azul te queda muy bien con los pantalones grises
-		- señalar la ubicación geográfica o situación física de un lugar inanimado
-			- el museo queda a tres manzanas de la estación central
-		- indicar retención, posesión definitiva o elección de un objeto
-			- te gusta este libro o prefieres que me lo quede yo
-		- WHERE: para indicar dónde se encuentra situado un lugar
-			- el supermercado queda a dos cuadras de aqu
 		- AGREE TO: "quedar en + infinitivo" significado de pactar o acordar hacer algo
 			- la reunión estaba prevista para las diez, pero al final quedamos en vernos a las doce
+		- CITA: quedar con alguien: citarse para verse en un lugar y a una hora; se usa tanto para planes; en España «quedar» es el verbo habitual para citarse con amigos; en otros países se suelen usar «juntarse», «verse» o «encontrarse».
+			- a qué hora quedamos mañana para tomar un café en la plaza
+			- he quedado con mis amigos a las ocho en la plaza
+			- quedamos a las ocho
+			- he quedado con Lucía
+			- dónde queda el museo
+			- Argentina: nos juntamos el sábado
+			- Mexico: Quedamos de vernos a las cinco
+		- MAKE A GOOD IMPRESSION: quedar bien con alguien
+			- nnn
+		- ROPA: expresar cómo sienta o favorece una prenda; sentar bien o mal una prenda
+			- esa camisa azul te queda muy bien con los pantalones grises
+			- esa chaqueta te queda genial
+			- esa camisa te queda muy bien con los vaqueros
+			- te queda bien
+			- la chaqueta me queda grande
+			- el color azul te queda muy bien
+		- WHERE: señalar la ubicación geográfica o situación física de un lugar inanimado
+			- el museo queda a tres manzanas de la estación central
+			- el supermercado queda a dos cuadras de aquí
+		- KEEP: indicar retención, posesión definitiva o elección de un objeto
+			- te gusta este libro o prefieres que me lo quede yo
 		- ONLY ONE LEFT: para expresar la parte de un todo que todavía no se ha consumido o gastado
 			- solo queda un pedazo de pastel en la nevera
 	- quedarse
-		- paso a un estado emocional o físico resultante
+		- CHANGE EMOTIONAL STATE: paso a un estado emocional o físico resultante
 			- al enterarse de la noticia, ella se quedó totalmente sorprendida
-		- indicar permanencia o estancia en un sitio específico
+		- PERMANECER: indicar permanencia o estancia en un sitio específico, permanecer o continuar en un lugar o estado
 			- este fin de semana estoy muy cansado, así que voy a quedarme en casa descansando
-		-  describir la transición accidental o natural hacia el estado de sueño
+			- me quedo en casa porque estoy resfriado
+			- me quedo en casa esta noche
+			- te quedas a cenar
+			- nos quedamos en un hotel cerca de la playa
+		- ACCIDENTAL TRANSITION: describir la transición accidental o natural hacia el estado de sueño
 			- la película era tan aburrida que Juan se quedó dormido en los primeros veinte minutos
+		- LO QUE RESTA: sobrar o faltar 
+			- me quedan dos euros
+			- solo me quedan cinco minutos para terminar el examen
+		- ENDING UP IN A STATE: 
+			- me quedé sorprendido
+			- se quedó dormido en el sofá
+			- se quedó sin electricidad todo el barrio
+			- me quedé sin dinero
+		- KEEPING SOMETHING: 
+			- me quedé con el libro
+			- no te puedes quedar con lo que no es tuyo
+			- con cuál te quedas
+			- se quedó con la casa después de la separación
+			

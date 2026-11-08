@@ -23,6 +23,13 @@ export interface CategoryVideo {
 export interface BasicCategory {
   id: string;
   title: string;
+  titles: {
+    en: string;
+    fr: string;
+    es: string;
+    it: string;
+    nl: string;
+  };
   items: BasicItem[];
   videos?: Record<string, CategoryVideo[]>;
   links?: Record<string, CategoryVideo[]>;
@@ -35,7 +42,7 @@ interface ParsedFileCategory {
 }
 
 function formatCategoryTitle(raw: string): string {
-  const minorWords = new Set(['of', 'and', 'the', 'in', 'on', 'at', 'to', 'for', 'with']);
+  const minorWords = new Set(['of', 'and', 'the', 'in', 'on', 'at', 'to', 'for', 'with', 'de', 'la', 'le', 'et', 'y', 'en', 'e']);
   return raw
     .split(' ')
     .map((word, index) => {
@@ -108,6 +115,13 @@ export function parseBasics(): { categories: BasicCategory[]; totalWords: number
 
     const catId = slugify(enCat.name);
     const catTitle = formatCategoryTitle(enCat.name);
+    const titles = {
+      en: catTitle,
+      fr: formatCategoryTitle(frCat?.name || enCat.name),
+      es: formatCategoryTitle(esCat?.name || enCat.name),
+      it: formatCategoryTitle(itCat?.name || enCat.name),
+      nl: formatCategoryTitle(nlCat?.name || enCat.name),
+    };
 
     let esItems = [...(esCat?.items || [])];
     // For letter pronunciation, exclude 'eñe' so Spanish aligns with the standard 26 A-Z letters
@@ -140,6 +154,7 @@ export function parseBasics(): { categories: BasicCategory[]; totalWords: number
     resultCategories.push({
       id: catId,
       title: catTitle,
+      titles,
       items,
       ...(Object.keys(videos).length > 0 ? { videos, links: videos } : {})
     });

@@ -14,20 +14,22 @@ interface BasicItem {
 interface CategoryVideo {
   url: string
   title: string
+  titles?: Record<string, string>
 }
 
 interface BasicCategory {
   id: string
   title: string
+  titles?: Record<string, string>
   items: BasicItem[]
   videos?: Record<string, CategoryVideo[]>
 }
 
 const languages = [
-  { code: 'fr', label: 'French' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'it', label: 'Italian' },
-  { code: 'nl', label: 'Dutch' }
+  { code: 'fr', label: 'FR' },
+  { code: 'es', label: 'ES' },
+  { code: 'it', label: 'IT' },
+  { code: 'nl', label: 'NL' }
 ] as const
 
 type LangCode = typeof languages[number]['code']
@@ -56,6 +58,14 @@ const resetCategoryConfirmId = ref<string | null>(null)
 
 // Accordion open category (single-open structure; initial state is all closed)
 const openCategoryId = ref<string | null>(null)
+const isTopCollapsed = ref(true)
+
+function getCategoryTitle(cat: BasicCategory): string {
+  if (cat.titles && (cat.titles as any)[selectedLang.value]) {
+    return (cat.titles as any)[selectedLang.value]
+  }
+  return cat.title
+}
 
 // Current language color
 const currentColor = computed(() => languageColors[selectedLang.value] || '#333388')
@@ -965,7 +975,7 @@ const filteredCategories = computed(() => {
 
   return categories
     .map(cat => {
-      const titleMatches = canSearchCategoryTitle && cat.title.toLowerCase().includes(q)
+      const titleMatches = canSearchCategoryTitle && (getCategoryTitle(cat).toLowerCase().includes(q) || cat.title.toLowerCase().includes(q))
       if (titleMatches) return cat
 
       const matchingItems = cat.items.filter(item => {
@@ -1140,7 +1150,7 @@ function isItemFoundBySearch(item: BasicItem): boolean {
 function isCategoryFoundBySearch(cat: BasicCategory): boolean {
   const q = searchQuery.value.trim().toLowerCase()
   if (q.length < 4) return false
-  return cat.title.toLowerCase().includes(q)
+  return getCategoryTitle(cat).toLowerCase().includes(q) || cat.title.toLowerCase().includes(q)
 }
 
 // Determine if the item should currently be displayed as revealed (target language) or unrevealed (English)
@@ -1183,26 +1193,33 @@ function isFlashcardOpen(itemId: string): boolean {
 </script>
 
 <template>
-  <div class="max-w-5xl mx-auto px-4 py-4">
+  <div class="max-w-5xl mx-auto px-4 pt-1 sm:pt-4 pb-4">
     <!-- Sticky Header -->
     <div
-      class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-2 pb-3.5 space-y-3 -mx-4 px-4 transition-all duration-200"
+      class="sticky top-16 z-30 bg-white/95 dark:bg-[#121824]/95 backdrop-blur-md pt-1.5 sm:pt-2 pb-2.5 sm:pb-3.5 space-y-3 -mx-4 px-4 transition-all duration-200"
       :class="isScrolled
         ? 'shadow-md border-b border-gray-300 dark:border-gray-700'
         : 'shadow-xs border-b border-gray-200/80 dark:border-gray-800/80'"
     >
-      <!-- Top Navigation Link: off-white to keep language colors meaningful -->
-      <div>
+      <!-- Top Navigation: "Back to Activities" on left and "Expand"/"Collapse" on right -->
+      <div class="flex items-center justify-between gap-2">
         <NuxtLink
           to="/activities"
           class="inline-flex items-center text-sm font-medium !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white opacity-50 hover:opacity-100 transition-all"
         >
           ← Back to Activities
         </NuxtLink>
+        <button
+          type="button"
+          @click="isTopCollapsed = !isTopCollapsed"
+          class="text-xs font-semibold px-2.5 py-1 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer select-none"
+        >
+          {{ isTopCollapsed ? 'Expand' : 'Collapse' }}
+        </button>
       </div>
 
       <!-- Flexible line of four buttons matching Links UX -->
-      <div class="flex flex-wrap items-center gap-2 w-full">
+      <div class="flex items-center gap-2 w-full">
         <button
           v-for="lang in languages"
           :key="lang.code"
@@ -1234,6 +1251,8 @@ function isFlashcardOpen(itemId: string): boolean {
         </button>
       </div>
 
+      <!-- Collapsible panel controlled by Expand/Collapse -->
+      <div v-show="!isTopCollapsed" class="space-y-3">
       <!-- Progress Panel: NO PERCENTAGE on left, stats + controls, then progress bar -->
       <div class="p-3.5 rounded-2xl bg-gray-50 dark:bg-[#182030] border border-gray-200/90 dark:border-gray-800 shadow-xs space-y-2">
         <div class="flex items-center justify-between gap-2 flex-wrap">
@@ -1400,6 +1419,7 @@ function isFlashcardOpen(itemId: string): boolean {
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
+      </div>
       </div>
     </div>
 
@@ -1658,7 +1678,7 @@ function isFlashcardOpen(itemId: string): boolean {
           >
             <div class="flex items-center gap-2 min-w-0 pr-2">
               <span class="text-sm font-bold text-gray-900 dark:text-white truncate">
-                {{ cat.title }}
+                {{ getCategoryTitle(cat) }}
               </span>
             </div>
 
@@ -1666,11 +1686,13 @@ function isFlashcardOpen(itemId: string): boolean {
               <!-- Visual indication when category is 100%: bold count and accomplished checkmark with fixed width -->
               <div
                 v-if="!isStatsLoading && getCategoryLearnedPercentage(cat) === 100"
-                class="flex items-center justify-center gap-1.5 w-24 sm:w-28 h-5 rounded-full font-black text-[11px] font-mono shrink-0 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800/60"
+                class="flex items-center justify-center gap-1.5 w-24 sm:w-28 h-5 rounded-full font-black text-[11px] font-mono shrink-0 shadow-xs border border-white/20"
+                :style="{ backgroundColor: currentColor }"
               >
-                <span class="text-emerald-600 dark:text-emerald-400">{{ cat.items.length }} of {{ cat.items.length }}</span>
-                <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                <span class="text-white drop-shadow-xs">{{ cat.items.length }} of {{ cat.items.length }}</span>
+                <svg class="w-3.5 h-3.5 text-white shrink-0 drop-shadow-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 12l2.5 2.5 5.5-5.5" />
                 </svg>
               </div>
 

@@ -4,7 +4,8 @@ import {
   SpeakerWaveIcon,
   SparklesIcon,
   CursorArrowRaysIcon,
-  TagIcon
+  TagIcon,
+  LanguageIcon
 } from '@heroicons/vue/24/outline'
 
 useHead({
@@ -28,6 +29,13 @@ const activities = [
     description: 'Interactive flashcards covering essential language basics across four languages.',
     icon: BookOpenIcon,
     badgeColor: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-900/40'
+  },
+  {
+    title: 'Spanish Verbs',
+    path: '/activities/spanish-verbs',
+    description: 'Master Spanish verb conjugations across tenses and pronouns with interactive tables, test mode, and difficult word retesting.',
+    icon: LanguageIcon,
+    badgeColor: 'bg-pink-50 dark:bg-pink-950/40 text-[#be185d] dark:text-[#f43f5e] border-pink-200/60 dark:border-pink-900/40'
   },
   {
     title: 'Pronunciation Practice',

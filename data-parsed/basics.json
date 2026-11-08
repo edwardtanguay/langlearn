@@ -2,6 +2,13 @@
   {
     "id": "numbers",
     "title": "Numbers",
+    "titles": {
+      "en": "Numbers",
+      "fr": "Nombres",
+      "es": "Números",
+      "it": "Numeri",
+      "nl": "Getallen"
+    },
     "items": [
       {
         "id": "numbers-1",
@@ -892,6 +899,13 @@
   {
     "id": "letters",
     "title": "Letters",
+    "titles": {
+      "en": "Letters",
+      "fr": "Lettres",
+      "es": "Letras",
+      "it": "Lettere",
+      "nl": "Letters"
+    },
     "items": [
       {
         "id": "letters-1",
@@ -1166,6 +1180,13 @@
   {
     "id": "question-words",
     "title": "Question Words",
+    "titles": {
+      "en": "Question Words",
+      "fr": "Mots Interrogatifs",
+      "es": "Palabras Interrogativas",
+      "it": "Parole Interrogative",
+      "nl": "Vraagwoorden"
+    },
     "items": [
       {
         "id": "question-words-1",
@@ -1244,6 +1265,13 @@
   {
     "id": "weekdays",
     "title": "Weekdays",
+    "titles": {
+      "en": "Weekdays",
+      "fr": "Jours de la Semaine",
+      "es": "Días de la Semana",
+      "it": "Giorni Della Settimana",
+      "nl": "Weekdagen"
+    },
     "items": [
       {
         "id": "weekdays-1",
@@ -1306,6 +1334,13 @@
   {
     "id": "months",
     "title": "Months",
+    "titles": {
+      "en": "Months",
+      "fr": "Mois",
+      "es": "Meses",
+      "it": "Mesi",
+      "nl": "Maanden"
+    },
     "items": [
       {
         "id": "months-1",
@@ -1408,6 +1443,13 @@
   {
     "id": "time-expressions",
     "title": "Time Expressions",
+    "titles": {
+      "en": "Time Expressions",
+      "fr": "Expressions de Temps",
+      "es": "Expresiones de Tiempo",
+      "it": "Espressioni Di Tempo",
+      "nl": "Tijduitdrukkingen"
+    },
     "items": [
       {
         "id": "time-expressions-1",
@@ -1526,6 +1568,13 @@
   {
     "id": "greetings",
     "title": "Greetings",
+    "titles": {
+      "en": "Greetings",
+      "fr": "Salutations",
+      "es": "Saludos",
+      "it": "Saluti",
+      "nl": "Begroetingen"
+    },
     "items": [
       {
         "id": "greetings-1",
@@ -1588,6 +1637,13 @@
   {
     "id": "colors",
     "title": "Colors",
+    "titles": {
+      "en": "Colors",
+      "fr": "Couleurs",
+      "es": "Colores",
+      "it": "Colori",
+      "nl": "Kleuren"
+    },
     "items": [
       {
         "id": "colors-1",
@@ -1706,6 +1762,13 @@
   {
     "id": "opposites",
     "title": "Opposites",
+    "titles": {
+      "en": "Opposites",
+      "fr": "Contraires",
+      "es": "Opuestos",
+      "it": "Contrari",
+      "nl": "Tegenstellingen"
+    },
     "items": [
       {
         "id": "opposites-1",
@@ -1866,12 +1929,43 @@
         "es": "vacío/lleno",
         "it": "vuoto/pieno",
         "nl": "leeg/vol"
+      },
+      {
+        "id": "opposites-21",
+        "en": "feminine/masculine",
+        "fr": "féminin/masculin",
+        "es": "femenino/masculino",
+        "it": "femminile/maschile",
+        "nl": "vrouwelijk/mannelijk"
+      },
+      {
+        "id": "opposites-22",
+        "en": "true/false",
+        "fr": "vrai/faux",
+        "es": "verdadero/falso",
+        "it": "vero/falso",
+        "nl": "waar/onwaar"
+      },
+      {
+        "id": "opposites-23",
+        "en": "right/wrong",
+        "fr": "juste/faux",
+        "es": "correcto/incorrecto",
+        "it": "giusto/sbagliato",
+        "nl": "juist/fout"
       }
     ]
   },
   {
     "id": "family",
     "title": "Family",
+    "titles": {
+      "en": "Family",
+      "fr": "Famille",
+      "es": "Familia",
+      "it": "Famiglia",
+      "nl": "Familie"
+    },
     "items": [
       {
         "id": "family-1",
@@ -1998,6 +2092,13 @@
   {
     "id": "jobs",
     "title": "Jobs",
+    "titles": {
+      "en": "Jobs",
+      "fr": "Métiers",
+      "es": "Profesiones",
+      "it": "Mestieri",
+      "nl": "Beroepen"
+    },
     "items": [
       {
         "id": "jobs-1",
@@ -2124,6 +2225,13 @@
   {
     "id": "food-and-drink",
     "title": "Food and Drink",
+    "titles": {
+      "en": "Food and Drink",
+      "fr": "Nourriture et Boissons",
+      "es": "Comida y Bebida",
+      "it": "Cibo e Bevande",
+      "nl": "Eten en Drinken"
+    },
     "items": [
       {
         "id": "food-and-drink-1",
@@ -2362,6 +2470,13 @@
   {
     "id": "clothes",
     "title": "Clothes",
+    "titles": {
+      "en": "Clothes",
+      "fr": "Vêtements",
+      "es": "Ropa",
+      "it": "Vestiti",
+      "nl": "Kleding"
+    },
     "items": [
       {
         "id": "clothes-1",
@@ -2496,6 +2611,13 @@
   {
     "id": "weather",
     "title": "Weather",
+    "titles": {
+      "en": "Weather",
+      "fr": "Météo",
+      "es": "Clima",
+      "it": "Tempo Meteorologico",
+      "nl": "Weer"
+    },
     "items": [
       {
         "id": "weather-1",
@@ -2574,6 +2696,13 @@
   {
     "id": "seasons",
     "title": "Seasons",
+    "titles": {
+      "en": "Seasons",
+      "fr": "Saisons",
+      "es": "Estaciones",
+      "it": "Stagioni",
+      "nl": "Seizoenen"
+    },
     "items": [
       {
         "id": "seasons-1",
@@ -2612,6 +2741,13 @@
   {
     "id": "body",
     "title": "Body",
+    "titles": {
+      "en": "Body",
+      "fr": "Corps",
+      "es": "Cuerpo",
+      "it": "Corpo",
+      "nl": "Lichaam"
+    },
     "items": [
       {
         "id": "body-1",
@@ -2738,6 +2874,13 @@
   {
     "id": "house",
     "title": "House",
+    "titles": {
+      "en": "House",
+      "fr": "Maison",
+      "es": "Casa",
+      "it": "Casa",
+      "nl": "Huis"
+    },
     "items": [
       {
         "id": "house-1",
@@ -2808,6 +2951,13 @@
   {
     "id": "furniture",
     "title": "Furniture",
+    "titles": {
+      "en": "Furniture",
+      "fr": "Meubles",
+      "es": "Muebles",
+      "it": "Mobili",
+      "nl": "Meubels"
+    },
     "items": [
       {
         "id": "furniture-1",
@@ -2910,6 +3060,13 @@
   {
     "id": "places",
     "title": "Places",
+    "titles": {
+      "en": "Places",
+      "fr": "Lieux",
+      "es": "Lugares",
+      "it": "Luoghi",
+      "nl": "Plaatsen"
+    },
     "items": [
       {
         "id": "places-1",
@@ -3044,6 +3201,13 @@
   {
     "id": "transport",
     "title": "Transport",
+    "titles": {
+      "en": "Transport",
+      "fr": "Transports",
+      "es": "Transporte",
+      "it": "Trasporti",
+      "nl": "Vervoer"
+    },
     "items": [
       {
         "id": "transport-1",
@@ -3066,7 +3230,7 @@
         "en": "train",
         "fr": "le train",
         "es": "el tren",
-        "it": "il treno",
+        "it": "il train",
         "nl": "de trein"
       },
       {
@@ -3138,6 +3302,13 @@
   {
     "id": "directions",
     "title": "Directions",
+    "titles": {
+      "en": "Directions",
+      "fr": "Directions",
+      "es": "Direcciones",
+      "it": "Indicazioni",
+      "nl": "Richtingen"
+    },
     "items": [
       {
         "id": "directions-1",
@@ -3240,6 +3411,13 @@
   {
     "id": "routines",
     "title": "Routines",
+    "titles": {
+      "en": "Routines",
+      "fr": "Routines",
+      "es": "Rutinas",
+      "it": "Routine",
+      "nl": "Routines"
+    },
     "items": [
       {
         "id": "routines-1",
@@ -3326,6 +3504,13 @@
   {
     "id": "hobbies",
     "title": "Hobbies",
+    "titles": {
+      "en": "Hobbies",
+      "fr": "Loisirs",
+      "es": "Pasatiempos",
+      "it": "Passatempi",
+      "nl": "Hobby's"
+    },
     "items": [
       {
         "id": "hobbies-1",
@@ -3428,6 +3613,13 @@
   {
     "id": "sports",
     "title": "Sports",
+    "titles": {
+      "en": "Sports",
+      "fr": "Sports",
+      "es": "Deportes",
+      "it": "Sport",
+      "nl": "Sporten"
+    },
     "items": [
       {
         "id": "sports-1",
@@ -3506,6 +3698,13 @@
   {
     "id": "ordinals",
     "title": "Ordinals",
+    "titles": {
+      "en": "Ordinals",
+      "fr": "Ordinaux",
+      "es": "Ordinales",
+      "it": "Ordinali",
+      "nl": "Rangtelwoorden"
+    },
     "items": [
       {
         "id": "ordinals-1",
@@ -3592,6 +3791,13 @@
   {
     "id": "countries",
     "title": "Countries",
+    "titles": {
+      "en": "Countries",
+      "fr": "Pays",
+      "es": "Países",
+      "it": "Paesi",
+      "nl": "Landen"
+    },
     "items": [
       {
         "id": "countries-1",
@@ -3758,6 +3964,13 @@
   {
     "id": "emotions",
     "title": "Emotions",
+    "titles": {
+      "en": "Emotions",
+      "fr": "Émotions",
+      "es": "Emociones",
+      "it": "Emozioni",
+      "nl": "Emoties"
+    },
     "items": [
       {
         "id": "emotions-1",
@@ -3860,6 +4073,13 @@
   {
     "id": "adjectives",
     "title": "Adjectives",
+    "titles": {
+      "en": "Adjectives",
+      "fr": "Adjectifs",
+      "es": "Adjectivos",
+      "it": "Aggettivi",
+      "nl": "Bijvoeglijke Naamwoorden"
+    },
     "items": [
       {
         "id": "adjectives-1",
@@ -3986,6 +4206,13 @@
   {
     "id": "frequency",
     "title": "Frequency",
+    "titles": {
+      "en": "Frequency",
+      "fr": "Fréquence",
+      "es": "Frecuencia",
+      "it": "Frequenza",
+      "nl": "Frequentie"
+    },
     "items": [
       {
         "id": "frequency-1",
@@ -4072,6 +4299,13 @@
   {
     "id": "tech",
     "title": "Tech",
+    "titles": {
+      "en": "Tech",
+      "fr": "Technologie",
+      "es": "Tecnología",
+      "it": "Tecnologia",
+      "nl": "Technologie"
+    },
     "items": [
       {
         "id": "tech-1",
@@ -4158,6 +4392,13 @@
   {
     "id": "school",
     "title": "School",
+    "titles": {
+      "en": "School",
+      "fr": "École",
+      "es": "Escuela",
+      "it": "Scuola",
+      "nl": "School"
+    },
     "items": [
       {
         "id": "school-1",
@@ -4236,6 +4477,13 @@
   {
     "id": "animals",
     "title": "Animals",
+    "titles": {
+      "en": "Animals",
+      "fr": "Animaux",
+      "es": "Animales",
+      "it": "Animali",
+      "nl": "Dieren"
+    },
     "items": [
       {
         "id": "animals-1",
@@ -4322,6 +4570,13 @@
   {
     "id": "kitchen",
     "title": "Kitchen",
+    "titles": {
+      "en": "Kitchen",
+      "fr": "Cuisine",
+      "es": "Cocina",
+      "it": "Cucina",
+      "nl": "Keuken"
+    },
     "items": [
       {
         "id": "kitchen-1",
@@ -4488,6 +4743,13 @@
   {
     "id": "office",
     "title": "Office",
+    "titles": {
+      "en": "Office",
+      "fr": "Bureau",
+      "es": "Oficina",
+      "it": "Ufficio",
+      "nl": "Kantoor"
+    },
     "items": [
       {
         "id": "office-1",
@@ -4654,6 +4916,13 @@
   {
     "id": "writing",
     "title": "Writing",
+    "titles": {
+      "en": "Writing",
+      "fr": "Écriture",
+      "es": "Escritura",
+      "it": "Scrittura",
+      "nl": "Schrijven"
+    },
     "items": [
       {
         "id": "writing-1",
@@ -4820,6 +5089,13 @@
   {
     "id": "language",
     "title": "Language",
+    "titles": {
+      "en": "Language",
+      "fr": "Langue",
+      "es": "Idioma",
+      "it": "Lingua",
+      "nl": "Taal"
+    },
     "items": [
       {
         "id": "language-1",
@@ -5002,6 +5278,13 @@
   {
     "id": "starters",
     "title": "Starters",
+    "titles": {
+      "en": "Starters",
+      "fr": "Amorces",
+      "es": "Iniciadores",
+      "it": "Frasi Introduttive",
+      "nl": "Startzinnen"
+    },
     "items": [
       {
         "id": "starters-1",

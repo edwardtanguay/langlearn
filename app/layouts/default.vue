@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col relative pb-10">
     <Navigation />
-    <main class="flex-1 py-12 min-h-[600px]">
+    <main class="flex-1 pt-3 pb-8 sm:py-12 min-h-[600px]">
       <UContainer>
         <slot />
       </UContainer>

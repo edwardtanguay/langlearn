@@ -1,4 +1,4 @@
-- numbers
+- numeri
 	- https://www.youtube.com/watch?v=o50lpnL5PBw; 1-10 canzone
 	- zero, uno, due, tre, quattro, cinque, sei, sette, otto, nove
 	- dieci, undici, dodici, tredici, quattordici, quindici, sedici, diciassette, diciotto, diciannove
@@ -11,16 +11,16 @@
 	- ottanta, ottantuno, ottantadue, ottantatré, ottantaquattro, ottantacinque, ottantasei, ottantasette, ottantotto, ottantanove
 	- novanta, novantuno, novantadue, novantatré, novantaquattro, novantacinque, novantasei, novantasette, novantotto, novantanove
 	- cento
-- letters
+- lettere
 	- https://youtu.be/T7deYXBnmBE?t=11; A-Z
 	- ah, bee, chee, dee, eh, effe, gee, akka, ee, ee-loonga, kappa, elle, emme, enne, oh, pee, koo, erre, esse, tee, oo, voo, doppia-voh, eeks, ee-grekka, zeta
-- question words
+- parole interrogative
 	- chi, che cosa, dove, quando, perché, come, quale, quanti, quanto
-- weekdays
+- giorni della settimana
 	- lunedì, martedì, mercoledì, giovedì, venerdì, sabato, domenica
-- months
+- mesi
 	- gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre
-- time expressions
+- espressioni di tempo
 	- è l'una
 	- è l'una e mezza
 	- è l'una e un quarto
@@ -35,66 +35,66 @@
 	- la notte
 	- a mezzanotte
 	- a mezzogiorno
-- greetings
+- saluti
 	- ciao, buongiorno, buon pomeriggio, buonasera, buonanotte, arrivederci, a più tardi
-- colors
+- colori
 	- rosso, blu, giallo, verde, arancione, viola, rosa, marrone, nero, bianco, grigio, argento, oro, bronzo
-- opposites
-	- grande/piccolo, caldo/freddo, buono/cattivo, veloce/lento, vecchio/nuovo, felice/triste, facile/difficile, ricco/povero, pesante/leggero, aperto/chiuso, presto/tardi, giovane/vecchio, vicino/lontano, pulito/sporco, forte/debole, scuro/chiaro, silenzioso/rumoroso, costoso/economico, sicuro/pericoloso, vuoto/pieno
-- family
+- contrari
+	- grande/piccolo, caldo/freddo, buono/cattivo, veloce/lento, vecchio/nuovo, felice/triste, facile/difficile, ricco/povero, pesante/leggero, aperto/chiuso, presto/tardi, giovane/vecchio, vicino/lontano, pulito/sporco, forte/debole, scuro/chiaro, silenzioso/rumoroso, costoso/economico, sicuro/pericoloso, vuoto/pieno, femminile/maschile, vero/falso, giusto/sbagliato
+- famiglia
 	- la madre, il padre, i genitori, la sorella, il fratello, il figlio, la figlia, la nonna, il nonno, la zia, lo zio, il cugino / la cugina, il marito, la moglie, il bambino / i bambini
-- jobs
+- mestieri
 	- l'insegnante (m/f), il medico / la dottoressa, l'infermiere (m) / l'infermiera (f), lo studente / la studentessa, l'ingegnere (m), il cameriere / la cameriera, il cuoco / la cuoca, l'autista (m/f), il commesso / la commessa, il poliziotto / la poliziotta, il pompiere, l'agricoltore (m) / l'agricoltrice (f), l'impiegato (m) / l'impiegata (f), disoccupato, in pensione
-- food and drink
+- cibo e bevande
 	- il pane, il riso, la pasta, la carne, il pollo, il pesce, l'uovo (m), il formaggio, la frutta, la mela, la banana, l'arancia (f), la verdura, la patata, il pomodoro, l'insalata, la zuppa, il panino, la pizza
 	- il latte, l'acqua (f), il succo, il caffè, il tè, la torta, il cioccolato, la colazione, il pranzo, la cena
-- clothes
+- vestiti
 	- la maglietta, la camicia, i pantaloni, i jeans, la gonna, il vestito, la giacca, il cappotto, il maglione, le scarpe, gli stivali, i calzini, il cappello, la sciarpa, i guanti, la borsa
-- weather
+- tempo meteorologico
 	- soleggiato, piovoso, nuvoloso, ventoso, nevoso, caldo, tiepido, freddo, fresco
-- seasons
+- stagioni
 	- la primavera, l'estate (f), l'autunno (m), l'inverno (m)
-- body
+- corpo
 	- la testa, i capelli, il viso, l'occhio (m), l'orecchio (m), il naso, la bocca, il dente / i denti, il braccio, la mano, il dito, la gamba, il piede / i piedi, la schiena, lo stomaco
-- house
+- casa
 	- la casa, l'appartamento (m), la stanza, la camera da letto, il bagno, la cucina, il soggiorno, il giardino
-- furniture
+- mobili
 	- il letto, il tavolo, la sedia, il divano, la scrivania, l'armadio (m), il frigorifero, i fornelli, la finestra, la porta, il muro, il pavimento
-- places
+- luoghi
 	- la scuola, l'ospedale (m), il supermercato, il negozio, la banca, l'ufficio postale, il ristorante, il bar, il cinema, il parco, il museo, la stazione, l'aeroporto (m), l'albergo (m), la biblioteca, la palestra
-- transport
-	- la macchina, l'autobus, il treno, l'aereo (m), la bicicletta / la bici, la moto, il taxi, la barca, la metropolitana, a piedi, in macchina / in autobus
-- directions 
+- trasporti
+	- la macchina, l'autobus, il train, l'aereo (m), la bicicletta / la bici, la moto, il taxi, la barca, la metropolitana, a piedi, in macchina / in autobus
+- indicazioni
 	- a sinistra, a destra, dritto, vicino a, di fronte a, tra, davanti a, dietro, vicino a, lontano da, al semaforo, girare a sinistra/a destra
-- routines
+- routine
 	- alzarsi, fare colazione, andare al lavoro/a scuola, iniziare a lavorare, finire di lavorare, pranzare, andare a casa, guardare la TV, andare a letto, dormire
-- hobbies
+- passatempi
 	- giocare a calcio/tennis, nuotare, correre, ballare, leggere, guardare film/la TV, ascoltare la musica, fare la spesa, incontrare gli amici, viaggiare, cucinare, giocare ai videogiochi
-- sports
+- sport
 	- il calcio, il tennis, la pallacanestro, il nuoto, la corsa, il ciclismo, lo sci, lo yoga, la palestra
-- ordinals
+- ordinali
 	- primo, secondo, terzo, quarto, quinto, sesto, settimo, ottavo, nono, decimo
-- countries 
+- paesi
 	- l'Inghilterra / inglese, gli Stati Uniti / americano, la Spagna / spagnolo, la Francia / francese, la Germania / tedesco, l'Italia / italiano, la Cina / cinese, il Giappone / giapponese, il Brasile / brasiliano, il Portogallo / portoghese, la Russia / russo, il Messico / messicano, il Canada / canadese, l'Australia / australiano, l'India / indiano, la Turchia / turco, la Polonia / polacco, la Grecia / greco, l'Egitto / egiziano, l'Argentina / argentino
-- emotions
+- emozioni
 	- felice, triste, arrabbiato, stanco, affamato, assetato, annoiato, emozionato, preoccupato, nervoso, sorpreso, rilassato
-- adjectives
+- aggettivi
 	- bello, brutto, pulito, sporco, silenzioso, rumoroso, costoso, economico, interessante, noioso, importante, pericoloso, sicuro, amichevole, educato
-- frequency
+- frequenza
 	- sempre, di solito, normalmente, frequentemente, spesso, a volte, occasionalmente, raramente, di rado, mai
-- tech
+- tecnologia
 	- il telefono, il computer, il portatile, il caricabatterie, la chiave, il portafoglio, l'ombrello (m), le cuffie, la macchina fotografica, il tablet
-- school
+- scuola
 	- l'inglese (m), la matematica, le scienze, la storia, la geografia, l'arte (f), la musica, la biologia, la chimica
-- animals
+- animali
 	- il cane, il gatto, l'uccello (m), il pesce, il coniglio, il cavallo, il leone, la tigre, l'elefante (m), la scimmia
-- kitchen
+- cucina
 	- il cucchiaio, la forchetta, il coltello, il piatto, la ciotola, il bicchiere, la tazza, la pentola, la padella, il frigorifero, il congelatore, il forno, il fornello, il microonde, il lavandino, la lavastoviglie, il tagliere, il tovagliolo, la bottiglia, il bollitore
-- office
+- ufficio
 	- la graffetta, la cucitrice, le forbici, la cartella, la penna, la matita, la tastiera, il mouse, la scrivania, il monitor, la stampante, il quaderno, la gomma, il nastro adesivo, l'evidenziatore (m), la busta, il calendario, la calcolatrice, la valigetta, i foglietti adesivi
-- writing
+- scrittura
 	- il punto, la virgola, il punto e virgola, i due punti, il punto esclamativo, il punto interrogativo, le virgolette, i caporali, l'apostrofo (m), il trattino, la lineetta, le parentesi tonde, le parentesi quadre, le parentesi graffe, i puntini di sospensione, la barra obliqua, la barra rovesciata, il trattino basso, la tilde, la e commerciale
-- language
+- lingua
 	- il sostantivo, il verbo, l'aggettivo (m), l'avverbio (m), il pronome, la preposizione, la congiunzione, l'articolo (m), il soggetto, il complemento, il tempo verbale, la coniugazione, la grammatica, il vocabolario, la pronuncia, la sillaba, la frase, il paragrafo, il singolare, il plurale, l'accento grave, l'accento acuto
-- starters
+- frasi introduttive
 	- comunque, non importa, nel frattempo, sia come sia, detto questo, ad ogni modo, andiamo avanti, per farla breve, per quel che vale, nondimeno, a pensarci bene, a proposito, ripensandoci, in entrambi i casi, ciò premesso, parlando di questo, in ogni caso, nel bene o nel male, inoltre, cioè, a quanto pare

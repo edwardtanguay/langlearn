@@ -1,4 +1,4 @@
-- numbers
+- getallen
 	- https://www.youtube.com/watch?v=Gglzo9wlcTU;1-100
 	- https://youtu.be/osXA2WJU9tg?t=22;100-1
 	- nul, een, twee, drie, vier, vijf, zes, zeven, acht, negen
@@ -16,13 +16,13 @@
 	- https://www.youtube.com/watch?v=YIf3ukVvFRM;A-Z
 	- https://youtu.be/YIf3ukVvFRM?t=64; A-Z snel
 	- ah, bay, say, day, ay, eff, %ay, hah, ee, yay, kah, ell, emm, enn, oh, pay, koo, air, ess, tay, oo, fay, vay, iks, ee-grehk, zed
-- question words
+- vraagwoorden
 	- wie, wat, waar, wanneer, waarom, hoe, welk, hoeveel, hoeveel
-- weekdays
+- weekdagen
 	- maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag, zondag
-- months
+- maanden
 	- januari, februari, maart, april, mei, juni, juli, augustus, september, oktober, november, december
-- time expressions
+- tijduitdrukkingen
 	- het is één uur
 	- het is half twee
 	- het is kwart over één
@@ -37,66 +37,66 @@
 	- 's nachts
 	- om middernacht
 	- 's middags om twaalf uur
-- greetings
+- begroetingen
 	- hallo, goedemorgen, goedemiddag, goedenavond, goedenacht, tot ziens, tot later
-- colors
+- kleuren
 	- rood, blauw, geel, groen, oranje, paars, roze, bruin, zwart, wit, grijs, zilver, goud, brons
-- opposites
-	- groot/klein, warm/koud, goed/slecht, snel/langzaam, oud/nieuw, blij/verdrietig, makkelijk/moeilijk, rijk/arm, zwaar/licht, open/gesloten, vroeg/laat, jong/oud, dichtbij/ver, schoon/vies, sterk/zwak, donker/licht, rustig/lawaaiig, duur/goedkoop, veilig/gevaarlijk, leeg/vol
-- family
+- tegenstellingen
+	- groot/klein, warm/koud, goed/slecht, snel/langzaam, oud/nieuw, blij/verdrietig, makkelijk/moeilijk, rijk/arm, zwaar/licht, open/gesloten, vroeg/laat, jong/oud, dichtbij/ver, schoon/vies, sterk/zwak, donker/licht, rustig/lawaaiig, duur/goedkoop, veilig/gevaarlijk, leeg/vol, vrouwelijk/mannelijk, waar/onwaar, juist/fout
+- familie
 	- de moeder, de vader, de ouders, de zus, de broer, de zoon, de dochter, de oma, de opa, de tante, de oom, de neef / de nicht, de man, de vrouw, het kind / de kinderen
-- jobs
+- beroepen
 	- de leraar / de lerares, de dokter, de verpleegkundige, de student / de studente, de ingenieur, de ober / de serveerster, de chef-kok, de chauffeur, de winkelbediende, de politieagent, de brandweerman, de boer / de boerin, de kantoormedewerker, werkloos, gepensioneerd
-- food and drink
+- eten en drinken
 	- het brood, de rijst, de pasta, het vlees, de kip, de vis, het ei, de kaas, het fruit, de appel, de banaan, de sinaasappel, de groente, de aardappel, de tomaat, de salade, de soep, de sandwich, de pizza
 	- de melk, het water, het sap, de koffie, de thee, de taart, de chocolade, het ontbijt, de lunch, het avondeten
-- clothes
+- kleding
 	- het T-shirt, het overhemd, de broek, de spijkerbroek, de rok, de jurk, het jasje, de jas, de trui, de schoenen, de laarzen, de sokken, de hoed, de sjaal, de handschoenen, de tas
-- weather
+- weer
 	- zonnig, regenachtig, bewolkt, winderig, sneeuwachtig, heet, warm, koud, koel
-- seasons
+- seizoenen
 	- de lente, de zomer, de herfst, de winter
-- body
+- lichaam
 	- het hoofd, het haar, het gezicht, het oog, het oor, de neus, de mond, de tand / de tanden, de arm, de hand, de vinger, het been, de voet / de voeten, de rug, de maag
-- house
+- huis
 	- het huis, het appartement, de kamer, de slaapkamer, de badkamer, de keuken, de woonkamer, de tuin
-- furniture
+- meubels
 	- het bed, de tafel, de stoel, de bank, het bureau, de kast, de koelkast, het fornuis, het raam, de deur, de muur, de vloer
-- places
+- plaatsen
 	- de school, het ziekenhuis, de supermarkt, de winkel, de bank, het postkantoor, het restaurant, het café, de bioscoop, het park, het museum, het station, het vliegveld, het hotel, de bibliotheek, de sportschool
-- transport
+- vervoer
 	- de auto, de bus, de trein, het vliegtuig, de fiets, de motor, de taxi, de boot, de metro, te voet, met de auto / met de bus
-- directions 
+- richtingen
 	- links, rechts, rechtdoor, naast, tegenover, tussen, voor, achter, dichtbij, ver van, bij de verkeerslichten, linksaf/rechtsaf slaan
 - routines
 	- opstaan, ontbijten, naar het werk/naar school gaan, beginnen met werken, stoppen met werken, lunchen, naar huis gaan, tv-kijken, naar bed gaan, slapen
-- hobbies
+- hobby's
 	- voetballen/tennissen, zwemmen, hardlopen, dansen, lezen, films/tv kijken, naar muziek luisteren, winkelen, vrienden ontmoeten, reizen, koken, computerspelletjes spelen
-- sports
+- sporten
 	- het voetbal, het tennis, het basketbal, het zwemmen, het hardlopen, het wielrennen, het skiën, de yoga, de sportschool
-- ordinals
+- rangtelwoorden
 	- eerste, tweede, derde, vierde, vijfde, zesde, zevende, achtste, negende, tiende
-- countries 
+- landen
 	- Engeland / Engels, de Verenigde Staten / Amerikaans, Spanje / Spaans, Frankrijk / Frans, Duitsland / Duits, Italië / Italiaans, China / Chinees, Japan / Japans, Brazilië / Braziliaans, Portugal / Portugees, Rusland / Russisch, Mexico / Mexicaans, Canada / Canadees, Australië / Australisch, India / Indiaas, Turkije / Turks, Polen / Pools, Griekenland / Grieks, Egypte / Egyptisch, Argentinië / Argentijns
-- emotions
+- emoties
 	- blij, verdrietig, boos, moe, hongerig, dorstig, verveeld, enthousiast, bezorgd, nerveus, verrast, ontspannen
-- adjectives
+- bijvoeglijke naamwoorden
 	- mooi, lelijk, schoon, vies, rustig, luidruchtig, duur, goedkoop, interessant, saai, belangrijk, gevaarlijk, veilig, vriendelijk, beleefd
-- frequency
+- frequentie
 	- altijd, meestal, gewoonlijk, frequent, vaak, soms, af en toe, zelden, bijna nooit, nooit
-- tech
+- technologie
 	- de telefoon, de computer, de laptop, de oplader, de sleutel, de portemonnee, de paraplu, de koptelefoon, de camera, de tablet
 - school
 	- het Engels, de wiskunde, de natuurwetenschappen, de geschiedenis, de aardrijkskunde, de kunst, de muziek, de biologie, de scheikunde
-- animals
+- dieren
 	- de hond, de kat, de vogel, de vis, het konijn, het paard, de leeuw, de tijger, de olifant, de aap
-- kitchen
+- keuken
 	- de lepel, de vork, het mes, het bord, de kom, het glas, het kopje, de pan, de koekenpan, de koelkast, de vriezer, de oven, het fornuis, de magnetron, de gootsteen, de vaatwasser, de snijplank, het servet, de fles, de waterkoker
-- office
+- kantoor
 	- de paperclip, de nietmachine, de schaar, de map, de pen, het potlood, het toetsenbord, de muis, het bureau, het scherm, de printer, het notitieboekje, het gummetje, het plakband, de markeerstift, de envelop, de kalender, de rekenmachine, de aktetas, de plakbriefjes
-- writing
+- schrijven
 	- de punt, de komma, de puntkomma, de dubbele punt, het uitroepteken, het vraagteken, de aanhalingstekens, de chevrons, de apostrof, het koppelteken, het gedachtestreepje, de haakjes, de rechte haken, de accolades, het beletselteken, de schuine streep, de omgekeerde schuine streep, het laag liggend streepje, de tilde, het en-teken
-- language
+- taal
 	- het zelfstandig naamwoord, het werkwoord, het bijvoeglijk naamwoord, het bijwoord, het voornaamwoord, het voorzetsel, het voegwoord, het lidwoord, het onderwerp, het lijdend voorwerp, de werkwoordstijd, de vervoeging, de grammatica, de woordenschat, de uitspraak, de lettergreep, de zin, de alinea, het enkelvoud, het meervoud, het accent grave, het accent aigu
-- starters
+- startzinnen
 	- hoe dan ook, wat dan ook, ondertussen, hoe het ook zij, dat gezegd hebbende, in ieder geval, verdergaand, kort gezegd, voor wat het waard is, desondanks, nu ik erover nadenk, trouwens, bij nader inzien, in beide gevallen, afgezien daarvan, daarover gesproken, in elk geval, ten goede of ten kwade, bovendien, oftewel, blijkbaar

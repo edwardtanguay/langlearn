@@ -32,6 +32,7 @@ interface LinkItem {
 }
 
 const languageTitles: Record<string, string> = {
+  general: 'General',
   en: 'English',
   fr: 'French',
   es: 'Spanish',
@@ -45,12 +46,15 @@ const languageTitles: Record<string, string> = {
   el: 'Greek'
 }
 
-const languageMetadata: Record<string, { title: string; color: string }> = Object.fromEntries(
+const languageMetadata: Record<string, { title: string; color: string }> = {
+  general: { title: 'General', color: '#94a3b8' },
+  ...Object.fromEntries(
   Object.entries(languageColors).map(([code, color]) => [
     code,
     { title: languageTitles[code] || code.toUpperCase(), color }
   ])
-)
+  )
+}
 
 function isYouTubeUrl(url?: string): boolean {
   if (!url) return false
@@ -100,7 +104,7 @@ async function moveLink(categoryLinks: LinkItem[], index: number, direction: 'up
   }
 }
 
-const TARGET_LANG_ORDER = ['fr', 'es', 'de', 'nl', 'it']
+const TARGET_LANG_ORDER = ['general', 'fr', 'es', 'de', 'nl', 'it']
 
 function sortLanguagesByTargetOrder(langs: string[]): string[] {
   return [...langs].sort((a, b) => {
@@ -119,14 +123,19 @@ const memberTargetLanguages = ref<string[]>([])
 const selectedLanguageFilter = ref<string>('fr')
 
 const availableTargetLanguages = computed(() => {
-  if (loggedIn.value && memberTargetLanguages.value.length > 0) {
-    return sortLanguagesByTargetOrder(memberTargetLanguages.value.map(l => l.toLowerCase()))
-  }
   const set = new Set<string>()
-  for (const l of links.value) {
-    if (l.language) set.add(l.language.toLowerCase())
+  if (loggedIn.value && memberTargetLanguages.value.length > 0) {
+    for (const l of memberTargetLanguages.value) set.add(l.toLowerCase())
+  } else {
+    for (const l of links.value) {
+      if (l.language) set.add(l.language.toLowerCase())
+    }
   }
-  return sortLanguagesByTargetOrder(Array.from(set))
+  if (links.value.some(l => l.language?.toLowerCase() === 'general')) {
+    set.add('general')
+  }
+  const sorted = sortLanguagesByTargetOrder(Array.from(set))
+  return ['all', ...sorted]
 })
 
 const loadLinks = async () => {
@@ -215,7 +224,7 @@ onUnmounted(() => {
 const filteredLinks = computed(() => {
   let list = links.value
   if (loggedIn.value && userRole.value !== 'unknownUser') {
-    const targets = new Set(memberTargetLanguages.value.map(l => l.toLowerCase()))
+    const targets = new Set([...memberTargetLanguages.value.map(l => l.toLowerCase()), 'general'])
     list = list.filter(l => targets.has(l.language.toLowerCase()))
   }
   if (selectedLanguageFilter.value !== 'all') {
