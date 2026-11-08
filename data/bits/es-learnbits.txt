@@ -796,9 +796,8 @@
 			- el dinero recaudado servirá para construir una escuela comunitaria
 - quedar vs. quedarse
 	- quedar
-		- AGREE TO: "quedar en + infinitivo" significado de pactar o acordar hacer algo
-			- la reunión estaba prevista para las diez, pero al final quedamos en vernos a las doce
-		- CITA: quedar con alguien: citarse para verse en un lugar y a una hora; se usa tanto para planes; en España «quedar» es el verbo habitual para citarse con amigos; en otros países se suelen usar «juntarse», «verse» o «encontrarse».
+		- TO AGREE ON SOMETHING (E.G. A MEETING): quedar con alguien: citarse para verse en un lugar y a una hora; se usa tanto para planes; en España «quedar» es el verbo habitual para citarse con amigos; en otros países se suelen usar «juntarse», «verse» o «encontrarse»
+			- he quedado con Ana a las siete de la mañana
 			- a qué hora quedamos mañana para tomar un café en la plaza
 			- he quedado con mis amigos a las ocho en la plaza
 			- quedamos a las ocho
@@ -806,44 +805,73 @@
 			- dónde queda el museo
 			- Argentina: nos juntamos el sábado
 			- Mexico: Quedamos de vernos a las cinco
-		- MAKE A GOOD IMPRESSION: quedar bien con alguien
-			- nnn
-		- ROPA: expresar cómo sienta o favorece una prenda; sentar bien o mal una prenda
+			- quedamos en Madrid
+		- TO AGREE TO: "quedar en + infinitivo" significado de pactar o acordar hacer algo; acordar
+			- la reunión estaba prevista para las diez, pero al final quedamos en vernos a las doce
+			- quedamos en que íbamos al cine esta tarde
+		- HOW SOMETHING TURNS OUT: resultado de una acción o situación
+			- El vídeo quedará genial
+		- TIME UNTIL SOMETHING HAPPENS: señalar el tiempo aue falta para terminar algo
+			- queda un día para el concierto
+		- TO BE LEFT: para expresar la parte de un todo que todavía no se ha consumido o gastado; señalar lo aue nos sobra o tenemos aún; lo que resta: sobrar o faltar
+			- solo queda un pedazo de pastel en la nevera
+			- me quedan dos euros
+			- solo me quedan cinco minutos para terminar el examen	
+			- queden cinco días
+		- MAKE A GOOD IMPRESSION: causar una buena impresión
+			- quedar bien con alguien
+			- quiero quedar bien con mi jefe
+			- trajo un regalo para quedar bien con sus padres
+			- vas a quedar bien con ellos si te ofreces a ayudar
+		- TO LOOK GOOD ON SOMEONE (clothing or haircut): expresar cómo sienta o favorece una prenda; sentar bien o mal una prenda
 			- esa camisa azul te queda muy bien con los pantalones grises
 			- esa chaqueta te queda genial
 			- esa camisa te queda muy bien con los vaqueros
 			- te queda bien
 			- la chaqueta me queda grande
 			- el color azul te queda muy bien
-		- WHERE: señalar la ubicación geográfica o situación física de un lugar inanimado
+		- TO LOOK GOOD
+			- esta foto queda bien
+		- TO BECOME CLEAR
+			- todo quedó claro
+		- TO COME FIRST
+			- quedó primero en la carrera
+		- TO BE LOCATED: señalar la ubicación geográfica o situación física de un lugar inanimado
 			- el museo queda a tres manzanas de la estación central
 			- el supermercado queda a dos cuadras de aquí
-		- KEEP: indicar retención, posesión definitiva o elección de un objeto
-			- te gusta este libro o prefieres que me lo quede yo
-		- ONLY ONE LEFT: para expresar la parte de un todo que todavía no se ha consumido o gastado
-			- solo queda un pedazo de pastel en la nevera
 	- quedarse
 		- CHANGE EMOTIONAL STATE: paso a un estado emocional o físico resultante
 			- al enterarse de la noticia, ella se quedó totalmente sorprendida
-		- PERMANECER: indicar permanencia o estancia en un sitio específico, permanecer o continuar en un lugar o estado
+		- TO STAY: indicar permanencia o estancia en un sitio específico, permanecer o continuar en un lugar o estado
 			- este fin de semana estoy muy cansado, así que voy a quedarme en casa descansando
 			- me quedo en casa porque estoy resfriado
 			- me quedo en casa esta noche
 			- te quedas a cenar
 			- nos quedamos en un hotel cerca de la playa
-		- ACCIDENTAL TRANSITION: describir la transición accidental o natural hacia el estado de sueño
-			- la película era tan aburrida que Juan se quedó dormido en los primeros veinte minutos
-		- LO QUE RESTA: sobrar o faltar 
-			- me quedan dos euros
-			- solo me quedan cinco minutos para terminar el examen
-		- ENDING UP IN A STATE: 
+			- me quedo en casa hoy
+			- nos quedamos hasta tarde
+			- se quedó sorprendido (remained surprised)
+			- hoy lleuve, me quedo en casa
+			- nos quedamos en Madrid
+		- CHANGING STATE ACCIDENTALLY OR UNCONSCIOUSLY: describir la transición accidental o natural hacia el estado de sueño
 			- me quedé sorprendido
 			- se quedó dormido en el sofá
 			- se quedó sin electricidad todo el barrio
 			- me quedé sin dinero
-		- KEEPING SOMETHING: 
+			- el niño se ha quedado dormido
+			- la película era tan aburrida que Juan se quedó dormido en los primeros veinte minutos
+		- TO KEEP SOMETHING: indicar retención, posesión definitiva o elección de un objeto
 			- me quedé con el libro
 			- no te puedes quedar con lo que no es tuyo
 			- con cuál te quedas
 			- se quedó con la casa después de la separación
+			- te gusta este libro o prefieres que me lo quede yo
+			- me quedo con esta
+			- se ha quedado con mi libro de gramática
+		- TO TAKE SOMETHING: adquirir o comprar
+			- me quedo con la falda amarilla
+		- TO BE LEFT ALONE
+			- me quedé solo en casa
+		- TO RUN OUT OF
+			- me quedé sin batería
 			
