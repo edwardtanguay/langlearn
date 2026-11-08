@@ -798,9 +798,23 @@
 	- quedar
 		- AGREE TO: "quedar en + infinitivo" significado de pactar o acordar hacer algo
 			- la reunión estaba prevista para las diez, pero al final quedamos en vernos a las doce
-			- ¿A qué hora quedamos mañana para tomar un café en la plaza?
-		- SHOW PREFERENCE: expresar cómo sienta o favorece una prenda
+		- CITA: quedar con alguien: citarse para verse en un lugar y a una hora; se usa tanto para planes; en España «quedar» es el verbo habitual para citarse con amigos; en otros países se suelen usar «juntarse», «verse» o «encontrarse».
+			- a qué hora quedamos mañana para tomar un café en la plaza
+			- he quedado con mis amigos a las ocho en la plaza
+			- quedamos a las ocho
+			- he quedado con Lucía
+			- dónde queda el museo
+			- Argentina: nos juntamos el sábado
+			- Mexico: Quedamos de vernos a las cinco
+		- MAKE A GOOD IMPRESSION: quedar bien con alguien
+			- nnn
+		- ROPA: expresar cómo sienta o favorece una prenda; sentar bien o mal una prenda
 			- esa camisa azul te queda muy bien con los pantalones grises
+			- esa chaqueta te queda genial
+			- esa camisa te queda muy bien con los vaqueros
+			- te queda bien
+			- la chaqueta me queda grande
+			- el color azul te queda muy bien
 		- WHERE: señalar la ubicación geográfica o situación física de un lugar inanimado
 			- el museo queda a tres manzanas de la estación central
 			- el supermercado queda a dos cuadras de aquí
@@ -811,10 +825,25 @@
 	- quedarse
 		- CHANGE EMOTIONAL STATE: paso a un estado emocional o físico resultante
 			- al enterarse de la noticia, ella se quedó totalmente sorprendida
-		- STAY HOME: indicar permanencia o estancia en un sitio específico
+		- PERMANECER: indicar permanencia o estancia en un sitio específico, permanecer o continuar en un lugar o estado
 			- este fin de semana estoy muy cansado, así que voy a quedarme en casa descansando
+			- me quedo en casa porque estoy resfriado
+			- me quedo en casa esta noche
+			- te quedas a cenar
+			- nos quedamos en un hotel cerca de la playa
 		- ACCIDENTAL TRANSITION: describir la transición accidental o natural hacia el estado de sueño
 			- la película era tan aburrida que Juan se quedó dormido en los primeros veinte minutos
-			
-			
+		- LO QUE RESTA: sobrar o faltar 
+			- me quedan dos euros
+			- solo me quedan cinco minutos para terminar el examen
+		- ENDING UP IN A STATE: 
+			- me quedé sorprendido
+			- se quedó dormido en el sofá
+			- se quedó sin electricidad todo el barrio
+			- me quedé sin dinero
+		- KEEPING SOMETHING: 
+			- me quedé con el libro
+			- no te puedes quedar con lo que no es tuyo
+			- con cuál te quedas
+			- se quedó con la casa después de la separación
 			

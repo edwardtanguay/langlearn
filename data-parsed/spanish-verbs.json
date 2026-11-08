@@ -2560,5 +2560,432 @@
     ],
     "gerund": "echando",
     "pastParticiple": "echado"
+  },
+  {
+    "verb": "quedarse",
+    "present": [
+      "me quedo",
+      "te quedas",
+      "se queda",
+      "nos quedamos",
+      "os quedáis",
+      "se quedan"
+    ],
+    "imperfect": [
+      "me quedaba",
+      "te quedabas",
+      "se quedaba",
+      "nos quedábamos",
+      "os quedabais",
+      "se quedaban"
+    ],
+    "preterite": [
+      "me quedé",
+      "te quedaste",
+      "se quedó",
+      "nos quedamos",
+      "os quedasteis",
+      "se quedaron"
+    ],
+    "future": [
+      "me quedaré",
+      "te quedarás",
+      "se quedará",
+      "nos quedaremos",
+      "os quedaréis",
+      "se quedarán"
+    ],
+    "conditional": [
+      "me quedaría",
+      "te quedarías",
+      "se quedaría",
+      "nos quedaríamos",
+      "os quedaríais",
+      "se quedarían"
+    ],
+    "presentSubjunctive": [
+      "me quede",
+      "te quedes",
+      "se quede",
+      "nos quedemos",
+      "os quedéis",
+      "se queden"
+    ],
+    "imperfectSubjunctive": [
+      "me quedara",
+      "te quedaras",
+      "se quedara",
+      "nos quedáramos",
+      "os quedarais",
+      "se quedaran"
+    ],
+    "gerund": "quedándose",
+    "pastParticiple": "quedado"
+  },
+  {
+    "verb": "irse",
+    "present": [
+      "me voy",
+      "te vas",
+      "se va",
+      "nos vamos",
+      "os vais",
+      "se van"
+    ],
+    "imperfect": [
+      "me iba",
+      "te ibas",
+      "se iba",
+      "nos íbamos",
+      "os ibais",
+      "se iban"
+    ],
+    "preterite": [
+      "me fui",
+      "te fuiste",
+      "se fue",
+      "nos fuimos",
+      "os fuisteis",
+      "se fueron"
+    ],
+    "future": [
+      "me iré",
+      "te irás",
+      "se irá",
+      "nos iremos",
+      "os iréis",
+      "se irán"
+    ],
+    "conditional": [
+      "me iría",
+      "te irías",
+      "se iría",
+      "nos iríamos",
+      "os iríais",
+      "se irían"
+    ],
+    "presentSubjunctive": [
+      "me vaya",
+      "te vayas",
+      "se vaya",
+      "nos vayamos",
+      "os vayáis",
+      "se vayan"
+    ],
+    "imperfectSubjunctive": [
+      "me fuera",
+      "te fueras",
+      "se fuera",
+      "nos fuéramos",
+      "os fuerais",
+      "se fueran"
+    ],
+    "gerund": "yéndose",
+    "pastParticiple": "ido"
+  },
+  {
+    "verb": "darse",
+    "present": [
+      "me doy",
+      "te das",
+      "se da",
+      "nos damos",
+      "os dais",
+      "se dan"
+    ],
+    "imperfect": [
+      "me daba",
+      "te dabas",
+      "se daba",
+      "nos dábamos",
+      "os dabais",
+      "se daban"
+    ],
+    "preterite": [
+      "me di",
+      "te diste",
+      "se dio",
+      "nos dimos",
+      "os disteis",
+      "se dieron"
+    ],
+    "future": [
+      "me daré",
+      "te darás",
+      "se dará",
+      "nos daremos",
+      "os daréis",
+      "se darán"
+    ],
+    "conditional": [
+      "me daría",
+      "te darías",
+      "se daría",
+      "nos daríamos",
+      "os daríais",
+      "se darían"
+    ],
+    "presentSubjunctive": [
+      "me dé",
+      "te des",
+      "se dé",
+      "nos demos",
+      "os deis",
+      "se den"
+    ],
+    "imperfectSubjunctive": [
+      "me diera",
+      "te dieras",
+      "se diera",
+      "nos diéramos",
+      "os dierais",
+      "se dieran"
+    ],
+    "gerund": "dándose",
+    "pastParticiple": "dado"
+  },
+  {
+    "verb": "enterarse",
+    "present": [
+      "me entero",
+      "te enteras",
+      "se entera",
+      "nos enteramos",
+      "os enteráis",
+      "se enteran"
+    ],
+    "imperfect": [
+      "me enteraba",
+      "te enterabas",
+      "se enteraba",
+      "nos enterábamos",
+      "os enterabais",
+      "se enteraban"
+    ],
+    "preterite": [
+      "me enteré",
+      "te enteraste",
+      "se enteró",
+      "nos enteramos",
+      "os enterasteis",
+      "se enteraron"
+    ],
+    "future": [
+      "me enteraré",
+      "te enterarás",
+      "se enterará",
+      "nos enteraremos",
+      "os enteraréis",
+      "se enterarán"
+    ],
+    "conditional": [
+      "me enteraría",
+      "te enterarías",
+      "se enteraría",
+      "nos enteraríamos",
+      "os enteraríais",
+      "se enterarían"
+    ],
+    "presentSubjunctive": [
+      "me entere",
+      "te enteres",
+      "se entere",
+      "nos enteremos",
+      "os enteréis",
+      "se enteren"
+    ],
+    "imperfectSubjunctive": [
+      "me enterara",
+      "te enteraras",
+      "se enterara",
+      "nos enteráramos",
+      "os enterarais",
+      "se enteraran"
+    ],
+    "gerund": "enterándose",
+    "pastParticiple": "enterado"
+  },
+  {
+    "verb": "sentarse",
+    "present": [
+      "me siento",
+      "te sientas",
+      "se sienta",
+      "nos sentamos",
+      "os sentáis",
+      "se sientan"
+    ],
+    "imperfect": [
+      "me sentaba",
+      "te sentabas",
+      "se sentaba",
+      "nos sentábamos",
+      "os sentabais",
+      "se sentaban"
+    ],
+    "preterite": [
+      "me senté",
+      "te sentaste",
+      "se sentó",
+      "nos sentamos",
+      "os sentasteis",
+      "se sentaron"
+    ],
+    "future": [
+      "me sentaré",
+      "te sentarás",
+      "se sentará",
+      "nos sentaremos",
+      "os sentaréis",
+      "se sentarán"
+    ],
+    "conditional": [
+      "me sentaría",
+      "te sentarías",
+      "se sentaría",
+      "nos sentaríamos",
+      "os sentaríais",
+      "se sentarían"
+    ],
+    "presentSubjunctive": [
+      "me siente",
+      "te sientes",
+      "se siente",
+      "nos sentemos",
+      "os sentéis",
+      "se sienten"
+    ],
+    "imperfectSubjunctive": [
+      "me sentara",
+      "te sentaras",
+      "se sentara",
+      "nos sentáramos",
+      "os sentarais",
+      "se sentaran"
+    ],
+    "gerund": "sentándose",
+    "pastParticiple": "sentado"
+  },
+  {
+    "verb": "acordarse",
+    "present": [
+      "me acuerdo",
+      "te acuerdas",
+      "se acuerda",
+      "nos acordamos",
+      "os acordáis",
+      "se acuerdan"
+    ],
+    "imperfect": [
+      "me acordaba",
+      "te acordabas",
+      "se acordaba",
+      "nos acordábamos",
+      "os acordabais",
+      "se acordaban"
+    ],
+    "preterite": [
+      "me acordé",
+      "te acordaste",
+      "se acordó",
+      "nos acordamos",
+      "os acordasteis",
+      "se acordaron"
+    ],
+    "future": [
+      "me acordaré",
+      "te acordarás",
+      "se acordará",
+      "nos acordaremos",
+      "os acordaréis",
+      "se acordarán"
+    ],
+    "conditional": [
+      "me acordaría",
+      "te acordarías",
+      "se acordaría",
+      "nos acordaríamos",
+      "os acordaríais",
+      "se acordarían"
+    ],
+    "presentSubjunctive": [
+      "me acuerde",
+      "te acuerdes",
+      "se acuerde",
+      "nos acordemos",
+      "os acordéis",
+      "se acuerden"
+    ],
+    "imperfectSubjunctive": [
+      "me acordara",
+      "te acordaras",
+      "se acordara",
+      "nos acordáramos",
+      "os acordarais",
+      "se acordaran"
+    ],
+    "gerund": "acordándose",
+    "pastParticiple": "acordado"
+  },
+  {
+    "verb": "verse",
+    "present": [
+      "me veo",
+      "te ves",
+      "se ve",
+      "nos vemos",
+      "os veis",
+      "se ven"
+    ],
+    "imperfect": [
+      "me veía",
+      "te veías",
+      "se veía",
+      "nos veíamos",
+      "os veíais",
+      "se veían"
+    ],
+    "preterite": [
+      "me vi",
+      "te viste",
+      "se vio",
+      "nos vimos",
+      "os visteis",
+      "se vieron"
+    ],
+    "future": [
+      "me veré",
+      "te verás",
+      "se verá",
+      "nos veremos",
+      "os veréis",
+      "se verán"
+    ],
+    "conditional": [
+      "me vería",
+      "te verías",
+      "se vería",
+      "nos veríamos",
+      "os veríais",
+      "se verían"
+    ],
+    "presentSubjunctive": [
+      "me vea",
+      "te veas",
+      "se vea",
+      "nos veamos",
+      "os veáis",
+      "se vean"
+    ],
+    "imperfectSubjunctive": [
+      "me viera",
+      "te vieras",
+      "se viera",
+      "nos viéramos",
+      "os vierais",
+      "se vieran"
+    ],
+    "gerund": "viéndose",
+    "pastParticiple": "visto"
   }
 ]

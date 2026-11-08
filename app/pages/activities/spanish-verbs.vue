@@ -167,6 +167,16 @@ const VERB_GROUPS: VerbGroup[] = [
     verbs: ['haber', 'hacer', 'quedar']
   },
   {
+    id: 'quedar-quedarse',
+    name: 'quedar/quedarse',
+    verbs: ['quedar', 'quedarse']
+  },
+  {
+    id: 'verbos-con-se',
+    name: 'verbos con se',
+    verbs: ['quedarse', 'irse', 'darse', 'enterarse', 'sentarse', 'acordarse', 'verse']
+  },
+  {
     id: 'modal',
     name: 'Modal verbs',
     verbs: ['poder', 'deber', 'querer', 'saber', 'soler', 'tener', 'necesitar', 'gustar']
@@ -193,6 +203,10 @@ function isGroupActive(group: VerbGroup): boolean {
   if (selectedVerbs.value.length !== group.verbs.length) return false
   return group.verbs.every(v => selectedVerbs.value.includes(v))
 }
+
+const alphabetizedVerbs = computed(() => {
+  return [...verbs].sort((a, b) => a.verb.localeCompare(b.verb))
+})
 
 // Search state & helper functions
 const searchQuery = ref('')
@@ -230,7 +244,7 @@ function highlightWordMatches(word: string, normQuery: string): string {
     lastIdx = searchPos + normQuery.length
   }
   res += escapeHtml(word.slice(lastIdx))
-  return `<span class="text-amber-600 dark:text-yellow-400 font-semibold">${res}</span>`
+  return res
 }
 
 function highlightText(text: string): string {
@@ -1541,51 +1555,12 @@ onUnmounted(() => {
       </div>
 
       <!-- Mobile Quick Actions Row -->
-      <div v-if="!isSearching" class="flex items-center justify-between gap-1.5">
-        <div class="flex items-center gap-1.5 flex-1 min-w-0">
-          <!-- Random Test -->
-          <button
-            type="button"
-            @click="toggleRandomTest"
-            class="flex-1 py-1.5 px-2 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center justify-center gap-1 min-w-0 truncate"
-            :class="isRandomTestMode
-              ? 'bg-[#be185d] text-white border-[#be185d]'
-              : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40'"
-          >
-            <SparklesIcon class="w-3.5 h-3.5 shrink-0" />
-            <span class="truncate">Random</span>
-          </button>
-
-          <!-- Full Test -->
-          <button
-            type="button"
-            @click="toggleFullTest"
-            class="flex-1 py-1.5 px-2 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center justify-center gap-1 min-w-0 truncate"
-            :class="isTestMode
-              ? 'bg-[#be185d] text-white border-[#be185d]'
-              : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40'"
-          >
-            <PencilSquareIcon class="w-3.5 h-3.5 shrink-0" />
-            <span class="truncate">Full Test</span>
-          </button>
-
-          <!-- Review Difficult Words (if any) -->
-          <button
-            v-if="activeDifficultWords.length > 0"
-            type="button"
-            @click="showRetestModal = true"
-            class="py-1.5 px-2 rounded-xl text-xs font-bold border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 inline-flex items-center gap-1 shrink-0 cursor-pointer"
-          >
-            <AcademicCapIcon class="w-3.5 h-3.5 text-[#be185d]" />
-            <span>{{ activeDifficultWords.length }}</span>
-          </button>
-        </div>
-
+      <div v-if="!isSearching" class="flex items-center justify-end">
         <!-- Filter & Settings Drawer Button -->
         <button
           type="button"
           @click="isMobileDrawerOpen = true"
-          class="py-1.5 px-2.5 rounded-xl text-xs font-bold border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 hover:border-[#be185d] transition-all cursor-pointer inline-flex items-center gap-1 shrink-0 shadow-xs"
+          class="py-1.5 px-3 rounded-xl text-xs font-bold border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 hover:border-[#be185d] transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-xs"
           title="Filters & Settings"
         >
           <AdjustmentsHorizontalIcon class="w-4 h-4 text-[#be185d] dark:text-[#f43f5e]" />
@@ -1658,87 +1633,6 @@ onUnmounted(() => {
       v-show="showControls && !isSearching"
       class="hidden sm:block p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-sm space-y-4"
     >
-      <!-- Top Action Row inside controls: Random Test & Full Test on left, Clear/Reset & Retest Link on right -->
-      <div class="flex items-center justify-between gap-3 flex-wrap pb-3 border-b border-gray-200 dark:border-gray-700">
-        <!-- Left Side: Random Test and Full Test (look and act the same) -->
-        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <!-- 1. Random Test -->
-          <button
-            type="button"
-            @click="toggleRandomTest"
-            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
-            :class="isRandomTestMode
-              ? 'bg-[#be185d] text-white border-[#be185d] hover:bg-[#a2134e]'
-              : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20'"
-          >
-            <SparklesIcon class="w-4 h-4" />
-            <span>Random Test</span>
-          </button>
-
-          <!-- 2. Full Test -->
-          <button
-            type="button"
-            @click="toggleFullTest"
-            class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
-            :class="isTestMode
-              ? 'bg-[#be185d] text-white border-[#be185d] hover:bg-[#a2134e]'
-              : 'bg-[#be185d]/10 text-[#be185d] dark:text-[#f43f5e] border-[#be185d]/40 hover:bg-[#be185d]/20'"
-          >
-            <PencilSquareIcon class="w-4 h-4" />
-            <span>Full Test</span>
-          </button>
-        </div>
-
-        <!-- Right Side: Clear Answers button & Retest Difficult Words link -->
-        <div class="flex items-center gap-4 flex-wrap">
-          <!-- Inline Clear Answers Confirmation -->
-          <div v-if="isTestMode" class="flex items-center gap-2">
-            <div v-if="!confirmClearAnswers">
-              <button
-                type="button"
-                @click="confirmClearAnswers = true"
-                class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-red-700 dark:hover:text-red-500 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer"
-              >
-                Clear Answers
-              </button>
-            </div>
-            <div v-else class="flex items-center gap-2 text-xs bg-red-50 dark:bg-red-950/40 px-2.5 py-1 rounded-lg border border-red-200 dark:border-red-900/50">
-              <span class="text-gray-700 dark:text-gray-300 font-medium">Are you sure?</span>
-              <button
-                type="button"
-                @click="resetTestInputs(); confirmClearAnswers = false"
-                class="font-bold text-red-800 dark:text-red-600 hover:underline cursor-pointer"
-              >
-                Yes, clear
-              </button>
-              <button
-                type="button"
-                @click="confirmClearAnswers = false"
-                class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 ml-1 cursor-pointer"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-
-          <!-- Retest Difficult Words as a link -->
-          <button
-            type="button"
-            @click="showRetestModal = true"
-            class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:underline transition-colors cursor-pointer inline-flex items-center gap-1.5"
-          >
-            <AcademicCapIcon class="w-4 h-4 text-gray-500 dark:text-gray-400" />
-            <span>Retest Difficult Words</span>
-            <span
-              v-if="activeDifficultWords.length > 0"
-              class="px-1.5 py-0.2 rounded-full text-[11px] font-extrabold bg-[#be185d] text-white"
-            >
-              {{ activeDifficultWords.length }}
-            </span>
-          </button>
-        </div>
-      </div>
-
       <!-- Verbs Selector with Groups -->
       <div class="space-y-3">
         <!-- Groups Section -->
@@ -1778,7 +1672,7 @@ onUnmounted(() => {
           </div>
           <div class="flex flex-wrap gap-2">
             <button
-              v-for="v in verbs"
+              v-for="v in alphabetizedVerbs"
               :key="v.verb"
               type="button"
               @click="selectedVerbs.includes(v.verb) ? selectedVerbs = selectedVerbs.filter(x => x !== v.verb) : selectedVerbs.push(v.verb)"
@@ -1913,9 +1807,9 @@ onUnmounted(() => {
                 {{ selectedVerbs.length === verbs.length ? 'Deselect All' : 'Select All' }}
               </button>
             </div>
-            <div class="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto p-1 bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div class="flex flex-wrap gap-1.5 p-1 bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-gray-200 dark:border-gray-700">
               <button
-                v-for="v in verbs"
+                v-for="v in alphabetizedVerbs"
                 :key="v.verb"
                 type="button"
                 @click="selectedVerbs.includes(v.verb) ? selectedVerbs = selectedVerbs.filter(x => x !== v.verb) : selectedVerbs.push(v.verb)"
@@ -1987,54 +1881,6 @@ onUnmounted(() => {
                 {{ p.label }}
               </button>
             </div>
-          </div>
-
-          <!-- Test Actions (Clear answers & Retest) -->
-          <div class="space-y-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-            <div v-if="isTestMode" class="space-y-2">
-              <button
-                v-if="!confirmClearAnswers"
-                type="button"
-                @click="confirmClearAnswers = true"
-                class="w-full py-2 px-3 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer"
-              >
-                Clear All Test Answers
-              </button>
-              <div v-else class="flex items-center justify-between p-2 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50">
-                <span class="text-xs text-gray-700 dark:text-gray-300 font-medium">Clear answers?</span>
-                <div class="flex items-center gap-2">
-                  <button
-                    type="button"
-                    @click="resetTestInputs(); confirmClearAnswers = false"
-                    class="text-xs font-bold text-red-800 dark:text-red-600 hover:underline cursor-pointer"
-                  >
-                    Yes, clear
-                  </button>
-                  <button
-                    type="button"
-                    @click="confirmClearAnswers = false"
-                    class="text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              @click="showRetestModal = true; isMobileDrawerOpen = false"
-              class="w-full py-2 px-3 rounded-xl text-xs font-bold border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-750 transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <AcademicCapIcon class="w-4 h-4 text-[#be185d]" />
-              <span>Retest Difficult Words</span>
-              <span
-                v-if="activeDifficultWords.length > 0"
-                class="px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-[#be185d] text-white"
-              >
-                {{ activeDifficultWords.length }}
-              </span>
-            </button>
           </div>
         </div>
 
@@ -2146,7 +1992,7 @@ onUnmounted(() => {
 
             <!-- Participle Box -->
             <div class="flex flex-col items-center gap-1">
-              <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
+              <span class="text-gray-400 dark:text-gray-500 font-mono text-[11px] uppercase font-medium">
                 Participio
               </span>
 
@@ -2190,25 +2036,22 @@ onUnmounted(() => {
           <!-- Mobile Stepper Header -->
           <div class="sm:hidden px-3 py-2 bg-gray-100/90 dark:bg-[#121824]/90 border-b border-gray-200 dark:border-gray-700 flex flex-col gap-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                 Pronoun
               </span>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1.5">
                 <button
                   type="button"
                   @click.stop="prevMobilePronoun"
-                  class="p-1 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer"
+                  class="w-10 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   title="Previous pronoun"
                 >
                   <ChevronLeftIcon class="w-4 h-4" />
                 </button>
-                <span class="text-xs font-mono font-extrabold text-[#be185d] dark:text-[#f43f5e] min-w-[70px] text-center">
-                  {{ PRONOUNS[currentMobilePronounIdx].label }}
-                </span>
                 <button
                   type="button"
                   @click.stop="nextMobilePronoun"
-                  class="p-1 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer"
+                  class="w-10 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   title="Next pronoun"
                 >
                   <ChevronRightIcon class="w-4 h-4" />
@@ -2359,6 +2202,14 @@ onUnmounted(() => {
 
     <!-- Verb Tables: Vertically Stacked -->
     <div v-else class="space-y-6 sm:space-y-8">
+      <!-- Active Words Banner when > 1 word selected -->
+      <div
+        v-if="!isSearching && selectedVerbs.length > 1"
+        class="px-4 py-2.5 rounded-xl bg-red-50/80 dark:bg-red-950/30 border border-red-200 dark:border-red-900/40 text-xs sm:text-sm font-bold text-red-600 dark:text-red-400 flex items-center gap-2 flex-wrap"
+      >
+        <span>Active words: {{ selectedVerbs.join(', ') }}</span>
+      </div>
+
       <div
         v-for="(verb, verbIdx) in filteredVerbList"
         :key="verb.verb"
@@ -2373,19 +2224,13 @@ onUnmounted(() => {
               class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight"
               v-html="highlightText(verb.verb)"
             ></h2>
-            <div v-if="!isSearching && isTestMode" class="text-xs text-gray-400 dark:text-gray-500 select-none">
-              ESC for hint, CTRL-ENTER to peek, ALT-ENTER for examples
-            </div>
-            <div v-else-if="!isSearching && !isTestMode" class="text-xs text-gray-400 dark:text-gray-500 select-none">
-              CTRL-ENTER to peek unselected cells
-            </div>
           </div>
 
           <!-- Non-finite form tags/cards directly above table -->
           <div class="flex items-center gap-2 sm:gap-4 flex-wrap">
             <!-- Gerund Box -->
             <div class="flex flex-col items-center gap-1">
-              <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
+              <span class="text-gray-400 dark:text-gray-500 font-mono text-[11px] uppercase font-medium">
                 Gerundio
               </span>
 
@@ -2441,7 +2286,7 @@ onUnmounted(() => {
 
             <!-- Participle Box -->
             <div class="flex flex-col items-center gap-1">
-              <span class="text-gray-600 dark:text-gray-400 font-mono text-[11px] uppercase font-bold">
+              <span class="text-gray-400 dark:text-gray-500 font-mono text-[11px] uppercase font-medium">
                 Participio
               </span>
 
@@ -2502,25 +2347,22 @@ onUnmounted(() => {
           <!-- Mobile Stepper Header -->
           <div class="sm:hidden px-3 py-2 bg-gray-100/90 dark:bg-[#121824]/90 border-b border-gray-200 dark:border-gray-700 flex flex-col gap-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                 Pronoun
               </span>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1.5">
                 <button
                   type="button"
                   @click.stop="prevMobilePronoun"
-                  class="p-1 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer"
+                  class="w-10 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   title="Previous pronoun"
                 >
                   <ChevronLeftIcon class="w-4 h-4" />
                 </button>
-                <span class="text-xs font-mono font-extrabold text-[#be185d] dark:text-[#f43f5e] min-w-[70px] text-center">
-                  {{ PRONOUNS[currentMobilePronounIdx].label }}
-                </span>
                 <button
                   type="button"
                   @click.stop="nextMobilePronoun"
-                  class="p-1 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer"
+                  class="w-10 h-7 rounded-lg bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   title="Next pronoun"
                 >
                   <ChevronRightIcon class="w-4 h-4" />
@@ -2547,7 +2389,7 @@ onUnmounted(() => {
           <div class="overflow-x-auto sm:overflow-visible">
             <table class="w-full table-fixed text-left text-xs sm:text-sm border-collapse" :class="isMobile ? '' : 'min-w-[760px]'">
               <thead>
-                <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
+                <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/40 dark:bg-[#121824]/40 text-gray-400 dark:text-gray-500 font-medium">
                   <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-[42%] sm:w-36 shrink-0">
                     Tiempo
                   </th>
@@ -2568,7 +2410,7 @@ onUnmounted(() => {
                   class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
                 >
                   <!-- Tense Name Left Column -->
-                  <td class="py-2.5 px-3 sm:px-4 font-semibold text-gray-900 dark:text-gray-200 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30">
+                  <td class="py-2.5 px-3 sm:px-4 font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap bg-gray-50/20 dark:bg-[#151d2c]/20">
                     {{ tense.label }}
                   </td>
 
@@ -2621,8 +2463,8 @@ onUnmounted(() => {
                     <span
                       v-else
                       @click.stop="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
-                      class="font-medium cursor-pointer"
-                      :class="isCellHidden(tense.key, p.idx) ? (isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-800 dark:text-gray-200'"
+                      class="font-bold cursor-pointer"
+                      :class="isCellHidden(tense.key, p.idx) ? (isVerbPeeking(verb.verb) ? (peekFading ? 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-0' : 'text-amber-500 dark:text-amber-400 italic font-mono select-none transition-opacity duration-300 opacity-100') : 'text-gray-400 dark:text-gray-500 select-none font-mono transition-opacity duration-300 opacity-100') : 'text-gray-950 dark:text-white'"
                       v-html="highlightText(isCellHidden(tense.key, p.idx) ? (isVerbPeeking(verb.verb) ? (((verb as any)[tense.key] || [])[p.idx] || '—') : '---') : (((verb as any)[tense.key] || [])[p.idx] || '—'))"
                     >
                     </span>
