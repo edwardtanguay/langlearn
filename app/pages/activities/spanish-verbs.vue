@@ -1520,9 +1520,23 @@ onUnmounted(() => {
         >
           ← Activities
         </NuxtLink>
-        <h1 class="text-base font-black text-gray-900 dark:text-white tracking-tight">
-          <span class="text-[#be185d] dark:text-[#f43f5e]">Spanish Verbs</span>
-        </h1>
+        <div class="flex items-center gap-2">
+          <h1 class="text-base font-black text-gray-900 dark:text-white tracking-tight">
+            <span class="text-[#be185d] dark:text-[#f43f5e]">Spanish Verbs</span>
+          </h1>
+          <!-- Filter & Settings Drawer Button -->
+          <button
+            v-if="!isSearching"
+            type="button"
+            @click="isMobileDrawerOpen = true"
+            class="py-1 px-2.5 rounded-xl text-xs font-bold border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 hover:border-[#be185d] transition-all cursor-pointer inline-flex items-center gap-1 shadow-xs"
+            title="Filters & Settings"
+          >
+            <AdjustmentsHorizontalIcon class="w-3.5 h-3.5 text-[#be185d] dark:text-[#f43f5e]" />
+            <span>Filters</span>
+            <span class="text-[10px] font-mono opacity-70">({{ selectedVerbs.length }})</span>
+          </button>
+        </div>
       </div>
 
       <!-- Mobile Search Box -->
@@ -1551,21 +1565,6 @@ onUnmounted(() => {
           title="Clear search"
         >
           <XMarkIcon class="w-4 h-4" />
-        </button>
-      </div>
-
-      <!-- Mobile Quick Actions Row -->
-      <div v-if="!isSearching" class="flex items-center justify-end">
-        <!-- Filter & Settings Drawer Button -->
-        <button
-          type="button"
-          @click="isMobileDrawerOpen = true"
-          class="py-1.5 px-3 rounded-xl text-xs font-bold border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 hover:border-[#be185d] transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-xs"
-          title="Filters & Settings"
-        >
-          <AdjustmentsHorizontalIcon class="w-4 h-4 text-[#be185d] dark:text-[#f43f5e]" />
-          <span>Filters</span>
-          <span class="text-[10px] font-mono opacity-70">({{ selectedVerbs.length }})</span>
         </button>
       </div>
     </div>
@@ -1883,17 +1882,6 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
-
-        <!-- Drawer Footer -->
-        <div class="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-[#121824]/50">
-          <button
-            type="button"
-            @click="isMobileDrawerOpen = false"
-            class="w-full py-2.5 rounded-xl font-bold text-xs bg-[#be185d] text-white hover:bg-[#a2134e] transition-colors cursor-pointer shadow-xs"
-          >
-            Apply & Close
-          </button>
-        </div>
       </div>
     </div>
 
@@ -2202,12 +2190,12 @@ onUnmounted(() => {
 
     <!-- Verb Tables: Vertically Stacked -->
     <div v-else class="space-y-6 sm:space-y-8">
-      <!-- Active Words Banner when > 1 word selected -->
+      <!-- Active Words Title when 2+ words selected (hidden if all words are selected) -->
       <div
-        v-if="!isSearching && selectedVerbs.length > 1"
-        class="px-4 py-2.5 rounded-xl bg-red-50/80 dark:bg-red-950/30 border border-red-200 dark:border-red-900/40 text-xs sm:text-sm font-bold text-red-600 dark:text-red-400 flex items-center gap-2 flex-wrap"
+        v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
+        class="text-base sm:text-lg font-black uppercase tracking-wider text-center text-[#be185d] dark:text-[#f43f5e]"
       >
-        <span>Active words: {{ selectedVerbs.join(', ') }}</span>
+        {{ selectedVerbs.join(', ') }}
       </div>
 
       <div
