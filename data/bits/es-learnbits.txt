@@ -796,24 +796,25 @@
 			- el dinero recaudado servirá para construir una escuela comunitaria
 - quedar vs. quedarse
 	- quedar
-		- fijar una cita o ponerse de acuerdo para verse
-			- ¿A qué hora quedamos mañana para tomar un café en la plaza?
-		- expresar cómo sienta o favorece una prenda
-			- esa camisa azul te queda muy bien con los pantalones grises
-		- señalar la ubicación geográfica o situación física de un lugar inanimado
-			- el museo queda a tres manzanas de la estación central
-		- indicar retención, posesión definitiva o elección de un objeto
-			- te gusta este libro o prefieres que me lo quede yo
-		- WHERE: para indicar dónde se encuentra situado un lugar
-			- el supermercado queda a dos cuadras de aqu
 		- AGREE TO: "quedar en + infinitivo" significado de pactar o acordar hacer algo
 			- la reunión estaba prevista para las diez, pero al final quedamos en vernos a las doce
+			- ¿A qué hora quedamos mañana para tomar un café en la plaza?
+		- SHOW PREFERENCE: expresar cómo sienta o favorece una prenda
+			- esa camisa azul te queda muy bien con los pantalones grises
+		- WHERE: señalar la ubicación geográfica o situación física de un lugar inanimado
+			- el museo queda a tres manzanas de la estación central
+			- el supermercado queda a dos cuadras de aquí
+		- KEEP: indicar retención, posesión definitiva o elección de un objeto
+			- te gusta este libro o prefieres que me lo quede yo
 		- ONLY ONE LEFT: para expresar la parte de un todo que todavía no se ha consumido o gastado
 			- solo queda un pedazo de pastel en la nevera
 	- quedarse
-		- paso a un estado emocional o físico resultante
+		- CHANGE EMOTIONAL STATE: paso a un estado emocional o físico resultante
 			- al enterarse de la noticia, ella se quedó totalmente sorprendida
-		- indicar permanencia o estancia en un sitio específico
+		- STAY HOME: indicar permanencia o estancia en un sitio específico
 			- este fin de semana estoy muy cansado, así que voy a quedarme en casa descansando
-		-  describir la transición accidental o natural hacia el estado de sueño
+		- ACCIDENTAL TRANSITION: describir la transición accidental o natural hacia el estado de sueño
 			- la película era tan aburrida que Juan se quedó dormido en los primeros veinte minutos
+			
+			
+			
