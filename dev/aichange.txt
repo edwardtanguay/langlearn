@@ -1,0 +1,26 @@
+- ,, change01
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- mobile view
+		- normal testing
+			- when clicking on "Normal Testing" it puts the cursor in "Gerundio"
+				- make it so the user can't type in any input box anymore, so that the Gerundio and Participio words are dots ("...") like all the others, and the user simple clicks on them to get the answer
+			- incorporate all the style changes that are now on "Random Testing", e.g. 
+			- when clicking on "Normal Testing", "Presente/Yo" box says "h" instead of ???, make it say ???
+			- same colors as on "Random Testing"
+		- study mode
+			- remove peek and hint buttons
+			- make verb e.g. "Hablar" larger and red
+			- put Gerundio and Participio to the right
+				- stack label-over-inputbox
+				- so that verb + gerund/participio take up one line
+			- give the same colors to active column name (e.g. "yo") and active tense name (e.g. "Futuro") as is on Random Testing, e.g. red
+			- reduce space between group title (e.g. "Hablar, Comer, Vivir") and the first card, i.e. same space between that title and the first card as between each card
+		- remote testing
+			- put Gerundio and Participio to the right
+				- stack label-over-inputbox
+				- so that verb + gerund/participio take up one line
+			- in row of pronouns, make active pronoun box have red text
+			- the "tense" text on the left e.g. "Presente" should be moved up 1 px inside the pill to be perfectly vertically centered
+	----------------------------------------------

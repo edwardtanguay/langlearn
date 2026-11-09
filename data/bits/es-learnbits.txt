@@ -381,6 +381,15 @@
 		- eche, eches, eche, echemos, echéis, echen
 		- echara, echaras, echara, echáramos, echarais, echaran
 		- echando, echado
+	- coger
+		- cojo, coges, coge, cogemos, cogéis, cogen
+		- cogía, cogías, cogía, cogíamos, cogíais, cogían
+		- cogí, cogiste, cogió, cogimos, cogisteis, cogieron
+		- cogeré, cogerás, cogerá, cogeremos, cogeréis, cogerán
+		- cogería, cogerías, cogería, cogeríamos, cogeríais, cogerían
+		- coja, cojas, coja, cojamos, cojáis, cojan
+		- cogiera, cogieras, cogiera, cogiéramos, cogierais, cogieran
+		- cogiendo, cogido
 - Spain vs. Latin America
 	- Tu - Amigos - Informal - misma edad
 	- Usted - personas mayores - jefes - respeto

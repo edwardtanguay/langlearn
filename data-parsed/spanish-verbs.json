@@ -2560,5 +2560,66 @@
     ],
     "gerund": "echando",
     "pastParticiple": "echado"
+  },
+  {
+    "verb": "coger",
+    "present": [
+      "cojo",
+      "coges",
+      "coge",
+      "cogemos",
+      "cogéis",
+      "cogen"
+    ],
+    "imperfect": [
+      "cogía",
+      "cogías",
+      "cogía",
+      "cogíamos",
+      "cogíais",
+      "cogían"
+    ],
+    "preterite": [
+      "cogí",
+      "cogiste",
+      "cogió",
+      "cogimos",
+      "cogisteis",
+      "cogieron"
+    ],
+    "future": [
+      "cogeré",
+      "cogerás",
+      "cogerá",
+      "cogeremos",
+      "cogeréis",
+      "cogerán"
+    ],
+    "conditional": [
+      "cogería",
+      "cogerías",
+      "cogería",
+      "cogeríamos",
+      "cogeríais",
+      "cogerían"
+    ],
+    "presentSubjunctive": [
+      "coja",
+      "cojas",
+      "coja",
+      "cojamos",
+      "cojáis",
+      "cojan"
+    ],
+    "imperfectSubjunctive": [
+      "cogiera",
+      "cogieras",
+      "cogiera",
+      "cogiéramos",
+      "cogierais",
+      "cogieran"
+    ],
+    "gerund": "cogiendo",
+    "pastParticiple": "cogido"
   }
 ]
