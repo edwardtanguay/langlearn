@@ -10,6 +10,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   ChevronLeftIcon,
+  ArrowRightIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
   AdjustmentsHorizontalIcon
@@ -121,6 +122,10 @@ function isMobileCellRevealed(cellKey: string): boolean {
 }
 
 function handleDashCellClick(cellKey: string, rawWord: string) {
+  if (isRandomTestMode.value && isMobile.value) {
+    openGoogleExamples(rawWord)
+    return
+  }
   if (isPeeking.value || isMobileCellRevealed(cellKey)) {
     openGoogleExamples(rawWord)
   } else {
@@ -2109,10 +2114,10 @@ onUnmounted(() => {
             type="button"
             v-if="isMobile || !waitingForNextRandomKey"
             @click.stop="pickNextRandomTarget()"
-            class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#be185d] text-white hover:bg-[#a2134e] cursor-pointer transition-colors shadow-xs inline-flex items-center gap-1 whitespace-nowrap"
+            class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#be185d] text-white hover:bg-[#a2134e] cursor-pointer transition-colors shadow-xs inline-flex items-center gap-1.5 whitespace-nowrap"
           >
             <span>Next</span>
-            <span>→</span>
+            <ArrowRightIcon class="w-4 h-4 stroke-[3]" />
           </button>
         </div>
       </div>
@@ -2153,15 +2158,24 @@ onUnmounted(() => {
                   >
                     {{ randomTestAnswer || '···' }}
                   </button>
-                  <button
-                    v-else
-                    type="button"
-                    @click.stop="openGoogleExamples(currentRandomTarget.expected)"
-                    class="w-full h-[26px] px-2.5 py-0.5 text-xs font-bold rounded-lg bg-gray-100/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-gray-900 dark:text-white inline-flex items-center justify-center font-mono cursor-pointer hover:bg-gray-200/80 dark:hover:bg-gray-700/80 transition-colors"
-                    title="Click for 3 example sentences"
-                  >
-                    {{ currentRandomTarget.expected.split('/')[0].trim() }}
-                  </button>
+                  <template v-else>
+                    <button
+                      type="button"
+                      @click.stop="openGoogleExamples(currentRandomTarget.expected)"
+                      class="w-full h-[26px] px-2.5 py-0.5 text-xs font-bold rounded-lg bg-gray-100/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-gray-900 dark:text-white inline-flex items-center justify-center font-mono cursor-pointer hover:bg-gray-200/80 dark:hover:bg-gray-700/80 transition-colors"
+                      title="Click for 3 example sentences"
+                    >
+                      {{ currentRandomTarget.expected.split('/')[0].trim() }}
+                    </button>
+                    <button
+                      type="button"
+                      @click.stop="pickNextRandomTarget()"
+                      class="absolute left-full top-0 ml-1.5 w-[26px] h-[26px] rounded-lg bg-[#be185d] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none z-10"
+                      title="Next"
+                    >
+                      &gt;
+                    </button>
+                  </template>
                 </template>
                 <input
                   v-else
@@ -2220,15 +2234,24 @@ onUnmounted(() => {
                   >
                     {{ randomTestAnswer || '···' }}
                   </button>
-                  <button
-                    v-else
-                    type="button"
-                    @click.stop="openGoogleExamples(currentRandomTarget.expected)"
-                    class="w-full h-[26px] px-2.5 py-0.5 text-xs font-bold rounded-lg bg-gray-100/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-gray-900 dark:text-white inline-flex items-center justify-center font-mono cursor-pointer hover:bg-gray-200/80 dark:hover:bg-gray-700/80 transition-colors"
-                    title="Click for 3 example sentences"
-                  >
-                    {{ currentRandomTarget.expected.split('/')[0].trim() }}
-                  </button>
+                  <template v-else>
+                    <button
+                      type="button"
+                      @click.stop="openGoogleExamples(currentRandomTarget.expected)"
+                      class="w-full h-[26px] px-2.5 py-0.5 text-xs font-bold rounded-lg bg-gray-100/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-gray-900 dark:text-white inline-flex items-center justify-center font-mono cursor-pointer hover:bg-gray-200/80 dark:hover:bg-gray-700/80 transition-colors"
+                      title="Click for 3 example sentences"
+                    >
+                      {{ currentRandomTarget.expected.split('/')[0].trim() }}
+                    </button>
+                    <button
+                      type="button"
+                      @click.stop="pickNextRandomTarget()"
+                      class="absolute left-full top-0 ml-1.5 w-[26px] h-[26px] rounded-lg bg-[#be185d] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none z-10"
+                      title="Next"
+                    >
+                      &gt;
+                    </button>
+                  </template>
                 </template>
                 <input
                   v-else
@@ -2404,15 +2427,24 @@ onUnmounted(() => {
                       >
                         {{ randomTestAnswer || '···' }}
                       </button>
-                      <button
-                        v-else
-                        type="button"
-                        @click.stop="openGoogleExamples(currentRandomTarget.expected)"
-                        class="w-full h-[26px] px-2.5 py-0.5 text-xs font-bold rounded-lg bg-gray-100/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-gray-900 dark:text-white inline-flex items-center justify-center font-mono cursor-pointer hover:bg-gray-200/80 dark:hover:bg-gray-700/80 transition-colors"
-                        title="Click for 3 example sentences"
-                      >
-                        {{ currentRandomTarget.expected.split('/')[0].trim() }}
-                      </button>
+                      <template v-else>
+                        <button
+                          type="button"
+                          @click.stop="openGoogleExamples(currentRandomTarget.expected)"
+                          class="w-full h-[26px] px-2.5 py-0.5 text-xs font-bold rounded-lg bg-gray-100/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-gray-900 dark:text-white inline-flex items-center justify-center font-mono cursor-pointer hover:bg-gray-200/80 dark:hover:bg-gray-700/80 transition-colors"
+                          title="Click for 3 example sentences"
+                        >
+                          {{ currentRandomTarget.expected.split('/')[0].trim() }}
+                        </button>
+                        <button
+                          type="button"
+                          @click.stop="pickNextRandomTarget()"
+                          class="absolute left-full top-0 ml-1.5 w-[26px] h-[26px] rounded-lg bg-[#be185d] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none z-10"
+                          title="Next"
+                        >
+                          &gt;
+                        </button>
+                      </template>
                     </template>
                     <input
                       v-else
