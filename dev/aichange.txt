@@ -24,7 +24,7 @@
 			- in row of pronouns, make active pronoun box have red text
 			- the "tense" text on the left e.g. "Presente" should be moved up 1 px inside the pill to be perfectly vertically centered
 	----------------------------------------------
-- ,, change02
+- x change02
 	----------------------------------------------
 	## Spanish Verb Page
 	
@@ -40,3 +40,23 @@
 		- all highlighted buttons (red) should have their text in the buttons moved up 2px so the text is vertically centered
 	- add the verb "quedarse" so that when "quedar/quedarse" are chose, these two are shown
 	----------------------------------------------
+- x change03
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- study mode
+		- put the pronoun (e.g. "yo") center above the verbs in the column
+		- around each verb, put a ghost pill the same as "hablando and hablado" have 
+		- change the font of the tenses on the left to the same as the "GER" and "PAR" above
+		- when loading put skeleton placement holders e.g. in the "ger/par/yo" line since currently when it loads, all of the buttons are shown there for about a second which looks very unprofessional
+		- make the pronoun text (e.g. "yo") simply a red text not in a bubble and the same font as the GER and PAR and left side tenses
+		- clicking the "<" and ">" should only change the pronoun for that verb, not all verbs being shown
+	----------------------------------------------
+- .. change04
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- when searching change highlight of text from bright yellow background to
+		- the whole pill that the found word is in, lightly highlighted more than the others, a bit yellow
+	----------------------------------------------
+	

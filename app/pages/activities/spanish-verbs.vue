@@ -90,15 +90,44 @@ const isTestMode = ref(false)
 const showControls = ref(true)
 
 // Mobile & Layout State
+const isPageLoading = ref(true)
+let pageLoadTimer: any = null
 const isMobile = ref(false)
 const isMobileDrawerOpen = ref(false)
 const currentMobilePronounIdx = ref(0)
+const verbMobilePronounIdx = ref<Record<string, number>>({})
 const activeStudyVerb = ref<string | null>(null)
 
 function checkMobile() {
   if (typeof window !== 'undefined') {
     isMobile.value = window.innerWidth < 640
   }
+}
+
+function getVerbMobilePronounIdx(verbName: string): number {
+  return verbMobilePronounIdx.value[verbName] ?? 0
+}
+
+function getVerbMobilePronoun(verbName: string) {
+  const idx = getVerbMobilePronounIdx(verbName)
+  return PRONOUNS[idx] || PRONOUNS[0]
+}
+
+function getDisplayedPronounsForVerb(verbName: string) {
+  if (isMobile.value) {
+    return [getVerbMobilePronoun(verbName)]
+  }
+  return PRONOUNS
+}
+
+function prevVerbMobilePronoun(verbName: string) {
+  const curr = getVerbMobilePronounIdx(verbName)
+  verbMobilePronounIdx.value[verbName] = (curr - 1 + PRONOUNS.length) % PRONOUNS.length
+}
+
+function nextVerbMobilePronoun(verbName: string) {
+  const curr = getVerbMobilePronounIdx(verbName)
+  verbMobilePronounIdx.value[verbName] = (curr + 1) % PRONOUNS.length
 }
 
 function prevMobilePronoun() {
@@ -181,7 +210,7 @@ function revealMobileRandomTarget() {
 }
 
 function triggerMobileHintForVerb(verbName: string) {
-  const currentPronoun = PRONOUNS[currentMobilePronounIdx.value]
+  const currentPronoun = getVerbMobilePronoun(verbName)
   if (!currentPronoun) return
   const pIdx = currentPronoun.idx
   const v = verbs.find(x => x.verb === verbName)
@@ -1297,13 +1326,18 @@ function handleCellFocus(event: FocusEvent) {
         if (lastDash !== -1) {
           const pronounStr = rawId.slice(lastDash + 1)
           const pIdx = parseInt(pronounStr, 10)
-          if (!isNaN(pIdx) && pIdx >= 0 && pIdx < PRONOUNS.length) {
-            currentMobilePronounIdx.value = pIdx
-          }
           const rest = rawId.slice(0, lastDash)
           const secondLastDash = rest.lastIndexOf('-')
+          let focusedVerbName = ''
           if (secondLastDash !== -1) {
-            lastFocusedVerb.value = rest.slice(0, secondLastDash)
+            focusedVerbName = rest.slice(0, secondLastDash)
+            lastFocusedVerb.value = focusedVerbName
+          }
+          if (!isNaN(pIdx) && pIdx >= 0 && pIdx < PRONOUNS.length) {
+            currentMobilePronounIdx.value = pIdx
+            if (focusedVerbName) {
+              verbMobilePronounIdx.value[focusedVerbName] = pIdx
+            }
           }
         }
       }
@@ -1645,6 +1679,9 @@ function handleGlobalKeyDown(e: KeyboardEvent) {
 onMounted(() => {
   loadDifficultWords()
   checkMobile()
+  pageLoadTimer = setTimeout(() => {
+    isPageLoading.value = false
+  }, 200)
   if (import.meta.client) {
     window.addEventListener('resize', checkMobile)
     window.addEventListener('keydown', handleGlobalKeyDown)
@@ -1657,6 +1694,7 @@ onUnmounted(() => {
     window.removeEventListener('keydown', handleRandomGlobalKeyDown)
     window.removeEventListener('keydown', handleGlobalKeyDown)
   }
+  if (pageLoadTimer) clearTimeout(pageLoadTimer)
   if (peekTimer) clearTimeout(peekTimer)
   if (peekFadeTimer) clearTimeout(peekFadeTimer)
   if (verbZoomTimer) clearTimeout(verbZoomTimer)
@@ -2294,8 +2332,8 @@ onUnmounted(() => {
 
         <!-- Finite Conjugation Table -->
         <div>
-          <!-- Mobile Row: GER[___] and PAR[___] on left, red pronoun pill on right -->
-          <div class="sm:hidden px-2.5 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 flex items-center justify-between gap-1.5">
+          <!-- Mobile Row: GER[___] and PAR[___] on left, red pronoun text centered above verb column -->
+          <div class="sm:hidden relative px-2.5 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 flex items-center justify-between gap-1.5">
             <!-- Left side: GER[___] and PAR[___] on one line -->
             <div class="flex items-center gap-2 min-w-0">
               <!-- GER inline -->
@@ -2308,7 +2346,11 @@ onUnmounted(() => {
                 >
                   GER
                 </span>
-                <div v-if="currentRandomTarget.tenseKey === 'gerund'" class="relative inline-flex items-center gap-1 h-[24px] align-middle">
+                <span
+                  v-if="isPageLoading"
+                  class="inline-block h-[22px] w-[54px] rounded-md bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
+                ></span>
+                <div v-else-if="currentRandomTarget.tenseKey === 'gerund'" class="relative inline-flex items-center gap-1 h-[24px] align-middle">
                   <button
                     v-if="!isMobileRandomRevealed"
                     type="button"
@@ -2364,7 +2406,11 @@ onUnmounted(() => {
                 >
                   PAR
                 </span>
-                <div v-if="currentRandomTarget.tenseKey === 'pastParticiple'" class="relative inline-flex items-center gap-1 h-[24px] align-middle">
+                <span
+                  v-if="isPageLoading"
+                  class="inline-block h-[22px] w-[54px] rounded-md bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
+                ></span>
+                <div v-else-if="currentRandomTarget.tenseKey === 'pastParticiple'" class="relative inline-flex items-center gap-1 h-[24px] align-middle">
                   <button
                     v-if="!isMobileRandomRevealed"
                     type="button"
@@ -2411,23 +2457,24 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <!-- Right side: Pronoun pill -->
-            <div class="shrink-0">
+            <!-- Right side: Pronoun centered above verb column -->
+            <div class="absolute inset-y-0 right-0 w-[58%] flex items-center justify-center px-2 pointer-events-none">
               <span
-                v-for="p in displayedPronouns"
-                :key="p.idx"
-                class="font-mono text-[11px] transition-all duration-300 inline-block"
-                :class="currentRandomTarget.tenseKey !== 'gerund' && currentRandomTarget.tenseKey !== 'pastParticiple' && currentRandomTarget.pronounIdx === p.idx
-                  ? ['px-2.5 py-0.5 rounded-full font-bold shadow-2xs bg-[#be185d] text-white', isPillPulsing ? 'animate-pulse-gentle' : '']
-                  : 'text-gray-600 dark:text-gray-400 font-bold px-1'"
+                v-if="isPageLoading"
+                class="inline-block h-3.5 w-8 rounded bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
+              ></span>
+              <span
+                v-else
+                class="font-mono text-[10px] uppercase font-bold text-[#be185d] dark:text-[#f43f5e] transition-all duration-300 inline-block"
+                :class="isPillPulsing ? 'animate-pulse-gentle' : ''"
               >
-                {{ p.label }}
+                {{ (PRONOUNS[currentMobilePronounIdx] || PRONOUNS[0]).label }}
               </span>
             </div>
           </div>
 
           <div class="overflow-x-auto sm:overflow-visible">
-            <table class="w-full table-fixed text-left text-xs sm:text-sm border-collapse" :class="isMobile ? '' : 'min-w-[760px]'">
+            <table class="w-full table-fixed text-left text-xs sm:text-sm border-collapse sm:min-w-[760px]">
               <thead class="hidden sm:table-header-group">
                 <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
                   <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-[42%] sm:w-36 shrink-0"></th>
@@ -2435,10 +2482,18 @@ onUnmounted(() => {
                     v-for="p in displayedPronouns"
                     :key="p.idx"
                     class="py-2.5 px-2 text-center"
-                    :class="isMobile ? 'w-[58%]' : 'w-[14.285%]' + (p.idx === 2 ? ' border-r border-dotted border-gray-300 dark:border-gray-600' : '')"
+                    :class="[
+                      isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[14.285%]' + (p.idx === 2 ? ' border-r border-dotted border-gray-300 dark:border-gray-600' : ''),
+                      p.idx !== currentMobilePronounIdx ? 'hidden sm:table-cell' : ''
+                    ]"
                   >
                     <span
-                      class="font-mono text-[11px] transition-all duration-300 inline-block"
+                      v-if="isPageLoading"
+                      class="inline-block h-3.5 w-10 rounded bg-gray-200/80 dark:bg-gray-700/60 animate-pulse align-middle"
+                    ></span>
+                    <span
+                      v-else
+                      class="font-mono text-[11px] uppercase transition-all duration-300 inline-block"
                       :class="currentRandomTarget.tenseKey !== 'gerund' && currentRandomTarget.tenseKey !== 'pastParticiple' && currentRandomTarget.pronounIdx === p.idx
                         ? ['px-2.5 py-0.5 rounded-full font-bold shadow-2xs', isMobile ? 'bg-[#be185d] text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100', isPillPulsing ? 'animate-pulse-gentle' : '']
                         : 'text-gray-600 dark:text-gray-400 font-bold'"
@@ -2455,8 +2510,7 @@ onUnmounted(() => {
                   class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
                 >
                   <td
-                    class="py-2.5 px-3 sm:px-4 font-semibold text-gray-900 dark:text-gray-200 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30"
-                    :class="isMobile ? 'w-[42%]' : ''"
+                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold text-gray-600 dark:text-gray-400 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-36"
                   >
                     <span
                       class="transition-all duration-300 inline-block"
@@ -2473,7 +2527,8 @@ onUnmounted(() => {
                     :key="p.idx"
                     class="py-2 px-2 sm:px-3 text-center"
                     :class="[
-                      isMobile ? 'w-[58%]' : '',
+                      isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[14.285%]',
+                      p.idx !== currentMobilePronounIdx ? 'hidden sm:table-cell' : '',
                       { 'border-r border-dotted border-gray-300 dark:border-gray-600': !isMobile && p.idx === 2 }
                     ]"
                   >
@@ -2638,7 +2693,7 @@ onUnmounted(() => {
             </template>
             <button
               type="button"
-              @click.stop="prevMobilePronoun"
+              @click.stop="prevVerbMobilePronoun(verb.verb)"
               class="w-12 h-7 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none"
               title="Previous pronoun"
             >
@@ -2646,7 +2701,7 @@ onUnmounted(() => {
             </button>
             <button
               type="button"
-              @click.stop="nextMobilePronoun"
+              @click.stop="nextVerbMobilePronoun(verb.verb)"
               class="w-12 h-7 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none"
               title="Next pronoun"
             >
@@ -2662,8 +2717,14 @@ onUnmounted(() => {
                 Gerundio
               </span>
 
+              <!-- Skeleton on initial load -->
+              <span
+                v-if="isPageLoading"
+                class="inline-block h-[26px] w-[90px] rounded-xl bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
+              ></span>
+
               <!-- Test Mode Input -->
-              <div v-if="!isSearching && isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-32 h-[26px] text-center align-middle">
+              <div v-else-if="!isSearching && isTestMode && selectedTenses.includes('gerund')" class="relative inline-block w-32 h-[26px] text-center align-middle">
                 <span
                   v-if="isCellPeeking(`input-${verb.verb}-gerund`, verb.verb)"
                   @click.stop="openGoogleExamples(verb.gerund)"
@@ -2724,8 +2785,14 @@ onUnmounted(() => {
                 Participio
               </span>
 
+              <!-- Skeleton on initial load -->
+              <span
+                v-if="isPageLoading"
+                class="inline-block h-[26px] w-[90px] rounded-xl bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
+              ></span>
+
               <!-- Test Mode Input -->
-              <div v-if="!isSearching && isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-32 h-[26px] text-center align-middle">
+              <div v-else-if="!isSearching && isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-block w-32 h-[26px] text-center align-middle">
                 <span
                   v-if="isCellPeeking(`input-${verb.verb}-pastParticiple`, verb.verb)"
                   @click.stop="openGoogleExamples(verb.pastParticiple)"
@@ -2784,8 +2851,8 @@ onUnmounted(() => {
 
         <!-- Conjugation Table -->
         <div>
-          <!-- Mobile Row: GER[___] and PAR[___] on left, red pronoun pill on right -->
-          <div class="sm:hidden px-2.5 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 flex items-center justify-between gap-1.5">
+          <!-- Mobile Row: GER[___] and PAR[___] on left, red pronoun text centered above verb column -->
+          <div class="sm:hidden relative px-2.5 py-2 border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 flex items-center justify-between gap-1.5">
             <!-- Left side: GER[___] and PAR[___] on one line -->
             <div class="flex items-center gap-2 min-w-0">
               <!-- GER inline -->
@@ -2793,7 +2860,11 @@ onUnmounted(() => {
                 <span class="text-gray-600 dark:text-gray-400 font-mono text-[10px] uppercase font-bold">
                   GER
                 </span>
-                <div v-if="!isSearching && isTestMode && selectedTenses.includes('gerund')" class="relative inline-flex items-center h-[24px] text-center align-middle">
+                <span
+                  v-if="isPageLoading"
+                  class="inline-block h-[22px] w-[54px] rounded-md bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
+                ></span>
+                <div v-else-if="!isSearching && isTestMode && selectedTenses.includes('gerund')" class="relative inline-flex items-center h-[24px] text-center align-middle">
                   <span
                     v-if="isCellPeeking(`input-${verb.verb}-gerund`, verb.verb)"
                     @click.stop="openGoogleExamples(verb.gerund)"
@@ -2850,7 +2921,11 @@ onUnmounted(() => {
                 <span class="text-gray-600 dark:text-gray-400 font-mono text-[10px] uppercase font-bold">
                   PAR
                 </span>
-                <div v-if="!isSearching && isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-flex items-center h-[24px] text-center align-middle">
+                <span
+                  v-if="isPageLoading"
+                  class="inline-block h-[22px] w-[54px] rounded-md bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
+                ></span>
+                <div v-else-if="!isSearching && isTestMode && selectedTenses.includes('pastParticiple')" class="relative inline-flex items-center h-[24px] text-center align-middle">
                   <span
                     v-if="isCellPeeking(`input-${verb.verb}-pastParticiple`, verb.verb)"
                     @click.stop="openGoogleExamples(verb.pastParticiple)"
@@ -2903,34 +2978,42 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <!-- Right side: Red pronoun pill -->
-            <div class="shrink-0">
+            <!-- Right side: Red pronoun text centered above verb column -->
+            <div class="absolute inset-y-0 right-0 w-[58%] flex items-center justify-center px-2 pointer-events-none">
               <span
-                v-for="p in displayedPronouns"
-                :key="p.idx"
-                class="font-mono text-[11px] px-2.5 py-0.5 rounded-full font-bold shadow-2xs bg-[#be185d] text-white transition-all duration-300 inline-block"
+                v-if="isPageLoading"
+                class="inline-block h-3.5 w-8 rounded bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
+              ></span>
+              <span
+                v-else
+                class="font-mono text-[10px] uppercase font-bold text-[#be185d] dark:text-[#f43f5e] transition-all duration-300 inline-block"
               >
-                {{ p.label }}
+                {{ getVerbMobilePronoun(verb.verb).label }}
               </span>
             </div>
           </div>
 
           <div class="overflow-x-auto sm:overflow-visible">
-            <table class="w-full table-fixed text-left text-xs sm:text-sm border-collapse" :class="isMobile ? '' : 'min-w-[760px]'">
+            <table class="w-full table-fixed text-left text-xs sm:text-sm border-collapse sm:min-w-[760px]">
               <thead class="hidden sm:table-header-group">
                 <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
                   <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-[42%] sm:w-36 shrink-0"></th>
                   <th
-                    v-for="p in displayedPronouns"
+                    v-for="p in getDisplayedPronounsForVerb(verb.verb)"
                     :key="p.idx"
                     class="py-2.5 px-2 text-center"
-                    :class="isMobile ? 'w-[58%]' : 'w-[14.285%]' + (p.idx === 2 ? ' border-r border-dotted border-gray-300 dark:border-gray-600' : '')"
+                    :class="[
+                      isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[14.285%]' + (p.idx === 2 ? ' border-r border-dotted border-gray-300 dark:border-gray-600' : ''),
+                      p.idx !== getVerbMobilePronounIdx(verb.verb) ? 'hidden sm:table-cell' : ''
+                    ]"
                   >
                     <span
-                      class="font-mono text-[11px] transition-all duration-300 inline-block"
-                      :class="isMobile
-                        ? 'px-2.5 py-0.5 rounded-full font-bold shadow-2xs bg-[#be185d] text-white'
-                        : 'text-gray-600 dark:text-gray-400 font-bold'"
+                      v-if="isPageLoading"
+                      class="inline-block h-3.5 w-10 rounded bg-gray-200/80 dark:bg-gray-700/60 animate-pulse align-middle"
+                    ></span>
+                    <span
+                      v-else
+                      class="font-mono text-[11px] uppercase font-bold text-gray-600 dark:text-gray-400 transition-all duration-300 inline-block"
                     >
                       {{ p.label }}
                     </span>
@@ -2945,25 +3028,31 @@ onUnmounted(() => {
                 >
                   <!-- Tense Name Left Column -->
                   <td
-                    class="py-2.5 px-3 sm:px-4 font-semibold text-gray-900 dark:text-gray-200 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30"
-                    :class="isMobile ? 'w-[42%]' : ''"
+                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold text-gray-600 dark:text-gray-400 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-36"
                   >
                     {{ tense.label }}
                   </td>
 
                   <!-- Pronoun Column(s) -->
                   <td
-                    v-for="p in displayedPronouns"
+                    v-for="p in getDisplayedPronounsForVerb(verb.verb)"
                     :key="p.idx"
                     class="py-2 px-2 sm:px-3 text-center"
                     :class="[
-                      isMobile ? 'w-[58%]' : '',
+                      isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[14.285%]',
+                      p.idx !== getVerbMobilePronounIdx(verb.verb) ? 'hidden sm:table-cell' : '',
                       { 'border-r border-dotted border-gray-300 dark:border-gray-600': !isMobile && p.idx === 2 }
                     ]"
                   >
+                    <!-- Skeleton placeholder during initial load -->
+                    <span
+                      v-if="isPageLoading"
+                      class="inline-block h-[22px] sm:h-[26px] w-[58px] sm:w-[90px] rounded-md sm:rounded-xl bg-gray-200/80 dark:bg-gray-700/60 animate-pulse align-middle"
+                    ></span>
+
                     <!-- Defective Form ('-') Displays 'n/a' in light grey in all modes -->
                     <span
-                      v-if="(((verb as any)[tense.key] || [])[p.idx]) === '-'"
+                      v-else-if="(((verb as any)[tense.key] || [])[p.idx]) === '-'"
                       class="block py-1 text-xs font-mono select-none text-gray-400/60 dark:text-gray-600"
                     >
                       n/a
@@ -3043,7 +3132,7 @@ onUnmounted(() => {
                     <span
                       v-else
                       @click.stop="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx])"
-                      class="font-bold cursor-pointer text-gray-950 dark:text-white"
+                      class="inline-block px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
                       v-html="highlightText(((verb as any)[tense.key] || [])[p.idx] || '—')"
                     >
                     </span>
