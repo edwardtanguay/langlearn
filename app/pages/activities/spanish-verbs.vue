@@ -592,7 +592,7 @@ function triggerVerbZoom() {
     isVerbZooming.value = true
     verbZoomTimer = setTimeout(() => {
       isVerbZooming.value = false
-    }, 1400)
+    }, 600)
   })
 }
 
@@ -825,11 +825,43 @@ function triggerPeek() {
   }, 1000)
 }
 
+let lastExamplePromptIdx = -1
+
+function buildRandomVerbExamplePrompt(word: string): string {
+  const templates: ((w: string) => string)[] = [
+    w => `give me three Spanish sentences using the verb "${w}" with English translations`,
+    w => `could you create please three Spanish phrases with the verb "${w}" and translate them to English`,
+    w => `generate 3 everyday Spanish example sentences featuring "${w}" with English meanings`,
+    w => `write three natural Spanish sentences that use the verb "${w}" along with English translations`,
+    w => `show me 3 different Spanish phrases using "${w}" and their English translations`,
+    w => `please provide three short Spanish sentences with "${w}" translated into English`,
+    w => `can you make 3 conversational Spanish sentences with the verb "${w}" and English translations`,
+    w => `create three practical Spanish examples using "${w}" with English translations`,
+    w => `give me 3 varied Spanish phrases containing "${w}" and translate each into English`,
+    w => `come up with three Spanish sentences using the verb form "${w}" with English translations`,
+    w => `list 3 authentic Spanish sentences with "${w}" and include their English translations`,
+    w => `compose three distinct Spanish phrases using "${w}" with English translations`,
+    w => `could you give me 3 useful Spanish sentences with "${w}" and their English equivalents`,
+    w => `produce three Spanish example phrases featuring the word "${w}" with English translations`,
+    w => `share 3 real-life Spanish sentences using "${w}" along with English translations`,
+    w => `draft three clear Spanish sentences that include "${w}" with English translations`,
+    w => `invent 3 creative Spanish sentences using the verb "${w}" and translate them to English`,
+    w => `supply three common Spanish phrases with "${w}" and their English translations`
+  ]
+
+  let idx = Math.floor(Math.random() * templates.length)
+  if (templates.length > 1 && idx === lastExamplePromptIdx) {
+    idx = (idx + 1 + Math.floor(Math.random() * (templates.length - 1))) % templates.length
+  }
+  lastExamplePromptIdx = idx
+  return templates[idx](word)
+}
+
 function openGoogleExamples(rawWord: string) {
   if (!rawWord || !import.meta.client) return
   const cleanWord = rawWord.split('/')[0].trim()
   if (!cleanWord || cleanWord === '—' || cleanWord === '---' || cleanWord === '-' || cleanWord === 'n/a') return
-  const query = `give me three Spanish sentences using the verb "${cleanWord}" with English translations`
+  const query = buildRandomVerbExamplePrompt(cleanWord)
   const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(url, '_blank')
 }
@@ -1577,7 +1609,7 @@ function pickNextRandomTarget() {
   const newVerb = currentRandomTarget.value?.verb?.verb
   if (prevVerb && newVerb && prevVerb !== newVerb) {
     triggerVerbZoom()
-    schedulePillPulse(1400)
+    schedulePillPulse(600)
   } else {
     schedulePillPulse(0)
   }
@@ -2226,7 +2258,7 @@ onUnmounted(() => {
               class="!mb-0 text-2xl font-black text-[#be185d] dark:text-[#f43f5e] capitalize tracking-tight inline-block origin-left"
               :class="{ 'animate-verb-zoom': isVerbZooming }"
             >
-              {{ currentRandomTarget.verb.verb }}{{ isVerbZooming ? ' <<<' : '' }}
+              {{ currentRandomTarget.verb.verb }}
             </h2>
           </div>
 
@@ -3360,23 +3392,29 @@ onUnmounted(() => {
 
 <style scoped>
 @keyframes verb-zoom-highlight {
-  0% {
+  0%, 100% {
     transform: scale(1);
   }
-  15% {
+  16.67% {
     transform: scale(1.25);
   }
-  85% {
-    transform: scale(1.25);
-  }
-  100% {
+  33.33% {
     transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  66.67% {
+    transform: scale(1);
+  }
+  83.33% {
+    transform: scale(1.25);
   }
 }
 
 .animate-verb-zoom {
   display: inline-block;
-  animation: verb-zoom-highlight 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: verb-zoom-highlight 0.6s ease-in-out both;
   will-change: transform;
   z-index: 30;
   position: relative;
