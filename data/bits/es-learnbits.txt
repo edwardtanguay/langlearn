@@ -906,37 +906,75 @@
 		- Description
 			- ella es alta
 			- soy Michael
+			- soy psicóloga
 		- Occupation
 			- soy professor
 			- es desarrollador de software
 		- Characteristic
 			- él es amable
 			- ella es hermosa
+			- Bogotá es una ciudad grande
+			- el edificio es alto
+			- la película es interesante
 		- Time/Date
 			- hoy es lunes
 			- son las ocho de la noche
 		- Origin
 			- somos de Filipinas
 			- este chocolate es de Alemania
+			- el café es de Colombia
+			- el libro es de Ana
+			- la mesa es de madera
 		- Relationship
 			- elle es mi hermana
 			- él es mi padre
+		- EXCEPTION: Location of an event
+			- la reunión es en la oficina
 	- estar
 		- Position
 			- está sentado
 			- está de pie
+			- la puerta está abierta
 		- Location
 			- estamos en casa
 			- Roma está en Italia
 			- Berlín está en Alemania
 			- París está en Francia
 			- estamos en la biblioteca
+			- estoy en Bogotá
+			- el restaurante está cerca
+			- las llaves están sobre la mesa
 		- Action
 			- estoy estudiando
 			- estoy leyendo un libro
 		- Condition
 			- la puerta está abierta
 			- mi padre está un poco loco
+			- estoy cansado
+			- estamos cansados
+			- hoy estoy ocupado
+			- la comida está preparada
 		- Emotion
 			- estoy feliz
 			- estoy triste
+			- estoy contento
+	- both
+		- aburrido
+			- es aburrido = he is boring
+			- está aburrido = he is bored
+		- listo
+			- es listo = he is intelligent
+			- está listo = he is ready
+		- rico
+			- es rico = he is rich
+			- está rico = it tastes delicious
+		- verde
+			- es verde = it is green
+			- está verde = it is unripe
+			
+			
+			
+			
+			
+			
+			

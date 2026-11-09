@@ -93,6 +93,7 @@ const showControls = ref(true)
 const isPageLoading = ref(false)
 let pageLoadTimer: any = null
 const isMobile = ref(false)
+const isAndroidChrome = ref(false)
 const isMobileDrawerOpen = ref(false)
 const currentMobilePronounIdx = ref(0)
 const verbMobilePronounIdx = ref<Record<string, number>>(
@@ -103,6 +104,13 @@ const activeStudyVerb = ref<string | null>(null)
 function checkMobile() {
   if (typeof window !== 'undefined') {
     isMobile.value = window.innerWidth < 640
+  }
+  if (typeof navigator !== 'undefined') {
+    const ua = navigator.userAgent || ''
+    const uaData = (navigator as any).userAgentData
+    const isAndroid = /Android/i.test(ua) || (uaData?.platform && /Android/i.test(uaData.platform))
+    const isChrome = /Chrome\//i.test(ua) && !/EdgA|OPR|SamsungBrowser|Firefox/i.test(ua)
+    isAndroidChrome.value = Boolean(isAndroid && isChrome)
   }
 }
 
@@ -1841,7 +1849,7 @@ onUnmounted(() => {
             ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
             : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700'"
         >
-          <span :class="!isTestMode && !isRandomTestMode ? 'inline-block -translate-y-[2px]' : ''">Study Mode</span>
+          <span :class="!isTestMode && !isRandomTestMode && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">Study Mode</span>
         </button>
         <button
           type="button"
@@ -1851,7 +1859,7 @@ onUnmounted(() => {
             ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
             : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700'"
         >
-          <span :class="isTestMode ? 'inline-block -translate-y-[2px]' : ''">Normal Testing</span>
+          <span :class="isTestMode && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">Normal Testing</span>
         </button>
         <button
           type="button"
@@ -1861,7 +1869,7 @@ onUnmounted(() => {
             ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
             : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700'"
         >
-          <span :class="isRandomTestMode ? 'inline-block -translate-y-[2px]' : ''">Random Testing</span>
+          <span :class="isRandomTestMode && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">Random Testing</span>
         </button>
       </div>
 
@@ -1964,7 +1972,7 @@ onUnmounted(() => {
             ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
             : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-[#be185d]'"
         >
-          <span :class="!isTestMode && !isRandomTestMode ? 'inline-block -translate-y-[2px]' : ''">Study Mode</span>
+          <span :class="!isTestMode && !isRandomTestMode && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">Study Mode</span>
         </button>
         <button
           type="button"
@@ -1974,7 +1982,7 @@ onUnmounted(() => {
             ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
             : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-[#be185d]'"
         >
-          <span :class="isTestMode ? 'inline-block -translate-y-[2px]' : ''">Normal Testing</span>
+          <span :class="isTestMode && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">Normal Testing</span>
         </button>
         <button
           type="button"
@@ -1984,7 +1992,7 @@ onUnmounted(() => {
             ? 'bg-[#be185d] text-white border-[#be185d] shadow-sm'
             : 'bg-white dark:bg-[#182030] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-[#be185d]'"
         >
-          <span :class="isRandomTestMode ? 'inline-block -translate-y-[2px]' : ''">Random Testing</span>
+          <span :class="isRandomTestMode && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">Random Testing</span>
         </button>
       </div>
     </div>
@@ -2012,7 +2020,7 @@ onUnmounted(() => {
                 ? 'bg-[#be185d] text-white border-[#be185d] shadow-xs'
                 : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
             >
-              <span :class="isGroupActive(group) ? 'inline-block -translate-y-[2px]' : ''">{{ group.name }}</span>
+              <span :class="isGroupActive(group) && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">{{ group.name }}</span>
             </button>
           </div>
         </div>
@@ -2042,7 +2050,7 @@ onUnmounted(() => {
                 ? 'bg-[#be185d] text-white border-[#be185d]'
                 : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
             >
-              <span :class="selectedVerbs.includes(v.verb) ? 'inline-block -translate-y-[2px]' : ''">{{ v.verb }}</span>
+              <span :class="selectedVerbs.includes(v.verb) && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">{{ v.verb }}</span>
             </button>
           </div>
         </div>
@@ -2149,7 +2157,7 @@ onUnmounted(() => {
                   ? 'bg-[#be185d] text-white border-[#be185d] shadow-xs'
                   : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
               >
-                <span :class="isGroupActive(group) ? 'inline-block -translate-y-[2px]' : ''">{{ group.name }}</span>
+                <span :class="isGroupActive(group) && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">{{ group.name }}</span>
               </button>
             </div>
           </div>
@@ -2179,7 +2187,7 @@ onUnmounted(() => {
                   ? 'bg-[#be185d] text-white border-[#be185d]'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700'"
               >
-                <span :class="selectedVerbs.includes(v.verb) ? 'inline-block -translate-y-[2px]' : ''">{{ v.verb }}</span>
+                <span :class="selectedVerbs.includes(v.verb) && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">{{ v.verb }}</span>
               </button>
             </div>
           </div>
