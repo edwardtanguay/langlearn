@@ -426,7 +426,7 @@ function highlightWordMatches(word: string, normQuery: string): string {
   while ((searchPos = normWord.indexOf(normQuery, lastIdx)) !== -1) {
     res += escapeHtml(word.slice(lastIdx, searchPos))
     const matchSlice = word.slice(searchPos, searchPos + normQuery.length)
-    res += `<span class="bg-yellow-300/55 dark:bg-yellow-300/50 !text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.75)] font-extrabold px-0.5 rounded-xs">${escapeHtml(matchSlice)}</span>`
+    res += `<span class="bg-rose-400/60 dark:bg-rose-500/55 !text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.75)] rounded-xs">${escapeHtml(matchSlice)}</span>`
     lastIdx = searchPos + normQuery.length
   }
   res += escapeHtml(word.slice(lastIdx))
