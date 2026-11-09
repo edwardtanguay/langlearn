@@ -2318,10 +2318,10 @@ onUnmounted(() => {
             <button
               type="button"
               @click.stop="pickNextRandomTarget()"
-              class="px-3.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer transition-colors shadow-xs inline-flex items-center gap-1 whitespace-nowrap bg-[#be185d] text-white hover:bg-[#a2134e] select-none"
+              class="pl-3.5 pr-2.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer transition-colors shadow-xs inline-flex items-center justify-center gap-1 whitespace-nowrap bg-[#be185d] text-white hover:bg-[#a2134e] select-none"
             >
-              <span class="translate-y-[1px]">NEXT</span>
-              <ChevronRightIcon class="w-4 h-4 translate-y-[1px]" />
+              <span class="leading-none">NEXT</span>
+              <ChevronRightIcon class="w-4 h-4 shrink-0" />
             </button>
           </div>
         </div>
