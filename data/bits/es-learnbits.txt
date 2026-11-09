@@ -883,4 +883,42 @@
 			- me quedo con la falda amarilla
 		- TO BE LEFT ALONE
 			- me quedé solo en casa
-			
+- ser vs. estar
+	- ser (DOCTOR)
+		- Description
+			- ella es alta
+			- soy Michael
+		- Occupation
+			- soy professor
+			- es desarrollador de software
+		- Characteristic
+			- él es amable
+			- ella es hermosa
+		- Time/Date
+			- hoy es lunes
+			- son las ocho de la noche
+		- Origin
+			- somos de Filipinas
+			- este chocolate es de Alemania
+		- Relationship
+			- elle es mi hermana
+			- él es mi padre
+	- estar
+		- Position
+			- está sentado
+			- está de pie
+		- Location
+			- estamos en casa
+			- Roma está en Italia
+			- Berlín está en Alemania
+			- París está en Francia
+			- estamos en la biblioteca
+		- Action
+			- estoy estudiando
+			- estoy leyendo un libro
+		- Condition
+			- la puerta está abierta
+			- mi padre está un poco loco
+		- Emotion
+			- estoy feliz
+			- estoy triste
