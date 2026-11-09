@@ -52,7 +52,7 @@
 		- make the pronoun text (e.g. "yo") simply a red text not in a bubble and the same font as the GER and PAR and left side tenses
 		- clicking the "<" and ">" should only change the pronoun for that verb, not all verbs being shown
 	----------------------------------------------
-- ,, change04
+- x change04
 	----------------------------------------------
 	## Spanish Verb Page
 	
@@ -77,11 +77,11 @@
 				- does not expand SO large as currently
 				- does not become yellow but white
 	----------------------------------------------
-- .. change05
+- ,, change05
 	----------------------------------------------
 	## Spanish Verb Page
 	
-	- for desktop view
+	- desktop view
 		- change the icon on the left of "Spanish Verbs" so that it is the same "settings" icon as on the filters button in mobile, but keep the icon that shows when the filter section is open (we want a recognition effect)
 		- match the colors and styles to mobile:
 			- verb red text
@@ -91,6 +91,12 @@
 		- move the "gerundio" and "participio" so they are on the far left of the pronoun line with same style as mobile, perhaps move the whole pronoun are over to the right if you need room
 			- then instead of the long green notice when a word is corret, just but a "NEXT >" button where GER/PAR were on the right in the verb title line, but ENTER of course also means "next"
 			- but also write then a note: "ENTER=next | ALT-ENTER=examples"
+	- mobile view
+		- on all modes/test
+			- if I click on the "<" and ">" buttons too fast, they blink and skip over pronouns, fix this so that it is smooth and one can just click and go to the next pronoun regardless how fast one clicks
+		- random testing
+			- change "new verb" animation to
+				- keep it red, just enlarge with " <<<" after it, then shrink it
 	----------------------------------------------
 	
 	
