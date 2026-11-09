@@ -167,10 +167,37 @@ function capitalizeFirst(text?: string): string {
   return trimmed.charAt(0).toUpperCase() + trimmed.slice(1)
 }
 
-function openLink(url: string) {
+const pointerDownTime = ref(0)
+const pointerDownPos = ref({ x: 0, y: 0 })
+
+function handleCardPointerDown(event: PointerEvent) {
+  pointerDownTime.value = Date.now()
+  pointerDownPos.value = { x: event.clientX, y: event.clientY }
+}
+
+function isHoldOrSelection(event?: MouseEvent): boolean {
   if (typeof window !== 'undefined') {
     const selection = window.getSelection()?.toString().trim()
     if (selection && selection.length > 0) {
+      return true
+    }
+  }
+  if (pointerDownTime.value > 0 && Date.now() - pointerDownTime.value >= 250) {
+    return true
+  }
+  if (event && (pointerDownPos.value.x !== 0 || pointerDownPos.value.y !== 0)) {
+    const dist = Math.hypot(event.clientX - pointerDownPos.value.x, event.clientY - pointerDownPos.value.y)
+    if (dist > 6) {
+      return true
+    }
+  }
+  return false
+}
+
+function openLink(url: string, event?: MouseEvent) {
+  if (typeof window !== 'undefined') {
+    const selection = window.getSelection()?.toString().trim()
+    if (isHoldOrSelection(event)) {
       return
     }
     window.open(url, '_blank', 'noopener,noreferrer')
@@ -184,12 +211,12 @@ function toggleCrudToolbar(id: string, event?: Event) {
   activeCrudLinkId.value = activeCrudLinkId.value === id ? null : id
 }
 
-function handleCardClick(link: LinkItem) {
+function handleCardClick(link: LinkItem, event?: MouseEvent) {
   if (activeCrudLinkId.value) {
     activeCrudLinkId.value = null
     return
   }
-  openLink(link.url)
+  openLink(link.url, event)
 }
 
 function handleClickOutside(e: MouseEvent) {
@@ -425,7 +452,8 @@ const executeDelete = async () => {
         <li
           v-for="(link, idx) in category.links"
           :key="link.id"
-          @click="handleCardClick(link)"
+          @pointerdown="handleCardPointerDown($event)"
+          @click="handleCardClick(link, $event)"
           class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer hover:brightness-110 active:scale-[0.99]"
           :style="{
             backgroundColor: `color-mix(in srgb, ${category.color} 14%, #111827)`,
@@ -510,7 +538,7 @@ const executeDelete = async () => {
                   </svg>
                   <DocumentTextIcon v-else class="w-4 h-4 text-gray-400 dark:text-gray-400" title="Web article" />
                 </span>
-                <span class="truncate select-text cursor-text" @click.stop>{{ link.title.trim() }}</span>
+                <span class="truncate select-text">{{ link.title.trim() }}</span>
               </div>
 
               <!-- Ellipsis icon on far right for admin to toggle manage bar -->
@@ -526,7 +554,7 @@ const executeDelete = async () => {
             </div>
 
             <!-- Description (forced capitalize first letter) -->
-            <p v-if="link.description" @click.stop class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed select-text cursor-text">
+            <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed select-text">
               {{ capitalizeFirst(link.description) }}
             </p>
           </div>

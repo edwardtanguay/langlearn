@@ -157,10 +157,37 @@ const currentLanguageColor = computed(() => languageColors[currentLanguageCode.v
 const currentLanguageName = computed(() => languageNames[currentLanguageCode.value] || currentLanguageCode.value.toUpperCase())
 
 // Action: Copy text to clipboard & open Gemini AI in new tab
-async function handleCopyAndPaste(text: string) {
+const pointerDownTime = ref(0)
+const pointerDownPos = ref({ x: 0, y: 0 })
+
+function handleCardPointerDown(event: PointerEvent) {
+  pointerDownTime.value = Date.now()
+  pointerDownPos.value = { x: event.clientX, y: event.clientY }
+}
+
+function isHoldOrSelection(event?: MouseEvent): boolean {
   if (typeof window !== 'undefined') {
     const selection = window.getSelection()?.toString().trim()
     if (selection && selection.length > 0) {
+      return true
+    }
+  }
+  if (pointerDownTime.value > 0 && Date.now() - pointerDownTime.value >= 250) {
+    return true
+  }
+  if (event && (pointerDownPos.value.x !== 0 || pointerDownPos.value.y !== 0)) {
+    const dist = Math.hypot(event.clientX - pointerDownPos.value.x, event.clientY - pointerDownPos.value.y)
+    if (dist > 6) {
+      return true
+    }
+  }
+  return false
+}
+
+async function handleCopyAndPaste(text: string, event?: MouseEvent) {
+  if (typeof window !== 'undefined') {
+    const selection = window.getSelection()?.toString().trim()
+    if ((selection && selection.length > 0) || isHoldOrSelection(event)) {
       return
     }
   }
@@ -397,7 +424,8 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
       <li
         v-for="(p, idx) in currentLanguagePrompts"
         :key="p.id"
-        @click="activeCrudPromptId === p.id ? (activeCrudPromptId = null) : handleCopyAndPaste(p.prompt)"
+        @pointerdown="handleCardPointerDown($event)"
+        @click="activeCrudPromptId === p.id ? (activeCrudPromptId = null) : handleCopyAndPaste(p.prompt, $event)"
         class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer hover:brightness-110 active:scale-[0.99]"
         :style="{
           backgroundColor: `color-mix(in srgb, ${currentLanguageColor} 14%, #111827)`,
@@ -472,7 +500,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               class="font-bold text-base leading-snug flex items-center gap-2 min-w-0"
               :style="{ color: currentLanguageColor }"
             >
-              <span class="truncate select-text cursor-text" @click.stop>{{ p.title.trim() }}</span>
+              <span class="truncate select-text">{{ p.title.trim() }}</span>
             </div>
 
             <!-- Desktop Admin CRUD Tools (always visible on desktop, no ellipsis) -->
