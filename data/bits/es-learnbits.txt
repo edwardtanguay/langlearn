@@ -111,6 +111,15 @@
 		- quede, quedes, quede, quedemos, quedéis, queden
 		- quedara, quedaras, quedara, quedáramos, quedarais, quedaran
 		- quedando, quedado
+	- quedarse
+		- me quedo, te quedas, se queda, nos quedamos, os quedáis, se quedan
+		- me quedaba, te quedabas, se quedaba, nos quedábamos, os quedabais, se quedaban
+		- me quedé, te quedaste, se quedó, nos quedamos, os quedasteis, se quedaron
+		- me quedaré, te quedarás, se quedará, nos quedaremos, os quedaréis, se quedarán
+		- me quedaría, te quedarías, se quedaría, nos quedaríamos, os quedaríais, se quedarían
+		- me quede, te quedes, se quede, nos quedemos, os quedéis, se queden
+		- me quedara, te quedaras, se quedara, nos quedáramos, os quedarais, se quedaran
+		- quedándose, quedado
 	- venir
 		- vengo, vienes, viene, venimos, venís, vienen
 		- venía, venías, venía, veníamos, veníais, venían
@@ -381,6 +390,15 @@
 		- eche, eches, eche, echemos, echéis, echen
 		- echara, echaras, echara, echáramos, echarais, echaran
 		- echando, echado
+	- coger
+		- cojo, coges, coge, cogemos, cogéis, cogen
+		- cogía, cogías, cogía, cogíamos, cogíais, cogían
+		- cogí, cogiste, cogió, cogimos, cogisteis, cogieron
+		- cogeré, cogerás, cogerá, cogeremos, cogeréis, cogerán
+		- cogería, cogerías, cogería, cogeríamos, cogeríais, cogerían
+		- coja, cojas, coja, cojamos, cojáis, cojan
+		- cogiera, cogieras, cogiera, cogiéramos, cogierais, cogieran
+		- cogiendo, cogido
 - Spain vs. Latin America
 	- Tu - Amigos - Informal - misma edad
 	- Usted - personas mayores - jefes - respeto
@@ -883,4 +901,42 @@
 			- me quedo con la falda amarilla
 		- TO BE LEFT ALONE
 			- me quedé solo en casa
-			
+- ser vs. estar
+	- ser (DOCTOR)
+		- Description
+			- ella es alta
+			- soy Michael
+		- Occupation
+			- soy professor
+			- es desarrollador de software
+		- Characteristic
+			- él es amable
+			- ella es hermosa
+		- Time/Date
+			- hoy es lunes
+			- son las ocho de la noche
+		- Origin
+			- somos de Filipinas
+			- este chocolate es de Alemania
+		- Relationship
+			- elle es mi hermana
+			- él es mi padre
+	- estar
+		- Position
+			- está sentado
+			- está de pie
+		- Location
+			- estamos en casa
+			- Roma está en Italia
+			- Berlín está en Alemania
+			- París está en Francia
+			- estamos en la biblioteca
+		- Action
+			- estoy estudiando
+			- estoy leyendo un libro
+		- Condition
+			- la puerta está abierta
+			- mi padre está un poco loco
+		- Emotion
+			- estoy feliz
+			- estoy triste

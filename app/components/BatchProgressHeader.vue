@@ -44,8 +44,12 @@ function getLanguageTextColor(lang?: string): string {
   return languageTextColors[code] || getLanguageColor(lang)
 }
 
+function isParkedOrDeleted(slot: BatchSlot): boolean {
+  return slot.status === 'parked' || slot.status === 'deleted'
+}
+
 function getSlotStyle(slot: BatchSlot) {
-  if (slot.status === 'parked' || slot.status === 'deleted') {
+  if (isParkedOrDeleted(slot)) {
     return {
       backgroundColor: 'rgba(107, 114, 128, 0.25)',
       borderColor: 'rgba(156, 163, 175, 0.4)',
@@ -103,11 +107,11 @@ const percent = computed(() => {
         :key="slot.id"
         class="flex-1 min-w-0 flex flex-col items-center"
       >
-        <!-- Language abbreviation above the box in its language color -->
+        <!-- Language abbreviation above the box in its language color (gray when parked or deleted) -->
         <span
           class="text-[10px] sm:text-xs font-mono font-bold mb-1 select-none tracking-wider"
-          :class="slot.status === 'parked' || slot.status === 'deleted' ? '!text-gray-400 dark:!text-gray-500' : ''"
-          :style="slot.status === 'parked' || slot.status === 'deleted' ? {} : { color: getLanguageColor(slot.language) }"
+          :class="isParkedOrDeleted(slot) ? 'text-gray-400 dark:text-gray-500' : ''"
+          :style="isParkedOrDeleted(slot) ? { color: '#9ca3af', opacity: 0.5 } : { color: getLanguageColor(slot.language) }"
         >
           {{ (slot.language || 'FR').toUpperCase() }}
         </span>
@@ -124,10 +128,15 @@ const percent = computed(() => {
           :style="[
             getSlotStyle(slot),
             slot.id === activeCardId && !isBatchComplete
-              ? {
-                  borderColor: getLanguageTextColor(slot.language),
-                  boxShadow: `0 0 0 2px ${getLanguageTextColor(slot.language)}, 0 4px 6px -1px rgba(0, 0, 0, 0.1)`
-                }
+              ? (isParkedOrDeleted(slot)
+                ? {
+                    borderColor: '#9ca3af',
+                    boxShadow: '0 0 0 2px #9ca3af, 0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  }
+                : {
+                    borderColor: getLanguageTextColor(slot.language),
+                    boxShadow: `0 0 0 2px ${getLanguageTextColor(slot.language)}, 0 4px 6px -1px rgba(0, 0, 0, 0.1)`
+                  })
               : {}
           ]"
           :title="`Card ${slot.slotIndex + 1}: ${
@@ -207,7 +216,7 @@ const percent = computed(() => {
           <svg
             v-if="slot.id === activeCardId && !isBatchComplete"
             class="w-3 h-3 animate-pulse drop-shadow-xs"
-            :style="{ color: getLanguageTextColor(slot.language) }"
+            :style="{ color: isParkedOrDeleted(slot) ? '#9ca3af' : getLanguageTextColor(slot.language) }"
             viewBox="0 0 24 24"
             fill="currentColor"
           >

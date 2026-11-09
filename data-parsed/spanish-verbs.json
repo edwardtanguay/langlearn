@@ -732,6 +732,67 @@
     "pastParticiple": "quedado"
   },
   {
+    "verb": "quedarse",
+    "present": [
+      "me quedo",
+      "te quedas",
+      "se queda",
+      "nos quedamos",
+      "os quedáis",
+      "se quedan"
+    ],
+    "imperfect": [
+      "me quedaba",
+      "te quedabas",
+      "se quedaba",
+      "nos quedábamos",
+      "os quedabais",
+      "se quedaban"
+    ],
+    "preterite": [
+      "me quedé",
+      "te quedaste",
+      "se quedó",
+      "nos quedamos",
+      "os quedasteis",
+      "se quedaron"
+    ],
+    "future": [
+      "me quedaré",
+      "te quedarás",
+      "se quedará",
+      "nos quedaremos",
+      "os quedaréis",
+      "se quedarán"
+    ],
+    "conditional": [
+      "me quedaría",
+      "te quedarías",
+      "se quedaría",
+      "nos quedaríamos",
+      "os quedaríais",
+      "se quedarían"
+    ],
+    "presentSubjunctive": [
+      "me quede",
+      "te quedes",
+      "se quede",
+      "nos quedemos",
+      "os quedéis",
+      "se queden"
+    ],
+    "imperfectSubjunctive": [
+      "me quedara",
+      "te quedaras",
+      "se quedara",
+      "nos quedáramos",
+      "os quedarais",
+      "se quedaran"
+    ],
+    "gerund": "quedándose",
+    "pastParticiple": "quedado"
+  },
+  {
     "verb": "venir",
     "present": [
       "vengo",
@@ -2560,5 +2621,66 @@
     ],
     "gerund": "echando",
     "pastParticiple": "echado"
+  },
+  {
+    "verb": "coger",
+    "present": [
+      "cojo",
+      "coges",
+      "coge",
+      "cogemos",
+      "cogéis",
+      "cogen"
+    ],
+    "imperfect": [
+      "cogía",
+      "cogías",
+      "cogía",
+      "cogíamos",
+      "cogíais",
+      "cogían"
+    ],
+    "preterite": [
+      "cogí",
+      "cogiste",
+      "cogió",
+      "cogimos",
+      "cogisteis",
+      "cogieron"
+    ],
+    "future": [
+      "cogeré",
+      "cogerás",
+      "cogerá",
+      "cogeremos",
+      "cogeréis",
+      "cogerán"
+    ],
+    "conditional": [
+      "cogería",
+      "cogerías",
+      "cogería",
+      "cogeríamos",
+      "cogeríais",
+      "cogerían"
+    ],
+    "presentSubjunctive": [
+      "coja",
+      "cojas",
+      "coja",
+      "cojamos",
+      "cojáis",
+      "cojan"
+    ],
+    "imperfectSubjunctive": [
+      "cogiera",
+      "cogieras",
+      "cogiera",
+      "cogiéramos",
+      "cogierais",
+      "cogieran"
+    ],
+    "gerund": "cogiendo",
+    "pastParticiple": "cogido"
   }
 ]

@@ -1,0 +1,102 @@
+- x change01
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- mobile view
+		- normal testing
+			- when clicking on "Normal Testing" it puts the cursor in "Gerundio"
+				- make it so the user can't type in any input box anymore, so that the Gerundio and Participio words are dots ("...") like all the others, and the user simple clicks on them to get the answer
+			- incorporate all the style changes that are now on "Random Testing", e.g. 
+			- when clicking on "Normal Testing", "Presente/Yo" box says "h" instead of ???, make it say ???
+			- same colors as on "Random Testing"
+		- study mode
+			- x remove peek and hint buttons
+			- x make verb e.g. "Hablar" larger and red
+			- x put Gerundio and Participio to the right
+				- stack label-over-inputbox
+				- so that verb + gerund/participio take up one line
+			- x give the same colors to active column name (e.g. "yo") and active tense name (e.g. "Futuro") as is on Random Testing, e.g. red
+			- x reduce space between group title (e.g. "Hablar, Comer, Vivir") and the first card, i.e. same space between that title and the first card as between each card
+		- remote testing
+			- put Gerundio and Participio to the right
+				- stack label-over-inputbox
+				- so that verb + gerund/participio take up one line
+			- in row of pronouns, make active pronoun box have red text
+			- the "tense" text on the left e.g. "Presente" should be moved up 1 px inside the pill to be perfectly vertically centered
+	----------------------------------------------
+- x change02
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- mobile view
+		- normal testing
+			- remove the whole row of buttons "yo", "tú", etc.
+			- move the "<" and ">" buttons up to the right of the verb
+				- make these all the same size in the same title area there
+			- move the "gerund" and "participle" to the left side of the row with the red tense pill 
+				- abbreviate on one line: GER[___] and PAR[___]
+	- filters & settings
+		- on top upper left, icon should be left of the title "Filters & Settings"
+		- all highlighted buttons (red) should have their text in the buttons moved up 2px so the text is vertically centered
+	- add the verb "quedarse" so that when "quedar/quedarse" are chose, these two are shown
+	----------------------------------------------
+- x change03
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- study mode
+		- put the pronoun (e.g. "yo") center above the verbs in the column
+		- around each verb, put a ghost pill the same as "hablando and hablado" have 
+		- change the font of the tenses on the left to the same as the "GER" and "PAR" above
+		- when loading put skeleton placement holders e.g. in the "ger/par/yo" line since currently when it loads, all of the buttons are shown there for about a second which looks very unprofessional
+		- make the pronoun text (e.g. "yo") simply a red text not in a bubble and the same font as the GER and PAR and left side tenses
+		- clicking the "<" and ">" should only change the pronoun for that verb, not all verbs being shown
+	----------------------------------------------
+- x change04
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- when searching change highlight of text from bright yellow background to
+		- a light yellow (but not a brown) which does not change the color of the phone (currently the highlighted text is black on yellow), make it simply white text on a highlighted background where the white text is still very readable
+	- mobile
+		- all 3 modes/tests
+			- move the words "GER" and "PAR" down 1px
+			- make the "<" and ">" buttons a bit smaller
+		- study mode
+			- when load for first time, show "yo"
+		- normal testing
+			- on the far right of the "GER"/"PAR" line, put a small percent
+				- this is the percent of words that have been turned over and revealed for that verb, make it white and courier font, make it look technical
+		- random testing
+			- when on random testing and user goes to change filter and comes back, change the testing to one of the filtered words (currently it stays on the word that was there before, until one clicks next)
+			- put all words in an outline pill as on study mode and normal testing
+			- get rid of the "next" button altogether
+			- move the Peek and Hint buttons to the left of the "<" and ">" as on the other modes/tests and remove the line where peek/hint/move were
+			- change the style of the active tense from red background to simply red text (same as the pronoun on top of the column)
+			- when changing a word and enlarging the infinitive verb in animation to yellow, change this so it
+				- does not expand SO large as currently
+				- does not become yellow but white
+	----------------------------------------------
+- ,, change05
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- desktop view
+		- change the icon on the left of "Spanish Verbs" so that it is the same "settings" icon as on the filters button in mobile, but keep the icon that shows when the filter section is open (we want a recognition effect)
+		- match the colors and styles to mobile:
+			- verb red text
+			- active tense red text
+			- active pronoun red text
+		- remove the "next>" button and the whole line it is one
+		- move the "gerundio" and "participio" so they are on the far left of the pronoun line with same style as mobile, perhaps move the whole pronoun are over to the right if you need room
+			- then instead of the long green notice when a word is corret, just but a "NEXT >" button where GER/PAR were on the right in the verb title line, but ENTER of course also means "next"
+			- but also write then a note: "ENTER=next | ALT-ENTER=examples"
+	- mobile view
+		- on all modes/test
+			- if I click on the "<" and ">" buttons too fast, they blink and skip over pronouns, fix this so that it is smooth and one can just click and go to the next pronoun regardless how fast one clicks
+		- random testing
+			- change "new verb" animation to
+				- keep it red, just enlarge with " <<<" after it, then shrink it
+	----------------------------------------------
+	
+	
