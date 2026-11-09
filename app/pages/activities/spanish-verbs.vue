@@ -10,7 +10,6 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   ChevronLeftIcon,
-  ArrowRightIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
   AdjustmentsHorizontalIcon
@@ -2117,7 +2116,7 @@ onUnmounted(() => {
             class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#be185d] text-white hover:bg-[#a2134e] cursor-pointer transition-colors shadow-xs inline-flex items-center gap-1.5 whitespace-nowrap"
           >
             <span>Next</span>
-            <ArrowRightIcon class="w-4 h-4 stroke-[3]" />
+            <ChevronRightIcon class="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -2128,7 +2127,7 @@ onUnmounted(() => {
         <div class="px-5 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex items-center justify-between gap-4 flex-wrap">
           <div class="space-y-0.5">
             <h2
-              class="text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight inline-block origin-left"
+              class="text-2xl font-black text-[#be185d] dark:text-[#f43f5e] sm:text-gray-900 sm:dark:text-white capitalize tracking-tight inline-block origin-left"
               :class="{ 'animate-verb-zoom': isVerbZooming }"
             >
               {{ currentRandomTarget.verb.verb }}
@@ -2173,7 +2172,7 @@ onUnmounted(() => {
                       class="absolute left-full top-0 ml-1.5 w-[26px] h-[26px] rounded-lg bg-[#be185d] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none z-10"
                       title="Next"
                     >
-                      &gt;
+                      <ChevronRightIcon class="w-4 h-4" />
                     </button>
                   </template>
                 </template>
@@ -2249,7 +2248,7 @@ onUnmounted(() => {
                       class="absolute left-full top-0 ml-1.5 w-[26px] h-[26px] rounded-lg bg-[#be185d] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none z-10"
                       title="Next"
                     >
-                      &gt;
+                      <ChevronRightIcon class="w-4 h-4" />
                     </button>
                   </template>
                 </template>
@@ -2442,7 +2441,7 @@ onUnmounted(() => {
                           class="absolute left-full top-0 ml-1.5 w-[26px] h-[26px] rounded-lg bg-[#be185d] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none z-10"
                           title="Next"
                         >
-                          &gt;
+                          <ChevronRightIcon class="w-4 h-4" />
                         </button>
                       </template>
                     </template>
@@ -3007,7 +3006,6 @@ onUnmounted(() => {
 @keyframes verb-zoom-highlight {
   0% {
     transform: scale(1);
-    color: inherit;
   }
   15% {
     transform: scale(2);
@@ -3019,7 +3017,6 @@ onUnmounted(() => {
   }
   100% {
     transform: scale(1);
-    color: inherit;
   }
 }
 
