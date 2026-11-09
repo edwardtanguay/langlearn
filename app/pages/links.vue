@@ -167,8 +167,39 @@ function capitalizeFirst(text?: string): string {
   return trimmed.charAt(0).toUpperCase() + trimmed.slice(1)
 }
 
-function openLink(url: string) {
+const pointerDownTime = ref(0)
+const pointerDownPos = ref({ x: 0, y: 0 })
+
+function handleCardPointerDown(event: PointerEvent) {
+  pointerDownTime.value = Date.now()
+  pointerDownPos.value = { x: event.clientX, y: event.clientY }
+}
+
+function isHoldOrSelection(event?: MouseEvent): boolean {
   if (typeof window !== 'undefined') {
+    const selection = window.getSelection()?.toString().trim()
+    if (selection && selection.length > 0) {
+      return true
+    }
+  }
+  if (pointerDownTime.value > 0 && Date.now() - pointerDownTime.value >= 250) {
+    return true
+  }
+  if (event && (pointerDownPos.value.x !== 0 || pointerDownPos.value.y !== 0)) {
+    const dist = Math.hypot(event.clientX - pointerDownPos.value.x, event.clientY - pointerDownPos.value.y)
+    if (dist > 6) {
+      return true
+    }
+  }
+  return false
+}
+
+function openLink(url: string, event?: MouseEvent) {
+  if (typeof window !== 'undefined') {
+    const selection = window.getSelection()?.toString().trim()
+    if (isHoldOrSelection(event)) {
+      return
+    }
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 }
@@ -180,12 +211,12 @@ function toggleCrudToolbar(id: string, event?: Event) {
   activeCrudLinkId.value = activeCrudLinkId.value === id ? null : id
 }
 
-function handleCardClick(link: LinkItem) {
+function handleCardClick(link: LinkItem, event?: MouseEvent) {
   if (activeCrudLinkId.value) {
     activeCrudLinkId.value = null
     return
   }
-  openLink(link.url)
+  openLink(link.url, event)
 }
 
 function handleClickOutside(e: MouseEvent) {
@@ -421,8 +452,9 @@ const executeDelete = async () => {
         <li
           v-for="(link, idx) in category.links"
           :key="link.id"
-          @click="handleCardClick(link)"
-          class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer select-none hover:brightness-110 active:scale-[0.99]"
+          @pointerdown="handleCardPointerDown($event)"
+          @click="handleCardClick(link, $event)"
+          class="p-2.5 sm:p-3 rounded-xl border shadow-xs flex items-start justify-between gap-2.5 group transition-all duration-150 cursor-pointer hover:brightness-110 active:scale-[0.99]"
           :style="{
             backgroundColor: `color-mix(in srgb, ${category.color} 14%, #111827)`,
             borderColor: `color-mix(in srgb, ${category.color} 30%, #374151)`
@@ -495,18 +527,18 @@ const executeDelete = async () => {
               class="flex items-center justify-between gap-2 w-full"
             >
               <div
-                @click.stop="openLink(link.url)"
-                class="font-bold text-base leading-snug flex items-center gap-2 cursor-pointer min-w-0"
+
+                class="font-bold text-base leading-snug flex items-center gap-2 min-w-0"
                 :style="{ color: category.color }"
               >
                 <!-- YouTube Icon / Document Icon on the front (left side) -->
-                <span class="inline-flex items-center shrink-0">
+                <span @click.stop="openLink(link.url)" class="inline-flex items-center shrink-0 cursor-pointer" title="Open link">
                   <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 text-gray-400 dark:text-gray-400" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                   </svg>
                   <DocumentTextIcon v-else class="w-4 h-4 text-gray-400 dark:text-gray-400" title="Web article" />
                 </span>
-                <span class="truncate">{{ link.title.trim() }}</span>
+                <span class="truncate select-text">{{ link.title.trim() }}</span>
               </div>
 
               <!-- Ellipsis icon on far right for admin to toggle manage bar -->
@@ -522,7 +554,7 @@ const executeDelete = async () => {
             </div>
 
             <!-- Description (forced capitalize first letter) -->
-            <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed">
+            <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed select-text">
               {{ capitalizeFirst(link.description) }}
             </p>
           </div>

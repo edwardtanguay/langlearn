@@ -33,7 +33,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
         '/',
         '/links',
         '/about',
-        '/activities/gemini-quiz'
+        '/activities/gemini-quiz',
+        '/activities/spanish-verbs'
       ]
       return unknownAllowedPaths.includes(path)
     }
@@ -72,7 +73,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
       '/links',
       '/about',
       '/profile',
-      '/activities/gemini-quiz'
+      '/activities/gemini-quiz',
+      '/activities/spanish-verbs'
     ]
     return memberAllowedPaths.includes(path)
   }
