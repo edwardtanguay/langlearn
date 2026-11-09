@@ -111,6 +111,15 @@
 		- quede, quedes, quede, quedemos, quedéis, queden
 		- quedara, quedaras, quedara, quedáramos, quedarais, quedaran
 		- quedando, quedado
+	- quedarse
+		- me quedo, te quedas, se queda, nos quedamos, os quedáis, se quedan
+		- me quedaba, te quedabas, se quedaba, nos quedábamos, os quedabais, se quedaban
+		- me quedé, te quedaste, se quedó, nos quedamos, os quedasteis, se quedaron
+		- me quedaré, te quedarás, se quedará, nos quedaremos, os quedaréis, se quedarán
+		- me quedaría, te quedarías, se quedaría, nos quedaríamos, os quedaríais, se quedarían
+		- me quede, te quedes, se quede, nos quedemos, os quedéis, se queden
+		- me quedara, te quedaras, se quedara, nos quedáramos, os quedarais, se quedaran
+		- quedándose, quedado
 	- venir
 		- vengo, vienes, viene, venimos, venís, vienen
 		- venía, venías, venía, veníamos, veníais, venían
