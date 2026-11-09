@@ -589,6 +589,8 @@ const currentRandomTarget = ref<RandomTarget | null>(null)
 const randomTestAnswer = ref('')
 const randomTestStatus = ref<'correct' | 'incorrect' | null>(null)
 const waitingForNextRandomKey = ref(false)
+const showNextRandomControls = ref(false)
+let nextRandomControlsTimer: any = null
 let ignoreNextRandomKey = false
 const isVerbZooming = ref(false)
 let verbZoomTimer: any = null
@@ -1460,6 +1462,8 @@ function exitRandomTest() {
   currentRandomTarget.value = null
   randomTestAnswer.value = ''
   randomTestStatus.value = null
+  if (nextRandomControlsTimer) { clearTimeout(nextRandomControlsTimer); nextRandomControlsTimer = null }
+  showNextRandomControls.value = false
   waitingForNextRandomKey.value = false
   isMobileRandomRevealed.value = false
   resetTestInputs()
@@ -1526,6 +1530,8 @@ function pickNextRandomTarget() {
   const prevVerb = currentRandomTarget.value?.verb?.verb
   if (hintState.value?.timer) clearTimeout(hintState.value.timer)
   hintState.value = null
+  if (nextRandomControlsTimer) { clearTimeout(nextRandomControlsTimer); nextRandomControlsTimer = null }
+  showNextRandomControls.value = false
   waitingForNextRandomKey.value = false
   isMobileRandomRevealed.value = false
   mobileRevealedCells.value = {}
@@ -1646,6 +1652,11 @@ function validateRandomTest() {
   if (isMatch) {
     randomTestStatus.value = 'correct'
     waitingForNextRandomKey.value = true
+    if (nextRandomControlsTimer) clearTimeout(nextRandomControlsTimer)
+    showNextRandomControls.value = false
+    nextRandomControlsTimer = setTimeout(() => {
+      showNextRandomControls.value = true
+    }, 500)
     ignoreNextRandomKey = true
     setTimeout(() => {
       ignoreNextRandomKey = false
@@ -2311,7 +2322,7 @@ onUnmounted(() => {
           </div>
 
           <!-- Desktop: Note & NEXT > button when correct -->
-          <div v-if="waitingForNextRandomKey" class="hidden sm:flex items-center justify-end gap-3 shrink-0">
+          <div class="hidden sm:flex items-center justify-end gap-3 shrink-0" :class="showNextRandomControls ? 'opacity-100 transition-opacity duration-300' : 'opacity-0 pointer-events-none'">
             <span class="font-mono text-xs font-bold text-gray-500 dark:text-gray-400 tracking-tight select-none">
               ENTER=next | ALT-ENTER=examples
             </span>

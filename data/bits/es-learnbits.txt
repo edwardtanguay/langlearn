@@ -973,7 +973,14 @@
 			- está verde = it is unripe
 			
 			
-			
+- classes
+	- es claro
+	- lo entiendo
+	- es un matiz
+	- fascinating
+	- me parece algo muy interesante
+	- eso es otra cosa interesante
+	- gracias por la explicación
 			
 			
 			
