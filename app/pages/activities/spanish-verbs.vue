@@ -141,10 +141,12 @@ function triggerMobileHint() {
   }
 }
 
+const isMobileRandomRevealed = ref(false)
+
 function revealMobileRandomTarget() {
   if (isRandomTestMode.value && currentRandomTarget.value) {
+    isMobileRandomRevealed.value = true
     randomTestAnswer.value = currentRandomTarget.value.expected.split('/')[0].trim()
-    randomTestStatus.value = 'correct'
     waitingForNextRandomKey.value = true
   }
 }
@@ -1291,6 +1293,7 @@ function exitRandomTest() {
   randomTestAnswer.value = ''
   randomTestStatus.value = null
   waitingForNextRandomKey.value = false
+  isMobileRandomRevealed.value = false
   if (import.meta.client) {
     window.removeEventListener('keydown', handleRandomGlobalKeyDown)
   }
@@ -1310,11 +1313,27 @@ function toggleFullTest() {
   }
   isTestMode.value = !isTestMode.value
   pausedFullTest.value = false
+  if (isTestMode.value) {
+    nextTick(() => {
+      const firstVerb = filteredVerbList.value[0]?.verb
+      if (firstVerb) {
+        let target = document.getElementById(`input-${firstVerb}-present-0`) as HTMLInputElement | null
+        if (!target) {
+          target = document.querySelector(`input[id^="input-${firstVerb}"]`) as HTMLInputElement | null
+        }
+        if (target) {
+          target.focus()
+          target.select()
+        }
+      }
+    })
+  }
 }
 
 function pickNextRandomTarget() {
   const prevVerb = currentRandomTarget.value?.verb?.verb
   waitingForNextRandomKey.value = false
+  isMobileRandomRevealed.value = false
   ignoreNextRandomKey = false
   randomTestStatus.value = null
   randomTestAnswer.value = ''
@@ -1882,10 +1901,10 @@ onUnmounted(() => {
     <!-- Mobile Filter & Settings Drawer -->
     <div
       v-if="isMobileDrawerOpen"
-      class="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs sm:hidden"
+      class="fixed inset-0 z-50 flex bg-black/60 backdrop-blur-xs sm:hidden"
       @click.self="isMobileDrawerOpen = false"
     >
-      <div class="w-full max-w-sm h-full bg-white dark:bg-[#161f30] border-l border-gray-200 dark:border-gray-700 shadow-2xl flex flex-col">
+      <div class="w-full h-full bg-white dark:bg-[#161f30] shadow-2xl flex flex-col">
         <!-- Drawer Header -->
         <div class="px-4 py-3.5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -2025,20 +2044,27 @@ onUnmounted(() => {
           <span class="px-2.5 py-1 rounded-lg text-xs font-black uppercase bg-[#be185d] text-white shrink-0">
             Random Test Mode
           </span>
-          <span class="text-xs text-gray-500 dark:text-gray-400 font-medium whitespace-nowrap">
-            ESC for hint, CTRL-ENTER to peek, ALT-ENTER for examples
-          </span>
+
         </div>
 
         <div class="flex items-center gap-2.5 shrink-0">
           <button
             type="button"
-            v-if="waitingForNextRandomKey"
+            v-if="waitingForNextRandomKey && !isMobile"
             @click.stop="pickNextRandomTarget()"
             class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-400 dark:border-emerald-700 animate-pulse hover:bg-emerald-200 dark:hover:bg-emerald-900/60 cursor-pointer transition-colors whitespace-nowrap"
             title="Click or press any key to continue · ALT-Enter for examples"
           >
             ✓ Correct! (Click for next · ALT-Enter for examples →)
+          </button>
+          <button
+            type="button"
+            v-if="isMobile && (waitingForNextRandomKey || isMobileRandomRevealed)"
+            @click.stop="pickNextRandomTarget()"
+            class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#be185d] text-white hover:bg-[#a2134e] cursor-pointer transition-colors shadow-xs inline-flex items-center gap-1 whitespace-nowrap"
+          >
+            <span>Next</span>
+            <span>→</span>
           </button>
           <button
             type="button"
@@ -2061,29 +2087,7 @@ onUnmounted(() => {
             >
               {{ currentRandomTarget.verb.verb }}
             </h2>
-            <div
-              class="hidden sm:block text-xs text-gray-400 dark:text-gray-500 select-none transition-opacity"
-              :class="{ 'animate-hint-fade-during-zoom': isVerbZooming }"
-            >
-              ESC for hint, CTRL-ENTER to peek, ALT-ENTER for examples
-            </div>
-            <!-- Mobile Peek and Hint buttons below infinitive name -->
-            <div class="sm:hidden flex items-center gap-2 pt-1">
-              <button
-                type="button"
-                @click.stop="triggerPeek"
-                class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 active:scale-95 transition-all cursor-pointer select-none"
-              >
-                Peek
-              </button>
-              <button
-                type="button"
-                @click.stop="triggerMobileHint"
-                class="px-3 py-1 rounded-lg text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 active:scale-95 transition-all cursor-pointer select-none"
-              >
-                Hint
-              </button>
-            </div>
+
           </div>
 
           <!-- Non-finite form tags directly above table -->
@@ -2096,7 +2100,24 @@ onUnmounted(() => {
 
               <!-- If this cell is the tested one -->
               <div v-if="currentRandomTarget.tenseKey === 'gerund'" class="relative inline-block w-28 sm:w-32 h-[26px] align-middle">
+                <template v-if="isMobile">
+                  <button
+                    v-if="!isMobileRandomRevealed"
+                    type="button"
+                    @click.stop="revealMobileRandomTarget"
+                    class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:text-[#be185d] active:scale-95 transition-all cursor-pointer select-none"
+                  >
+                    ···
+                  </button>
+                  <span
+                    v-else
+                    class="w-full h-[26px] px-2 py-1 text-xs font-bold text-gray-900 dark:text-white inline-flex items-center justify-center font-mono"
+                  >
+                    {{ currentRandomTarget.expected.split('/')[0].trim() }}
+                  </span>
+                </template>
                 <input
+                  v-else
                   id="random-test-input"
                   ref="randomTestInputRef"
                   type="text"
@@ -2135,7 +2156,24 @@ onUnmounted(() => {
 
               <!-- If this cell is the tested one -->
               <div v-if="currentRandomTarget.tenseKey === 'pastParticiple'" class="relative inline-block w-28 sm:w-32 h-[26px] align-middle">
+                <template v-if="isMobile">
+                  <button
+                    v-if="!isMobileRandomRevealed"
+                    type="button"
+                    @click.stop="revealMobileRandomTarget"
+                    class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:text-[#be185d] active:scale-95 transition-all cursor-pointer select-none"
+                  >
+                    ···
+                  </button>
+                  <span
+                    v-else
+                    class="w-full h-[26px] px-2 py-1 text-xs font-bold text-gray-900 dark:text-white inline-flex items-center justify-center font-mono"
+                  >
+                    {{ currentRandomTarget.expected.split('/')[0].trim() }}
+                  </span>
+                </template>
                 <input
+                  v-else
                   id="random-test-input"
                   ref="randomTestInputRef"
                   type="text"
@@ -2173,9 +2211,25 @@ onUnmounted(() => {
           <!-- Mobile Stepper Header -->
           <div class="sm:hidden px-3 py-2 bg-gray-100/90 dark:bg-[#121824]/90 border-b border-gray-200 dark:border-gray-700 flex flex-col gap-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                Pronoun
-              </span>
+              <!-- Left side: Peek and Hint buttons -->
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  @click.stop="triggerPeek"
+                  class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 active:scale-95 transition-all cursor-pointer select-none"
+                >
+                  Peek
+                </button>
+                <button
+                  type="button"
+                  @click.stop="triggerMobileHint"
+                  class="px-3 py-1 rounded-lg text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 active:scale-95 transition-all cursor-pointer select-none"
+                >
+                  Hint
+                </button>
+              </div>
+
+              <!-- Right side: Arrow buttons -->
               <div class="flex items-center gap-1.5">
                 <button
                   type="button"
@@ -2275,7 +2329,24 @@ onUnmounted(() => {
                     v-else-if="currentRandomTarget.tenseKey === tense.key && currentRandomTarget.pronounIdx === p.idx"
                     class="relative inline-block w-full max-w-[130px] h-[26px] align-middle text-center"
                   >
+                    <template v-if="isMobile">
+                      <button
+                        v-if="!isMobileRandomRevealed"
+                        type="button"
+                        @click.stop="revealMobileRandomTarget"
+                        class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:text-[#be185d] active:scale-95 transition-all cursor-pointer select-none"
+                      >
+                        ···
+                      </button>
+                      <span
+                        v-else
+                        class="w-full h-[26px] px-2 py-1 text-xs font-bold text-gray-900 dark:text-white inline-flex items-center justify-center font-mono"
+                      >
+                        {{ currentRandomTarget.expected.split('/')[0].trim() }}
+                      </span>
+                    </template>
                     <input
+                      v-else
                       id="random-test-input"
                       ref="randomTestInputRef"
                       type="text"
@@ -2487,9 +2558,25 @@ onUnmounted(() => {
           <!-- Mobile Stepper Header -->
           <div class="sm:hidden px-3 py-2 bg-gray-100/90 dark:bg-[#121824]/90 border-b border-gray-200 dark:border-gray-700 flex flex-col gap-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                Pronoun
-              </span>
+              <!-- Left side: Peek and Hint buttons -->
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  @click.stop="triggerPeekForVerb(verb.verb)"
+                  class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 active:scale-95 transition-all cursor-pointer select-none"
+                >
+                  Peek
+                </button>
+                <button
+                  type="button"
+                  @click.stop="triggerMobileHintForVerb(verb.verb)"
+                  class="px-3 py-1 rounded-lg text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 active:scale-95 transition-all cursor-pointer select-none"
+                >
+                  Hint
+                </button>
+              </div>
+
+              <!-- Right side: Arrow buttons -->
               <div class="flex items-center gap-1.5">
                 <button
                   type="button"

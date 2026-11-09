@@ -499,18 +499,18 @@ const executeDelete = async () => {
               class="flex items-center justify-between gap-2 w-full"
             >
               <div
-                @click.stop="openLink(link.url)"
-                class="font-bold text-base leading-snug flex items-center gap-2 cursor-pointer min-w-0"
+
+                class="font-bold text-base leading-snug flex items-center gap-2 min-w-0"
                 :style="{ color: category.color }"
               >
                 <!-- YouTube Icon / Document Icon on the front (left side) -->
-                <span class="inline-flex items-center shrink-0">
+                <span @click.stop="openLink(link.url)" class="inline-flex items-center shrink-0 cursor-pointer" title="Open link">
                   <svg v-if="isYouTubeUrl(link.url)" class="w-4 h-4 text-gray-400 dark:text-gray-400" viewBox="0 0 24 24" fill="currentColor" title="YouTube video">
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                   </svg>
                   <DocumentTextIcon v-else class="w-4 h-4 text-gray-400 dark:text-gray-400" title="Web article" />
                 </span>
-                <span class="truncate select-text">{{ link.title.trim() }}</span>
+                <span class="truncate select-text cursor-text" @click.stop>{{ link.title.trim() }}</span>
               </div>
 
               <!-- Ellipsis icon on far right for admin to toggle manage bar -->
@@ -526,7 +526,7 @@ const executeDelete = async () => {
             </div>
 
             <!-- Description (forced capitalize first letter) -->
-            <p v-if="link.description" class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed select-text">
+            <p v-if="link.description" @click.stop class="text-xs text-gray-300 dark:text-gray-300 leading-relaxed select-text cursor-text">
               {{ capitalizeFirst(link.description) }}
             </p>
           </div>

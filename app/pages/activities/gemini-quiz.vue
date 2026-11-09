@@ -472,7 +472,7 @@ async function movePrompt(items: ChatbotPromptItem[], index: number, direction: 
               class="font-bold text-base leading-snug flex items-center gap-2 min-w-0"
               :style="{ color: currentLanguageColor }"
             >
-              <span class="truncate select-text">{{ p.title.trim() }}</span>
+              <span class="truncate select-text cursor-text" @click.stop>{{ p.title.trim() }}</span>
             </div>
 
             <!-- Desktop Admin CRUD Tools (always visible on desktop, no ellipsis) -->
