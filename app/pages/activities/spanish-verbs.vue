@@ -961,6 +961,8 @@ function validateRetestItem(item: DifficultWord) {
 }
 
 function resetTestInputs() {
+  if (hintState.value?.timer) clearTimeout(hintState.value.timer)
+  hintState.value = null
   userAnswers.value = {}
   answerStatuses.value = {}
   mobileRevealedCells.value = {}
@@ -1316,6 +1318,7 @@ function handleCellFocus(event: FocusEvent) {
 }
 
 function startRandomTest() {
+  resetTestInputs()
   isRandomTestMode.value = true
   isTestMode.value = false
   if (import.meta.client) {
@@ -1332,7 +1335,7 @@ function exitRandomTest() {
   randomTestStatus.value = null
   waitingForNextRandomKey.value = false
   isMobileRandomRevealed.value = false
-  mobileRevealedCells.value = {}
+  resetTestInputs()
   if (import.meta.client) {
     window.removeEventListener('keydown', handleRandomGlobalKeyDown)
   }
@@ -1344,7 +1347,7 @@ function enableStudyMode() {
   }
   isTestMode.value = false
   pausedFullTest.value = false
-  mobileRevealedCells.value = {}
+  resetTestInputs()
 }
 
 function toggleRandomTest() {
@@ -1356,13 +1359,14 @@ function toggleRandomTest() {
 }
 
 function toggleFullTest() {
+  checkMobile()
   if (isRandomTestMode.value) {
     exitRandomTest()
   }
   isTestMode.value = !isTestMode.value
   pausedFullTest.value = false
-  mobileRevealedCells.value = {}
-  if (isTestMode.value) {
+  resetTestInputs()
+  if (isTestMode.value && !isMobile.value) {
     nextTick(() => {
       const firstVerb = filteredVerbList.value[0]?.verb
       if (firstVerb) {
@@ -2166,7 +2170,7 @@ onUnmounted(() => {
       <!-- Single Verb Table for Random Target -->
       <div class="bg-white dark:bg-[#182030] rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
         <!-- Verb Header with Gerund & Participle -->
-        <div class="px-3 sm:px-5 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-1 sm:gap-4">
+        <div class="px-3 sm:px-5 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-row items-center justify-between gap-2 sm:gap-4">
           <div class="space-y-0.5">
             <h2
               class="text-2xl font-black text-[#be185d] dark:text-[#f43f5e] sm:text-gray-900 sm:dark:text-white capitalize tracking-tight inline-block origin-left"
@@ -2176,10 +2180,10 @@ onUnmounted(() => {
             </h2>
           </div>
 
-          <!-- Non-finite form tags directly above table (one line right-aligned under verb on mobile) -->
+          <!-- Non-finite form tags directly above table (one line right-aligned next to verb on mobile) -->
           <div class="flex items-center justify-end gap-2 sm:gap-4 flex-nowrap sm:flex-wrap">
             <!-- Gerund Box -->
-            <div class="flex flex-row sm:flex-col items-center gap-1">
+            <div class="flex flex-col items-center gap-0.5 sm:gap-1">
               <span
                 class="font-mono text-[10px] sm:text-[11px] uppercase transition-all duration-300"
                 :class="currentRandomTarget.tenseKey === 'gerund' && isMobile
@@ -2260,12 +2264,12 @@ onUnmounted(() => {
             </div>
 
             <!-- Participle Box -->
-            <div class="flex flex-row sm:flex-col items-center gap-1">
+            <div class="flex flex-col items-center gap-0.5 sm:gap-1">
               <span
                 class="font-mono text-[10px] sm:text-[11px] uppercase transition-all duration-300"
                 :class="currentRandomTarget.tenseKey === 'pastParticiple' && isMobile
                   ? ['px-2 py-0.5 rounded-full bg-[#be185d] text-white font-bold shadow-2xs', isPillPulsing ? 'animate-pulse-gentle' : '']
-                  : 'text-gray-400 dark:text-gray-500 font-medium'"
+                  : 'text-gray-600 dark:text-gray-400 font-bold'"
               >
                 Participio
               </span>
@@ -2367,7 +2371,7 @@ onUnmounted(() => {
                 </button>
               </div>
             </div>
-            <!-- Quick-jump mini pills (highlighted pronoun button is gray) -->
+            <!-- Quick-jump mini pills (highlighted pronoun button is gray with red text) -->
             <div class="flex items-center justify-between gap-1 pt-0.5">
               <button
                 v-for="p in PRONOUNS"
@@ -2378,7 +2382,7 @@ onUnmounted(() => {
                 :class="[
                   (p.idx === 0 || p.idx === 1 || p.idx === 2) ? 'flex-[0.75]' : (p.idx === 3 || p.idx === 4) ? 'flex-[1.4]' : 'flex-1',
                   currentMobilePronounIdx === p.idx
-                    ? 'bg-gray-400/80 dark:bg-gray-600 text-gray-900 dark:text-white shadow-2xs'
+                    ? 'bg-gray-400/80 dark:bg-gray-600 text-[#be185d] dark:text-[#f43f5e] shadow-2xs'
                     : 'bg-gray-200/50 dark:bg-gray-800/60 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 ]"
               >
@@ -2422,7 +2426,7 @@ onUnmounted(() => {
                         ? ['px-2.5 py-0.5 rounded-full font-bold shadow-2xs', isMobile ? 'bg-[#be185d] text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100', isPillPulsing ? 'animate-pulse-gentle' : '']
                         : ''"
                     >
-                      {{ tense.label }}
+                      <span :class="currentRandomTarget.tenseKey === tense.key ? '-translate-y-[1px] inline-block' : ''">{{ tense.label }}</span>
                     </span>
                   </td>
 
@@ -2548,11 +2552,11 @@ onUnmounted(() => {
     </div>
 
     <!-- Verb Tables: Vertically Stacked -->
-    <div v-else class="space-y-6 sm:space-y-8">
+    <div v-else class="space-y-3 sm:space-y-8">
       <!-- Active Words Title when 2+ words selected (hidden if all words are selected) -->
       <div
         v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
-        class="text-base sm:text-lg font-black uppercase tracking-wider text-center text-[#be185d] dark:text-[#f43f5e]"
+        class="text-base sm:text-lg font-black uppercase tracking-wider text-center text-[#be185d] dark:text-[#f43f5e] leading-none"
       >
         {{ selectedVerbs.join(', ') }}
       </div>
@@ -2565,19 +2569,19 @@ onUnmounted(() => {
         :class="activeStudyVerb === verb.verb ? 'ring-2 ring-[#be185d]/40' : ''"
       >
         <!-- Verb Header with Gerund and Past Participle Badges/Inputs -->
-        <div class="px-3 sm:px-5 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-1 sm:gap-4">
+        <div class="px-3 sm:px-5 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-row items-center justify-between gap-2 sm:gap-4">
           <div class="space-y-0.5">
             <h2
-              class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white capitalize tracking-tight"
+              class="text-2xl font-black text-[#be185d] dark:text-[#f43f5e] sm:text-gray-900 sm:dark:text-white capitalize tracking-tight"
               v-html="highlightText(verb.verb)"
             ></h2>
           </div>
 
-          <!-- Non-finite form tags/cards directly above table (one line right-aligned under verb on mobile) -->
+          <!-- Non-finite form tags/cards directly above table (one line right-aligned next to verb on mobile) -->
           <div class="flex items-center justify-end gap-2 sm:gap-4 flex-nowrap sm:flex-wrap">
             <!-- Gerund Box -->
-            <div class="flex flex-row sm:flex-col items-center gap-1">
-              <span class="text-gray-400 dark:text-gray-500 font-mono text-[10px] sm:text-[11px] uppercase font-medium">
+            <div class="flex flex-col items-center gap-0.5 sm:gap-1">
+              <span class="text-gray-600 dark:text-gray-400 font-mono text-[10px] sm:text-[11px] uppercase font-bold">
                 Gerundio
               </span>
 
@@ -2596,7 +2600,7 @@ onUnmounted(() => {
                     v-if="!isMobileCellRevealed(getCellKey(verb.verb, 'gerund', 0))"
                     type="button"
                     @click.stop="revealMobileCell(getCellKey(verb.verb, 'gerund', 0))"
-                    class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-gray-300 dark:border-gray-600 transition-colors duration-300 cursor-pointer select-none active:scale-95"
+                    class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-[#be185d] dark:border-[#f43f5e] transition-colors duration-300 cursor-pointer select-none active:scale-95"
                     :class="userAnswers[getCellKey(verb.verb, 'gerund', 0)]
                       ? (isHintActive(getCellKey(verb.verb, 'gerund', 0)) ? 'text-emerald-500 dark:text-emerald-400' : 'text-gray-900 dark:text-white')
                       : 'text-gray-400 dark:text-gray-500 hover:text-[#be185d]'"
@@ -2660,8 +2664,8 @@ onUnmounted(() => {
             </div>
 
             <!-- Participle Box -->
-            <div class="flex flex-row sm:flex-col items-center gap-1">
-              <span class="text-gray-400 dark:text-gray-500 font-mono text-[10px] sm:text-[11px] uppercase font-medium">
+            <div class="flex flex-col items-center gap-0.5 sm:gap-1">
+              <span class="text-gray-600 dark:text-gray-400 font-mono text-[10px] sm:text-[11px] uppercase font-bold">
                 Participio
               </span>
 
@@ -2680,7 +2684,7 @@ onUnmounted(() => {
                     v-if="!isMobileCellRevealed(getCellKey(verb.verb, 'pastParticiple', 0))"
                     type="button"
                     @click.stop="revealMobileCell(getCellKey(verb.verb, 'pastParticiple', 0))"
-                    class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-gray-300 dark:border-gray-600 transition-colors duration-300 cursor-pointer select-none active:scale-95"
+                    class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-[#be185d] dark:border-[#f43f5e] transition-colors duration-300 cursor-pointer select-none active:scale-95"
                     :class="userAnswers[getCellKey(verb.verb, 'pastParticiple', 0)]
                       ? (isHintActive(getCellKey(verb.verb, 'pastParticiple', 0)) ? 'text-emerald-500 dark:text-emerald-400' : 'text-gray-900 dark:text-white')
                       : 'text-gray-400 dark:text-gray-500 hover:text-[#be185d]'"
@@ -2749,9 +2753,9 @@ onUnmounted(() => {
         <div>
           <!-- Mobile Stepper Header -->
           <div class="sm:hidden px-3 py-2 bg-gray-100/90 dark:bg-[#121824]/90 border-b border-gray-200 dark:border-gray-700 flex flex-col gap-1.5">
-            <div class="flex items-center justify-between">
-              <!-- Left side: Peek and Hint buttons -->
-              <div class="flex items-center gap-2">
+            <div class="flex items-center" :class="isTestMode ? 'justify-between' : 'justify-end'">
+              <!-- Left side: Peek and Hint buttons (only in Normal Testing) -->
+              <div v-if="isTestMode" class="flex items-center gap-2">
                 <button
                   type="button"
                   @click.stop="triggerPeekForVerb(verb.verb)"
@@ -2788,7 +2792,7 @@ onUnmounted(() => {
                 </button>
               </div>
             </div>
-            <!-- Quick-jump mini pills (highlighted pronoun button is gray) -->
+            <!-- Quick-jump mini pills (highlighted pronoun button is gray with red text) -->
             <div class="flex items-center justify-between gap-1 pt-0.5">
               <button
                 v-for="p in PRONOUNS"
@@ -2799,7 +2803,7 @@ onUnmounted(() => {
                 :class="[
                   (p.idx === 0 || p.idx === 1 || p.idx === 2) ? 'flex-[0.75]' : (p.idx === 3 || p.idx === 4) ? 'flex-[1.4]' : 'flex-1',
                   currentMobilePronounIdx === p.idx
-                    ? 'bg-gray-400/80 dark:bg-gray-600 text-gray-900 dark:text-white shadow-2xs'
+                    ? 'bg-gray-400/80 dark:bg-gray-600 text-[#be185d] dark:text-[#f43f5e] shadow-2xs'
                     : 'bg-gray-200/50 dark:bg-gray-800/60 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 ]"
               >
@@ -2811,7 +2815,7 @@ onUnmounted(() => {
           <div class="overflow-x-auto sm:overflow-visible">
             <table class="w-full table-fixed text-left text-xs sm:text-sm border-collapse" :class="isMobile ? '' : 'min-w-[760px]'">
               <thead>
-                <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/40 dark:bg-[#121824]/40 text-gray-400 dark:text-gray-500 font-medium">
+                <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
                   <th class="py-2.5 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-[42%] sm:w-36 shrink-0"></th>
                   <th
                     v-for="p in displayedPronouns"
@@ -2819,7 +2823,14 @@ onUnmounted(() => {
                     class="py-2.5 px-2 text-center"
                     :class="isMobile ? 'w-[58%]' : 'w-[14.285%]' + (p.idx === 2 ? ' border-r border-dotted border-gray-300 dark:border-gray-600' : '')"
                   >
-                    <span class="font-mono text-[11px]">{{ p.label }}</span>
+                    <span
+                      class="font-mono text-[11px] transition-all duration-300 inline-block"
+                      :class="isMobile
+                        ? 'px-2.5 py-0.5 rounded-full font-bold shadow-2xs bg-[#be185d] text-white'
+                        : 'text-gray-600 dark:text-gray-400 font-bold'"
+                    >
+                      {{ p.label }}
+                    </span>
                   </th>
                 </tr>
               </thead>
@@ -2830,7 +2841,7 @@ onUnmounted(() => {
                   class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
                 >
                   <!-- Tense Name Left Column -->
-                  <td class="py-2.5 px-3 sm:px-4 font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap bg-gray-50/20 dark:bg-[#151d2c]/20">
+                  <td class="py-2.5 px-3 sm:px-4 font-semibold text-gray-900 dark:text-gray-200 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30">
                     {{ tense.label }}
                   </td>
 
@@ -2865,7 +2876,7 @@ onUnmounted(() => {
                           v-if="!isMobileCellRevealed(getCellKey(verb.verb, tense.key, p.idx))"
                           type="button"
                           @click.stop="revealMobileCell(getCellKey(verb.verb, tense.key, p.idx))"
-                          class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-gray-300 dark:border-gray-600 transition-colors duration-300 cursor-pointer select-none active:scale-95"
+                          class="w-full h-[26px] px-2 py-0.5 text-xs font-mono font-bold rounded-lg border border-dashed border-[#be185d] dark:border-[#f43f5e] transition-colors duration-300 cursor-pointer select-none active:scale-95"
                           :class="userAnswers[getCellKey(verb.verb, tense.key, p.idx)]
                             ? (isHintActive(getCellKey(verb.verb, tense.key, p.idx)) ? 'text-emerald-500 dark:text-emerald-400' : 'text-gray-900 dark:text-white')
                             : 'text-gray-400 dark:text-gray-500 hover:text-[#be185d]'"

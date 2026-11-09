@@ -1,4 +1,4 @@
-- ,, change01
+- x change01
 	----------------------------------------------
 	## Spanish Verb Page
 	
@@ -10,17 +10,33 @@
 			- when clicking on "Normal Testing", "Presente/Yo" box says "h" instead of ???, make it say ???
 			- same colors as on "Random Testing"
 		- study mode
-			- remove peek and hint buttons
-			- make verb e.g. "Hablar" larger and red
-			- put Gerundio and Participio to the right
+			- x remove peek and hint buttons
+			- x make verb e.g. "Hablar" larger and red
+			- x put Gerundio and Participio to the right
 				- stack label-over-inputbox
 				- so that verb + gerund/participio take up one line
-			- give the same colors to active column name (e.g. "yo") and active tense name (e.g. "Futuro") as is on Random Testing, e.g. red
-			- reduce space between group title (e.g. "Hablar, Comer, Vivir") and the first card, i.e. same space between that title and the first card as between each card
+			- x give the same colors to active column name (e.g. "yo") and active tense name (e.g. "Futuro") as is on Random Testing, e.g. red
+			- x reduce space between group title (e.g. "Hablar, Comer, Vivir") and the first card, i.e. same space between that title and the first card as between each card
 		- remote testing
 			- put Gerundio and Participio to the right
 				- stack label-over-inputbox
 				- so that verb + gerund/participio take up one line
 			- in row of pronouns, make active pronoun box have red text
 			- the "tense" text on the left e.g. "Presente" should be moved up 1 px inside the pill to be perfectly vertically centered
+	----------------------------------------------
+- ,, change02
+	----------------------------------------------
+	## Spanish Verb Page
+	
+	- mobile view
+		- normal testing
+			- remove the whole row of buttons "yo", "tú", etc.
+			- move the "<" and ">" buttons up to the right of the verb
+				- make these all the same size in the same title area there
+			- move the "gerund" and "participle" to the left side of the row with the red tense pill 
+				- abbreviate on one line: GER[___] and PAR[___]
+	- filters & settings
+		- on top upper left, icon should be left of the title "Filters & Settings"
+		- all highlighted buttons (red) should have their text in the buttons moved up 2px so the text is vertically centered
+	- add the verb "quedarse" so that when "quedar/quedarse" are chose, these two are shown
 	----------------------------------------------
