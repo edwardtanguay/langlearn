@@ -1053,7 +1053,12 @@
 	- me parece algo muy interesante
 	- eso es otra cosa interesante
 	- gracias por la explicación
-			
+- columbia
+	- párchese = chill out, man
+	- chévere = cool
+	
+- app todos
+	- Enabled users to see activities and links for their own language, so a user who has a mother language listed as "Spanish" is now able to see Spanish links on the links page, and can see the Spanish Verbs activity on the activity page.
 			
 			
 			
