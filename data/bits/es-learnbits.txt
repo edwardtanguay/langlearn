@@ -120,6 +120,78 @@
 		- me quede, te quedes, se quede, nos quedemos, os quedéis, se queden
 		- me quedara, te quedaras, se quedara, nos quedáramos, os quedarais, se quedaran
 		- quedándose, quedado
+	- irse
+		- me voy, te vas, se va, nos vamos, os vais, se van
+		- me iba, te ibas, se iba, nos íbamos, os ibais, se iban
+		- me fui, te fuiste, se fue, nos fuimos, os fuisteis, se fueron
+		- me iré, te irás, se irá, nos iremos, os iréis, se irán
+		- me iría, te irías, se iría, nos iríamos, os iríais, se irían
+		- me vaya, te vayas, se vaya, nos vayamos, os vayáis, se vayan
+		- me fuera, te fueras, se fuera, nos fuéramos, os fuerais, se fueran
+		- yéndose, ido
+	- ponerse
+		- me pongo, te pones, se pone, nos ponemos, os ponéis, se ponen
+		- me ponía, te ponías, se ponía, nos poníamos, os poníais, se ponían
+		- me puse, te pusiste, se puso, nos pusimos, os pusisteis, se pusieron
+		- me pondré, te pondrás, se pondrá, nos pondremos, os pondréis, se pondrán
+		- me pondría, te pondrías, se pondría, nos pondríamos, os pondríais, se pondrían
+		- me ponga, te pongas, se ponga, nos pongamos, os pongáis, se pongan
+		- me pusiera, te pusieras, se pusiera, nos pusiéramos, os pusierais, se pusieran
+		- poniéndose, puesto
+	- sentirse
+		- me siento, te sientes, se siente, nos sentimos, os sentís, se sienten
+		- me sentía, te sentías, se sentía, nos sentíamos, os sentíais, se sentían
+		- me sentí, te sentiste, se sintió, nos sentimos, os sentisteis, se sintieron
+		- me sentiré, te sentirás, se sentirá, nos sentiremos, os sentiréis, se sentirán
+		- me sentiría, te sentirías, se sentiría, nos sentiríamos, os sentiríais, se sentirían
+		- me sienta, te sientas, se sienta, nos sintamos, os sintáis, se sientan
+		- me sintiera, te sintieras, se sintiera, nos sintiéramos, os sintierais, se sintieran
+		- sintiéndose, sentido
+	- darse
+		- me doy, te das, se da, nos damos, os dais, se dan
+		- me daba, te dabas, se daba, nos dábamos, os dabais, se daban
+		- me di, te diste, se dio, nos dimos, os disteis, se dieron
+		- me daré, te darás, se dará, nos daremos, os daréis, se darán
+		- me daría, te darías, se daría, nos daríamos, os daríais, se darían
+		- me dé, te des, se dé, nos demos, os deis, se den
+		- me diera, te dieras, se diera, nos diéramos, os dierais, se dieran
+		- dándose, dado
+	- enterarse
+		- me entero, te enteras, se entera, nos enteramos, os enteráis, se enteran
+		- me enteraba, te enterabas, se enteraba, nos enterábamos, os enterabais, se enteraban
+		- me enteré, te enteraste, se enteró, nos enteramos, os enterasteis, se enteraron
+		- me enteraré, te enterarás, se enterará, nos enteraremos, os enteraréis, se enterarán
+		- me enteraría, te enterarías, se enteraría, nos enteraríamos, os enteraríais, se enterarían
+		- me entere, te enteres, se entere, nos enteremos, os enteréis, se enteren
+		- me enterara, te enteraras, se enterara, nos enteráramos, os enterarais, se enteraran
+		- enterándose, enterado
+	- sentarse
+		- me siento, te sientas, se sienta, nos sentamos, os sentáis, se sientan
+		- me sentaba, te sentabas, se sentaba, nos sentábamos, os sentabais, se sentaban
+		- me senté, te sentaste, se sentó, nos sentamos, os sentasteis, se sentaron
+		- me sentaré, te sentarás, se sentará, nos sentaremos, os sentaréis, se sentarán
+		- me sentaría, te sentarías, se sentaría, nos sentaríamos, os sentaríais, se sentarían
+		- me siente, te sientes, se siente, nos sentemos, os sentéis, se sienten
+		- me sentara, te sentaras, se sentara, nos sentáramos, os sentarais, se sentaran
+		- sentándose, sentado
+	- acordarse
+		- me acuerdo, te acuerdas, se acuerda, nos acordamos, os acordáis, se acuerdan
+		- me acordaba, te acordabas, se acordaba, nos acordábamos, os acordabais, se acordaban
+		- me acordé, te acordaste, se acordó, nos acordamos, os acordasteis, se acordaron
+		- me acordaré, te acordarás, se acordará, nos acordaremos, os acordaréis, se acordarán
+		- me acordaría, te acordarías, se acordaría, nos acordaríamos, os acordaríais, se acordarían
+		- me acuerde, te acuerdes, se acuerde, nos acordemos, os acordéis, se acuerden
+		- me acordara, te acordaras, se acordara, nos acordáramos, os acordarais, se acordaran
+		- acordándose, acordado
+	- verse
+		- me veo, te ves, se ve, nos vemos, os veis, se ven
+		- me veía, te veías, se veía, nos veíamos, os veíais, se veían
+		- me vi, te viste, se vio, nos vimos, os visteis, se vieron
+		- me veré, te verás, se verá, nos veremos, os veréis, se verán
+		- me vería, te verías, se vería, nos veríamos, os veríais, se verían
+		- me vea, te veas, se vea, nos veamos, os veáis, se vean
+		- me viera, te vieras, se viera, nos viéramos, os vierais, se vieran
+		- viéndose, visto
 	- venir
 		- vengo, vienes, viene, venimos, venís, vienen
 		- venía, venías, venía, veníamos, veníais, venían
