@@ -115,7 +115,7 @@ function checkMobile() {
 }
 
 function getVerbMobilePronounIdx(verbName: string): number {
-  return verbMobilePronounIdx.value[verbName] ?? 0
+  return verbMobilePronounIdx.value[verbName] ?? currentMobilePronounIdx.value
 }
 
 function getVerbMobilePronoun(verbName: string) {
@@ -127,22 +127,30 @@ function getDisplayedPronounsForVerb(_verbName: string) {
   return PRONOUNS
 }
 
-function prevVerbMobilePronoun(verbName: string) {
-  const curr = getVerbMobilePronounIdx(verbName)
-  verbMobilePronounIdx.value[verbName] = (curr - 1 + PRONOUNS.length) % PRONOUNS.length
+function prevVerbMobilePronoun(verbName?: string) {
+  const curr = verbName ? getVerbMobilePronounIdx(verbName) : currentMobilePronounIdx.value
+  const nextIdx = (curr - 1 + PRONOUNS.length) % PRONOUNS.length
+  currentMobilePronounIdx.value = nextIdx
+  for (const v of verbs) {
+    verbMobilePronounIdx.value[v.verb] = nextIdx
+  }
 }
 
-function nextVerbMobilePronoun(verbName: string) {
-  const curr = getVerbMobilePronounIdx(verbName)
-  verbMobilePronounIdx.value[verbName] = (curr + 1) % PRONOUNS.length
+function nextVerbMobilePronoun(verbName?: string) {
+  const curr = verbName ? getVerbMobilePronounIdx(verbName) : currentMobilePronounIdx.value
+  const nextIdx = (curr + 1) % PRONOUNS.length
+  currentMobilePronounIdx.value = nextIdx
+  for (const v of verbs) {
+    verbMobilePronounIdx.value[v.verb] = nextIdx
+  }
 }
 
 function prevMobilePronoun() {
-  currentMobilePronounIdx.value = (currentMobilePronounIdx.value - 1 + PRONOUNS.length) % PRONOUNS.length
+  prevVerbMobilePronoun()
 }
 
 function nextMobilePronoun() {
-  currentMobilePronounIdx.value = (currentMobilePronounIdx.value + 1) % PRONOUNS.length
+  nextVerbMobilePronoun()
 }
 
 
@@ -329,27 +337,27 @@ interface VerbGroup {
 const VERB_GROUPS: VerbGroup[] = [
   {
     id: 'reg1',
-    name: 'Regular Verbs 1',
+    name: 'regular 1',
     verbs: ['hablar', 'comer', 'vivir']
   },
   {
     id: 'reg2',
-    name: 'Regular Verbs 2',
+    name: 'regular 2',
     verbs: ['trabajar', 'aprender', 'abrir']
   },
   {
     id: 'reg3',
-    name: 'Regular Verbs 3',
+    name: 'regular 3',
     verbs: ['tomar', 'beber', 'escribir']
   },
   {
     id: 'core1',
-    name: 'Core Verbs 1',
+    name: 'core 1',
     verbs: ['ir', 'ser', 'estar']
   },
   {
     id: 'core2',
-    name: 'Core Verbs 2',
+    name: 'core 2',
     verbs: ['haber', 'hacer', 'quedar']
   },
   {
@@ -358,18 +366,18 @@ const VERB_GROUPS: VerbGroup[] = [
     verbs: ['quedar', 'quedarse']
   },
   {
-    id: 'verbos-con-se',
-    name: 'verbos con se',
-    verbs: ['quedarse', 'irse', 'darse', 'enterarse', 'sentarse', 'acordarse', 'verse']
+    id: 'pronominal',
+    name: 'pronominal',
+    verbs: ['quedarse', 'irse', 'ponerse', 'sentirse', 'darse', 'enterarse', 'sentarse', 'acordarse', 'verse']
   },
   {
     id: 'modal',
-    name: 'Modal verbs',
+    name: 'modal',
     verbs: ['poder', 'deber', 'querer', 'saber', 'soler', 'tener', 'necesitar', 'gustar']
   },
   {
-    id: 'll-words',
-    name: 'LL-words',
+    id: 'll-verbs',
+    name: 'll-verbs',
     verbs: ['llegar', 'llevar', 'llamar', 'llenar', 'llorar', 'llover']
   }
 ]
@@ -2268,6 +2276,14 @@ onUnmounted(() => {
 
     <!-- Random Test View (when isRandomTestMode is true and not searching) -->
     <div v-if="isRandomTestMode && currentRandomTarget && !isSearching" class="space-y-4">
+      <!-- Active Words Title when 2+ words selected (hidden if all words are selected) -->
+      <div
+        v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
+        class="text-base sm:text-lg font-black uppercase tracking-wider text-center text-[#be185d] dark:text-[#f43f5e] leading-none"
+      >
+        {{ selectedVerbs.join(', ') }}
+      </div>
+
       <!-- Single Verb Table for Random Target -->
       <div class="bg-white dark:bg-[#182030] rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
         <!-- Verb Header with NEXT > button (Desktop when correct) and Pronoun Arrows (Mobile) -->
@@ -2293,7 +2309,8 @@ onUnmounted(() => {
             <button
               type="button"
               @click.stop="triggerMobileHint"
-              class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+              :disabled="waitingForNextRandomKey || isMobileRandomRevealed"
+              class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none"
             >
               Hint
             </button>
@@ -2465,7 +2482,7 @@ onUnmounted(() => {
             </div>
 
             <!-- Right side: Pronoun centered above verb column -->
-            <div class="absolute inset-y-0 right-0 w-[58%] flex items-center justify-center px-2 pointer-events-none">
+            <div class="absolute inset-y-0 right-0 w-[64%] flex items-center justify-center px-2 pr-7 pointer-events-none">
               <span
                 v-if="isPageLoading"
                 class="inline-block h-3.5 w-8 rounded bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
@@ -2486,7 +2503,7 @@ onUnmounted(() => {
             <table class="w-full table-fixed text-left text-xs sm:text-sm border-collapse sm:min-w-[820px]">
               <thead class="hidden sm:table-header-group">
                 <tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100/60 dark:bg-[#121824]/60 text-gray-600 dark:text-gray-400 font-bold">
-                  <th class="py-2 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-[42%] sm:w-72 shrink-0 align-middle">
+                  <th class="py-2 px-3 sm:px-4 font-mono uppercase text-[11px] tracking-wider w-[36%] sm:w-72 shrink-0 align-middle">
                     <div class="flex items-center gap-2.5 min-w-0">
                       <!-- GER inline -->
                       <div class="inline-flex items-center gap-1">
@@ -2592,7 +2609,7 @@ onUnmounted(() => {
                     :key="p.idx"
                     class="py-2 px-2 text-center align-middle"
                     :class="[
-                      isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[calc((100%-18rem)/6)]' + (p.idx === 2 ? ' border-r border-dotted border-gray-300 dark:border-gray-600' : ''),
+                      isMobile ? 'w-[64%] pr-7' : 'w-[58%] sm:w-[calc((100%-18rem)/6)]' + (p.idx === 2 ? ' border-r border-dotted border-gray-300 dark:border-gray-600' : ''),
                       p.idx !== currentMobilePronounIdx ? 'hidden sm:table-cell' : ''
                     ]"
                   >
@@ -2619,7 +2636,7 @@ onUnmounted(() => {
                   class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
                 >
                   <td
-                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold text-gray-600 dark:text-gray-400 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-72"
+                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold text-gray-600 dark:text-gray-400 whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30 w-[36%] sm:w-72"
                   >
                     <span
                       class="inline-block"
@@ -2636,7 +2653,7 @@ onUnmounted(() => {
                     :key="p.idx"
                     class="py-2 px-2 sm:px-3 text-center"
                     :class="[
-                      isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[calc((100%-18rem)/6)]',
+                      isMobile ? 'w-[64%] pr-7' : 'w-[58%] sm:w-[calc((100%-18rem)/6)]',
                       p.idx !== currentMobilePronounIdx ? 'hidden sm:table-cell' : '',
                       { 'border-r border-dotted border-gray-300 dark:border-gray-600': !isMobile && p.idx === 2 }
                     ]"
