@@ -33,6 +33,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
         '/',
         '/links',
         '/about',
+        '/activities',
         '/activities/gemini-quiz',
         '/activities/spanish-verbs'
       ]
@@ -65,6 +66,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const isPathAllowedForMember = (path: string) => {
     if (path.startsWith('/flashcards') || path.startsWith('/flashcard')) return true
+    if (path.startsWith('/activities')) return true
     if (path.startsWith('/version/') || path === '/version') return true
     const memberAllowedPaths = [
       '/member',

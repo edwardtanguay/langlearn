@@ -120,12 +120,14 @@ function sortLanguagesByTargetOrder(langs: string[]): string[] {
 const links = ref<LinkItem[]>([])
 const isLoading = ref(true)
 const memberTargetLanguages = ref<string[]>([])
+const memberSourceLanguage = ref<string | null>(null)
 const selectedLanguageFilter = ref<string>('fr')
 
 const availableTargetLanguages = computed(() => {
   const set = new Set<string>()
-  if (loggedIn.value && memberTargetLanguages.value.length > 0) {
+  if (loggedIn.value && (memberTargetLanguages.value.length > 0 || memberSourceLanguage.value)) {
     for (const l of memberTargetLanguages.value) set.add(l.toLowerCase())
+    if (memberSourceLanguage.value) set.add(memberSourceLanguage.value.toLowerCase())
   } else {
     for (const l of links.value) {
       if (l.language) set.add(l.language.toLowerCase())
@@ -143,14 +145,26 @@ const loadLinks = async () => {
   try {
     const [linksData, meData] = await Promise.all([
       $fetch<LinkItem[]>('/api/links'),
-      loggedIn.value ? $fetch<{ targetLanguages?: string[] }>('/api/user/me').catch(() => null) : null
+      loggedIn.value ? $fetch<{ sourceLanguage?: string | null; targetLanguages?: string[] }>('/api/user/me').catch(() => null) : null
     ])
     links.value = linksData || []
-    if (meData?.targetLanguages && meData.targetLanguages.length > 0) {
-      memberTargetLanguages.value = meData.targetLanguages
-      const sorted = sortLanguagesByTargetOrder(meData.targetLanguages.map((l: string) => l.toLowerCase()))
-      if (!sorted.includes(selectedLanguageFilter.value)) {
-        selectedLanguageFilter.value = sorted[0] || 'fr'
+    if (meData) {
+      if (meData.sourceLanguage) {
+        memberSourceLanguage.value = meData.sourceLanguage.toLowerCase()
+      }
+      const userLangs: string[] = []
+      if (meData.targetLanguages && meData.targetLanguages.length > 0) {
+        memberTargetLanguages.value = meData.targetLanguages
+        userLangs.push(...meData.targetLanguages.map((l: string) => l.toLowerCase()))
+      }
+      if (meData.sourceLanguage) {
+        userLangs.push(meData.sourceLanguage.toLowerCase())
+      }
+      if (userLangs.length > 0) {
+        const sorted = sortLanguagesByTargetOrder(Array.from(new Set(userLangs)))
+        if (selectedLanguageFilter.value !== 'all' && !sorted.includes(selectedLanguageFilter.value)) {
+          selectedLanguageFilter.value = sorted[0] || 'fr'
+        }
       }
     }
   } catch (err) {
@@ -255,7 +269,11 @@ onUnmounted(() => {
 const filteredLinks = computed(() => {
   let list = links.value
   if (loggedIn.value && userRole.value !== 'unknownUser') {
-    const targets = new Set([...memberTargetLanguages.value.map(l => l.toLowerCase()), 'general'])
+    const allowed = [...memberTargetLanguages.value.map(l => l.toLowerCase()), 'general']
+    if (memberSourceLanguage.value) {
+      allowed.push(memberSourceLanguage.value.toLowerCase())
+    }
+    const targets = new Set(allowed)
     list = list.filter(l => targets.has(l.language.toLowerCase()))
   }
   if (selectedLanguageFilter.value !== 'all') {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { SparklesIcon, LinkIcon, InformationCircleIcon, ClockIcon } from '@heroicons/vue/24/outline'
+import { SparklesIcon, LinkIcon, InformationCircleIcon, ClockIcon, LanguageIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'LangLearn - Member Area',
@@ -65,6 +65,27 @@ const user = computed(() => isBypass.value ? { given_name: 'Member' } : (auth?.u
         </div>
       </NuxtLink>
 
+      <!-- Spanish Verbs Activity Card -->
+      <NuxtLink
+        to="/activities/spanish-verbs"
+        class="group p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg transition-all flex flex-col justify-between space-y-4"
+      >
+        <div class="space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center justify-center">
+            <LanguageIcon class="w-6 h-6" />
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+            Spanish Verbs
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            Master Spanish verb conjugations across tenses and pronouns with interactive tables, test mode, and difficult word retesting.
+          </p>
+        </div>
+        <div class="flex items-center text-xs font-semibold text-gray-700 dark:text-gray-300 group-hover:translate-x-1 transition-transform">
+          <span>Open activity →</span>
+        </div>
+      </NuxtLink>
+
       <!-- Useful Links Card -->
       <NuxtLink
         to="/links"
@@ -89,7 +110,7 @@ const user = computed(() => isBypass.value ? { given_name: 'Member' } : (auth?.u
       <!-- About Page Card -->
       <NuxtLink
         to="/about"
-        class="group p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg transition-all flex flex-col justify-between space-y-4 md:col-span-2"
+        class="group p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg transition-all flex flex-col justify-between space-y-4"
       >
         <div class="space-y-2">
           <div class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center justify-center">

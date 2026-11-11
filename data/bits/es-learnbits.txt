@@ -21,6 +21,15 @@
 		- coma, comas, coma, comamos, comáis, coman
 		- comiera, comieras, comiera, comiéramos, comierais, comieran
 		- comiendo, comido
+	- creer
+		- creo, crees, cree, creemos, creéis, creen
+		- creía, creías, creía, creíamos, creíais, creían
+		- creí, creíste, creyó, creímos, creísteis, creyeron
+		- creeré, creerás, creerá, creeremos, creeréis, creerán
+		- creería, creerías, creería, creeríamos, creeríais, creerían
+		- crea, creas, crea, creamos, creáis, crean
+		- creyera, creyeras, creyera, creyéramos, creyerais, creyeran
+		- creyendo, creído
 	- vivir
 		- vivo, vives, vive, vivimos, vivís, viven
 		- vivía, vivías, vivía, vivíamos, vivíais, vivían

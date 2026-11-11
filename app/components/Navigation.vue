@@ -189,13 +189,13 @@ const navItems = computed(() => {
       items.push({ name: 'Flashcards', path: '/flashcards', icon: DocumentTextIcon })
       items.push({ name: 'Batches', path: '/batches', icon: QueueListIcon })
       items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
-      items.push({ name: 'Activities', path: '/activities/gemini-quiz', icon: SparklesIcon })
+      items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
       items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     }
   } else {
     items.push({ name: 'Welcome', path: '/', icon: HomeIcon })
-    items.push({ name: 'Activities', path: '/activities/gemini-quiz', icon: SparklesIcon })
+    items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
     items.push({ name: 'Links', path: '/links', icon: LinkIcon })
     items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
   }
@@ -238,9 +238,9 @@ const navItems = computed(() => {
             </template>
           </ClientOnly>
 
-          <!-- Quick-Add Idea Drawer Trigger (Admin only) -->
+          <!-- Quick-Add Idea Drawer Trigger (All logged-in users) -->
           <ClientOnly>
-            <QuickAddIdeaDrawer v-if="loggedIn && isAdmin" />
+            <QuickAddIdeaDrawer v-if="loggedIn" />
           </ClientOnly>
         </div>
 
@@ -257,8 +257,8 @@ const navItems = computed(() => {
 
           <!-- Fully Loaded Navigation Items (Faded in all at once) -->
           <div v-else class="flex items-center space-x-6 transition-opacity duration-300 opacity-100">
-            <!-- Desktop Take-Count Goal Progress Pill (Admin only) -->
-            <button v-if="loggedIn && isAdmin"
+            <!-- Desktop Take-Count Goal Progress Pill (All logged-in users) -->
+            <button v-if="loggedIn"
                     @click.stop="showStatsModal = !showStatsModal; mobileMenuOpen = false"
                     class="px-3 py-1 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer border text-xs font-bold shadow-xs min-h-[32px]"
                     :class="countButtonClass"

@@ -70,11 +70,16 @@ function sortLanguagesByTargetOrder(languages: string[]): string[] {
 }
 
 const memberTargetLanguages = ref<string[]>([])
+const memberSourceLanguage = ref<string | null>(null)
 const selectedLanguageFilter = ref<string>('fr')
 
 const availableTargetLanguages = computed(() => {
-  if (loggedIn.value && memberTargetLanguages.value.length > 0) {
-    return sortLanguagesByTargetOrder(memberTargetLanguages.value.map(l => l.toLowerCase()))
+  if (loggedIn.value && (memberTargetLanguages.value.length > 0 || memberSourceLanguage.value)) {
+    const langs = [...memberTargetLanguages.value.map(l => l.toLowerCase())]
+    if (memberSourceLanguage.value) {
+      langs.push(memberSourceLanguage.value.toLowerCase())
+    }
+    return sortLanguagesByTargetOrder(Array.from(new Set(langs)))
   }
   const set = new Set<string>()
   for (const p of prompts.value) {
@@ -104,12 +109,22 @@ async function loadData() {
   try {
     const [data, me] = await Promise.all([
       $fetch<ChatbotPromptItem[]>('/api/chatbot-prompts?category=geminiQuizPrompts'),
-      loggedIn.value ? $fetch<{ role?: string; targetLanguages?: string[] }>('/api/user/me').catch((): { role?: string; targetLanguages?: string[] } => ({ role: 'member' })) : null
+      loggedIn.value ? $fetch<{ role?: string; sourceLanguage?: string | null; targetLanguages?: string[] }>('/api/user/me').catch((): { role?: string; sourceLanguage?: string | null; targetLanguages?: string[] } => ({ role: 'member' })) : null
     ])
     prompts.value = data || []
+    if (me?.sourceLanguage) {
+      memberSourceLanguage.value = me.sourceLanguage.toLowerCase()
+    }
+    const userLangs: string[] = []
     if (me?.targetLanguages && me.targetLanguages.length > 0) {
       memberTargetLanguages.value = me.targetLanguages
-      const sorted = sortLanguagesByTargetOrder(me.targetLanguages.map((l: string) => l.toLowerCase()))
+      userLangs.push(...me.targetLanguages.map((l: string) => l.toLowerCase()))
+    }
+    if (me?.sourceLanguage) {
+      userLangs.push(me.sourceLanguage.toLowerCase())
+    }
+    if (userLangs.length > 0) {
+      const sorted = sortLanguagesByTargetOrder(Array.from(new Set(userLangs)))
       if (!sorted.includes(selectedLanguageFilter.value)) {
         selectedLanguageFilter.value = sorted[0] || 'fr'
       }

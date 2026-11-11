@@ -461,6 +461,7 @@ const alphabetizedVerbs = computed(() => {
 
 // Search state & helper functions
 const searchQuery = ref('')
+const isSearchActiveOrFocused = ref(false)
 const previousShowControls = ref(true)
 const pausedRandomTest = ref(false)
 const pausedFullTest = ref(false)
@@ -551,6 +552,7 @@ const searchMatchingVerbs = computed(() => {
 })
 
 function handleSearchFocus() {
+  isSearchActiveOrFocused.value = true
   const activeEl = typeof document !== 'undefined' ? (document.activeElement as HTMLElement | null) : null
   if (activeEl && activeEl.id && !activeEl.id.startsWith('verb-search-input')) {
     savedFocusInputId.value = activeEl.id
@@ -566,6 +568,7 @@ function handleSearchFocus() {
 }
 
 function handleSearchInput() {
+  isSearchActiveOrFocused.value = true
   if (searchQuery.value.trim()) {
     if (isRandomTestMode.value) {
       pausedRandomTest.value = true
@@ -588,16 +591,21 @@ function handleSearchBlur(event: FocusEvent) {
   if (related && (related.id === 'verb-search-clear-btn' || related.closest('#verb-search-clear-btn'))) {
     return
   }
+  isSearchActiveOrFocused.value = false
   if (!searchQuery.value.trim()) {
     resumePausedTests()
   }
 }
 
 function resumePausedTests() {
+  if (isSearchActiveOrFocused.value || isSearching.value || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
+    return
+  }
   showControls.value = previousShowControls.value
   if (pausedRandomTest.value) {
     pausedRandomTest.value = false
     nextTick(() => {
+      if (isSearchActiveOrFocused.value || isSearching.value || document.activeElement?.id?.startsWith('verb-search-input')) return
       const el = document.getElementById('random-test-input') as HTMLInputElement | null
       if (el) {
         el.focus()
@@ -611,6 +619,7 @@ function resumePausedTests() {
     pausedFullTest.value = false
     if (savedFocusInputId.value) {
       nextTick(() => {
+        if (isSearchActiveOrFocused.value || isSearching.value || document.activeElement?.id?.startsWith('verb-search-input')) return
         const el = document.getElementById(savedFocusInputId.value) as HTMLInputElement | null
         if (el) {
           el.focus()
@@ -622,6 +631,7 @@ function resumePausedTests() {
 
 function clearSearch() {
   searchQuery.value = ''
+  isSearchActiveOrFocused.value = false
   resumePausedTests()
 }
 
@@ -890,6 +900,9 @@ function triggerPeek() {
       peekingExcludedInputId.value = null
       if (targetInputIdToRestore && typeof document !== 'undefined') {
         nextTick(() => {
+          if (isSearchActiveOrFocused.value || isSearching.value || document.activeElement?.id?.startsWith('verb-search-input')) {
+            return
+          }
           const el = document.getElementById(targetInputIdToRestore) as HTMLInputElement | null
           if (el) {
             el.focus()
@@ -1280,7 +1293,7 @@ function triggerHint(cellKey: string, expectedAnswer: string, event: KeyboardEve
 
 function handleBlur(verb: SpanishVerb, tenseKey: string, pronounIdx: number, event: FocusEvent) {
   const related = event?.relatedTarget as HTMLElement | null
-  if (related && related.id === 'verb-search-input') {
+  if (isSearchActiveOrFocused.value || (related && related.id?.startsWith('verb-search-input')) || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
     return
   }
   if (!related || !related.id || !related.id.startsWith('input-')) {
@@ -1326,6 +1339,9 @@ function moveToNextTestCell(currentInput: HTMLInputElement) {
   const targetIndex = (currentIndex + 1) % inputs.length
   const nextInput = inputs[targetIndex]
   if (nextInput) {
+    if (isSearchActiveOrFocused.value || isSearching.value || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
+      return
+    }
     nextInput.focus()
     nextInput.select()
   }
@@ -1641,6 +1657,9 @@ function toggleFullTest() {
   resetTestInputs()
   if (isTestMode.value && !isMobile.value) {
     nextTick(() => {
+      if (isSearchActiveOrFocused.value || isSearching.value || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
+        return
+      }
       const firstVerb = filteredVerbList.value[0]?.verb
       if (firstVerb) {
         let target = document.getElementById(`input-${firstVerb}-present-0`) as HTMLInputElement | null
@@ -1759,6 +1778,9 @@ function pickNextRandomTarget() {
   }
 
   nextTick(() => {
+    if (isSearchActiveOrFocused.value || isSearching.value || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
+      return
+    }
     const el = document.getElementById('random-test-input') as HTMLInputElement | null
     if (el) {
       el.focus()
@@ -1802,10 +1824,10 @@ function validateRandomTest() {
       currentRandomTarget.value.expected
     )
     nextTick(() => {
-      if (typeof document !== 'undefined' && document.activeElement?.id === 'verb-search-input') {
+      if (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input')) {
         return
       }
-      if (isSearching.value) {
+      if (isSearchActiveOrFocused.value || isSearching.value) {
         return
       }
       const el = document.getElementById('random-test-input') as HTMLInputElement | null
@@ -1820,10 +1842,7 @@ function validateRandomTest() {
 function handleRandomBlur(event?: FocusEvent) {
   if (waitingForNextRandomKey.value) return
   const related = event?.relatedTarget as HTMLElement | null
-  if (related && related.id === 'verb-search-input') {
-    return
-  }
-  if (typeof document !== 'undefined' && document.activeElement?.id === 'verb-search-input') {
+  if (isSearchActiveOrFocused.value || (related && related.id?.startsWith('verb-search-input')) || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
     return
   }
   if (isSearching.value) {
@@ -1903,6 +1922,7 @@ function handleRandomInputKeyDown(event: KeyboardEvent) {
 }
 
 function handleRandomGlobalKeyDown(e: KeyboardEvent) {
+  if (isSearchActiveOrFocused.value || isSearching.value || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) return
   if (!isRandomTestMode.value) return
   if (waitingForNextRandomKey.value) {
     if (ignoreNextRandomKey) return
@@ -2033,6 +2053,7 @@ onUnmounted(() => {
           @input="handleSearchInput"
           @focus="handleSearchFocus"
           @blur="handleSearchBlur"
+          @pointerdown="handleSearchFocus"
           @mousedown="handleSearchFocus"
           @keydown.esc="clearSearch"
           placeholder="Search conjugations..."
@@ -2072,6 +2093,7 @@ onUnmounted(() => {
           @input="handleSearchInput"
           @focus="handleSearchFocus"
           @blur="handleSearchBlur"
+          @pointerdown="handleSearchFocus"
           @mousedown="handleSearchFocus"
           @keydown.esc="clearSearch"
           placeholder="Search conjugations..."

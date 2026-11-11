@@ -122,6 +122,67 @@
     "pastParticiple": "comido"
   },
   {
+    "verb": "creer",
+    "present": [
+      "creo",
+      "crees",
+      "cree",
+      "creemos",
+      "creéis",
+      "creen"
+    ],
+    "imperfect": [
+      "creía",
+      "creías",
+      "creía",
+      "creíamos",
+      "creíais",
+      "creían"
+    ],
+    "preterite": [
+      "creí",
+      "creíste",
+      "creyó",
+      "creímos",
+      "creísteis",
+      "creyeron"
+    ],
+    "future": [
+      "creeré",
+      "creerás",
+      "creerá",
+      "creeremos",
+      "creeréis",
+      "creerán"
+    ],
+    "conditional": [
+      "creería",
+      "creerías",
+      "creería",
+      "creeríamos",
+      "creeríais",
+      "creerían"
+    ],
+    "presentSubjunctive": [
+      "crea",
+      "creas",
+      "crea",
+      "creamos",
+      "creáis",
+      "crean"
+    ],
+    "imperfectSubjunctive": [
+      "creyera",
+      "creyeras",
+      "creyera",
+      "creyéramos",
+      "creyerais",
+      "creyeran"
+    ],
+    "gerund": "creyendo",
+    "pastParticiple": "creído"
+  },
+  {
     "verb": "vivir",
     "present": [
       "vivo",
