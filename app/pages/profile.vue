@@ -385,7 +385,7 @@ const handleSaveGroupSize = async () => {
               </div>
             </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              Source language is your <strong class="text-gray-700 dark:text-gray-200 font-bold">native language</strong>. Currently, the site UI is always in English regardless of the source language. The source language will be more relevant when the import function is made available to members.
+              Source language is your <strong class="text-gray-700 dark:text-gray-200 font-bold">native language</strong>. Currently, the site UI is always in English regardless of the source language. 
             </p>
           </div>
 
