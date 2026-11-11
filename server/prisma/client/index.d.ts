@@ -83,6 +83,16 @@ export type BasicWordInfo = $Result.DefaultSelection<Prisma.$BasicWordInfoPayloa
  * 
  */
 export type UserCorrectionSection = $Result.DefaultSelection<Prisma.$UserCorrectionSectionPayload>
+/**
+ * Model UserFlashcardBatch
+ * 
+ */
+export type UserFlashcardBatch = $Result.DefaultSelection<Prisma.$UserFlashcardBatchPayload>
+/**
+ * Model HowtoItem
+ * 
+ */
+export type HowtoItem = $Result.DefaultSelection<Prisma.$HowtoItemPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -344,6 +354,26 @@ export class PrismaClient<
     * ```
     */
   get userCorrectionSection(): Prisma.UserCorrectionSectionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userFlashcardBatch`: Exposes CRUD operations for the **UserFlashcardBatch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserFlashcardBatches
+    * const userFlashcardBatches = await prisma.userFlashcardBatch.findMany()
+    * ```
+    */
+  get userFlashcardBatch(): Prisma.UserFlashcardBatchDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.howtoItem`: Exposes CRUD operations for the **HowtoItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HowtoItems
+    * const howtoItems = await prisma.howtoItem.findMany()
+    * ```
+    */
+  get howtoItem(): Prisma.HowtoItemDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -791,7 +821,9 @@ export namespace Prisma {
     MobileImport: 'MobileImport',
     ChatbotPrompt: 'ChatbotPrompt',
     BasicWordInfo: 'BasicWordInfo',
-    UserCorrectionSection: 'UserCorrectionSection'
+    UserCorrectionSection: 'UserCorrectionSection',
+    UserFlashcardBatch: 'UserFlashcardBatch',
+    HowtoItem: 'HowtoItem'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -807,7 +839,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "link" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport" | "chatbotPrompt" | "basicWordInfo" | "userCorrectionSection"
+      modelProps: "user" | "link" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport" | "chatbotPrompt" | "basicWordInfo" | "userCorrectionSection" | "userFlashcardBatch" | "howtoItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1847,6 +1879,154 @@ export namespace Prisma {
           }
         }
       }
+      UserFlashcardBatch: {
+        payload: Prisma.$UserFlashcardBatchPayload<ExtArgs>
+        fields: Prisma.UserFlashcardBatchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFlashcardBatchFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFlashcardBatchFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFlashcardBatchFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFlashcardBatchFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>
+          }
+          findMany: {
+            args: Prisma.UserFlashcardBatchFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>[]
+          }
+          create: {
+            args: Prisma.UserFlashcardBatchCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>
+          }
+          createMany: {
+            args: Prisma.UserFlashcardBatchCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserFlashcardBatchCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>[]
+          }
+          delete: {
+            args: Prisma.UserFlashcardBatchDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>
+          }
+          update: {
+            args: Prisma.UserFlashcardBatchUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserFlashcardBatchDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserFlashcardBatchUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserFlashcardBatchUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserFlashcardBatchUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserFlashcardBatchPayload>
+          }
+          aggregate: {
+            args: Prisma.UserFlashcardBatchAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserFlashcardBatch>
+          }
+          groupBy: {
+            args: Prisma.UserFlashcardBatchGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserFlashcardBatchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserFlashcardBatchCountArgs<ExtArgs>
+            result: $Utils.Optional<UserFlashcardBatchCountAggregateOutputType> | number
+          }
+        }
+      }
+      HowtoItem: {
+        payload: Prisma.$HowtoItemPayload<ExtArgs>
+        fields: Prisma.HowtoItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HowtoItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HowtoItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>
+          }
+          findFirst: {
+            args: Prisma.HowtoItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HowtoItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>
+          }
+          findMany: {
+            args: Prisma.HowtoItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>[]
+          }
+          create: {
+            args: Prisma.HowtoItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>
+          }
+          createMany: {
+            args: Prisma.HowtoItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HowtoItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>[]
+          }
+          delete: {
+            args: Prisma.HowtoItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>
+          }
+          update: {
+            args: Prisma.HowtoItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.HowtoItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HowtoItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HowtoItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>[]
+          }
+          upsert: {
+            args: Prisma.HowtoItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HowtoItemPayload>
+          }
+          aggregate: {
+            args: Prisma.HowtoItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHowtoItem>
+          }
+          groupBy: {
+            args: Prisma.HowtoItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HowtoItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HowtoItemCountArgs<ExtArgs>
+            result: $Utils.Optional<HowtoItemCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1969,6 +2149,8 @@ export namespace Prisma {
     chatbotPrompt?: ChatbotPromptOmit
     basicWordInfo?: BasicWordInfoOmit
     userCorrectionSection?: UserCorrectionSectionOmit
+    userFlashcardBatch?: UserFlashcardBatchOmit
+    howtoItem?: HowtoItemOmit
   }
 
   /* Types for Logging */
@@ -2051,6 +2233,7 @@ export namespace Prisma {
   export type UserCountOutputType = {
     flashcards: number
     activities: number
+    flashcardBatches: number
     versionItems: number
     mobileImports: number
     basicWordInfos: number
@@ -2060,6 +2243,7 @@ export namespace Prisma {
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | UserCountOutputTypeCountFlashcardsArgs
     activities?: boolean | UserCountOutputTypeCountActivitiesArgs
+    flashcardBatches?: boolean | UserCountOutputTypeCountFlashcardBatchesArgs
     versionItems?: boolean | UserCountOutputTypeCountVersionItemsArgs
     mobileImports?: boolean | UserCountOutputTypeCountMobileImportsArgs
     basicWordInfos?: boolean | UserCountOutputTypeCountBasicWordInfosArgs
@@ -2089,6 +2273,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserFlashcardActivityWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFlashcardBatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserFlashcardBatchWhereInput
   }
 
   /**
@@ -2288,12 +2479,14 @@ export namespace Prisma {
   }
 
   export type UserAvgAggregateOutputType = {
+    points: number | null
     minutesToTestAgain: number | null
     dailyTakeGoal: number | null
     testingGroupSize: number | null
   }
 
   export type UserSumAggregateOutputType = {
+    points: number | null
     minutesToTestAgain: number | null
     dailyTakeGoal: number | null
     testingGroupSize: number | null
@@ -2305,9 +2498,12 @@ export namespace Prisma {
     lastName: string | null
     email: string | null
     role: string | null
+    points: number | null
     minutesToTestAgain: number | null
     dailyTakeGoal: number | null
     testingGroupSize: number | null
+    lastFlashcardStrategy: string | null
+    lastFlashcardLanguage: string | null
     sourceLanguage: string | null
     targetLanguages: string | null
   }
@@ -2318,9 +2514,12 @@ export namespace Prisma {
     lastName: string | null
     email: string | null
     role: string | null
+    points: number | null
     minutesToTestAgain: number | null
     dailyTakeGoal: number | null
     testingGroupSize: number | null
+    lastFlashcardStrategy: string | null
+    lastFlashcardLanguage: string | null
     sourceLanguage: string | null
     targetLanguages: string | null
   }
@@ -2331,9 +2530,12 @@ export namespace Prisma {
     lastName: number
     email: number
     role: number
+    points: number
     minutesToTestAgain: number
     dailyTakeGoal: number
     testingGroupSize: number
+    lastFlashcardStrategy: number
+    lastFlashcardLanguage: number
     sourceLanguage: number
     targetLanguages: number
     _all: number
@@ -2341,12 +2543,14 @@ export namespace Prisma {
 
 
   export type UserAvgAggregateInputType = {
+    points?: true
     minutesToTestAgain?: true
     dailyTakeGoal?: true
     testingGroupSize?: true
   }
 
   export type UserSumAggregateInputType = {
+    points?: true
     minutesToTestAgain?: true
     dailyTakeGoal?: true
     testingGroupSize?: true
@@ -2358,9 +2562,12 @@ export namespace Prisma {
     lastName?: true
     email?: true
     role?: true
+    points?: true
     minutesToTestAgain?: true
     dailyTakeGoal?: true
     testingGroupSize?: true
+    lastFlashcardStrategy?: true
+    lastFlashcardLanguage?: true
     sourceLanguage?: true
     targetLanguages?: true
   }
@@ -2371,9 +2578,12 @@ export namespace Prisma {
     lastName?: true
     email?: true
     role?: true
+    points?: true
     minutesToTestAgain?: true
     dailyTakeGoal?: true
     testingGroupSize?: true
+    lastFlashcardStrategy?: true
+    lastFlashcardLanguage?: true
     sourceLanguage?: true
     targetLanguages?: true
   }
@@ -2384,9 +2594,12 @@ export namespace Prisma {
     lastName?: true
     email?: true
     role?: true
+    points?: true
     minutesToTestAgain?: true
     dailyTakeGoal?: true
     testingGroupSize?: true
+    lastFlashcardStrategy?: true
+    lastFlashcardLanguage?: true
     sourceLanguage?: true
     targetLanguages?: true
     _all?: true
@@ -2484,9 +2697,12 @@ export namespace Prisma {
     lastName: string
     email: string
     role: string
+    points: number
     minutesToTestAgain: number
     dailyTakeGoal: number
     testingGroupSize: number
+    lastFlashcardStrategy: string | null
+    lastFlashcardLanguage: string | null
     sourceLanguage: string | null
     targetLanguages: string | null
     _count: UserCountAggregateOutputType | null
@@ -2516,13 +2732,17 @@ export namespace Prisma {
     lastName?: boolean
     email?: boolean
     role?: boolean
+    points?: boolean
     minutesToTestAgain?: boolean
     dailyTakeGoal?: boolean
     testingGroupSize?: boolean
+    lastFlashcardStrategy?: boolean
+    lastFlashcardLanguage?: boolean
     sourceLanguage?: boolean
     targetLanguages?: boolean
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
+    flashcardBatches?: boolean | User$flashcardBatchesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
     mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     basicWordInfos?: boolean | User$basicWordInfosArgs<ExtArgs>
@@ -2536,9 +2756,12 @@ export namespace Prisma {
     lastName?: boolean
     email?: boolean
     role?: boolean
+    points?: boolean
     minutesToTestAgain?: boolean
     dailyTakeGoal?: boolean
     testingGroupSize?: boolean
+    lastFlashcardStrategy?: boolean
+    lastFlashcardLanguage?: boolean
     sourceLanguage?: boolean
     targetLanguages?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2549,9 +2772,12 @@ export namespace Prisma {
     lastName?: boolean
     email?: boolean
     role?: boolean
+    points?: boolean
     minutesToTestAgain?: boolean
     dailyTakeGoal?: boolean
     testingGroupSize?: boolean
+    lastFlashcardStrategy?: boolean
+    lastFlashcardLanguage?: boolean
     sourceLanguage?: boolean
     targetLanguages?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2562,17 +2788,21 @@ export namespace Prisma {
     lastName?: boolean
     email?: boolean
     role?: boolean
+    points?: boolean
     minutesToTestAgain?: boolean
     dailyTakeGoal?: boolean
     testingGroupSize?: boolean
+    lastFlashcardStrategy?: boolean
+    lastFlashcardLanguage?: boolean
     sourceLanguage?: boolean
     targetLanguages?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "minutesToTestAgain" | "dailyTakeGoal" | "testingGroupSize" | "sourceLanguage" | "targetLanguages", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "points" | "minutesToTestAgain" | "dailyTakeGoal" | "testingGroupSize" | "lastFlashcardStrategy" | "lastFlashcardLanguage" | "sourceLanguage" | "targetLanguages", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
+    flashcardBatches?: boolean | User$flashcardBatchesArgs<ExtArgs>
     versionItems?: boolean | User$versionItemsArgs<ExtArgs>
     mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     basicWordInfos?: boolean | User$basicWordInfosArgs<ExtArgs>
@@ -2587,6 +2817,7 @@ export namespace Prisma {
     objects: {
       flashcards: Prisma.$FlashcardPayload<ExtArgs>[]
       activities: Prisma.$UserFlashcardActivityPayload<ExtArgs>[]
+      flashcardBatches: Prisma.$UserFlashcardBatchPayload<ExtArgs>[]
       versionItems: Prisma.$VersionItemPayload<ExtArgs>[]
       mobileImports: Prisma.$MobileImportPayload<ExtArgs>[]
       basicWordInfos: Prisma.$BasicWordInfoPayload<ExtArgs>[]
@@ -2598,9 +2829,12 @@ export namespace Prisma {
       lastName: string
       email: string
       role: string
+      points: number
       minutesToTestAgain: number
       dailyTakeGoal: number
       testingGroupSize: number
+      lastFlashcardStrategy: string | null
+      lastFlashcardLanguage: string | null
       sourceLanguage: string | null
       targetLanguages: string | null
     }, ExtArgs["result"]["user"]>
@@ -2999,6 +3233,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     flashcards<T extends User$flashcardsArgs<ExtArgs> = {}>(args?: Subset<T, User$flashcardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activities<T extends User$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    flashcardBatches<T extends User$flashcardBatchesArgs<ExtArgs> = {}>(args?: Subset<T, User$flashcardBatchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     versionItems<T extends User$versionItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$versionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VersionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mobileImports<T extends User$mobileImportsArgs<ExtArgs> = {}>(args?: Subset<T, User$mobileImportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     basicWordInfos<T extends User$basicWordInfosArgs<ExtArgs> = {}>(args?: Subset<T, User$basicWordInfosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3037,9 +3272,12 @@ export namespace Prisma {
     readonly lastName: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
+    readonly points: FieldRef<"User", 'Int'>
     readonly minutesToTestAgain: FieldRef<"User", 'Int'>
     readonly dailyTakeGoal: FieldRef<"User", 'Int'>
     readonly testingGroupSize: FieldRef<"User", 'Int'>
+    readonly lastFlashcardStrategy: FieldRef<"User", 'String'>
+    readonly lastFlashcardLanguage: FieldRef<"User", 'String'>
     readonly sourceLanguage: FieldRef<"User", 'String'>
     readonly targetLanguages: FieldRef<"User", 'String'>
   }
@@ -3478,6 +3716,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserFlashcardActivityScalarFieldEnum | UserFlashcardActivityScalarFieldEnum[]
+  }
+
+  /**
+   * User.flashcardBatches
+   */
+  export type User$flashcardBatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    where?: UserFlashcardBatchWhereInput
+    orderBy?: UserFlashcardBatchOrderByWithRelationInput | UserFlashcardBatchOrderByWithRelationInput[]
+    cursor?: UserFlashcardBatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserFlashcardBatchScalarFieldEnum | UserFlashcardBatchScalarFieldEnum[]
   }
 
   /**
@@ -18169,6 +18431,2267 @@ export namespace Prisma {
 
 
   /**
+   * Model UserFlashcardBatch
+   */
+
+  export type AggregateUserFlashcardBatch = {
+    _count: UserFlashcardBatchCountAggregateOutputType | null
+    _avg: UserFlashcardBatchAvgAggregateOutputType | null
+    _sum: UserFlashcardBatchSumAggregateOutputType | null
+    _min: UserFlashcardBatchMinAggregateOutputType | null
+    _max: UserFlashcardBatchMaxAggregateOutputType | null
+  }
+
+  export type UserFlashcardBatchAvgAggregateOutputType = {
+    learnedInBatchCount: number | null
+    totalInBatch: number | null
+  }
+
+  export type UserFlashcardBatchSumAggregateOutputType = {
+    learnedInBatchCount: number | null
+    totalInBatch: number | null
+  }
+
+  export type UserFlashcardBatchMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    strategy: string | null
+    language: string | null
+    slotsJson: string | null
+    queueIdsJson: string | null
+    allCardIdsJson: string | null
+    currentCardId: string | null
+    learnedInBatchCount: number | null
+    totalInBatch: number | null
+    isBatchComplete: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserFlashcardBatchMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    strategy: string | null
+    language: string | null
+    slotsJson: string | null
+    queueIdsJson: string | null
+    allCardIdsJson: string | null
+    currentCardId: string | null
+    learnedInBatchCount: number | null
+    totalInBatch: number | null
+    isBatchComplete: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserFlashcardBatchCountAggregateOutputType = {
+    id: number
+    userId: number
+    strategy: number
+    language: number
+    slotsJson: number
+    queueIdsJson: number
+    allCardIdsJson: number
+    currentCardId: number
+    learnedInBatchCount: number
+    totalInBatch: number
+    isBatchComplete: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserFlashcardBatchAvgAggregateInputType = {
+    learnedInBatchCount?: true
+    totalInBatch?: true
+  }
+
+  export type UserFlashcardBatchSumAggregateInputType = {
+    learnedInBatchCount?: true
+    totalInBatch?: true
+  }
+
+  export type UserFlashcardBatchMinAggregateInputType = {
+    id?: true
+    userId?: true
+    strategy?: true
+    language?: true
+    slotsJson?: true
+    queueIdsJson?: true
+    allCardIdsJson?: true
+    currentCardId?: true
+    learnedInBatchCount?: true
+    totalInBatch?: true
+    isBatchComplete?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserFlashcardBatchMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    strategy?: true
+    language?: true
+    slotsJson?: true
+    queueIdsJson?: true
+    allCardIdsJson?: true
+    currentCardId?: true
+    learnedInBatchCount?: true
+    totalInBatch?: true
+    isBatchComplete?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserFlashcardBatchCountAggregateInputType = {
+    id?: true
+    userId?: true
+    strategy?: true
+    language?: true
+    slotsJson?: true
+    queueIdsJson?: true
+    allCardIdsJson?: true
+    currentCardId?: true
+    learnedInBatchCount?: true
+    totalInBatch?: true
+    isBatchComplete?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserFlashcardBatchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserFlashcardBatch to aggregate.
+     */
+    where?: UserFlashcardBatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserFlashcardBatches to fetch.
+     */
+    orderBy?: UserFlashcardBatchOrderByWithRelationInput | UserFlashcardBatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserFlashcardBatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserFlashcardBatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserFlashcardBatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserFlashcardBatches
+    **/
+    _count?: true | UserFlashcardBatchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserFlashcardBatchAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserFlashcardBatchSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserFlashcardBatchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserFlashcardBatchMaxAggregateInputType
+  }
+
+  export type GetUserFlashcardBatchAggregateType<T extends UserFlashcardBatchAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserFlashcardBatch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserFlashcardBatch[P]>
+      : GetScalarType<T[P], AggregateUserFlashcardBatch[P]>
+  }
+
+
+
+
+  export type UserFlashcardBatchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserFlashcardBatchWhereInput
+    orderBy?: UserFlashcardBatchOrderByWithAggregationInput | UserFlashcardBatchOrderByWithAggregationInput[]
+    by: UserFlashcardBatchScalarFieldEnum[] | UserFlashcardBatchScalarFieldEnum
+    having?: UserFlashcardBatchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserFlashcardBatchCountAggregateInputType | true
+    _avg?: UserFlashcardBatchAvgAggregateInputType
+    _sum?: UserFlashcardBatchSumAggregateInputType
+    _min?: UserFlashcardBatchMinAggregateInputType
+    _max?: UserFlashcardBatchMaxAggregateInputType
+  }
+
+  export type UserFlashcardBatchGroupByOutputType = {
+    id: string
+    userId: string
+    strategy: string
+    language: string
+    slotsJson: string
+    queueIdsJson: string
+    allCardIdsJson: string
+    currentCardId: string | null
+    learnedInBatchCount: number
+    totalInBatch: number
+    isBatchComplete: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: UserFlashcardBatchCountAggregateOutputType | null
+    _avg: UserFlashcardBatchAvgAggregateOutputType | null
+    _sum: UserFlashcardBatchSumAggregateOutputType | null
+    _min: UserFlashcardBatchMinAggregateOutputType | null
+    _max: UserFlashcardBatchMaxAggregateOutputType | null
+  }
+
+  type GetUserFlashcardBatchGroupByPayload<T extends UserFlashcardBatchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserFlashcardBatchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserFlashcardBatchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserFlashcardBatchGroupByOutputType[P]>
+            : GetScalarType<T[P], UserFlashcardBatchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserFlashcardBatchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    strategy?: boolean
+    language?: boolean
+    slotsJson?: boolean
+    queueIdsJson?: boolean
+    allCardIdsJson?: boolean
+    currentCardId?: boolean
+    learnedInBatchCount?: boolean
+    totalInBatch?: boolean
+    isBatchComplete?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userFlashcardBatch"]>
+
+  export type UserFlashcardBatchSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    strategy?: boolean
+    language?: boolean
+    slotsJson?: boolean
+    queueIdsJson?: boolean
+    allCardIdsJson?: boolean
+    currentCardId?: boolean
+    learnedInBatchCount?: boolean
+    totalInBatch?: boolean
+    isBatchComplete?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userFlashcardBatch"]>
+
+  export type UserFlashcardBatchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    strategy?: boolean
+    language?: boolean
+    slotsJson?: boolean
+    queueIdsJson?: boolean
+    allCardIdsJson?: boolean
+    currentCardId?: boolean
+    learnedInBatchCount?: boolean
+    totalInBatch?: boolean
+    isBatchComplete?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userFlashcardBatch"]>
+
+  export type UserFlashcardBatchSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    strategy?: boolean
+    language?: boolean
+    slotsJson?: boolean
+    queueIdsJson?: boolean
+    allCardIdsJson?: boolean
+    currentCardId?: boolean
+    learnedInBatchCount?: boolean
+    totalInBatch?: boolean
+    isBatchComplete?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserFlashcardBatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "strategy" | "language" | "slotsJson" | "queueIdsJson" | "allCardIdsJson" | "currentCardId" | "learnedInBatchCount" | "totalInBatch" | "isBatchComplete" | "createdAt" | "updatedAt", ExtArgs["result"]["userFlashcardBatch"]>
+  export type UserFlashcardBatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserFlashcardBatchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserFlashcardBatchIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserFlashcardBatchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserFlashcardBatch"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      strategy: string
+      language: string
+      slotsJson: string
+      queueIdsJson: string
+      allCardIdsJson: string
+      currentCardId: string | null
+      learnedInBatchCount: number
+      totalInBatch: number
+      isBatchComplete: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userFlashcardBatch"]>
+    composites: {}
+  }
+
+  type UserFlashcardBatchGetPayload<S extends boolean | null | undefined | UserFlashcardBatchDefaultArgs> = $Result.GetResult<Prisma.$UserFlashcardBatchPayload, S>
+
+  type UserFlashcardBatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFlashcardBatchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserFlashcardBatchCountAggregateInputType | true
+    }
+
+  export interface UserFlashcardBatchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserFlashcardBatch'], meta: { name: 'UserFlashcardBatch' } }
+    /**
+     * Find zero or one UserFlashcardBatch that matches the filter.
+     * @param {UserFlashcardBatchFindUniqueArgs} args - Arguments to find a UserFlashcardBatch
+     * @example
+     * // Get one UserFlashcardBatch
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFlashcardBatchFindUniqueArgs>(args: SelectSubset<T, UserFlashcardBatchFindUniqueArgs<ExtArgs>>): Prisma__UserFlashcardBatchClient<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserFlashcardBatch that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFlashcardBatchFindUniqueOrThrowArgs} args - Arguments to find a UserFlashcardBatch
+     * @example
+     * // Get one UserFlashcardBatch
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFlashcardBatchFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFlashcardBatchFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserFlashcardBatchClient<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserFlashcardBatch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardBatchFindFirstArgs} args - Arguments to find a UserFlashcardBatch
+     * @example
+     * // Get one UserFlashcardBatch
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFlashcardBatchFindFirstArgs>(args?: SelectSubset<T, UserFlashcardBatchFindFirstArgs<ExtArgs>>): Prisma__UserFlashcardBatchClient<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserFlashcardBatch that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardBatchFindFirstOrThrowArgs} args - Arguments to find a UserFlashcardBatch
+     * @example
+     * // Get one UserFlashcardBatch
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFlashcardBatchFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFlashcardBatchFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserFlashcardBatchClient<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserFlashcardBatches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardBatchFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserFlashcardBatches
+     * const userFlashcardBatches = await prisma.userFlashcardBatch.findMany()
+     * 
+     * // Get first 10 UserFlashcardBatches
+     * const userFlashcardBatches = await prisma.userFlashcardBatch.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userFlashcardBatchWithIdOnly = await prisma.userFlashcardBatch.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFlashcardBatchFindManyArgs>(args?: SelectSubset<T, UserFlashcardBatchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserFlashcardBatch.
+     * @param {UserFlashcardBatchCreateArgs} args - Arguments to create a UserFlashcardBatch.
+     * @example
+     * // Create one UserFlashcardBatch
+     * const UserFlashcardBatch = await prisma.userFlashcardBatch.create({
+     *   data: {
+     *     // ... data to create a UserFlashcardBatch
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserFlashcardBatchCreateArgs>(args: SelectSubset<T, UserFlashcardBatchCreateArgs<ExtArgs>>): Prisma__UserFlashcardBatchClient<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserFlashcardBatches.
+     * @param {UserFlashcardBatchCreateManyArgs} args - Arguments to create many UserFlashcardBatches.
+     * @example
+     * // Create many UserFlashcardBatches
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserFlashcardBatchCreateManyArgs>(args?: SelectSubset<T, UserFlashcardBatchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserFlashcardBatches and returns the data saved in the database.
+     * @param {UserFlashcardBatchCreateManyAndReturnArgs} args - Arguments to create many UserFlashcardBatches.
+     * @example
+     * // Create many UserFlashcardBatches
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserFlashcardBatches and only return the `id`
+     * const userFlashcardBatchWithIdOnly = await prisma.userFlashcardBatch.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserFlashcardBatchCreateManyAndReturnArgs>(args?: SelectSubset<T, UserFlashcardBatchCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserFlashcardBatch.
+     * @param {UserFlashcardBatchDeleteArgs} args - Arguments to delete one UserFlashcardBatch.
+     * @example
+     * // Delete one UserFlashcardBatch
+     * const UserFlashcardBatch = await prisma.userFlashcardBatch.delete({
+     *   where: {
+     *     // ... filter to delete one UserFlashcardBatch
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserFlashcardBatchDeleteArgs>(args: SelectSubset<T, UserFlashcardBatchDeleteArgs<ExtArgs>>): Prisma__UserFlashcardBatchClient<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserFlashcardBatch.
+     * @param {UserFlashcardBatchUpdateArgs} args - Arguments to update one UserFlashcardBatch.
+     * @example
+     * // Update one UserFlashcardBatch
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserFlashcardBatchUpdateArgs>(args: SelectSubset<T, UserFlashcardBatchUpdateArgs<ExtArgs>>): Prisma__UserFlashcardBatchClient<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserFlashcardBatches.
+     * @param {UserFlashcardBatchDeleteManyArgs} args - Arguments to filter UserFlashcardBatches to delete.
+     * @example
+     * // Delete a few UserFlashcardBatches
+     * const { count } = await prisma.userFlashcardBatch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserFlashcardBatchDeleteManyArgs>(args?: SelectSubset<T, UserFlashcardBatchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserFlashcardBatches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardBatchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserFlashcardBatches
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserFlashcardBatchUpdateManyArgs>(args: SelectSubset<T, UserFlashcardBatchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserFlashcardBatches and returns the data updated in the database.
+     * @param {UserFlashcardBatchUpdateManyAndReturnArgs} args - Arguments to update many UserFlashcardBatches.
+     * @example
+     * // Update many UserFlashcardBatches
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserFlashcardBatches and only return the `id`
+     * const userFlashcardBatchWithIdOnly = await prisma.userFlashcardBatch.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserFlashcardBatchUpdateManyAndReturnArgs>(args: SelectSubset<T, UserFlashcardBatchUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserFlashcardBatch.
+     * @param {UserFlashcardBatchUpsertArgs} args - Arguments to update or create a UserFlashcardBatch.
+     * @example
+     * // Update or create a UserFlashcardBatch
+     * const userFlashcardBatch = await prisma.userFlashcardBatch.upsert({
+     *   create: {
+     *     // ... data to create a UserFlashcardBatch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserFlashcardBatch we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserFlashcardBatchUpsertArgs>(args: SelectSubset<T, UserFlashcardBatchUpsertArgs<ExtArgs>>): Prisma__UserFlashcardBatchClient<$Result.GetResult<Prisma.$UserFlashcardBatchPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserFlashcardBatches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardBatchCountArgs} args - Arguments to filter UserFlashcardBatches to count.
+     * @example
+     * // Count the number of UserFlashcardBatches
+     * const count = await prisma.userFlashcardBatch.count({
+     *   where: {
+     *     // ... the filter for the UserFlashcardBatches we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserFlashcardBatchCountArgs>(
+      args?: Subset<T, UserFlashcardBatchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserFlashcardBatchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserFlashcardBatch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardBatchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserFlashcardBatchAggregateArgs>(args: Subset<T, UserFlashcardBatchAggregateArgs>): Prisma.PrismaPromise<GetUserFlashcardBatchAggregateType<T>>
+
+    /**
+     * Group by UserFlashcardBatch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFlashcardBatchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserFlashcardBatchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserFlashcardBatchGroupByArgs['orderBy'] }
+        : { orderBy?: UserFlashcardBatchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserFlashcardBatchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserFlashcardBatchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserFlashcardBatch model
+   */
+  readonly fields: UserFlashcardBatchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserFlashcardBatch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserFlashcardBatchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserFlashcardBatch model
+   */
+  interface UserFlashcardBatchFieldRefs {
+    readonly id: FieldRef<"UserFlashcardBatch", 'String'>
+    readonly userId: FieldRef<"UserFlashcardBatch", 'String'>
+    readonly strategy: FieldRef<"UserFlashcardBatch", 'String'>
+    readonly language: FieldRef<"UserFlashcardBatch", 'String'>
+    readonly slotsJson: FieldRef<"UserFlashcardBatch", 'String'>
+    readonly queueIdsJson: FieldRef<"UserFlashcardBatch", 'String'>
+    readonly allCardIdsJson: FieldRef<"UserFlashcardBatch", 'String'>
+    readonly currentCardId: FieldRef<"UserFlashcardBatch", 'String'>
+    readonly learnedInBatchCount: FieldRef<"UserFlashcardBatch", 'Int'>
+    readonly totalInBatch: FieldRef<"UserFlashcardBatch", 'Int'>
+    readonly isBatchComplete: FieldRef<"UserFlashcardBatch", 'Boolean'>
+    readonly createdAt: FieldRef<"UserFlashcardBatch", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserFlashcardBatch", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserFlashcardBatch findUnique
+   */
+  export type UserFlashcardBatchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardBatch to fetch.
+     */
+    where: UserFlashcardBatchWhereUniqueInput
+  }
+
+  /**
+   * UserFlashcardBatch findUniqueOrThrow
+   */
+  export type UserFlashcardBatchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardBatch to fetch.
+     */
+    where: UserFlashcardBatchWhereUniqueInput
+  }
+
+  /**
+   * UserFlashcardBatch findFirst
+   */
+  export type UserFlashcardBatchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardBatch to fetch.
+     */
+    where?: UserFlashcardBatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserFlashcardBatches to fetch.
+     */
+    orderBy?: UserFlashcardBatchOrderByWithRelationInput | UserFlashcardBatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserFlashcardBatches.
+     */
+    cursor?: UserFlashcardBatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserFlashcardBatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserFlashcardBatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserFlashcardBatches.
+     */
+    distinct?: UserFlashcardBatchScalarFieldEnum | UserFlashcardBatchScalarFieldEnum[]
+  }
+
+  /**
+   * UserFlashcardBatch findFirstOrThrow
+   */
+  export type UserFlashcardBatchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardBatch to fetch.
+     */
+    where?: UserFlashcardBatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserFlashcardBatches to fetch.
+     */
+    orderBy?: UserFlashcardBatchOrderByWithRelationInput | UserFlashcardBatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserFlashcardBatches.
+     */
+    cursor?: UserFlashcardBatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserFlashcardBatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserFlashcardBatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserFlashcardBatches.
+     */
+    distinct?: UserFlashcardBatchScalarFieldEnum | UserFlashcardBatchScalarFieldEnum[]
+  }
+
+  /**
+   * UserFlashcardBatch findMany
+   */
+  export type UserFlashcardBatchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * Filter, which UserFlashcardBatches to fetch.
+     */
+    where?: UserFlashcardBatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserFlashcardBatches to fetch.
+     */
+    orderBy?: UserFlashcardBatchOrderByWithRelationInput | UserFlashcardBatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserFlashcardBatches.
+     */
+    cursor?: UserFlashcardBatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserFlashcardBatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserFlashcardBatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserFlashcardBatches.
+     */
+    distinct?: UserFlashcardBatchScalarFieldEnum | UserFlashcardBatchScalarFieldEnum[]
+  }
+
+  /**
+   * UserFlashcardBatch create
+   */
+  export type UserFlashcardBatchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserFlashcardBatch.
+     */
+    data: XOR<UserFlashcardBatchCreateInput, UserFlashcardBatchUncheckedCreateInput>
+  }
+
+  /**
+   * UserFlashcardBatch createMany
+   */
+  export type UserFlashcardBatchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserFlashcardBatches.
+     */
+    data: UserFlashcardBatchCreateManyInput | UserFlashcardBatchCreateManyInput[]
+  }
+
+  /**
+   * UserFlashcardBatch createManyAndReturn
+   */
+  export type UserFlashcardBatchCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserFlashcardBatches.
+     */
+    data: UserFlashcardBatchCreateManyInput | UserFlashcardBatchCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserFlashcardBatch update
+   */
+  export type UserFlashcardBatchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserFlashcardBatch.
+     */
+    data: XOR<UserFlashcardBatchUpdateInput, UserFlashcardBatchUncheckedUpdateInput>
+    /**
+     * Choose, which UserFlashcardBatch to update.
+     */
+    where: UserFlashcardBatchWhereUniqueInput
+  }
+
+  /**
+   * UserFlashcardBatch updateMany
+   */
+  export type UserFlashcardBatchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserFlashcardBatches.
+     */
+    data: XOR<UserFlashcardBatchUpdateManyMutationInput, UserFlashcardBatchUncheckedUpdateManyInput>
+    /**
+     * Filter which UserFlashcardBatches to update
+     */
+    where?: UserFlashcardBatchWhereInput
+    /**
+     * Limit how many UserFlashcardBatches to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserFlashcardBatch updateManyAndReturn
+   */
+  export type UserFlashcardBatchUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * The data used to update UserFlashcardBatches.
+     */
+    data: XOR<UserFlashcardBatchUpdateManyMutationInput, UserFlashcardBatchUncheckedUpdateManyInput>
+    /**
+     * Filter which UserFlashcardBatches to update
+     */
+    where?: UserFlashcardBatchWhereInput
+    /**
+     * Limit how many UserFlashcardBatches to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserFlashcardBatch upsert
+   */
+  export type UserFlashcardBatchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserFlashcardBatch to update in case it exists.
+     */
+    where: UserFlashcardBatchWhereUniqueInput
+    /**
+     * In case the UserFlashcardBatch found by the `where` argument doesn't exist, create a new UserFlashcardBatch with this data.
+     */
+    create: XOR<UserFlashcardBatchCreateInput, UserFlashcardBatchUncheckedCreateInput>
+    /**
+     * In case the UserFlashcardBatch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserFlashcardBatchUpdateInput, UserFlashcardBatchUncheckedUpdateInput>
+  }
+
+  /**
+   * UserFlashcardBatch delete
+   */
+  export type UserFlashcardBatchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+    /**
+     * Filter which UserFlashcardBatch to delete.
+     */
+    where: UserFlashcardBatchWhereUniqueInput
+  }
+
+  /**
+   * UserFlashcardBatch deleteMany
+   */
+  export type UserFlashcardBatchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserFlashcardBatches to delete
+     */
+    where?: UserFlashcardBatchWhereInput
+    /**
+     * Limit how many UserFlashcardBatches to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserFlashcardBatch without action
+   */
+  export type UserFlashcardBatchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserFlashcardBatch
+     */
+    select?: UserFlashcardBatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserFlashcardBatch
+     */
+    omit?: UserFlashcardBatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserFlashcardBatchInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model HowtoItem
+   */
+
+  export type AggregateHowtoItem = {
+    _count: HowtoItemCountAggregateOutputType | null
+    _avg: HowtoItemAvgAggregateOutputType | null
+    _sum: HowtoItemSumAggregateOutputType | null
+    _min: HowtoItemMinAggregateOutputType | null
+    _max: HowtoItemMaxAggregateOutputType | null
+  }
+
+  export type HowtoItemAvgAggregateOutputType = {
+    rank: number | null
+  }
+
+  export type HowtoItemSumAggregateOutputType = {
+    rank: number | null
+  }
+
+  export type HowtoItemMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    rank: number | null
+    slug: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HowtoItemMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    rank: number | null
+    slug: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HowtoItemCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    rank: number
+    slug: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HowtoItemAvgAggregateInputType = {
+    rank?: true
+  }
+
+  export type HowtoItemSumAggregateInputType = {
+    rank?: true
+  }
+
+  export type HowtoItemMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    rank?: true
+    slug?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HowtoItemMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    rank?: true
+    slug?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HowtoItemCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    rank?: true
+    slug?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HowtoItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HowtoItem to aggregate.
+     */
+    where?: HowtoItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HowtoItems to fetch.
+     */
+    orderBy?: HowtoItemOrderByWithRelationInput | HowtoItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HowtoItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HowtoItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HowtoItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HowtoItems
+    **/
+    _count?: true | HowtoItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HowtoItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HowtoItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HowtoItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HowtoItemMaxAggregateInputType
+  }
+
+  export type GetHowtoItemAggregateType<T extends HowtoItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateHowtoItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHowtoItem[P]>
+      : GetScalarType<T[P], AggregateHowtoItem[P]>
+  }
+
+
+
+
+  export type HowtoItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HowtoItemWhereInput
+    orderBy?: HowtoItemOrderByWithAggregationInput | HowtoItemOrderByWithAggregationInput[]
+    by: HowtoItemScalarFieldEnum[] | HowtoItemScalarFieldEnum
+    having?: HowtoItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HowtoItemCountAggregateInputType | true
+    _avg?: HowtoItemAvgAggregateInputType
+    _sum?: HowtoItemSumAggregateInputType
+    _min?: HowtoItemMinAggregateInputType
+    _max?: HowtoItemMaxAggregateInputType
+  }
+
+  export type HowtoItemGroupByOutputType = {
+    id: string
+    title: string
+    description: string
+    rank: number
+    slug: string
+    createdAt: Date
+    updatedAt: Date
+    _count: HowtoItemCountAggregateOutputType | null
+    _avg: HowtoItemAvgAggregateOutputType | null
+    _sum: HowtoItemSumAggregateOutputType | null
+    _min: HowtoItemMinAggregateOutputType | null
+    _max: HowtoItemMaxAggregateOutputType | null
+  }
+
+  type GetHowtoItemGroupByPayload<T extends HowtoItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HowtoItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HowtoItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HowtoItemGroupByOutputType[P]>
+            : GetScalarType<T[P], HowtoItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HowtoItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    rank?: boolean
+    slug?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["howtoItem"]>
+
+  export type HowtoItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    rank?: boolean
+    slug?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["howtoItem"]>
+
+  export type HowtoItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    rank?: boolean
+    slug?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["howtoItem"]>
+
+  export type HowtoItemSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    rank?: boolean
+    slug?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type HowtoItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "rank" | "slug" | "createdAt" | "updatedAt", ExtArgs["result"]["howtoItem"]>
+
+  export type $HowtoItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HowtoItem"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string
+      rank: number
+      slug: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["howtoItem"]>
+    composites: {}
+  }
+
+  type HowtoItemGetPayload<S extends boolean | null | undefined | HowtoItemDefaultArgs> = $Result.GetResult<Prisma.$HowtoItemPayload, S>
+
+  type HowtoItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HowtoItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HowtoItemCountAggregateInputType | true
+    }
+
+  export interface HowtoItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HowtoItem'], meta: { name: 'HowtoItem' } }
+    /**
+     * Find zero or one HowtoItem that matches the filter.
+     * @param {HowtoItemFindUniqueArgs} args - Arguments to find a HowtoItem
+     * @example
+     * // Get one HowtoItem
+     * const howtoItem = await prisma.howtoItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HowtoItemFindUniqueArgs>(args: SelectSubset<T, HowtoItemFindUniqueArgs<ExtArgs>>): Prisma__HowtoItemClient<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HowtoItem that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HowtoItemFindUniqueOrThrowArgs} args - Arguments to find a HowtoItem
+     * @example
+     * // Get one HowtoItem
+     * const howtoItem = await prisma.howtoItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HowtoItemFindUniqueOrThrowArgs>(args: SelectSubset<T, HowtoItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HowtoItemClient<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HowtoItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HowtoItemFindFirstArgs} args - Arguments to find a HowtoItem
+     * @example
+     * // Get one HowtoItem
+     * const howtoItem = await prisma.howtoItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HowtoItemFindFirstArgs>(args?: SelectSubset<T, HowtoItemFindFirstArgs<ExtArgs>>): Prisma__HowtoItemClient<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HowtoItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HowtoItemFindFirstOrThrowArgs} args - Arguments to find a HowtoItem
+     * @example
+     * // Get one HowtoItem
+     * const howtoItem = await prisma.howtoItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HowtoItemFindFirstOrThrowArgs>(args?: SelectSubset<T, HowtoItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__HowtoItemClient<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HowtoItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HowtoItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HowtoItems
+     * const howtoItems = await prisma.howtoItem.findMany()
+     * 
+     * // Get first 10 HowtoItems
+     * const howtoItems = await prisma.howtoItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const howtoItemWithIdOnly = await prisma.howtoItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HowtoItemFindManyArgs>(args?: SelectSubset<T, HowtoItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HowtoItem.
+     * @param {HowtoItemCreateArgs} args - Arguments to create a HowtoItem.
+     * @example
+     * // Create one HowtoItem
+     * const HowtoItem = await prisma.howtoItem.create({
+     *   data: {
+     *     // ... data to create a HowtoItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends HowtoItemCreateArgs>(args: SelectSubset<T, HowtoItemCreateArgs<ExtArgs>>): Prisma__HowtoItemClient<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HowtoItems.
+     * @param {HowtoItemCreateManyArgs} args - Arguments to create many HowtoItems.
+     * @example
+     * // Create many HowtoItems
+     * const howtoItem = await prisma.howtoItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HowtoItemCreateManyArgs>(args?: SelectSubset<T, HowtoItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HowtoItems and returns the data saved in the database.
+     * @param {HowtoItemCreateManyAndReturnArgs} args - Arguments to create many HowtoItems.
+     * @example
+     * // Create many HowtoItems
+     * const howtoItem = await prisma.howtoItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HowtoItems and only return the `id`
+     * const howtoItemWithIdOnly = await prisma.howtoItem.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HowtoItemCreateManyAndReturnArgs>(args?: SelectSubset<T, HowtoItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HowtoItem.
+     * @param {HowtoItemDeleteArgs} args - Arguments to delete one HowtoItem.
+     * @example
+     * // Delete one HowtoItem
+     * const HowtoItem = await prisma.howtoItem.delete({
+     *   where: {
+     *     // ... filter to delete one HowtoItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HowtoItemDeleteArgs>(args: SelectSubset<T, HowtoItemDeleteArgs<ExtArgs>>): Prisma__HowtoItemClient<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HowtoItem.
+     * @param {HowtoItemUpdateArgs} args - Arguments to update one HowtoItem.
+     * @example
+     * // Update one HowtoItem
+     * const howtoItem = await prisma.howtoItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HowtoItemUpdateArgs>(args: SelectSubset<T, HowtoItemUpdateArgs<ExtArgs>>): Prisma__HowtoItemClient<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HowtoItems.
+     * @param {HowtoItemDeleteManyArgs} args - Arguments to filter HowtoItems to delete.
+     * @example
+     * // Delete a few HowtoItems
+     * const { count } = await prisma.howtoItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HowtoItemDeleteManyArgs>(args?: SelectSubset<T, HowtoItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HowtoItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HowtoItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HowtoItems
+     * const howtoItem = await prisma.howtoItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HowtoItemUpdateManyArgs>(args: SelectSubset<T, HowtoItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HowtoItems and returns the data updated in the database.
+     * @param {HowtoItemUpdateManyAndReturnArgs} args - Arguments to update many HowtoItems.
+     * @example
+     * // Update many HowtoItems
+     * const howtoItem = await prisma.howtoItem.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HowtoItems and only return the `id`
+     * const howtoItemWithIdOnly = await prisma.howtoItem.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HowtoItemUpdateManyAndReturnArgs>(args: SelectSubset<T, HowtoItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HowtoItem.
+     * @param {HowtoItemUpsertArgs} args - Arguments to update or create a HowtoItem.
+     * @example
+     * // Update or create a HowtoItem
+     * const howtoItem = await prisma.howtoItem.upsert({
+     *   create: {
+     *     // ... data to create a HowtoItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HowtoItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HowtoItemUpsertArgs>(args: SelectSubset<T, HowtoItemUpsertArgs<ExtArgs>>): Prisma__HowtoItemClient<$Result.GetResult<Prisma.$HowtoItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HowtoItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HowtoItemCountArgs} args - Arguments to filter HowtoItems to count.
+     * @example
+     * // Count the number of HowtoItems
+     * const count = await prisma.howtoItem.count({
+     *   where: {
+     *     // ... the filter for the HowtoItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends HowtoItemCountArgs>(
+      args?: Subset<T, HowtoItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HowtoItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HowtoItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HowtoItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HowtoItemAggregateArgs>(args: Subset<T, HowtoItemAggregateArgs>): Prisma.PrismaPromise<GetHowtoItemAggregateType<T>>
+
+    /**
+     * Group by HowtoItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HowtoItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HowtoItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HowtoItemGroupByArgs['orderBy'] }
+        : { orderBy?: HowtoItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HowtoItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHowtoItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HowtoItem model
+   */
+  readonly fields: HowtoItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HowtoItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HowtoItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HowtoItem model
+   */
+  interface HowtoItemFieldRefs {
+    readonly id: FieldRef<"HowtoItem", 'String'>
+    readonly title: FieldRef<"HowtoItem", 'String'>
+    readonly description: FieldRef<"HowtoItem", 'String'>
+    readonly rank: FieldRef<"HowtoItem", 'Float'>
+    readonly slug: FieldRef<"HowtoItem", 'String'>
+    readonly createdAt: FieldRef<"HowtoItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"HowtoItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HowtoItem findUnique
+   */
+  export type HowtoItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * Filter, which HowtoItem to fetch.
+     */
+    where: HowtoItemWhereUniqueInput
+  }
+
+  /**
+   * HowtoItem findUniqueOrThrow
+   */
+  export type HowtoItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * Filter, which HowtoItem to fetch.
+     */
+    where: HowtoItemWhereUniqueInput
+  }
+
+  /**
+   * HowtoItem findFirst
+   */
+  export type HowtoItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * Filter, which HowtoItem to fetch.
+     */
+    where?: HowtoItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HowtoItems to fetch.
+     */
+    orderBy?: HowtoItemOrderByWithRelationInput | HowtoItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HowtoItems.
+     */
+    cursor?: HowtoItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HowtoItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HowtoItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HowtoItems.
+     */
+    distinct?: HowtoItemScalarFieldEnum | HowtoItemScalarFieldEnum[]
+  }
+
+  /**
+   * HowtoItem findFirstOrThrow
+   */
+  export type HowtoItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * Filter, which HowtoItem to fetch.
+     */
+    where?: HowtoItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HowtoItems to fetch.
+     */
+    orderBy?: HowtoItemOrderByWithRelationInput | HowtoItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HowtoItems.
+     */
+    cursor?: HowtoItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HowtoItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HowtoItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HowtoItems.
+     */
+    distinct?: HowtoItemScalarFieldEnum | HowtoItemScalarFieldEnum[]
+  }
+
+  /**
+   * HowtoItem findMany
+   */
+  export type HowtoItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * Filter, which HowtoItems to fetch.
+     */
+    where?: HowtoItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HowtoItems to fetch.
+     */
+    orderBy?: HowtoItemOrderByWithRelationInput | HowtoItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HowtoItems.
+     */
+    cursor?: HowtoItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HowtoItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HowtoItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HowtoItems.
+     */
+    distinct?: HowtoItemScalarFieldEnum | HowtoItemScalarFieldEnum[]
+  }
+
+  /**
+   * HowtoItem create
+   */
+  export type HowtoItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * The data needed to create a HowtoItem.
+     */
+    data: XOR<HowtoItemCreateInput, HowtoItemUncheckedCreateInput>
+  }
+
+  /**
+   * HowtoItem createMany
+   */
+  export type HowtoItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HowtoItems.
+     */
+    data: HowtoItemCreateManyInput | HowtoItemCreateManyInput[]
+  }
+
+  /**
+   * HowtoItem createManyAndReturn
+   */
+  export type HowtoItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * The data used to create many HowtoItems.
+     */
+    data: HowtoItemCreateManyInput | HowtoItemCreateManyInput[]
+  }
+
+  /**
+   * HowtoItem update
+   */
+  export type HowtoItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * The data needed to update a HowtoItem.
+     */
+    data: XOR<HowtoItemUpdateInput, HowtoItemUncheckedUpdateInput>
+    /**
+     * Choose, which HowtoItem to update.
+     */
+    where: HowtoItemWhereUniqueInput
+  }
+
+  /**
+   * HowtoItem updateMany
+   */
+  export type HowtoItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HowtoItems.
+     */
+    data: XOR<HowtoItemUpdateManyMutationInput, HowtoItemUncheckedUpdateManyInput>
+    /**
+     * Filter which HowtoItems to update
+     */
+    where?: HowtoItemWhereInput
+    /**
+     * Limit how many HowtoItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HowtoItem updateManyAndReturn
+   */
+  export type HowtoItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * The data used to update HowtoItems.
+     */
+    data: XOR<HowtoItemUpdateManyMutationInput, HowtoItemUncheckedUpdateManyInput>
+    /**
+     * Filter which HowtoItems to update
+     */
+    where?: HowtoItemWhereInput
+    /**
+     * Limit how many HowtoItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HowtoItem upsert
+   */
+  export type HowtoItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * The filter to search for the HowtoItem to update in case it exists.
+     */
+    where: HowtoItemWhereUniqueInput
+    /**
+     * In case the HowtoItem found by the `where` argument doesn't exist, create a new HowtoItem with this data.
+     */
+    create: XOR<HowtoItemCreateInput, HowtoItemUncheckedCreateInput>
+    /**
+     * In case the HowtoItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HowtoItemUpdateInput, HowtoItemUncheckedUpdateInput>
+  }
+
+  /**
+   * HowtoItem delete
+   */
+  export type HowtoItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+    /**
+     * Filter which HowtoItem to delete.
+     */
+    where: HowtoItemWhereUniqueInput
+  }
+
+  /**
+   * HowtoItem deleteMany
+   */
+  export type HowtoItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HowtoItems to delete
+     */
+    where?: HowtoItemWhereInput
+    /**
+     * Limit how many HowtoItems to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HowtoItem without action
+   */
+  export type HowtoItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HowtoItem
+     */
+    select?: HowtoItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HowtoItem
+     */
+    omit?: HowtoItemOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -18185,9 +20708,12 @@ export namespace Prisma {
     lastName: 'lastName',
     email: 'email',
     role: 'role',
+    points: 'points',
     minutesToTestAgain: 'minutesToTestAgain',
     dailyTakeGoal: 'dailyTakeGoal',
     testingGroupSize: 'testingGroupSize',
+    lastFlashcardStrategy: 'lastFlashcardStrategy',
+    lastFlashcardLanguage: 'lastFlashcardLanguage',
     sourceLanguage: 'sourceLanguage',
     targetLanguages: 'targetLanguages'
   };
@@ -18368,6 +20894,38 @@ export namespace Prisma {
   export type UserCorrectionSectionScalarFieldEnum = (typeof UserCorrectionSectionScalarFieldEnum)[keyof typeof UserCorrectionSectionScalarFieldEnum]
 
 
+  export const UserFlashcardBatchScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    strategy: 'strategy',
+    language: 'language',
+    slotsJson: 'slotsJson',
+    queueIdsJson: 'queueIdsJson',
+    allCardIdsJson: 'allCardIdsJson',
+    currentCardId: 'currentCardId',
+    learnedInBatchCount: 'learnedInBatchCount',
+    totalInBatch: 'totalInBatch',
+    isBatchComplete: 'isBatchComplete',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserFlashcardBatchScalarFieldEnum = (typeof UserFlashcardBatchScalarFieldEnum)[keyof typeof UserFlashcardBatchScalarFieldEnum]
+
+
+  export const HowtoItemScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    rank: 'rank',
+    slug: 'slug',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HowtoItemScalarFieldEnum = (typeof HowtoItemScalarFieldEnum)[keyof typeof HowtoItemScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -18436,13 +20994,17 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
+    points?: IntFilter<"User"> | number
     minutesToTestAgain?: IntFilter<"User"> | number
     dailyTakeGoal?: IntFilter<"User"> | number
     testingGroupSize?: IntFilter<"User"> | number
+    lastFlashcardStrategy?: StringNullableFilter<"User"> | string | null
+    lastFlashcardLanguage?: StringNullableFilter<"User"> | string | null
     sourceLanguage?: StringNullableFilter<"User"> | string | null
     targetLanguages?: StringNullableFilter<"User"> | string | null
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
+    flashcardBatches?: UserFlashcardBatchListRelationFilter
     versionItems?: VersionItemListRelationFilter
     mobileImports?: MobileImportListRelationFilter
     basicWordInfos?: BasicWordInfoListRelationFilter
@@ -18455,13 +21017,17 @@ export namespace Prisma {
     lastName?: SortOrder
     email?: SortOrder
     role?: SortOrder
+    points?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
     testingGroupSize?: SortOrder
+    lastFlashcardStrategy?: SortOrderInput | SortOrder
+    lastFlashcardLanguage?: SortOrderInput | SortOrder
     sourceLanguage?: SortOrderInput | SortOrder
     targetLanguages?: SortOrderInput | SortOrder
     flashcards?: FlashcardOrderByRelationAggregateInput
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
+    flashcardBatches?: UserFlashcardBatchOrderByRelationAggregateInput
     versionItems?: VersionItemOrderByRelationAggregateInput
     mobileImports?: MobileImportOrderByRelationAggregateInput
     basicWordInfos?: BasicWordInfoOrderByRelationAggregateInput
@@ -18477,13 +21043,17 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
+    points?: IntFilter<"User"> | number
     minutesToTestAgain?: IntFilter<"User"> | number
     dailyTakeGoal?: IntFilter<"User"> | number
     testingGroupSize?: IntFilter<"User"> | number
+    lastFlashcardStrategy?: StringNullableFilter<"User"> | string | null
+    lastFlashcardLanguage?: StringNullableFilter<"User"> | string | null
     sourceLanguage?: StringNullableFilter<"User"> | string | null
     targetLanguages?: StringNullableFilter<"User"> | string | null
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
+    flashcardBatches?: UserFlashcardBatchListRelationFilter
     versionItems?: VersionItemListRelationFilter
     mobileImports?: MobileImportListRelationFilter
     basicWordInfos?: BasicWordInfoListRelationFilter
@@ -18496,9 +21066,12 @@ export namespace Prisma {
     lastName?: SortOrder
     email?: SortOrder
     role?: SortOrder
+    points?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
     testingGroupSize?: SortOrder
+    lastFlashcardStrategy?: SortOrderInput | SortOrder
+    lastFlashcardLanguage?: SortOrderInput | SortOrder
     sourceLanguage?: SortOrderInput | SortOrder
     targetLanguages?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -18517,9 +21090,12 @@ export namespace Prisma {
     lastName?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     role?: StringWithAggregatesFilter<"User"> | string
+    points?: IntWithAggregatesFilter<"User"> | number
     minutesToTestAgain?: IntWithAggregatesFilter<"User"> | number
     dailyTakeGoal?: IntWithAggregatesFilter<"User"> | number
     testingGroupSize?: IntWithAggregatesFilter<"User"> | number
+    lastFlashcardStrategy?: StringNullableWithAggregatesFilter<"User"> | string | null
+    lastFlashcardLanguage?: StringNullableWithAggregatesFilter<"User"> | string | null
     sourceLanguage?: StringNullableWithAggregatesFilter<"User"> | string | null
     targetLanguages?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
@@ -19427,19 +22003,185 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"UserCorrectionSection"> | Date | string
   }
 
+  export type UserFlashcardBatchWhereInput = {
+    AND?: UserFlashcardBatchWhereInput | UserFlashcardBatchWhereInput[]
+    OR?: UserFlashcardBatchWhereInput[]
+    NOT?: UserFlashcardBatchWhereInput | UserFlashcardBatchWhereInput[]
+    id?: StringFilter<"UserFlashcardBatch"> | string
+    userId?: StringFilter<"UserFlashcardBatch"> | string
+    strategy?: StringFilter<"UserFlashcardBatch"> | string
+    language?: StringFilter<"UserFlashcardBatch"> | string
+    slotsJson?: StringFilter<"UserFlashcardBatch"> | string
+    queueIdsJson?: StringFilter<"UserFlashcardBatch"> | string
+    allCardIdsJson?: StringFilter<"UserFlashcardBatch"> | string
+    currentCardId?: StringNullableFilter<"UserFlashcardBatch"> | string | null
+    learnedInBatchCount?: IntFilter<"UserFlashcardBatch"> | number
+    totalInBatch?: IntFilter<"UserFlashcardBatch"> | number
+    isBatchComplete?: BoolFilter<"UserFlashcardBatch"> | boolean
+    createdAt?: DateTimeFilter<"UserFlashcardBatch"> | Date | string
+    updatedAt?: DateTimeFilter<"UserFlashcardBatch"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserFlashcardBatchOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    strategy?: SortOrder
+    language?: SortOrder
+    slotsJson?: SortOrder
+    queueIdsJson?: SortOrder
+    allCardIdsJson?: SortOrder
+    currentCardId?: SortOrderInput | SortOrder
+    learnedInBatchCount?: SortOrder
+    totalInBatch?: SortOrder
+    isBatchComplete?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserFlashcardBatchWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_strategy_language?: UserFlashcardBatchUserIdStrategyLanguageCompoundUniqueInput
+    AND?: UserFlashcardBatchWhereInput | UserFlashcardBatchWhereInput[]
+    OR?: UserFlashcardBatchWhereInput[]
+    NOT?: UserFlashcardBatchWhereInput | UserFlashcardBatchWhereInput[]
+    userId?: StringFilter<"UserFlashcardBatch"> | string
+    strategy?: StringFilter<"UserFlashcardBatch"> | string
+    language?: StringFilter<"UserFlashcardBatch"> | string
+    slotsJson?: StringFilter<"UserFlashcardBatch"> | string
+    queueIdsJson?: StringFilter<"UserFlashcardBatch"> | string
+    allCardIdsJson?: StringFilter<"UserFlashcardBatch"> | string
+    currentCardId?: StringNullableFilter<"UserFlashcardBatch"> | string | null
+    learnedInBatchCount?: IntFilter<"UserFlashcardBatch"> | number
+    totalInBatch?: IntFilter<"UserFlashcardBatch"> | number
+    isBatchComplete?: BoolFilter<"UserFlashcardBatch"> | boolean
+    createdAt?: DateTimeFilter<"UserFlashcardBatch"> | Date | string
+    updatedAt?: DateTimeFilter<"UserFlashcardBatch"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_strategy_language">
+
+  export type UserFlashcardBatchOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    strategy?: SortOrder
+    language?: SortOrder
+    slotsJson?: SortOrder
+    queueIdsJson?: SortOrder
+    allCardIdsJson?: SortOrder
+    currentCardId?: SortOrderInput | SortOrder
+    learnedInBatchCount?: SortOrder
+    totalInBatch?: SortOrder
+    isBatchComplete?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserFlashcardBatchCountOrderByAggregateInput
+    _avg?: UserFlashcardBatchAvgOrderByAggregateInput
+    _max?: UserFlashcardBatchMaxOrderByAggregateInput
+    _min?: UserFlashcardBatchMinOrderByAggregateInput
+    _sum?: UserFlashcardBatchSumOrderByAggregateInput
+  }
+
+  export type UserFlashcardBatchScalarWhereWithAggregatesInput = {
+    AND?: UserFlashcardBatchScalarWhereWithAggregatesInput | UserFlashcardBatchScalarWhereWithAggregatesInput[]
+    OR?: UserFlashcardBatchScalarWhereWithAggregatesInput[]
+    NOT?: UserFlashcardBatchScalarWhereWithAggregatesInput | UserFlashcardBatchScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserFlashcardBatch"> | string
+    userId?: StringWithAggregatesFilter<"UserFlashcardBatch"> | string
+    strategy?: StringWithAggregatesFilter<"UserFlashcardBatch"> | string
+    language?: StringWithAggregatesFilter<"UserFlashcardBatch"> | string
+    slotsJson?: StringWithAggregatesFilter<"UserFlashcardBatch"> | string
+    queueIdsJson?: StringWithAggregatesFilter<"UserFlashcardBatch"> | string
+    allCardIdsJson?: StringWithAggregatesFilter<"UserFlashcardBatch"> | string
+    currentCardId?: StringNullableWithAggregatesFilter<"UserFlashcardBatch"> | string | null
+    learnedInBatchCount?: IntWithAggregatesFilter<"UserFlashcardBatch"> | number
+    totalInBatch?: IntWithAggregatesFilter<"UserFlashcardBatch"> | number
+    isBatchComplete?: BoolWithAggregatesFilter<"UserFlashcardBatch"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"UserFlashcardBatch"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserFlashcardBatch"> | Date | string
+  }
+
+  export type HowtoItemWhereInput = {
+    AND?: HowtoItemWhereInput | HowtoItemWhereInput[]
+    OR?: HowtoItemWhereInput[]
+    NOT?: HowtoItemWhereInput | HowtoItemWhereInput[]
+    id?: StringFilter<"HowtoItem"> | string
+    title?: StringFilter<"HowtoItem"> | string
+    description?: StringFilter<"HowtoItem"> | string
+    rank?: FloatFilter<"HowtoItem"> | number
+    slug?: StringFilter<"HowtoItem"> | string
+    createdAt?: DateTimeFilter<"HowtoItem"> | Date | string
+    updatedAt?: DateTimeFilter<"HowtoItem"> | Date | string
+  }
+
+  export type HowtoItemOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    rank?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HowtoItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: HowtoItemWhereInput | HowtoItemWhereInput[]
+    OR?: HowtoItemWhereInput[]
+    NOT?: HowtoItemWhereInput | HowtoItemWhereInput[]
+    title?: StringFilter<"HowtoItem"> | string
+    description?: StringFilter<"HowtoItem"> | string
+    rank?: FloatFilter<"HowtoItem"> | number
+    createdAt?: DateTimeFilter<"HowtoItem"> | Date | string
+    updatedAt?: DateTimeFilter<"HowtoItem"> | Date | string
+  }, "id" | "slug">
+
+  export type HowtoItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    rank?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HowtoItemCountOrderByAggregateInput
+    _avg?: HowtoItemAvgOrderByAggregateInput
+    _max?: HowtoItemMaxOrderByAggregateInput
+    _min?: HowtoItemMinOrderByAggregateInput
+    _sum?: HowtoItemSumOrderByAggregateInput
+  }
+
+  export type HowtoItemScalarWhereWithAggregatesInput = {
+    AND?: HowtoItemScalarWhereWithAggregatesInput | HowtoItemScalarWhereWithAggregatesInput[]
+    OR?: HowtoItemScalarWhereWithAggregatesInput[]
+    NOT?: HowtoItemScalarWhereWithAggregatesInput | HowtoItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"HowtoItem"> | string
+    title?: StringWithAggregatesFilter<"HowtoItem"> | string
+    description?: StringWithAggregatesFilter<"HowtoItem"> | string
+    rank?: FloatWithAggregatesFilter<"HowtoItem"> | number
+    slug?: StringWithAggregatesFilter<"HowtoItem"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"HowtoItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"HowtoItem"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
@@ -19452,13 +22194,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
@@ -19471,13 +22217,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
@@ -19490,13 +22240,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
@@ -19509,9 +22263,12 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
   }
@@ -19522,9 +22279,12 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -19535,9 +22295,12 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -20495,6 +23258,187 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserFlashcardBatchCreateInput = {
+    id?: string
+    strategy: string
+    language?: string
+    slotsJson?: string
+    queueIdsJson?: string
+    allCardIdsJson?: string
+    currentCardId?: string | null
+    learnedInBatchCount?: number
+    totalInBatch?: number
+    isBatchComplete?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutFlashcardBatchesInput
+  }
+
+  export type UserFlashcardBatchUncheckedCreateInput = {
+    id?: string
+    userId: string
+    strategy: string
+    language?: string
+    slotsJson?: string
+    queueIdsJson?: string
+    allCardIdsJson?: string
+    currentCardId?: string | null
+    learnedInBatchCount?: number
+    totalInBatch?: number
+    isBatchComplete?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserFlashcardBatchUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    strategy?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    slotsJson?: StringFieldUpdateOperationsInput | string
+    queueIdsJson?: StringFieldUpdateOperationsInput | string
+    allCardIdsJson?: StringFieldUpdateOperationsInput | string
+    currentCardId?: NullableStringFieldUpdateOperationsInput | string | null
+    learnedInBatchCount?: IntFieldUpdateOperationsInput | number
+    totalInBatch?: IntFieldUpdateOperationsInput | number
+    isBatchComplete?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFlashcardBatchesNestedInput
+  }
+
+  export type UserFlashcardBatchUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    strategy?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    slotsJson?: StringFieldUpdateOperationsInput | string
+    queueIdsJson?: StringFieldUpdateOperationsInput | string
+    allCardIdsJson?: StringFieldUpdateOperationsInput | string
+    currentCardId?: NullableStringFieldUpdateOperationsInput | string | null
+    learnedInBatchCount?: IntFieldUpdateOperationsInput | number
+    totalInBatch?: IntFieldUpdateOperationsInput | number
+    isBatchComplete?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserFlashcardBatchCreateManyInput = {
+    id?: string
+    userId: string
+    strategy: string
+    language?: string
+    slotsJson?: string
+    queueIdsJson?: string
+    allCardIdsJson?: string
+    currentCardId?: string | null
+    learnedInBatchCount?: number
+    totalInBatch?: number
+    isBatchComplete?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserFlashcardBatchUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    strategy?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    slotsJson?: StringFieldUpdateOperationsInput | string
+    queueIdsJson?: StringFieldUpdateOperationsInput | string
+    allCardIdsJson?: StringFieldUpdateOperationsInput | string
+    currentCardId?: NullableStringFieldUpdateOperationsInput | string | null
+    learnedInBatchCount?: IntFieldUpdateOperationsInput | number
+    totalInBatch?: IntFieldUpdateOperationsInput | number
+    isBatchComplete?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserFlashcardBatchUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    strategy?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    slotsJson?: StringFieldUpdateOperationsInput | string
+    queueIdsJson?: StringFieldUpdateOperationsInput | string
+    allCardIdsJson?: StringFieldUpdateOperationsInput | string
+    currentCardId?: NullableStringFieldUpdateOperationsInput | string | null
+    learnedInBatchCount?: IntFieldUpdateOperationsInput | number
+    totalInBatch?: IntFieldUpdateOperationsInput | number
+    isBatchComplete?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HowtoItemCreateInput = {
+    id?: string
+    title: string
+    description: string
+    rank?: number
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HowtoItemUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: string
+    rank?: number
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HowtoItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HowtoItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HowtoItemCreateManyInput = {
+    id?: string
+    title: string
+    description: string
+    rank?: number
+    slug: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HowtoItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HowtoItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    rank?: FloatFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -20546,6 +23490,12 @@ export namespace Prisma {
     none?: UserFlashcardActivityWhereInput
   }
 
+  export type UserFlashcardBatchListRelationFilter = {
+    every?: UserFlashcardBatchWhereInput
+    some?: UserFlashcardBatchWhereInput
+    none?: UserFlashcardBatchWhereInput
+  }
+
   export type VersionItemListRelationFilter = {
     every?: VersionItemWhereInput
     some?: VersionItemWhereInput
@@ -20583,6 +23533,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type UserFlashcardBatchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type VersionItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -20605,14 +23559,18 @@ export namespace Prisma {
     lastName?: SortOrder
     email?: SortOrder
     role?: SortOrder
+    points?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
     testingGroupSize?: SortOrder
+    lastFlashcardStrategy?: SortOrder
+    lastFlashcardLanguage?: SortOrder
     sourceLanguage?: SortOrder
     targetLanguages?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
+    points?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
     testingGroupSize?: SortOrder
@@ -20624,9 +23582,12 @@ export namespace Prisma {
     lastName?: SortOrder
     email?: SortOrder
     role?: SortOrder
+    points?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
     testingGroupSize?: SortOrder
+    lastFlashcardStrategy?: SortOrder
+    lastFlashcardLanguage?: SortOrder
     sourceLanguage?: SortOrder
     targetLanguages?: SortOrder
   }
@@ -20637,14 +23598,18 @@ export namespace Prisma {
     lastName?: SortOrder
     email?: SortOrder
     role?: SortOrder
+    points?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
     testingGroupSize?: SortOrder
+    lastFlashcardStrategy?: SortOrder
+    lastFlashcardLanguage?: SortOrder
     sourceLanguage?: SortOrder
     targetLanguages?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
+    points?: SortOrder
     minutesToTestAgain?: SortOrder
     dailyTakeGoal?: SortOrder
     testingGroupSize?: SortOrder
@@ -21357,6 +24322,108 @@ export namespace Prisma {
     timesTested?: SortOrder
   }
 
+  export type UserFlashcardBatchUserIdStrategyLanguageCompoundUniqueInput = {
+    userId: string
+    strategy: string
+    language: string
+  }
+
+  export type UserFlashcardBatchCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    strategy?: SortOrder
+    language?: SortOrder
+    slotsJson?: SortOrder
+    queueIdsJson?: SortOrder
+    allCardIdsJson?: SortOrder
+    currentCardId?: SortOrder
+    learnedInBatchCount?: SortOrder
+    totalInBatch?: SortOrder
+    isBatchComplete?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserFlashcardBatchAvgOrderByAggregateInput = {
+    learnedInBatchCount?: SortOrder
+    totalInBatch?: SortOrder
+  }
+
+  export type UserFlashcardBatchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    strategy?: SortOrder
+    language?: SortOrder
+    slotsJson?: SortOrder
+    queueIdsJson?: SortOrder
+    allCardIdsJson?: SortOrder
+    currentCardId?: SortOrder
+    learnedInBatchCount?: SortOrder
+    totalInBatch?: SortOrder
+    isBatchComplete?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserFlashcardBatchMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    strategy?: SortOrder
+    language?: SortOrder
+    slotsJson?: SortOrder
+    queueIdsJson?: SortOrder
+    allCardIdsJson?: SortOrder
+    currentCardId?: SortOrder
+    learnedInBatchCount?: SortOrder
+    totalInBatch?: SortOrder
+    isBatchComplete?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserFlashcardBatchSumOrderByAggregateInput = {
+    learnedInBatchCount?: SortOrder
+    totalInBatch?: SortOrder
+  }
+
+  export type HowtoItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    rank?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HowtoItemAvgOrderByAggregateInput = {
+    rank?: SortOrder
+  }
+
+  export type HowtoItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    rank?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HowtoItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    rank?: SortOrder
+    slug?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HowtoItemSumOrderByAggregateInput = {
+    rank?: SortOrder
+  }
+
   export type FlashcardCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -21369,6 +24436,13 @@ export namespace Prisma {
     connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutUserInput | UserFlashcardActivityCreateOrConnectWithoutUserInput[]
     createMany?: UserFlashcardActivityCreateManyUserInputEnvelope
     connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+  }
+
+  export type UserFlashcardBatchCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserFlashcardBatchCreateWithoutUserInput, UserFlashcardBatchUncheckedCreateWithoutUserInput> | UserFlashcardBatchCreateWithoutUserInput[] | UserFlashcardBatchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserFlashcardBatchCreateOrConnectWithoutUserInput | UserFlashcardBatchCreateOrConnectWithoutUserInput[]
+    createMany?: UserFlashcardBatchCreateManyUserInputEnvelope
+    connect?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
   }
 
   export type VersionItemCreateNestedManyWithoutStartedByUserInput = {
@@ -21411,6 +24485,13 @@ export namespace Prisma {
     connectOrCreate?: UserFlashcardActivityCreateOrConnectWithoutUserInput | UserFlashcardActivityCreateOrConnectWithoutUserInput[]
     createMany?: UserFlashcardActivityCreateManyUserInputEnvelope
     connect?: UserFlashcardActivityWhereUniqueInput | UserFlashcardActivityWhereUniqueInput[]
+  }
+
+  export type UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserFlashcardBatchCreateWithoutUserInput, UserFlashcardBatchUncheckedCreateWithoutUserInput> | UserFlashcardBatchCreateWithoutUserInput[] | UserFlashcardBatchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserFlashcardBatchCreateOrConnectWithoutUserInput | UserFlashcardBatchCreateOrConnectWithoutUserInput[]
+    createMany?: UserFlashcardBatchCreateManyUserInputEnvelope
+    connect?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
   }
 
   export type VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput = {
@@ -21483,6 +24564,20 @@ export namespace Prisma {
     update?: UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput | UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserFlashcardActivityUpdateManyWithWhereWithoutUserInput | UserFlashcardActivityUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+  }
+
+  export type UserFlashcardBatchUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserFlashcardBatchCreateWithoutUserInput, UserFlashcardBatchUncheckedCreateWithoutUserInput> | UserFlashcardBatchCreateWithoutUserInput[] | UserFlashcardBatchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserFlashcardBatchCreateOrConnectWithoutUserInput | UserFlashcardBatchCreateOrConnectWithoutUserInput[]
+    upsert?: UserFlashcardBatchUpsertWithWhereUniqueWithoutUserInput | UserFlashcardBatchUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserFlashcardBatchCreateManyUserInputEnvelope
+    set?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
+    disconnect?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
+    delete?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
+    connect?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
+    update?: UserFlashcardBatchUpdateWithWhereUniqueWithoutUserInput | UserFlashcardBatchUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserFlashcardBatchUpdateManyWithWhereWithoutUserInput | UserFlashcardBatchUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserFlashcardBatchScalarWhereInput | UserFlashcardBatchScalarWhereInput[]
   }
 
   export type VersionItemUpdateManyWithoutStartedByUserNestedInput = {
@@ -21567,6 +24662,20 @@ export namespace Prisma {
     update?: UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput | UserFlashcardActivityUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserFlashcardActivityUpdateManyWithWhereWithoutUserInput | UserFlashcardActivityUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserFlashcardActivityScalarWhereInput | UserFlashcardActivityScalarWhereInput[]
+  }
+
+  export type UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserFlashcardBatchCreateWithoutUserInput, UserFlashcardBatchUncheckedCreateWithoutUserInput> | UserFlashcardBatchCreateWithoutUserInput[] | UserFlashcardBatchUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserFlashcardBatchCreateOrConnectWithoutUserInput | UserFlashcardBatchCreateOrConnectWithoutUserInput[]
+    upsert?: UserFlashcardBatchUpsertWithWhereUniqueWithoutUserInput | UserFlashcardBatchUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserFlashcardBatchCreateManyUserInputEnvelope
+    set?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
+    disconnect?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
+    delete?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
+    connect?: UserFlashcardBatchWhereUniqueInput | UserFlashcardBatchWhereUniqueInput[]
+    update?: UserFlashcardBatchUpdateWithWhereUniqueWithoutUserInput | UserFlashcardBatchUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserFlashcardBatchUpdateManyWithWhereWithoutUserInput | UserFlashcardBatchUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserFlashcardBatchScalarWhereInput | UserFlashcardBatchScalarWhereInput[]
   }
 
   export type VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput = {
@@ -22137,6 +25246,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCorrectionSectionsInput, UserUpdateWithoutCorrectionSectionsInput>, UserUncheckedUpdateWithoutCorrectionSectionsInput>
   }
 
+  export type UserCreateNestedOneWithoutFlashcardBatchesInput = {
+    create?: XOR<UserCreateWithoutFlashcardBatchesInput, UserUncheckedCreateWithoutFlashcardBatchesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFlashcardBatchesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutFlashcardBatchesNestedInput = {
+    create?: XOR<UserCreateWithoutFlashcardBatchesInput, UserUncheckedCreateWithoutFlashcardBatchesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFlashcardBatchesInput
+    upsert?: UserUpsertWithoutFlashcardBatchesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFlashcardBatchesInput, UserUpdateWithoutFlashcardBatchesInput>, UserUncheckedUpdateWithoutFlashcardBatchesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -22430,6 +25553,45 @@ export namespace Prisma {
     data: UserFlashcardActivityCreateManyUserInput | UserFlashcardActivityCreateManyUserInput[]
   }
 
+  export type UserFlashcardBatchCreateWithoutUserInput = {
+    id?: string
+    strategy: string
+    language?: string
+    slotsJson?: string
+    queueIdsJson?: string
+    allCardIdsJson?: string
+    currentCardId?: string | null
+    learnedInBatchCount?: number
+    totalInBatch?: number
+    isBatchComplete?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserFlashcardBatchUncheckedCreateWithoutUserInput = {
+    id?: string
+    strategy: string
+    language?: string
+    slotsJson?: string
+    queueIdsJson?: string
+    allCardIdsJson?: string
+    currentCardId?: string | null
+    learnedInBatchCount?: number
+    totalInBatch?: number
+    isBatchComplete?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserFlashcardBatchCreateOrConnectWithoutUserInput = {
+    where: UserFlashcardBatchWhereUniqueInput
+    create: XOR<UserFlashcardBatchCreateWithoutUserInput, UserFlashcardBatchUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserFlashcardBatchCreateManyUserInputEnvelope = {
+    data: UserFlashcardBatchCreateManyUserInput | UserFlashcardBatchCreateManyUserInput[]
+  }
+
   export type VersionItemCreateWithoutStartedByUserInput = {
     id?: string
     type?: string
@@ -22612,6 +25774,41 @@ export namespace Prisma {
     whenActedUpon?: DateTimeFilter<"UserFlashcardActivity"> | Date | string
     actionTaken?: StringFilter<"UserFlashcardActivity"> | string
     actionDetails?: StringNullableFilter<"UserFlashcardActivity"> | string | null
+  }
+
+  export type UserFlashcardBatchUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserFlashcardBatchWhereUniqueInput
+    update: XOR<UserFlashcardBatchUpdateWithoutUserInput, UserFlashcardBatchUncheckedUpdateWithoutUserInput>
+    create: XOR<UserFlashcardBatchCreateWithoutUserInput, UserFlashcardBatchUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserFlashcardBatchUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserFlashcardBatchWhereUniqueInput
+    data: XOR<UserFlashcardBatchUpdateWithoutUserInput, UserFlashcardBatchUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserFlashcardBatchUpdateManyWithWhereWithoutUserInput = {
+    where: UserFlashcardBatchScalarWhereInput
+    data: XOR<UserFlashcardBatchUpdateManyMutationInput, UserFlashcardBatchUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserFlashcardBatchScalarWhereInput = {
+    AND?: UserFlashcardBatchScalarWhereInput | UserFlashcardBatchScalarWhereInput[]
+    OR?: UserFlashcardBatchScalarWhereInput[]
+    NOT?: UserFlashcardBatchScalarWhereInput | UserFlashcardBatchScalarWhereInput[]
+    id?: StringFilter<"UserFlashcardBatch"> | string
+    userId?: StringFilter<"UserFlashcardBatch"> | string
+    strategy?: StringFilter<"UserFlashcardBatch"> | string
+    language?: StringFilter<"UserFlashcardBatch"> | string
+    slotsJson?: StringFilter<"UserFlashcardBatch"> | string
+    queueIdsJson?: StringFilter<"UserFlashcardBatch"> | string
+    allCardIdsJson?: StringFilter<"UserFlashcardBatch"> | string
+    currentCardId?: StringNullableFilter<"UserFlashcardBatch"> | string | null
+    learnedInBatchCount?: IntFilter<"UserFlashcardBatch"> | number
+    totalInBatch?: IntFilter<"UserFlashcardBatch"> | number
+    isBatchComplete?: BoolFilter<"UserFlashcardBatch"> | boolean
+    createdAt?: DateTimeFilter<"UserFlashcardBatch"> | Date | string
+    updatedAt?: DateTimeFilter<"UserFlashcardBatch"> | Date | string
   }
 
   export type VersionItemUpsertWithWhereUniqueWithoutStartedByUserInput = {
@@ -22995,13 +26192,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
@@ -23013,13 +26214,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
@@ -23109,13 +26314,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
@@ -23127,13 +26336,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
@@ -23145,12 +26358,16 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
@@ -23163,12 +26380,16 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
@@ -23339,12 +26560,16 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
@@ -23357,12 +26582,16 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
@@ -23485,12 +26714,16 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
@@ -23503,12 +26736,16 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
@@ -23584,12 +26821,16 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
@@ -23602,12 +26843,16 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
@@ -23848,13 +27093,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
@@ -23866,13 +27115,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
@@ -23900,13 +27153,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
@@ -23918,13 +27175,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
@@ -23936,13 +27197,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
@@ -23954,13 +27219,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
@@ -23988,13 +27257,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
@@ -24006,13 +27279,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
@@ -24024,13 +27301,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
@@ -24042,13 +27323,17 @@ export namespace Prisma {
     lastName: string
     email: string
     role?: string
+    points?: number
     minutesToTestAgain?: number
     dailyTakeGoal?: number
     testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
@@ -24076,13 +27361,17 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
@@ -24094,9 +27383,116 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
     minutesToTestAgain?: IntFieldUpdateOperationsInput | number
     dailyTakeGoal?: IntFieldUpdateOperationsInput | number
     testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutFlashcardBatchesInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    points?: number
+    minutesToTestAgain?: number
+    dailyTakeGoal?: number
+    testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
+    sourceLanguage?: string | null
+    targetLanguages?: string | null
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutFlashcardBatchesInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    points?: number
+    minutesToTestAgain?: number
+    dailyTakeGoal?: number
+    testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
+    sourceLanguage?: string | null
+    targetLanguages?: string | null
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutFlashcardBatchesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFlashcardBatchesInput, UserUncheckedCreateWithoutFlashcardBatchesInput>
+  }
+
+  export type UserUpsertWithoutFlashcardBatchesInput = {
+    update: XOR<UserUpdateWithoutFlashcardBatchesInput, UserUncheckedUpdateWithoutFlashcardBatchesInput>
+    create: XOR<UserCreateWithoutFlashcardBatchesInput, UserUncheckedCreateWithoutFlashcardBatchesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFlashcardBatchesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFlashcardBatchesInput, UserUncheckedUpdateWithoutFlashcardBatchesInput>
+  }
+
+  export type UserUpdateWithoutFlashcardBatchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFlashcardBatchesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
@@ -24104,6 +27500,7 @@ export namespace Prisma {
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardCreateManyOwnerInput = {
@@ -24130,6 +27527,21 @@ export namespace Prisma {
     whenActedUpon?: Date | string
     actionTaken: string
     actionDetails?: string | null
+  }
+
+  export type UserFlashcardBatchCreateManyUserInput = {
+    id?: string
+    strategy: string
+    language?: string
+    slotsJson?: string
+    queueIdsJson?: string
+    allCardIdsJson?: string
+    currentCardId?: string | null
+    learnedInBatchCount?: number
+    totalInBatch?: number
+    isBatchComplete?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type VersionItemCreateManyStartedByUserInput = {
@@ -24255,6 +27667,51 @@ export namespace Prisma {
     whenActedUpon?: DateTimeFieldUpdateOperationsInput | Date | string
     actionTaken?: StringFieldUpdateOperationsInput | string
     actionDetails?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserFlashcardBatchUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    strategy?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    slotsJson?: StringFieldUpdateOperationsInput | string
+    queueIdsJson?: StringFieldUpdateOperationsInput | string
+    allCardIdsJson?: StringFieldUpdateOperationsInput | string
+    currentCardId?: NullableStringFieldUpdateOperationsInput | string | null
+    learnedInBatchCount?: IntFieldUpdateOperationsInput | number
+    totalInBatch?: IntFieldUpdateOperationsInput | number
+    isBatchComplete?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserFlashcardBatchUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    strategy?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    slotsJson?: StringFieldUpdateOperationsInput | string
+    queueIdsJson?: StringFieldUpdateOperationsInput | string
+    allCardIdsJson?: StringFieldUpdateOperationsInput | string
+    currentCardId?: NullableStringFieldUpdateOperationsInput | string | null
+    learnedInBatchCount?: IntFieldUpdateOperationsInput | number
+    totalInBatch?: IntFieldUpdateOperationsInput | number
+    isBatchComplete?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserFlashcardBatchUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    strategy?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    slotsJson?: StringFieldUpdateOperationsInput | string
+    queueIdsJson?: StringFieldUpdateOperationsInput | string
+    allCardIdsJson?: StringFieldUpdateOperationsInput | string
+    currentCardId?: NullableStringFieldUpdateOperationsInput | string | null
+    learnedInBatchCount?: IntFieldUpdateOperationsInput | number
+    totalInBatch?: IntFieldUpdateOperationsInput | number
+    isBatchComplete?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VersionItemUpdateWithoutStartedByUserInput = {

@@ -11,8 +11,11 @@ export default defineEventHandler(async (event) => {
     firstName: dbUser?.firstName || user.given_name || 'User',
     lastName: dbUser?.lastName || user.family_name || '',
     role: dbUser?.role || user.role || 'member',
+    points: dbUser?.points ?? 0,
     dailyTakeGoal: dbUser?.dailyTakeGoal ?? 100,
     testingGroupSize: dbUser?.testingGroupSize ?? 10,
+    lastFlashcardStrategy: dbUser?.lastFlashcardStrategy ?? 'last_imported',
+    lastFlashcardLanguage: dbUser?.lastFlashcardLanguage ?? 'all',
     sourceLanguage: dbUser?.sourceLanguage ?? 'en',
     targetLanguages: dbUser?.targetLanguages
       ? (typeof dbUser.targetLanguages === 'string' && dbUser.targetLanguages.startsWith('[')

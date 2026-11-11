@@ -18,6 +18,7 @@ const isBypass = config.public.bypassAuth
 
 const auth = !isBypass ? useAuth() : null
 const loggedIn = computed(() => isBypass ? true : (auth?.loggedIn ?? false))
+const { userPoints } = useCurrentUser()
 const user = computed(() => isBypass ? { given_name: 'Local', family_name: 'Developer', email: 'local.developer@example.com', picture: null } : (auth?.user ?? null))
 
 interface Tag {
@@ -177,7 +178,10 @@ const cardStatusLabel = computed(() => {
     if (slot.status === 'learned') label = 'learned'
     else if (slot.status === 'testing') label = 'currently testing'
     else if (slot.status === 'parked') label = 'parked'
-    else if (slot.status === 'untested') label = 'untested'
+    else if (slot.status === 'untested') {
+      const cardSt = currentCard.value.status?.toLowerCase() || ''
+      label = cardSt === 'learned' ? 'learned' : 'untested'
+    }
   }
   if (!label) {
     const st = currentCard.value.status?.toLowerCase() || ''
@@ -432,6 +436,44 @@ async function fetchBatchLanguages(reqId?: number) {
   }
 }
 
+function saveBatchStateSnapshot(payload?: {
+  slots?: BatchSlot[]
+  queueIds?: string[]
+  allCardIds?: string[]
+  currentCardId?: string | null
+  learnedInBatchCount?: number
+  totalInBatch?: number
+  isBatchComplete?: boolean
+}) {
+  if (!loggedIn.value || import.meta.server) return
+  const slots = payload?.slots ?? batchSlots.value
+  const queueIds = payload?.queueIds ?? testQueue.value.map(c => c.id)
+  const allCardIds = payload?.allCardIds ?? currentBatchAllCards.value.map(c => c.id)
+  const currentCardId = payload && 'currentCardId' in payload ? payload.currentCardId : (currentCard.value?.id ?? null)
+  const learnedCount = payload?.learnedInBatchCount ?? learnedInBatchCount.value
+  const totalCount = payload?.totalInBatch ?? totalInBatch.value
+  const complete = payload?.isBatchComplete ?? isBatchComplete.value
+
+  fetch('/api/flashcards/batch-state', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    keepalive: true,
+    body: JSON.stringify({
+      strategy: selectedStrategy.value,
+      language: selectedLanguage.value,
+      slots,
+      queueIds,
+      allCardIds,
+      currentCardId,
+      learnedInBatchCount: learnedCount,
+      totalInBatch: totalCount,
+      isBatchComplete: complete
+    })
+  }).catch((err) => {
+    console.error('Failed to persist flashcard batch state:', err)
+  })
+}
+
 // Fetch active batch of flashcards
 async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boolean = false, reqId?: number) {
   const thisReqId = reqId ?? ++activeBatchRequestId
@@ -494,10 +536,57 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
           if (testQueue.value.length > 0 && userGroupSize.value === 7) {
             userGroupSize.value = testQueue.value.length
           }
+          saveBatchStateSnapshot({
+            currentCardId: specificCard.id,
+            isBatchComplete: false
+          })
           return
         }
       } catch (e) {
         console.error('Failed to load specific card from permalink ID:', e)
+      }
+    }
+
+    // Try restoring saved in-progress batch state unless starting a fresh next batch
+    if (!excludePrevious && !cardIdFromRoute) {
+      try {
+        const [savedState] = await Promise.all([
+          $fetch<{
+            found: boolean
+            slots?: BatchSlot[]
+            queueCards?: Flashcard[]
+            allCards?: Flashcard[]
+            currentCardId?: string | null
+            learnedInBatchCount?: number
+            totalInBatch?: number
+          }>(`/api/flashcards/batch-state?strategy=${encodeURIComponent(selectedStrategy.value)}&language=${encodeURIComponent(selectedLanguage.value)}`),
+          minDelay
+        ])
+
+        if (thisReqId !== activeBatchRequestId) return
+
+        if (savedState?.found && savedState.queueCards && savedState.queueCards.length > 0 && savedState.slots && savedState.slots.length > 0) {
+          testQueue.value = savedState.queueCards
+          currentBatchAllCards.value = savedState.allCards || [...savedState.queueCards]
+          batchSlots.value = savedState.slots
+          const restoredIdx = savedState.currentCardId
+            ? testQueue.value.findIndex(c => c.id === savedState.currentCardId)
+            : 0
+          currentQueueIndex.value = restoredIdx !== -1 ? restoredIdx : 0
+          isFlipped.value = false
+          learnedInBatchCount.value = savedState.learnedInBatchCount ?? 0
+          totalInBatch.value = savedState.totalInBatch ?? savedState.slots.length
+          if (savedState.slots.length > 0 && userGroupSize.value === 7) {
+            userGroupSize.value = savedState.slots.length
+          }
+          const activeCard = testQueue.value[currentQueueIndex.value]
+          if (activeCard) {
+            sliderValue.value = activeCard.rank
+          }
+          return
+        }
+      } catch (e) {
+        console.error('Failed to restore saved batch state:', e)
       }
     }
 
@@ -530,6 +619,11 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
     if (firstCard) {
       sliderValue.value = firstCard.rank
     }
+
+    saveBatchStateSnapshot({
+      currentCardId: firstCard?.id ?? null,
+      isBatchComplete: (results || []).length === 0
+    })
   } catch (err) {
     if (thisReqId === activeBatchRequestId) {
       console.error('Failed to load flashcard batch:', err)
@@ -558,6 +652,7 @@ function handleSelectSlotCard(cardId: string) {
     isFlipped.value = false
     const card = testQueue.value[idx]
     if (card) sliderValue.value = card.rank
+    saveBatchStateSnapshot({ currentCardId: cardId })
     return
   }
 
@@ -568,6 +663,7 @@ function handleSelectSlotCard(cardId: string) {
     currentQueueIndex.value = 0
     isFlipped.value = false
     sliderValue.value = card.rank
+    saveBatchStateSnapshot({ currentCardId: cardId })
   }
 }
 
@@ -827,10 +923,20 @@ function debouncedSaveRank() {
   }, 700)
 }
 
+const POINTS_FOR_ACTION: Record<string, number> = {
+  MARKED_AS_LEARNED: 10,
+  MARKED_AS_KEEP_TESTING: 2,
+  MARKED_AS_PARKED: 1,
+  MARKED_AS_DELETED: 1,
+}
+
 // Card action — logs activity, updates batch rotation, slides card out
 function markAction(actionTaken: string, newStatus?: string) {
   if (!currentCard.value) return
   const cardId = currentCard.value.id
+
+  const pointsDelta = POINTS_FOR_ACTION[actionTaken] ?? 0
+  userPoints.value = Math.max(0, userPoints.value + pointsDelta)
 
   const slot = batchSlots.value.find(s => s.id === cardId)
   const isFirstActionOnCard = slot ? (slot.status === 'untested' && slot.unsuccessfulCount === 0) : true
@@ -846,6 +952,34 @@ function markAction(actionTaken: string, newStatus?: string) {
       slot.status = 'deleted'
     }
   }
+
+  // Persist next batch state immediately (with keepalive) so leaving the page within 200ms still preserves state
+  const currentSlotIdxForSave = slot ? slot.slotIndex : 0
+  const slotsSnapshot = batchSlots.value.map(s =>
+    s.id === cardId && actionTaken === 'MARKED_AS_KEEP_TESTING'
+      ? { ...s, unsuccessfulCount: s.unsuccessfulCount + 1 }
+      : { ...s }
+  )
+  const queueIdsSnapshot = actionTaken === 'MARKED_AS_KEEP_TESTING'
+    ? testQueue.value.map(c => c.id)
+    : testQueue.value.filter(c => c.id !== cardId).map(c => c.id)
+  const isCompleteSnapshot = slotsSnapshot.length > 0 && slotsSnapshot.every(s => ['learned', 'parked', 'deleted'].includes(s.status))
+  const learnedCountSnapshot = actionTaken === 'MARKED_AS_KEEP_TESTING'
+    ? learnedInBatchCount.value
+    : learnedInBatchCount.value + 1
+  let nextSlotSnapshot = slotsSnapshot.find(s => s.slotIndex > currentSlotIdxForSave && (s.status === 'untested' || s.status === 'testing'))
+  if (!nextSlotSnapshot) {
+    nextSlotSnapshot = slotsSnapshot.find(s => s.status === 'untested' || s.status === 'testing')
+  }
+  saveBatchStateSnapshot({
+    slots: slotsSnapshot,
+    queueIds: queueIdsSnapshot,
+    allCardIds: currentBatchAllCards.value.map(c => c.id),
+    currentCardId: isCompleteSnapshot ? null : (nextSlotSnapshot?.id ?? null),
+    learnedInBatchCount: learnedCountSnapshot,
+    totalInBatch: totalInBatch.value,
+    isBatchComplete: isCompleteSnapshot
+  })
 
   let shouldDecrement = false
   if (selectedStrategy.value === 'last_imported') {
@@ -948,10 +1082,13 @@ function markAction(actionTaken: string, newStatus?: string) {
     setTimeout(() => { cardAnimState.value = 'idle' }, 220)
   }, 200)
 
-  $fetch(`/api/flashcards/${cardId}/action`, {
+  $fetch<{ ok: boolean; pointsEarned?: number; totalPoints?: number }>(`/api/flashcards/${cardId}/action`, {
     method: 'POST',
     body: { actionTaken, ...(newStatus ? { status: newStatus } : {}) }
-  }).then(() => {
+  }).then((res) => {
+    if (typeof res?.totalPoints === 'number') {
+      userPoints.value = res.totalPoints
+    }
     fetchCardStats()
     // Silent sync of batch language counts
     $fetch<{
@@ -965,6 +1102,7 @@ function markAction(actionTaken: string, newStatus?: string) {
       }
     }).catch(() => {})
   }).catch((err) => {
+    userPoints.value = Math.max(0, userPoints.value - pointsDelta)
     console.error('Failed to record action:', err)
   })
 }
@@ -1125,10 +1263,13 @@ async function handleSelectCard(card: Flashcard) {
         { id: copyResult.id, language: copyResult.backLanguage || copyResult.frontLanguage || 'fr', slotIndex: 0, unsuccessfulCount: 0, status: 'untested' as const },
         ...batchSlots.value
       ].map((s, idx) => ({ ...s, slotIndex: idx }))
+      currentBatchAllCards.value = [copyResult, ...currentBatchAllCards.value.filter(c => c.id !== copyResult.id)]
+      totalInBatch.value = batchSlots.value.length
     }
     currentQueueIndex.value = 0
     isFlipped.value = false
     sliderValue.value = copyResult.rank
+    saveBatchStateSnapshot({ currentCardId: copyResult.id })
     
     isSearching.value = false
     isSearchPending.value = false
@@ -1202,6 +1343,17 @@ async function fetchUserSettings() {
     if (data?.dailyTakeGoal) {
       userDailyGoal.value = data.dailyTakeGoal
     }
+    if (typeof data?.points === 'number') {
+      userPoints.value = data.points
+    }
+    if (!route.params.id && !fromPronunciation.value) {
+      if (data?.lastFlashcardStrategy) {
+        selectedStrategy.value = data.lastFlashcardStrategy
+      }
+      if (data?.lastFlashcardLanguage) {
+        selectedLanguage.value = data.lastFlashcardLanguage
+      }
+    }
   } catch {
     userDailyGoal.value = 50
   }
@@ -1212,9 +1364,9 @@ onMounted(async () => {
   document.addEventListener('click', handleClickOutsideDropdowns)
   if (loggedIn.value) {
     try {
+      await fetchUserSettings()
       const reqId = ++activeBatchRequestId
       await Promise.all([
-        fetchUserSettings(),
         fetchTags(),
         fetchCardStats(),
         fetchBatchLanguages(reqId),
@@ -1503,14 +1655,14 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- Batch Complete Overlay -->
-                <div v-else-if="isBatchComplete" key="complete" class="absolute inset-0 z-15 flex flex-col items-center justify-center text-center p-6 bg-white dark:bg-gray-900 rounded-3xl border border-emerald-100 dark:border-emerald-900/40 shadow-xl space-y-3.5">
+                <div v-else-if="isBatchComplete" key="complete" class="absolute inset-0 z-15 flex flex-col items-center justify-center text-center p-6 space-y-3.5">
                   <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl shadow-inner">
                     🎉
                   </div>
                   <div class="space-y-1">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white">Batch Complete!</h3>
                     <p class="text-xs text-gray-500 dark:text-gray-400 max-w-xs">
-                      You've learned all {{ totalInBatch }} cards in this batch.
+                      You've completed all {{ totalInBatch }} cards in this batch.
                     </p>
                   </div>
                   <div class="pt-1 flex flex-col items-center gap-2.5 w-full max-w-xs">

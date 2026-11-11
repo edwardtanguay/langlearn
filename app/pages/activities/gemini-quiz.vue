@@ -75,7 +75,7 @@ const selectedLanguageFilter = ref<string>('fr')
 
 const availableTargetLanguages = computed(() => {
   if (loggedIn.value && (memberTargetLanguages.value.length > 0 || memberSourceLanguage.value)) {
-    const langs = [...memberTargetLanguages.value.map(l => l.toLowerCase())]
+    const langs = [...memberTargetLanguages.value.map(l => l.toLowerCase()), 'es']
     if (memberSourceLanguage.value) {
       langs.push(memberSourceLanguage.value.toLowerCase())
     }
@@ -85,6 +85,7 @@ const availableTargetLanguages = computed(() => {
   for (const p of prompts.value) {
     if (p.language) set.add(p.language.toLowerCase())
   }
+  set.add('es')
   return sortLanguagesByTargetOrder(Array.from(set))
 })
 
@@ -123,6 +124,7 @@ async function loadData() {
     if (me?.sourceLanguage) {
       userLangs.push(me.sourceLanguage.toLowerCase())
     }
+    userLangs.push('es')
     if (userLangs.length > 0) {
       const sorted = sortLanguagesByTargetOrder(Array.from(new Set(userLangs)))
       if (!sorted.includes(selectedLanguageFilter.value)) {

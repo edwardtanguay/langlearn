@@ -128,6 +128,7 @@ const availableTargetLanguages = computed(() => {
   if (loggedIn.value && (memberTargetLanguages.value.length > 0 || memberSourceLanguage.value)) {
     for (const l of memberTargetLanguages.value) set.add(l.toLowerCase())
     if (memberSourceLanguage.value) set.add(memberSourceLanguage.value.toLowerCase())
+    set.add('es')
   } else {
     for (const l of links.value) {
       if (l.language) set.add(l.language.toLowerCase())
@@ -135,6 +136,9 @@ const availableTargetLanguages = computed(() => {
   }
   if (links.value.some(l => l.language?.toLowerCase() === 'general')) {
     set.add('general')
+  }
+  if (links.value.some(l => l.language?.toLowerCase() === 'es')) {
+    set.add('es')
   }
   const sorted = sortLanguagesByTargetOrder(Array.from(set))
   return ['all', ...sorted]
@@ -160,6 +164,7 @@ const loadLinks = async () => {
       if (meData.sourceLanguage) {
         userLangs.push(meData.sourceLanguage.toLowerCase())
       }
+      userLangs.push('es')
       if (userLangs.length > 0) {
         const sorted = sortLanguagesByTargetOrder(Array.from(new Set(userLangs)))
         if (selectedLanguageFilter.value !== 'all' && !sorted.includes(selectedLanguageFilter.value)) {
@@ -269,7 +274,7 @@ onUnmounted(() => {
 const filteredLinks = computed(() => {
   let list = links.value
   if (loggedIn.value && userRole.value !== 'unknownUser') {
-    const allowed = [...memberTargetLanguages.value.map(l => l.toLowerCase()), 'general']
+    const allowed = [...memberTargetLanguages.value.map(l => l.toLowerCase()), 'general', 'es']
     if (memberSourceLanguage.value) {
       allowed.push(memberSourceLanguage.value.toLowerCase())
     }

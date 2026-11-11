@@ -14,7 +14,8 @@ import {
   ArrowUpTrayIcon,
   LinkIcon,
   SparklesIcon,
-  QueueListIcon
+  QueueListIcon,
+  BookOpenIcon
 } from '@heroicons/vue/24/outline'
 
 interface CardStats {
@@ -68,7 +69,8 @@ const config = useRuntimeConfig()
 const showColorModeToggle = config.public.showColorModeToggle
 const showDevPageConfig = computed(() => config.public.showDevPage)
 
-const { loggedIn, isAdmin, isMember, isUnknownUser, userRole, fetchRole } = useCurrentUser()
+const { loggedIn, isAdmin, isMember, isUnknownUser, userRole, userPoints, fetchRole } = useCurrentUser()
+const formattedPoints = computed(() => String(Math.max(0, userPoints.value || 0)).padStart(5, '0'))
 const isBypass = computed(() => Boolean(config.public.bypassAuth))
 const auth = useAuth()
 const user = computed(() => isBypass.value ? { given_name: 'Edward', picture: null } : (auth?.user ?? null))
@@ -77,9 +79,12 @@ const fetchUserData = async () => {
   if (!loggedIn.value) return
   try {
     const headers = useRequestHeaders(['cookie'])
-    const data = await $fetch<{ role: string; dailyTakeGoal: number }>('/api/user/me', { headers })
+    const data = await $fetch<{ role: string; dailyTakeGoal: number; points?: number }>('/api/user/me', { headers })
     if (data?.role) {
       userRole.value = data.role
+    }
+    if (typeof data?.points === 'number') {
+      userPoints.value = data.points
     }
     if (data?.dailyTakeGoal) {
       dailyTakeGoal.value = data.dailyTakeGoal
@@ -181,6 +186,7 @@ const navItems = computed(() => {
       items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
       items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
+      items.push({ name: 'Guide', path: '/guide', icon: BookOpenIcon })
       if (showDevPageConfig.value) {
         items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
       }
@@ -191,12 +197,14 @@ const navItems = computed(() => {
       items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
       items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
+      items.push({ name: 'Guide', path: '/guide', icon: BookOpenIcon })
       items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     }
   } else {
     items.push({ name: 'Welcome', path: '/', icon: HomeIcon })
     items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
     items.push({ name: 'Links', path: '/links', icon: LinkIcon })
+    items.push({ name: 'Guide', path: '/guide', icon: BookOpenIcon })
     items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
   }
   return items
@@ -215,14 +223,22 @@ const navItems = computed(() => {
             <NuxtLink :to="loggedIn ? '/profile' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
               <div class="flex flex-row items-center gap-2.5">
                 <template v-if="loggedIn">
-                  <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs">
+                  <div class="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs">
                     <img v-if="user?.picture" :src="user.picture" alt="Avatar" class="w-full h-full object-cover" />
                     <span v-else class="text-sm text-white">{{ user?.given_name?.[0] || 'U' }}</span>
                   </div>
-                  <!-- First name only display -->
-                  <span class="text-sm font-bold text-gray-800 group-hover:text-black dark:text-gray-200 dark:group-hover:text-white transition-colors whitespace-nowrap">
-                    {{ user?.given_name || 'User' }}
-                  </span>
+                  <!-- First name on top, large Global Points underneath -->
+                  <div class="flex flex-col leading-none">
+                    <span class="text-[11px] font-semibold text-gray-500 group-hover:text-black dark:text-gray-400 dark:group-hover:text-white transition-colors whitespace-nowrap">
+                      {{ user?.given_name || 'User' }}
+                    </span>
+                    <span
+                      class="text-lg sm:text-xl font-black font-mono tracking-wider text-gray-900 dark:text-white leading-tight whitespace-nowrap"
+                      title="Global Points"
+                    >
+                      {{ formattedPoints }}
+                    </span>
+                  </div>
                 </template>
                 <template v-else>
                   <span class="text-xl font-bold !text-black hover:!text-gray-700 transition-colors dark:!text-white dark:hover:!text-gray-300">LangLearn</span>

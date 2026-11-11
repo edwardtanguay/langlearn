@@ -163,6 +163,29 @@ async function main() {
     }
   }
 
+  // Ensure points, lastFlashcardStrategy, and lastFlashcardLanguage columns exist on User table
+  try {
+    await client.execute('ALTER TABLE User ADD COLUMN points INTEGER DEFAULT 0;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+  try {
+    await client.execute("ALTER TABLE User ADD COLUMN lastFlashcardStrategy TEXT DEFAULT 'last_imported';")
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+  try {
+    await client.execute("ALTER TABLE User ADD COLUMN lastFlashcardLanguage TEXT DEFAULT 'all';")
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
 
   client.close()
