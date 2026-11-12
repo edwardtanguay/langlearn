@@ -101,7 +101,7 @@
 	
 	
 - 2026-11-11 langlearn version-0-12-0
-	- ,, changes01
+	- x changes01
 		--------------------------------------
 		## general
 		
@@ -127,9 +127,12 @@
 			- add a "+" icon which pops up the add modal form with a prefilled rank that is slightly higher than the card on which the icon was clicked (so the new card is added just above that card)
 			- only if there are no cards should the large "Add How-to" be shown
 		--------------------------------------
-	- .. fix howtos
-	- changes02
+	- x fix howtos
+	- ,, changes02
 		--------------------------------------
+		## Guide
 		
+		- put a simple paragraph at the top that says "This guide is a collection of howtos and tips for using LangLearn."
+		- don't round the corners of the image
 		--------------------------------------
 	
