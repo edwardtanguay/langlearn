@@ -185,6 +185,13 @@ async function main() {
       console.warn('Column notice:', err?.message || err)
     }
   }
+  try {
+    await client.execute('ALTER TABLE User ADD COLUMN showSourceLanguageMaterials INTEGER NOT NULL DEFAULT 0;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
 
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
 

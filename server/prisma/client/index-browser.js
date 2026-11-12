@@ -130,6 +130,7 @@ exports.Prisma.UserScalarFieldEnum = {
   lastFlashcardStrategy: 'lastFlashcardStrategy',
   lastFlashcardLanguage: 'lastFlashcardLanguage',
   sourceLanguage: 'sourceLanguage',
+  showSourceLanguageMaterials: 'showSourceLanguageMaterials',
   targetLanguages: 'targetLanguages'
 };
 

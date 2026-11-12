@@ -21,8 +21,9 @@ model User {
   testingGroupSize      Int                     @default(10)
   lastFlashcardStrategy String?                 @default("last_imported")
   lastFlashcardLanguage String?                 @default("all")
-  sourceLanguage        String?
-  targetLanguages       String?                 @default("[]")
+  sourceLanguage                String?
+  showSourceLanguageMaterials   Boolean                 @default(false)
+  targetLanguages               String?                 @default("[]")
   flashcards            Flashcard[]
   activities            UserFlashcardActivity[]
   flashcardBatches      UserFlashcardBatch[]

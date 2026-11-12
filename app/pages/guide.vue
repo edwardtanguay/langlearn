@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import {
-  BookOpenIcon,
   PlusIcon,
   PencilSquareIcon,
+  TrashIcon,
   XMarkIcon,
   ArrowUpIcon,
-  ArrowDownIcon,
-  SparklesIcon,
-  CommandLineIcon
+  ArrowDownIcon
 } from '@heroicons/vue/24/outline'
 
 useHead({
@@ -82,17 +80,39 @@ const showDeleteConfirm = ref(false)
 const itemToDelete = ref<HowtoItem | null>(null)
 const isDeleting = ref(false)
 
-function openAddModal() {
+function openAddModal(initialRank = 2.5) {
   modalMode.value = 'add'
   saveError.value = ''
   formItem.value = {
     id: '',
     title: '',
     description: '',
-    rank: 2.5,
+    rank: initialRank,
     slug: ''
   }
   showModal.value = true
+}
+
+function openAddAboveModal(idx: number) {
+  const clicked = sortedHowtoItems.value[idx]
+  if (!clicked) {
+    openAddModal(2.5)
+    return
+  }
+  const clickedRank = Number(clicked.rank ?? 2.5)
+  let prefilledRank: number
+  if (idx === 0) {
+    prefilledRank = clickedRank < 5 ? Number(((5 + clickedRank) / 2).toFixed(4)) : 5
+  } else {
+    const above = sortedHowtoItems.value[idx - 1]
+    const aboveRank = Number(above?.rank ?? 5)
+    if (aboveRank > clickedRank) {
+      prefilledRank = Number(((aboveRank + clickedRank) / 2).toFixed(4))
+    } else {
+      prefilledRank = Number(Math.min(5, clickedRank + 0.01).toFixed(4))
+    }
+  }
+  openAddModal(prefilledRank)
 }
 
 function openEditModal(item: HowtoItem) {
@@ -245,150 +265,12 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
   }
 }
 
-const syntaxExamples = [
-  {
-    code: '//498',
-    meaning: 'Assigns rank 4.98 (very high priority, 0.0–5.0)',
-    example: 'Au fur et à mesure //498'
-  },
-  {
-    code: '//43',
-    meaning: 'Assigns rank 4.3 (first digit is integer, rest is decimal)',
-    example: 'Ça vaut le coup //43'
-  },
-  {
-    code: '//p.TEXT',
-    meaning: 'Sets the pronunciation hint shown on the card',
-    example: 'L\'accueil //p.lah-kuhy'
-  },
-  {
-    code: '//m.TEXT',
-    meaning: 'Sets a personal memory hook on the back of the card',
-    example: 'La gare //m.the train gate'
-  },
-  {
-    code: '//t.TAG',
-    meaning: 'Adds a tag to the card (//t.a automatically becomes "à")',
-    example: 'Penser à quelqu\'un //t.a'
-  },
-  {
-    code: '*word*',
-    meaning: 'Highlights target phrase for examples & Drag/Drop activity',
-    example: 'Il fait *beau* aujourd\'hui'
-  },
-  {
-    code: '<verb>',
-    meaning: 'Unlocks instant verb conjugation lookup links on card back',
-    example: 'Je <vouloir> partir tôt'
-  }
-]
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-8 min-h-[600px]">
-    <!-- Header -->
-    <div class="space-y-2 border-b border-gray-200 dark:border-gray-800 pb-5">
-      <div class="flex items-center justify-between gap-4 flex-wrap">
-        <div class="flex items-center gap-3">
-          <BookOpenIcon class="w-7 h-7 text-gray-900 dark:text-white shrink-0" />
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-            Guide
-          </h1>
-        </div>
-        <button
-          v-if="isAdmin"
-          type="button"
-          @click="openAddModal"
-          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold hover:opacity-90 transition-opacity cursor-pointer"
-        >
-          <PlusIcon class="w-4 h-4" />
-          <span>Add How-To</span>
-        </button>
-      </div>
-      <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-        How to get the most out of LangLearn — recommended settings, daily workflow, and Google Translate import codes.
-      </p>
-    </div>
-
-    <!-- How I Use LangLearn & Best Options -->
-    <section class="space-y-4">
-      <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-        <SparklesIcon class="w-5 h-5 text-gray-500 dark:text-gray-400" />
-        <span>How I Use the Site &amp; Best Options</span>
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-sm">
-        <div class="p-4 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 space-y-1.5">
-          <h3 class="font-bold text-gray-900 dark:text-white">1. Save Phrases in Google Translate</h3>
-          <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-            Whenever you hear or read a useful phrase, look it up in Google Translate and star it. Add quick inline codes like <code class="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 font-mono text-gray-900 dark:text-white">//498</code> before exporting so your best phrases automatically get top priority.
-          </p>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 space-y-1.5">
-          <h3 class="font-bold text-gray-900 dark:text-white">2. Import &amp; Preview (<NuxtLink to="/import" class="underline text-gray-900 dark:text-white">/import</NuxtLink>)</h3>
-          <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-            Set your native language in <NuxtLink to="/profile" class="underline text-gray-900 dark:text-white">Profile</NuxtLink>, then paste or upload your exported phrases. Cards without an explicit rank are scored automatically by optimal length (around 34 characters).
-          </p>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 space-y-1.5">
-          <h3 class="font-bold text-gray-900 dark:text-white">3. Best Flashcard Modes (<NuxtLink to="/flashcards" class="underline text-gray-900 dark:text-white">/flashcards</NuxtLink>)</h3>
-          <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-            Start with <strong>Newly imported untested</strong> to clear fresh imports, then switch to <strong>Most important unlearned</strong> for high-rank cards, and periodically use <strong>Most important learned</strong> to refresh old cards. Batch progress saves automatically if you leave mid-batch.
-          </p>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 space-y-1.5">
-          <h3 class="font-bold text-gray-900 dark:text-white">4. Mix in Activities (<NuxtLink to="/activities" class="underline text-gray-900 dark:text-white">/activities</NuxtLink>)</h3>
-          <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-            Use <strong>Random Testing</strong> in Spanish Verbs for quick recall drills, <strong>Gemini Quiz Prompts</strong> for AI-generated reading &amp; grammar tests, and <strong>Drag/Drop Highlighted Words</strong> for active recall in context.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Google Translate Import Codes & Card Syntax -->
-    <section class="space-y-4">
-      <div class="space-y-1">
-        <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-          <CommandLineIcon class="w-5 h-5 text-gray-500 dark:text-gray-400" />
-          <span>Google Translate Codes &amp; Card Syntax</span>
-        </h2>
-        <p class="text-xs text-gray-600 dark:text-gray-400">
-          Include these markers when saving phrases in Google Translate to automatically set rank, pronunciation, memory hooks, and tags on import.
-        </p>
-      </div>
-
-      <div class="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 overflow-hidden">
-        <div class="divide-y divide-gray-100 dark:divide-gray-800">
-          <div
-            v-for="item in syntaxExamples"
-            :key="item.code"
-            class="p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
-          >
-            <div class="flex items-start sm:items-center gap-3 min-w-0">
-              <code class="px-2 py-1 rounded-lg bg-gray-100 dark:bg-gray-800 font-mono font-bold text-gray-900 dark:text-white shrink-0">
-                {{ item.code }}
-              </code>
-              <span class="text-gray-700 dark:text-gray-300">{{ item.meaning }}</span>
-            </div>
-            <code class="px-2.5 py-1 rounded-lg bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 font-mono text-[11px] text-gray-600 dark:text-gray-300 shrink-0">
-              {{ item.example }}
-            </code>
-          </div>
-        </div>
-      </div>
-    </section>
-
+  <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-6 min-h-[600px]">
     <!-- How-To Items from Database -->
     <section class="space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
-          How-To Examples
-        </h2>
-      </div>
-
       <!-- Loading State -->
       <div v-if="isLoading" class="py-12 flex flex-col items-center justify-center space-y-3">
         <div class="w-8 h-8 border-4 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
@@ -396,8 +278,17 @@ const syntaxExamples = [
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="sortedHowtoItems.length === 0" class="py-10 text-center bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6">
+      <div v-else-if="sortedHowtoItems.length === 0" class="py-12 text-center bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 space-y-4">
         <p class="text-sm text-gray-600 dark:text-gray-400">No how-to items yet.</p>
+        <button
+          v-if="isAdmin"
+          type="button"
+          @click="openAddModal()"
+          class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
+        >
+          <PlusIcon class="w-5 h-5" />
+          <span>Add How-to</span>
+        </button>
       </div>
 
       <!-- Items List -->
@@ -413,21 +304,26 @@ const syntaxExamples = [
                 <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
                   {{ item.title }}
                 </h3>
-                <span class="px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-800 text-[11px] font-mono font-bold text-gray-700 dark:text-gray-300">
-                  rank {{ Number(item.rank).toFixed(2) }}
-                </span>
                 <span v-if="pendingItemId === item.id" class="w-3.5 h-3.5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></span>
               </div>
               <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                 {{ item.description }}
               </p>
-              <p class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+              <p v-if="isAdmin" class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
                 images/howtos/{{ item.slug }}.jpg
               </p>
             </div>
 
             <!-- Admin CRUD Controls -->
             <div v-if="isAdmin" class="flex items-center gap-1 shrink-0">
+              <button
+                type="button"
+                @click="openAddAboveModal(idx)"
+                title="Add How-To Above"
+                class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors"
+              >
+                <PlusIcon class="w-4 h-4" />
+              </button>
               <template v-if="sortedHowtoItems.length > 1">
                 <button
                   type="button"
@@ -460,9 +356,9 @@ const syntaxExamples = [
                 type="button"
                 @click="confirmDelete(item)"
                 title="Delete How-To"
-                class="px-1.5 py-1 text-[11px] font-medium text-red-900 dark:text-red-900/90 hover:text-red-700 dark:hover:text-red-600 underline cursor-pointer transition-colors"
+                class="p-1.5 text-red-900/70 dark:text-red-900/80 hover:text-red-700 dark:hover:text-red-600 cursor-pointer transition-colors"
               >
-                delete
+                <TrashIcon class="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -543,7 +439,7 @@ const syntaxExamples = [
               <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Rank (0.0 to 5.0)</label>
               <input
                 type="number"
-                step="0.01"
+                step="any"
                 min="0"
                 max="5"
                 v-model.number="formItem.rank"

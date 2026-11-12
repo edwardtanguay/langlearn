@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     lastFlashcardStrategy: dbUser?.lastFlashcardStrategy ?? 'last_imported',
     lastFlashcardLanguage: dbUser?.lastFlashcardLanguage ?? 'all',
     sourceLanguage: dbUser?.sourceLanguage ?? 'en',
+    showSourceLanguageMaterials: dbUser?.showSourceLanguageMaterials ?? false,
     targetLanguages: dbUser?.targetLanguages
       ? (typeof dbUser.targetLanguages === 'string' && dbUser.targetLanguages.startsWith('[')
           ? JSON.parse(dbUser.targetLanguages)

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { getAllowedLanguages } from '~/utils/allowedLanguages'
 
 useHead({
   title: 'LangLearn - Gemini Quiz Prompts',
@@ -71,21 +72,22 @@ function sortLanguagesByTargetOrder(languages: string[]): string[] {
 
 const memberTargetLanguages = ref<string[]>([])
 const memberSourceLanguage = ref<string | null>(null)
+const memberShowSourceMaterials = ref(false)
+const allowedMemberLanguages = computed(() => getAllowedLanguages({
+  sourceLanguage: memberSourceLanguage.value,
+  showSourceLanguageMaterials: memberShowSourceMaterials.value,
+  targetLanguages: memberTargetLanguages.value
+}))
 const selectedLanguageFilter = ref<string>('fr')
 
 const availableTargetLanguages = computed(() => {
-  if (loggedIn.value && (memberTargetLanguages.value.length > 0 || memberSourceLanguage.value)) {
-    const langs = [...memberTargetLanguages.value.map(l => l.toLowerCase()), 'es']
-    if (memberSourceLanguage.value) {
-      langs.push(memberSourceLanguage.value.toLowerCase())
-    }
-    return sortLanguagesByTargetOrder(Array.from(new Set(langs)))
+  if (loggedIn.value && allowedMemberLanguages.value.size > 0) {
+    return sortLanguagesByTargetOrder(Array.from(allowedMemberLanguages.value))
   }
   const set = new Set<string>()
   for (const p of prompts.value) {
     if (p.language) set.add(p.language.toLowerCase())
   }
-  set.add('es')
   return sortLanguagesByTargetOrder(Array.from(set))
 })
 
@@ -110,23 +112,19 @@ async function loadData() {
   try {
     const [data, me] = await Promise.all([
       $fetch<ChatbotPromptItem[]>('/api/chatbot-prompts?category=geminiQuizPrompts'),
-      loggedIn.value ? $fetch<{ role?: string; sourceLanguage?: string | null; targetLanguages?: string[] }>('/api/user/me').catch((): { role?: string; sourceLanguage?: string | null; targetLanguages?: string[] } => ({ role: 'member' })) : null
+      loggedIn.value ? $fetch<{ role?: string; sourceLanguage?: string | null; showSourceLanguageMaterials?: boolean; targetLanguages?: string[] }>('/api/user/me').catch((): { role?: string; sourceLanguage?: string | null; showSourceLanguageMaterials?: boolean; targetLanguages?: string[] } => ({ role: 'member' })) : null
     ])
     prompts.value = data || []
+    memberShowSourceMaterials.value = Boolean(me?.showSourceLanguageMaterials)
     if (me?.sourceLanguage) {
       memberSourceLanguage.value = me.sourceLanguage.toLowerCase()
     }
-    const userLangs: string[] = []
     if (me?.targetLanguages && me.targetLanguages.length > 0) {
       memberTargetLanguages.value = me.targetLanguages
-      userLangs.push(...me.targetLanguages.map((l: string) => l.toLowerCase()))
     }
-    if (me?.sourceLanguage) {
-      userLangs.push(me.sourceLanguage.toLowerCase())
-    }
-    userLangs.push('es')
+    const userLangs = me ? Array.from(getAllowedLanguages(me)) : []
     if (userLangs.length > 0) {
-      const sorted = sortLanguagesByTargetOrder(Array.from(new Set(userLangs)))
+      const sorted = sortLanguagesByTargetOrder(userLangs)
       if (!sorted.includes(selectedLanguageFilter.value)) {
         selectedLanguageFilter.value = sorted[0] || 'fr'
       }

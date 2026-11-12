@@ -75,6 +75,7 @@ const { data: meData, refresh: refreshMe } = await useFetch<{
   dailyTakeGoal: number
   testingGroupSize: number
   sourceLanguage: string | null
+  showSourceLanguageMaterials: boolean
   targetLanguages: string[]
   role: string
 }>('/api/user/me')
@@ -88,6 +89,9 @@ const isSavingGroupSize = ref(false)
 const groupSizeSaveSuccess = ref(false)
 
 const selectedSourceLanguage = ref(meData.value?.sourceLanguage || 'en')
+const showSourceLanguageMaterials = ref(Boolean(meData.value?.showSourceLanguageMaterials))
+const isSavingShowSource = ref(false)
+const selectedSourceLanguageLabel = computed(() => allSupportedLanguages.find(o => o.code === selectedSourceLanguage.value)?.label || selectedSourceLanguage.value)
 const selectedTargetLanguages = ref<string[]>(
   Array.isArray(meData.value?.targetLanguages) && meData.value!.targetLanguages.length > 0
     ? meData.value!.targetLanguages
@@ -112,6 +116,10 @@ watch(() => meData.value?.sourceLanguage, (newVal) => {
   if (newVal) selectedSourceLanguage.value = newVal
 })
 
+watch(() => meData.value?.showSourceLanguageMaterials, (newVal) => {
+  if (newVal !== undefined) showSourceLanguageMaterials.value = Boolean(newVal)
+})
+
 watch(() => meData.value?.targetLanguages, (newVal) => {
   if (Array.isArray(newVal) && newVal.length > 0) {
     selectedTargetLanguages.value = newVal
@@ -124,6 +132,12 @@ const availableTargetLanguages = computed(() => {
 })
 
 const handleSourceLanguageChange = async (newVal: string) => {
+  const prevSource = selectedSourceLanguage.value
+  const prevShowSource = showSourceLanguageMaterials.value
+  const prevTargets = [...selectedTargetLanguages.value]
+  if (newVal !== prevSource) {
+    showSourceLanguageMaterials.value = false
+  }
   selectedSourceLanguage.value = newVal
   isSourceDropdownOpen.value = false
   // Remove the new source language from target languages if present
@@ -134,7 +148,34 @@ const handleSourceLanguageChange = async (newVal: string) => {
     if (fallback) updatedTargets = [fallback]
   }
   selectedTargetLanguages.value = updatedTargets
-  await persistLanguageSettings()
+  const saved = await persistLanguageSettings()
+  if (!saved) {
+    selectedSourceLanguage.value = prevSource
+    showSourceLanguageMaterials.value = prevShowSource
+    selectedTargetLanguages.value = prevTargets
+  }
+}
+
+const toggleShowSourceLanguageMaterials = async () => {
+  if (isSavingShowSource.value || isSavingLanguages.value) return
+  const prevVal = showSourceLanguageMaterials.value
+  const nextVal = !prevVal
+  showSourceLanguageMaterials.value = nextVal
+  isSavingShowSource.value = true
+  try {
+    await $fetch('/api/user/profile', {
+      method: 'POST',
+      body: { showSourceLanguageMaterials: nextVal }
+    })
+    if (meData.value) {
+      meData.value.showSourceLanguageMaterials = nextVal
+    }
+  } catch (err) {
+    console.error('Failed to save showSourceLanguageMaterials:', err)
+    showSourceLanguageMaterials.value = prevVal
+  } finally {
+    isSavingShowSource.value = false
+  }
 }
 
 const toggleTargetLanguage = async (code: string) => {
@@ -152,8 +193,8 @@ const toggleTargetLanguage = async (code: string) => {
   await persistLanguageSettings()
 }
 
-const persistLanguageSettings = async () => {
-  if (isSavingLanguages.value) return
+const persistLanguageSettings = async (): Promise<boolean> => {
+  if (isSavingLanguages.value) return false
   isSavingLanguages.value = true
   languageSaveSuccess.value = false
 
@@ -168,17 +209,21 @@ const persistLanguageSettings = async () => {
       method: 'POST',
       body: {
         sourceLanguage: selectedSourceLanguage.value,
+        showSourceLanguageMaterials: showSourceLanguageMaterials.value,
         targetLanguages: selectedTargetLanguages.value
       }
     })
     languageSaveSuccess.value = true
     if (meData.value) {
       meData.value.sourceLanguage = selectedSourceLanguage.value
+      meData.value.showSourceLanguageMaterials = showSourceLanguageMaterials.value
       meData.value.targetLanguages = [...selectedTargetLanguages.value]
     }
     setTimeout(() => { languageSaveSuccess.value = false }, 2000)
+    return true
   } catch (err) {
     console.error('Failed to save language settings:', err)
+    return false
   } finally {
     isSavingLanguages.value = false
   }
@@ -384,6 +429,18 @@ const handleSaveGroupSize = async () => {
                 </button>
               </div>
             </div>
+              <!-- Source Language Learning Materials Checkbox -->
+              <label class="flex items-center gap-2.5 pt-1 cursor-pointer select-none text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+                <input
+                  type="checkbox"
+                  :checked="showSourceLanguageMaterials"
+                  :disabled="isSavingShowSource || isSavingLanguages"
+                  @change="toggleShowSourceLanguageMaterials"
+                  class="rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500 cursor-pointer w-4 h-4 disabled:opacity-50"
+                />
+                <span>show {{ selectedSourceLanguageLabel }} language learning materials</span>
+                <span v-if="isSavingShowSource" class="w-3.5 h-3.5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin shrink-0"></span>
+              </label>
             <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
               Source language is your <strong class="text-gray-700 dark:text-gray-200 font-bold">native language</strong>. Currently, the site UI is always in English regardless of the source language. 
             </p>
@@ -397,7 +454,7 @@ const handleSaveGroupSize = async () => {
               </label>
             </div>
             <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              Target languages are the <strong class="text-gray-700 dark:text-gray-200 font-bold">languages you want to learn</strong>. Currently, target languages filter the Links page and Gemini Quiz Prompts activity.
+              Target languages are the <strong class="text-gray-700 dark:text-gray-200 font-bold">languages you want to learn</strong>. Currently, target languages filter the Links page, Activities menu, Language Basics, and Gemini Quiz Prompts activity.
             </p>
 
             <div class="grid grid-cols-2 gap-2.5 pt-1">

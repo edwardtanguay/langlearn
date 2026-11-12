@@ -35,6 +35,7 @@ const languages = [
 type LangCode = typeof languages[number]['code']
 
 import { languageColors } from '~/utils/languageColors'
+import { getAllowedLanguages } from '~/utils/allowedLanguages'
 
 const languageNames: Record<string, string> = {
   fr: 'french',
@@ -51,6 +52,13 @@ useHead({
 })
 
 const categories = rawBasicsData as BasicCategory[]
+const { loggedIn } = useCurrentUser()
+const allowedLangSet = ref<Set<string> | null>(null)
+const visibleLanguages = computed(() => {
+  if (!allowedLangSet.value) return languages
+  const filtered = languages.filter(l => allowedLangSet.value!.has(l.code))
+  return filtered.length > 0 ? filtered : languages
+})
 const selectedLang = ref<LangCode>('fr')
 const searchQuery = ref('')
 const showResetConfirm = ref(false)
@@ -736,12 +744,22 @@ function selectLanguage(code: LangCode) {
   selectedLang.value = code
 }
 
-onMounted(() => {
+onMounted(async () => {
+  if (loggedIn.value) {
+    try {
+      const me = await $fetch<{ sourceLanguage?: string | null; showSourceLanguageMaterials?: boolean; targetLanguages?: string[] }>('/api/user/me')
+      allowedLangSet.value = getAllowedLanguages(me)
+    } catch {
+      allowedLangSet.value = null
+    }
+  }
   if (import.meta.client) {
     try {
       const savedLang = localStorage.getItem('lang-basics-selected-language') as LangCode | null
-      if (savedLang && languages.some(l => l.code === savedLang)) {
+      if (savedLang && visibleLanguages.value.some(l => l.code === savedLang)) {
         selectedLang.value = savedLang
+      } else if (!visibleLanguages.value.some(l => l.code === selectedLang.value)) {
+        selectedLang.value = visibleLanguages.value[0]?.code || 'fr'
       }
     } catch {}
   }
@@ -1221,7 +1239,7 @@ function isFlashcardOpen(itemId: string): boolean {
       <!-- Flexible line of four buttons matching Links UX -->
       <div class="flex items-center gap-2 w-full">
         <button
-          v-for="lang in languages"
+          v-for="lang in visibleLanguages"
           :key="lang.code"
           type="button"
           @click="selectLanguage(lang.code)"

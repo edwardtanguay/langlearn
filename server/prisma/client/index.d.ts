@@ -2505,6 +2505,7 @@ export namespace Prisma {
     lastFlashcardStrategy: string | null
     lastFlashcardLanguage: string | null
     sourceLanguage: string | null
+    showSourceLanguageMaterials: boolean | null
     targetLanguages: string | null
   }
 
@@ -2521,6 +2522,7 @@ export namespace Prisma {
     lastFlashcardStrategy: string | null
     lastFlashcardLanguage: string | null
     sourceLanguage: string | null
+    showSourceLanguageMaterials: boolean | null
     targetLanguages: string | null
   }
 
@@ -2537,6 +2539,7 @@ export namespace Prisma {
     lastFlashcardStrategy: number
     lastFlashcardLanguage: number
     sourceLanguage: number
+    showSourceLanguageMaterials: number
     targetLanguages: number
     _all: number
   }
@@ -2569,6 +2572,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: true
     lastFlashcardLanguage?: true
     sourceLanguage?: true
+    showSourceLanguageMaterials?: true
     targetLanguages?: true
   }
 
@@ -2585,6 +2589,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: true
     lastFlashcardLanguage?: true
     sourceLanguage?: true
+    showSourceLanguageMaterials?: true
     targetLanguages?: true
   }
 
@@ -2601,6 +2606,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: true
     lastFlashcardLanguage?: true
     sourceLanguage?: true
+    showSourceLanguageMaterials?: true
     targetLanguages?: true
     _all?: true
   }
@@ -2704,6 +2710,7 @@ export namespace Prisma {
     lastFlashcardStrategy: string | null
     lastFlashcardLanguage: string | null
     sourceLanguage: string | null
+    showSourceLanguageMaterials: boolean
     targetLanguages: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -2739,6 +2746,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: boolean
     lastFlashcardLanguage?: boolean
     sourceLanguage?: boolean
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: boolean
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
@@ -2763,6 +2771,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: boolean
     lastFlashcardLanguage?: boolean
     sourceLanguage?: boolean
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2779,6 +2788,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: boolean
     lastFlashcardLanguage?: boolean
     sourceLanguage?: boolean
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2795,10 +2805,11 @@ export namespace Prisma {
     lastFlashcardStrategy?: boolean
     lastFlashcardLanguage?: boolean
     sourceLanguage?: boolean
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "points" | "minutesToTestAgain" | "dailyTakeGoal" | "testingGroupSize" | "lastFlashcardStrategy" | "lastFlashcardLanguage" | "sourceLanguage" | "targetLanguages", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "points" | "minutesToTestAgain" | "dailyTakeGoal" | "testingGroupSize" | "lastFlashcardStrategy" | "lastFlashcardLanguage" | "sourceLanguage" | "showSourceLanguageMaterials" | "targetLanguages", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
@@ -2836,6 +2847,7 @@ export namespace Prisma {
       lastFlashcardStrategy: string | null
       lastFlashcardLanguage: string | null
       sourceLanguage: string | null
+      showSourceLanguageMaterials: boolean
       targetLanguages: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -3279,6 +3291,7 @@ export namespace Prisma {
     readonly lastFlashcardStrategy: FieldRef<"User", 'String'>
     readonly lastFlashcardLanguage: FieldRef<"User", 'String'>
     readonly sourceLanguage: FieldRef<"User", 'String'>
+    readonly showSourceLanguageMaterials: FieldRef<"User", 'Boolean'>
     readonly targetLanguages: FieldRef<"User", 'String'>
   }
     
@@ -20715,6 +20728,7 @@ export namespace Prisma {
     lastFlashcardStrategy: 'lastFlashcardStrategy',
     lastFlashcardLanguage: 'lastFlashcardLanguage',
     sourceLanguage: 'sourceLanguage',
+    showSourceLanguageMaterials: 'showSourceLanguageMaterials',
     targetLanguages: 'targetLanguages'
   };
 
@@ -20962,6 +20976,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -20972,13 +20993,6 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
   /**
    * Deep Input Types
@@ -21001,6 +21015,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: StringNullableFilter<"User"> | string | null
     lastFlashcardLanguage?: StringNullableFilter<"User"> | string | null
     sourceLanguage?: StringNullableFilter<"User"> | string | null
+    showSourceLanguageMaterials?: BoolFilter<"User"> | boolean
     targetLanguages?: StringNullableFilter<"User"> | string | null
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
@@ -21024,6 +21039,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: SortOrderInput | SortOrder
     lastFlashcardLanguage?: SortOrderInput | SortOrder
     sourceLanguage?: SortOrderInput | SortOrder
+    showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrderInput | SortOrder
     flashcards?: FlashcardOrderByRelationAggregateInput
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
@@ -21050,6 +21066,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: StringNullableFilter<"User"> | string | null
     lastFlashcardLanguage?: StringNullableFilter<"User"> | string | null
     sourceLanguage?: StringNullableFilter<"User"> | string | null
+    showSourceLanguageMaterials?: BoolFilter<"User"> | boolean
     targetLanguages?: StringNullableFilter<"User"> | string | null
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
@@ -21073,6 +21090,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: SortOrderInput | SortOrder
     lastFlashcardLanguage?: SortOrderInput | SortOrder
     sourceLanguage?: SortOrderInput | SortOrder
+    showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -21097,6 +21115,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: StringNullableWithAggregatesFilter<"User"> | string | null
     lastFlashcardLanguage?: StringNullableWithAggregatesFilter<"User"> | string | null
     sourceLanguage?: StringNullableWithAggregatesFilter<"User"> | string | null
+    showSourceLanguageMaterials?: BoolWithAggregatesFilter<"User"> | boolean
     targetLanguages?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
@@ -22178,6 +22197,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
@@ -22201,6 +22221,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
@@ -22224,6 +22245,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
@@ -22247,6 +22269,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
@@ -22270,6 +22293,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
   }
 
@@ -22286,6 +22310,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -22302,6 +22327,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -23478,6 +23504,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type FlashcardListRelationFilter = {
     every?: FlashcardWhereInput
     some?: FlashcardWhereInput
@@ -23566,6 +23597,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: SortOrder
     lastFlashcardLanguage?: SortOrder
     sourceLanguage?: SortOrder
+    showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrder
   }
 
@@ -23589,6 +23621,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: SortOrder
     lastFlashcardLanguage?: SortOrder
     sourceLanguage?: SortOrder
+    showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrder
   }
 
@@ -23605,6 +23638,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: SortOrder
     lastFlashcardLanguage?: SortOrder
     sourceLanguage?: SortOrder
+    showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrder
   }
 
@@ -23663,6 +23697,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -23887,11 +23929,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type VersionNullableScalarRelationFilter = {
     is?: VersionWhereInput | null
     isNot?: VersionWhereInput | null
@@ -23957,14 +23994,6 @@ export namespace Prisma {
   export type VersionItemSumOrderByAggregateInput = {
     rank?: SortOrder
     orderWithinVersion?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -24538,6 +24567,10 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type FlashcardUpdateManyWithoutOwnerNestedInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -24906,10 +24939,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutVersionItemsInput, UserUncheckedCreateWithoutVersionItemsInput>
     connectOrCreate?: UserCreateOrConnectWithoutVersionItemsInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type VersionUpdateOneWithoutVersionItemsNestedInput = {
@@ -25299,6 +25328,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -25371,6 +25405,14 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -25435,19 +25477,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableFilter<$PrismaModel = never> = {
@@ -26199,6 +26228,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
@@ -26221,6 +26251,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
@@ -26321,6 +26352,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
@@ -26343,6 +26375,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
@@ -26365,6 +26398,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
@@ -26387,6 +26421,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
@@ -26567,6 +26602,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
@@ -26589,6 +26625,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
@@ -26721,6 +26758,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
@@ -26743,6 +26781,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
@@ -26828,6 +26867,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
@@ -26850,6 +26890,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
@@ -27100,6 +27141,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
@@ -27122,6 +27164,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
@@ -27160,6 +27203,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
@@ -27182,6 +27226,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
@@ -27204,6 +27249,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
@@ -27226,6 +27272,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
@@ -27264,6 +27311,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
@@ -27286,6 +27334,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
@@ -27308,6 +27357,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
@@ -27330,6 +27380,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
@@ -27368,6 +27419,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
@@ -27390,6 +27442,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
@@ -27412,6 +27465,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
@@ -27434,6 +27488,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: string | null
     lastFlashcardLanguage?: string | null
     sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
@@ -27472,6 +27527,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
@@ -27494,6 +27550,7 @@ export namespace Prisma {
     lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
     lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput

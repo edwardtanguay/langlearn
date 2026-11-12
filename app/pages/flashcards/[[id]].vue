@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { languageColors } from '~/utils/languageColors'
+import { getAllowedLanguages, isActivityVisible } from '~/utils/allowedLanguages'
 
 useHead({
   title: 'LangLearn - Flashcards Practice',
@@ -95,18 +96,21 @@ let activeBatchRequestId = 0
 // Random activities & Daily goal
 const allActivities = [
   { title: 'Language Basics', path: '/activities/language-basics' },
+  { title: 'Spanish Verbs', path: '/activities/spanish-verbs' },
   { title: 'Pronunciation Practice', path: '/activities/pronunciation-practice' },
   { title: 'Correction Journal', path: '/activities/correction-journal' },
   { title: 'Drag/Drop Highlighted Words', path: '/activities/starred-texts' },
   { title: 'Learn à/de', path: '/activities/learn-a-de' },
   { title: 'Gemini Quiz Prompts', path: '/activities/gemini-quiz' }
 ]
+const allowedUserLanguages = ref<Set<string> | null>(null)
 const currentBatchRandomActivities = ref<Array<{ title: string; path: string }>>([])
 const batchCompleteRandomActivities = ref<Array<{ title: string; path: string }>>([])
 const userDailyGoal = ref(50)
 
 function pickRandomActivitiesForBatch() {
-  const shuffled = [...allActivities].sort(() => Math.random() - 0.5)
+  const eligible = allActivities.filter(act => isActivityVisible(act.path, allowedUserLanguages.value))
+  const shuffled = [...eligible].sort(() => Math.random() - 0.5)
   currentBatchRandomActivities.value = shuffled.slice(0, 3)
   batchCompleteRandomActivities.value = [shuffled[0]!, shuffled[1]!]
 }
@@ -1340,6 +1344,7 @@ watch(() => route.params.id, (newId) => {
 async function fetchUserSettings() {
   try {
     const data: any = await $fetch('/api/user/me')
+    allowedUserLanguages.value = getAllowedLanguages(data)
     if (data?.dailyTakeGoal) {
       userDailyGoal.value = data.dailyTakeGoal
     }
