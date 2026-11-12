@@ -123,10 +123,14 @@ exports.Prisma.UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   role: 'role',
+  points: 'points',
   minutesToTestAgain: 'minutesToTestAgain',
   dailyTakeGoal: 'dailyTakeGoal',
   testingGroupSize: 'testingGroupSize',
+  lastFlashcardStrategy: 'lastFlashcardStrategy',
+  lastFlashcardLanguage: 'lastFlashcardLanguage',
   sourceLanguage: 'sourceLanguage',
+  showSourceLanguageMaterials: 'showSourceLanguageMaterials',
   targetLanguages: 'targetLanguages'
 };
 
@@ -264,6 +268,32 @@ exports.Prisma.UserCorrectionSectionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserFlashcardBatchScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  strategy: 'strategy',
+  language: 'language',
+  slotsJson: 'slotsJson',
+  queueIdsJson: 'queueIdsJson',
+  allCardIdsJson: 'allCardIdsJson',
+  currentCardId: 'currentCardId',
+  learnedInBatchCount: 'learnedInBatchCount',
+  totalInBatch: 'totalInBatch',
+  isBatchComplete: 'isBatchComplete',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.HowtoItemScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  rank: 'rank',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -289,7 +319,9 @@ exports.Prisma.ModelName = {
   MobileImport: 'MobileImport',
   ChatbotPrompt: 'ChatbotPrompt',
   BasicWordInfo: 'BasicWordInfo',
-  UserCorrectionSection: 'UserCorrectionSection'
+  UserCorrectionSection: 'UserCorrectionSection',
+  UserFlashcardBatch: 'UserFlashcardBatch',
+  HowtoItem: 'HowtoItem'
 };
 
 /**

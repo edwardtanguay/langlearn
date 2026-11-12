@@ -88,6 +88,21 @@ const selectedTenses = ref<string[]>(TENSES.map(t => t.key))
 const selectedPronouns = ref<number[]>(PRONOUNS.map(p => p.idx))
 const isTestMode = ref(false)
 const showControls = ref(true)
+const isIdeaBoxOpen = useState('isIdeaBoxOpen', () => false)
+
+function isTypingInExternalInput(target?: EventTarget | null): boolean {
+  if (isIdeaBoxOpen.value) return true
+  if (isSearchActiveOrFocused.value || isSearching.value) return true
+  const checkEl = (el: HTMLElement | null | undefined) => {
+    if (!el) return false
+    if (el.id === 'random-test-input' || el.id?.startsWith('input-')) return false
+    const tag = el.tagName?.toLowerCase()
+    return tag === 'input' || tag === 'textarea' || tag === 'select' || el.isContentEditable || el.hasAttribute('contenteditable')
+  }
+  if (checkEl(target as HTMLElement | null)) return true
+  if (typeof document !== 'undefined' && checkEl(document.activeElement as HTMLElement | null)) return true
+  return false
+}
 
 // Mobile & Layout State
 const isPageLoading = ref(false)
@@ -900,7 +915,7 @@ function triggerPeek() {
       peekingExcludedInputId.value = null
       if (targetInputIdToRestore && typeof document !== 'undefined') {
         nextTick(() => {
-          if (isSearchActiveOrFocused.value || isSearching.value || document.activeElement?.id?.startsWith('verb-search-input')) {
+          if (isTypingInExternalInput() || document.activeElement?.id?.startsWith('verb-search-input')) {
             return
           }
           const el = document.getElementById(targetInputIdToRestore) as HTMLInputElement | null
@@ -1293,7 +1308,7 @@ function triggerHint(cellKey: string, expectedAnswer: string, event: KeyboardEve
 
 function handleBlur(verb: SpanishVerb, tenseKey: string, pronounIdx: number, event: FocusEvent) {
   const related = event?.relatedTarget as HTMLElement | null
-  if (isSearchActiveOrFocused.value || (related && related.id?.startsWith('verb-search-input')) || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
+  if (isTypingInExternalInput(related) || (related && related.id?.startsWith('verb-search-input')) || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
     return
   }
   if (!related || !related.id || !related.id.startsWith('input-')) {
@@ -1593,9 +1608,13 @@ function handleCellFocus(event: FocusEvent) {
 }
 
 function startRandomTest() {
+  checkMobile()
   resetTestInputs()
   isRandomTestMode.value = true
   isTestMode.value = false
+  if (!isMobile.value) {
+    showControls.value = false
+  }
   if (import.meta.client) {
     window.addEventListener('keydown', handleRandomGlobalKeyDown)
   }
@@ -1778,7 +1797,7 @@ function pickNextRandomTarget() {
   }
 
   nextTick(() => {
-    if (isSearchActiveOrFocused.value || isSearching.value || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
+    if (isTypingInExternalInput() || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
       return
     }
     const el = document.getElementById('random-test-input') as HTMLInputElement | null
@@ -1789,7 +1808,7 @@ function pickNextRandomTarget() {
   })
 }
 
-function validateRandomTest() {
+function validateRandomTest(shouldRefocus = true) {
   if (!currentRandomTarget.value || waitingForNextRandomKey.value) return
   const raw = randomTestAnswer.value
   const trimmed = normalizeAnswer(raw)
@@ -1823,11 +1842,12 @@ function validateRandomTest() {
       currentRandomTarget.value.pronounLabel,
       currentRandomTarget.value.expected
     )
+    if (!shouldRefocus) return
     nextTick(() => {
       if (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input')) {
         return
       }
-      if (isSearchActiveOrFocused.value || isSearching.value) {
+      if (isTypingInExternalInput()) {
         return
       }
       const el = document.getElementById('random-test-input') as HTMLInputElement | null
@@ -1842,10 +1862,7 @@ function validateRandomTest() {
 function handleRandomBlur(event?: FocusEvent) {
   if (waitingForNextRandomKey.value) return
   const related = event?.relatedTarget as HTMLElement | null
-  if (isSearchActiveOrFocused.value || (related && related.id?.startsWith('verb-search-input')) || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
-    return
-  }
-  if (isSearching.value) {
+  if (isTypingInExternalInput(related) || (related && related.id?.startsWith('verb-search-input')) || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) {
     return
   }
   if (hintState.value && hintState.value.cellKey === randomKey.value) {
@@ -1855,7 +1872,7 @@ function handleRandomBlur(event?: FocusEvent) {
     }
     hintState.value = null
   }
-  validateRandomTest()
+  validateRandomTest(false)
 }
 
 function handleRandomInput() {
@@ -1922,7 +1939,7 @@ function handleRandomInputKeyDown(event: KeyboardEvent) {
 }
 
 function handleRandomGlobalKeyDown(e: KeyboardEvent) {
-  if (isSearchActiveOrFocused.value || isSearching.value || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) return
+  if (isTypingInExternalInput(e.target) || (typeof document !== 'undefined' && document.activeElement?.id?.startsWith('verb-search-input'))) return
   if (!isRandomTestMode.value) return
   if (waitingForNextRandomKey.value) {
     if (ignoreNextRandomKey) return
@@ -1943,6 +1960,7 @@ function handleRandomGlobalKeyDown(e: KeyboardEvent) {
 }
 
 function handleGlobalKeyDown(e: KeyboardEvent) {
+  if (isTypingInExternalInput(e.target)) return
   if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
     e.preventDefault()
     triggerPeek()

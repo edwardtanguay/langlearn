@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { getAllowedLanguages, isActivityVisible } from '~/utils/allowedLanguages'
 import { SparklesIcon, LinkIcon, InformationCircleIcon, ClockIcon, LanguageIcon } from '@heroicons/vue/24/outline'
 
 useHead({
@@ -13,6 +14,24 @@ const config = useRuntimeConfig()
 const isBypass = computed(() => Boolean(config.public.bypassAuth))
 const auth = useAuth()
 const user = computed(() => isBypass.value ? { given_name: 'Member' } : (auth?.user ?? null))
+const { loggedIn } = useCurrentUser()
+const allowedLanguages = ref<Set<string> | null>(null)
+const isLoadingPrefs = ref(true)
+
+onMounted(async () => {
+  if (!loggedIn.value) {
+    isLoadingPrefs.value = false
+    return
+  }
+  try {
+    const me = await $fetch<{ sourceLanguage?: string | null; showSourceLanguageMaterials?: boolean; targetLanguages?: string[] }>('/api/user/me')
+    allowedLanguages.value = getAllowedLanguages(me)
+  } catch {
+    allowedLanguages.value = null
+  } finally {
+    isLoadingPrefs.value = false
+  }
+})
 </script>
 
 <template>
@@ -43,7 +62,10 @@ const user = computed(() => isBypass.value ? { given_name: 'Member' } : (auth?.u
     </div>
 
     <!-- Available Member Activities & Features Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-2">
+    <div v-if="isLoadingPrefs" class="py-12 flex justify-center">
+      <div class="w-8 h-8 border-4 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-2">
       <!-- Gemini Activity Card -->
       <NuxtLink
         to="/activities/gemini-quiz"
@@ -67,6 +89,7 @@ const user = computed(() => isBypass.value ? { given_name: 'Member' } : (auth?.u
 
       <!-- Spanish Verbs Activity Card -->
       <NuxtLink
+        v-if="isActivityVisible('/activities/spanish-verbs', allowedLanguages)"
         to="/activities/spanish-verbs"
         class="group p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg transition-all flex flex-col justify-between space-y-4"
       >

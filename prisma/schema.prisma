@@ -10,22 +10,27 @@ generator client {
 
 
 model User {
-  id                 String                 @id @default(uuid())
-  firstName          String
-  lastName           String
-  email              String                 @unique
-  role               String                 @default("member")
-  minutesToTestAgain Int                    @default(10)
-  dailyTakeGoal      Int                    @default(100)
-  testingGroupSize   Int                    @default(10)
-  sourceLanguage     String?
-  targetLanguages    String?                @default("[]")
-  flashcards         Flashcard[]
-  activities         UserFlashcardActivity[]
-  versionItems       VersionItem[]          @relation("UserVersionItems")
-  mobileImports      MobileImport[]
-  basicWordInfos     BasicWordInfo[]
-  correctionSections UserCorrectionSection[]
+  id                    String                  @id @default(uuid())
+  firstName             String
+  lastName              String
+  email                 String                  @unique
+  role                  String                  @default("member")
+  points                Int                     @default(0)
+  minutesToTestAgain    Int                     @default(10)
+  dailyTakeGoal         Int                     @default(100)
+  testingGroupSize      Int                     @default(10)
+  lastFlashcardStrategy String?                 @default("last_imported")
+  lastFlashcardLanguage String?                 @default("all")
+  sourceLanguage                String?
+  showSourceLanguageMaterials   Boolean                 @default(false)
+  targetLanguages               String?                 @default("[]")
+  flashcards            Flashcard[]
+  activities            UserFlashcardActivity[]
+  flashcardBatches      UserFlashcardBatch[]
+  versionItems          VersionItem[]           @relation("UserVersionItems")
+  mobileImports         MobileImport[]
+  basicWordInfos        BasicWordInfo[]
+  correctionSections    UserCorrectionSection[]
 }
 
 model Link {
@@ -195,5 +200,31 @@ model UserCorrectionSection {
   @@unique([userId, sectionId])
 }
 
+model UserFlashcardBatch {
+  id                  String   @id @default(uuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategy            String
+  language            String   @default("all")
+  slotsJson           String   @default("[]")
+  queueIdsJson        String   @default("[]")
+  allCardIdsJson      String   @default("[]")
+  currentCardId       String?
+  learnedInBatchCount Int      @default(0)
+  totalInBatch        Int      @default(0)
+  isBatchComplete     Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
+  @@unique([userId, strategy, language])
+}
 
+model HowtoItem {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  rank        Float    @default(2.5)
+  slug        String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

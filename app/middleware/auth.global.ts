@@ -32,6 +32,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       const unknownAllowedPaths = [
         '/',
         '/links',
+        '/guide',
         '/about',
         '/activities',
         '/activities/gemini-quiz',
@@ -73,6 +74,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       '/batches',
       '/import',
       '/links',
+      '/guide',
       '/about',
       '/profile',
       '/activities/gemini-quiz',

@@ -18,6 +18,9 @@ export default defineEventHandler(async (event) => {
   if (body.sourceLanguage !== undefined) {
     dataToUpdate.sourceLanguage = body.sourceLanguage ? String(body.sourceLanguage).toLowerCase().trim() : null
   }
+  if (body.showSourceLanguageMaterials !== undefined) {
+    dataToUpdate.showSourceLanguageMaterials = Boolean(body.showSourceLanguageMaterials)
+  }
 
   if (body.targetLanguages !== undefined) {
     const arr = Array.isArray(body.targetLanguages) ? body.targetLanguages : []
@@ -40,6 +43,7 @@ export default defineEventHandler(async (event) => {
       dailyTakeGoal: updatedUser.dailyTakeGoal,
       testingGroupSize: updatedUser.testingGroupSize,
       sourceLanguage: updatedUser.sourceLanguage,
+      showSourceLanguageMaterials: updatedUser.showSourceLanguageMaterials,
       targetLanguages: updatedUser.targetLanguages ? JSON.parse(updatedUser.targetLanguages) : []
     }
   }

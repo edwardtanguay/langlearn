@@ -12,6 +12,7 @@ import {
   EllipsisHorizontalIcon
 } from '@heroicons/vue/24/outline'
 import { languageColors } from '~/utils/languageColors'
+import { getAllowedLanguages } from '~/utils/allowedLanguages'
 
 useHead({
   title: 'LangLearn - Links',
@@ -121,13 +122,18 @@ const links = ref<LinkItem[]>([])
 const isLoading = ref(true)
 const memberTargetLanguages = ref<string[]>([])
 const memberSourceLanguage = ref<string | null>(null)
+const memberShowSourceMaterials = ref(false)
+const allowedMemberLanguages = computed(() => getAllowedLanguages({
+  sourceLanguage: memberSourceLanguage.value,
+  showSourceLanguageMaterials: memberShowSourceMaterials.value,
+  targetLanguages: memberTargetLanguages.value
+}))
 const selectedLanguageFilter = ref<string>('fr')
 
 const availableTargetLanguages = computed(() => {
   const set = new Set<string>()
-  if (loggedIn.value && (memberTargetLanguages.value.length > 0 || memberSourceLanguage.value)) {
-    for (const l of memberTargetLanguages.value) set.add(l.toLowerCase())
-    if (memberSourceLanguage.value) set.add(memberSourceLanguage.value.toLowerCase())
+  if (loggedIn.value && userRole.value !== 'unknownUser' && allowedMemberLanguages.value.size > 0) {
+    for (const l of allowedMemberLanguages.value) set.add(l)
   } else {
     for (const l of links.value) {
       if (l.language) set.add(l.language.toLowerCase())
@@ -145,23 +151,20 @@ const loadLinks = async () => {
   try {
     const [linksData, meData] = await Promise.all([
       $fetch<LinkItem[]>('/api/links'),
-      loggedIn.value ? $fetch<{ sourceLanguage?: string | null; targetLanguages?: string[] }>('/api/user/me').catch(() => null) : null
+      loggedIn.value ? $fetch<{ sourceLanguage?: string | null; showSourceLanguageMaterials?: boolean; targetLanguages?: string[] }>('/api/user/me').catch(() => null) : null
     ])
     links.value = linksData || []
     if (meData) {
+      memberShowSourceMaterials.value = Boolean(meData.showSourceLanguageMaterials)
       if (meData.sourceLanguage) {
         memberSourceLanguage.value = meData.sourceLanguage.toLowerCase()
       }
-      const userLangs: string[] = []
       if (meData.targetLanguages && meData.targetLanguages.length > 0) {
         memberTargetLanguages.value = meData.targetLanguages
-        userLangs.push(...meData.targetLanguages.map((l: string) => l.toLowerCase()))
       }
-      if (meData.sourceLanguage) {
-        userLangs.push(meData.sourceLanguage.toLowerCase())
-      }
-      if (userLangs.length > 0) {
-        const sorted = sortLanguagesByTargetOrder(Array.from(new Set(userLangs)))
+      const allowed = Array.from(getAllowedLanguages(meData))
+      if (allowed.length > 0) {
+        const sorted = sortLanguagesByTargetOrder(allowed)
         if (selectedLanguageFilter.value !== 'all' && !sorted.includes(selectedLanguageFilter.value)) {
           selectedLanguageFilter.value = sorted[0] || 'fr'
         }
@@ -269,11 +272,7 @@ onUnmounted(() => {
 const filteredLinks = computed(() => {
   let list = links.value
   if (loggedIn.value && userRole.value !== 'unknownUser') {
-    const allowed = [...memberTargetLanguages.value.map(l => l.toLowerCase()), 'general']
-    if (memberSourceLanguage.value) {
-      allowed.push(memberSourceLanguage.value.toLowerCase())
-    }
-    const targets = new Set(allowed)
+    const targets = new Set([...allowedMemberLanguages.value, 'general'])
     list = list.filter(l => targets.has(l.language.toLowerCase()))
   }
   if (selectedLanguageFilter.value !== 'all') {

@@ -100,3 +100,39 @@
 	----------------------------------------------
 	
 	
+- 2026-11-11 langlearn version-0-12-0
+	- x changes01
+		--------------------------------------
+		## general
+		
+		- x roll back the change that Spanish learning materials should always be available to all members
+			- only show learning materials for a specific language if that language is choosen by the user as a "learning langauge" (checked in their profile)
+			- this applies to e.g. the activity "Spanish Verbs" which should only be shown if Spanish is chosen by the user in their profile as a language they want to learn
+			- for pages like "Spanish Verbs", all users can access these pages in a permalink, but they will only appear in the menu if that language is chosen as a language they are learning
+		- x note that users that are not logged in yet, they see learning material for all languages
+		
+		## Profile
+		
+		- x under the "Source Language" dropdown, add a checkbox and a sentence that says:
+			- [_] show Spanish language learning materials
+			- (of course, the word "Spanish" should be the language they have selected as their source language
+			- make this binding in the application, so if a user has Spanish as their source language, then they will also see e.g. the page in the menu "Spanish Verbs"
+			
+		## Guide
+		
+		- x remove absolutely everything on the page except for the Howtos
+		- x howtos
+			- don't show the rank
+			- change the "delete" link to a red trashcan
+			- add a "+" icon which pops up the add modal form with a prefilled rank that is slightly higher than the card on which the icon was clicked (so the new card is added just above that card)
+			- only if there are no cards should the large "Add How-to" be shown
+		--------------------------------------
+	- x fix howtos
+	- x changes02
+		--------------------------------------
+		## Guide
+		
+		- put a simple paragraph at the top that says "This guide is a collection of howtos and tips for using LangLearn."
+		- don't round the corners of the image
+		--------------------------------------
+	

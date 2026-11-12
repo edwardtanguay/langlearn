@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import { getAllowedLanguages, isActivityVisible } from '~/utils/allowedLanguages'
 import {
   BookOpenIcon,
   SpeakerWaveIcon,
@@ -13,6 +15,26 @@ useHead({
   meta: [
     { name: 'description', content: 'Explore interactive language learning activities.' }
   ]
+})
+
+const { loggedIn } = useCurrentUser()
+const allowedLanguages = ref<Set<string> | null>(null)
+const isLoadingPrefs = ref(Boolean(loggedIn.value))
+
+onMounted(async () => {
+  if (!loggedIn.value) {
+    allowedLanguages.value = null
+    isLoadingPrefs.value = false
+    return
+  }
+  try {
+    const me = await $fetch<{ sourceLanguage?: string | null; showSourceLanguageMaterials?: boolean; targetLanguages?: string[] }>('/api/user/me')
+    allowedLanguages.value = getAllowedLanguages(me)
+  } catch {
+    allowedLanguages.value = null
+  } finally {
+    isLoadingPrefs.value = false
+  }
 })
 
 const activities = [
@@ -66,6 +88,10 @@ const activities = [
     badgeColor: 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200/60 dark:border-rose-900/40'
   }
 ]
+
+const visibleActivities = computed(() => {
+  return activities.filter(act => isActivityVisible(act.path, allowedLanguages.value))
+})
 </script>
 
 <template>
@@ -75,9 +101,13 @@ const activities = [
       <p class="text-gray-600 dark:text-gray-400 mt-1">Choose an activity to practice your language skills and reinforce key vocabulary.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+    <div v-if="isLoadingPrefs" class="py-12 flex justify-center">
+      <div class="w-8 h-8 border-4 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
       <NuxtLink
-        v-for="act in activities"
+        v-for="act in visibleActivities"
         :key="act.path"
         :to="act.path"
         class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#182030] border-2 border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg hover:border-amber-500/70 dark:hover:border-amber-500/70 transition-all duration-200 group flex flex-col justify-start relative"
