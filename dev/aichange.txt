@@ -128,7 +128,7 @@
 			- only if there are no cards should the large "Add How-to" be shown
 		--------------------------------------
 	- x fix howtos
-	- ,, changes02
+	- x changes02
 		--------------------------------------
 		## Guide
 		
