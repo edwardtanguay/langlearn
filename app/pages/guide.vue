@@ -173,8 +173,9 @@ async function saveItem() {
     const targetId = formItem.value.id
     pendingItemId.value = targetId
     const idx = howtoItems.value.findIndex(i => i.id === targetId)
-    if (idx !== -1) {
-      howtoItems.value[idx] = { ...howtoItems.value[idx], title, description, rank, slug }
+    const existing = howtoItems.value[idx]
+    if (existing) {
+      howtoItems.value[idx] = { ...existing, title, description, rank, slug }
     }
     showModal.value = false
 
@@ -269,6 +270,11 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
 
 <template>
   <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-6 min-h-[600px]">
+    <h1 class="sr-only">Guide</h1>
+    <p class="text-sm text-gray-600 dark:text-gray-400">
+      This page is a collection of howtos and tips for using LangLearn. If you have any suggestions for howtos or tips you would like to see, add your idea as a bug-fix or feature above, and I'll add it as a howto here.
+    </p>
+
     <!-- How-To Items from Database -->
     <section class="space-y-4">
       <!-- Loading State -->
@@ -366,7 +372,7 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
           <!-- Image Preview (renders when images/howtos/<slug>.jpg exists) -->
           <div
             v-if="item.slug && !brokenImageSlugs[item.slug]"
-            class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-950"
+            class="overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-950"
           >
             <img
               :src="getImagePath(item.slug)"
