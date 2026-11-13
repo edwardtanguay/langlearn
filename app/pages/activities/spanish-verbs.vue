@@ -560,10 +560,36 @@ function verbMatchesSearch(v: SpanishVerb, normQuery: string): boolean {
 
 const isSearching = computed(() => !!searchQuery.value.trim())
 
+function getVerbSearchScore(v: SpanishVerb, normQuery: string): number {
+  const normVerb = normalizeForSearch(v.verb)
+  if (normVerb === normQuery) return 3
+
+  const hasExactWord = (text?: string): boolean => {
+    if (!text || text === '-') return false
+    return normalizeForSearch(text)
+      .split(/[\s/,;()]+/)
+      .some(word => word === normQuery)
+  }
+
+  if (hasExactWord(v.gerund) || hasExactWord(v.pastParticiple)) return 2
+  for (const tense of FINITE_TENSES) {
+    const forms = (v as any)[tense.key] as string[] || []
+    for (const form of forms) {
+      if (hasExactWord(form)) return 2
+    }
+  }
+
+  return verbMatchesSearch(v, normQuery) ? 1 : 0
+}
+
 const searchMatchingVerbs = computed(() => {
   const q = normalizeForSearch(searchQuery.value.trim())
   if (!q) return []
-  return verbs.filter(v => verbMatchesSearch(v, q))
+  return verbs
+    .map((v, idx) => ({ v, idx, score: getVerbSearchScore(v, q) }))
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.idx - b.idx)
+    .map(item => item.v)
 })
 
 function handleSearchFocus() {
@@ -2486,7 +2512,6 @@ onUnmounted(() => {
             <button
               type="button"
               @pointerdown="blurActiveSearchInput"
-              @pointerdown.prevent.stop="prevMobilePronoun"
               @keydown.enter.prevent.stop="prevMobilePronoun"
               @keydown.space.prevent.stop="prevMobilePronoun"
               @click.stop.prevent="prevMobilePronoun"
@@ -2498,7 +2523,6 @@ onUnmounted(() => {
             <button
               type="button"
               @pointerdown="blurActiveSearchInput"
-              @pointerdown.prevent.stop="nextMobilePronoun"
               @keydown.enter.prevent.stop="nextMobilePronoun"
               @keydown.space.prevent.stop="nextMobilePronoun"
               @click.stop.prevent="nextMobilePronoun"
@@ -2991,7 +3015,6 @@ onUnmounted(() => {
             <button
               type="button"
               @pointerdown="blurActiveSearchInput"
-              @pointerdown.prevent.stop="prevVerbMobilePronoun(verb.verb)"
               @keydown.enter.prevent.stop="prevVerbMobilePronoun(verb.verb)"
               @keydown.space.prevent.stop="prevVerbMobilePronoun(verb.verb)"
               @click.stop.prevent="prevVerbMobilePronoun(verb.verb)"
@@ -3003,7 +3026,6 @@ onUnmounted(() => {
             <button
               type="button"
               @pointerdown="blurActiveSearchInput"
-              @pointerdown.prevent.stop="nextVerbMobilePronoun(verb.verb)"
               @keydown.enter.prevent.stop="nextVerbMobilePronoun(verb.verb)"
               @keydown.space.prevent.stop="nextVerbMobilePronoun(verb.verb)"
               @click.stop.prevent="nextVerbMobilePronoun(verb.verb)"

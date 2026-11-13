@@ -29,6 +29,9 @@ interface LinkItem {
   title: string
   url: string
   description?: string
+  slug?: string | null
+  imageUrl?: string | null
+  thumbUrl?: string | null
   rank: number
 }
 
@@ -326,12 +329,14 @@ const modalMode = ref<'add' | 'edit'>('add')
 const isSaving = ref(false)
 const saveError = ref('')
 
+const lightboxImageUrl = ref<string | null>(null)
 const formLink = ref({
   id: '',
   language: 'fr',
   title: '',
   url: '',
   description: '',
+  slug: '',
   rank: 2.5
 })
 
@@ -363,6 +368,7 @@ const openEditModal = (item: LinkItem) => {
     title: item.title,
     url: item.url,
     description: item.description || '',
+    slug: item.slug || '',
     rank: item.rank ?? 2.5
   }
   showModal.value = true
@@ -478,7 +484,16 @@ const executeDelete = async () => {
           }"
         >
           <div class="space-y-1.5 min-w-0 flex-1">
-            <!-- Active Admin CRUD Tools (Displayed when title clicked) -->
+            <div class="flex items-start gap-3">
+            <img
+              v-if="link.thumbUrl || link.imageUrl"
+              :src="link.thumbUrl || link.imageUrl || ''"
+              :alt="link.title"
+              @click.stop="lightboxImageUrl = link.imageUrl || link.thumbUrl || null"
+              class="w-20 h-14 sm:w-24 sm:h-16 object-cover rounded-lg border border-gray-700 shrink-0 cursor-zoom-in"
+            />
+            <div class="flex-1 min-w-0">
+              <!-- Active Admin CRUD Tools (Displayed when title clicked) -->
             <div
               v-if="isAdmin && activeCrudLinkId === link.id"
               @click.stop="toggleCrudToolbar(link.id, $event)"
@@ -575,8 +590,19 @@ const executeDelete = async () => {
               {{ capitalizeFirst(link.description) }}
             </p>
           </div>
+            </div>
+          </div>
         </li>
       </ul>
+    </div>
+
+    <!-- Full Image Lightbox Modal -->
+    <div
+      v-if="lightboxImageUrl"
+      @click="lightboxImageUrl = null"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs cursor-zoom-out"
+    >
+      <img :src="lightboxImageUrl" alt="Link preview" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />
     </div>
 
     <!-- Admin Add/Edit Modal Dialog -->
@@ -642,6 +668,17 @@ const executeDelete = async () => {
               placeholder="Short explanation of what this link offers..."
               class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white"
             ></textarea>
+          </div>
+
+          <!-- Slug Input -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Slug (optional, matches &lt;slug&gt;.jpg/.png/.gif)</label>
+            <input
+              v-model="formLink.slug"
+              type="text"
+              placeholder="e.g. my-link-screenshot"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white font-mono text-xs"
+            />
           </div>
 
           <!-- Rank Input (0.0 to 5.0) -->

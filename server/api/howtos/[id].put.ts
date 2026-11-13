@@ -1,3 +1,4 @@
+import { syncAndResolveSlugImages } from '../../utils/imageSlug'
 import { prisma } from '../../utils/prisma'
 import { requireAdmin } from '../../utils/auth'
 
@@ -26,7 +27,8 @@ export default defineEventHandler(async (event) => {
       where: { id },
       data
     })
-    return updated
+    const imgs = await syncAndResolveSlugImages(updated.slug, 'howtos')
+    return { ...updated, ...imgs }
   } catch (err: any) {
     if (err?.code === 'P2002') {
       throw createError({

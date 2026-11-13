@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
   const clientTz = (getHeader(event, 'x-client-timezone') as string) || body.tz || undefined
 
   try {
-    const result = await processImportRows(dbUser.id, body.rows, clientTz)
+    const result = await processImportRows(dbUser.id, body.rows, clientTz, { lowercaseFirst: body.lowercaseFirst !== false })
     return result
   } catch (err: any) {
     throw createError({

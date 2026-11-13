@@ -13,6 +13,9 @@ const props = defineProps<{
   slots: BatchSlot[]
   activeCardId?: string | null
   isBatchComplete?: boolean
+  isLoading?: boolean
+  loadingCount?: number
+  loadingLanguage?: string
 }>()
 
 const emit = defineEmits<{
@@ -101,11 +104,45 @@ const percent = computed(() => {
 <template>
   <div class="w-full px-1 py-1 transition-all">
     <!-- Capsule Pills Row with language abbreviation above each box -->
-    <div v-if="slots.length > 0" class="flex items-start gap-1 sm:gap-1.5 w-full">
+    <!-- Loading Skeleton Pills Row -->
+    <div
+      v-if="isLoading && (loadingCount ?? 0) > 0"
+      class="flex items-start w-full"
+      :class="(loadingCount ?? 0) <= 3 ? 'justify-center gap-2' : 'gap-1 sm:gap-1.5'"
+    >
+      <div
+        v-for="n in (loadingCount ?? 0)"
+        :key="`skel-${n}`"
+        class="flex flex-col items-center"
+        :class="(loadingCount ?? 0) <= 3 ? 'w-16 sm:w-20' : 'flex-1 min-w-0'"
+      >
+        <span
+          v-if="loadingLanguage && loadingLanguage !== 'all'"
+          class="text-[10px] sm:text-xs font-mono font-bold mb-1 select-none tracking-wider animate-pulse"
+          :style="{ color: getLanguageColor(loadingLanguage) }"
+        >
+          {{ loadingLanguage.toUpperCase() }}
+        </span>
+        <span v-else class="w-5 h-3 rounded bg-gray-200 dark:bg-gray-800 animate-pulse mb-1.5" />
+        <div
+          class="w-full h-8 rounded-lg border animate-pulse"
+          :class="loadingLanguage && loadingLanguage !== 'all' ? '' : 'bg-gray-200 dark:bg-gray-800 border-gray-300/60 dark:border-gray-700/60'"
+          :style="loadingLanguage && loadingLanguage !== 'all'
+            ? {
+                backgroundColor: `color-mix(in srgb, ${getLanguageColor(loadingLanguage)} 20%, transparent)`,
+                borderColor: `color-mix(in srgb, ${getLanguageColor(loadingLanguage)} 45%, transparent)`
+              }
+            : undefined"
+        />
+      </div>
+    </div>
+
+    <div v-else-if="slots.length > 0" class="flex items-start w-full" :class="slots.length <= 3 ? 'justify-center gap-2' : 'gap-1 sm:gap-1.5'">
       <div
         v-for="slot in slots"
         :key="slot.id"
-        class="flex-1 min-w-0 flex flex-col items-center"
+        class="flex flex-col items-center"
+        :class="slots.length <= 3 ? 'w-16 sm:w-20' : 'flex-1 min-w-0'"
       >
         <!-- Language abbreviation above the box in its language color (gray when parked or deleted) -->
         <span

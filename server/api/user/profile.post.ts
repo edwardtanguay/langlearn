@@ -5,21 +5,36 @@ export default defineEventHandler(async (event) => {
   const user = await requireAuth(event)
   const body = await readBody(event)
 
+  const userId = user.dbId || user.id
   const dataToUpdate: Record<string, any> = {}
+  let shouldResetBatches = false
 
   if (body.dailyTakeGoal !== undefined) {
     dataToUpdate.dailyTakeGoal = Math.max(1, parseInt(body.dailyTakeGoal, 10) || 100)
   }
 
   if (body.testingGroupSize !== undefined) {
-    dataToUpdate.testingGroupSize = Math.max(1, Math.min(50, parseInt(body.testingGroupSize, 10) || 10))
+    const newGroupSize = Math.max(1, Math.min(50, parseInt(body.testingGroupSize, 10) || 10))
+    const currentUser = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { testingGroupSize: true }
+    })
+    if (currentUser && currentUser.testingGroupSize !== newGroupSize) {
+      shouldResetBatches = true
+    }
+    dataToUpdate.testingGroupSize = newGroupSize
   }
 
   if (body.sourceLanguage !== undefined) {
     dataToUpdate.sourceLanguage = body.sourceLanguage ? String(body.sourceLanguage).toLowerCase().trim() : null
   }
   if (body.showSourceLanguageMaterials !== undefined) {
+  if (body.showSourceLanguageMaterials !== undefined) {
     dataToUpdate.showSourceLanguageMaterials = Boolean(body.showSourceLanguageMaterials)
+  }
+  if (body.isCommunity !== undefined) {
+    dataToUpdate.isCommunity = Boolean(body.isCommunity)
+  }
   }
 
   if (body.targetLanguages !== undefined) {
@@ -28,9 +43,15 @@ export default defineEventHandler(async (event) => {
   }
 
   const updatedUser = await prisma.user.update({
-    where: { id: user.dbId || user.id },
+    where: { id: userId },
     data: dataToUpdate
   })
+
+  if (shouldResetBatches) {
+    await prisma.userFlashcardBatch.deleteMany({
+      where: { userId: updatedUser.id }
+    })
+  }
 
   return {
     success: true,
@@ -44,6 +65,7 @@ export default defineEventHandler(async (event) => {
       testingGroupSize: updatedUser.testingGroupSize,
       sourceLanguage: updatedUser.sourceLanguage,
       showSourceLanguageMaterials: updatedUser.showSourceLanguageMaterials,
+      isCommunity: updatedUser.isCommunity,
       targetLanguages: updatedUser.targetLanguages ? JSON.parse(updatedUser.targetLanguages) : []
     }
   }

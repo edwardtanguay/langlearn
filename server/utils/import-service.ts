@@ -25,6 +25,27 @@ export interface SkippedCardDetail extends CardDetail {
   reason: string
 }
 
+const CAPITALIZATION_KEEP_LIST = new Set([
+  'I', 'Sie',
+  'Berlin', 'Paris', 'London', 'Madrid', 'Rome', 'Roma', 'Amsterdam', 'Vienna', 'Wien',
+  'Munich', 'M?nchen', 'Hamburg', 'Frankfurt', 'Brussels', 'Bruxelles', 'Zurich', 'Z?rich',
+  'Athens', 'Warsaw', 'Moscow', 'Lisbon', 'Prague', 'Dublin', 'Copenhagen', 'Oslo',
+  'Stockholm', 'Reykjavik', 'Tokyo',
+  'Germany', 'Deutschland', 'France', 'Spain', 'Espa?a', 'Italy', 'Italia', 'England',
+  'Britain', 'Netherlands', 'Holland', 'Poland', 'Polska', 'Russia', 'Greece', 'Denmark',
+  'Danmark', 'Iceland', '?sland', 'America', 'Europe', 'Europa', 'USA', 'UK'
+])
+
+export function normalizeFirstLetterCapitalization(str: string): string {
+  const s = str.trim()
+  if (!s) return s
+  const match = s.match(/^([A-Za-z?-??-??-?]+)([^A-Za-z?-??-??-?]|$)/)
+  if (match && CAPITALIZATION_KEEP_LIST.has(match[1])) {
+    return s
+  }
+  return s.charAt(0).toLowerCase() + s.slice(1)
+}
+
 export function cleanTrailingPunctuation(str: string): string {
   let s = str.trim()
   if (!s) return s
@@ -50,7 +71,7 @@ export function cleanTrailingPunctuation(str: string): string {
   return s
 }
 
-export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], sourceLanguage: string = 'en'): {
+export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], sourceLanguage: string = 'en', options: { lowercaseFirst?: boolean } = {}): {
   willImport: CardDetail[]
   willNotImport: SkippedCardDetail[]
 } {
@@ -58,6 +79,7 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], s
   const willImport: CardDetail[] = []
   const willNotImport: SkippedCardDetail[] = []
   const userSourceLang = mapLanguage(sourceLanguage || 'en') || 'en'
+  const shouldLowercaseFirst = options.lowercaseFirst !== false
 
   for (const row of rows) {
     if (!row.lang1 || !row.lang2 || !row.text1 || !row.text2) {
@@ -152,9 +174,15 @@ export function analyzeImportRows(existingSet: Set<string>, rows: ParsedRow[], s
     // Clean front text: remove "my friend," prefix, asterisks, and trailing punctuation
     front = front.replace(/^my friend,\s*/i, '').replace(/\*/g, '').trim()
     front = cleanTrailingPunctuation(front)
+    if (shouldLowercaseFirst) {
+      front = normalizeFirstLetterCapitalization(front)
+    }
 
     // Clean back text trailing punctuation
     back = cleanTrailingPunctuation(back)
+    if (shouldLowercaseFirst) {
+      back = normalizeFirstLetterCapitalization(back)
+    }
 
     // If target phrase (back) is only one word, wrap it with asterisks so it's highlighted
     const cleanBack = back.replace(/\*/g, '').trim()
@@ -284,7 +312,7 @@ export function formatLocalYMDHMS(date: Date, tz?: string): string {
   }
 }
 
-export async function processImportRows(userId: string, rows: ParsedRow[], clientTz?: string) {
+export async function processImportRows(userId: string, rows: ParsedRow[], clientTz?: string, options: { lowercaseFirst?: boolean } = {}) {
   const dbUser = await prisma.user.findUnique({
     where: { id: userId }
   })
@@ -315,7 +343,7 @@ export async function processImportRows(userId: string, rows: ParsedRow[], clien
     existingSet.add(`${card.front.trim().toLowerCase()}|${card.back.trim().toLowerCase()}`)
   }
 
-  const { willImport, willNotImport } = analyzeImportRows(existingSet, rows, dbUser.sourceLanguage)
+  const { willImport, willNotImport } = analyzeImportRows(existingSet, rows, dbUser.sourceLanguage, options)
 
   const cardsToCreate: any[] = []
   const activitiesToCreate: any[] = []

@@ -76,6 +76,7 @@ const { data: meData, refresh: refreshMe } = await useFetch<{
   testingGroupSize: number
   sourceLanguage: string | null
   showSourceLanguageMaterials: boolean
+  isCommunity: boolean
   targetLanguages: string[]
   role: string
 }>('/api/user/me')
@@ -91,6 +92,86 @@ const groupSizeSaveSuccess = ref(false)
 const selectedSourceLanguage = ref(meData.value?.sourceLanguage || 'en')
 const showSourceLanguageMaterials = ref(Boolean(meData.value?.showSourceLanguageMaterials))
 const isSavingShowSource = ref(false)
+const isCommunity = ref(Boolean(meData.value?.isCommunity))
+const isSavingCommunity = ref(false)
+
+watch(() => meData.value?.isCommunity, (newVal) => {
+  if (newVal !== undefined) isCommunity.value = Boolean(newVal)
+})
+
+const toggleCommunityMode = async () => {
+  const prev = isCommunity.value
+  const next = !prev
+  isCommunity.value = next
+  isSavingCommunity.value = true
+  try {
+    await $fetch('/api/user/profile', {
+      method: 'POST',
+      body: { isCommunity: next }
+    })
+  } catch (err) {
+    console.error('Failed to update community mode:', err)
+    isCommunity.value = prev
+  } finally {
+    isSavingCommunity.value = false
+  }
+}
+
+interface DailyActivityData {
+  date: string
+  daysAgo: number
+  totalFlashcards: number
+  totalPoints: number
+  byLanguage: Record<string, number>
+  byAction: Record<string, number>
+  logs: Array<{
+    id: string
+    points: number
+    reason: string
+    language: string | null
+    actionTaken: string | null
+    createdAt: string
+  }>
+}
+
+const dailyDaysAgo = ref(0)
+const dailyActivity = ref<DailyActivityData | null>(null)
+const isDailyLoading = ref(true)
+
+const dailyLabel = computed(() => {
+  if (dailyDaysAgo.value === 0) return 'Today'
+  if (dailyDaysAgo.value === 1) return 'Yesterday'
+  return `${dailyDaysAgo.value} days ago`
+})
+
+const fetchDailyActivity = async (daysAgo: number) => {
+  isDailyLoading.value = true
+  try {
+    const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
+    const data = await $fetch<DailyActivityData>('/api/user/daily-activity', {
+      query: { daysAgo, ...(tz ? { tz } : {}) },
+      headers: tz ? { 'x-client-timezone': tz } : undefined
+    })
+    dailyActivity.value = data
+  } catch (err) {
+    console.error('Failed to fetch daily activity:', err)
+  } finally {
+    isDailyLoading.value = false
+  }
+}
+
+const changeDailyDaysAgo = (delta: number) => {
+  const next = Math.max(0, dailyDaysAgo.value + delta)
+  if (next === dailyDaysAgo.value) return
+  dailyDaysAgo.value = next
+  fetchDailyActivity(next)
+}
+
+onMounted(() => {
+  if (loggedIn.value) {
+    fetchDailyActivity(0)
+  }
+})
 const selectedSourceLanguageLabel = computed(() => allSupportedLanguages.find(o => o.code === selectedSourceLanguage.value)?.label || selectedSourceLanguage.value)
 const selectedTargetLanguages = ref<string[]>(
   Array.isArray(meData.value?.targetLanguages) && meData.value!.targetLanguages.length > 0
@@ -572,6 +653,125 @@ const handleSaveGroupSize = async () => {
             </div>
           </div>
         </template>
+
+        <!-- Community Mode Switch -->
+        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">Visibility Mode</span>
+              <span v-if="isSavingCommunity" class="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></span>
+            </div>
+            <button
+              type="button"
+              @click="toggleCommunityMode"
+              :disabled="isSavingCommunity"
+              class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-colors cursor-pointer disabled:opacity-60"
+              :class="isCommunity
+                ? 'bg-emerald-600/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-300'
+                : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300'"
+            >
+              <span>{{ isCommunity ? 'Community' : 'Private' }}</span>
+              <span
+                class="w-8 h-4 rounded-full relative transition-colors inline-block"
+                :class="isCommunity ? 'bg-emerald-500' : 'bg-gray-400 dark:bg-gray-600'"
+              >
+                <span
+                  class="absolute top-0.5 w-3 h-3 rounded-full bg-white transition-transform"
+                  :class="isCommunity ? 'left-4.5' : 'left-0.5'"
+                ></span>
+              </span>
+            </button>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            When switched to Community, your first name will be shown on the leader board which is public, and other community users will be able to import your flashcards, and you will be able to import other community users' flashcards.
+          </p>
+        </div>
+
+        <!-- Daily Activity Section -->
+        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Daily Activity</h2>
+              <p v-if="dailyActivity" class="text-xs text-gray-500 dark:text-gray-400">
+                {{ dailyLabel }} ({{ dailyActivity.date }})
+              </p>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button
+                type="button"
+                @click="changeDailyDaysAgo(1)"
+                class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 cursor-pointer"
+                title="Previous day"
+              >
+                <ChevronLeftIcon class="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                @click="changeDailyDaysAgo(-1)"
+                :disabled="dailyDaysAgo <= 0"
+                class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                title="Next day"
+              >
+                <ChevronRightIcon class="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          <div v-if="isDailyLoading" class="py-6 flex justify-center">
+            <div class="w-6 h-6 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+
+          <div v-else-if="dailyActivity" class="space-y-3">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center">
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Flashcards</div>
+                <div class="text-lg font-black font-mono text-gray-900 dark:text-white">{{ dailyActivity.totalFlashcards }}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Points</div>
+                <div class="text-lg font-black font-mono text-gray-900 dark:text-white">+{{ dailyActivity.totalPoints }}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Learned</div>
+                <div class="text-lg font-black font-mono text-gray-900 dark:text-white">{{ dailyActivity.byAction.MARKED_AS_LEARNED || 0 }}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Keep Testing</div>
+                <div class="text-lg font-black font-mono text-gray-900 dark:text-white">{{ dailyActivity.byAction.MARKED_AS_KEEP_TESTING || 0 }}</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 text-xs text-gray-600 dark:text-gray-400">
+              <span>Parked: <strong class="text-gray-900 dark:text-white font-mono">{{ dailyActivity.byAction.MARKED_AS_PARKED || 0 }}</strong></span>
+              <span>Deleted: <strong class="text-gray-900 dark:text-white font-mono">{{ dailyActivity.byAction.MARKED_AS_DELETED || 0 }}</strong></span>
+              <template v-for="(count, lang) in dailyActivity.byLanguage" :key="lang">
+                <span class="inline-flex items-center gap-1.5 font-semibold" :style="{ color: languageColors[lang] || undefined }">
+                  <span class="w-2 h-2 rounded-full" :style="{ backgroundColor: languageColors[lang] || '#9ca3af' }"></span>
+                  {{ lang.toUpperCase() }}: {{ count }}
+                </span>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Developer Section -->
+        <div v-if="isAdmin" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+          <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Developer</h2>
+          <div class="flex flex-wrap gap-3">
+            <NuxtLink
+              to="/batches"
+              class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-900 dark:text-white transition-colors"
+            >
+              Batches
+            </NuxtLink>
+            <NuxtLink
+              to="/dev"
+              class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-900 dark:text-white transition-colors"
+            >
+              Dev
+            </NuxtLink>
+          </div>
+        </div>
 
         <!-- Immediate Save Notice -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-5 text-center">

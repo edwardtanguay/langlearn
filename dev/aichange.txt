@@ -135,4 +135,25 @@
 		- put a simple paragraph at the top that says "This guide is a collection of howtos and tips for using LangLearn."
 		- don't round the corners of the image
 		--------------------------------------
-	
+	- .. changes01
+		--------------------------------------
+		## Flashcard
+		
+		- if the number of cards in a batch is three or less, then don't display them full width, but smaller buttons centered
+		--------------------------------------
+	- add verbs
+		- visitar
+		- bailar
+		- cenar
+		- cancelar
+		- nadar
+		- entrar
+		
+	- add links:
+		- https://youtu.be/pFvG2M3hk-4. vos backgroznd:
+		- Https://youtu.be/jr2TzukNlas past tense.
+		- Https://youtu.be/k7K1cqMu_pQ?is=GQThjSNwr8QgvjSd subjunctive.
+		- Https://youtu.be/gOPnjBw3Ev4?is=IBM1uSWjRKixPjc8 refelive.
+		- Https://youtu.be/Me-dP9__BRA?is=JEtYM2Yy2-7zIQVu. Nice large format, past.
+		- Https://youtu.be/XlaWXG21-JA?is=BQG8IMD2xE72R_7M subjunctve.
+			

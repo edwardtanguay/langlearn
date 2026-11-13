@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
-import { languageColors } from '~/utils/languageColors'
+import { languageColors, getLanguageColor, getLanguageContrastTextColor } from '~/utils/languageColors'
 import { getAllowedLanguages, isActivityVisible } from '~/utils/allowedLanguages'
 
 useHead({
@@ -115,10 +115,152 @@ function pickRandomActivitiesForBatch() {
   batchCompleteRandomActivities.value = [shuffled[0]!, shuffled[1]!]
 }
 
+const allowedActivities = computed(() =>
+  allActivities.filter(act => isActivityVisible(act.path, allowedUserLanguages.value))
+)
+
+interface TagSummary {
+  id: string
+  abbreviation: string
+  _count?: { flashcards: number }
+}
+const availableTags = ref<TagSummary[]>([])
+const isLoadingTags = ref(false)
+const selectedTag = ref<string | null>(null)
+
+async function fetchAvailableTags() {
+  if (availableTags.value.length === 0) isLoadingTags.value = true
+  try {
+    const tags = await $fetch<TagSummary[]>('/api/tags')
+    availableTags.value = (tags || []).filter(t => (t._count?.flashcards ?? 0) > 0)
+  } catch (err) {
+    console.error('Failed to fetch tags for batch complete:', err)
+  } finally {
+    isLoadingTags.value = false
+  }
+}
+
 const hasReachedDailyGoal = computed(() => {
   const reviewed = cardStats.value?.todayReviewedCount ?? 0
   return reviewed >= userDailyGoal.value
 })
+
+const dailyGoalPercentage = computed(() => {
+  const reviewed = cardStats.value?.todayReviewedCount ?? 0
+  if (userDailyGoal.value <= 0) return 0
+  return Math.min(100, Math.round((reviewed / userDailyGoal.value) * 100))
+})
+
+const batchCompleteTags = computed(() =>
+  availableTags.value
+    .filter(t => (t._count?.flashcards ?? 0) > 3)
+    .sort((a, b) => (b._count?.flashcards ?? 0) - (a._count?.flashcards ?? 0))
+)
+
+const batchCompleteDestinations = computed(() => [
+  ...allowedActivities.value,
+  { title: 'Links', path: '/links' },
+  { title: 'Import', path: '/import' },
+  { title: 'Profile', path: '/profile' }
+])
+
+const batchCompleteSelection = ref<string>('last_imported')
+const isBatchCompleteGroupDropdownOpen = ref(false)
+const batchCompleteGroupDropdownRef = ref<HTMLElement | null>(null)
+const batchCompleteLanguage = ref<string>('all')
+const isBatchCompleteLanguageDropdownOpen = ref(false)
+const batchCompleteLanguageDropdownRef = ref<HTMLElement | null>(null)
+const batchCompleteActivityPath = ref<string>('')
+const batchCompleteGroupSize = ref<number>(7)
+const isStartingNextBatch = ref(false)
+
+function stepBatchCompleteGroupSize(delta: number) {
+  const current = Number(batchCompleteGroupSize.value) || 7
+  batchCompleteGroupSize.value = Math.max(1, Math.min(7, current + delta))
+}
+
+const selectedBatchCompleteGroupLabel = computed(() => {
+  const sel = batchCompleteSelection.value
+  if (sel.startsWith('tag:')) {
+    const abbr = sel.slice(4)
+    const tag = batchCompleteTags.value.find(t => t.abbreviation === abbr)
+      || availableTags.value.find(t => t.abbreviation === abbr)
+    return tag ? `#${tag.abbreviation} (${tag._count?.flashcards ?? 0})` : `#${abbr}`
+  }
+  const strat = strategyOptions.find(opt => opt.id === sel)
+  return strat ? strat.label : 'Newly imported untested'
+})
+
+function selectBatchCompleteGroup(value: string) {
+  batchCompleteSelection.value = value
+  isBatchCompleteGroupDropdownOpen.value = false
+}
+
+function selectBatchCompleteLanguage(code: string) {
+  batchCompleteLanguage.value = code
+  isBatchCompleteLanguageDropdownOpen.value = false
+}
+
+const selectedBatchCompleteLanguageLabel = computed(() => {
+  if (batchCompleteLanguage.value === 'all') {
+    const countStr = totalAvailableMatching.value < userGroupSize.value
+      ? `${totalAvailableMatching.value} of ${userGroupSize.value} cards`
+      : `${totalAvailableMatching.value}`
+    return `All languages (${countStr})`
+  }
+  const item = availableLanguages.value.find(l => l.code === batchCompleteLanguage.value)
+  if (!item) return batchCompleteLanguage.value.toUpperCase()
+  const countStr = item.isPartial ? `${item.count} of ${userGroupSize.value} cards` : `${item.count}`
+  return `${item.name} (${countStr})`
+})
+
+function onBatchCompleteActivitySelect() {
+  if (!batchCompleteActivityPath.value) return
+  const target = batchCompleteActivityPath.value
+  batchCompleteActivityPath.value = ''
+  navigateTo(target)
+}
+
+async function startBatchFromComplete() {
+  if (isStartingNextBatch.value) return
+  isStartingNextBatch.value = true
+  isLoadingQueue.value = true
+  isBatchComplete.value = false
+  learnedInBatchCount.value = 0
+  // Keep existing slots until new batch loads to prevent layout jump
+  const selection = batchCompleteSelection.value
+  selectedLanguage.value = batchCompleteLanguage.value
+  if (selection.startsWith('tag:')) {
+    selectedTag.value = selection.slice(4)
+  } else {
+    selectedTag.value = null
+    selectedStrategy.value = selection as StrategyId
+  }
+  const newGroupSize = Math.max(1, Math.min(7, Number(batchCompleteGroupSize.value) || 7))
+  batchCompleteGroupSize.value = newGroupSize
+
+  const reqId = ++activeBatchRequestId
+  try {
+    if (newGroupSize !== userGroupSize.value) {
+      userGroupSize.value = newGroupSize
+      try {
+        await $fetch('/api/user/profile', {
+          method: 'POST',
+          body: { testingGroupSize: newGroupSize }
+        })
+      } catch (err) {
+        console.error('Failed to save testingGroupSize:', err)
+      }
+    }
+
+    await Promise.all([
+      fetchBatchLanguages(reqId),
+      fetchBatch(true, true, reqId)
+    ])
+  } finally {
+    isStartingNextBatch.value = false
+  }
+}
 
 const strategyOptions = [
   { id: 'last_imported', label: 'Newly imported untested' },
@@ -331,6 +473,7 @@ function toggleStrategyDropdown() {
 }
 
 function selectStrategyOption(strategyId: StrategyId) {
+  selectedTag.value = null
   selectedStrategy.value = strategyId
   isStrategyDropdownOpen.value = false
   onStrategyChange()
@@ -348,6 +491,12 @@ function handleClickOutsideDropdowns(e: MouseEvent) {
   }
   if (strategyDropdownRef.value && !strategyDropdownRef.value.contains(target)) {
     isStrategyDropdownOpen.value = false
+  }
+  if (batchCompleteGroupDropdownRef.value && !batchCompleteGroupDropdownRef.value.contains(target)) {
+    isBatchCompleteGroupDropdownOpen.value = false
+  }
+  if (batchCompleteLanguageDropdownRef.value && !batchCompleteLanguageDropdownRef.value.contains(target)) {
+    isBatchCompleteLanguageDropdownOpen.value = false
   }
 }
 
@@ -401,7 +550,9 @@ const savingFields = ref<Record<string, boolean>>({})
 // Fetch all available tags
 async function fetchTags() {
   try {
-    allTags.value = await $fetch<Tag[]>('/api/tags')
+    const tags = await $fetch<Tag[]>('/api/tags')
+    allTags.value = tags
+    availableTags.value = (tags || []).filter((t: any) => (t._count?.flashcards ?? 0) > 0)
   } catch (err) {
     console.error('Failed to load tags:', err)
   }
@@ -496,7 +647,8 @@ async function fetchBatch(excludePrevious: boolean = false, ignoreRouteId: boole
       ? `&language=${encodeURIComponent(selectedLanguage.value)}`
       : ''
 
-    const batchUrl = `/api/flashcards/batch?strategy=${selectedStrategy.value}${langParam}${excludeParam}`
+    const tagParam = selectedTag.value ? `&tag=${encodeURIComponent(selectedTag.value)}` : ''
+    const batchUrl = `/api/flashcards/batch?strategy=${selectedStrategy.value}${langParam}${excludeParam}${tagParam}`
 
     if (cardIdFromRoute) {
       try {
@@ -675,12 +827,29 @@ function startNextBatch() {
   fetchBatch(true)
 }
 
+function startTagBatch(tagAbbr: string) {
+  selectedTag.value = tagAbbr
+  fetchBatch(true)
+}
+
+watch(isBatchComplete, (complete) => {
+  if (complete) {
+    batchCompleteSelection.value = selectedTag.value ? `tag:${selectedTag.value}` : selectedStrategy.value
+    batchCompleteLanguage.value = selectedLanguage.value
+    isBatchCompleteGroupDropdownOpen.value = false
+    isBatchCompleteLanguageDropdownOpen.value = false
+    batchCompleteActivityPath.value = ''
+    batchCompleteGroupSize.value = Math.max(1, Math.min(7, userGroupSize.value || 7))
+    fetchAvailableTags()
+  }
+})
+
 async function onStrategyChange() {
   const reqId = ++activeBatchRequestId
   isLoadingQueue.value = true
   isBatchComplete.value = false
   learnedInBatchCount.value = 0
-  batchSlots.value = []
+  // Keep existing slots until new batch loads to prevent layout jump
 
   // Disregard previous URL permalink so new mode cleanly starts from top card
   if (typeof window !== 'undefined' && window.history) {
@@ -698,7 +867,7 @@ async function onLanguageChange() {
   isLoadingQueue.value = true
   isBatchComplete.value = false
   learnedInBatchCount.value = 0
-  batchSlots.value = []
+  // Keep existing slots until new batch loads to prevent layout jump
 
   if (typeof window !== 'undefined' && window.history) {
     window.history.replaceState(null, '', '/flashcards')
@@ -1553,7 +1722,16 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- Active Practice Area -->
-        <div v-if="!isSearching" class="mt-2 sm:mt-4 flex flex-col items-center w-full min-h-[290px] justify-start pt-0">
+        <div v-if="isSearching && showControls" class="max-w-lg mx-auto w-full mb-4">
+          <SearchResults
+            :search-results="searchResults"
+            :is-search-pending="isSearchPending"
+            :language-colors="languageColors"
+            @select-card="handleSelectCard"
+          />
+        </div>
+
+        <div v-if="!isSearching || !showControls" class="mt-2 sm:mt-4 flex flex-col items-center w-full min-h-[290px] justify-start pt-0">
           
           <div class="w-full max-w-lg space-y-2.5 sm:space-y-4">
             
@@ -1577,10 +1755,13 @@ onBeforeUnmount(() => {
 
             <!-- Batch Progress Header -->
             <BatchProgressHeader
-              v-if="batchSlots.length > 0"
+              v-if="batchSlots.length > 0 || isStartingNextBatch"
               :slots="batchSlots"
               :active-card-id="currentCard?.id"
               :is-batch-complete="isBatchComplete"
+              :is-loading="isStartingNextBatch"
+              :loading-count="batchCompleteGroupSize"
+              :loading-language="batchCompleteLanguage"
               @select-slot="handleSelectSlotCard"
             />
 
@@ -1595,19 +1776,23 @@ onBeforeUnmount(() => {
               </NuxtLink>
             </div>
 
-            <!-- Relative card wrapper of fixed height that crossfades loading state and card -->
-            <div class="relative w-full h-[215px] sm:h-[256px]">
-              <Transition name="fade-layout">
+            <!-- Batch/card wrapper: fixed height for cards, expands naturally when batch is complete -->
+
+            <div class="relative w-full" :class="isBatchComplete && !isLoadingQueue && !isInitialLoading ? 'min-h-[215px] sm:min-h-[256px]' : 'h-[215px] sm:h-[256px]'">
+              <Transition name="fade-layout" mode="out-in">
                 
                 <!-- Card Placeholder / Language Loader -->
                 <div v-if="isLoadingQueue || isInitialLoading" key="loading" class="absolute inset-0 z-20 flex items-center justify-center placeholder-card bg-gray-50/20 dark:bg-gray-950/10 rounded-3xl border border-transparent">
-                  <div class="flex items-center justify-center">
+                  <div class="flex flex-col items-center justify-center gap-2.5">
                     <svg class="w-14 h-14 text-gray-400 dark:text-gray-600" viewBox="0 0 48 48" fill="none">
                       <path d="M14 30C14 30 11 33 8 33C8 30 7 28 7 27C4.5 25 3 21.8 3 18C3 10.8 10.6 5 20 5C29.4 5 37 10.8 37 18C37 25.2 29.4 31 20 31C17.9 31 15.9 30.7 14 30Z" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="animate-bubble-left" />
                       <path d="M34 33C32.1 33.7 30.1 34 28 34C18.6 34 11 28.2 11 21C11 20.7 11 20.3 11.1 20M41 21C43.5 23 45 26.2 45 30C45 33.8 43.5 37 41 39C41 40 40 42 37 45C37 42 34 39 34 39C32.1 39.7 30.1 40 28 40C22.4 40 17.5 38.3 14.7 35.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="animate-bubble-right" />
                       <text x="16" y="21" font-size="10" font-family="system-ui, -apple-system, sans-serif" fill="currentColor" class="animate-text-a font-semibold">A</text>
                       <text x="27" y="32" font-size="10" font-family="system-ui, -apple-system, sans-serif" fill="currentColor" class="animate-text-b font-semibold">文</text>
                     </svg>
+                    <p v-if="isStartingNextBatch" class="text-xs font-medium text-gray-500 dark:text-gray-400 animate-pulse">
+                      Loading your next batch...
+                    </p>
                   </div>
                 </div>
 
@@ -1660,43 +1845,273 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- Batch Complete Overlay -->
-                <div v-else-if="isBatchComplete" key="complete" class="absolute inset-0 z-15 flex flex-col items-center justify-center text-center p-6 space-y-3.5">
-                  <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl shadow-inner">
-                    🎉
-                  </div>
-                  <div class="space-y-1">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Batch Complete!</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 max-w-xs">
-                      You've completed all {{ totalInBatch }} cards in this batch.
-                    </p>
-                  </div>
-                  <div class="pt-1 flex flex-col items-center gap-2.5 w-full max-w-xs">
-                    <button
-                      @click="startNextBatch"
-                      class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <span>Test next batch</span>
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                    </button>
+                <div v-else-if="isBatchComplete" key="complete" class="relative z-15 flex flex-col items-center justify-center text-center p-4 sm:p-6 space-y-4 min-h-[215px] sm:min-h-[256px]">
+                  <div class="w-full max-w-sm space-y-2.5 pb-3">
+                    <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+                      {{ hasReachedDailyGoal ? 'Congratulations! Daily Goal Reached!' : `${userDailyGoal} is your daily goal 🎯` }}
+                    </h3>
 
-                    <!-- Two random activity buttons -->
-                    <div v-if="batchCompleteRandomActivities.length >= 2" class="w-full grid grid-cols-2 gap-2">
-                      <NuxtLink
-                        v-for="act in batchCompleteRandomActivities"
-                        :key="act.path"
-                        :to="act.path"
-                        class="py-2 px-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-xl text-[11px] transition-colors truncate text-center shadow-xs"
+                    <!-- Filled range progress bar -->
+                    <div class="relative w-full h-6 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden border border-gray-300/70 dark:border-gray-700/70">
+                      <div
+                        class="h-full rounded-full transition-all duration-300 ease-out"
+                        :class="hasReachedDailyGoal ? 'bg-emerald-600' : 'bg-emerald-500/45 dark:bg-emerald-500/35'"
+                        :style="{ width: `${dailyGoalPercentage}%` }"
+                      />
+                      <div
+                        class="absolute inset-0 flex items-center justify-center text-xs font-mono font-bold drop-shadow-xs pointer-events-none"
+                        :class="hasReachedDailyGoal ? 'text-white' : ((cardStats?.todayReviewedCount ?? 0) === 0 ? 'text-gray-700 dark:text-gray-200' : 'text-gray-900 dark:text-white')"
                       >
-                        {{ act.title }}
-                      </NuxtLink>
+                        {{ cardStats?.todayReviewedCount ?? 0 }} of {{ userDailyGoal }}
+                      </div>
                     </div>
 
-                    <NuxtLink
-                      to="/activities"
-                      class="text-xs text-gray-500 dark:text-gray-400 hover:text-amber-500 underline transition-colors pt-0.5 cursor-pointer"
+                    <p v-if="!hasReachedDailyGoal" class="text-base sm:text-lg font-bold text-gray-900 dark:text-white italic pt-1">
+                      Keep it going! 🚀
+                    </p>
+                    <div v-if="hasReachedDailyGoal" class="space-y-2 pt-0.5">
+                      <p class="text-xs text-gray-600 dark:text-gray-300">
+                        {{ userDailyGoal }} is your daily goal — you achieved it! You can either continue testing below, or do an activity:
+                      </p>
+                      <select
+                        v-model="batchCompleteActivityPath"
+                        @change="onBatchCompleteActivitySelect"
+                        class="w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                      >
+                        <option value="" disabled>Choose an activity or page...</option>
+                        <option
+                          v-for="dest in batchCompleteDestinations"
+                          :key="dest.path"
+                          :value="dest.path"
+                        >
+                          {{ dest.title }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="w-full max-w-sm space-y-2.5 text-left">
+                    <p class="text-xs text-gray-600 dark:text-gray-300 text-center">
+                      Change what you want to test, or keep it the same:
+                    </p>
+
+                    <!-- Language dropdown (Desktop popover + Mobile bottom sheet) -->
+                    <div class="relative" ref="batchCompleteLanguageDropdownRef">
+                      <button
+                        type="button"
+                        @click="isBatchCompleteGroupDropdownOpen = false; isBatchCompleteLanguageDropdownOpen = !isBatchCompleteLanguageDropdownOpen"
+                        class="w-full flex items-center justify-between pl-3 pr-2.5 py-2.5 border rounded-xl font-semibold text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer text-left transition-all"
+                        :class="batchCompleteLanguage === 'all' ? 'bg-gray-50 dark:bg-gray-800/90 border-gray-200 dark:border-gray-700/80 text-gray-900 dark:text-white' : ''"
+                        :style="batchCompleteLanguage !== 'all' ? { backgroundColor: getLanguageColor(batchCompleteLanguage), borderColor: getLanguageColor(batchCompleteLanguage), color: getLanguageContrastTextColor(batchCompleteLanguage) } : undefined"
+                      >
+                        <span
+                          class="truncate"
+                          :class="batchCompleteLanguage === 'all' ? 'text-gray-900 dark:text-white' : ''"
+                          :style="batchCompleteLanguage !== 'all' ? { color: getLanguageContrastTextColor(batchCompleteLanguage) } : undefined"
+                        >
+                          {{ selectedBatchCompleteLanguageLabel }}
+                        </span>
+                        <div class="shrink-0 ml-1" :class="batchCompleteLanguage === 'all' ? 'text-gray-400' : 'opacity-80'">
+                          <svg
+                            class="h-3.5 w-3.5 transition-transform duration-200"
+                            :class="{ 'rotate-180': isBatchCompleteLanguageDropdownOpen }"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </button>
+
+                      <!-- Desktop popover -->
+                      <div
+                        v-if="isBatchCompleteLanguageDropdownOpen"
+                        class="hidden sm:block absolute left-0 right-0 top-full mt-1.5 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/80 rounded-xl shadow-xl p-2 space-y-1.5 text-xs"
+                      >
+                        <button
+                          type="button"
+                          @click="selectBatchCompleteLanguage('all')"
+                          class="w-full text-left px-3 py-2 rounded-xl flex items-center justify-between transition-colors cursor-pointer"
+                          :class="batchCompleteLanguage === 'all' ? 'bg-gray-100 dark:bg-gray-800 font-semibold' : 'hover:bg-gray-50 dark:hover:bg-gray-800'"
+                        >
+                          <span class="text-gray-900 dark:text-white">All languages</span>
+                          <span class="font-normal opacity-85">
+                            {{ totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching }}
+                          </span>
+                        </button>
+                        <button
+                          v-for="lang in availableLanguages"
+                          :key="lang.code"
+                          type="button"
+                          @click="selectBatchCompleteLanguage(lang.code)"
+                          class="w-full text-left px-3 py-2 rounded-xl flex items-center justify-between transition-colors cursor-pointer"
+                          :class="batchCompleteLanguage === lang.code ? 'font-bold ring-1 ring-inset ring-white/40' : 'font-semibold'"
+                          :style="{ backgroundColor: getLanguageColor(lang.code), color: getLanguageContrastTextColor(lang.code) }"
+                        >
+                          <span class="font-semibold">{{ lang.name }}</span>
+                          <span class="font-normal opacity-85">
+                            {{ lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count }}
+                          </span>
+                        </button>
+                      </div>
+
+                      <!-- Mobile bottom sheet -->
+                      <div
+                        v-if="isBatchCompleteLanguageDropdownOpen"
+                        class="sm:hidden fixed inset-0 z-50 flex items-end bg-black/50 backdrop-blur-[1px]"
+                        @click.self="isBatchCompleteLanguageDropdownOpen = false"
+                      >
+                        <div class="w-full bg-white dark:bg-gray-900 rounded-t-2xl border-t border-gray-200 dark:border-gray-800 shadow-2xl max-h-[75vh] flex flex-col">
+                          <div class="flex justify-center pt-2.5 pb-1">
+                            <div class="w-10 h-1 rounded-full bg-gray-300 dark:bg-gray-700" />
+                          </div>
+                          <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Choose Language</span>
+                            <button type="button" @click="isBatchCompleteLanguageDropdownOpen = false" class="text-xs text-gray-400 hover:text-gray-200 px-2 py-1">Done</button>
+                          </div>
+                          <div class="overflow-y-auto p-3 space-y-2">
+                            <button
+                              type="button"
+                              @click="selectBatchCompleteLanguage('all')"
+                              class="w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm transition-colors"
+                              :class="batchCompleteLanguage === 'all' ? 'bg-gray-100 dark:bg-gray-800 font-semibold' : ''"
+                            >
+                              <span class="text-gray-900 dark:text-white">All languages</span>
+                              <span class="text-xs font-mono opacity-85">
+                                {{ totalAvailableMatching < userGroupSize ? `${totalAvailableMatching} of ${userGroupSize} cards` : totalAvailableMatching }}
+                              </span>
+                            </button>
+                            <button
+                              v-for="lang in availableLanguages"
+                              :key="`mob-lang-${lang.code}`"
+                              type="button"
+                              @click="selectBatchCompleteLanguage(lang.code)"
+                              class="w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm transition-colors"
+                              :class="batchCompleteLanguage === lang.code ? 'font-bold ring-1 ring-inset ring-white/40' : 'font-semibold'"
+                              :style="{ backgroundColor: getLanguageColor(lang.code), color: getLanguageContrastTextColor(lang.code) }"
+                            >
+                              <span class="font-semibold">{{ lang.name }}</span>
+                              <span class="text-xs font-mono opacity-85">
+                                {{ lang.isPartial ? `${lang.count} of ${userGroupSize} cards` : lang.count }}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Group / Tag Dropdown (Desktop popover + Mobile bottom sheet) -->
+                    <div class="relative" ref="batchCompleteGroupDropdownRef">
+                      <button
+                        type="button"
+                        @click="isBatchCompleteLanguageDropdownOpen = false; isBatchCompleteGroupDropdownOpen = !isBatchCompleteGroupDropdownOpen"
+                        class="w-full flex items-center justify-between pl-3 pr-2.5 py-2.5 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl text-gray-900 dark:text-white font-medium text-xs focus:outline-hidden focus:ring-2 focus:ring-indigo-500 cursor-pointer text-left transition-all"
+                      >
+                        <span class="truncate">{{ selectedBatchCompleteGroupLabel }}</span>
+                        <div class="shrink-0 ml-1" :class="batchCompleteLanguage === 'all' ? 'text-gray-400' : 'opacity-80'">
+                          <svg
+                            class="h-3.5 w-3.5 transition-transform duration-200"
+                            :class="{ 'rotate-180': isBatchCompleteGroupDropdownOpen }"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </button>
+
+                      <!-- Desktop popover -->
+                      <div
+                        v-if="isBatchCompleteGroupDropdownOpen"
+                        class="hidden sm:block absolute left-0 right-0 top-full mt-1.5 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/80 rounded-xl shadow-xl p-2 space-y-1.5 text-xs"
+                      >
+                        <button
+                          v-for="opt in strategyOptions"
+                          :key="opt.id"
+                          type="button"
+                          @click="selectBatchCompleteGroup(opt.id)"
+                          class="w-full text-left px-3 py-2 rounded-xl flex items-center justify-between transition-colors cursor-pointer"
+                          :class="batchCompleteSelection === opt.id ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                        >
+                          <span>{{ opt.label }}</span>
+                        </button>
+
+                      </div>
+
+                      <!-- Mobile bottom sheet -->
+                      <div
+                        v-if="isBatchCompleteGroupDropdownOpen"
+                        class="sm:hidden fixed inset-0 z-50 flex items-end bg-black/50 backdrop-blur-[1px]"
+                        @click.self="isBatchCompleteGroupDropdownOpen = false"
+                      >
+                        <div class="w-full bg-white dark:bg-gray-900 rounded-t-2xl border-t border-gray-200 dark:border-gray-800 shadow-2xl max-h-[75vh] flex flex-col">
+                          <div class="flex justify-center pt-2.5 pb-1">
+                            <div class="w-10 h-1 rounded-full bg-gray-300 dark:bg-gray-700" />
+                          </div>
+                          <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Choose Group</span>
+                            <button type="button" @click="isBatchCompleteGroupDropdownOpen = false" class="text-xs text-gray-400 hover:text-gray-200 px-2 py-1">Done</button>
+                          </div>
+                          <div class="overflow-y-auto p-3 space-y-2">
+                            <button
+                              v-for="opt in strategyOptions"
+                              :key="`mob-${opt.id}`"
+                              type="button"
+                              @click="selectBatchCompleteGroup(opt.id)"
+                              class="w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-sm transition-colors"
+                              :class="batchCompleteSelection === opt.id ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-300 font-semibold' : 'text-gray-800 dark:text-gray-200'"
+                            >
+                              <span>{{ opt.label }}</span>
+                              <span v-if="batchCompleteSelection === opt.id" class="text-indigo-500 text-xs font-bold">✓</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Batch Size Stepper (1 to 7) -->
+                    <div class="w-full flex items-center justify-between px-2 py-1.5 bg-gray-50 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 rounded-xl mb-3">
+                      <button
+                        type="button"
+                        @click="stepBatchCompleteGroupSize(-1)"
+                        :disabled="batchCompleteGroupSize <= 1"
+                        class="w-7 h-7 rounded-lg bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        title="Decrease batch size"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+                      </button>
+
+                      <span class="text-sm font-semibold text-gray-900 dark:text-white select-none">
+                        {{ batchCompleteGroupSize }} {{ batchCompleteGroupSize === 1 ? 'card per batch' : 'cards per batch' }}
+                      </span>
+
+                      <button
+                        type="button"
+                        @click="stepBatchCompleteGroupSize(1)"
+                        :disabled="batchCompleteGroupSize >= 7"
+                        class="w-7 h-7 rounded-lg bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        title="Increase batch size"
+                      >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
+                      </button>
+                    </div>
+
+                    <!-- Test next batch button at the bottom -->
+                    <button
+                      type="button"
+                      :disabled="isStartingNextBatch"
+                      @click="startBatchFromComplete"
+                      class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      Activities
-                    </NuxtLink>
+                      <svg v-if="isStartingNextBatch" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      <span>{{ isStartingNextBatch ? 'Starting next batch...' : 'Start next batch' }}</span>
+                      <svg v-if="!isStartingNextBatch" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </button>
                   </div>
                 </div>
 
@@ -1853,15 +2268,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
-        <!-- Search Results View -->
-        <SearchResults 
-          v-else 
-          class="mt-4"
-          :search-results="searchResults" 
-          :is-search-pending="isSearchPending" 
-          :language-colors="languageColors"
-          @select-card="handleSelectCard" 
-        />
+        
 
       </div>
 

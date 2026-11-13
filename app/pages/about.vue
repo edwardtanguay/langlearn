@@ -1874,6 +1874,13 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
           >
             + New Version
           </button>
+          <button
+            v-if="adminEditMode && !isSingleVersionView"
+            @click="openAddCategory()"
+            class="px-2.5 py-1 text-xs text-gray-300 dark:text-gray-400 hover:text-white bg-gray-800 dark:bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 transition-colors cursor-pointer"
+          >
+            + Add Category
+          </button>
           <label class="inline-flex items-center gap-2 cursor-pointer text-xs text-gray-400 select-none">
             <input
               type="checkbox"
@@ -1944,7 +1951,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versionsForDisplay" :key="ver.id" class="relative group/card">
+        <div v-for="ver in versionsForDisplay" :key="ver.id" v-memo="[ver, ver.versionItems, categories, adminEditMode, searchQuery, inlineEditingCategoryId, inlineCategoryTitle, recentlyEditedItemId, recentlyEditedCategoryId, versionViewMode[ver.id], recentlyEditedVersionId === ver.id, isAdmin]" class="relative group/card">
           <!-- Outside Top Button in Admin Mode -->
           <button
             v-if="isAdmin && adminEditMode"
@@ -2381,7 +2388,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
               v-if="!adminEditMode && ver.description && ver.description.trim()"
               type="button"
               @click.stop="toggleVersionCardFlip(ver)"
-              class="absolute bottom-2.5 right-2.5 z-10 w-6 h-6 rounded-full flex items-center justify-center bg-white/90 hover:bg-amber-50 dark:bg-gray-800/90 dark:hover:bg-amber-950/80 border border-gray-200/80 hover:border-amber-300 dark:border-gray-700/80 dark:hover:border-amber-700/80 text-gray-400 hover:text-amber-600 dark:text-gray-400 dark:hover:text-amber-400 shadow-xs hover:shadow-sm hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer select-none backdrop-blur-xs group/flip"
+              class="absolute bottom-2.5 right-2.5 z-10 w-6 h-6 rounded-full flex items-center justify-center bg-white/90 hover:bg-amber-50 dark:bg-gray-800/90 dark:hover:bg-amber-950/80 border border-gray-200/80 hover:border-amber-300 dark:border-gray-700/80 dark:hover:border-amber-700/80 text-gray-400 hover:text-amber-600 dark:text-gray-400 dark:hover:text-amber-400 shadow-xs hover:shadow-sm hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer select-none  group/flip"
               :class="shouldShowVersionDescription(ver) ? 'border-amber-300/80 dark:border-amber-700/80 text-amber-600 dark:text-amber-400 bg-amber-50/60 dark:bg-amber-950/40' : ''"
               :title="shouldShowVersionDescription(ver) ? 'Click to view version items' : 'Click to view version description'"
               :aria-label="shouldShowVersionDescription(ver) ? 'Click to view version items' : 'Click to view version description'"
@@ -2395,7 +2402,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
   </div>
 
     <!-- Admin Edit Version Modal -->
-    <div v-if="showEditVersionModal && editingVersion" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+    <div v-if="showEditVersionModal && editingVersion" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl space-y-4">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewVersion ? 'Admin Create: Version' : 'Admin Edit: Version' }}</h3>
         
@@ -2439,7 +2446,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
     </div>
 
     <!-- Admin Edit Item Modal -->
-    <div v-if="showEditItemModal && editingItem" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+    <div v-if="showEditItemModal && editingItem" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-lg shadow-2xl space-y-4">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewItem ? 'Admin Add: Roadmap Item' : 'Admin Edit: Roadmap Item' }}</h3>
         <form @submit.prevent="saveAdminItem" class="space-y-3 text-xs">
@@ -2538,7 +2545,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
     </div>
 
     <!-- Category & Abbreviation Management Modal -->
-    <div v-if="showCategoryModal && editingCategory" @click.self="closeCategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+    <div v-if="showCategoryModal && editingCategory" @click.self="closeCategoryModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4">
       <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl space-y-4">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ isNewCategory ? 'Add Category' : 'Edit Category' }}</h3>
 

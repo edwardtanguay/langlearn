@@ -2,13 +2,27 @@ import { prisma } from '../../utils/prisma'
 import { requireAuth } from '../../utils/auth'
 
 export default defineEventHandler(async (event) => {
-  await requireAuth(event)
+  const user = await requireAuth(event)
 
   try {
+    const dbUser = (await prisma.user.findUnique({ where: { id: user.dbId || user.id } }))
+      || (user.email ? await prisma.user.findUnique({ where: { email: user.email } }) : null)
+
     const tags = await prisma.tag.findMany({
       include: {
         _count: {
-          select: { flashcards: true }
+          select: {
+            flashcards: dbUser
+              ? {
+                  where: {
+                    flashcard: {
+                      ownerId: dbUser.id,
+                      status: { not: 'DELETED' }
+                    }
+                  }
+                }
+              : true
+          }
         }
       },
       orderBy: {

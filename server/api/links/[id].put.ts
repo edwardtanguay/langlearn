@@ -1,3 +1,4 @@
+import { syncAndResolveSlugImages } from '../../utils/imageSlug'
 import { prisma } from '../../utils/prisma'
 import { requireAdmin } from '../../utils/auth'
 
@@ -15,6 +16,7 @@ export default defineEventHandler(async (event) => {
   if (body.title !== undefined) dataToUpdate.title = body.title.trim()
   if (body.url !== undefined) dataToUpdate.url = body.url.trim()
   if (body.description !== undefined) dataToUpdate.description = body.description.trim()
+  if (body.slug !== undefined) dataToUpdate.slug = typeof body.slug === 'string' && body.slug.trim() ? body.slug.trim() : null
   if (body.rank !== undefined) {
     const rank = typeof body.rank === 'number' ? body.rank : parseFloat(body.rank || '2.5')
     dataToUpdate.rank = isNaN(rank) ? 2.5 : Math.max(0, Math.min(5, rank))
@@ -25,5 +27,6 @@ export default defineEventHandler(async (event) => {
     data: dataToUpdate
   })
 
-  return updated
+  const imgs = await syncAndResolveSlugImages(updated.slug, 'links')
+  return { ...updated, ...imgs }
 })

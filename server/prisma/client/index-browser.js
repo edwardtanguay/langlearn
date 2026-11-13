@@ -131,7 +131,8 @@ exports.Prisma.UserScalarFieldEnum = {
   lastFlashcardLanguage: 'lastFlashcardLanguage',
   sourceLanguage: 'sourceLanguage',
   showSourceLanguageMaterials: 'showSourceLanguageMaterials',
-  targetLanguages: 'targetLanguages'
+  targetLanguages: 'targetLanguages',
+  isCommunity: 'isCommunity'
 };
 
 exports.Prisma.LinkScalarFieldEnum = {
@@ -140,6 +141,7 @@ exports.Prisma.LinkScalarFieldEnum = {
   url: 'url',
   title: 'title',
   description: 'description',
+  slug: 'slug',
   rank: 'rank',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -294,6 +296,16 @@ exports.Prisma.HowtoItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PointLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  points: 'points',
+  reason: 'reason',
+  language: 'language',
+  actionTaken: 'actionTaken',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -321,7 +333,8 @@ exports.Prisma.ModelName = {
   BasicWordInfo: 'BasicWordInfo',
   UserCorrectionSection: 'UserCorrectionSection',
   UserFlashcardBatch: 'UserFlashcardBatch',
-  HowtoItem: 'HowtoItem'
+  HowtoItem: 'HowtoItem',
+  PointLog: 'PointLog'
 };
 
 /**

@@ -36,8 +36,12 @@ const sortedHowtoItems = computed(() => {
   return [...howtoItems.value].sort((a, b) => (b.rank ?? 2.5) - (a.rank ?? 2.5))
 })
 
-function getImagePath(slug: string): string {
-  return `/images/howtos/${slug}.jpg`
+const lightboxImageUrl = ref<string | null>(null)
+function getImagePath(slug: string, item?: HowtoItem): string {
+  return item?.imageUrl || `/images/howtos/${slug}.jpg`
+}
+function getThumbPath(slug: string, item?: HowtoItem): string {
+  return item?.thumbUrl || item?.imageUrl || `/images/howtos/${slug}.jpg`
 }
 
 function handleImageError(slug: string) {
@@ -74,6 +78,16 @@ const formItem = ref({
   rank: 2.5,
   slug: ''
 })
+const slugManuallyEdited = ref(false)
+watch(() => formItem.value.title, (newTitle) => {
+  if (!editingItem.value && !slugManuallyEdited.value) {
+    formItem.value.slug = newTitle
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+  }
+})
 
 // Delete confirmation modal state
 const showDeleteConfirm = ref(false)
@@ -94,6 +108,7 @@ function openAddModal(initialRank = 2.5) {
 }
 
 function openAddAboveModal(idx: number) {
+  slugManuallyEdited.value = false
   const clicked = sortedHowtoItems.value[idx]
   if (!clicked) {
     openAddModal(2.5)
@@ -116,6 +131,7 @@ function openAddAboveModal(idx: number) {
 }
 
 function openEditModal(item: HowtoItem) {
+  slugManuallyEdited.value = true
   modalMode.value = 'edit'
   saveError.value = ''
   formItem.value = {
@@ -371,19 +387,29 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
 
           <!-- Image Preview (renders when images/howtos/<slug>.jpg exists) -->
           <div
-            v-if="item.slug && !brokenImageSlugs[item.slug]"
+            v-if="item.slug && !brokenImageSlugs[item.slug] && (item.thumbUrl || item.imageUrl || true)"
             class="overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-950"
           >
             <img
-              :src="getImagePath(item.slug)"
+              :src="getThumbPath(item.slug, item)"
+              @click="lightboxImageUrl = getImagePath(item.slug, item)"
               :alt="item.title"
               @error="handleImageError(item.slug)"
-              class="w-full max-h-80 object-contain mx-auto block"
+              class="w-full max-h-80 object-contain mx-auto block cursor-zoom-in"
             />
           </div>
         </article>
       </div>
     </section>
+
+    <!-- Full Image Lightbox Modal -->
+    <div
+      v-if="lightboxImageUrl"
+      @click="lightboxImageUrl = null"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs cursor-zoom-out"
+    >
+      <img :src="lightboxImageUrl" alt="Full graphic" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />
+    </div>
 
     <!-- Admin Add/Edit Modal -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
@@ -423,7 +449,7 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
               <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Slug (used for images/howtos/&lt;slug&gt;.jpg)</label>
               <input
                 type="text"
-                v-model="formItem.slug"
+                v-model="formItem.slug" @input="slugManuallyEdited = true"
                 placeholder="e.g. addRankToPhrase"
                 required
                 class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-mono"

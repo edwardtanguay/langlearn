@@ -1,3 +1,4 @@
+import { syncAndResolveSlugImages } from '../../utils/imageSlug'
 import { prisma } from '../../utils/prisma'
 import { requireAdmin } from '../../utils/auth'
 
@@ -20,9 +21,11 @@ export default defineEventHandler(async (event) => {
       title: body.title.trim(),
       url: body.url.trim(),
       description: (body.description || '').trim(),
+      slug: typeof body.slug === 'string' && body.slug.trim() ? body.slug.trim() : null,
       rank: isNaN(rank) ? 2.5 : Math.max(0, Math.min(5, rank))
     }
   })
 
-  return link
+  const imgs = await syncAndResolveSlugImages(link.slug, 'links')
+  return { ...link, ...imgs }
 })

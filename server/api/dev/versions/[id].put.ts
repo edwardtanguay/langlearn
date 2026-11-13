@@ -63,6 +63,29 @@ export default defineEventHandler(async (event) => {
     dataToUpdate.description = body.description ? body.description.trim() : null
   }
 
+  // If publishing, convert any "Clean and Assign" items in this version to "General"
+  if (body.status === 'PUBLISHED') {
+    const allCats = await prisma.versionCategory.findMany()
+    const cleanAssignCat = allCats.find(c => c.title.toLowerCase().trim() === 'clean and assign')
+    let generalCat = allCats.find(c => c.title.toLowerCase().trim() === 'general')
+    if (!generalCat) {
+      generalCat = await prisma.versionCategory.create({
+        data: { title: 'General', rank: 0 }
+      })
+    }
+    if (cleanAssignCat && generalCat) {
+      await prisma.versionItem.updateMany({
+        where: {
+          versionId: id,
+          versionCategoryId: cleanAssignCat.id
+        },
+        data: {
+          versionCategoryId: generalCat.id
+        }
+      })
+    }
+  }
+
   const updated = await prisma.version.update({
     where: { id },
     data: dataToUpdate
