@@ -739,7 +739,7 @@ const handleSaveGroupSize = async () => {
                 <div class="text-lg font-black font-mono text-gray-900 dark:text-white">{{ dailyActivity.byAction.MARKED_AS_LEARNED || 0 }}</div>
               </div>
               <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
-                <div class="text-[11px] text-gray-500 dark:text-gray-400">Keep Testing</div>
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Keep</div>
                 <div class="text-lg font-black font-mono text-gray-900 dark:text-white">{{ dailyActivity.byAction.MARKED_AS_KEEP_TESTING || 0 }}</div>
               </div>
             </div>

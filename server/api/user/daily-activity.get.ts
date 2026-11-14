@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
       },
       include: {
         flashcard: {
-          select: { frontLanguage: true }
+          select: { backLanguage: true, frontLanguage: true }
         }
       },
       orderBy: { whenActedUpon: 'desc' }
@@ -97,7 +97,7 @@ export default defineEventHandler(async (event) => {
   }
 
   for (const act of activities) {
-    const lang = act.flashcard?.frontLanguage || 'unknown'
+    const lang = act.flashcard?.backLanguage || act.flashcard?.frontLanguage || 'unknown'
     byLanguage[lang] = (byLanguage[lang] || 0) + 1
     if (act.actionTaken in byAction) {
       byAction[act.actionTaken] = (byAction[act.actionTaken] || 0) + 1

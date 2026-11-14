@@ -112,7 +112,9 @@ const formItem = ref({
   title: '',
   description: '',
   rank: 2.5,
-  slug: ''
+  slug: '',
+  imageFileMain: '',
+  imageFileThumb: ''
 })
 const slugManuallyEdited = ref(false)
 watch(() => formItem.value.title, (newTitle) => {
@@ -138,7 +140,9 @@ function openAddModal(initialRank = 2.5) {
     title: '',
     description: '',
     rank: initialRank,
-    slug: ''
+    slug: '',
+    imageFileMain: '',
+    imageFileThumb: ''
   }
   showModal.value = true
 }
@@ -175,7 +179,9 @@ function openEditModal(item: HowtoItem) {
     title: item.title,
     description: item.description,
     rank: item.rank ?? 2.5,
-    slug: item.slug
+    slug: item.slug,
+    imageFileMain: item.imageFileMain || '',
+    imageFileThumb: item.imageFileThumb || ''
   }
   showModal.value = true
 }
@@ -188,6 +194,8 @@ async function saveItem() {
   const description = formItem.value.description.trim()
   const slug = formItem.value.slug.trim()
   const rank = Math.max(0, Math.min(5, Number(formItem.value.rank ?? 2.5)))
+  const imageFileMain = formItem.value.imageFileMain.trim() || null
+  const imageFileThumb = formItem.value.imageFileThumb.trim() || null
 
   if (!title || !description || !slug) {
     saveError.value = 'Title, description, and slug are required.'
@@ -200,19 +208,20 @@ async function saveItem() {
   if (modalMode.value === 'add') {
     const tempId = `temp-${Date.now()}`
     pendingItemId.value = tempId
-    howtoItems.value.push({ id: tempId, title, description, rank, slug })
+    howtoItems.value.push({ id: tempId, title, description, rank, slug, imageFileMain, imageFileThumb })
     showModal.value = false
 
     try {
       const created = await $fetch<HowtoItem>('/api/howtos', {
         method: 'POST',
-        body: { title, description, rank, slug }
+        body: { title, description, rank, slug, imageFileMain, imageFileThumb }
       })
       const idx = howtoItems.value.findIndex(i => i.id === tempId)
       if (idx !== -1) {
         howtoItems.value[idx] = created
       }
-      brokenImageSlugs.value = { ...brokenImageSlugs.value, [created.slug]: false }
+      brokenMainSlugs.value = { ...brokenMainSlugs.value, [created.slug]: false }
+      brokenThumbSlugs.value = { ...brokenThumbSlugs.value, [created.slug]: false }
     } catch (err: any) {
       howtoItems.value = previousItems
       saveError.value = err?.data?.statusMessage || err?.message || 'Failed to create howto item.'
@@ -227,14 +236,14 @@ async function saveItem() {
     const idx = howtoItems.value.findIndex(i => i.id === targetId)
     const existing = howtoItems.value[idx]
     if (existing) {
-      howtoItems.value[idx] = { ...existing, title, description, rank, slug }
+      howtoItems.value[idx] = { ...existing, title, description, rank, slug, imageFileMain, imageFileThumb }
     }
     showModal.value = false
 
     try {
       const updated = await ($fetch as any)(`/api/howtos/${targetId}`, {
         method: 'PUT',
-        body: { title, description, rank, slug }
+        body: { title, description, rank, slug, imageFileMain, imageFileThumb }
       }) as HowtoItem
       const updatedIdx = howtoItems.value.findIndex(i => i.id === updated.id)
       if (updatedIdx !== -1) {
@@ -517,6 +526,27 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
                 required
                 class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white"
               ></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Main Image File (optional)</label>
+                <input
+                  type="text"
+                  v-model="formItem.imageFileMain"
+                  placeholder="e.g. savepronunc.png"
+                  class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-mono"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Thumb Image File (optional)</label>
+                <input
+                  type="text"
+                  v-model="formItem.imageFileThumb"
+                  placeholder="e.g. savepronunc-thumb.png"
+                  class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-mono"
+                />
+              </div>
             </div>
 
             <div>

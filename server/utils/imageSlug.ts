@@ -50,13 +50,18 @@ function findFileInDir(dir: string, baseName: string): { filePath: string; ext: 
 export async function syncAndResolveSlugImages(
   slug: string | null | undefined,
   category: ImageCategory
-): Promise<{ imageUrl: string | null; thumbUrl: string | null }> {
+): Promise<{
+  imageUrl: string | null
+  thumbUrl: string | null
+  imageFileMain: string | null
+  imageFileThumb: string | null
+}> {
   const cleanSlug = typeof slug === 'string' ? slug.trim() : ''
-  if (!cleanSlug) return { imageUrl: null, thumbUrl: null }
+  if (!cleanSlug) return { imageUrl: null, thumbUrl: null, imageFileMain: null, imageFileThumb: null }
 
   // Prevent path traversal
   if (cleanSlug.includes('/') || cleanSlug.includes('\\') || cleanSlug.includes('..')) {
-    return { imageUrl: null, thumbUrl: null }
+    return { imageUrl: null, thumbUrl: null, imageFileMain: null, imageFileThumb: null }
   }
 
   const targetDir = getTargetDir(category)
@@ -91,11 +96,16 @@ export async function syncAndResolveSlugImages(
       }
     }
 
+    const mainFile = `${cleanSlug}${sourceMatch.ext}`
+    const thumbFile = fs.existsSync(destThumb)
+      ? `${cleanSlug}-thumb${thumbExt}`
+      : mainFile
+
     return {
-      imageUrl: `/images/${category}/${cleanSlug}${sourceMatch.ext}`,
-      thumbUrl: fs.existsSync(destThumb)
-        ? `/images/${category}/${cleanSlug}-thumb${thumbExt}`
-        : `/images/${category}/${cleanSlug}${sourceMatch.ext}`
+      imageUrl: `/images/${category}/${mainFile}`,
+      thumbUrl: `/images/${category}/${thumbFile}`,
+      imageFileMain: mainFile,
+      imageFileThumb: thumbFile
     }
   }
 
@@ -103,14 +113,18 @@ export async function syncAndResolveSlugImages(
   const existingFull = findFileInDir(targetDir, cleanSlug)
   if (existingFull) {
     const existingThumb = findFileInDir(targetDir, `${cleanSlug}-thumb`)
+    const mainFile = `${cleanSlug}${existingFull.ext}`
+    const thumbFile = existingThumb
+      ? `${cleanSlug}-thumb${existingThumb.ext}`
+      : mainFile
     return {
-      imageUrl: `/images/${category}/${cleanSlug}${existingFull.ext}`,
-      thumbUrl: existingThumb
-        ? `/images/${category}/${cleanSlug}-thumb${existingThumb.ext}`
-        : `/images/${category}/${cleanSlug}${existingFull.ext}`
+      imageUrl: `/images/${category}/${mainFile}`,
+      thumbUrl: `/images/${category}/${thumbFile}`,
+      imageFileMain: mainFile,
+      imageFileThumb: thumbFile
     }
   }
 
-  return { imageUrl: null, thumbUrl: null }
+  return { imageUrl: null, thumbUrl: null, imageFileMain: null, imageFileThumb: null }
 }
 

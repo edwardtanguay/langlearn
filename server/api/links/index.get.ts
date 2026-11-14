@@ -1,4 +1,5 @@
 import { prisma } from '../../utils/prisma'
+import { syncAndResolveSlugImages } from '../../utils/imageSlug'
 
 export default defineEventHandler(async () => {
   try {
@@ -42,8 +43,31 @@ export default defineEventHandler(async () => {
       { title: 'asc' }
     ]
   })
-  return links.map((link) => ({
-    ...link,
-    thumbUrl: link.imageFileThumb ? `/images/links/${link.imageFileThumb}` : null
-  }))
+  return Promise.all(
+    links.map(async (link) => {
+      if (link.imageFileThumb) {
+        return {
+          ...link,
+          thumbUrl: `/images/links/${link.imageFileThumb}`
+        }
+      }
+      if (link.slug) {
+        const imgs = await syncAndResolveSlugImages(link.slug, 'links')
+        if (imgs.imageFileThumb) {
+          prisma.link
+            .update({ where: { id: link.id }, data: { imageFileThumb: imgs.imageFileThumb } })
+            .catch(() => {})
+          return {
+            ...link,
+            imageFileThumb: imgs.imageFileThumb,
+            thumbUrl: imgs.thumbUrl
+          }
+        }
+      }
+      return {
+        ...link,
+        thumbUrl: null
+      }
+    })
+  )
 })

@@ -283,13 +283,26 @@ onUnmounted(() => {
   }
 })
 
-// Filter links based on user role, target languages, and selected filter:
-const filteredLinks = computed(() => {
-  let list = links.value
+const visibleLinks = computed(() => {
   if (loggedIn.value && userRole.value !== 'unknownUser') {
     const targets = new Set([...allowedMemberLanguages.value, 'general'])
-    list = list.filter(l => targets.has(l.language.toLowerCase()))
+    return links.value.filter(l => targets.has(l.language.toLowerCase()))
   }
+  return links.value
+})
+
+const languageMenuItems = computed(() => {
+  return availableTargetLanguages.value.map(code => ({
+    code,
+    badge: code === 'all'
+      ? visibleLinks.value.length
+      : visibleLinks.value.filter(l => l.language.toLowerCase() === code).length
+  }))
+})
+
+// Filter links based on user role, target languages, and selected filter:
+const filteredLinks = computed(() => {
+  let list = visibleLinks.value
   if (selectedLanguageFilter.value !== 'all') {
     list = list.filter(l => l.language.toLowerCase() === selectedLanguageFilter.value.toLowerCase())
   }
@@ -349,6 +362,7 @@ const formLink = ref({
   url: '',
   description: '',
   slug: '',
+  imageFileThumb: '',
   rank: 2.5
 })
 
@@ -366,6 +380,8 @@ const openAddModal = (defaultLang = 'fr') => {
     title: '',
     url: '',
     description: '',
+    slug: '',
+    imageFileThumb: '',
     rank: 2.5
   }
   showModal.value = true
@@ -381,6 +397,7 @@ const openEditModal = (item: LinkItem) => {
     url: item.url,
     description: item.description || '',
     slug: item.slug || '',
+    imageFileThumb: item.imageFileThumb || '',
     rank: item.rank ?? 2.5
   }
   showModal.value = true
@@ -452,7 +469,7 @@ const executeDelete = async () => {
     <LanguageFilterMenu
       v-if="availableTargetLanguages.length > 1"
       v-model="selectedLanguageFilter"
-      :languages="availableTargetLanguages"
+      :languages="languageMenuItems"
       :language-titles="languageTitles"
     />
 
@@ -697,6 +714,17 @@ const executeDelete = async () => {
               v-model="formLink.slug"
               type="text"
               placeholder="e.g. my-link-screenshot"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white font-mono text-xs"
+            />
+          </div>
+
+          <!-- Thumbnail Image File Input -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Thumb Image File (optional, e.g. spanishtalkcafe.png)</label>
+            <input
+              v-model="formLink.imageFileThumb"
+              type="text"
+              placeholder="e.g. spanishtalkcafe.png"
               class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white font-mono text-xs"
             />
           </div>

@@ -98,7 +98,6 @@ const { data, pending } = await useFetch<{
             </span>
             <span class="font-semibold text-gray-900 dark:text-white">
               {{ entry.firstName }}
-              <span v-if="entry.id === data.currentUserId" class="ml-1.5 text-xs font-normal text-gray-500 dark:text-gray-400">(you)</span>
             </span>
           </div>
           <span class="font-mono font-black text-lg text-gray-900 dark:text-white">

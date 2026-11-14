@@ -3264,7 +3264,10 @@ onUnmounted(() => {
                         <span
                           v-else
                           @click.stop="openGoogleExamples(verb.gerund, { verb: verb.verb, tenseKey: 'gerund', tenseLabel: 'Gerundio' })"
-                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[54px] text-center cursor-pointer"
+                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
+                          :class="isExactSearchMatch(verb.gerund)
+                            ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
                           v-html="highlightText(verb.gerund)"
                         >
                         </span>
@@ -3329,7 +3332,10 @@ onUnmounted(() => {
                         <span
                           v-else
                           @click.stop="openGoogleExamples(verb.pastParticiple, { verb: verb.verb, tenseKey: 'pastParticiple', tenseLabel: 'Participio' })"
-                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[54px] text-center cursor-pointer"
+                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
+                          :class="isExactSearchMatch(verb.pastParticiple)
+                            ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
                           v-html="highlightText(verb.pastParticiple)"
                         >
                         </span>

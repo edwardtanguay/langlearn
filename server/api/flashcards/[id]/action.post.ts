@@ -82,7 +82,7 @@ export default defineEventHandler(async (event) => {
           userId: dbUser.id,
           points: pointsEarned,
           reason: 'flashcard',
-          language: flashcard.frontLanguage,
+          language: flashcard.backLanguage || flashcard.frontLanguage,
           actionTaken
         }
       })

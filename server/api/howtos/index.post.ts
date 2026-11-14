@@ -19,17 +19,35 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const explicitMain =
+    typeof body?.imageFileMain === 'string' && body.imageFileMain.trim()
+      ? body.imageFileMain.trim()
+      : null
+  const explicitThumb =
+    typeof body?.imageFileThumb === 'string' && body.imageFileThumb.trim()
+      ? body.imageFileThumb.trim()
+      : null
+
+  const imgs = await syncAndResolveSlugImages(slug, 'howtos')
+  const imageFileMain = explicitMain || imgs.imageFileMain
+  const imageFileThumb = explicitThumb || imgs.imageFileThumb
+
   try {
     const created = await prisma.howtoItem.create({
       data: {
         title,
         description,
         slug,
-        rank
+        rank,
+        imageFileMain,
+        imageFileThumb
       }
     })
-    const imgs = await syncAndResolveSlugImages(created.slug, 'howtos')
-    return { ...created, ...imgs }
+    return {
+      ...created,
+      imageUrl: created.imageFileMain ? `/images/howtos/${created.imageFileMain}` : imgs.imageUrl,
+      thumbUrl: created.imageFileThumb ? `/images/howtos/${created.imageFileThumb}` : imgs.thumbUrl
+    }
   } catch (err: any) {
     if (err?.code === 'P2002') {
       throw createError({
@@ -44,4 +62,3 @@ export default defineEventHandler(async (event) => {
     })
   }
 })
-

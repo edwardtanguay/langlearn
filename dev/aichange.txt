@@ -172,31 +172,31 @@
 			- if anywhere on thumbnail, title or description is clicked (anywhere on the item panel that these are in), then user goes to the link
 			- so there is only one image, and it is called <slug>-thumb.jpg, <slug>-thumb.png or <slug>-thumb.gif
 		--------------------------------------
-	- ,, changes02
+	- x changes02
 		--------------------------------------
 		## Spanish Verbs Page		
 		
-		- when searching and finding a full match on the gerund or past participle, also fill in that full pill as well
+		- x when searching and finding a full match on the gerund or past participle, also fill in that full pill as well
 		
 		## profile page
 		
-		- in "Daily Activity" 
+		- x in "Daily Activity" 
 			- change "Keep Testing" to "Keep"
 			- it says that I tested "EN: 4" but in reality they were Spanish verbs, e.g. "ES: 4"
 		
 		## guide page
 		
-		- the thumbnail is showing, but when clicked, it only shows the title and description, but it should also show the main image
+		- x the thumbnail is showing, but when clicked, it only shows the title and description, but it should also show the main image
 		
 		## links
 		
-		- in the menu items (languages) on top of the links page, put a small number showing how many items there are for that language
-		- one of the items has the slug "spanishtalkcafe" and there is a file public\images\links\spanishtalkcafe.png but it is not showing the thumbnail
+		- x in the menu items (languages) on top of the links page, put a small number showing how many items there are for that language
+		- x one of the items has the slug "spanishtalkcafe" and there is a file public\images\links\spanishtalkcafe.png but it is not showing the thumbnail
 			- you also need to have a field called "imageFileThumb" which has the full name, e.g. "imageFileThumb.png" (perhaps you are looking for .jpg)
 		
 		## leader board
 		
-		- remove the "(you)"
+		- x remove the "(you)"
 		--------------------------------------
 	- add verbs
 		- visitar
@@ -206,11 +206,3 @@
 		- nadar
 		- entrar
 		
-	- add links:
-		- https://youtu.be/pFvG2M3hk-4. vos backgroznd:
-		- Https://youtu.be/jr2TzukNlas past tense.
-		- Https://youtu.be/k7K1cqMu_pQ?is=GQThjSNwr8QgvjSd subjunctive.
-		- Https://youtu.be/gOPnjBw3Ev4?is=IBM1uSWjRKixPjc8 refelive.
-		- Https://youtu.be/Me-dP9__BRA?is=JEtYM2Yy2-7zIQVu. Nice large format, past.
-		- Https://youtu.be/XlaWXG21-JA?is=BQG8IMD2xE72R_7M subjunctve.
-			
