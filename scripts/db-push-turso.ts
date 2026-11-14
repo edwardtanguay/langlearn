@@ -193,6 +193,42 @@ async function main() {
     }
   }
 
+  try {
+    await client.execute('ALTER TABLE User ADD COLUMN isCommunity INTEGER NOT NULL DEFAULT 0;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+  try {
+    await client.execute('ALTER TABLE Link ADD COLUMN slug TEXT;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+  try {
+    await client.execute('ALTER TABLE Link ADD COLUMN imageFileThumb TEXT;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+  try {
+    await client.execute('ALTER TABLE HowtoItem ADD COLUMN imageFileMain TEXT;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+  try {
+    await client.execute('ALTER TABLE HowtoItem ADD COLUMN imageFileThumb TEXT;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
 
   client.close()

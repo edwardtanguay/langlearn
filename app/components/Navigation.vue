@@ -182,18 +182,15 @@ const navItems = computed(() => {
   if (loggedIn.value) {
     if (isAdmin.value) {
       items.push({ name: 'Flashcards', path: '/flashcards', icon: DocumentTextIcon })
-      items.push({ name: 'Batches', path: '/batches', icon: QueueListIcon })
+      // Batches and Dev moved to Profile -> Developer section
       items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
       items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
       items.push({ name: 'Guide', path: '/guide', icon: BookOpenIcon })
-      if (showDevPageConfig.value) {
-        items.push({ name: 'Dev', path: '/dev', icon: WrenchScrewdriverIcon, showOnMobile: false })
-      }
       items.push({ name: 'About', path: '/about', icon: InformationCircleIcon })
     } else {
       items.push({ name: 'Flashcards', path: '/flashcards', icon: DocumentTextIcon })
-      items.push({ name: 'Batches', path: '/batches', icon: QueueListIcon })
+      // Batches and Dev moved to Profile -> Developer section
       items.push({ name: 'Import', path: '/import', icon: ArrowUpTrayIcon })
       items.push({ name: 'Activities', path: '/activities', icon: DocumentTextIcon })
       items.push({ name: 'Links', path: '/links', icon: LinkIcon })
@@ -220,30 +217,17 @@ const navItems = computed(() => {
         <!-- Logo / User Profile (Navigates to /profile for both members and admins) -->
         <div class="flex items-center space-x-3">
           <ClientOnly>
-            <NuxtLink :to="loggedIn ? '/profile' : '/'" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200" :class="{ 'opacity-50': isUserPage }">
-              <div class="flex flex-row items-center gap-2.5">
-                <template v-if="loggedIn">
-                  <div class="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs">
-                    <img v-if="user?.picture" :src="user.picture" alt="Avatar" class="w-full h-full object-cover" />
-                    <span v-else class="text-sm text-white">{{ user?.given_name?.[0] || 'U' }}</span>
-                  </div>
-                  <!-- First name on top, large Global Points underneath -->
-                  <div class="flex flex-col leading-none">
-                    <span class="text-[11px] font-semibold text-gray-500 group-hover:text-black dark:text-gray-400 dark:group-hover:text-white transition-colors whitespace-nowrap">
-                      {{ user?.given_name || 'User' }}
-                    </span>
-                    <span
-                      class="text-lg sm:text-xl font-black font-mono tracking-wider text-gray-900 dark:text-white leading-tight whitespace-nowrap"
-                      title="Global Points"
-                    >
-                      {{ formattedPoints }}
-                    </span>
-                  </div>
-                </template>
-                <template v-else>
-                  <span class="text-xl font-bold !text-black hover:!text-gray-700 transition-colors dark:!text-white dark:hover:!text-gray-300">LangLearn</span>
-                </template>
-              </div>
+            <div v-if="loggedIn" class="flex flex-row items-center gap-3">
+              <NuxtLink to="/profile" @click="mobileMenuOpen = false" class="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden shrink-0 shadow-xs transition-opacity duration-200 hover:opacity-85" :class="{ 'ring-2 ring-amber-400': isUserPage }" title="Profile">
+                <img v-if="user?.picture" :src="user.picture" alt="Avatar" class="w-full h-full object-cover" />
+                <span v-else class="text-sm text-white">{{ user?.given_name?.[0] || 'U' }}</span>
+              </NuxtLink>
+              <NuxtLink to="/leaderboard" @click="mobileMenuOpen = false" class="text-2xl sm:text-3xl font-black font-mono tracking-wider text-gray-900 dark:text-white leading-none whitespace-nowrap hover:text-amber-500 dark:hover:text-yellow-400 transition-colors" title="Global Score - View Leader Board">
+                {{ formattedPoints }}
+              </NuxtLink>
+            </div>
+            <NuxtLink v-else to="/" @click="mobileMenuOpen = false" class="group block transition-opacity duration-200">
+              <span class="text-xl font-bold !text-black hover:!text-gray-700 transition-colors dark:!text-white dark:hover:!text-gray-300">LangLearn</span>
             </NuxtLink>
             <template #fallback>
               <NuxtLink to="/" @click="mobileMenuOpen = false" class="group block">

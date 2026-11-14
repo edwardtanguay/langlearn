@@ -29,7 +29,22 @@ interface LinkItem {
   title: string
   url: string
   description?: string
+  slug?: string | null
+  imageFileThumb?: string | null
+  thumbUrl?: string | null
   rank: number
+}
+
+const brokenThumbIds = ref<Record<string, boolean>>({})
+
+function getLinkThumbUrl(link: LinkItem): string | null {
+  if (link.thumbUrl) return link.thumbUrl
+  if (link.imageFileThumb) return `/images/links/${link.imageFileThumb}`
+  return null
+}
+
+function handleLinkThumbError(id: string) {
+  brokenThumbIds.value = { ...brokenThumbIds.value, [id]: true }
 }
 
 const languageTitles: Record<string, string> = {
@@ -268,13 +283,26 @@ onUnmounted(() => {
   }
 })
 
-// Filter links based on user role, target languages, and selected filter:
-const filteredLinks = computed(() => {
-  let list = links.value
+const visibleLinks = computed(() => {
   if (loggedIn.value && userRole.value !== 'unknownUser') {
     const targets = new Set([...allowedMemberLanguages.value, 'general'])
-    list = list.filter(l => targets.has(l.language.toLowerCase()))
+    return links.value.filter(l => targets.has(l.language.toLowerCase()))
   }
+  return links.value
+})
+
+const languageMenuItems = computed(() => {
+  return availableTargetLanguages.value.map(code => ({
+    code,
+    badge: code === 'all'
+      ? visibleLinks.value.length
+      : visibleLinks.value.filter(l => l.language.toLowerCase() === code).length
+  }))
+})
+
+// Filter links based on user role, target languages, and selected filter:
+const filteredLinks = computed(() => {
+  let list = visibleLinks.value
   if (selectedLanguageFilter.value !== 'all') {
     list = list.filter(l => l.language.toLowerCase() === selectedLanguageFilter.value.toLowerCase())
   }
@@ -326,12 +354,15 @@ const modalMode = ref<'add' | 'edit'>('add')
 const isSaving = ref(false)
 const saveError = ref('')
 
+const lightboxImageUrl = ref<string | null>(null)
 const formLink = ref({
   id: '',
   language: 'fr',
   title: '',
   url: '',
   description: '',
+  slug: '',
+  imageFileThumb: '',
   rank: 2.5
 })
 
@@ -349,6 +380,8 @@ const openAddModal = (defaultLang = 'fr') => {
     title: '',
     url: '',
     description: '',
+    slug: '',
+    imageFileThumb: '',
     rank: 2.5
   }
   showModal.value = true
@@ -363,6 +396,8 @@ const openEditModal = (item: LinkItem) => {
     title: item.title,
     url: item.url,
     description: item.description || '',
+    slug: item.slug || '',
+    imageFileThumb: item.imageFileThumb || '',
     rank: item.rank ?? 2.5
   }
   showModal.value = true
@@ -434,7 +469,7 @@ const executeDelete = async () => {
     <LanguageFilterMenu
       v-if="availableTargetLanguages.length > 1"
       v-model="selectedLanguageFilter"
-      :languages="availableTargetLanguages"
+      :languages="languageMenuItems"
       :language-titles="languageTitles"
     />
 
@@ -478,7 +513,24 @@ const executeDelete = async () => {
           }"
         >
           <div class="space-y-1.5 min-w-0 flex-1">
-            <!-- Active Admin CRUD Tools (Displayed when title clicked) -->
+            <div class="flex items-start gap-3">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-gray-700 shrink-0">
+              <img
+                v-if="getLinkThumbUrl(link) && !brokenThumbIds[link.id]"
+                :src="getLinkThumbUrl(link)!"
+                :alt="link.title"
+                @error="handleLinkThumbError(link.id)"
+                class="w-full h-full object-cover block"
+              />
+              <div
+                v-else
+                class="w-full h-full flex items-center justify-center bg-slate-200 dark:bg-slate-700/80 text-slate-600 dark:text-slate-200 text-[11px] font-semibold text-center px-1 select-none"
+              >
+                no image
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <!-- Active Admin CRUD Tools (Displayed when title clicked) -->
             <div
               v-if="isAdmin && activeCrudLinkId === link.id"
               @click.stop="toggleCrudToolbar(link.id, $event)"
@@ -575,8 +627,19 @@ const executeDelete = async () => {
               {{ capitalizeFirst(link.description) }}
             </p>
           </div>
+            </div>
+          </div>
         </li>
       </ul>
+    </div>
+
+    <!-- Full Image Lightbox Modal -->
+    <div
+      v-if="lightboxImageUrl"
+      @click="lightboxImageUrl = null"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs cursor-zoom-out"
+    >
+      <img :src="lightboxImageUrl" alt="Link preview" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />
     </div>
 
     <!-- Admin Add/Edit Modal Dialog -->
@@ -642,6 +705,28 @@ const executeDelete = async () => {
               placeholder="Short explanation of what this link offers..."
               class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white"
             ></textarea>
+          </div>
+
+          <!-- Slug Input -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Slug (optional, matches &lt;slug&gt;.jpg/.png/.gif)</label>
+            <input
+              v-model="formLink.slug"
+              type="text"
+              placeholder="e.g. my-link-screenshot"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white font-mono text-xs"
+            />
+          </div>
+
+          <!-- Thumbnail Image File Input -->
+          <div>
+            <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Thumb Image File (optional, e.g. spanishtalkcafe.png)</label>
+            <input
+              v-model="formLink.imageFileThumb"
+              type="text"
+              placeholder="e.g. spanishtalkcafe.png"
+              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white font-mono text-xs"
+            />
           </div>
 
           <!-- Rank Input (0.0 to 5.0) -->

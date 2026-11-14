@@ -21,6 +21,7 @@ const inputText = ref('')
 const isAnalyzing = ref(false)
 const isConfirming = ref(false)
 const importError = ref<string | null>(null)
+const lowercaseFirst = ref(true)
 
 const isMobile = ref(false)
 
@@ -129,7 +130,7 @@ const runPreview = async (textToPreview: string) => {
     const res = await $fetch<PreviewData>('/api/import/mobile', {
       method: 'POST',
       headers: tz ? { 'x-client-timezone': tz } : {},
-      body: { mobileImportText: text, preview: true, tz }
+      body: { mobileImportText: text, preview: true, tz, lowercaseFirst: lowercaseFirst.value }
     })
     previewResult.value = res
   } catch (err: any) {
@@ -178,7 +179,7 @@ const handleConfirmImport = async () => {
     await $fetch('/api/import/mobile', {
       method: 'POST',
       headers: tz ? { 'x-client-timezone': tz } : {},
-      body: { mobileImportText: text, tz }
+      body: { mobileImportText: text, tz, lowercaseFirst: lowercaseFirst.value }
     })
     importSuccessStats.value = {
       count: totalCount,
@@ -337,6 +338,11 @@ onBeforeUnmount(() => {
                   class="w-full p-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-2xl text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
                 ></textarea>
 
+                <label class="inline-flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 cursor-pointer select-none">
+                  <input type="checkbox" v-model="lowercaseFirst" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 cursor-pointer" />
+                  <span>Lowercase first letter by default (keeps "I", "Sie", cities/countries capitalized)</span>
+                </label>
+
                 <button
                   @click="runPreview(inputText)"
                   :disabled="!inputText.trim() || isAnalyzing"
@@ -369,6 +375,11 @@ onBeforeUnmount(() => {
                 <li>click below on "Import CSV file"</li>
                 <li>find and double-click on the file you just imported</li>
               </ul>
+
+              <label class="inline-flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 cursor-pointer select-none">
+                  <input type="checkbox" v-model="lowercaseFirst" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 cursor-pointer" />
+                  <span>Lowercase first letter by default (keeps "I", "Sie", cities/countries capitalized)</span>
+                </label>
 
               <!-- File Upload -->
               <div class="flex items-center gap-4">

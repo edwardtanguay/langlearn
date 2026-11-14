@@ -24,24 +24,64 @@ interface HowtoItem {
   description: string
   rank: number
   slug: string
+  imageFileMain?: string | null
+  imageFileThumb?: string | null
+  imageUrl?: string | null
+  thumbUrl?: string | null
   createdAt?: string
   updatedAt?: string
 }
 
 const howtoItems = ref<HowtoItem[]>([])
 const isLoading = ref(true)
-const brokenImageSlugs = ref<Record<string, boolean>>({})
+const brokenMainSlugs = ref<Record<string, boolean>>({})
+const brokenThumbSlugs = ref<Record<string, boolean>>({})
+const selectedItemId = ref<string | null>(null)
 
 const sortedHowtoItems = computed(() => {
   return [...howtoItems.value].sort((a, b) => (b.rank ?? 2.5) - (a.rank ?? 2.5))
 })
 
-function getImagePath(slug: string): string {
-  return `/images/howtos/${slug}.jpg`
+const selectedItem = computed(() => {
+  if (!selectedItemId.value) return null
+  return sortedHowtoItems.value.find(i => i.id === selectedItemId.value) ?? null
+})
+
+const selectedItemIndex = computed(() => {
+  if (!selectedItem.value) return -1
+  return sortedHowtoItems.value.findIndex(i => i.id === selectedItem.value!.id)
+})
+
+const gridItems = computed(() => {
+  if (!selectedItem.value) return sortedHowtoItems.value
+  return sortedHowtoItems.value.filter(i => i.id !== selectedItem.value!.id)
+})
+
+function getMainImageUrl(item: HowtoItem): string | null {
+  if (item.imageUrl) return item.imageUrl
+  if (item.imageFileMain) return `/images/howtos/${item.imageFileMain}`
+  return null
 }
 
-function handleImageError(slug: string) {
-  brokenImageSlugs.value = { ...brokenImageSlugs.value, [slug]: true }
+function getThumbImageUrl(item: HowtoItem): string | null {
+  if (item.thumbUrl) return item.thumbUrl
+  if (item.imageFileThumb) return `/images/howtos/${item.imageFileThumb}`
+  return null
+}
+
+function handleMainImageError(slug: string) {
+  brokenMainSlugs.value = { ...brokenMainSlugs.value, [slug]: true }
+}
+
+function handleThumbImageError(slug: string) {
+  brokenThumbSlugs.value = { ...brokenThumbSlugs.value, [slug]: true }
+}
+
+function openHowtoItem(item: HowtoItem) {
+  selectedItemId.value = item.id
+  if (typeof window !== 'undefined') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }
 
 async function loadHowtoItems() {
@@ -72,7 +112,19 @@ const formItem = ref({
   title: '',
   description: '',
   rank: 2.5,
-  slug: ''
+  slug: '',
+  imageFileMain: '',
+  imageFileThumb: ''
+})
+const slugManuallyEdited = ref(false)
+watch(() => formItem.value.title, (newTitle) => {
+  if (!editingItem.value && !slugManuallyEdited.value) {
+    formItem.value.slug = newTitle
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+  }
 })
 
 // Delete confirmation modal state
@@ -88,12 +140,15 @@ function openAddModal(initialRank = 2.5) {
     title: '',
     description: '',
     rank: initialRank,
-    slug: ''
+    slug: '',
+    imageFileMain: '',
+    imageFileThumb: ''
   }
   showModal.value = true
 }
 
 function openAddAboveModal(idx: number) {
+  slugManuallyEdited.value = false
   const clicked = sortedHowtoItems.value[idx]
   if (!clicked) {
     openAddModal(2.5)
@@ -116,6 +171,7 @@ function openAddAboveModal(idx: number) {
 }
 
 function openEditModal(item: HowtoItem) {
+  slugManuallyEdited.value = true
   modalMode.value = 'edit'
   saveError.value = ''
   formItem.value = {
@@ -123,7 +179,9 @@ function openEditModal(item: HowtoItem) {
     title: item.title,
     description: item.description,
     rank: item.rank ?? 2.5,
-    slug: item.slug
+    slug: item.slug,
+    imageFileMain: item.imageFileMain || '',
+    imageFileThumb: item.imageFileThumb || ''
   }
   showModal.value = true
 }
@@ -136,6 +194,8 @@ async function saveItem() {
   const description = formItem.value.description.trim()
   const slug = formItem.value.slug.trim()
   const rank = Math.max(0, Math.min(5, Number(formItem.value.rank ?? 2.5)))
+  const imageFileMain = formItem.value.imageFileMain.trim() || null
+  const imageFileThumb = formItem.value.imageFileThumb.trim() || null
 
   if (!title || !description || !slug) {
     saveError.value = 'Title, description, and slug are required.'
@@ -148,19 +208,20 @@ async function saveItem() {
   if (modalMode.value === 'add') {
     const tempId = `temp-${Date.now()}`
     pendingItemId.value = tempId
-    howtoItems.value.push({ id: tempId, title, description, rank, slug })
+    howtoItems.value.push({ id: tempId, title, description, rank, slug, imageFileMain, imageFileThumb })
     showModal.value = false
 
     try {
       const created = await $fetch<HowtoItem>('/api/howtos', {
         method: 'POST',
-        body: { title, description, rank, slug }
+        body: { title, description, rank, slug, imageFileMain, imageFileThumb }
       })
       const idx = howtoItems.value.findIndex(i => i.id === tempId)
       if (idx !== -1) {
         howtoItems.value[idx] = created
       }
-      brokenImageSlugs.value = { ...brokenImageSlugs.value, [created.slug]: false }
+      brokenMainSlugs.value = { ...brokenMainSlugs.value, [created.slug]: false }
+      brokenThumbSlugs.value = { ...brokenThumbSlugs.value, [created.slug]: false }
     } catch (err: any) {
       howtoItems.value = previousItems
       saveError.value = err?.data?.statusMessage || err?.message || 'Failed to create howto item.'
@@ -175,14 +236,14 @@ async function saveItem() {
     const idx = howtoItems.value.findIndex(i => i.id === targetId)
     const existing = howtoItems.value[idx]
     if (existing) {
-      howtoItems.value[idx] = { ...existing, title, description, rank, slug }
+      howtoItems.value[idx] = { ...existing, title, description, rank, slug, imageFileMain, imageFileThumb }
     }
     showModal.value = false
 
     try {
       const updated = await ($fetch as any)(`/api/howtos/${targetId}`, {
         method: 'PUT',
-        body: { title, description, rank, slug }
+        body: { title, description, rank, slug, imageFileMain, imageFileThumb }
       }) as HowtoItem
       const updatedIdx = howtoItems.value.findIndex(i => i.id === updated.id)
       if (updatedIdx !== -1) {
@@ -297,34 +358,34 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
         </button>
       </div>
 
-      <!-- Items List -->
-      <div v-else class="space-y-4">
+      <div v-else class="space-y-6">
+        <!-- Open Full Item at Top -->
         <article
-          v-for="(item, idx) in sortedHowtoItems"
-          :key="item.id"
-          class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-xs space-y-3"
+          v-if="selectedItem"
+          @click="selectedItemId = null"
+          class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-xs space-y-3 cursor-pointer"
         >
           <div class="flex items-start justify-between gap-3">
             <div class="space-y-1 min-w-0 flex-1">
               <div class="flex items-center gap-2 flex-wrap">
                 <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
-                  {{ item.title }}
+                  {{ selectedItem.title }}
                 </h3>
-                <span v-if="pendingItemId === item.id" class="w-3.5 h-3.5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></span>
+                <span v-if="pendingItemId === selectedItem.id" class="w-3.5 h-3.5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></span>
               </div>
               <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                {{ item.description }}
+                {{ selectedItem.description }}
               </p>
               <p v-if="isAdmin" class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                images/howtos/{{ item.slug }}.jpg
+                {{ selectedItem.imageFileMain || ('images/howtos/' + selectedItem.slug) }}
               </p>
             </div>
 
             <!-- Admin CRUD Controls -->
-            <div v-if="isAdmin" class="flex items-center gap-1 shrink-0">
+            <div v-if="isAdmin" class="flex items-center gap-1 shrink-0" @click.stop>
               <button
                 type="button"
-                @click="openAddAboveModal(idx)"
+                @click.stop="openAddAboveModal(selectedItemIndex)"
                 title="Add How-To Above"
                 class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors"
               >
@@ -333,8 +394,8 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
               <template v-if="sortedHowtoItems.length > 1">
                 <button
                   type="button"
-                  @click="moveItem(sortedHowtoItems, idx, 'up')"
-                  :disabled="idx === 0"
+                  @click.stop="moveItem(sortedHowtoItems, selectedItemIndex, 'up')"
+                  :disabled="selectedItemIndex === 0"
                   title="Move Up"
                   class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
                 >
@@ -342,8 +403,8 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
                 </button>
                 <button
                   type="button"
-                  @click="moveItem(sortedHowtoItems, idx, 'down')"
-                  :disabled="idx === sortedHowtoItems.length - 1"
+                  @click.stop="moveItem(sortedHowtoItems, selectedItemIndex, 'down')"
+                  :disabled="selectedItemIndex === sortedHowtoItems.length - 1"
                   title="Move Down"
                   class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
                 >
@@ -352,7 +413,7 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
               </template>
               <button
                 type="button"
-                @click="openEditModal(item)"
+                @click.stop="openEditModal(selectedItem)"
                 title="Edit How-To"
                 class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors"
               >
@@ -360,7 +421,7 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
               </button>
               <button
                 type="button"
-                @click="confirmDelete(item)"
+                @click.stop="confirmDelete(selectedItem)"
                 title="Delete How-To"
                 class="p-1.5 text-red-900/70 dark:text-red-900/80 hover:text-red-700 dark:hover:text-red-600 cursor-pointer transition-colors"
               >
@@ -369,19 +430,45 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
             </div>
           </div>
 
-          <!-- Image Preview (renders when images/howtos/<slug>.jpg exists) -->
+          <!-- Main Image Preview -->
           <div
-            v-if="item.slug && !brokenImageSlugs[item.slug]"
-            class="overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-950"
+            v-if="getMainImageUrl(selectedItem) && !brokenMainSlugs[selectedItem.slug]"
+            class="overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-950 rounded-xl"
           >
             <img
-              :src="getImagePath(item.slug)"
-              :alt="item.title"
-              @error="handleImageError(item.slug)"
-              class="w-full max-h-80 object-contain mx-auto block"
+              :src="getMainImageUrl(selectedItem)!"
+              :alt="selectedItem.title"
+              @error="handleMainImageError(selectedItem.slug)"
+              class="w-full max-h-[28rem] object-contain mx-auto block"
             />
           </div>
         </article>
+
+        <!-- Thumbnails Grid -->
+        <div v-if="gridItems.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+          <button
+            v-for="item in gridItems"
+            :key="item.id"
+            type="button"
+            :title="item.title"
+            @click="openHowtoItem(item)"
+            class="aspect-square w-full rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-gray-400"
+          >
+            <img
+              v-if="getThumbImageUrl(item) && !brokenThumbSlugs[item.slug]"
+              :src="getThumbImageUrl(item)!"
+              :alt="item.title"
+              @error="handleThumbImageError(item.slug)"
+              class="w-full h-full object-cover block"
+            />
+            <div
+              v-else
+              class="w-full h-full flex items-center justify-center bg-slate-200 dark:bg-slate-700/80 text-slate-600 dark:text-slate-200 text-xs sm:text-sm font-semibold select-none"
+            >
+              no image
+            </div>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -423,7 +510,7 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
               <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Slug (used for images/howtos/&lt;slug&gt;.jpg)</label>
               <input
                 type="text"
-                v-model="formItem.slug"
+                v-model="formItem.slug" @input="slugManuallyEdited = true"
                 placeholder="e.g. addRankToPhrase"
                 required
                 class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-mono"
@@ -439,6 +526,27 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
                 required
                 class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white"
               ></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Main Image File (optional)</label>
+                <input
+                  type="text"
+                  v-model="formItem.imageFileMain"
+                  placeholder="e.g. savepronunc.png"
+                  class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-mono"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 dark:text-gray-300 mb-1 font-semibold">Thumb Image File (optional)</label>
+                <input
+                  type="text"
+                  v-model="formItem.imageFileThumb"
+                  placeholder="e.g. savepronunc-thumb.png"
+                  class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-mono"
+                />
+              </div>
             </div>
 
             <div>

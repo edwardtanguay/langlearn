@@ -76,6 +76,7 @@ const { data: meData, refresh: refreshMe } = await useFetch<{
   testingGroupSize: number
   sourceLanguage: string | null
   showSourceLanguageMaterials: boolean
+  isCommunity: boolean
   targetLanguages: string[]
   role: string
 }>('/api/user/me')
@@ -91,6 +92,88 @@ const groupSizeSaveSuccess = ref(false)
 const selectedSourceLanguage = ref(meData.value?.sourceLanguage || 'en')
 const showSourceLanguageMaterials = ref(Boolean(meData.value?.showSourceLanguageMaterials))
 const isSavingShowSource = ref(false)
+const isCommunity = ref(Boolean(meData.value?.isCommunity))
+const isSavingCommunity = ref(false)
+
+watch(() => meData.value?.isCommunity, (newVal) => {
+  if (newVal !== undefined) isCommunity.value = Boolean(newVal)
+})
+
+const toggleCommunityMode = async () => {
+  const prev = isCommunity.value
+  const next = !prev
+  isCommunity.value = next
+  if (meData.value) meData.value.isCommunity = next
+  isSavingCommunity.value = true
+  try {
+    await $fetch('/api/user/profile', {
+      method: 'POST',
+      body: { isCommunity: next }
+    })
+  } catch (err) {
+    console.error('Failed to update community mode:', err)
+    isCommunity.value = prev
+    if (meData.value) meData.value.isCommunity = prev
+  } finally {
+    isSavingCommunity.value = false
+  }
+}
+
+interface DailyActivityData {
+  date: string
+  daysAgo: number
+  totalFlashcards: number
+  totalPoints: number
+  byLanguage: Record<string, number>
+  byAction: Record<string, number>
+  logs: Array<{
+    id: string
+    points: number
+    reason: string
+    language: string | null
+    actionTaken: string | null
+    createdAt: string
+  }>
+}
+
+const dailyDaysAgo = ref(0)
+const dailyActivity = ref<DailyActivityData | null>(null)
+const isDailyLoading = ref(true)
+
+const dailyLabel = computed(() => {
+  if (dailyDaysAgo.value === 0) return 'Today'
+  if (dailyDaysAgo.value === 1) return 'Yesterday'
+  return `${dailyDaysAgo.value} days ago`
+})
+
+const fetchDailyActivity = async (daysAgo: number) => {
+  isDailyLoading.value = true
+  try {
+    const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : ''
+    const data = await $fetch<DailyActivityData>('/api/user/daily-activity', {
+      query: { daysAgo, ...(tz ? { tz } : {}) },
+      headers: tz ? { 'x-client-timezone': tz } : undefined
+    })
+    dailyActivity.value = data
+  } catch (err) {
+    console.error('Failed to fetch daily activity:', err)
+  } finally {
+    isDailyLoading.value = false
+  }
+}
+
+const changeDailyDaysAgo = (delta: number) => {
+  const next = Math.max(0, dailyDaysAgo.value + delta)
+  if (next === dailyDaysAgo.value) return
+  dailyDaysAgo.value = next
+  fetchDailyActivity(next)
+}
+
+onMounted(() => {
+  if (loggedIn.value) {
+    fetchDailyActivity(0)
+  }
+})
 const selectedSourceLanguageLabel = computed(() => allSupportedLanguages.find(o => o.code === selectedSourceLanguage.value)?.label || selectedSourceLanguage.value)
 const selectedTargetLanguages = ref<string[]>(
   Array.isArray(meData.value?.targetLanguages) && meData.value!.targetLanguages.length > 0
@@ -254,8 +337,8 @@ const stepGoal = (delta: number) => {
 }
 
 const stepGroupSize = (delta: number) => {
-  const current = Number(testingGroupSizeInput.value) || 10
-  const updated = Math.max(1, Math.min(50, current + delta))
+  const current = Number(testingGroupSizeInput.value) || 7
+  const updated = Math.max(1, Math.min(7, current + delta))
   testingGroupSizeInput.value = updated
   if (groupSizeDebounceTimer) clearTimeout(groupSizeDebounceTimer)
   handleSaveGroupSize()
@@ -288,7 +371,8 @@ const handleSaveGoal = async () => {
 const handleSaveGroupSize = async () => {
   if (isSavingGroupSize.value) return
   const prevValue = meData.value?.testingGroupSize ?? 10
-  const newValue = Math.max(1, Math.min(50, Number(testingGroupSizeInput.value) || 10))
+  const newValue = Math.max(1, Math.min(7, Number(testingGroupSizeInput.value) || 7))
+  testingGroupSizeInput.value = newValue
 
   if (meData.value) meData.value.testingGroupSize = newValue
   isSavingGroupSize.value = true
@@ -557,13 +641,13 @@ const handleSaveGroupSize = async () => {
                 v-model.number="testingGroupSizeInput"
                 @input="onGroupSizeInput"
                 min="1"
-                max="50"
+                max="7"
                 class="w-20 text-center font-mono px-2 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               <button
                 type="button"
                 @click="stepGroupSize(1)"
-                :disabled="isSavingGroupSize || testingGroupSizeInput >= 50"
+                :disabled="isSavingGroupSize || testingGroupSizeInput >= 7"
                 class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-40"
                 title="Increase by 1"
               >
@@ -572,6 +656,125 @@ const handleSaveGroupSize = async () => {
             </div>
           </div>
         </template>
+
+        <!-- Community Mode Switch -->
+        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">Visibility Mode</span>
+              <span v-if="isSavingCommunity" class="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></span>
+            </div>
+            <button
+              type="button"
+              @click="toggleCommunityMode"
+              :disabled="isSavingCommunity"
+              class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-colors cursor-pointer disabled:opacity-60"
+              :class="isCommunity
+                ? 'bg-emerald-600/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-300'
+                : 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300'"
+            >
+              <span>{{ isCommunity ? 'Community' : 'Private' }}</span>
+              <span
+                class="w-8 h-4 rounded-full relative transition-colors inline-block"
+                :class="isCommunity ? 'bg-emerald-500' : 'bg-gray-400 dark:bg-gray-600'"
+              >
+                <span
+                  class="absolute top-0.5 w-3 h-3 rounded-full bg-white transition-transform"
+                  :class="isCommunity ? 'left-4.5' : 'left-0.5'"
+                ></span>
+              </span>
+            </button>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            When switched to Community, your first name will be shown on the leader board which is public, and other community users will be able to import your flashcards, and you will be able to import other community users' flashcards.
+          </p>
+        </div>
+
+        <!-- Daily Activity Section -->
+        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Daily Activity</h2>
+              <p v-if="dailyActivity" class="text-xs text-gray-500 dark:text-gray-400">
+                {{ dailyLabel }} ({{ dailyActivity.date }})
+              </p>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button
+                type="button"
+                @click="changeDailyDaysAgo(1)"
+                class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 cursor-pointer"
+                title="Previous day"
+              >
+                <ChevronLeftIcon class="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                @click="changeDailyDaysAgo(-1)"
+                :disabled="dailyDaysAgo <= 0"
+                class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                title="Next day"
+              >
+                <ChevronRightIcon class="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          <div v-if="isDailyLoading" class="py-6 flex justify-center">
+            <div class="w-6 h-6 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+
+          <div v-else-if="dailyActivity" class="space-y-3">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center">
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Flashcards</div>
+                <div class="text-lg font-black font-mono text-gray-900 dark:text-white">{{ dailyActivity.totalFlashcards }}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Points</div>
+                <div class="text-lg font-black font-mono text-gray-900 dark:text-white">+{{ dailyActivity.totalPoints }}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Learned</div>
+                <div class="text-lg font-black font-mono text-gray-900 dark:text-white">{{ dailyActivity.byAction.MARKED_AS_LEARNED || 0 }}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                <div class="text-[11px] text-gray-500 dark:text-gray-400">Keep</div>
+                <div class="text-lg font-black font-mono text-gray-900 dark:text-white">{{ dailyActivity.byAction.MARKED_AS_KEEP_TESTING || 0 }}</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 text-xs text-gray-600 dark:text-gray-400">
+              <span>Parked: <strong class="text-gray-900 dark:text-white font-mono">{{ dailyActivity.byAction.MARKED_AS_PARKED || 0 }}</strong></span>
+              <span>Deleted: <strong class="text-gray-900 dark:text-white font-mono">{{ dailyActivity.byAction.MARKED_AS_DELETED || 0 }}</strong></span>
+              <template v-for="(count, lang) in dailyActivity.byLanguage" :key="lang">
+                <span class="inline-flex items-center gap-1.5 font-semibold" :style="{ color: languageColors[lang] || undefined }">
+                  <span class="w-2 h-2 rounded-full" :style="{ backgroundColor: languageColors[lang] || '#9ca3af' }"></span>
+                  {{ lang.toUpperCase() }}: {{ count }}
+                </span>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Developer Section -->
+        <div v-if="isAdmin" class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+          <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Developer</h2>
+          <div class="flex flex-wrap gap-3">
+            <NuxtLink
+              to="/batches"
+              class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-900 dark:text-white transition-colors"
+            >
+              Batches
+            </NuxtLink>
+            <NuxtLink
+              to="/dev"
+              class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-900 dark:text-white transition-colors"
+            >
+              Dev
+            </NuxtLink>
+          </div>
+        </div>
 
         <!-- Immediate Save Notice -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-5 text-center">

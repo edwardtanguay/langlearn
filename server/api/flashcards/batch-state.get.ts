@@ -83,6 +83,11 @@ export default defineEventHandler(async (event) => {
       return { found: false, strategy, language }
     }
 
+    const targetGroupSize = (dbUser.testingGroupSize && dbUser.testingGroupSize !== 10) ? dbUser.testingGroupSize : 7
+    if (validSlots.length > targetGroupSize) {
+      return { found: false, strategy, language }
+    }
+
     return {
       found: true,
       strategy,

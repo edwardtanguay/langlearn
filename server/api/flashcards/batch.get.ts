@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
   const strategy = (query.strategy as string) || 'last_imported'
   const language = (query.language as string) || ''
   const excludeIdsParam = (query.excludeIds as string) || ''
+  const tagParam = ((query.tag as string) || '').trim()
 
   try {
     const dbUser = (await prisma.user.findUnique({
@@ -44,7 +45,17 @@ export default defineEventHandler(async (event) => {
     let where: any = { ...baseWhere }
     let orderBy: any = [{ rank: 'desc' }, { id: 'asc' }]
 
-    if (strategy === 'last_imported') {
+    if (tagParam) {
+      where.status = { not: 'DELETED' }
+      where.tags = {
+        some: {
+          tag: {
+            abbreviation: tagParam
+          }
+        }
+      }
+      orderBy = [{ rank: 'desc' }, { id: 'asc' }]
+    } else if (strategy === 'last_imported') {
       where.status = 'LEARNING'
       where.nextTestTime = null
       orderBy = [{ createdAt: 'desc' }, { id: 'asc' }]

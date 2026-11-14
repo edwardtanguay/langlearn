@@ -24,6 +24,7 @@ model User {
   sourceLanguage                String?
   showSourceLanguageMaterials   Boolean                 @default(false)
   targetLanguages               String?                 @default("[]")
+  isCommunity                   Boolean                 @default(false)
   flashcards            Flashcard[]
   activities            UserFlashcardActivity[]
   flashcardBatches      UserFlashcardBatch[]
@@ -31,6 +32,7 @@ model User {
   mobileImports         MobileImport[]
   basicWordInfos        BasicWordInfo[]
   correctionSections    UserCorrectionSection[]
+  pointLogs             PointLog[]
 }
 
 model Link {
@@ -39,6 +41,8 @@ model Link {
   url         String
   title       String
   description String
+  slug           String?
+  imageFileThumb String?
   rank        Float    @default(2.5)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -224,7 +228,23 @@ model HowtoItem {
   title       String
   description String
   rank        Float    @default(2.5)
-  slug        String   @unique
+  slug           String   @unique
+  imageFileMain  String?
+  imageFileThumb String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+
+model PointLog {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  points      Int
+  reason      String
+  language    String?
+  actionTaken String?
+  createdAt   DateTime @default(now())
+
+  @@index([userId, createdAt])
 }

@@ -93,6 +93,11 @@ export type UserFlashcardBatch = $Result.DefaultSelection<Prisma.$UserFlashcardB
  * 
  */
 export type HowtoItem = $Result.DefaultSelection<Prisma.$HowtoItemPayload>
+/**
+ * Model PointLog
+ * 
+ */
+export type PointLog = $Result.DefaultSelection<Prisma.$PointLogPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -374,6 +379,16 @@ export class PrismaClient<
     * ```
     */
   get howtoItem(): Prisma.HowtoItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pointLog`: Exposes CRUD operations for the **PointLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PointLogs
+    * const pointLogs = await prisma.pointLog.findMany()
+    * ```
+    */
+  get pointLog(): Prisma.PointLogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -823,7 +838,8 @@ export namespace Prisma {
     BasicWordInfo: 'BasicWordInfo',
     UserCorrectionSection: 'UserCorrectionSection',
     UserFlashcardBatch: 'UserFlashcardBatch',
-    HowtoItem: 'HowtoItem'
+    HowtoItem: 'HowtoItem',
+    PointLog: 'PointLog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -839,7 +855,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "link" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport" | "chatbotPrompt" | "basicWordInfo" | "userCorrectionSection" | "userFlashcardBatch" | "howtoItem"
+      modelProps: "user" | "link" | "version" | "versionCategory" | "versionCategoryAbbreviation" | "versionItem" | "flashcard" | "userFlashcardActivity" | "tag" | "flashcardTag" | "mobileImport" | "chatbotPrompt" | "basicWordInfo" | "userCorrectionSection" | "userFlashcardBatch" | "howtoItem" | "pointLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2027,6 +2043,80 @@ export namespace Prisma {
           }
         }
       }
+      PointLog: {
+        payload: Prisma.$PointLogPayload<ExtArgs>
+        fields: Prisma.PointLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PointLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PointLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>
+          }
+          findFirst: {
+            args: Prisma.PointLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PointLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>
+          }
+          findMany: {
+            args: Prisma.PointLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>[]
+          }
+          create: {
+            args: Prisma.PointLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>
+          }
+          createMany: {
+            args: Prisma.PointLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PointLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>[]
+          }
+          delete: {
+            args: Prisma.PointLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>
+          }
+          update: {
+            args: Prisma.PointLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.PointLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PointLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PointLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.PointLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PointLogPayload>
+          }
+          aggregate: {
+            args: Prisma.PointLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePointLog>
+          }
+          groupBy: {
+            args: Prisma.PointLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PointLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PointLogCountArgs<ExtArgs>
+            result: $Utils.Optional<PointLogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2151,6 +2241,7 @@ export namespace Prisma {
     userCorrectionSection?: UserCorrectionSectionOmit
     userFlashcardBatch?: UserFlashcardBatchOmit
     howtoItem?: HowtoItemOmit
+    pointLog?: PointLogOmit
   }
 
   /* Types for Logging */
@@ -2238,6 +2329,7 @@ export namespace Prisma {
     mobileImports: number
     basicWordInfos: number
     correctionSections: number
+    pointLogs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2248,6 +2340,7 @@ export namespace Prisma {
     mobileImports?: boolean | UserCountOutputTypeCountMobileImportsArgs
     basicWordInfos?: boolean | UserCountOutputTypeCountBasicWordInfosArgs
     correctionSections?: boolean | UserCountOutputTypeCountCorrectionSectionsArgs
+    pointLogs?: boolean | UserCountOutputTypeCountPointLogsArgs
   }
 
   // Custom InputTypes
@@ -2308,6 +2401,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCorrectionSectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserCorrectionSectionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPointLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PointLogWhereInput
   }
 
 
@@ -2507,6 +2607,7 @@ export namespace Prisma {
     sourceLanguage: string | null
     showSourceLanguageMaterials: boolean | null
     targetLanguages: string | null
+    isCommunity: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2524,6 +2625,7 @@ export namespace Prisma {
     sourceLanguage: string | null
     showSourceLanguageMaterials: boolean | null
     targetLanguages: string | null
+    isCommunity: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2541,6 +2643,7 @@ export namespace Prisma {
     sourceLanguage: number
     showSourceLanguageMaterials: number
     targetLanguages: number
+    isCommunity: number
     _all: number
   }
 
@@ -2574,6 +2677,7 @@ export namespace Prisma {
     sourceLanguage?: true
     showSourceLanguageMaterials?: true
     targetLanguages?: true
+    isCommunity?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2591,6 +2695,7 @@ export namespace Prisma {
     sourceLanguage?: true
     showSourceLanguageMaterials?: true
     targetLanguages?: true
+    isCommunity?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2608,6 +2713,7 @@ export namespace Prisma {
     sourceLanguage?: true
     showSourceLanguageMaterials?: true
     targetLanguages?: true
+    isCommunity?: true
     _all?: true
   }
 
@@ -2712,6 +2818,7 @@ export namespace Prisma {
     sourceLanguage: string | null
     showSourceLanguageMaterials: boolean
     targetLanguages: string | null
+    isCommunity: boolean
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -2748,6 +2855,7 @@ export namespace Prisma {
     sourceLanguage?: boolean
     showSourceLanguageMaterials?: boolean
     targetLanguages?: boolean
+    isCommunity?: boolean
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
     flashcardBatches?: boolean | User$flashcardBatchesArgs<ExtArgs>
@@ -2755,6 +2863,7 @@ export namespace Prisma {
     mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     basicWordInfos?: boolean | User$basicWordInfosArgs<ExtArgs>
     correctionSections?: boolean | User$correctionSectionsArgs<ExtArgs>
+    pointLogs?: boolean | User$pointLogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2773,6 +2882,7 @@ export namespace Prisma {
     sourceLanguage?: boolean
     showSourceLanguageMaterials?: boolean
     targetLanguages?: boolean
+    isCommunity?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2790,6 +2900,7 @@ export namespace Prisma {
     sourceLanguage?: boolean
     showSourceLanguageMaterials?: boolean
     targetLanguages?: boolean
+    isCommunity?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2807,9 +2918,10 @@ export namespace Prisma {
     sourceLanguage?: boolean
     showSourceLanguageMaterials?: boolean
     targetLanguages?: boolean
+    isCommunity?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "points" | "minutesToTestAgain" | "dailyTakeGoal" | "testingGroupSize" | "lastFlashcardStrategy" | "lastFlashcardLanguage" | "sourceLanguage" | "showSourceLanguageMaterials" | "targetLanguages", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "role" | "points" | "minutesToTestAgain" | "dailyTakeGoal" | "testingGroupSize" | "lastFlashcardStrategy" | "lastFlashcardLanguage" | "sourceLanguage" | "showSourceLanguageMaterials" | "targetLanguages" | "isCommunity", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     flashcards?: boolean | User$flashcardsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
@@ -2818,6 +2930,7 @@ export namespace Prisma {
     mobileImports?: boolean | User$mobileImportsArgs<ExtArgs>
     basicWordInfos?: boolean | User$basicWordInfosArgs<ExtArgs>
     correctionSections?: boolean | User$correctionSectionsArgs<ExtArgs>
+    pointLogs?: boolean | User$pointLogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2833,6 +2946,7 @@ export namespace Prisma {
       mobileImports: Prisma.$MobileImportPayload<ExtArgs>[]
       basicWordInfos: Prisma.$BasicWordInfoPayload<ExtArgs>[]
       correctionSections: Prisma.$UserCorrectionSectionPayload<ExtArgs>[]
+      pointLogs: Prisma.$PointLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2849,6 +2963,7 @@ export namespace Prisma {
       sourceLanguage: string | null
       showSourceLanguageMaterials: boolean
       targetLanguages: string | null
+      isCommunity: boolean
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -3250,6 +3365,7 @@ export namespace Prisma {
     mobileImports<T extends User$mobileImportsArgs<ExtArgs> = {}>(args?: Subset<T, User$mobileImportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MobileImportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     basicWordInfos<T extends User$basicWordInfosArgs<ExtArgs> = {}>(args?: Subset<T, User$basicWordInfosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BasicWordInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     correctionSections<T extends User$correctionSectionsArgs<ExtArgs> = {}>(args?: Subset<T, User$correctionSectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCorrectionSectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pointLogs<T extends User$pointLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$pointLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3293,6 +3409,7 @@ export namespace Prisma {
     readonly sourceLanguage: FieldRef<"User", 'String'>
     readonly showSourceLanguageMaterials: FieldRef<"User", 'Boolean'>
     readonly targetLanguages: FieldRef<"User", 'String'>
+    readonly isCommunity: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -3852,6 +3969,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.pointLogs
+   */
+  export type User$pointLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    where?: PointLogWhereInput
+    orderBy?: PointLogOrderByWithRelationInput | PointLogOrderByWithRelationInput[]
+    cursor?: PointLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PointLogScalarFieldEnum | PointLogScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3896,6 +4037,8 @@ export namespace Prisma {
     url: string | null
     title: string | null
     description: string | null
+    slug: string | null
+    imageFileThumb: string | null
     rank: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3907,6 +4050,8 @@ export namespace Prisma {
     url: string | null
     title: string | null
     description: string | null
+    slug: string | null
+    imageFileThumb: string | null
     rank: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3918,6 +4063,8 @@ export namespace Prisma {
     url: number
     title: number
     description: number
+    slug: number
+    imageFileThumb: number
     rank: number
     createdAt: number
     updatedAt: number
@@ -3939,6 +4086,8 @@ export namespace Prisma {
     url?: true
     title?: true
     description?: true
+    slug?: true
+    imageFileThumb?: true
     rank?: true
     createdAt?: true
     updatedAt?: true
@@ -3950,6 +4099,8 @@ export namespace Prisma {
     url?: true
     title?: true
     description?: true
+    slug?: true
+    imageFileThumb?: true
     rank?: true
     createdAt?: true
     updatedAt?: true
@@ -3961,6 +4112,8 @@ export namespace Prisma {
     url?: true
     title?: true
     description?: true
+    slug?: true
+    imageFileThumb?: true
     rank?: true
     createdAt?: true
     updatedAt?: true
@@ -4059,6 +4212,8 @@ export namespace Prisma {
     url: string
     title: string
     description: string
+    slug: string | null
+    imageFileThumb: string | null
     rank: number
     createdAt: Date
     updatedAt: Date
@@ -4089,6 +4244,8 @@ export namespace Prisma {
     url?: boolean
     title?: boolean
     description?: boolean
+    slug?: boolean
+    imageFileThumb?: boolean
     rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4100,6 +4257,8 @@ export namespace Prisma {
     url?: boolean
     title?: boolean
     description?: boolean
+    slug?: boolean
+    imageFileThumb?: boolean
     rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4111,6 +4270,8 @@ export namespace Prisma {
     url?: boolean
     title?: boolean
     description?: boolean
+    slug?: boolean
+    imageFileThumb?: boolean
     rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4122,12 +4283,14 @@ export namespace Prisma {
     url?: boolean
     title?: boolean
     description?: boolean
+    slug?: boolean
+    imageFileThumb?: boolean
     rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type LinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "language" | "url" | "title" | "description" | "rank" | "createdAt" | "updatedAt", ExtArgs["result"]["link"]>
+  export type LinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "language" | "url" | "title" | "description" | "slug" | "imageFileThumb" | "rank" | "createdAt" | "updatedAt", ExtArgs["result"]["link"]>
 
   export type $LinkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Link"
@@ -4138,6 +4301,8 @@ export namespace Prisma {
       url: string
       title: string
       description: string
+      slug: string | null
+      imageFileThumb: string | null
       rank: number
       createdAt: Date
       updatedAt: Date
@@ -4569,6 +4734,8 @@ export namespace Prisma {
     readonly url: FieldRef<"Link", 'String'>
     readonly title: FieldRef<"Link", 'String'>
     readonly description: FieldRef<"Link", 'String'>
+    readonly slug: FieldRef<"Link", 'String'>
+    readonly imageFileThumb: FieldRef<"Link", 'String'>
     readonly rank: FieldRef<"Link", 'Float'>
     readonly createdAt: FieldRef<"Link", 'DateTime'>
     readonly updatedAt: FieldRef<"Link", 'DateTime'>
@@ -19672,6 +19839,8 @@ export namespace Prisma {
     description: string | null
     rank: number | null
     slug: string | null
+    imageFileMain: string | null
+    imageFileThumb: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -19682,6 +19851,8 @@ export namespace Prisma {
     description: string | null
     rank: number | null
     slug: string | null
+    imageFileMain: string | null
+    imageFileThumb: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -19692,6 +19863,8 @@ export namespace Prisma {
     description: number
     rank: number
     slug: number
+    imageFileMain: number
+    imageFileThumb: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -19712,6 +19885,8 @@ export namespace Prisma {
     description?: true
     rank?: true
     slug?: true
+    imageFileMain?: true
+    imageFileThumb?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -19722,6 +19897,8 @@ export namespace Prisma {
     description?: true
     rank?: true
     slug?: true
+    imageFileMain?: true
+    imageFileThumb?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -19732,6 +19909,8 @@ export namespace Prisma {
     description?: true
     rank?: true
     slug?: true
+    imageFileMain?: true
+    imageFileThumb?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -19829,6 +20008,8 @@ export namespace Prisma {
     description: string
     rank: number
     slug: string
+    imageFileMain: string | null
+    imageFileThumb: string | null
     createdAt: Date
     updatedAt: Date
     _count: HowtoItemCountAggregateOutputType | null
@@ -19858,6 +20039,8 @@ export namespace Prisma {
     description?: boolean
     rank?: boolean
     slug?: boolean
+    imageFileMain?: boolean
+    imageFileThumb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["howtoItem"]>
@@ -19868,6 +20051,8 @@ export namespace Prisma {
     description?: boolean
     rank?: boolean
     slug?: boolean
+    imageFileMain?: boolean
+    imageFileThumb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["howtoItem"]>
@@ -19878,6 +20063,8 @@ export namespace Prisma {
     description?: boolean
     rank?: boolean
     slug?: boolean
+    imageFileMain?: boolean
+    imageFileThumb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["howtoItem"]>
@@ -19888,11 +20075,13 @@ export namespace Prisma {
     description?: boolean
     rank?: boolean
     slug?: boolean
+    imageFileMain?: boolean
+    imageFileThumb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type HowtoItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "rank" | "slug" | "createdAt" | "updatedAt", ExtArgs["result"]["howtoItem"]>
+  export type HowtoItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "rank" | "slug" | "imageFileMain" | "imageFileThumb" | "createdAt" | "updatedAt", ExtArgs["result"]["howtoItem"]>
 
   export type $HowtoItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "HowtoItem"
@@ -19903,6 +20092,8 @@ export namespace Prisma {
       description: string
       rank: number
       slug: string
+      imageFileMain: string | null
+      imageFileThumb: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["howtoItem"]>
@@ -20333,6 +20524,8 @@ export namespace Prisma {
     readonly description: FieldRef<"HowtoItem", 'String'>
     readonly rank: FieldRef<"HowtoItem", 'Float'>
     readonly slug: FieldRef<"HowtoItem", 'String'>
+    readonly imageFileMain: FieldRef<"HowtoItem", 'String'>
+    readonly imageFileThumb: FieldRef<"HowtoItem", 'String'>
     readonly createdAt: FieldRef<"HowtoItem", 'DateTime'>
     readonly updatedAt: FieldRef<"HowtoItem", 'DateTime'>
   }
@@ -20705,6 +20898,1127 @@ export namespace Prisma {
 
 
   /**
+   * Model PointLog
+   */
+
+  export type AggregatePointLog = {
+    _count: PointLogCountAggregateOutputType | null
+    _avg: PointLogAvgAggregateOutputType | null
+    _sum: PointLogSumAggregateOutputType | null
+    _min: PointLogMinAggregateOutputType | null
+    _max: PointLogMaxAggregateOutputType | null
+  }
+
+  export type PointLogAvgAggregateOutputType = {
+    points: number | null
+  }
+
+  export type PointLogSumAggregateOutputType = {
+    points: number | null
+  }
+
+  export type PointLogMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    points: number | null
+    reason: string | null
+    language: string | null
+    actionTaken: string | null
+    createdAt: Date | null
+  }
+
+  export type PointLogMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    points: number | null
+    reason: string | null
+    language: string | null
+    actionTaken: string | null
+    createdAt: Date | null
+  }
+
+  export type PointLogCountAggregateOutputType = {
+    id: number
+    userId: number
+    points: number
+    reason: number
+    language: number
+    actionTaken: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type PointLogAvgAggregateInputType = {
+    points?: true
+  }
+
+  export type PointLogSumAggregateInputType = {
+    points?: true
+  }
+
+  export type PointLogMinAggregateInputType = {
+    id?: true
+    userId?: true
+    points?: true
+    reason?: true
+    language?: true
+    actionTaken?: true
+    createdAt?: true
+  }
+
+  export type PointLogMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    points?: true
+    reason?: true
+    language?: true
+    actionTaken?: true
+    createdAt?: true
+  }
+
+  export type PointLogCountAggregateInputType = {
+    id?: true
+    userId?: true
+    points?: true
+    reason?: true
+    language?: true
+    actionTaken?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type PointLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PointLog to aggregate.
+     */
+    where?: PointLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PointLogs to fetch.
+     */
+    orderBy?: PointLogOrderByWithRelationInput | PointLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PointLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PointLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PointLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PointLogs
+    **/
+    _count?: true | PointLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PointLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PointLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PointLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PointLogMaxAggregateInputType
+  }
+
+  export type GetPointLogAggregateType<T extends PointLogAggregateArgs> = {
+        [P in keyof T & keyof AggregatePointLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePointLog[P]>
+      : GetScalarType<T[P], AggregatePointLog[P]>
+  }
+
+
+
+
+  export type PointLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PointLogWhereInput
+    orderBy?: PointLogOrderByWithAggregationInput | PointLogOrderByWithAggregationInput[]
+    by: PointLogScalarFieldEnum[] | PointLogScalarFieldEnum
+    having?: PointLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PointLogCountAggregateInputType | true
+    _avg?: PointLogAvgAggregateInputType
+    _sum?: PointLogSumAggregateInputType
+    _min?: PointLogMinAggregateInputType
+    _max?: PointLogMaxAggregateInputType
+  }
+
+  export type PointLogGroupByOutputType = {
+    id: string
+    userId: string
+    points: number
+    reason: string
+    language: string | null
+    actionTaken: string | null
+    createdAt: Date
+    _count: PointLogCountAggregateOutputType | null
+    _avg: PointLogAvgAggregateOutputType | null
+    _sum: PointLogSumAggregateOutputType | null
+    _min: PointLogMinAggregateOutputType | null
+    _max: PointLogMaxAggregateOutputType | null
+  }
+
+  type GetPointLogGroupByPayload<T extends PointLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PointLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PointLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PointLogGroupByOutputType[P]>
+            : GetScalarType<T[P], PointLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PointLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    points?: boolean
+    reason?: boolean
+    language?: boolean
+    actionTaken?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pointLog"]>
+
+  export type PointLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    points?: boolean
+    reason?: boolean
+    language?: boolean
+    actionTaken?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pointLog"]>
+
+  export type PointLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    points?: boolean
+    reason?: boolean
+    language?: boolean
+    actionTaken?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pointLog"]>
+
+  export type PointLogSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    points?: boolean
+    reason?: boolean
+    language?: boolean
+    actionTaken?: boolean
+    createdAt?: boolean
+  }
+
+  export type PointLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "points" | "reason" | "language" | "actionTaken" | "createdAt", ExtArgs["result"]["pointLog"]>
+  export type PointLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PointLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PointLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PointLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PointLog"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      points: number
+      reason: string
+      language: string | null
+      actionTaken: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["pointLog"]>
+    composites: {}
+  }
+
+  type PointLogGetPayload<S extends boolean | null | undefined | PointLogDefaultArgs> = $Result.GetResult<Prisma.$PointLogPayload, S>
+
+  type PointLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PointLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PointLogCountAggregateInputType | true
+    }
+
+  export interface PointLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PointLog'], meta: { name: 'PointLog' } }
+    /**
+     * Find zero or one PointLog that matches the filter.
+     * @param {PointLogFindUniqueArgs} args - Arguments to find a PointLog
+     * @example
+     * // Get one PointLog
+     * const pointLog = await prisma.pointLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PointLogFindUniqueArgs>(args: SelectSubset<T, PointLogFindUniqueArgs<ExtArgs>>): Prisma__PointLogClient<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PointLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PointLogFindUniqueOrThrowArgs} args - Arguments to find a PointLog
+     * @example
+     * // Get one PointLog
+     * const pointLog = await prisma.pointLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PointLogFindUniqueOrThrowArgs>(args: SelectSubset<T, PointLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PointLogClient<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PointLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointLogFindFirstArgs} args - Arguments to find a PointLog
+     * @example
+     * // Get one PointLog
+     * const pointLog = await prisma.pointLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PointLogFindFirstArgs>(args?: SelectSubset<T, PointLogFindFirstArgs<ExtArgs>>): Prisma__PointLogClient<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PointLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointLogFindFirstOrThrowArgs} args - Arguments to find a PointLog
+     * @example
+     * // Get one PointLog
+     * const pointLog = await prisma.pointLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PointLogFindFirstOrThrowArgs>(args?: SelectSubset<T, PointLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__PointLogClient<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PointLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PointLogs
+     * const pointLogs = await prisma.pointLog.findMany()
+     * 
+     * // Get first 10 PointLogs
+     * const pointLogs = await prisma.pointLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pointLogWithIdOnly = await prisma.pointLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PointLogFindManyArgs>(args?: SelectSubset<T, PointLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PointLog.
+     * @param {PointLogCreateArgs} args - Arguments to create a PointLog.
+     * @example
+     * // Create one PointLog
+     * const PointLog = await prisma.pointLog.create({
+     *   data: {
+     *     // ... data to create a PointLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends PointLogCreateArgs>(args: SelectSubset<T, PointLogCreateArgs<ExtArgs>>): Prisma__PointLogClient<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PointLogs.
+     * @param {PointLogCreateManyArgs} args - Arguments to create many PointLogs.
+     * @example
+     * // Create many PointLogs
+     * const pointLog = await prisma.pointLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PointLogCreateManyArgs>(args?: SelectSubset<T, PointLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PointLogs and returns the data saved in the database.
+     * @param {PointLogCreateManyAndReturnArgs} args - Arguments to create many PointLogs.
+     * @example
+     * // Create many PointLogs
+     * const pointLog = await prisma.pointLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PointLogs and only return the `id`
+     * const pointLogWithIdOnly = await prisma.pointLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PointLogCreateManyAndReturnArgs>(args?: SelectSubset<T, PointLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PointLog.
+     * @param {PointLogDeleteArgs} args - Arguments to delete one PointLog.
+     * @example
+     * // Delete one PointLog
+     * const PointLog = await prisma.pointLog.delete({
+     *   where: {
+     *     // ... filter to delete one PointLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PointLogDeleteArgs>(args: SelectSubset<T, PointLogDeleteArgs<ExtArgs>>): Prisma__PointLogClient<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PointLog.
+     * @param {PointLogUpdateArgs} args - Arguments to update one PointLog.
+     * @example
+     * // Update one PointLog
+     * const pointLog = await prisma.pointLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PointLogUpdateArgs>(args: SelectSubset<T, PointLogUpdateArgs<ExtArgs>>): Prisma__PointLogClient<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PointLogs.
+     * @param {PointLogDeleteManyArgs} args - Arguments to filter PointLogs to delete.
+     * @example
+     * // Delete a few PointLogs
+     * const { count } = await prisma.pointLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PointLogDeleteManyArgs>(args?: SelectSubset<T, PointLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PointLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PointLogs
+     * const pointLog = await prisma.pointLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PointLogUpdateManyArgs>(args: SelectSubset<T, PointLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PointLogs and returns the data updated in the database.
+     * @param {PointLogUpdateManyAndReturnArgs} args - Arguments to update many PointLogs.
+     * @example
+     * // Update many PointLogs
+     * const pointLog = await prisma.pointLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PointLogs and only return the `id`
+     * const pointLogWithIdOnly = await prisma.pointLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PointLogUpdateManyAndReturnArgs>(args: SelectSubset<T, PointLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PointLog.
+     * @param {PointLogUpsertArgs} args - Arguments to update or create a PointLog.
+     * @example
+     * // Update or create a PointLog
+     * const pointLog = await prisma.pointLog.upsert({
+     *   create: {
+     *     // ... data to create a PointLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PointLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PointLogUpsertArgs>(args: SelectSubset<T, PointLogUpsertArgs<ExtArgs>>): Prisma__PointLogClient<$Result.GetResult<Prisma.$PointLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PointLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointLogCountArgs} args - Arguments to filter PointLogs to count.
+     * @example
+     * // Count the number of PointLogs
+     * const count = await prisma.pointLog.count({
+     *   where: {
+     *     // ... the filter for the PointLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends PointLogCountArgs>(
+      args?: Subset<T, PointLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PointLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PointLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PointLogAggregateArgs>(args: Subset<T, PointLogAggregateArgs>): Prisma.PrismaPromise<GetPointLogAggregateType<T>>
+
+    /**
+     * Group by PointLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PointLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PointLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PointLogGroupByArgs['orderBy'] }
+        : { orderBy?: PointLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PointLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPointLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PointLog model
+   */
+  readonly fields: PointLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PointLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PointLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PointLog model
+   */
+  interface PointLogFieldRefs {
+    readonly id: FieldRef<"PointLog", 'String'>
+    readonly userId: FieldRef<"PointLog", 'String'>
+    readonly points: FieldRef<"PointLog", 'Int'>
+    readonly reason: FieldRef<"PointLog", 'String'>
+    readonly language: FieldRef<"PointLog", 'String'>
+    readonly actionTaken: FieldRef<"PointLog", 'String'>
+    readonly createdAt: FieldRef<"PointLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PointLog findUnique
+   */
+  export type PointLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * Filter, which PointLog to fetch.
+     */
+    where: PointLogWhereUniqueInput
+  }
+
+  /**
+   * PointLog findUniqueOrThrow
+   */
+  export type PointLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * Filter, which PointLog to fetch.
+     */
+    where: PointLogWhereUniqueInput
+  }
+
+  /**
+   * PointLog findFirst
+   */
+  export type PointLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * Filter, which PointLog to fetch.
+     */
+    where?: PointLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PointLogs to fetch.
+     */
+    orderBy?: PointLogOrderByWithRelationInput | PointLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PointLogs.
+     */
+    cursor?: PointLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PointLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PointLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PointLogs.
+     */
+    distinct?: PointLogScalarFieldEnum | PointLogScalarFieldEnum[]
+  }
+
+  /**
+   * PointLog findFirstOrThrow
+   */
+  export type PointLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * Filter, which PointLog to fetch.
+     */
+    where?: PointLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PointLogs to fetch.
+     */
+    orderBy?: PointLogOrderByWithRelationInput | PointLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PointLogs.
+     */
+    cursor?: PointLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PointLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PointLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PointLogs.
+     */
+    distinct?: PointLogScalarFieldEnum | PointLogScalarFieldEnum[]
+  }
+
+  /**
+   * PointLog findMany
+   */
+  export type PointLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * Filter, which PointLogs to fetch.
+     */
+    where?: PointLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PointLogs to fetch.
+     */
+    orderBy?: PointLogOrderByWithRelationInput | PointLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PointLogs.
+     */
+    cursor?: PointLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PointLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PointLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PointLogs.
+     */
+    distinct?: PointLogScalarFieldEnum | PointLogScalarFieldEnum[]
+  }
+
+  /**
+   * PointLog create
+   */
+  export type PointLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PointLog.
+     */
+    data: XOR<PointLogCreateInput, PointLogUncheckedCreateInput>
+  }
+
+  /**
+   * PointLog createMany
+   */
+  export type PointLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PointLogs.
+     */
+    data: PointLogCreateManyInput | PointLogCreateManyInput[]
+  }
+
+  /**
+   * PointLog createManyAndReturn
+   */
+  export type PointLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many PointLogs.
+     */
+    data: PointLogCreateManyInput | PointLogCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PointLog update
+   */
+  export type PointLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PointLog.
+     */
+    data: XOR<PointLogUpdateInput, PointLogUncheckedUpdateInput>
+    /**
+     * Choose, which PointLog to update.
+     */
+    where: PointLogWhereUniqueInput
+  }
+
+  /**
+   * PointLog updateMany
+   */
+  export type PointLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PointLogs.
+     */
+    data: XOR<PointLogUpdateManyMutationInput, PointLogUncheckedUpdateManyInput>
+    /**
+     * Filter which PointLogs to update
+     */
+    where?: PointLogWhereInput
+    /**
+     * Limit how many PointLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PointLog updateManyAndReturn
+   */
+  export type PointLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * The data used to update PointLogs.
+     */
+    data: XOR<PointLogUpdateManyMutationInput, PointLogUncheckedUpdateManyInput>
+    /**
+     * Filter which PointLogs to update
+     */
+    where?: PointLogWhereInput
+    /**
+     * Limit how many PointLogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PointLog upsert
+   */
+  export type PointLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PointLog to update in case it exists.
+     */
+    where: PointLogWhereUniqueInput
+    /**
+     * In case the PointLog found by the `where` argument doesn't exist, create a new PointLog with this data.
+     */
+    create: XOR<PointLogCreateInput, PointLogUncheckedCreateInput>
+    /**
+     * In case the PointLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PointLogUpdateInput, PointLogUncheckedUpdateInput>
+  }
+
+  /**
+   * PointLog delete
+   */
+  export type PointLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+    /**
+     * Filter which PointLog to delete.
+     */
+    where: PointLogWhereUniqueInput
+  }
+
+  /**
+   * PointLog deleteMany
+   */
+  export type PointLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PointLogs to delete
+     */
+    where?: PointLogWhereInput
+    /**
+     * Limit how many PointLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PointLog without action
+   */
+  export type PointLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PointLog
+     */
+    select?: PointLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PointLog
+     */
+    omit?: PointLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PointLogInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -20729,7 +22043,8 @@ export namespace Prisma {
     lastFlashcardLanguage: 'lastFlashcardLanguage',
     sourceLanguage: 'sourceLanguage',
     showSourceLanguageMaterials: 'showSourceLanguageMaterials',
-    targetLanguages: 'targetLanguages'
+    targetLanguages: 'targetLanguages',
+    isCommunity: 'isCommunity'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -20741,6 +22056,8 @@ export namespace Prisma {
     url: 'url',
     title: 'title',
     description: 'description',
+    slug: 'slug',
+    imageFileThumb: 'imageFileThumb',
     rank: 'rank',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -20933,11 +22250,26 @@ export namespace Prisma {
     description: 'description',
     rank: 'rank',
     slug: 'slug',
+    imageFileMain: 'imageFileMain',
+    imageFileThumb: 'imageFileThumb',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type HowtoItemScalarFieldEnum = (typeof HowtoItemScalarFieldEnum)[keyof typeof HowtoItemScalarFieldEnum]
+
+
+  export const PointLogScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    points: 'points',
+    reason: 'reason',
+    language: 'language',
+    actionTaken: 'actionTaken',
+    createdAt: 'createdAt'
+  };
+
+  export type PointLogScalarFieldEnum = (typeof PointLogScalarFieldEnum)[keyof typeof PointLogScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -21017,6 +22349,7 @@ export namespace Prisma {
     sourceLanguage?: StringNullableFilter<"User"> | string | null
     showSourceLanguageMaterials?: BoolFilter<"User"> | boolean
     targetLanguages?: StringNullableFilter<"User"> | string | null
+    isCommunity?: BoolFilter<"User"> | boolean
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     flashcardBatches?: UserFlashcardBatchListRelationFilter
@@ -21024,6 +22357,7 @@ export namespace Prisma {
     mobileImports?: MobileImportListRelationFilter
     basicWordInfos?: BasicWordInfoListRelationFilter
     correctionSections?: UserCorrectionSectionListRelationFilter
+    pointLogs?: PointLogListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -21041,6 +22375,7 @@ export namespace Prisma {
     sourceLanguage?: SortOrderInput | SortOrder
     showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrderInput | SortOrder
+    isCommunity?: SortOrder
     flashcards?: FlashcardOrderByRelationAggregateInput
     activities?: UserFlashcardActivityOrderByRelationAggregateInput
     flashcardBatches?: UserFlashcardBatchOrderByRelationAggregateInput
@@ -21048,6 +22383,7 @@ export namespace Prisma {
     mobileImports?: MobileImportOrderByRelationAggregateInput
     basicWordInfos?: BasicWordInfoOrderByRelationAggregateInput
     correctionSections?: UserCorrectionSectionOrderByRelationAggregateInput
+    pointLogs?: PointLogOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -21068,6 +22404,7 @@ export namespace Prisma {
     sourceLanguage?: StringNullableFilter<"User"> | string | null
     showSourceLanguageMaterials?: BoolFilter<"User"> | boolean
     targetLanguages?: StringNullableFilter<"User"> | string | null
+    isCommunity?: BoolFilter<"User"> | boolean
     flashcards?: FlashcardListRelationFilter
     activities?: UserFlashcardActivityListRelationFilter
     flashcardBatches?: UserFlashcardBatchListRelationFilter
@@ -21075,6 +22412,7 @@ export namespace Prisma {
     mobileImports?: MobileImportListRelationFilter
     basicWordInfos?: BasicWordInfoListRelationFilter
     correctionSections?: UserCorrectionSectionListRelationFilter
+    pointLogs?: PointLogListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -21092,6 +22430,7 @@ export namespace Prisma {
     sourceLanguage?: SortOrderInput | SortOrder
     showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrderInput | SortOrder
+    isCommunity?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -21117,6 +22456,7 @@ export namespace Prisma {
     sourceLanguage?: StringNullableWithAggregatesFilter<"User"> | string | null
     showSourceLanguageMaterials?: BoolWithAggregatesFilter<"User"> | boolean
     targetLanguages?: StringNullableWithAggregatesFilter<"User"> | string | null
+    isCommunity?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type LinkWhereInput = {
@@ -21128,6 +22468,8 @@ export namespace Prisma {
     url?: StringFilter<"Link"> | string
     title?: StringFilter<"Link"> | string
     description?: StringFilter<"Link"> | string
+    slug?: StringNullableFilter<"Link"> | string | null
+    imageFileThumb?: StringNullableFilter<"Link"> | string | null
     rank?: FloatFilter<"Link"> | number
     createdAt?: DateTimeFilter<"Link"> | Date | string
     updatedAt?: DateTimeFilter<"Link"> | Date | string
@@ -21139,6 +22481,8 @@ export namespace Prisma {
     url?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    imageFileThumb?: SortOrderInput | SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -21153,6 +22497,8 @@ export namespace Prisma {
     url?: StringFilter<"Link"> | string
     title?: StringFilter<"Link"> | string
     description?: StringFilter<"Link"> | string
+    slug?: StringNullableFilter<"Link"> | string | null
+    imageFileThumb?: StringNullableFilter<"Link"> | string | null
     rank?: FloatFilter<"Link"> | number
     createdAt?: DateTimeFilter<"Link"> | Date | string
     updatedAt?: DateTimeFilter<"Link"> | Date | string
@@ -21164,6 +22510,8 @@ export namespace Prisma {
     url?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    imageFileThumb?: SortOrderInput | SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -21183,6 +22531,8 @@ export namespace Prisma {
     url?: StringWithAggregatesFilter<"Link"> | string
     title?: StringWithAggregatesFilter<"Link"> | string
     description?: StringWithAggregatesFilter<"Link"> | string
+    slug?: StringNullableWithAggregatesFilter<"Link"> | string | null
+    imageFileThumb?: StringNullableWithAggregatesFilter<"Link"> | string | null
     rank?: FloatWithAggregatesFilter<"Link"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Link"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Link"> | Date | string
@@ -22129,6 +23479,8 @@ export namespace Prisma {
     description?: StringFilter<"HowtoItem"> | string
     rank?: FloatFilter<"HowtoItem"> | number
     slug?: StringFilter<"HowtoItem"> | string
+    imageFileMain?: StringNullableFilter<"HowtoItem"> | string | null
+    imageFileThumb?: StringNullableFilter<"HowtoItem"> | string | null
     createdAt?: DateTimeFilter<"HowtoItem"> | Date | string
     updatedAt?: DateTimeFilter<"HowtoItem"> | Date | string
   }
@@ -22139,6 +23491,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrderInput | SortOrder
+    imageFileThumb?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22152,6 +23506,8 @@ export namespace Prisma {
     title?: StringFilter<"HowtoItem"> | string
     description?: StringFilter<"HowtoItem"> | string
     rank?: FloatFilter<"HowtoItem"> | number
+    imageFileMain?: StringNullableFilter<"HowtoItem"> | string | null
+    imageFileThumb?: StringNullableFilter<"HowtoItem"> | string | null
     createdAt?: DateTimeFilter<"HowtoItem"> | Date | string
     updatedAt?: DateTimeFilter<"HowtoItem"> | Date | string
   }, "id" | "slug">
@@ -22162,6 +23518,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrderInput | SortOrder
+    imageFileThumb?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: HowtoItemCountOrderByAggregateInput
@@ -22180,8 +23538,77 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"HowtoItem"> | string
     rank?: FloatWithAggregatesFilter<"HowtoItem"> | number
     slug?: StringWithAggregatesFilter<"HowtoItem"> | string
+    imageFileMain?: StringNullableWithAggregatesFilter<"HowtoItem"> | string | null
+    imageFileThumb?: StringNullableWithAggregatesFilter<"HowtoItem"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"HowtoItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"HowtoItem"> | Date | string
+  }
+
+  export type PointLogWhereInput = {
+    AND?: PointLogWhereInput | PointLogWhereInput[]
+    OR?: PointLogWhereInput[]
+    NOT?: PointLogWhereInput | PointLogWhereInput[]
+    id?: StringFilter<"PointLog"> | string
+    userId?: StringFilter<"PointLog"> | string
+    points?: IntFilter<"PointLog"> | number
+    reason?: StringFilter<"PointLog"> | string
+    language?: StringNullableFilter<"PointLog"> | string | null
+    actionTaken?: StringNullableFilter<"PointLog"> | string | null
+    createdAt?: DateTimeFilter<"PointLog"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PointLogOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    points?: SortOrder
+    reason?: SortOrder
+    language?: SortOrderInput | SortOrder
+    actionTaken?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type PointLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PointLogWhereInput | PointLogWhereInput[]
+    OR?: PointLogWhereInput[]
+    NOT?: PointLogWhereInput | PointLogWhereInput[]
+    userId?: StringFilter<"PointLog"> | string
+    points?: IntFilter<"PointLog"> | number
+    reason?: StringFilter<"PointLog"> | string
+    language?: StringNullableFilter<"PointLog"> | string | null
+    actionTaken?: StringNullableFilter<"PointLog"> | string | null
+    createdAt?: DateTimeFilter<"PointLog"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type PointLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    points?: SortOrder
+    reason?: SortOrder
+    language?: SortOrderInput | SortOrder
+    actionTaken?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: PointLogCountOrderByAggregateInput
+    _avg?: PointLogAvgOrderByAggregateInput
+    _max?: PointLogMaxOrderByAggregateInput
+    _min?: PointLogMinOrderByAggregateInput
+    _sum?: PointLogSumOrderByAggregateInput
+  }
+
+  export type PointLogScalarWhereWithAggregatesInput = {
+    AND?: PointLogScalarWhereWithAggregatesInput | PointLogScalarWhereWithAggregatesInput[]
+    OR?: PointLogScalarWhereWithAggregatesInput[]
+    NOT?: PointLogScalarWhereWithAggregatesInput | PointLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PointLog"> | string
+    userId?: StringWithAggregatesFilter<"PointLog"> | string
+    points?: IntWithAggregatesFilter<"PointLog"> | number
+    reason?: StringWithAggregatesFilter<"PointLog"> | string
+    language?: StringNullableWithAggregatesFilter<"PointLog"> | string | null
+    actionTaken?: StringNullableWithAggregatesFilter<"PointLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"PointLog"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -22199,6 +23626,7 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
@@ -22206,6 +23634,7 @@ export namespace Prisma {
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -22223,6 +23652,7 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
@@ -22230,6 +23660,7 @@ export namespace Prisma {
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -22247,6 +23678,7 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
@@ -22254,6 +23686,7 @@ export namespace Prisma {
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -22271,6 +23704,7 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
@@ -22278,6 +23712,7 @@ export namespace Prisma {
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -22295,6 +23730,7 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -22312,6 +23748,7 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -22329,6 +23766,7 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type LinkCreateInput = {
@@ -22337,6 +23775,8 @@ export namespace Prisma {
     url: string
     title: string
     description: string
+    slug?: string | null
+    imageFileThumb?: string | null
     rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22348,6 +23788,8 @@ export namespace Prisma {
     url: string
     title: string
     description: string
+    slug?: string | null
+    imageFileThumb?: string | null
     rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22359,6 +23801,8 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22370,6 +23814,8 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22381,6 +23827,8 @@ export namespace Prisma {
     url: string
     title: string
     description: string
+    slug?: string | null
+    imageFileThumb?: string | null
     rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22392,6 +23840,8 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22403,6 +23853,8 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23401,6 +24853,8 @@ export namespace Prisma {
     description: string
     rank?: number
     slug: string
+    imageFileMain?: string | null
+    imageFileThumb?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23411,6 +24865,8 @@ export namespace Prisma {
     description: string
     rank?: number
     slug: string
+    imageFileMain?: string | null
+    imageFileThumb?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23421,6 +24877,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
+    imageFileMain?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23431,6 +24889,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
+    imageFileMain?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23441,6 +24901,8 @@ export namespace Prisma {
     description: string
     rank?: number
     slug: string
+    imageFileMain?: string | null
+    imageFileThumb?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23451,6 +24913,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
+    imageFileMain?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23461,8 +24925,79 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
+    imageFileMain?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PointLogCreateInput = {
+    id?: string
+    points: number
+    reason: string
+    language?: string | null
+    actionTaken?: string | null
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutPointLogsInput
+  }
+
+  export type PointLogUncheckedCreateInput = {
+    id?: string
+    userId: string
+    points: number
+    reason: string
+    language?: string | null
+    actionTaken?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PointLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    actionTaken?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPointLogsNestedInput
+  }
+
+  export type PointLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    actionTaken?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PointLogCreateManyInput = {
+    id?: string
+    userId: string
+    points: number
+    reason: string
+    language?: string | null
+    actionTaken?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PointLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    actionTaken?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PointLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    actionTaken?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -23551,6 +25086,12 @@ export namespace Prisma {
     none?: UserCorrectionSectionWhereInput
   }
 
+  export type PointLogListRelationFilter = {
+    every?: PointLogWhereInput
+    some?: PointLogWhereInput
+    none?: PointLogWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -23584,6 +25125,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type PointLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     firstName?: SortOrder
@@ -23599,6 +25144,7 @@ export namespace Prisma {
     sourceLanguage?: SortOrder
     showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrder
+    isCommunity?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -23623,6 +25169,7 @@ export namespace Prisma {
     sourceLanguage?: SortOrder
     showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrder
+    isCommunity?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -23640,6 +25187,7 @@ export namespace Prisma {
     sourceLanguage?: SortOrder
     showSourceLanguageMaterials?: SortOrder
     targetLanguages?: SortOrder
+    isCommunity?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -23735,6 +25283,8 @@ export namespace Prisma {
     url?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    slug?: SortOrder
+    imageFileThumb?: SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23750,6 +25300,8 @@ export namespace Prisma {
     url?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    slug?: SortOrder
+    imageFileThumb?: SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23761,6 +25313,8 @@ export namespace Prisma {
     url?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    slug?: SortOrder
+    imageFileThumb?: SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -24421,6 +25975,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrder
+    imageFileThumb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -24435,6 +25991,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrder
+    imageFileThumb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -24445,12 +26003,52 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrder
+    imageFileThumb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type HowtoItemSumOrderByAggregateInput = {
     rank?: SortOrder
+  }
+
+  export type PointLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    points?: SortOrder
+    reason?: SortOrder
+    language?: SortOrder
+    actionTaken?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PointLogAvgOrderByAggregateInput = {
+    points?: SortOrder
+  }
+
+  export type PointLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    points?: SortOrder
+    reason?: SortOrder
+    language?: SortOrder
+    actionTaken?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PointLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    points?: SortOrder
+    reason?: SortOrder
+    language?: SortOrder
+    actionTaken?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PointLogSumOrderByAggregateInput = {
+    points?: SortOrder
   }
 
   export type FlashcardCreateNestedManyWithoutOwnerInput = {
@@ -24502,6 +26100,13 @@ export namespace Prisma {
     connect?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
   }
 
+  export type PointLogCreateNestedManyWithoutUserInput = {
+    create?: XOR<PointLogCreateWithoutUserInput, PointLogUncheckedCreateWithoutUserInput> | PointLogCreateWithoutUserInput[] | PointLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PointLogCreateOrConnectWithoutUserInput | PointLogCreateOrConnectWithoutUserInput[]
+    createMany?: PointLogCreateManyUserInputEnvelope
+    connect?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+  }
+
   export type FlashcardUncheckedCreateNestedManyWithoutOwnerInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -24549,6 +26154,13 @@ export namespace Prisma {
     connectOrCreate?: UserCorrectionSectionCreateOrConnectWithoutUserInput | UserCorrectionSectionCreateOrConnectWithoutUserInput[]
     createMany?: UserCorrectionSectionCreateManyUserInputEnvelope
     connect?: UserCorrectionSectionWhereUniqueInput | UserCorrectionSectionWhereUniqueInput[]
+  }
+
+  export type PointLogUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PointLogCreateWithoutUserInput, PointLogUncheckedCreateWithoutUserInput> | PointLogCreateWithoutUserInput[] | PointLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PointLogCreateOrConnectWithoutUserInput | PointLogCreateOrConnectWithoutUserInput[]
+    createMany?: PointLogCreateManyUserInputEnvelope
+    connect?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -24669,6 +26281,20 @@ export namespace Prisma {
     deleteMany?: UserCorrectionSectionScalarWhereInput | UserCorrectionSectionScalarWhereInput[]
   }
 
+  export type PointLogUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PointLogCreateWithoutUserInput, PointLogUncheckedCreateWithoutUserInput> | PointLogCreateWithoutUserInput[] | PointLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PointLogCreateOrConnectWithoutUserInput | PointLogCreateOrConnectWithoutUserInput[]
+    upsert?: PointLogUpsertWithWhereUniqueWithoutUserInput | PointLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PointLogCreateManyUserInputEnvelope
+    set?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+    disconnect?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+    delete?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+    connect?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+    update?: PointLogUpdateWithWhereUniqueWithoutUserInput | PointLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PointLogUpdateManyWithWhereWithoutUserInput | PointLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PointLogScalarWhereInput | PointLogScalarWhereInput[]
+  }
+
   export type FlashcardUncheckedUpdateManyWithoutOwnerNestedInput = {
     create?: XOR<FlashcardCreateWithoutOwnerInput, FlashcardUncheckedCreateWithoutOwnerInput> | FlashcardCreateWithoutOwnerInput[] | FlashcardUncheckedCreateWithoutOwnerInput[]
     connectOrCreate?: FlashcardCreateOrConnectWithoutOwnerInput | FlashcardCreateOrConnectWithoutOwnerInput[]
@@ -24765,6 +26391,20 @@ export namespace Prisma {
     update?: UserCorrectionSectionUpdateWithWhereUniqueWithoutUserInput | UserCorrectionSectionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserCorrectionSectionUpdateManyWithWhereWithoutUserInput | UserCorrectionSectionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserCorrectionSectionScalarWhereInput | UserCorrectionSectionScalarWhereInput[]
+  }
+
+  export type PointLogUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PointLogCreateWithoutUserInput, PointLogUncheckedCreateWithoutUserInput> | PointLogCreateWithoutUserInput[] | PointLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PointLogCreateOrConnectWithoutUserInput | PointLogCreateOrConnectWithoutUserInput[]
+    upsert?: PointLogUpsertWithWhereUniqueWithoutUserInput | PointLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PointLogCreateManyUserInputEnvelope
+    set?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+    disconnect?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+    delete?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+    connect?: PointLogWhereUniqueInput | PointLogWhereUniqueInput[]
+    update?: PointLogUpdateWithWhereUniqueWithoutUserInput | PointLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PointLogUpdateManyWithWhereWithoutUserInput | PointLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PointLogScalarWhereInput | PointLogScalarWhereInput[]
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -25289,6 +26929,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFlashcardBatchesInput, UserUpdateWithoutFlashcardBatchesInput>, UserUncheckedUpdateWithoutFlashcardBatchesInput>
   }
 
+  export type UserCreateNestedOneWithoutPointLogsInput = {
+    create?: XOR<UserCreateWithoutPointLogsInput, UserUncheckedCreateWithoutPointLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPointLogsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPointLogsNestedInput = {
+    create?: XOR<UserCreateWithoutPointLogsInput, UserUncheckedCreateWithoutPointLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPointLogsInput
+    upsert?: UserUpsertWithoutPointLogsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPointLogsInput, UserUpdateWithoutPointLogsInput>, UserUncheckedUpdateWithoutPointLogsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -25739,6 +27393,33 @@ export namespace Prisma {
     data: UserCorrectionSectionCreateManyUserInput | UserCorrectionSectionCreateManyUserInput[]
   }
 
+  export type PointLogCreateWithoutUserInput = {
+    id?: string
+    points: number
+    reason: string
+    language?: string | null
+    actionTaken?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PointLogUncheckedCreateWithoutUserInput = {
+    id?: string
+    points: number
+    reason: string
+    language?: string | null
+    actionTaken?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PointLogCreateOrConnectWithoutUserInput = {
+    where: PointLogWhereUniqueInput
+    create: XOR<PointLogCreateWithoutUserInput, PointLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type PointLogCreateManyUserInputEnvelope = {
+    data: PointLogCreateManyUserInput | PointLogCreateManyUserInput[]
+  }
+
   export type FlashcardUpsertWithWhereUniqueWithoutOwnerInput = {
     where: FlashcardWhereUniqueInput
     update: XOR<FlashcardUpdateWithoutOwnerInput, FlashcardUncheckedUpdateWithoutOwnerInput>
@@ -25959,6 +27640,35 @@ export namespace Prisma {
     learnedFlashcardIds?: StringFilter<"UserCorrectionSection"> | string
     createdAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
     updatedAt?: DateTimeFilter<"UserCorrectionSection"> | Date | string
+  }
+
+  export type PointLogUpsertWithWhereUniqueWithoutUserInput = {
+    where: PointLogWhereUniqueInput
+    update: XOR<PointLogUpdateWithoutUserInput, PointLogUncheckedUpdateWithoutUserInput>
+    create: XOR<PointLogCreateWithoutUserInput, PointLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type PointLogUpdateWithWhereUniqueWithoutUserInput = {
+    where: PointLogWhereUniqueInput
+    data: XOR<PointLogUpdateWithoutUserInput, PointLogUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PointLogUpdateManyWithWhereWithoutUserInput = {
+    where: PointLogScalarWhereInput
+    data: XOR<PointLogUpdateManyMutationInput, PointLogUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PointLogScalarWhereInput = {
+    AND?: PointLogScalarWhereInput | PointLogScalarWhereInput[]
+    OR?: PointLogScalarWhereInput[]
+    NOT?: PointLogScalarWhereInput | PointLogScalarWhereInput[]
+    id?: StringFilter<"PointLog"> | string
+    userId?: StringFilter<"PointLog"> | string
+    points?: IntFilter<"PointLog"> | number
+    reason?: StringFilter<"PointLog"> | string
+    language?: StringNullableFilter<"PointLog"> | string | null
+    actionTaken?: StringNullableFilter<"PointLog"> | string | null
+    createdAt?: DateTimeFilter<"PointLog"> | Date | string
   }
 
   export type VersionItemCreateWithoutVersionInput = {
@@ -26230,12 +27940,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVersionItemsInput = {
@@ -26253,12 +27965,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVersionItemsInput = {
@@ -26354,12 +28068,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVersionItemsInput = {
@@ -26377,12 +28093,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutFlashcardsInput = {
@@ -26400,12 +28118,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFlashcardsInput = {
@@ -26423,12 +28143,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFlashcardsInput = {
@@ -26604,12 +28326,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFlashcardsInput = {
@@ -26627,12 +28351,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutCopiesInput = {
@@ -26760,12 +28486,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -26783,12 +28511,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -26869,12 +28599,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -26892,12 +28624,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FlashcardUpsertWithoutActivitiesInput = {
@@ -27143,12 +28877,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMobileImportsInput = {
@@ -27166,12 +28902,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMobileImportsInput = {
@@ -27205,12 +28943,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMobileImportsInput = {
@@ -27228,12 +28968,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBasicWordInfosInput = {
@@ -27251,12 +28993,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBasicWordInfosInput = {
@@ -27274,12 +29018,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBasicWordInfosInput = {
@@ -27313,12 +29059,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBasicWordInfosInput = {
@@ -27336,12 +29084,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCorrectionSectionsInput = {
@@ -27359,12 +29109,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCorrectionSectionsInput = {
@@ -27382,12 +29134,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCorrectionSectionsInput = {
@@ -27421,12 +29175,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCorrectionSectionsInput = {
@@ -27444,12 +29200,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
     flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutFlashcardBatchesInput = {
@@ -27467,12 +29225,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
     versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFlashcardBatchesInput = {
@@ -27490,12 +29250,14 @@ export namespace Prisma {
     sourceLanguage?: string | null
     showSourceLanguageMaterials?: boolean
     targetLanguages?: string | null
+    isCommunity?: boolean
     flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
     activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
     versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
     mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
     basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
     correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+    pointLogs?: PointLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFlashcardBatchesInput = {
@@ -27529,12 +29291,14 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
     correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFlashcardBatchesInput = {
@@ -27552,8 +29316,126 @@ export namespace Prisma {
     sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
     targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
     flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
     activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUncheckedUpdateManyWithoutUserNestedInput
+    pointLogs?: PointLogUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutPointLogsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    points?: number
+    minutesToTestAgain?: number
+    dailyTakeGoal?: number
+    testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
+    sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
+    targetLanguages?: string | null
+    isCommunity?: boolean
+    flashcards?: FlashcardCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPointLogsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    role?: string
+    points?: number
+    minutesToTestAgain?: number
+    dailyTakeGoal?: number
+    testingGroupSize?: number
+    lastFlashcardStrategy?: string | null
+    lastFlashcardLanguage?: string | null
+    sourceLanguage?: string | null
+    showSourceLanguageMaterials?: boolean
+    targetLanguages?: string | null
+    isCommunity?: boolean
+    flashcards?: FlashcardUncheckedCreateNestedManyWithoutOwnerInput
+    activities?: UserFlashcardActivityUncheckedCreateNestedManyWithoutUserInput
+    flashcardBatches?: UserFlashcardBatchUncheckedCreateNestedManyWithoutUserInput
+    versionItems?: VersionItemUncheckedCreateNestedManyWithoutStartedByUserInput
+    mobileImports?: MobileImportUncheckedCreateNestedManyWithoutUserInput
+    basicWordInfos?: BasicWordInfoUncheckedCreateNestedManyWithoutUserInput
+    correctionSections?: UserCorrectionSectionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPointLogsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPointLogsInput, UserUncheckedCreateWithoutPointLogsInput>
+  }
+
+  export type UserUpsertWithoutPointLogsInput = {
+    update: XOR<UserUpdateWithoutPointLogsInput, UserUncheckedUpdateWithoutPointLogsInput>
+    create: XOR<UserCreateWithoutPointLogsInput, UserUncheckedCreateWithoutPointLogsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPointLogsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPointLogsInput, UserUncheckedUpdateWithoutPointLogsInput>
+  }
+
+  export type UserUpdateWithoutPointLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
+    targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
+    flashcards?: FlashcardUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUpdateManyWithoutUserNestedInput
+    versionItems?: VersionItemUpdateManyWithoutStartedByUserNestedInput
+    mobileImports?: MobileImportUpdateManyWithoutUserNestedInput
+    basicWordInfos?: BasicWordInfoUpdateManyWithoutUserNestedInput
+    correctionSections?: UserCorrectionSectionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPointLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    minutesToTestAgain?: IntFieldUpdateOperationsInput | number
+    dailyTakeGoal?: IntFieldUpdateOperationsInput | number
+    testingGroupSize?: IntFieldUpdateOperationsInput | number
+    lastFlashcardStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastFlashcardLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    showSourceLanguageMaterials?: BoolFieldUpdateOperationsInput | boolean
+    targetLanguages?: NullableStringFieldUpdateOperationsInput | string | null
+    isCommunity?: BoolFieldUpdateOperationsInput | boolean
+    flashcards?: FlashcardUncheckedUpdateManyWithoutOwnerNestedInput
+    activities?: UserFlashcardActivityUncheckedUpdateManyWithoutUserNestedInput
+    flashcardBatches?: UserFlashcardBatchUncheckedUpdateManyWithoutUserNestedInput
     versionItems?: VersionItemUncheckedUpdateManyWithoutStartedByUserNestedInput
     mobileImports?: MobileImportUncheckedUpdateManyWithoutUserNestedInput
     basicWordInfos?: BasicWordInfoUncheckedUpdateManyWithoutUserNestedInput
@@ -27640,6 +29522,15 @@ export namespace Prisma {
     learnedFlashcardIds?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type PointLogCreateManyUserInput = {
+    id?: string
+    points: number
+    reason: string
+    language?: string | null
+    actionTaken?: string | null
+    createdAt?: Date | string
   }
 
   export type FlashcardUpdateWithoutOwnerInput = {
@@ -27892,6 +29783,33 @@ export namespace Prisma {
     learnedFlashcardIds?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PointLogUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    actionTaken?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PointLogUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    actionTaken?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PointLogUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    points?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    actionTaken?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VersionItemCreateManyVersionInput = {

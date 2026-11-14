@@ -1,4 +1,5 @@
 import { prisma } from '../../utils/prisma'
+import { syncAndResolveSlugImages } from '../../utils/imageSlug'
 
 const STARTER_HOWTO_ITEMS = [
   {
@@ -54,6 +55,34 @@ export default defineEventHandler(async () => {
     ]
   })
 
-  return items
-})
+  return Promise.all(
+    items.map(async (item) => {
+      let imageFileMain = item.imageFileMain
+      let imageFileThumb = item.imageFileThumb
 
+      if ((!imageFileMain || !imageFileThumb) && item.slug) {
+        const imgs = await syncAndResolveSlugImages(item.slug, 'howtos')
+        const patch: { imageFileMain?: string; imageFileThumb?: string } = {}
+        if (!imageFileMain && imgs.imageFileMain) {
+          imageFileMain = imgs.imageFileMain
+          patch.imageFileMain = imgs.imageFileMain
+        }
+        if (!imageFileThumb && imgs.imageFileThumb) {
+          imageFileThumb = imgs.imageFileThumb
+          patch.imageFileThumb = imgs.imageFileThumb
+        }
+        if (Object.keys(patch).length > 0) {
+          prisma.howtoItem.update({ where: { id: item.id }, data: patch }).catch(() => {})
+        }
+      }
+
+      return {
+        ...item,
+        imageFileMain,
+        imageFileThumb,
+        imageUrl: imageFileMain ? `/images/howtos/${imageFileMain}` : null,
+        thumbUrl: imageFileThumb ? `/images/howtos/${imageFileThumb}` : null
+      }
+    })
+  )
+})

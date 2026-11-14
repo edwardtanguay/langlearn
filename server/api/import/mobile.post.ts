@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
       existingSet.add(`${card.front.trim().toLowerCase()}|${card.back.trim().toLowerCase()}`)
     }
 
-    const { willImport, willNotImport } = analyzeImportRows(existingSet, parsedRows, dbUser.sourceLanguage)
+    const { willImport, willNotImport } = analyzeImportRows(existingSet, parsedRows, dbUser.sourceLanguage, { lowercaseFirst: body.lowercaseFirst !== false })
 
     return {
       preview: true,
@@ -87,7 +87,7 @@ export default defineEventHandler(async (event) => {
   // 2. Process import rows (creates flashcards, skips duplicates)
   try {
     const clientTz = (getHeader(event, 'x-client-timezone') as string) || body.tz || undefined
-    const importResult = await processImportRows(dbUser.id, parsedRows, clientTz)
+    const importResult = await processImportRows(dbUser.id, parsedRows, clientTz, { lowercaseFirst: body.lowercaseFirst !== false })
     return {
       id: record.id,
       userId: record.userId,

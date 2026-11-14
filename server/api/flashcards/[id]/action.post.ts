@@ -76,6 +76,15 @@ export default defineEventHandler(async (event) => {
           points: { increment: pointsEarned }
         },
         select: { points: true }
+      }),
+      prisma.pointLog.create({
+        data: {
+          userId: dbUser.id,
+          points: pointsEarned,
+          reason: 'flashcard',
+          language: flashcard.backLanguage || flashcard.frontLanguage,
+          actionTaken
+        }
       })
     ])
 

@@ -507,7 +507,7 @@ function highlightWordMatches(word: string, normQuery: string): string {
   while ((searchPos = normWord.indexOf(normQuery, lastIdx)) !== -1) {
     res += escapeHtml(word.slice(lastIdx, searchPos))
     const matchSlice = word.slice(searchPos, searchPos + normQuery.length)
-    res += `<span class="bg-rose-400/60 dark:bg-rose-500/55 !text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.75)] rounded-xs">${escapeHtml(matchSlice)}</span>`
+    res += `<span class="bg-emerald-600 dark:bg-emerald-500 !text-white px-0.5 rounded-xs">${escapeHtml(matchSlice)}</span>`
     lastIdx = searchPos + normQuery.length
   }
   res += escapeHtml(word.slice(lastIdx))
@@ -560,10 +560,45 @@ function verbMatchesSearch(v: SpanishVerb, normQuery: string): boolean {
 
 const isSearching = computed(() => !!searchQuery.value.trim())
 
+function isExactSearchMatch(text?: string | null): boolean {
+  if (!text || text === '—' || !isSearching.value) return false
+  const normQuery = normalizeForSearch(searchQuery.value.trim())
+  if (!normQuery) return false
+  if (normalizeForSearch(text.trim()) === normQuery) return true
+  const tokens = text.split(/([^\p{L}\p{M}]+)/u).filter(t => /[\p{L}\p{M}]/u.test(t))
+  return tokens.some(t => normalizeForSearch(t) === normQuery)
+}
+
+function getVerbSearchScore(v: SpanishVerb, normQuery: string): number {
+  const normVerb = normalizeForSearch(v.verb)
+  if (normVerb === normQuery) return 3
+
+  const hasExactWord = (text?: string): boolean => {
+    if (!text || text === '-') return false
+    return normalizeForSearch(text)
+      .split(/[\s/,;()]+/)
+      .some(word => word === normQuery)
+  }
+
+  if (hasExactWord(v.gerund) || hasExactWord(v.pastParticiple)) return 2
+  for (const tense of FINITE_TENSES) {
+    const forms = (v as any)[tense.key] as string[] || []
+    for (const form of forms) {
+      if (hasExactWord(form)) return 2
+    }
+  }
+
+  return verbMatchesSearch(v, normQuery) ? 1 : 0
+}
+
 const searchMatchingVerbs = computed(() => {
   const q = normalizeForSearch(searchQuery.value.trim())
   if (!q) return []
-  return verbs.filter(v => verbMatchesSearch(v, q))
+  return verbs
+    .map((v, idx) => ({ v, idx, score: getVerbSearchScore(v, q) }))
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.idx - b.idx)
+    .map(item => item.v)
 })
 
 function handleSearchFocus() {
@@ -2486,7 +2521,6 @@ onUnmounted(() => {
             <button
               type="button"
               @pointerdown="blurActiveSearchInput"
-              @pointerdown.prevent.stop="prevMobilePronoun"
               @keydown.enter.prevent.stop="prevMobilePronoun"
               @keydown.space.prevent.stop="prevMobilePronoun"
               @click.stop.prevent="prevMobilePronoun"
@@ -2498,7 +2532,6 @@ onUnmounted(() => {
             <button
               type="button"
               @pointerdown="blurActiveSearchInput"
-              @pointerdown.prevent.stop="nextMobilePronoun"
               @keydown.enter.prevent.stop="nextMobilePronoun"
               @keydown.space.prevent.stop="nextMobilePronoun"
               @click.stop.prevent="nextMobilePronoun"
@@ -2991,7 +3024,6 @@ onUnmounted(() => {
             <button
               type="button"
               @pointerdown="blurActiveSearchInput"
-              @pointerdown.prevent.stop="prevVerbMobilePronoun(verb.verb)"
               @keydown.enter.prevent.stop="prevVerbMobilePronoun(verb.verb)"
               @keydown.space.prevent.stop="prevVerbMobilePronoun(verb.verb)"
               @click.stop.prevent="prevVerbMobilePronoun(verb.verb)"
@@ -3003,7 +3035,6 @@ onUnmounted(() => {
             <button
               type="button"
               @pointerdown="blurActiveSearchInput"
-              @pointerdown.prevent.stop="nextVerbMobilePronoun(verb.verb)"
               @keydown.enter.prevent.stop="nextVerbMobilePronoun(verb.verb)"
               @keydown.space.prevent.stop="nextVerbMobilePronoun(verb.verb)"
               @click.stop.prevent="nextVerbMobilePronoun(verb.verb)"
@@ -3233,7 +3264,10 @@ onUnmounted(() => {
                         <span
                           v-else
                           @click.stop="openGoogleExamples(verb.gerund, { verb: verb.verb, tenseKey: 'gerund', tenseLabel: 'Gerundio' })"
-                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[54px] text-center cursor-pointer"
+                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
+                          :class="isExactSearchMatch(verb.gerund)
+                            ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
                           v-html="highlightText(verb.gerund)"
                         >
                         </span>
@@ -3298,7 +3332,10 @@ onUnmounted(() => {
                         <span
                           v-else
                           @click.stop="openGoogleExamples(verb.pastParticiple, { verb: verb.verb, tenseKey: 'pastParticiple', tenseLabel: 'Participio' })"
-                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[54px] text-center cursor-pointer"
+                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
+                          :class="isExactSearchMatch(verb.pastParticiple)
+                            ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
                           v-html="highlightText(verb.pastParticiple)"
                         >
                         </span>
@@ -3445,7 +3482,10 @@ onUnmounted(() => {
                     <span
                       v-else
                       @click.stop="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx], { verb: verb.verb, tenseKey: tense.key, tenseLabel: tense.label, pronounLabel: p.label })"
-                      class="inline-block px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
+                      class="inline-block px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold border min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
+                      :class="isExactSearchMatch(((verb as any)[tense.key] || [])[p.idx])
+                        ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
                       v-html="highlightText(((verb as any)[tense.key] || [])[p.idx] || '—')"
                     >
                     </span>
