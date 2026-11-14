@@ -1,4 +1,3 @@
-import { syncAndResolveSlugImages } from '../../utils/imageSlug'
 import { prisma } from '../../utils/prisma'
 
 export default defineEventHandler(async () => {
@@ -43,9 +42,8 @@ export default defineEventHandler(async () => {
       { title: 'asc' }
     ]
   })
-  const enriched = await Promise.all(links.map(async (link) => {
-    const imgs = await syncAndResolveSlugImages(link.slug, 'links')
-    return { ...link, ...imgs }
+  return links.map((link) => ({
+    ...link,
+    thumbUrl: link.imageFileThumb ? `/images/links/${link.imageFileThumb}` : null
   }))
-  return enriched
 })

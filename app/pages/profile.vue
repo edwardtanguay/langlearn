@@ -103,6 +103,7 @@ const toggleCommunityMode = async () => {
   const prev = isCommunity.value
   const next = !prev
   isCommunity.value = next
+  if (meData.value) meData.value.isCommunity = next
   isSavingCommunity.value = true
   try {
     await $fetch('/api/user/profile', {
@@ -112,6 +113,7 @@ const toggleCommunityMode = async () => {
   } catch (err) {
     console.error('Failed to update community mode:', err)
     isCommunity.value = prev
+    if (meData.value) meData.value.isCommunity = prev
   } finally {
     isSavingCommunity.value = false
   }
@@ -335,8 +337,8 @@ const stepGoal = (delta: number) => {
 }
 
 const stepGroupSize = (delta: number) => {
-  const current = Number(testingGroupSizeInput.value) || 10
-  const updated = Math.max(1, Math.min(50, current + delta))
+  const current = Number(testingGroupSizeInput.value) || 7
+  const updated = Math.max(1, Math.min(7, current + delta))
   testingGroupSizeInput.value = updated
   if (groupSizeDebounceTimer) clearTimeout(groupSizeDebounceTimer)
   handleSaveGroupSize()
@@ -369,7 +371,8 @@ const handleSaveGoal = async () => {
 const handleSaveGroupSize = async () => {
   if (isSavingGroupSize.value) return
   const prevValue = meData.value?.testingGroupSize ?? 10
-  const newValue = Math.max(1, Math.min(50, Number(testingGroupSizeInput.value) || 10))
+  const newValue = Math.max(1, Math.min(7, Number(testingGroupSizeInput.value) || 7))
+  testingGroupSizeInput.value = newValue
 
   if (meData.value) meData.value.testingGroupSize = newValue
   isSavingGroupSize.value = true
@@ -638,13 +641,13 @@ const handleSaveGroupSize = async () => {
                 v-model.number="testingGroupSizeInput"
                 @input="onGroupSizeInput"
                 min="1"
-                max="50"
+                max="7"
                 class="w-20 text-center font-mono px-2 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               <button
                 type="button"
                 @click="stepGroupSize(1)"
-                :disabled="isSavingGroupSize || testingGroupSizeInput >= 50"
+                :disabled="isSavingGroupSize || testingGroupSizeInput >= 7"
                 class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 transition-colors cursor-pointer disabled:opacity-40"
                 title="Increase by 1"
               >

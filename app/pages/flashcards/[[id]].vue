@@ -933,7 +933,7 @@ function handleSearch() {
 
 // Active card computed properties
 const currentCard = computed<Flashcard | null>(() => {
-  if (isSearching.value) {
+  if (false && isSearching.value) {
     return null
   }
   if (testQueue.value.length === 0 || currentQueueIndex.value >= testQueue.value.length) {
@@ -1452,7 +1452,7 @@ async function handleSelectCard(card: Flashcard) {
 }
 
 function handleGlobalKeyDown(event: KeyboardEvent) {
-  if (isSearching.value || !currentCard.value) return
+  if (!currentCard.value) return
 
   const activeEl = document.activeElement
   const isFocusedOnInput = activeEl && (
@@ -1731,7 +1731,7 @@ onBeforeUnmount(() => {
           />
         </div>
 
-        <div v-if="!isSearching || !showControls" class="mt-2 sm:mt-4 flex flex-col items-center w-full min-h-[290px] justify-start pt-0">
+        <div class="mt-2 sm:mt-4 flex flex-col items-center w-full min-h-[290px] justify-start pt-0">
           
           <div class="w-full max-w-lg space-y-2.5 sm:space-y-4">
             
@@ -1745,7 +1745,7 @@ onBeforeUnmount(() => {
             </NuxtLink>
 
             <button 
-              v-else-if="searchQuery && !isLoadingQueue && !isInitialLoading && currentCard" 
+              v-else-if="searchQuery && !isSearching && !isLoadingQueue && !isInitialLoading && currentCard" 
               @click="isSearching = true" 
               class="flex items-center gap-1 text-sm font-semibold text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-200 hover:underline mb-1 transition-colors"
             >

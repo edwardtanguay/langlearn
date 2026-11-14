@@ -4038,6 +4038,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     slug: string | null
+    imageFileThumb: string | null
     rank: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4050,6 +4051,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     slug: string | null
+    imageFileThumb: string | null
     rank: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4062,6 +4064,7 @@ export namespace Prisma {
     title: number
     description: number
     slug: number
+    imageFileThumb: number
     rank: number
     createdAt: number
     updatedAt: number
@@ -4084,6 +4087,7 @@ export namespace Prisma {
     title?: true
     description?: true
     slug?: true
+    imageFileThumb?: true
     rank?: true
     createdAt?: true
     updatedAt?: true
@@ -4096,6 +4100,7 @@ export namespace Prisma {
     title?: true
     description?: true
     slug?: true
+    imageFileThumb?: true
     rank?: true
     createdAt?: true
     updatedAt?: true
@@ -4108,6 +4113,7 @@ export namespace Prisma {
     title?: true
     description?: true
     slug?: true
+    imageFileThumb?: true
     rank?: true
     createdAt?: true
     updatedAt?: true
@@ -4207,6 +4213,7 @@ export namespace Prisma {
     title: string
     description: string
     slug: string | null
+    imageFileThumb: string | null
     rank: number
     createdAt: Date
     updatedAt: Date
@@ -4238,6 +4245,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     slug?: boolean
+    imageFileThumb?: boolean
     rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4250,6 +4258,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     slug?: boolean
+    imageFileThumb?: boolean
     rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4262,6 +4271,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     slug?: boolean
+    imageFileThumb?: boolean
     rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4274,12 +4284,13 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     slug?: boolean
+    imageFileThumb?: boolean
     rank?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type LinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "language" | "url" | "title" | "description" | "slug" | "rank" | "createdAt" | "updatedAt", ExtArgs["result"]["link"]>
+  export type LinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "language" | "url" | "title" | "description" | "slug" | "imageFileThumb" | "rank" | "createdAt" | "updatedAt", ExtArgs["result"]["link"]>
 
   export type $LinkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Link"
@@ -4291,6 +4302,7 @@ export namespace Prisma {
       title: string
       description: string
       slug: string | null
+      imageFileThumb: string | null
       rank: number
       createdAt: Date
       updatedAt: Date
@@ -4723,6 +4735,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Link", 'String'>
     readonly description: FieldRef<"Link", 'String'>
     readonly slug: FieldRef<"Link", 'String'>
+    readonly imageFileThumb: FieldRef<"Link", 'String'>
     readonly rank: FieldRef<"Link", 'Float'>
     readonly createdAt: FieldRef<"Link", 'DateTime'>
     readonly updatedAt: FieldRef<"Link", 'DateTime'>
@@ -19826,6 +19839,8 @@ export namespace Prisma {
     description: string | null
     rank: number | null
     slug: string | null
+    imageFileMain: string | null
+    imageFileThumb: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -19836,6 +19851,8 @@ export namespace Prisma {
     description: string | null
     rank: number | null
     slug: string | null
+    imageFileMain: string | null
+    imageFileThumb: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -19846,6 +19863,8 @@ export namespace Prisma {
     description: number
     rank: number
     slug: number
+    imageFileMain: number
+    imageFileThumb: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -19866,6 +19885,8 @@ export namespace Prisma {
     description?: true
     rank?: true
     slug?: true
+    imageFileMain?: true
+    imageFileThumb?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -19876,6 +19897,8 @@ export namespace Prisma {
     description?: true
     rank?: true
     slug?: true
+    imageFileMain?: true
+    imageFileThumb?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -19886,6 +19909,8 @@ export namespace Prisma {
     description?: true
     rank?: true
     slug?: true
+    imageFileMain?: true
+    imageFileThumb?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -19983,6 +20008,8 @@ export namespace Prisma {
     description: string
     rank: number
     slug: string
+    imageFileMain: string | null
+    imageFileThumb: string | null
     createdAt: Date
     updatedAt: Date
     _count: HowtoItemCountAggregateOutputType | null
@@ -20012,6 +20039,8 @@ export namespace Prisma {
     description?: boolean
     rank?: boolean
     slug?: boolean
+    imageFileMain?: boolean
+    imageFileThumb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["howtoItem"]>
@@ -20022,6 +20051,8 @@ export namespace Prisma {
     description?: boolean
     rank?: boolean
     slug?: boolean
+    imageFileMain?: boolean
+    imageFileThumb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["howtoItem"]>
@@ -20032,6 +20063,8 @@ export namespace Prisma {
     description?: boolean
     rank?: boolean
     slug?: boolean
+    imageFileMain?: boolean
+    imageFileThumb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["howtoItem"]>
@@ -20042,11 +20075,13 @@ export namespace Prisma {
     description?: boolean
     rank?: boolean
     slug?: boolean
+    imageFileMain?: boolean
+    imageFileThumb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type HowtoItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "rank" | "slug" | "createdAt" | "updatedAt", ExtArgs["result"]["howtoItem"]>
+  export type HowtoItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "rank" | "slug" | "imageFileMain" | "imageFileThumb" | "createdAt" | "updatedAt", ExtArgs["result"]["howtoItem"]>
 
   export type $HowtoItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "HowtoItem"
@@ -20057,6 +20092,8 @@ export namespace Prisma {
       description: string
       rank: number
       slug: string
+      imageFileMain: string | null
+      imageFileThumb: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["howtoItem"]>
@@ -20487,6 +20524,8 @@ export namespace Prisma {
     readonly description: FieldRef<"HowtoItem", 'String'>
     readonly rank: FieldRef<"HowtoItem", 'Float'>
     readonly slug: FieldRef<"HowtoItem", 'String'>
+    readonly imageFileMain: FieldRef<"HowtoItem", 'String'>
+    readonly imageFileThumb: FieldRef<"HowtoItem", 'String'>
     readonly createdAt: FieldRef<"HowtoItem", 'DateTime'>
     readonly updatedAt: FieldRef<"HowtoItem", 'DateTime'>
   }
@@ -22018,6 +22057,7 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     slug: 'slug',
+    imageFileThumb: 'imageFileThumb',
     rank: 'rank',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -22210,6 +22250,8 @@ export namespace Prisma {
     description: 'description',
     rank: 'rank',
     slug: 'slug',
+    imageFileMain: 'imageFileMain',
+    imageFileThumb: 'imageFileThumb',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -22427,6 +22469,7 @@ export namespace Prisma {
     title?: StringFilter<"Link"> | string
     description?: StringFilter<"Link"> | string
     slug?: StringNullableFilter<"Link"> | string | null
+    imageFileThumb?: StringNullableFilter<"Link"> | string | null
     rank?: FloatFilter<"Link"> | number
     createdAt?: DateTimeFilter<"Link"> | Date | string
     updatedAt?: DateTimeFilter<"Link"> | Date | string
@@ -22439,6 +22482,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrderInput | SortOrder
+    imageFileThumb?: SortOrderInput | SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22454,6 +22498,7 @@ export namespace Prisma {
     title?: StringFilter<"Link"> | string
     description?: StringFilter<"Link"> | string
     slug?: StringNullableFilter<"Link"> | string | null
+    imageFileThumb?: StringNullableFilter<"Link"> | string | null
     rank?: FloatFilter<"Link"> | number
     createdAt?: DateTimeFilter<"Link"> | Date | string
     updatedAt?: DateTimeFilter<"Link"> | Date | string
@@ -22466,6 +22511,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrderInput | SortOrder
+    imageFileThumb?: SortOrderInput | SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22486,6 +22532,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Link"> | string
     description?: StringWithAggregatesFilter<"Link"> | string
     slug?: StringNullableWithAggregatesFilter<"Link"> | string | null
+    imageFileThumb?: StringNullableWithAggregatesFilter<"Link"> | string | null
     rank?: FloatWithAggregatesFilter<"Link"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Link"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Link"> | Date | string
@@ -23432,6 +23479,8 @@ export namespace Prisma {
     description?: StringFilter<"HowtoItem"> | string
     rank?: FloatFilter<"HowtoItem"> | number
     slug?: StringFilter<"HowtoItem"> | string
+    imageFileMain?: StringNullableFilter<"HowtoItem"> | string | null
+    imageFileThumb?: StringNullableFilter<"HowtoItem"> | string | null
     createdAt?: DateTimeFilter<"HowtoItem"> | Date | string
     updatedAt?: DateTimeFilter<"HowtoItem"> | Date | string
   }
@@ -23442,6 +23491,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrderInput | SortOrder
+    imageFileThumb?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -23455,6 +23506,8 @@ export namespace Prisma {
     title?: StringFilter<"HowtoItem"> | string
     description?: StringFilter<"HowtoItem"> | string
     rank?: FloatFilter<"HowtoItem"> | number
+    imageFileMain?: StringNullableFilter<"HowtoItem"> | string | null
+    imageFileThumb?: StringNullableFilter<"HowtoItem"> | string | null
     createdAt?: DateTimeFilter<"HowtoItem"> | Date | string
     updatedAt?: DateTimeFilter<"HowtoItem"> | Date | string
   }, "id" | "slug">
@@ -23465,6 +23518,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrderInput | SortOrder
+    imageFileThumb?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: HowtoItemCountOrderByAggregateInput
@@ -23483,6 +23538,8 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"HowtoItem"> | string
     rank?: FloatWithAggregatesFilter<"HowtoItem"> | number
     slug?: StringWithAggregatesFilter<"HowtoItem"> | string
+    imageFileMain?: StringNullableWithAggregatesFilter<"HowtoItem"> | string | null
+    imageFileThumb?: StringNullableWithAggregatesFilter<"HowtoItem"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"HowtoItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"HowtoItem"> | Date | string
   }
@@ -23719,6 +23776,7 @@ export namespace Prisma {
     title: string
     description: string
     slug?: string | null
+    imageFileThumb?: string | null
     rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23731,6 +23789,7 @@ export namespace Prisma {
     title: string
     description: string
     slug?: string | null
+    imageFileThumb?: string | null
     rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23743,6 +23802,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23755,6 +23815,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23767,6 +23828,7 @@ export namespace Prisma {
     title: string
     description: string
     slug?: string | null
+    imageFileThumb?: string | null
     rank?: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23779,6 +23841,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23791,6 +23854,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     slug?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     rank?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -24789,6 +24853,8 @@ export namespace Prisma {
     description: string
     rank?: number
     slug: string
+    imageFileMain?: string | null
+    imageFileThumb?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -24799,6 +24865,8 @@ export namespace Prisma {
     description: string
     rank?: number
     slug: string
+    imageFileMain?: string | null
+    imageFileThumb?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -24809,6 +24877,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
+    imageFileMain?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -24819,6 +24889,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
+    imageFileMain?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -24829,6 +24901,8 @@ export namespace Prisma {
     description: string
     rank?: number
     slug: string
+    imageFileMain?: string | null
+    imageFileThumb?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -24839,6 +24913,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
+    imageFileMain?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -24849,6 +24925,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     rank?: FloatFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
+    imageFileMain?: NullableStringFieldUpdateOperationsInput | string | null
+    imageFileThumb?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -25206,6 +25284,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrder
+    imageFileThumb?: SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -25222,6 +25301,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrder
+    imageFileThumb?: SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -25234,6 +25314,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     slug?: SortOrder
+    imageFileThumb?: SortOrder
     rank?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -25894,6 +25975,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrder
+    imageFileThumb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -25908,6 +25991,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrder
+    imageFileThumb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -25918,6 +26003,8 @@ export namespace Prisma {
     description?: SortOrder
     rank?: SortOrder
     slug?: SortOrder
+    imageFileMain?: SortOrder
+    imageFileThumb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

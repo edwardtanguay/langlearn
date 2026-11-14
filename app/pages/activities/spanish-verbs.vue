@@ -507,7 +507,7 @@ function highlightWordMatches(word: string, normQuery: string): string {
   while ((searchPos = normWord.indexOf(normQuery, lastIdx)) !== -1) {
     res += escapeHtml(word.slice(lastIdx, searchPos))
     const matchSlice = word.slice(searchPos, searchPos + normQuery.length)
-    res += `<span class="bg-rose-400/60 dark:bg-rose-500/55 !text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.75)] rounded-xs">${escapeHtml(matchSlice)}</span>`
+    res += `<span class="bg-emerald-600 dark:bg-emerald-500 !text-white px-0.5 rounded-xs">${escapeHtml(matchSlice)}</span>`
     lastIdx = searchPos + normQuery.length
   }
   res += escapeHtml(word.slice(lastIdx))
@@ -559,6 +559,15 @@ function verbMatchesSearch(v: SpanishVerb, normQuery: string): boolean {
 }
 
 const isSearching = computed(() => !!searchQuery.value.trim())
+
+function isExactSearchMatch(text?: string | null): boolean {
+  if (!text || text === '—' || !isSearching.value) return false
+  const normQuery = normalizeForSearch(searchQuery.value.trim())
+  if (!normQuery) return false
+  if (normalizeForSearch(text.trim()) === normQuery) return true
+  const tokens = text.split(/([^\p{L}\p{M}]+)/u).filter(t => /[\p{L}\p{M}]/u.test(t))
+  return tokens.some(t => normalizeForSearch(t) === normQuery)
+}
 
 function getVerbSearchScore(v: SpanishVerb, normQuery: string): number {
   const normVerb = normalizeForSearch(v.verb)
@@ -3467,7 +3476,10 @@ onUnmounted(() => {
                     <span
                       v-else
                       @click.stop="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx], { verb: verb.verb, tenseKey: tense.key, tenseLabel: tense.label, pronounLabel: p.label })"
-                      class="inline-block px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
+                      class="inline-block px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold border min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
+                      :class="isExactSearchMatch(((verb as any)[tense.key] || [])[p.idx])
+                        ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
                       v-html="highlightText(((verb as any)[tense.key] || [])[p.idx] || '—')"
                     >
                     </span>

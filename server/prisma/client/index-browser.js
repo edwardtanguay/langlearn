@@ -142,6 +142,7 @@ exports.Prisma.LinkScalarFieldEnum = {
   title: 'title',
   description: 'description',
   slug: 'slug',
+  imageFileThumb: 'imageFileThumb',
   rank: 'rank',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -292,6 +293,8 @@ exports.Prisma.HowtoItemScalarFieldEnum = {
   description: 'description',
   rank: 'rank',
   slug: 'slug',
+  imageFileMain: 'imageFileMain',
+  imageFileThumb: 'imageFileThumb',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

@@ -207,6 +207,27 @@ async function main() {
       console.warn('Column notice:', err?.message || err)
     }
   }
+  try {
+    await client.execute('ALTER TABLE Link ADD COLUMN imageFileThumb TEXT;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+  try {
+    await client.execute('ALTER TABLE HowtoItem ADD COLUMN imageFileMain TEXT;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
+  try {
+    await client.execute('ALTER TABLE HowtoItem ADD COLUMN imageFileThumb TEXT;')
+  } catch (err: any) {
+    if (!err?.message?.includes('duplicate column')) {
+      console.warn('Column notice:', err?.message || err)
+    }
+  }
 
   console.log('✅ Turso database successfully migrated with latest Prisma schema!')
 

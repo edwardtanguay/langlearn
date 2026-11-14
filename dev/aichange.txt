@@ -135,42 +135,68 @@
 		- put a simple paragraph at the top that says "This guide is a collection of howtos and tips for using LangLearn."
 		- don't round the corners of the image
 		--------------------------------------
-	- .. changes01
+	- ,, changes01
 		--------------------------------------
 		## Spanish Verbs Page
 		
-		- on search results
-			- change the color of the found text to some bright color that attracts the eye but also so the text can remain white and readable
+		- x on search results
+			- x change the color of the found text to some bright color that attracts the eye but also so the text can remain white and readable
 			- if the whole word is exactly the search text, then fill the whole cell with the "found color"
 			
 		## profile page
 		
-		- only allow Testing group size to go from 1 to 7
-		- when I change visibility mode from private to community, and then come back, it is on private again
+		- x only allow Testing group size to go from 1 to 7
+		- x when I change visibility mode from private to community, and then come back, it is on private again
 		
 		## Flashcard page
 		
-		- searching should not affect which cards for testing are show, it is separate from that
+		- x searching should not affect which cards for testing are show, it is separate from that
 		
 		## npm run pd
 		
-		- loop through all howtos, and for each item, if there is no entry in the field "imageFileMain" then find it in the .env file SCREENSHOTS_DIR directory as <slug>.jpg, <slug>.png, or <slug>.gif in that order, e.g. if the slug field is "googleTranslateRank" and you find googleTranslateRank.jpg, the save this in the imageFileMain field; and do the same fo the "imageFileThumb" looking for e.g. googleTranslateRank-thumb.jpg etc.
+		- x loop through all howtos, and for each item, if there is no entry in the field "imageFileMain" then find it in the .env file SCREENSHOTS_DIR directory as <slug>.jpg, <slug>.png, or <slug>.gif in that order, e.g. if the slug field is "googleTranslateRank" and you find googleTranslateRank.jpg, the save this in the imageFileMain field; and do the same fo the "imageFileThumb" looking for e.g. googleTranslateRank-thumb.jpg etc.
 		
 		## guide page
 		
-		- when the page loads, only show the thumbnails in a grid
-		- when user clicks on a thumbnail, that time opens up at the top as the full item (as it is now) with the main image
-		- when the user clicks on another thumbnail, then that item is opened up at the top and all others are reduce to thumbnails in a grid below it
-		- if the user clicks anywhere on the open item, it closes again without any of the others opening up
-		- if there is no image for the thumbnail, then a colored, clickable square is shown with the text in the middle "no image" that functions the same way
+		- x when the page loads, only show the thumbnails in a grid
+		- x when user clicks on a thumbnail, that time opens up at the top as the full item (as it is now) with the main image
+		- x when the user clicks on another thumbnail, then that item is opened up at the top and all others are reduce to thumbnails in a grid below it
+		- x if the user clicks anywhere on the open item, it closes again without any of the others opening up
+		- x if there is no image for the thumbnail, then a colored, clickable square is shown with the text in the middle "no image" that functions the same way
 		
 		## links page
 		
-		- the links now function just like howtos on the guide page
-		- but they are show differently
+		- x the links now function just like howtos on the guide page
+		- x but they are show differently
 			- they are listed with thumbnail on left and title/description on right
 			- if anywhere on thumbnail, title or description is clicked (anywhere on the item panel that these are in), then user goes to the link
 			- so there is only one image, and it is called <slug>-thumb.jpg, <slug>-thumb.png or <slug>-thumb.gif
+		--------------------------------------
+	- ,, changes02
+		--------------------------------------
+		## Spanish Verbs Page		
+		
+		- when searching and finding a full match on the gerund or past participle, also fill in that full pill as well
+		
+		## profile page
+		
+		- in "Daily Activity" 
+			- change "Keep Testing" to "Keep"
+			- it says that I tested "EN: 4" but in reality they were Spanish verbs, e.g. "ES: 4"
+		
+		## guide page
+		
+		- the thumbnail is showing, but when clicked, it only shows the title and description, but it should also show the main image
+		
+		## links
+		
+		- in the menu items (languages) on top of the links page, put a small number showing how many items there are for that language
+		- one of the items has the slug "spanishtalkcafe" and there is a file public\images\links\spanishtalkcafe.png but it is not showing the thumbnail
+			- you also need to have a field called "imageFileThumb" which has the full name, e.g. "imageFileThumb.png" (perhaps you are looking for .jpg)
+		
+		## leader board
+		
+		- remove the "(you)"
 		--------------------------------------
 	- add verbs
 		- visitar

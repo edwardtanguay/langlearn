@@ -1,4 +1,3 @@
-import { syncAndResolveSlugImages } from '../../utils/imageSlug'
 import { prisma } from '../../utils/prisma'
 
 const STARTER_HOWTO_ITEMS = [
@@ -55,10 +54,10 @@ export default defineEventHandler(async () => {
     ]
   })
 
-  const enriched = await Promise.all(items.map(async (item) => {
-    const imgs = await syncAndResolveSlugImages(item.slug, 'howtos')
-    return { ...item, ...imgs }
+  return items.map((item) => ({
+    ...item,
+    imageUrl: item.imageFileMain ? `/images/howtos/${item.imageFileMain}` : null,
+    thumbUrl: item.imageFileThumb ? `/images/howtos/${item.imageFileThumb}` : null
   }))
-  return enriched
 })
 

@@ -30,9 +30,21 @@ interface LinkItem {
   url: string
   description?: string
   slug?: string | null
-  imageUrl?: string | null
+  imageFileThumb?: string | null
   thumbUrl?: string | null
   rank: number
+}
+
+const brokenThumbIds = ref<Record<string, boolean>>({})
+
+function getLinkThumbUrl(link: LinkItem): string | null {
+  if (link.thumbUrl) return link.thumbUrl
+  if (link.imageFileThumb) return `/images/links/${link.imageFileThumb}`
+  return null
+}
+
+function handleLinkThumbError(id: string) {
+  brokenThumbIds.value = { ...brokenThumbIds.value, [id]: true }
 }
 
 const languageTitles: Record<string, string> = {
@@ -485,13 +497,21 @@ const executeDelete = async () => {
         >
           <div class="space-y-1.5 min-w-0 flex-1">
             <div class="flex items-start gap-3">
-            <img
-              v-if="link.thumbUrl || link.imageUrl"
-              :src="link.thumbUrl || link.imageUrl || ''"
-              :alt="link.title"
-              @click.stop="lightboxImageUrl = link.imageUrl || link.thumbUrl || null"
-              class="w-20 h-14 sm:w-24 sm:h-16 object-cover rounded-lg border border-gray-700 shrink-0 cursor-zoom-in"
-            />
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-gray-700 shrink-0">
+              <img
+                v-if="getLinkThumbUrl(link) && !brokenThumbIds[link.id]"
+                :src="getLinkThumbUrl(link)!"
+                :alt="link.title"
+                @error="handleLinkThumbError(link.id)"
+                class="w-full h-full object-cover block"
+              />
+              <div
+                v-else
+                class="w-full h-full flex items-center justify-center bg-slate-200 dark:bg-slate-700/80 text-slate-600 dark:text-slate-200 text-[11px] font-semibold text-center px-1 select-none"
+              >
+                no image
+              </div>
+            </div>
             <div class="flex-1 min-w-0">
               <!-- Active Admin CRUD Tools (Displayed when title clicked) -->
             <div

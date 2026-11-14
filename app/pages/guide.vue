@@ -24,28 +24,64 @@ interface HowtoItem {
   description: string
   rank: number
   slug: string
+  imageFileMain?: string | null
+  imageFileThumb?: string | null
+  imageUrl?: string | null
+  thumbUrl?: string | null
   createdAt?: string
   updatedAt?: string
 }
 
 const howtoItems = ref<HowtoItem[]>([])
 const isLoading = ref(true)
-const brokenImageSlugs = ref<Record<string, boolean>>({})
+const brokenMainSlugs = ref<Record<string, boolean>>({})
+const brokenThumbSlugs = ref<Record<string, boolean>>({})
+const selectedItemId = ref<string | null>(null)
 
 const sortedHowtoItems = computed(() => {
   return [...howtoItems.value].sort((a, b) => (b.rank ?? 2.5) - (a.rank ?? 2.5))
 })
 
-const lightboxImageUrl = ref<string | null>(null)
-function getImagePath(slug: string, item?: HowtoItem): string {
-  return item?.imageUrl || `/images/howtos/${slug}.jpg`
-}
-function getThumbPath(slug: string, item?: HowtoItem): string {
-  return item?.thumbUrl || item?.imageUrl || `/images/howtos/${slug}.jpg`
+const selectedItem = computed(() => {
+  if (!selectedItemId.value) return null
+  return sortedHowtoItems.value.find(i => i.id === selectedItemId.value) ?? null
+})
+
+const selectedItemIndex = computed(() => {
+  if (!selectedItem.value) return -1
+  return sortedHowtoItems.value.findIndex(i => i.id === selectedItem.value!.id)
+})
+
+const gridItems = computed(() => {
+  if (!selectedItem.value) return sortedHowtoItems.value
+  return sortedHowtoItems.value.filter(i => i.id !== selectedItem.value!.id)
+})
+
+function getMainImageUrl(item: HowtoItem): string | null {
+  if (item.imageUrl) return item.imageUrl
+  if (item.imageFileMain) return `/images/howtos/${item.imageFileMain}`
+  return null
 }
 
-function handleImageError(slug: string) {
-  brokenImageSlugs.value = { ...brokenImageSlugs.value, [slug]: true }
+function getThumbImageUrl(item: HowtoItem): string | null {
+  if (item.thumbUrl) return item.thumbUrl
+  if (item.imageFileThumb) return `/images/howtos/${item.imageFileThumb}`
+  return null
+}
+
+function handleMainImageError(slug: string) {
+  brokenMainSlugs.value = { ...brokenMainSlugs.value, [slug]: true }
+}
+
+function handleThumbImageError(slug: string) {
+  brokenThumbSlugs.value = { ...brokenThumbSlugs.value, [slug]: true }
+}
+
+function openHowtoItem(item: HowtoItem) {
+  selectedItemId.value = item.id
+  if (typeof window !== 'undefined') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }
 
 async function loadHowtoItems() {
@@ -313,34 +349,34 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
         </button>
       </div>
 
-      <!-- Items List -->
-      <div v-else class="space-y-4">
+      <div v-else class="space-y-6">
+        <!-- Open Full Item at Top -->
         <article
-          v-for="(item, idx) in sortedHowtoItems"
-          :key="item.id"
-          class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-xs space-y-3"
+          v-if="selectedItem"
+          @click="selectedItemId = null"
+          class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-xs space-y-3 cursor-pointer"
         >
           <div class="flex items-start justify-between gap-3">
             <div class="space-y-1 min-w-0 flex-1">
               <div class="flex items-center gap-2 flex-wrap">
                 <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
-                  {{ item.title }}
+                  {{ selectedItem.title }}
                 </h3>
-                <span v-if="pendingItemId === item.id" class="w-3.5 h-3.5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></span>
+                <span v-if="pendingItemId === selectedItem.id" class="w-3.5 h-3.5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></span>
               </div>
               <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                {{ item.description }}
+                {{ selectedItem.description }}
               </p>
               <p v-if="isAdmin" class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                images/howtos/{{ item.slug }}.jpg
+                {{ selectedItem.imageFileMain || ('images/howtos/' + selectedItem.slug) }}
               </p>
             </div>
 
             <!-- Admin CRUD Controls -->
-            <div v-if="isAdmin" class="flex items-center gap-1 shrink-0">
+            <div v-if="isAdmin" class="flex items-center gap-1 shrink-0" @click.stop>
               <button
                 type="button"
-                @click="openAddAboveModal(idx)"
+                @click.stop="openAddAboveModal(selectedItemIndex)"
                 title="Add How-To Above"
                 class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors"
               >
@@ -349,8 +385,8 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
               <template v-if="sortedHowtoItems.length > 1">
                 <button
                   type="button"
-                  @click="moveItem(sortedHowtoItems, idx, 'up')"
-                  :disabled="idx === 0"
+                  @click.stop="moveItem(sortedHowtoItems, selectedItemIndex, 'up')"
+                  :disabled="selectedItemIndex === 0"
                   title="Move Up"
                   class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
                 >
@@ -358,8 +394,8 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
                 </button>
                 <button
                   type="button"
-                  @click="moveItem(sortedHowtoItems, idx, 'down')"
-                  :disabled="idx === sortedHowtoItems.length - 1"
+                  @click.stop="moveItem(sortedHowtoItems, selectedItemIndex, 'down')"
+                  :disabled="selectedItemIndex === sortedHowtoItems.length - 1"
                   title="Move Down"
                   class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-20 cursor-pointer transition-colors"
                 >
@@ -368,7 +404,7 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
               </template>
               <button
                 type="button"
-                @click="openEditModal(item)"
+                @click.stop="openEditModal(selectedItem)"
                 title="Edit How-To"
                 class="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer transition-colors"
               >
@@ -376,7 +412,7 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
               </button>
               <button
                 type="button"
-                @click="confirmDelete(item)"
+                @click.stop="confirmDelete(selectedItem)"
                 title="Delete How-To"
                 class="p-1.5 text-red-900/70 dark:text-red-900/80 hover:text-red-700 dark:hover:text-red-600 cursor-pointer transition-colors"
               >
@@ -385,31 +421,47 @@ async function moveItem(items: HowtoItem[], index: number, direction: 'up' | 'do
             </div>
           </div>
 
-          <!-- Image Preview (renders when images/howtos/<slug>.jpg exists) -->
+          <!-- Main Image Preview -->
           <div
-            v-if="item.slug && !brokenImageSlugs[item.slug] && (item.thumbUrl || item.imageUrl || true)"
-            class="overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-950"
+            v-if="getMainImageUrl(selectedItem) && !brokenMainSlugs[selectedItem.slug]"
+            class="overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-950 rounded-xl"
           >
             <img
-              :src="getThumbPath(item.slug, item)"
-              @click="lightboxImageUrl = getImagePath(item.slug, item)"
-              :alt="item.title"
-              @error="handleImageError(item.slug)"
-              class="w-full max-h-80 object-contain mx-auto block cursor-zoom-in"
+              :src="getMainImageUrl(selectedItem)!"
+              :alt="selectedItem.title"
+              @error="handleMainImageError(selectedItem.slug)"
+              class="w-full max-h-[28rem] object-contain mx-auto block"
             />
           </div>
         </article>
+
+        <!-- Thumbnails Grid -->
+        <div v-if="gridItems.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+          <button
+            v-for="item in gridItems"
+            :key="item.id"
+            type="button"
+            :title="item.title"
+            @click="openHowtoItem(item)"
+            class="aspect-square w-full rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-gray-400"
+          >
+            <img
+              v-if="getThumbImageUrl(item) && !brokenThumbSlugs[item.slug]"
+              :src="getThumbImageUrl(item)!"
+              :alt="item.title"
+              @error="handleThumbImageError(item.slug)"
+              class="w-full h-full object-cover block"
+            />
+            <div
+              v-else
+              class="w-full h-full flex items-center justify-center bg-slate-200 dark:bg-slate-700/80 text-slate-600 dark:text-slate-200 text-xs sm:text-sm font-semibold select-none"
+            >
+              no image
+            </div>
+          </button>
+        </div>
       </div>
     </section>
-
-    <!-- Full Image Lightbox Modal -->
-    <div
-      v-if="lightboxImageUrl"
-      @click="lightboxImageUrl = null"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs cursor-zoom-out"
-    >
-      <img :src="lightboxImageUrl" alt="Full graphic" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />
-    </div>
 
     <!-- Admin Add/Edit Modal -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
