@@ -499,6 +499,12 @@
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
+	- puede que
+	- me extraña que
+	- es una pena que
+	- esperamos que
+	- me apena que
+	- es lamentable que
 	- it is advisable that
 		- conviene que
 			- comes demasiado antes de correr
@@ -1068,6 +1074,4 @@
 	
 - app todos
 	- Enabled users to see activities and links for their own language, so a user who has a mother language listed as "Spanish" is now able to see Spanish links on the links page, and can see the Spanish Verbs activity on the activity page.
-			
-			
 			

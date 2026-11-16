@@ -198,11 +198,41 @@
 		
 		- x remove the "(you)"
 		--------------------------------------
-	- add verbs
-		- visitar
-		- bailar
-		- cenar
-		- cancelar
-		- nadar
-		- entrar
+		
+- activities
+	- On all activities, remove all instructions everywhere.
+	
+	
+	
+================= TODO
+VERBS ADD
+visitar
+bailar
+cenar
+cancelar
+nadar
+entrar
+estudiar
+entender
+comprender
+oír
+escuchar
+comencemos
+molestar
+tomar
+saludar
+incomodar
+invitar
+sentir
+lastimar
+sufrir
+enviar
+preocupar
+cancelar
+responder
+contestar
+ponerse 
+
+
+
 		
