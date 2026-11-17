@@ -499,12 +499,30 @@
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
-	- puede que
-	- me extraña que
-	- es una pena que
-	- esperamos que
-	- me apena que
-	- es lamentable que
+	- it is possible that
+		- puede que
+			- llueve mañana por la tarde
+				- puede que llueva mañana por la tarde
+	- it surprises me that
+		- me extraña que
+			- no contestan el teléfono
+				- me extraña que no contesten el teléfono
+	- it is a shame that
+		- es una pena que
+			- no puedes venir a la fiesta
+				- es una pena que no puedas venir a la fiesta
+	- we hope that
+		- esperamos que
+			- tienes un buen viaje
+				- esperamos que tengas un buen viaje
+	- it saddens me that
+		- me apena que
+			- se van tan pronto
+				- me apena que se vayan tan pronto
+	- it is regrettable that
+		- es lamentable que
+			- pierden tanto tiempo en eso
+				- es lamentable que pierdan tanto tiempo en eso
 	- it is advisable that
 		- conviene que
 			- comes demasiado antes de correr
