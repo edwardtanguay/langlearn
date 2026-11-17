@@ -20,7 +20,7 @@ export interface SpanishVerb {
 }
 
 export function parseSpanishVerbs(): { verbs: SpanishVerb[]; totalVerbs: number } {
-  const filePath = path.join(projectRoot, 'data', 'bits', 'es-learnbits.txt');
+  const filePath = path.join(projectRoot, 'data', 'verbs', 'es-verbs.txt');
   const parsedDir = path.join(projectRoot, 'data-parsed');
 
   if (!fs.existsSync(filePath)) {

@@ -1,0 +1,1542 @@
+[
+  {
+    "verb": "essere",
+    "presente": [
+      "sono",
+      "sei",
+      "è",
+      "siamo",
+      "siete",
+      "sono"
+    ],
+    "imperfetto": [
+      "ero",
+      "eri",
+      "era",
+      "eravamo",
+      "eravate",
+      "erano"
+    ],
+    "passatoProssimo": [
+      "sono stato",
+      "sei stato",
+      "è stato",
+      "siamo stati",
+      "siete stati",
+      "sono stati"
+    ],
+    "passatoRemoto": [
+      "fui",
+      "fosti",
+      "fu",
+      "fummo",
+      "foste",
+      "furono"
+    ],
+    "futuro": [
+      "sarò",
+      "sarai",
+      "sarà",
+      "saremo",
+      "sarete",
+      "saranno"
+    ],
+    "condizionale": [
+      "sarei",
+      "saresti",
+      "sarebbe",
+      "saremmo",
+      "sareste",
+      "sarebbero"
+    ],
+    "congiuntivoPresente": [
+      "sia",
+      "sia",
+      "sia",
+      "siamo",
+      "siate",
+      "siano"
+    ],
+    "congiuntivoImperfetto": [
+      "fossi",
+      "fossi",
+      "fosse",
+      "fossimo",
+      "foste",
+      "fossero"
+    ],
+    "imperativo": [
+      "*",
+      "sii",
+      "sia",
+      "siamo",
+      "siate",
+      "siano"
+    ],
+    "gerund": "essendo",
+    "pastParticiple": "stato"
+  },
+  {
+    "verb": "avere",
+    "presente": [
+      "ho",
+      "hai",
+      "ha",
+      "abbiamo",
+      "avete",
+      "hanno"
+    ],
+    "imperfetto": [
+      "avevo",
+      "avevi",
+      "aveva",
+      "avevamo",
+      "avevate",
+      "avevano"
+    ],
+    "passatoProssimo": [
+      "ho avuto",
+      "hai avuto",
+      "ha avuto",
+      "abbiamo avuto",
+      "avete avuto",
+      "hanno avuto"
+    ],
+    "passatoRemoto": [
+      "ebbi",
+      "avesti",
+      "ebbe",
+      "avemmo",
+      "aveste",
+      "ebbero"
+    ],
+    "futuro": [
+      "avrò",
+      "avrai",
+      "avrà",
+      "avremo",
+      "avrete",
+      "avranno"
+    ],
+    "condizionale": [
+      "avrei",
+      "avresti",
+      "avrebbe",
+      "avremmo",
+      "avreste",
+      "avrebbero"
+    ],
+    "congiuntivoPresente": [
+      "abbia",
+      "abbia",
+      "abbia",
+      "abbiamo",
+      "abbiate",
+      "abbiano"
+    ],
+    "congiuntivoImperfetto": [
+      "avessi",
+      "avessi",
+      "avesse",
+      "avessimo",
+      "aveste",
+      "avessero"
+    ],
+    "imperativo": [
+      "*",
+      "abbi",
+      "abbia",
+      "abbiamo",
+      "abbiate",
+      "abbiano"
+    ],
+    "gerund": "avendo",
+    "pastParticiple": "avuto"
+  },
+  {
+    "verb": "fare",
+    "presente": [
+      "faccio",
+      "fai",
+      "fa",
+      "facciamo",
+      "fate",
+      "fanno"
+    ],
+    "imperfetto": [
+      "facevo",
+      "facevi",
+      "faceva",
+      "facevamo",
+      "facevate",
+      "facevano"
+    ],
+    "passatoProssimo": [
+      "ho fatto",
+      "hai fatto",
+      "ha fatto",
+      "abbiamo fatto",
+      "avete fatto",
+      "hanno fatto"
+    ],
+    "passatoRemoto": [
+      "feci",
+      "facesti",
+      "fece",
+      "facemmo",
+      "faceste",
+      "fecero"
+    ],
+    "futuro": [
+      "farò",
+      "farai",
+      "farà",
+      "faremo",
+      "farete",
+      "faranno"
+    ],
+    "condizionale": [
+      "farei",
+      "faresti",
+      "farebbe",
+      "faremmo",
+      "fareste",
+      "farebbero"
+    ],
+    "congiuntivoPresente": [
+      "faccia",
+      "faccia",
+      "faccia",
+      "facciamo",
+      "facciate",
+      "facciano"
+    ],
+    "congiuntivoImperfetto": [
+      "facessi",
+      "facessi",
+      "facesse",
+      "facessimo",
+      "faceste",
+      "facessero"
+    ],
+    "imperativo": [
+      "*",
+      "fai",
+      "faccia",
+      "facciamo",
+      "fate",
+      "facciano"
+    ],
+    "gerund": "facendo",
+    "pastParticiple": "fatto"
+  },
+  {
+    "verb": "andare",
+    "presente": [
+      "vado",
+      "vai",
+      "va",
+      "andiamo",
+      "andate",
+      "vanno"
+    ],
+    "imperfetto": [
+      "andavo",
+      "andavi",
+      "andava",
+      "andavamo",
+      "andavate",
+      "andavano"
+    ],
+    "passatoProssimo": [
+      "sono andato",
+      "sei andato",
+      "è andato",
+      "siamo andati",
+      "siete andati",
+      "sono andati"
+    ],
+    "passatoRemoto": [
+      "andai",
+      "andasti",
+      "andò",
+      "andammo",
+      "andaste",
+      "andarono"
+    ],
+    "futuro": [
+      "andrò",
+      "andrai",
+      "andrà",
+      "andremo",
+      "andrete",
+      "andranno"
+    ],
+    "condizionale": [
+      "andrei",
+      "andresti",
+      "andrebbe",
+      "andremmo",
+      "andreste",
+      "andrebbero"
+    ],
+    "congiuntivoPresente": [
+      "vada",
+      "vada",
+      "vada",
+      "andiamo",
+      "andiate",
+      "vadano"
+    ],
+    "congiuntivoImperfetto": [
+      "andassi",
+      "andassi",
+      "andasse",
+      "andassimo",
+      "andaste",
+      "andassero"
+    ],
+    "imperativo": [
+      "*",
+      "vai",
+      "vada",
+      "andiamo",
+      "andate",
+      "vadano"
+    ],
+    "gerund": "andando",
+    "pastParticiple": "andato"
+  },
+  {
+    "verb": "stare",
+    "presente": [
+      "sto",
+      "stai",
+      "sta",
+      "stiamo",
+      "state",
+      "stanno"
+    ],
+    "imperfetto": [
+      "stavo",
+      "stavi",
+      "stava",
+      "stavamo",
+      "stavate",
+      "stavano"
+    ],
+    "passatoProssimo": [
+      "sono stato",
+      "sei stato",
+      "è stato",
+      "siamo stati",
+      "siete stati",
+      "sono stati"
+    ],
+    "passatoRemoto": [
+      "stetti",
+      "stesti",
+      "stette",
+      "stemmo",
+      "steste",
+      "stettero"
+    ],
+    "futuro": [
+      "starò",
+      "starai",
+      "starà",
+      "staremo",
+      "starete",
+      "staranno"
+    ],
+    "condizionale": [
+      "starei",
+      "staresti",
+      "starebbe",
+      "staremmo",
+      "stareste",
+      "starebbero"
+    ],
+    "congiuntivoPresente": [
+      "stia",
+      "stia",
+      "stia",
+      "stiamo",
+      "stiate",
+      "stiano"
+    ],
+    "congiuntivoImperfetto": [
+      "stessi",
+      "stessi",
+      "stesse",
+      "stessimo",
+      "steste",
+      "stessero"
+    ],
+    "imperativo": [
+      "*",
+      "stai",
+      "stia",
+      "stiamo",
+      "state",
+      "stiano"
+    ],
+    "gerund": "stando",
+    "pastParticiple": "stato"
+  },
+  {
+    "verb": "dare",
+    "presente": [
+      "do",
+      "dai",
+      "dà",
+      "diamo",
+      "date",
+      "danno"
+    ],
+    "imperfetto": [
+      "davo",
+      "davi",
+      "dava",
+      "davamo",
+      "davate",
+      "davano"
+    ],
+    "passatoProssimo": [
+      "ho dato",
+      "hai dato",
+      "ha dato",
+      "abbiamo dato",
+      "avete dato",
+      "hanno dato"
+    ],
+    "passatoRemoto": [
+      "diedi",
+      "desti",
+      "diede",
+      "demmo",
+      "deste",
+      "diedero"
+    ],
+    "futuro": [
+      "darò",
+      "darai",
+      "darà",
+      "daremo",
+      "darete",
+      "daranno"
+    ],
+    "condizionale": [
+      "darei",
+      "daresti",
+      "darebbe",
+      "daremmo",
+      "dareste",
+      "darebbero"
+    ],
+    "congiuntivoPresente": [
+      "dia",
+      "dia",
+      "dia",
+      "diamo",
+      "diate",
+      "diano"
+    ],
+    "congiuntivoImperfetto": [
+      "dessi",
+      "dessi",
+      "desse",
+      "dessimo",
+      "deste",
+      "dessero"
+    ],
+    "imperativo": [
+      "*",
+      "dai",
+      "dia",
+      "diamo",
+      "date",
+      "diano"
+    ],
+    "gerund": "dando",
+    "pastParticiple": "dato"
+  },
+  {
+    "verb": "dire",
+    "presente": [
+      "dico",
+      "dici",
+      "dice",
+      "diciamo",
+      "dite",
+      "dicono"
+    ],
+    "imperfetto": [
+      "dicevo",
+      "dicevi",
+      "diceva",
+      "dicevamo",
+      "dicevate",
+      "dicevano"
+    ],
+    "passatoProssimo": [
+      "ho detto",
+      "hai detto",
+      "ha detto",
+      "abbiamo detto",
+      "avete detto",
+      "hanno detto"
+    ],
+    "passatoRemoto": [
+      "dissi",
+      "dicesti",
+      "disse",
+      "dicemmo",
+      "diceste",
+      "dissero"
+    ],
+    "futuro": [
+      "dirò",
+      "dirai",
+      "dirà",
+      "diremo",
+      "direte",
+      "diranno"
+    ],
+    "condizionale": [
+      "direi",
+      "diresti",
+      "direbbe",
+      "diremmo",
+      "direste",
+      "direbbero"
+    ],
+    "congiuntivoPresente": [
+      "dica",
+      "dica",
+      "dica",
+      "diciamo",
+      "diciate",
+      "dicano"
+    ],
+    "congiuntivoImperfetto": [
+      "dicessi",
+      "dicessi",
+      "dicesse",
+      "dicessimo",
+      "diceste",
+      "dicessero"
+    ],
+    "imperativo": [
+      "*",
+      "di'",
+      "dica",
+      "diciamo",
+      "dite",
+      "dicano"
+    ],
+    "gerund": "dicendo",
+    "pastParticiple": "detto"
+  },
+  {
+    "verb": "potere",
+    "presente": [
+      "posso",
+      "puoi",
+      "può",
+      "possiamo",
+      "potete",
+      "possono"
+    ],
+    "imperfetto": [
+      "potevo",
+      "potevi",
+      "poteva",
+      "potevamo",
+      "potevate",
+      "potevano"
+    ],
+    "passatoProssimo": [
+      "ho potuto",
+      "hai potuto",
+      "ha potuto",
+      "abbiamo potuto",
+      "avete potuto",
+      "hanno potuto"
+    ],
+    "passatoRemoto": [
+      "potei",
+      "potesti",
+      "poté",
+      "potemmo",
+      "poteste",
+      "poterono"
+    ],
+    "futuro": [
+      "potrò",
+      "potrai",
+      "potrà",
+      "potremo",
+      "potrete",
+      "potranno"
+    ],
+    "condizionale": [
+      "potrei",
+      "potresti",
+      "potrebbe",
+      "potremmo",
+      "potreste",
+      "potrebbero"
+    ],
+    "congiuntivoPresente": [
+      "possa",
+      "possa",
+      "possa",
+      "possiamo",
+      "possiate",
+      "possano"
+    ],
+    "congiuntivoImperfetto": [
+      "potessi",
+      "potessi",
+      "potesse",
+      "potessimo",
+      "poteste",
+      "potessero"
+    ],
+    "imperativo": [
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*"
+    ],
+    "gerund": "potendo",
+    "pastParticiple": "potuto"
+  },
+  {
+    "verb": "volere",
+    "presente": [
+      "voglio",
+      "vuoi",
+      "vuole",
+      "vogliamo",
+      "volete",
+      "vogliono"
+    ],
+    "imperfetto": [
+      "volevo",
+      "volevi",
+      "voleva",
+      "volevamo",
+      "volevate",
+      "volevano"
+    ],
+    "passatoProssimo": [
+      "ho voluto",
+      "hai voluto",
+      "ha voluto",
+      "abbiamo voluto",
+      "avete voluto",
+      "hanno voluto"
+    ],
+    "passatoRemoto": [
+      "volli",
+      "volesti",
+      "volle",
+      "volemmo",
+      "voleste",
+      "vollero"
+    ],
+    "futuro": [
+      "vorrò",
+      "vorrai",
+      "vorrà",
+      "vorremo",
+      "vorrete",
+      "vorranno"
+    ],
+    "condizionale": [
+      "vorrei",
+      "vorresti",
+      "vorrebbe",
+      "vorremmo",
+      "vorreste",
+      "vorrebbero"
+    ],
+    "congiuntivoPresente": [
+      "voglia",
+      "voglia",
+      "voglia",
+      "vogliamo",
+      "vogliate",
+      "vogliano"
+    ],
+    "congiuntivoImperfetto": [
+      "volessi",
+      "volessi",
+      "volesse",
+      "volessimo",
+      "voleste",
+      "volessero"
+    ],
+    "imperativo": [
+      "*",
+      "vogli",
+      "voglia",
+      "vogliamo",
+      "vogliate",
+      "vogliano"
+    ],
+    "gerund": "volendo",
+    "pastParticiple": "voluto"
+  },
+  {
+    "verb": "dovere",
+    "presente": [
+      "devo",
+      "devi",
+      "deve",
+      "dobbiamo",
+      "dovete",
+      "devono"
+    ],
+    "imperfetto": [
+      "dovevo",
+      "dovevi",
+      "doveva",
+      "dovevamo",
+      "dovevate",
+      "dovevano"
+    ],
+    "passatoProssimo": [
+      "ho dovuto",
+      "hai dovuto",
+      "ha dovuto",
+      "abbiamo dovuto",
+      "avete dovuto",
+      "hanno dovuto"
+    ],
+    "passatoRemoto": [
+      "dovei",
+      "dovesti",
+      "dové",
+      "dovemmo",
+      "doveste",
+      "doverono"
+    ],
+    "futuro": [
+      "dovrò",
+      "dovrai",
+      "dovrà",
+      "dovremo",
+      "dovrete",
+      "dovranno"
+    ],
+    "condizionale": [
+      "dovrei",
+      "dovresti",
+      "dovrebbe",
+      "dovremmo",
+      "dovreste",
+      "dovrebbero"
+    ],
+    "congiuntivoPresente": [
+      "deva",
+      "deva",
+      "deva",
+      "dobbiamo",
+      "dobbiate",
+      "devano"
+    ],
+    "congiuntivoImperfetto": [
+      "dovessi",
+      "dovessi",
+      "dovesse",
+      "dovessimo",
+      "doveste",
+      "dovessero"
+    ],
+    "imperativo": [
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*"
+    ],
+    "gerund": "dovendo",
+    "pastParticiple": "dovuto"
+  },
+  {
+    "verb": "sapere",
+    "presente": [
+      "so",
+      "sai",
+      "sa",
+      "sappiamo",
+      "sapete",
+      "sanno"
+    ],
+    "imperfetto": [
+      "sapevo",
+      "sapevi",
+      "sapeva",
+      "sapevamo",
+      "sapevate",
+      "sapevano"
+    ],
+    "passatoProssimo": [
+      "ho saputo",
+      "hai saputo",
+      "ha saputo",
+      "abbiamo saputo",
+      "avete saputo",
+      "hanno saputo"
+    ],
+    "passatoRemoto": [
+      "seppi",
+      "sapesti",
+      "seppe",
+      "sapemmo",
+      "sapeste",
+      "seppero"
+    ],
+    "futuro": [
+      "saprò",
+      "saprai",
+      "saprà",
+      "sapremo",
+      "saprete",
+      "sapranno"
+    ],
+    "condizionale": [
+      "saprei",
+      "sapresti",
+      "saprebbe",
+      "sapremmo",
+      "sapreste",
+      "saprebbero"
+    ],
+    "congiuntivoPresente": [
+      "sappia",
+      "sappia",
+      "sappia",
+      "sappiamo",
+      "sappiate",
+      "sappiano"
+    ],
+    "congiuntivoImperfetto": [
+      "sapessi",
+      "sapessi",
+      "sapesse",
+      "sapessimo",
+      "sapeste",
+      "sapessero"
+    ],
+    "imperativo": [
+      "*",
+      "sappi",
+      "sappia",
+      "sappiamo",
+      "sappiate",
+      "sappiano"
+    ],
+    "gerund": "sapendo",
+    "pastParticiple": "saputo"
+  },
+  {
+    "verb": "venire",
+    "presente": [
+      "vengo",
+      "vieni",
+      "viene",
+      "veniamo",
+      "venite",
+      "vengono"
+    ],
+    "imperfetto": [
+      "venivo",
+      "venivi",
+      "veniva",
+      "venivamo",
+      "venivate",
+      "venivano"
+    ],
+    "passatoProssimo": [
+      "sono venuto",
+      "sei venuto",
+      "è venuto",
+      "siamo venuti",
+      "siete venuti",
+      "sono venuti"
+    ],
+    "passatoRemoto": [
+      "venni",
+      "venisti",
+      "venne",
+      "venimmo",
+      "veniste",
+      "vennero"
+    ],
+    "futuro": [
+      "verrò",
+      "verrai",
+      "verrà",
+      "verremo",
+      "verrete",
+      "verranno"
+    ],
+    "condizionale": [
+      "verrei",
+      "verresti",
+      "verrebbe",
+      "verremmo",
+      "verreste",
+      "verrebbero"
+    ],
+    "congiuntivoPresente": [
+      "venga",
+      "venga",
+      "venga",
+      "veniamo",
+      "veniate",
+      "vengano"
+    ],
+    "congiuntivoImperfetto": [
+      "venissi",
+      "venissi",
+      "venisse",
+      "venissimo",
+      "veniste",
+      "venissero"
+    ],
+    "imperativo": [
+      "*",
+      "vieni",
+      "venga",
+      "veniamo",
+      "venite",
+      "vengano"
+    ],
+    "gerund": "venendo",
+    "pastParticiple": "venuto"
+  },
+  {
+    "verb": "vedere",
+    "presente": [
+      "vedo",
+      "vedi",
+      "vede",
+      "vediamo",
+      "vedete",
+      "vedono"
+    ],
+    "imperfetto": [
+      "vedevo",
+      "vedevi",
+      "vedeva",
+      "vedevamo",
+      "vedevate",
+      "vedevano"
+    ],
+    "passatoProssimo": [
+      "ho visto",
+      "hai visto",
+      "ha visto",
+      "abbiamo visto",
+      "avete visto",
+      "hanno visto"
+    ],
+    "passatoRemoto": [
+      "vidi",
+      "vedesti",
+      "vide",
+      "vedemmo",
+      "vedeste",
+      "videro"
+    ],
+    "futuro": [
+      "vedrò",
+      "vedrai",
+      "vedrà",
+      "vedremo",
+      "vedrete",
+      "vedranno"
+    ],
+    "condizionale": [
+      "vedrei",
+      "vedresti",
+      "vedrebbe",
+      "vedremmo",
+      "vedreste",
+      "vedrebbero"
+    ],
+    "congiuntivoPresente": [
+      "veda",
+      "veda",
+      "veda",
+      "vediamo",
+      "vediate",
+      "vedano"
+    ],
+    "congiuntivoImperfetto": [
+      "vedessi",
+      "vedessi",
+      "vedesse",
+      "vedessimo",
+      "vedeste",
+      "vedessero"
+    ],
+    "imperativo": [
+      "*",
+      "vedi",
+      "veda",
+      "vediamo",
+      "vedete",
+      "vedano"
+    ],
+    "gerund": "vedendo",
+    "pastParticiple": "visto"
+  },
+  {
+    "verb": "prendere",
+    "presente": [
+      "prendo",
+      "prendi",
+      "prende",
+      "prendiamo",
+      "prendete",
+      "prendono"
+    ],
+    "imperfetto": [
+      "prendevo",
+      "prendevi",
+      "prendeva",
+      "prendevamo",
+      "prendevate",
+      "prendevano"
+    ],
+    "passatoProssimo": [
+      "ho preso",
+      "hai preso",
+      "ha preso",
+      "abbiamo preso",
+      "avete preso",
+      "hanno preso"
+    ],
+    "passatoRemoto": [
+      "presi",
+      "prendesti",
+      "prese",
+      "prendemmo",
+      "prendeste",
+      "presero"
+    ],
+    "futuro": [
+      "prenderò",
+      "prenderai",
+      "prenderà",
+      "prenderemo",
+      "prenderete",
+      "prenderanno"
+    ],
+    "condizionale": [
+      "prenderei",
+      "prenderesti",
+      "prenderebbe",
+      "prenderemmo",
+      "prendereste",
+      "prenderebbero"
+    ],
+    "congiuntivoPresente": [
+      "prenda",
+      "prenda",
+      "prenda",
+      "prendiamo",
+      "prendiate",
+      "prendano"
+    ],
+    "congiuntivoImperfetto": [
+      "prendessi",
+      "prendessi",
+      "prendesse",
+      "prendessimo",
+      "prendeste",
+      "prendessero"
+    ],
+    "imperativo": [
+      "*",
+      "prendi",
+      "prenda",
+      "prendiamo",
+      "prendete",
+      "prendano"
+    ],
+    "gerund": "prendendo",
+    "pastParticiple": "preso"
+  },
+  {
+    "verb": "parlare",
+    "presente": [
+      "parlo",
+      "parli",
+      "parla",
+      "parliamo",
+      "parlate",
+      "parlano"
+    ],
+    "imperfetto": [
+      "parlavo",
+      "parlavi",
+      "parlava",
+      "parlavamo",
+      "parlavate",
+      "parlavano"
+    ],
+    "passatoProssimo": [
+      "ho parlato",
+      "hai parlato",
+      "ha parlato",
+      "abbiamo parlato",
+      "avete parlato",
+      "hanno parlato"
+    ],
+    "passatoRemoto": [
+      "parlai",
+      "parlasti",
+      "parlò",
+      "parlammo",
+      "parlaste",
+      "parlarono"
+    ],
+    "futuro": [
+      "parlerò",
+      "parlerai",
+      "parlerà",
+      "parleremo",
+      "parlerete",
+      "parleranno"
+    ],
+    "condizionale": [
+      "parlerei",
+      "parleresti",
+      "parlerebbe",
+      "parleremmo",
+      "parlereste",
+      "parlerebbero"
+    ],
+    "congiuntivoPresente": [
+      "parli",
+      "parli",
+      "parli",
+      "parliamo",
+      "parliate",
+      "parlino"
+    ],
+    "congiuntivoImperfetto": [
+      "parlassi",
+      "parlassi",
+      "parlasse",
+      "parlassimo",
+      "parlaste",
+      "parlassero"
+    ],
+    "imperativo": [
+      "*",
+      "parla",
+      "parli",
+      "parliamo",
+      "parlate",
+      "parlino"
+    ],
+    "gerund": "parlando",
+    "pastParticiple": "parlato"
+  },
+  {
+    "verb": "mangiare",
+    "presente": [
+      "mangio",
+      "mangi",
+      "mangia",
+      "mangiamo",
+      "mangiate",
+      "mangiano"
+    ],
+    "imperfetto": [
+      "mangiavo",
+      "mangiavi",
+      "mangiava",
+      "mangiavamo",
+      "mangiavate",
+      "mangiavano"
+    ],
+    "passatoProssimo": [
+      "ho mangiato",
+      "hai mangiato",
+      "ha mangiato",
+      "abbiamo mangiato",
+      "avete mangiato",
+      "hanno mangiato"
+    ],
+    "passatoRemoto": [
+      "mangiai",
+      "mangiasti",
+      "mangiò",
+      "mangiammo",
+      "mangiaste",
+      "mangiarono"
+    ],
+    "futuro": [
+      "mangerò",
+      "mangerai",
+      "mangerà",
+      "mangeremo",
+      "mangerete",
+      "mangeranno"
+    ],
+    "condizionale": [
+      "mangerei",
+      "mangeresti",
+      "mangerebbe",
+      "mangeremmo",
+      "mangereste",
+      "mangerebbero"
+    ],
+    "congiuntivoPresente": [
+      "mangi",
+      "mangi",
+      "mangi",
+      "mangiamo",
+      "mangiate",
+      "mangino"
+    ],
+    "congiuntivoImperfetto": [
+      "mangiassi",
+      "mangiassi",
+      "mangiasse",
+      "mangiassimo",
+      "mangiaste",
+      "mangiassero"
+    ],
+    "imperativo": [
+      "*",
+      "mangia",
+      "mangi",
+      "mangiamo",
+      "mangiate",
+      "mangino"
+    ],
+    "gerund": "mangiando",
+    "pastParticiple": "mangiato"
+  },
+  {
+    "verb": "bere",
+    "presente": [
+      "bevo",
+      "bevi",
+      "beve",
+      "beviamo",
+      "bevete",
+      "bevono"
+    ],
+    "imperfetto": [
+      "bevevo",
+      "bevevi",
+      "beveva",
+      "bevevamo",
+      "bevevate",
+      "bevevano"
+    ],
+    "passatoProssimo": [
+      "ho bevuto",
+      "hai bevuto",
+      "ha bevuto",
+      "abbiamo bevuto",
+      "avete bevuto",
+      "hanno bevuto"
+    ],
+    "passatoRemoto": [
+      "bevvi",
+      "bevesti",
+      "bevve",
+      "bevemmo",
+      "beveste",
+      "bevvero"
+    ],
+    "futuro": [
+      "berrò",
+      "berrai",
+      "berrà",
+      "berremo",
+      "berrete",
+      "berranno"
+    ],
+    "condizionale": [
+      "berrei",
+      "berresti",
+      "berrebbe",
+      "berremmo",
+      "berreste",
+      "berrebbero"
+    ],
+    "congiuntivoPresente": [
+      "beva",
+      "beva",
+      "beva",
+      "beviamo",
+      "beviate",
+      "bevano"
+    ],
+    "congiuntivoImperfetto": [
+      "bevessi",
+      "bevessi",
+      "bevesse",
+      "bevessimo",
+      "beveste",
+      "bevessero"
+    ],
+    "imperativo": [
+      "*",
+      "bevi",
+      "beva",
+      "beviamo",
+      "bevete",
+      "bevano"
+    ],
+    "gerund": "bevendo",
+    "pastParticiple": "bevuto"
+  },
+  {
+    "verb": "uscire",
+    "presente": [
+      "esco",
+      "esci",
+      "esce",
+      "usciamo",
+      "uscite",
+      "escono"
+    ],
+    "imperfetto": [
+      "uscivo",
+      "uscivi",
+      "usciva",
+      "uscivamo",
+      "uscivate",
+      "uscivano"
+    ],
+    "passatoProssimo": [
+      "sono uscito",
+      "sei uscito",
+      "è uscito",
+      "siamo usciti",
+      "siete usciti",
+      "sono usciti"
+    ],
+    "passatoRemoto": [
+      "uscii",
+      "uscisti",
+      "uscì",
+      "uscimmo",
+      "usciste",
+      "uscirono"
+    ],
+    "futuro": [
+      "uscirò",
+      "uscirai",
+      "uscirà",
+      "usciremo",
+      "uscirete",
+      "usciranno"
+    ],
+    "condizionale": [
+      "uscirei",
+      "usciresti",
+      "uscirebbe",
+      "usciremmo",
+      "uscireste",
+      "uscirebbero"
+    ],
+    "congiuntivoPresente": [
+      "esca",
+      "esca",
+      "esca",
+      "usciamo",
+      "usciate",
+      "escano"
+    ],
+    "congiuntivoImperfetto": [
+      "uscissi",
+      "uscissi",
+      "uscisse",
+      "uscissimo",
+      "usciste",
+      "uscissero"
+    ],
+    "imperativo": [
+      "*",
+      "esci",
+      "esca",
+      "usciamo",
+      "uscite",
+      "escano"
+    ],
+    "gerund": "uscendo",
+    "pastParticiple": "uscito"
+  },
+  {
+    "verb": "capire",
+    "presente": [
+      "capisco",
+      "capisci",
+      "capisce",
+      "capiamo",
+      "capite",
+      "capiscono"
+    ],
+    "imperfetto": [
+      "capivo",
+      "capivi",
+      "capiva",
+      "capivamo",
+      "capivate",
+      "capivano"
+    ],
+    "passatoProssimo": [
+      "ho capito",
+      "hai capito",
+      "ha capito",
+      "abbiamo capito",
+      "avete capito",
+      "hanno capito"
+    ],
+    "passatoRemoto": [
+      "capii",
+      "capisti",
+      "capì",
+      "capimmo",
+      "capiste",
+      "capirono"
+    ],
+    "futuro": [
+      "capirò",
+      "capirai",
+      "capirà",
+      "capiremo",
+      "capirete",
+      "capiranno"
+    ],
+    "condizionale": [
+      "capirei",
+      "capiresti",
+      "capirebbe",
+      "capiremmo",
+      "capireste",
+      "capirebbero"
+    ],
+    "congiuntivoPresente": [
+      "capisca",
+      "capisca",
+      "capisca",
+      "capiamo",
+      "capiate",
+      "capiscano"
+    ],
+    "congiuntivoImperfetto": [
+      "capissi",
+      "capissi",
+      "capisse",
+      "capissimo",
+      "capiste",
+      "capissero"
+    ],
+    "imperativo": [
+      "*",
+      "capisci",
+      "capisca",
+      "capiamo",
+      "capite",
+      "capiscano"
+    ],
+    "gerund": "capendo",
+    "pastParticiple": "capito"
+  },
+  {
+    "verb": "trovare",
+    "presente": [
+      "trovo",
+      "trovi",
+      "trova",
+      "troviamo",
+      "trovate",
+      "trovano"
+    ],
+    "imperfetto": [
+      "trovavo",
+      "trovavi",
+      "trovava",
+      "trovavamo",
+      "trovavate",
+      "trovavano"
+    ],
+    "passatoProssimo": [
+      "ho trovato",
+      "hai trovato",
+      "ha trovato",
+      "abbiamo trovato",
+      "avete trovato",
+      "hanno trovato"
+    ],
+    "passatoRemoto": [
+      "trovai",
+      "trovasti",
+      "trovò",
+      "trovammo",
+      "trovaste",
+      "trovarono"
+    ],
+    "futuro": [
+      "troverò",
+      "troverai",
+      "troverà",
+      "troveremo",
+      "troverete",
+      "troveranno"
+    ],
+    "condizionale": [
+      "troverei",
+      "troveresti",
+      "troverebbe",
+      "troveremmo",
+      "trovereste",
+      "troverebbero"
+    ],
+    "congiuntivoPresente": [
+      "trovi",
+      "trovi",
+      "trovi",
+      "troviamo",
+      "troviate",
+      "trovino"
+    ],
+    "congiuntivoImperfetto": [
+      "trovassi",
+      "trovassi",
+      "trovasse",
+      "trovassimo",
+      "trovaste",
+      "trovassero"
+    ],
+    "imperativo": [
+      "*",
+      "trova",
+      "trovi",
+      "troviamo",
+      "trovate",
+      "trovino"
+    ],
+    "gerund": "trovando",
+    "pastParticiple": "trovato"
+  }
+]

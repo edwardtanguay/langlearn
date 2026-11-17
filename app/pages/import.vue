@@ -291,7 +291,7 @@ onBeforeUnmount(() => {
                 </p>
                 <div class="pt-1">
                   <a
-                    href="https://translate.google.com"
+                    href="https://translate.google.com/saved?sl=en&tl=es&op=translate"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-950 dark:text-amber-300 underline hover:text-amber-700 dark:hover:text-amber-200 transition-colors"

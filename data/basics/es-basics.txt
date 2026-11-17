@@ -99,3 +99,12 @@
 	- el sustantivo, el verbo, el adjetivo, el adverbio, el pronombre, la preposición, la conjunción, el artículo, el sujeto, el objeto, el tiempo verbal, la conjugación, la gramática, el vocabulario, la pronunciación, la sílaba, la frase, el párrafo, el singular, el plural, el acento grave, el acento agudo
 - iniciadores
 	- de todos modos, lo que sea, mientras tanto, sea como fuere, dicho esto, de todas formas, continuemos, en pocas palabras, por si sirve de algo, aun así, ahora que lo pienso, por cierto, pensándolo bien, de cualquier manera, habiendo dicho eso, hablando de eso, en todo caso, para bien o para mal, además, o sea, por lo visto
+- verbos
+	- soy / estoy, eres / estás, es / está, somos / estamos, sois / estáis, son / están
+	- era / estaba, eras / estabas, era / estaba, éramos / estábamos, erais / estabais, eran / estaban
+	- fui / estuve, fuiste / estuviste, fue / estuvo, fuimos / estuvimos, fuisteis / estuvisteis, fueron / estuvieron
+	- he sido / he estado, has sido / has estado, ha sido / ha estado, hemos sido / hemos estado, habéis sido / habéis estado, han sido / han estado
+	- tengo, tienes, tiene, tenemos, tenéis, tienen
+	- tenía, tenías, tenía, teníamos, teníais, tenían
+	- tuve, tuviste, tuvo, tuvimos, tuvisteis, tuvieron
+	- he tenido, has tenido, ha tenido, hemos tenido, habéis tenido, han tenido

@@ -438,6 +438,11 @@ const VERB_GROUPS: VerbGroup[] = [
     verbs: ['quedar', 'quedarse']
   },
   {
+    id: 'dar-decir',
+    name: 'dar/decir',
+    verbs: ['dar', 'decir']
+  },
+  {
     id: 'pronominal',
     name: 'pronominal',
     verbs: ['quedarse', 'irse', 'ponerse', 'sentirse', 'darse', 'enterarse', 'sentarse', 'acordarse', 'verse']
@@ -454,9 +459,22 @@ const VERB_GROUPS: VerbGroup[] = [
   }
 ]
 
+const combineGroups = ref(false)
+const studyTenseMode = ref<'standard' | 'past' | 'future'>('standard')
+
 function selectVerbGroup(group: VerbGroup) {
   if (group.id === 'all') {
     selectedVerbs.value = verbs.map(v => v.verb)
+    return
+  }
+  if (combineGroups.value) {
+    const allPresent = group.verbs.every(v => selectedVerbs.value.includes(v))
+    if (allPresent) {
+      selectedVerbs.value = selectedVerbs.value.filter(v => !group.verbs.includes(v))
+    } else {
+      const merged = new Set([...selectedVerbs.value, ...group.verbs])
+      selectedVerbs.value = Array.from(merged)
+    }
   } else {
     selectedVerbs.value = [...group.verbs]
   }
@@ -465,6 +483,9 @@ function selectVerbGroup(group: VerbGroup) {
 function isGroupActive(group: VerbGroup): boolean {
   if (group.id === 'all') {
     return selectedVerbs.value.length === verbs.length
+  }
+  if (combineGroups.value) {
+    return group.verbs.every(v => selectedVerbs.value.includes(v))
   }
   if (selectedVerbs.value.length !== group.verbs.length) return false
   return group.verbs.every(v => selectedVerbs.value.includes(v))
@@ -507,7 +528,7 @@ function highlightWordMatches(word: string, normQuery: string): string {
   while ((searchPos = normWord.indexOf(normQuery, lastIdx)) !== -1) {
     res += escapeHtml(word.slice(lastIdx, searchPos))
     const matchSlice = word.slice(searchPos, searchPos + normQuery.length)
-    res += `<span class="bg-emerald-600 dark:bg-emerald-500 !text-white px-0.5 rounded-xs">${escapeHtml(matchSlice)}</span>`
+    res += `<span class="bg-yellow-400 text-zinc-900 font-black">${escapeHtml(matchSlice)}</span>`
     lastIdx = searchPos + normQuery.length
   }
   res += escapeHtml(word.slice(lastIdx))
@@ -560,6 +581,13 @@ function verbMatchesSearch(v: SpanishVerb, normQuery: string): boolean {
 
 const isSearching = computed(() => !!searchQuery.value.trim())
 
+function cellMatchesSearch(text?: string | null): boolean {
+  if (!text || text === '—' || text === '-' || !isSearching.value) return false
+  const normQuery = normalizeForSearch(searchQuery.value.trim())
+  if (!normQuery) return false
+  return normalizeForSearch(text).includes(normQuery)
+}
+
 function isExactSearchMatch(text?: string | null): boolean {
   if (!text || text === '—' || !isSearching.value) return false
   const normQuery = normalizeForSearch(searchQuery.value.trim())
@@ -567,6 +595,67 @@ function isExactSearchMatch(text?: string | null): boolean {
   if (normalizeForSearch(text.trim()) === normQuery) return true
   const tokens = text.split(/([^\p{L}\p{M}]+)/u).filter(t => /[\p{L}\p{M}]/u.test(t))
   return tokens.some(t => normalizeForSearch(t) === normQuery)
+}
+
+function getSearchCellClass(text?: string | null): string {
+  if (!isSearching.value || !cellMatchesSearch(text)) {
+    return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
+  }
+  if (isExactSearchMatch(text)) {
+    return 'bg-yellow-200 text-zinc-800 border-yellow-400 shadow-[0_0_12px_rgba(250,204,21,0.95)] ring-2 ring-yellow-300 relative z-10'
+  }
+  return 'bg-yellow-200 text-zinc-800 border-yellow-400'
+}
+
+interface StudyRow {
+  key: string
+  label: string
+  forms: string[]
+}
+
+const HABER_PRESENT = ['he', 'has', 'ha', 'hemos', 'habéis', 'han']
+const ESTAR_IMPERFECT = ['estaba', 'estabas', 'estaba', 'estábamos', 'estabais', 'estaban']
+const HABER_IMPERFECT = ['había', 'habías', 'había', 'habíamos', 'habíais', 'habían']
+const ACABAR_PRESENT = ['acabo', 'acabas', 'acaba', 'acabamos', 'acabáis', 'acaban']
+const LLEVAR_PRESENT = ['llevo', 'llevas', 'lleva', 'llevamos', 'lleváis', 'llevan']
+const SOLER_IMPERFECT = ['solía', 'solías', 'solía', 'solíamos', 'solíais', 'solían']
+const IR_PRESENT = ['voy', 'vas', 'va', 'vamos', 'vais', 'van']
+const ESTAR_FUTURE = ['estaré', 'estarás', 'estará', 'estaremos', 'estaréis', 'estarán']
+const HABER_FUTURE = ['habré', 'habrás', 'habrá', 'habremos', 'habréis', 'habrán']
+
+function getStudyRowsForVerb(verb: SpanishVerb): StudyRow[] {
+  if (isTestMode.value || isRandomTestMode.value || isSearching.value || studyTenseMode.value === 'standard') {
+    return FINITE_TENSES.map(t => ({
+      key: t.key,
+      label: t.label,
+      forms: ((verb as any)[t.key] || []) as string[]
+    }))
+  }
+
+  const inf = verb.verb
+  const ger = verb.gerund || '—'
+  const pp = verb.pastParticiple || '—'
+
+  if (studyTenseMode.value === 'past') {
+    return [
+      { key: 'past-preterite', label: 'completed action', forms: verb.preterite || [] },
+      { key: 'past-imperfect', label: 'habit / description / background', forms: verb.imperfect || [] },
+      { key: 'past-perfect', label: 'recent past or experience (Spain)', forms: HABER_PRESENT.map(h => `${h} ${pp}`) },
+      { key: 'past-progressive', label: 'was in the middle of doing', forms: ESTAR_IMPERFECT.map(e => `${e} ${ger}`) },
+      { key: 'past-pluperfect', label: 'had already done', forms: HABER_IMPERFECT.map(h => `${h} ${pp}`) },
+      { key: 'past-acabar', label: 'just did', forms: ACABAR_PRESENT.map(a => `${a} de ${inf}`) },
+      { key: 'past-llevar', label: 'have been doing for X time', forms: LLEVAR_PRESENT.map(l => `${l} X tiempo ${ger}`) },
+      { key: 'past-soler', label: 'used to', forms: SOLER_IMPERFECT.map(s => `${s} ${inf}`) },
+    ]
+  }
+
+  return [
+    { key: 'fut-ir-a', label: "I'm going to do", forms: IR_PRESENT.map(i => `${i} a ${inf}`) },
+    { key: 'fut-simple', label: 'I will do', forms: verb.future || [] },
+    { key: 'fut-present', label: 'present for near/scheduled future', forms: verb.present || [] },
+    { key: 'fut-progressive', label: 'I will be doing', forms: ESTAR_FUTURE.map(e => `${e} ${ger}`) },
+    { key: 'fut-perfect', label: 'I will have done', forms: HABER_FUTURE.map(h => `${h} ${pp}`) },
+  ]
 }
 
 function getVerbSearchScore(v: SpanishVerb, normQuery: string): number {
@@ -2229,9 +2318,19 @@ onUnmounted(() => {
       <div class="space-y-3">
         <!-- Groups Section -->
         <div class="space-y-1.5">
-          <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-            Groups
-          </span>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              Groups
+            </span>
+            <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                v-model="combineGroups"
+                class="rounded border-gray-300 dark:border-gray-600 text-[#be185d] focus:ring-[#be185d] cursor-pointer"
+              />
+              <span>combine</span>
+            </label>
+          </div>
           <div class="flex flex-wrap gap-2">
             <button
               v-for="group in VERB_GROUPS"
@@ -2366,9 +2465,19 @@ onUnmounted(() => {
         <div class="flex-1 overflow-y-auto p-4 space-y-5">
           <!-- Groups Section -->
           <div class="space-y-2">
-            <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-              Groups
-            </span>
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                Groups
+              </span>
+              <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  v-model="combineGroups"
+                  class="rounded border-gray-300 dark:border-gray-600 text-[#be185d] focus:ring-[#be185d] cursor-pointer"
+                />
+                <span>combine</span>
+              </label>
+            </div>
             <div class="flex flex-wrap gap-1.5">
               <button
                 v-for="group in VERB_GROUPS"
@@ -3003,6 +3112,26 @@ onUnmounted(() => {
             ></h2>
           </div>
 
+          <!-- Study Mode Tense View Switcher (Standard / Past / Future) -->
+          <div
+            v-if="!isTestMode && !isRandomTestMode && !isSearching"
+            class="flex items-center gap-1 bg-gray-200/70 dark:bg-gray-800/80 p-0.5 rounded-lg border border-gray-300/70 dark:border-gray-700"
+            @click.stop
+          >
+            <button
+              v-for="modeOption in (['standard', 'past', 'future'] as const)"
+              :key="modeOption"
+              type="button"
+              @click.stop="studyTenseMode = modeOption"
+              class="px-2.5 py-1 rounded-md text-[11px] font-bold capitalize transition-all cursor-pointer select-none"
+              :class="studyTenseMode === modeOption
+                ? 'bg-[#be185d] text-white shadow-xs'
+                : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'"
+            >
+              {{ modeOption }}
+            </button>
+          </div>
+
           <!-- Mobile: Peek, Hint (in Full Testing) and <, > buttons in title area -->
           <div class="flex sm:hidden items-center gap-1.5 shrink-0">
             <template v-if="isTestMode && !isSearching">
@@ -3107,7 +3236,8 @@ onUnmounted(() => {
                 <span
                   v-else
                   @click.stop="openGoogleExamples(verb.gerund, { verb: verb.verb, tenseKey: 'gerund', tenseLabel: 'Gerundio' })"
-                  class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[50px] text-center cursor-pointer"
+                  class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
+                  :class="getSearchCellClass(verb.gerund)"
                   v-html="highlightText(verb.gerund)"
                 >
                 </span>
@@ -3168,7 +3298,8 @@ onUnmounted(() => {
                 <span
                   v-else
                   @click.stop="openGoogleExamples(verb.pastParticiple, { verb: verb.verb, tenseKey: 'pastParticiple', tenseLabel: 'Participio' })"
-                  class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 min-w-[50px] text-center cursor-pointer"
+                  class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
+                  :class="getSearchCellClass(verb.pastParticiple)"
                   v-html="highlightText(verb.pastParticiple)"
                 >
                 </span>
@@ -3265,9 +3396,7 @@ onUnmounted(() => {
                           v-else
                           @click.stop="openGoogleExamples(verb.gerund, { verb: verb.verb, tenseKey: 'gerund', tenseLabel: 'Gerundio' })"
                           class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
-                          :class="isExactSearchMatch(verb.gerund)
-                            ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
+                          :class="getSearchCellClass(verb.gerund)"
                           v-html="highlightText(verb.gerund)"
                         >
                         </span>
@@ -3333,9 +3462,7 @@ onUnmounted(() => {
                           v-else
                           @click.stop="openGoogleExamples(verb.pastParticiple, { verb: verb.verb, tenseKey: 'pastParticiple', tenseLabel: 'Participio' })"
                           class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
-                          :class="isExactSearchMatch(verb.pastParticiple)
-                            ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
+                          :class="getSearchCellClass(verb.pastParticiple)"
                           v-html="highlightText(verb.pastParticiple)"
                         >
                         </span>
@@ -3369,7 +3496,7 @@ onUnmounted(() => {
               </thead>
               <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                 <tr
-                  v-for="(tense, tenseIdx) in FINITE_TENSES"
+                  v-for="(tense, tenseIdx) in getStudyRowsForVerb(verb)"
                   :key="tense.key"
                   class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
                 >
@@ -3481,12 +3608,10 @@ onUnmounted(() => {
                     <!-- Standard Static Conjugation Mode -->
                     <span
                       v-else
-                      @click.stop="openGoogleExamples(((verb as any)[tense.key] || [])[p.idx], { verb: verb.verb, tenseKey: tense.key, tenseLabel: tense.label, pronounLabel: p.label })"
+                      @click.stop="openGoogleExamples(tense.forms[p.idx], { verb: verb.verb, tenseKey: tense.key, tenseLabel: tense.label, pronounLabel: p.label })"
                       class="inline-block px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold border min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
-                      :class="isExactSearchMatch(((verb as any)[tense.key] || [])[p.idx])
-                        ? 'bg-emerald-600 dark:bg-emerald-500 text-white border-emerald-500'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'"
-                      v-html="highlightText(((verb as any)[tense.key] || [])[p.idx] || '—')"
+                      :class="getSearchCellClass(tense.forms[p.idx])"
+                      v-html="highlightText(tense.forms[p.idx] || '—')"
                     >
                     </span>
                   </td>

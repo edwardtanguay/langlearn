@@ -78,22 +78,28 @@ export function parseImportText(text: string): ParsedRow[] {
           // All 4 columns on header line (e.g. English\tFrench\tabsolutely\tabsolument)
           rows.push(buildParsedRow(lang1, lang2, headerCols[2]!, headerCols[3]!))
         } else if (headerCols.length >= 3 && headerCols[2]!.length > 0) {
-          // Header has text1, text2 is on next line (e.g. English\tFrench\tthe lid of the jar)
+          // Header has text1, text2 is on next line(s) (e.g. English\tFrench\tthe lid of the jar)
           const text1 = headerCols[2]!
-          if (i + 1 < lines.length && !/^\d+\.?$/.test(lines[i + 1]!)) {
+          const extraLines: string[] = []
+          while (i + 1 < lines.length && !/^\d+\.?$/.test(lines[i + 1]!)) {
             i++
-            const text2 = lines[i]!
-            rows.push(buildParsedRow(lang1, lang2, text1, text2))
-          } else {
-            rows.push(buildParsedRow(lang1, lang2, text1, ''))
+            extraLines.push(lines[i]!)
           }
+          // If two phrases exist (e.g. feminine and masculine), always pick the second phrase
+          const text2 = extraLines.length >= 2 ? extraLines[1]! : (extraLines[0] ?? '')
+          rows.push(buildParsedRow(lang1, lang2, text1, text2))
         } else {
           // Header has only languages (e.g. French\tEnglish)
-          if (i + 1 < lines.length && !/^\d+\.?$/.test(lines[i + 1]!)) {
+          const itemLines: string[] = []
+          while (i + 1 < lines.length && !/^\d+\.?$/.test(lines[i + 1]!)) {
             i++
-            // Check if next line has both front and back separated by tab
-            if (lines[i]!.includes('\t')) {
-              const tabCols = lines[i]!.split('\t').map(s => s.trim().replace(/^"|"$/g, ''))
+            itemLines.push(lines[i]!)
+          }
+
+          if (itemLines.length > 0) {
+            // Check if first line has both front and back separated by tab
+            if (itemLines[0]!.includes('\t')) {
+              const tabCols = itemLines[0]!.split('\t').map(s => s.trim().replace(/^"|"$/g, ''))
               if (tabCols.length >= 2 && tabCols[0]!.length > 0 && tabCols[1]!.length > 0) {
                 rows.push(buildParsedRow(lang1, lang2, tabCols[0]!, tabCols[1]!))
                 i++
@@ -101,14 +107,10 @@ export function parseImportText(text: string): ParsedRow[] {
               }
             }
 
-            const text1 = lines[i]!
-            if (i + 1 < lines.length && !/^\d+\.?$/.test(lines[i + 1]!)) {
-              i++
-              const text2 = lines[i]!
-              rows.push(buildParsedRow(lang1, lang2, text1, text2))
-            } else {
-              rows.push(buildParsedRow(lang1, lang2, text1, ''))
-            }
+            const text1 = itemLines[0]!
+            // If 2 translation phrases follow text1 (e.g. feminine & masculine), pick the second one
+            const text2 = itemLines.length >= 3 ? itemLines[2]! : (itemLines[1] ?? '')
+            rows.push(buildParsedRow(lang1, lang2, text1, text2))
           } else {
             rows.push(buildParsedRow(lang1, lang2, '', ''))
           }
@@ -138,9 +140,18 @@ function stripMonAmiPrefix(input: string): string {
   return input.replace(/^Mon ami,?\s*/i, '').trim()
 }
 
+function pickSecondPhraseIfDual(input: string): string {
+  if (!input) return ''
+  const parts = input.split(/\r?\n/).map(p => p.trim()).filter(Boolean)
+  if (parts.length >= 2) {
+    return parts[1]!
+  }
+  return input
+}
+
 function buildParsedRow(lang1: string, lang2: string, text1: string, text2: string): ParsedRow {
-  const cleanText1 = stripMonAmiPrefix(text1)
-  const cleanText2 = stripMonAmiPrefix(text2)
+  const cleanText1 = stripMonAmiPrefix(pickSecondPhraseIfDual(text1))
+  const cleanText2 = stripMonAmiPrefix(pickSecondPhraseIfDual(text2))
 
   const meta1 = parseMetadata(cleanText1)
   const meta2 = parseMetadata(cleanText2)

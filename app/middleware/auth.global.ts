@@ -36,7 +36,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
         '/about',
         '/activities',
         '/activities/gemini-quiz',
-        '/activities/spanish-verbs'
+        '/activities/spanish-verbs',
+        '/activities/italian-verbs',
+        '/activities/spanish-subjunctive'
       ]
       return unknownAllowedPaths.includes(path)
     }
@@ -87,7 +89,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const savedTarget = returnUrlCookie.value
   if (savedTarget && (to.path === '/' || to.path === '/member' || to.path === '/flashcards' || to.path === '/flashcard')) {
     returnUrlCookie.value = null
-    const targetUrl = savedTarget.replace('/flashcard', '/flashcards').replace('/user', '/profile')
+    const targetUrl = savedTarget
+      .replace(/^\/flashcards+(\/|\?|$)/, '/flashcards$1')
+      .replace(/^\/flashcard(\/|\?|$)/, '/flashcards$1')
+      .replace(/^\/user(\/|\?|$)/, '/profile$1')
     if (isUserAdmin) {
       return navigateTo(targetUrl, { replace: true })
     } else {

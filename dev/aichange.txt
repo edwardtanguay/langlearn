@@ -198,43 +198,72 @@
 		
 		- x remove the "(you)"
 		--------------------------------------
-		
-- activities
 	- x On all activities, remove all instructions everywhere.
+
+
+
+		
+================= TODO
+- language-learning-activities
+	----------------------------------
+	## general
+	
 	- when importing an image, retain any hyphens and parentheses in the title, e.g. "notresalut-Marshal Pétain (1856-1951)"
 		- and retain the hyphens in the file name
 	- fix the styling of the audio control, it's broken again
-	- 
+	----------------------------------
+
+- langlearn
+	----------------------------------
+	## Spanish Verbs page
 	
+	- Add the following verbs to the spanish file data\verbs\es-verbs.txt: visitar, bailar, cenar, cancelar, nadar, entrar, estudiar, entender, comprender, oír, escuchar, comencemos, molestar, tomar, saludar, incomodar, invitar, sentir, lastimar, sufrir, enviar, preocupar, cancelar, responder, contestar, ponerse
+	- make these change for both Spanish and Italian verbs
+		- add a field for the verbs in the JSON file "kind": "regular" or "irregular"
+			- on the Spanish Verbs page, add two groups "All Regular" and "All Irregular"
+		- since we now have so many verbs, when choosing them, put them in a scroll box
+		- in study mode, when in "Past" or "Future" mode, it should show the conjugated verb and when clicking on it looks it up in Google Translate, just in Standard mode
+	- when finding results
+		- switch around the dark/light colors so the color that identifies the found letters is brighter
+		- if it matches the word exactly, then show the whole pill in the brightest color and put a MUCH brighter halo around it, with some pulsing animation
+		- if it matches the infinitive itself, put the infinitive in a large pill and display it just as a found conjugation word
+	- filter
+		- when combine is unchecked, then clicking one verb turns all other selections off and selects only that verb
+	- add "imperative" to Spanish Verbs just as you have it on Italian Verbs
 	
-================= TODO
-VERBS ADD
-visitar
-bailar
-cenar
-cancelar
-nadar
-entrar
-estudiar
-entender
-comprender
-oír
-escuchar
-comencemos
-molestar
-tomar
-saludar
-incomodar
-invitar
-sentir
-lastimar
-sufrir
-enviar
-preocupar
-cancelar
-responder
-contestar
-ponerse 
+	## Spanish and Italian Verbs pages
+	
+	- instead of "*" (e.g. imperative yo), write "n/a" with low opacity
+		
+	## Spanish Subjunctive 
+	
+	- make the "gray bar" look less like an input box and more like a "text is covered up here", perhaps even a kind of blur with pseudo text behind it, or be creative here
+	- take off all the "click..." messages
+	- put a "three examples" icon next to indicative and subjunctive which looks up shows three examples in Google Search
+	- allow used to select any text with the mouse, without producing a click
+	- below the game, show a link "show all" which displays/hides a simple table showing Spanish left, English right, but the table has a nice, modern design, clicking on any of them takes you to Google Search which shows three examples
+	
+	## Profile
+	
+	- when clicking the arrows on "Daily Activity", make the date change IMMEDIATELY not after a half-second wait, which is confusing for the user
+	
+	## Import
+	
+	- if a line has only one double quotation mark ("), then look at the next line, and if that next line has only one double quotation mark at the end, replace everything in the first line AFTER the quotation mark with the second line
+		- so if you have this:
+			-------------------------------------------------
+			English,Spanish,I am glad that it came back to the right spot,"111
+			222"	
+			-------------------------------------------------
+		- then convert it to one line that is:
+			-------------------------------------------------
+			English,Spanish,I am glad that it came back to the right spot,"222"	
+			-------------------------------------------------
+	
+	----------------------------------
+	
+
+
 
 
 
