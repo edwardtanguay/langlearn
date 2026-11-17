@@ -46,10 +46,41 @@ function looksLikeLanguageColumn(str: string): boolean {
   return true
 }
 
+function countQuotes(line: string): number {
+  let count = 0
+  for (let i = 0; i < line.length; i++) {
+    if (line[i] === '"') count++
+  }
+  return count
+}
+
+function mergeSplitQuotedLines(rawLines: string[]): string[] {
+  const merged: string[] = []
+  let i = 0
+  while (i < rawLines.length) {
+    const line = rawLines[i]!
+    if (
+      countQuotes(line) === 1 &&
+      i + 1 < rawLines.length &&
+      countQuotes(rawLines[i + 1]!) === 1 &&
+      rawLines[i + 1]!.endsWith('"')
+    ) {
+      const quoteIdx = line.indexOf('"')
+      merged.push(line.slice(0, quoteIdx + 1) + rawLines[i + 1]!)
+      i += 2
+      continue
+    }
+    merged.push(line)
+    i++
+  }
+  return merged
+}
+
 export function parseImportText(text: string): ParsedRow[] {
   if (!text || !text.trim()) return []
 
-  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0)
+  const rawLines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0)
+  const lines = mergeSplitQuotedLines(rawLines)
   const rows: ParsedRow[] = []
 
   let i = 0

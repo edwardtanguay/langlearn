@@ -1,6 +1,7 @@
 [
   {
     "verb": "essere",
+    "kind": "irregular",
     "presente": [
       "sono",
       "sei",
@@ -78,6 +79,7 @@
   },
   {
     "verb": "avere",
+    "kind": "irregular",
     "presente": [
       "ho",
       "hai",
@@ -155,6 +157,7 @@
   },
   {
     "verb": "fare",
+    "kind": "irregular",
     "presente": [
       "faccio",
       "fai",
@@ -232,6 +235,7 @@
   },
   {
     "verb": "andare",
+    "kind": "irregular",
     "presente": [
       "vado",
       "vai",
@@ -309,6 +313,7 @@
   },
   {
     "verb": "stare",
+    "kind": "irregular",
     "presente": [
       "sto",
       "stai",
@@ -386,6 +391,7 @@
   },
   {
     "verb": "dare",
+    "kind": "irregular",
     "presente": [
       "do",
       "dai",
@@ -463,6 +469,7 @@
   },
   {
     "verb": "dire",
+    "kind": "irregular",
     "presente": [
       "dico",
       "dici",
@@ -540,6 +547,7 @@
   },
   {
     "verb": "potere",
+    "kind": "irregular",
     "presente": [
       "posso",
       "puoi",
@@ -617,6 +625,7 @@
   },
   {
     "verb": "volere",
+    "kind": "irregular",
     "presente": [
       "voglio",
       "vuoi",
@@ -694,6 +703,7 @@
   },
   {
     "verb": "dovere",
+    "kind": "irregular",
     "presente": [
       "devo",
       "devi",
@@ -771,6 +781,7 @@
   },
   {
     "verb": "sapere",
+    "kind": "irregular",
     "presente": [
       "so",
       "sai",
@@ -848,6 +859,7 @@
   },
   {
     "verb": "venire",
+    "kind": "irregular",
     "presente": [
       "vengo",
       "vieni",
@@ -925,6 +937,7 @@
   },
   {
     "verb": "vedere",
+    "kind": "irregular",
     "presente": [
       "vedo",
       "vedi",
@@ -1002,6 +1015,7 @@
   },
   {
     "verb": "prendere",
+    "kind": "irregular",
     "presente": [
       "prendo",
       "prendi",
@@ -1079,6 +1093,7 @@
   },
   {
     "verb": "parlare",
+    "kind": "regular",
     "presente": [
       "parlo",
       "parli",
@@ -1156,6 +1171,7 @@
   },
   {
     "verb": "mangiare",
+    "kind": "regular",
     "presente": [
       "mangio",
       "mangi",
@@ -1233,6 +1249,7 @@
   },
   {
     "verb": "bere",
+    "kind": "irregular",
     "presente": [
       "bevo",
       "bevi",
@@ -1310,6 +1327,7 @@
   },
   {
     "verb": "uscire",
+    "kind": "irregular",
     "presente": [
       "esco",
       "esci",
@@ -1387,6 +1405,7 @@
   },
   {
     "verb": "capire",
+    "kind": "regular",
     "presente": [
       "capisco",
       "capisci",
@@ -1464,6 +1483,7 @@
   },
   {
     "verb": "trovare",
+    "kind": "regular",
     "presente": [
       "trovo",
       "trovi",

@@ -146,6 +146,15 @@ const dailyLabel = computed(() => {
   return `${dailyDaysAgo.value} days ago`
 })
 
+const dailyDateStr = computed(() => {
+  const d = new Date()
+  d.setDate(d.getDate() - dailyDaysAgo.value)
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+})
+
 const fetchDailyActivity = async (daysAgo: number) => {
   isDailyLoading.value = true
   try {
@@ -154,11 +163,15 @@ const fetchDailyActivity = async (daysAgo: number) => {
       query: { daysAgo, ...(tz ? { tz } : {}) },
       headers: tz ? { 'x-client-timezone': tz } : undefined
     })
-    dailyActivity.value = data
+    if (daysAgo === dailyDaysAgo.value) {
+      dailyActivity.value = data
+    }
   } catch (err) {
     console.error('Failed to fetch daily activity:', err)
   } finally {
-    isDailyLoading.value = false
+    if (daysAgo === dailyDaysAgo.value) {
+      isDailyLoading.value = false
+    }
   }
 }
 
@@ -666,8 +679,8 @@ const handleSaveGroupSize = async () => {
           <div class="flex items-center justify-between">
             <div>
               <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Daily Activity</h2>
-              <p v-if="dailyActivity" class="text-xs text-gray-500 dark:text-gray-400">
-                {{ dailyLabel }} ({{ dailyActivity.date }})
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                {{ dailyLabel }} ({{ dailyDateStr }})
               </p>
             </div>
             <div class="flex items-center gap-1.5">

@@ -1,5 +1,5 @@
 - verbs
-	- essere
+	- essere (irregular)
 		- sono, sei, è, siamo, siete, sono
 		- ero, eri, era, eravamo, eravate, erano
 		- sono stato, sei stato, è stato, siamo stati, siete stati, sono stati
@@ -10,7 +10,7 @@
 		- fossi, fossi, fosse, fossimo, foste, fossero
 		- *, sii, sia, siamo, siate, siano
 		- essendo, stato
-	- avere
+	- avere (irregular)
 		- ho, hai, ha, abbiamo, avete, hanno
 		- avevo, avevi, aveva, avevamo, avevate, avevano
 		- ho avuto, hai avuto, ha avuto, abbiamo avuto, avete avuto, hanno avuto
@@ -21,7 +21,7 @@
 		- avessi, avessi, avesse, avessimo, aveste, avessero
 		- *, abbi, abbia, abbiamo, abbiate, abbiano
 		- avendo, avuto
-	- fare
+	- fare (irregular)
 		- faccio, fai, fa, facciamo, fate, fanno
 		- facevo, facevi, faceva, facevamo, facevate, facevano
 		- ho fatto, hai fatto, ha fatto, abbiamo fatto, avete fatto, hanno fatto
@@ -32,7 +32,7 @@
 		- facessi, facessi, facesse, facessimo, faceste, facessero
 		- *, fai, faccia, facciamo, fate, facciano
 		- facendo, fatto
-	- andare
+	- andare (irregular)
 		- vado, vai, va, andiamo, andate, vanno
 		- andavo, andavi, andava, andavamo, andavate, andavano
 		- sono andato, sei andato, è andato, siamo andati, siete andati, sono andati
@@ -43,7 +43,7 @@
 		- andassi, andassi, andasse, andassimo, andaste, andassero
 		- *, vai, vada, andiamo, andate, vadano
 		- andando, andato
-	- stare
+	- stare (irregular)
 		- sto, stai, sta, stiamo, state, stanno
 		- stavo, stavi, stava, stavamo, stavate, stavano
 		- sono stato, sei stato, è stato, siamo stati, siete stati, sono stati
@@ -54,7 +54,7 @@
 		- stessi, stessi, stesse, stessimo, steste, stessero
 		- *, stai, stia, stiamo, state, stiano
 		- stando, stato
-	- dare
+	- dare (irregular)
 		- do, dai, dà, diamo, date, danno
 		- davo, davi, dava, davamo, davate, davano
 		- ho dato, hai dato, ha dato, abbiamo dato, avete dato, hanno dato
@@ -65,7 +65,7 @@
 		- dessi, dessi, desse, dessimo, deste, dessero
 		- *, dai, dia, diamo, date, diano
 		- dando, dato
-	- dire
+	- dire (irregular)
 		- dico, dici, dice, diciamo, dite, dicono
 		- dicevo, dicevi, diceva, dicevamo, dicevate, dicevano
 		- ho detto, hai detto, ha detto, abbiamo detto, avete detto, hanno detto
@@ -76,7 +76,7 @@
 		- dicessi, dicessi, dicesse, dicessimo, diceste, dicessero
 		- *, di', dica, diciamo, dite, dicano
 		- dicendo, detto
-	- potere
+	- potere (irregular)
 		- posso, puoi, può, possiamo, potete, possono
 		- potevo, potevi, poteva, potevamo, potevate, potevano
 		- ho potuto, hai potuto, ha potuto, abbiamo potuto, avete potuto, hanno potuto
@@ -87,7 +87,7 @@
 		- potessi, potessi, potesse, potessimo, poteste, potessero
 		- *, *, *, *, *, *
 		- potendo, potuto
-	- volere
+	- volere (irregular)
 		- voglio, vuoi, vuole, vogliamo, volete, vogliono
 		- volevo, volevi, voleva, volevamo, volevate, volevano
 		- ho voluto, hai voluto, ha voluto, abbiamo voluto, avete voluto, hanno voluto
@@ -98,7 +98,7 @@
 		- volessi, volessi, volesse, volessimo, voleste, volessero
 		- *, vogli, voglia, vogliamo, vogliate, vogliano
 		- volendo, voluto
-	- dovere
+	- dovere (irregular)
 		- devo, devi, deve, dobbiamo, dovete, devono
 		- dovevo, dovevi, doveva, dovevamo, dovevate, dovevano
 		- ho dovuto, hai dovuto, ha dovuto, abbiamo dovuto, avete dovuto, hanno dovuto
@@ -109,7 +109,7 @@
 		- dovessi, dovessi, dovesse, dovessimo, doveste, dovessero
 		- *, *, *, *, *, *
 		- dovendo, dovuto
-	- sapere
+	- sapere (irregular)
 		- so, sai, sa, sappiamo, sapete, sanno
 		- sapevo, sapevi, sapeva, sapevamo, sapevate, sapevano
 		- ho saputo, hai saputo, ha saputo, abbiamo saputo, avete saputo, hanno saputo
@@ -120,7 +120,7 @@
 		- sapessi, sapessi, sapesse, sapessimo, sapeste, sapessero
 		- *, sappi, sappia, sappiamo, sappiate, sappiano
 		- sapendo, saputo
-	- venire
+	- venire (irregular)
 		- vengo, vieni, viene, veniamo, venite, vengono
 		- venivo, venivi, veniva, venivamo, venivate, venivano
 		- sono venuto, sei venuto, è venuto, siamo venuti, siete venuti, sono venuti
@@ -131,7 +131,7 @@
 		- venissi, venissi, venisse, venissimo, veniste, venissero
 		- *, vieni, venga, veniamo, venite, vengano
 		- venendo, venuto
-	- vedere
+	- vedere (irregular)
 		- vedo, vedi, vede, vediamo, vedete, vedono
 		- vedevo, vedevi, vedeva, vedevamo, vedevate, vedevano
 		- ho visto, hai visto, ha visto, abbiamo visto, avete visto, hanno visto
@@ -142,7 +142,7 @@
 		- vedessi, vedessi, vedesse, vedessimo, vedeste, vedessero
 		- *, vedi, veda, vediamo, vedete, vedano
 		- vedendo, visto
-	- prendere
+	- prendere (irregular)
 		- prendo, prendi, prende, prendiamo, prendete, prendono
 		- prendevo, prendevi, prendeva, prendevamo, prendevate, prendevano
 		- ho preso, hai preso, ha preso, abbiamo preso, avete preso, hanno preso
@@ -153,7 +153,7 @@
 		- prendessi, prendessi, prendesse, prendessimo, prendeste, prendessero
 		- *, prendi, prenda, prendiamo, prendete, prendano
 		- prendendo, preso
-	- parlare
+	- parlare (regular)
 		- parlo, parli, parla, parliamo, parlate, parlano
 		- parlavo, parlavi, parlava, parlavamo, parlavate, parlavano
 		- ho parlato, hai parlato, ha parlato, abbiamo parlato, avete parlato, hanno parlato
@@ -164,7 +164,7 @@
 		- parlassi, parlassi, parlasse, parlassimo, parlaste, parlassero
 		- *, parla, parli, parliamo, parlate, parlino
 		- parlando, parlato
-	- mangiare
+	- mangiare (regular)
 		- mangio, mangi, mangia, mangiamo, mangiate, mangiano
 		- mangiavo, mangiavi, mangiava, mangiavamo, mangiavate, mangiavano
 		- ho mangiato, hai mangiato, ha mangiato, abbiamo mangiato, avete mangiato, hanno mangiato
@@ -175,7 +175,7 @@
 		- mangiassi, mangiassi, mangiasse, mangiassimo, mangiaste, mangiassero
 		- *, mangia, mangi, mangiamo, mangiate, mangino
 		- mangiando, mangiato
-	- bere
+	- bere (irregular)
 		- bevo, bevi, beve, beviamo, bevete, bevono
 		- bevevo, bevevi, beveva, bevevamo, bevevate, bevevano
 		- ho bevuto, hai bevuto, ha bevuto, abbiamo bevuto, avete bevuto, hanno bevuto
@@ -186,7 +186,7 @@
 		- bevessi, bevessi, bevesse, bevessimo, beveste, bevessero
 		- *, bevi, beva, beviamo, bevete, bevano
 		- bevendo, bevuto
-	- uscire
+	- uscire (irregular)
 		- esco, esci, esce, usciamo, uscite, escono
 		- uscivo, uscivi, usciva, uscivamo, uscivate, uscivano
 		- sono uscito, sei uscito, è uscito, siamo usciti, siete usciti, sono usciti
@@ -197,7 +197,7 @@
 		- uscissi, uscissi, uscisse, uscissimo, usciste, uscissero
 		- *, esci, esca, usciamo, uscite, escano
 		- uscendo, uscito
-	- capire
+	- capire (regular)
 		- capisco, capisci, capisce, capiamo, capite, capiscono
 		- capivo, capivi, capiva, capivamo, capivate, capivano
 		- ho capito, hai capito, ha capito, abbiamo capito, avete capito, hanno capito
@@ -208,7 +208,7 @@
 		- capissi, capissi, capisse, capissimo, capiste, capissero
 		- *, capisci, capisca, capiamo, capite, capiscano
 		- capendo, capito
-	- trovare
+	- trovare (regular)
 		- trovo, trovi, trova, troviamo, trovate, trovano
 		- trovavo, trovavi, trovava, trovavamo, trovavate, trovavano
 		- ho trovato, hai trovato, ha trovato, abbiamo trovato, avete trovato, hanno trovato

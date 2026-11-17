@@ -17,6 +17,7 @@ import {
 
 interface SpanishVerb {
   verb: string
+  kind: 'regular' | 'irregular'
   present: string[]
   imperfect: string[]
   preterite: string[]
@@ -24,6 +25,7 @@ interface SpanishVerb {
   conditional: string[]
   presentSubjunctive: string[]
   imperfectSubjunctive: string[]
+  imperative: string[]
   gerund: string
   pastParticiple: string
 }
@@ -65,7 +67,8 @@ const FINITE_TENSES = [
   { key: 'future', label: 'Futuro' },
   { key: 'conditional', label: 'Condicional' },
   { key: 'presentSubjunctive', label: 'Pres. subj.' },
-  { key: 'imperfectSubjunctive', label: 'Imp. subj.' }
+  { key: 'imperfectSubjunctive', label: 'Imp. subj.' },
+  { key: 'imperative', label: 'Imperativo' }
 ] as const
 
 const TENSES = [
@@ -76,6 +79,7 @@ const TENSES = [
   { key: 'conditional', label: 'Condicional' },
   { key: 'presentSubjunctive', label: 'Pres. subj.' },
   { key: 'imperfectSubjunctive', label: 'Imp. subj.' },
+  { key: 'imperative', label: 'Imperativo' },
   { key: 'gerund', label: 'Gerundio' },
   { key: 'pastParticiple', label: 'Participio' }
 ] as const
@@ -263,7 +267,7 @@ function getVerbRevealedPercent(verb: SpanishVerb): number {
       const forms = ((verb as any)[tense.key] as string[]) || []
       for (const pIdx of selectedPronouns.value) {
         const val = forms[pIdx]
-        if (val && val !== '-') {
+        if (val && val !== '-' && val !== '*') {
           total += 1
           if (isMobileCellRevealed(getCellKey(verb.verb, tense.key, pIdx))) {
             revealed += 1
@@ -456,27 +460,45 @@ const VERB_GROUPS: VerbGroup[] = [
     id: 'll-verbs',
     name: 'll-verbs',
     verbs: ['llegar', 'llevar', 'llamar', 'llenar', 'llorar', 'llover']
+  },
+  {
+    id: 'all-regular',
+    name: 'All Regular',
+    verbs: []
+  },
+  {
+    id: 'all-irregular',
+    name: 'All Irregular',
+    verbs: []
   }
 ]
 
 const combineGroups = ref(false)
 const studyTenseMode = ref<'standard' | 'past' | 'future'>('standard')
 
+function getGroupVerbs(group: VerbGroup): string[] {
+  if (group.id === 'all') return verbs.map(v => v.verb)
+  if (group.id === 'all-regular') return verbs.filter(v => v.kind === 'regular').map(v => v.verb)
+  if (group.id === 'all-irregular') return verbs.filter(v => v.kind === 'irregular').map(v => v.verb)
+  return group.verbs
+}
+
 function selectVerbGroup(group: VerbGroup) {
   if (group.id === 'all') {
     selectedVerbs.value = verbs.map(v => v.verb)
     return
   }
+  const groupVerbs = getGroupVerbs(group)
   if (combineGroups.value) {
-    const allPresent = group.verbs.every(v => selectedVerbs.value.includes(v))
+    const allPresent = groupVerbs.every(v => selectedVerbs.value.includes(v))
     if (allPresent) {
-      selectedVerbs.value = selectedVerbs.value.filter(v => !group.verbs.includes(v))
+      selectedVerbs.value = selectedVerbs.value.filter(v => !groupVerbs.includes(v))
     } else {
-      const merged = new Set([...selectedVerbs.value, ...group.verbs])
+      const merged = new Set([...selectedVerbs.value, ...groupVerbs])
       selectedVerbs.value = Array.from(merged)
     }
   } else {
-    selectedVerbs.value = [...group.verbs]
+    selectedVerbs.value = [...groupVerbs]
   }
 }
 
@@ -484,11 +506,25 @@ function isGroupActive(group: VerbGroup): boolean {
   if (group.id === 'all') {
     return selectedVerbs.value.length === verbs.length
   }
+  const groupVerbs = getGroupVerbs(group)
+  if (groupVerbs.length === 0) return false
   if (combineGroups.value) {
-    return group.verbs.every(v => selectedVerbs.value.includes(v))
+    return groupVerbs.every(v => selectedVerbs.value.includes(v))
   }
-  if (selectedVerbs.value.length !== group.verbs.length) return false
-  return group.verbs.every(v => selectedVerbs.value.includes(v))
+  if (selectedVerbs.value.length !== groupVerbs.length) return false
+  return groupVerbs.every(v => selectedVerbs.value.includes(v))
+}
+
+function toggleIndividualVerb(verbName: string) {
+  if (!combineGroups.value) {
+    selectedVerbs.value = [verbName]
+    return
+  }
+  if (selectedVerbs.value.includes(verbName)) {
+    selectedVerbs.value = selectedVerbs.value.filter(x => x !== verbName)
+  } else {
+    selectedVerbs.value = [...selectedVerbs.value, verbName]
+  }
 }
 
 const alphabetizedVerbs = computed(() => {
@@ -528,7 +564,7 @@ function highlightWordMatches(word: string, normQuery: string): string {
   while ((searchPos = normWord.indexOf(normQuery, lastIdx)) !== -1) {
     res += escapeHtml(word.slice(lastIdx, searchPos))
     const matchSlice = word.slice(searchPos, searchPos + normQuery.length)
-    res += `<span class="bg-yellow-400 text-zinc-900 font-black">${escapeHtml(matchSlice)}</span>`
+    res += `<span class="bg-yellow-300 text-zinc-950 font-black rounded px-0.5">${escapeHtml(matchSlice)}</span>`
     lastIdx = searchPos + normQuery.length
   }
   res += escapeHtml(word.slice(lastIdx))
@@ -571,7 +607,7 @@ function verbMatchesSearch(v: SpanishVerb, normQuery: string): boolean {
   for (const tense of FINITE_TENSES) {
     const forms = (v as any)[tense.key] as string[] || []
     for (const form of forms) {
-      if (form && form !== '-' && normalizeForSearch(form).includes(normQuery)) {
+      if (form && form !== '-' && form !== '*' && normalizeForSearch(form).includes(normQuery)) {
         return true
       }
     }
@@ -602,9 +638,9 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-yellow-200 text-zinc-800 border-yellow-400 shadow-[0_0_12px_rgba(250,204,21,0.95)] ring-2 ring-yellow-300 relative z-10'
+    return 'bg-yellow-300 text-zinc-950 border-yellow-100 shadow-[0_0_26px_rgba(253,224,71,1)] ring-4 ring-yellow-300/90 animate-pulse-bright relative z-10'
   }
-  return 'bg-yellow-200 text-zinc-800 border-yellow-400'
+  return 'bg-amber-950/75 dark:bg-amber-950/85 text-amber-100 border-amber-600/70'
 }
 
 interface StudyRow {
@@ -1223,6 +1259,9 @@ function isCellHidden(tenseKey: string, pronounIdx: number): boolean {
   if (isSearching.value) return false
   if (isTestMode.value) {
     return !isCellTested(tenseKey, pronounIdx)
+  }
+  if (!isRandomTestMode.value && studyTenseMode.value !== 'standard') {
+    return !selectedPronouns.value.includes(pronounIdx)
   }
   return !selectedTenses.value.includes(tenseKey) || !selectedPronouns.value.includes(pronounIdx)
 }
@@ -1861,7 +1900,7 @@ function pickNextRandomTarget() {
       if (selectedTenses.value.includes(tense.key)) {
         const forms = (v as any)[tense.key] as string[] || []
         for (const pIdx of selectedPronouns.value) {
-          if (forms[pIdx] && forms[pIdx] !== '-') {
+          if (forms[pIdx] && forms[pIdx] !== '-' && forms[pIdx] !== '*') {
             candidates.push({
               verb: v,
               tenseKey: tense.key,
@@ -1882,7 +1921,7 @@ function pickNextRandomTarget() {
       for (const tense of FINITE_TENSES) {
         const forms = (v as any)[tense.key] as string[] || []
         for (const p of PRONOUNS) {
-          if (forms[p.idx] && forms[p.idx] !== '-') {
+          if (forms[p.idx] && forms[p.idx] !== '-' && forms[p.idx] !== '*') {
             candidates.push({
               verb: v,
               tenseKey: tense.key,
@@ -2361,12 +2400,12 @@ onUnmounted(() => {
               {{ selectedVerbs.length === verbs.length ? 'Deselect All' : 'Select All' }}
             </button>
           </div>
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto pr-1">
             <button
               v-for="v in alphabetizedVerbs"
               :key="v.verb"
               type="button"
-              @click="selectedVerbs.includes(v.verb) ? selectedVerbs = selectedVerbs.filter(x => x !== v.verb) : selectedVerbs.push(v.verb)"
+              @click="toggleIndividualVerb(v.verb)"
               class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border select-none"
               :class="selectedVerbs.includes(v.verb)
                 ? 'bg-[#be185d] text-white border-[#be185d]'
@@ -2508,12 +2547,12 @@ onUnmounted(() => {
                 {{ selectedVerbs.length === verbs.length ? 'Deselect All' : 'Select All' }}
               </button>
             </div>
-            <div class="flex flex-wrap gap-1.5 p-1 bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-gray-200 dark:border-gray-700">
               <button
                 v-for="v in alphabetizedVerbs"
                 :key="v.verb"
                 type="button"
-                @click="selectedVerbs.includes(v.verb) ? selectedVerbs = selectedVerbs.filter(x => x !== v.verb) : selectedVerbs.push(v.verb)"
+                @click="toggleIndividualVerb(v.verb)"
                 class="px-2 py-0.5 rounded-md text-xs font-semibold transition-all cursor-pointer border select-none"
                 :class="selectedVerbs.includes(v.verb)
                   ? 'bg-[#be185d] text-white border-[#be185d]'
@@ -3107,9 +3146,18 @@ onUnmounted(() => {
         <div class="px-3 sm:px-5 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-row items-center justify-between gap-2 sm:gap-4">
           <div class="space-y-0.5">
             <h2
-              class="!mb-0 text-2xl font-black text-[#be185d] dark:text-[#f43f5e] capitalize tracking-tight"
+              v-if="isSearching && cellMatchesSearch(verb.verb)"
+              @click.stop="openGoogleExamples(verb.verb, { verb: verb.verb })"
+              class="!mb-0 inline-block px-3.5 py-1 rounded-xl text-xl sm:text-2xl font-black border capitalize tracking-tight cursor-pointer"
+              :class="getSearchCellClass(verb.verb)"
               v-html="highlightText(verb.verb)"
             ></h2>
+            <h2
+              v-else
+              class="!mb-0 text-2xl font-black text-[#be185d] dark:text-[#f43f5e] capitalize tracking-tight"
+            >
+              {{ verb.verb }}
+            </h2>
           </div>
 
           <!-- Study Mode Tense View Switcher (Standard / Past / Future) -->
@@ -3527,10 +3575,10 @@ onUnmounted(() => {
                       class="inline-block h-[22px] sm:h-[26px] w-[58px] sm:w-[90px] rounded-md sm:rounded-xl bg-gray-200/80 dark:bg-gray-700/60 animate-pulse align-middle"
                     ></span>
 
-                    <!-- Defective Form ('-') Displays 'n/a' in light grey in all modes -->
+                    <!-- Defective/Unavailable Form ('-' or '*') Displays 'n/a' in low opacity in all modes -->
                     <span
-                      v-else-if="(((verb as any)[tense.key] || [])[p.idx]) === '-'"
-                      class="block py-1 text-xs font-mono select-none text-gray-400/60 dark:text-gray-600"
+                      v-else-if="tense.forms[p.idx] === '-' || tense.forms[p.idx] === '*'"
+                      class="block py-1 text-xs font-mono select-none text-gray-400 dark:text-gray-500 opacity-35"
                     >
                       n/a
                     </span>
@@ -3834,5 +3882,20 @@ onUnmounted(() => {
 
 .animate-pulse-gentle {
   animation: pulse-gentle 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulse-bright {
+  0%, 100% {
+    box-shadow: 0 0 18px rgba(253, 224, 71, 0.85), 0 0 0 3px rgba(253, 224, 71, 0.75);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 34px rgba(254, 240, 138, 1), 0 0 0 5px rgba(254, 240, 138, 0.95);
+    transform: scale(1.04);
+  }
+}
+
+.animate-pulse-bright {
+  animation: pulse-bright 1.4s ease-in-out infinite;
 }
 </style>

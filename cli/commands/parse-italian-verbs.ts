@@ -8,6 +8,7 @@ const projectRoot = path.resolve(__dirname, '../..');
 
 export interface ItalianVerb {
   verb: string;
+  kind: 'regular' | 'irregular';
   presente: string[];
   imperfetto: string[];
   passatoProssimo: string[];
@@ -35,6 +36,7 @@ export function parseItalianVerbs(): { verbs: ItalianVerb[]; totalVerbs: number 
   let inVerbsSection = false;
   interface RawVerb {
     verb: string;
+    kind: 'regular' | 'irregular';
     lines: string[];
   }
 
@@ -60,7 +62,7 @@ export function parseItalianVerbs(): { verbs: ItalianVerb[]; totalVerbs: number 
 
     if (!inVerbsSection) continue;
 
-    const matchVerb = line.match(/^(\t|\s{2,4})-\s+([^\s]+)/);
+    const matchVerb = line.match(/^(\t|\s{2,4})-\s+([^\s(]+)(?:\s*\((regular|irregular)\))?/i);
     const matchSubLine = line.match(/^(\t\t|\s{5,8})-\s+(.*)$/);
 
     if (matchSubLine && currentVerb) {
@@ -69,8 +71,10 @@ export function parseItalianVerbs(): { verbs: ItalianVerb[]; totalVerbs: number 
       if (currentVerb) {
         rawVerbs.push(currentVerb);
       }
+      const rawKind = matchVerb[3]?.toLowerCase();
       currentVerb = {
         verb: matchVerb[2].trim(),
+        kind: rawKind === 'irregular' ? 'irregular' : 'regular',
         lines: []
       };
     }
@@ -103,6 +107,7 @@ export function parseItalianVerbs(): { verbs: ItalianVerb[]; totalVerbs: number 
 
     parsedVerbs.push({
       verb: raw.verb,
+      kind: raw.kind,
       presente,
       imperfetto,
       passatoProssimo,

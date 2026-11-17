@@ -8,6 +8,7 @@ const projectRoot = path.resolve(__dirname, '../..');
 
 export interface SpanishVerb {
   verb: string;
+  kind: 'regular' | 'irregular';
   present: string[];
   imperfect: string[];
   preterite: string[];
@@ -15,6 +16,7 @@ export interface SpanishVerb {
   conditional: string[];
   presentSubjunctive: string[];
   imperfectSubjunctive: string[];
+  imperative: string[];
   gerund: string;
   pastParticiple: string;
 }
@@ -33,6 +35,7 @@ export function parseSpanishVerbs(): { verbs: SpanishVerb[]; totalVerbs: number 
   let inVerbsSection = false;
   interface RawVerb {
     verb: string;
+    kind: 'regular' | 'irregular';
     lines: string[];
   }
 
@@ -60,8 +63,8 @@ export function parseSpanishVerbs(): { verbs: SpanishVerb[]; totalVerbs: number 
     if (!inVerbsSection) continue;
 
     // Check for verb definition: starts with one tab or 2-4 spaces followed by "- "
-    // Example: "\t- hablar"
-    const matchVerb = line.match(/^(\t|\s{2,4})-\s+([^\s]+)/);
+    // Example: "\t- hablar (regular)"
+    const matchVerb = line.match(/^(\t|\s{2,4})-\s+([^\s(]+)(?:\s*\((regular|irregular)\))?/i);
     // Check for sub-lines: starts with two tabs or 5+ spaces followed by "- "
     const matchSubLine = line.match(/^(\t\t|\s{5,8})-\s+(.*)$/);
 
@@ -71,8 +74,10 @@ export function parseSpanishVerbs(): { verbs: SpanishVerb[]; totalVerbs: number 
       if (currentVerb) {
         rawVerbs.push(currentVerb);
       }
+      const rawKind = matchVerb[3]?.toLowerCase();
       currentVerb = {
         verb: matchVerb[2].trim(),
+        kind: rawKind === 'irregular' ? 'irregular' : 'regular',
         lines: []
       };
     }
@@ -82,11 +87,11 @@ export function parseSpanishVerbs(): { verbs: SpanishVerb[]; totalVerbs: number 
     rawVerbs.push(currentVerb);
   }
 
-  // Filter only verbs that have all 8 lines
+  // Filter only verbs that have 9 lines (or 8 lines legacy)
   const parsedVerbs: SpanishVerb[] = [];
 
   for (const raw of rawVerbs) {
-    if (raw.lines.length !== 8) {
+    if (raw.lines.length < 8) {
       continue;
     }
 
@@ -100,10 +105,12 @@ export function parseSpanishVerbs(): { verbs: SpanishVerb[]; totalVerbs: number 
     const conditional = splitItems(raw.lines[4]);
     const presentSubjunctive = splitItems(raw.lines[5]);
     const imperfectSubjunctive = splitItems(raw.lines[6]);
-    const nonFinite = splitItems(raw.lines[7]);
+    const imperative = raw.lines.length >= 9 ? splitItems(raw.lines[7]) : [];
+    const nonFinite = splitItems(raw.lines.length >= 9 ? raw.lines[8] : raw.lines[7]);
 
     parsedVerbs.push({
       verb: raw.verb,
+      kind: raw.kind,
       present,
       imperfect,
       preterite,
@@ -111,6 +118,7 @@ export function parseSpanishVerbs(): { verbs: SpanishVerb[]; totalVerbs: number 
       conditional,
       presentSubjunctive,
       imperfectSubjunctive,
+      imperative,
       gerund: nonFinite[0] || '',
       pastParticiple: nonFinite[1] || ''
     });

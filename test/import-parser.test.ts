@@ -151,4 +151,18 @@ English\tTedesco\tdog\tHund`
     expect(imported[1]?.front).toBe('dog')
     expect(imported[1]?.back).toBe('*Hund*')
   })
+
+  it('merges split quoted lines by replacing everything after the first quote with the next line', () => {
+    const text = `English,Spanish,I am glad that it came back to the right spot,"111
+222"`
+
+    const rows = parseImportText(text)
+    expect(rows).toHaveLength(1)
+    expect(rows[0]).toMatchObject({
+      lang1: 'English',
+      lang2: 'Spanish',
+      text1: 'I am glad that it came back to the right spot',
+      text2: '*222*'
+    })
+  })
 })

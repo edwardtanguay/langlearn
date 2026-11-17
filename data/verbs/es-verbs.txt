@@ -1,5 +1,5 @@
 - verbs
-	- hablar
+	- hablar (regular)
 		- hablo, hablas, habla, hablamos, habláis, hablan
 		- hablaba, hablabas, hablaba, hablábamos, hablabais, hablaban
 		- hablé, hablaste, habló, hablamos, hablasteis, hablaron
@@ -7,8 +7,9 @@
 		- hablaría, hablarías, hablaría, hablaríamos, hablarías, hablarían
 		- hable, hables, hable, hablemos, habléis, hablen
 		- hablara, hablaras, hablara, habláramos, hablarais, hablaran
+		- *, habla, hable, hablemos, hablad, hablen
 		- hablando, hablado
-	- comer
+	- comer (regular)
 		- como, comes, come, comemos, coméis, comen
 		- comía, comías, comía, comíamos, comíais, comían
 		- comí, comiste, comió, comimos, comisteis, comieron
@@ -16,8 +17,9 @@
 		- comería, comerías, comería, comeríamos, comeríais, comerían
 		- coma, comas, coma, comamos, comáis, coman
 		- comiera, comieras, comiera, comiéramos, comierais, comieran
+		- *, come, coma, comamos, comed, coman
 		- comiendo, comido
-	- creer
+	- creer (regular)
 		- creo, crees, cree, creemos, creéis, creen
 		- creía, creías, creía, creíamos, creíais, creían
 		- creí, creíste, creyó, creímos, creísteis, creyeron
@@ -25,8 +27,9 @@
 		- creería, creerías, creería, creeríamos, creeríais, creerían
 		- crea, creas, crea, creamos, creáis, crean
 		- creyera, creyeras, creyera, creyéramos, creyerais, creyeran
+		- *, cree, crea, creamos, creed, crean
 		- creyendo, creído
-	- vivir
+	- vivir (regular)
 		- vivo, vives, vive, vivimos, vivís, viven
 		- vivía, vivías, vivía, vivíamos, vivíais, vivían
 		- viví, viviste, vivió, vivimos, vivisteis, vivieron
@@ -34,8 +37,9 @@
 		- viviría, vivirías, viviría, viviríamos, viviríais, vivirían
 		- viva, vivas, viva, vivamos, viváis, vivan
 		- viviera, vivieras, viviera, viviéramos, vivierais, vivieran
+		- *, vive, viva, vivamos, vivid, vivan
 		- viviendo, vivido
-	- ir
+	- ir (irregular)
 		- voy, vas, va, vamos, vais, van
 		- iba, ibas, iba, íbamos, ibais, iban
 		- fui, fuiste, fue, fuimos, fuisteis, fueron
@@ -43,8 +47,9 @@
 		- iría, irías, iría, iríamos, iríais, irían
 		- vaya, vayas, vaya, vayamos, vayáis, vayan
 		- fuera, fueras, fuera, fuéramos, fuerais, fueran
+		- *, ve, vaya, vamos, id, vayan
 		- yendo, ido
-	- ser
+	- ser (irregular)
 		- soy, eres, es, somos, sois, son
 		- era, eras, era, éramos, erais, eran
 		- fui, fuiste, fue, fuimos, fuisteis, fueron
@@ -52,8 +57,9 @@
 		- sería, serías, sería, seríamos, seríais, serían
 		- sea, seas, sea, seamos, seáis, sean
 		- fuera, fueras, fuera, fuéramos, fuerais, fueran
+		- *, sé, sea, seamos, sed, sean
 		- siendo, sido
-	- estar
+	- estar (irregular)
 		- estoy, estás, está, estamos, estáis, están
 		- estaba, estabas, estaba, estábamos, estabais, estaban
 		- estuve, estuviste, estuvo, estuvimos, estuvisteis, estuvieron
@@ -61,8 +67,9 @@
 		- estaría, estarías, estaría, estaríamos, estaríais, estarían
 		- esté, estés, esté, estemos, estéis, estén
 		- estuviera, estuvieras, estuviera, estuviéramos, estuvierais, estuvieran
+		- *, está, esté, estemos, estad, estén
 		- estando, estado
-	- haber
+	- haber (irregular)
 		- he, has, ha/hay, hemos, habéis, han
 		- había, habías, había, habíamos, habíais, habían
 		- hube, hubiste, hubo, hubimos, hubisteis, hubieron
@@ -70,8 +77,9 @@
 		- habría, habrías, habría, habríamos, habríais, habrían
 		- haya, hayas, haya, hayamos, hayáis, hayan
 		- hubiera, hubieras, hubiera, hubiéramos, hubierais, hubieran
+		- *, *, haya, *, *, hayan
 		- habiendo, habido
-	- tener
+	- tener (irregular)
 		- tengo, tienes, tiene, tenemos, tenéis, tienen
 		- tenía, tenías, tenía, teníamos, teníais, tenían
 		- tuve, tuviste, tuvo, tuvimos, tuvisteis, tuvieron
@@ -79,8 +87,9 @@
 		- tendría, tendrías, tendría, tendríamos, tendríais, tendrían
 		- tenga, tengas, tenga, tengamos, tengáis, tengan
 		- tuviera, tuvieras, tuviera, tuviéramos, tuvierais, tuvieran
+		- *, ten, tenga, tengamos, tened, tengan
 		- teniendo, tenido
-	- hacer
+	- hacer (irregular)
 		- hago, haces, hace, hacemos, hacéis, hacen
 		- hacía, hacías, hacía, hacíamos, hacíais, hacían
 		- hice, hiciste, hizo, hicimos, hicisteis, hicieron
@@ -88,8 +97,9 @@
 		- haría, harías, haría, haríamos, haríais, harían
 		- haga, hagas, haga, hagamos, hagáis, hagan
 		- hiciera, hicieras, hiciera, hiciéramos, hicierais, hicieran
+		- *, haz, haga, hagamos, haced, hagan
 		- haciendo, hecho
-	- dar
+	- dar (irregular)
 		- doy, das, da, damos, daís, dan
 		- daba, dabas, daba, dábamos, dabais, daban
 		- di, diste, dio, dimos, disteis, dieron
@@ -97,8 +107,9 @@
 		- daría, darías, daría, daríamos, daríais, darían
 		- dé, des, dé, demos, deis, den
 		- diera, dieras, diera, diéramos, dierais, dieran
+		- *, da, dé, demos, dad, den
 		- dando, dado
-	- ver
+	- ver (irregular)
 		- veo, ves, ve, vemos, veis, ven
 		- veía, veías, veía, veíamos, veíais, veían
 		- vi, viste, vio, vimos, visteis, vieron
@@ -106,8 +117,9 @@
 		- vería, verías, vería, veríamos, veríais, verían
 		- vea, veas, vea, veamos, veáis, vean
 		- viera, vieras, viera, viéramos, vierais, vieran
+		- *, ve, vea, veamos, ved, vean
 		- viendo, visto
-	- quedar
+	- quedar (regular)
 		- quedo, quedas, queda, quedamos, quedáis, quedan
 		- quedaba, quedabas, quedaba, quedábamos, quedabais, quedaban
 		- quedé, quedaste, quedó, quedamos, quedasteis, quedaron
@@ -115,8 +127,9 @@
 		- quedaría, quedarías, quedaría, quedaríamos, quedaríais, quedarían
 		- quede, quedes, quede, quedemos, quedéis, queden
 		- quedara, quedaras, quedara, quedáramos, quedarais, quedaran
+		- *, queda, quede, quedemos, quedad, queden
 		- quedando, quedado
-	- quedarse
+	- quedarse (regular)
 		- me quedo, te quedas, se queda, nos quedamos, os quedáis, se quedan
 		- me quedaba, te quedabas, se quedaba, nos quedábamos, os quedabais, se quedaban
 		- me quedé, te quedaste, se quedó, nos quedamos, os quedasteis, se quedaron
@@ -124,8 +137,9 @@
 		- me quedaría, te quedarías, se quedaría, nos quedaríamos, os quedaríais, se quedarían
 		- me quede, te quedes, se quede, nos quedemos, os quedéis, se queden
 		- me quedara, te quedaras, se quedara, nos quedáramos, os quedarais, se quedaran
+		- *, quédate, quédese, quedémonos, quedaos, quédense
 		- quedándose, quedado
-	- irse
+	- irse (irregular)
 		- me voy, te vas, se va, nos vamos, os vais, se van
 		- me iba, te ibas, se iba, nos íbamos, os ibais, se iban
 		- me fui, te fuiste, se fue, nos fuimos, os fuisteis, se fueron
@@ -133,8 +147,9 @@
 		- me iría, te irías, se iría, nos iríamos, os iríais, se irían
 		- me vaya, te vayas, se vaya, nos vayamos, os vayáis, se vayan
 		- me fuera, te fueras, se fuera, nos fuéramos, os fuerais, se fueran
+		- *, vete, váyase, vámonos, idos, váyanse
 		- yéndose, ido
-	- ponerse
+	- ponerse (irregular)
 		- me pongo, te pones, se pone, nos ponemos, os ponéis, se ponen
 		- me ponía, te ponías, se ponía, nos poníamos, os poníais, se ponían
 		- me puse, te pusiste, se puso, nos pusimos, os pusisteis, se pusieron
@@ -142,8 +157,9 @@
 		- me pondría, te pondrías, se pondría, nos pondríamos, os pondríais, se pondrían
 		- me ponga, te pongas, se ponga, nos pongamos, os pongáis, se pongan
 		- me pusiera, te pusieras, se pusiera, nos pusiéramos, os pusierais, se pusieran
+		- *, ponte, póngase, pongámonos, poneos, pónganse
 		- poniéndose, puesto
-	- sentirse
+	- sentirse (irregular)
 		- me siento, te sientes, se siente, nos sentimos, os sentís, se sienten
 		- me sentía, te sentías, se sentía, nos sentíamos, os sentíais, se sentían
 		- me sentí, te sentiste, se sintió, nos sentimos, os sentisteis, se sintieron
@@ -151,8 +167,9 @@
 		- me sentiría, te sentirías, se sentiría, nos sentiríamos, os sentiríais, se sentirían
 		- me sienta, te sientas, se sienta, nos sintamos, os sintáis, se sientan
 		- me sintiera, te sintieras, se sintiera, nos sintiéramos, os sintierais, se sintieran
+		- *, siéntete, siéntase, sintámonos, sentíos, siéntanse
 		- sintiéndose, sentido
-	- darse
+	- darse (irregular)
 		- me doy, te das, se da, nos damos, os dais, se dan
 		- me daba, te dabas, se daba, nos dábamos, os dabais, se daban
 		- me di, te diste, se dio, nos dimos, os disteis, se dieron
@@ -160,8 +177,9 @@
 		- me daría, te darías, se daría, nos daríamos, os daríais, se darían
 		- me dé, te des, se dé, nos demos, os deis, se den
 		- me diera, te dieras, se diera, nos diéramos, os dierais, se dieran
+		- *, date, dese, démonos, daos, dense
 		- dándose, dado
-	- enterarse
+	- enterarse (regular)
 		- me entero, te enteras, se entera, nos enteramos, os enteráis, se enteran
 		- me enteraba, te enterabas, se enteraba, nos enterábamos, os enterabais, se enteraban
 		- me enteré, te enteraste, se enteró, nos enteramos, os enterasteis, se enteraron
@@ -169,8 +187,9 @@
 		- me enteraría, te enterarías, se enteraría, nos enteraríamos, os enteraríais, se enterarían
 		- me entere, te enteres, se entere, nos enteremos, os enteréis, se enteren
 		- me enterara, te enteraras, se enterara, nos enteráramos, os enterarais, se enteraran
+		- *, entérate, entérese, enterémonos, enteraos, entérense
 		- enterándose, enterado
-	- sentarse
+	- sentarse (irregular)
 		- me siento, te sientas, se sienta, nos sentamos, os sentáis, se sientan
 		- me sentaba, te sentabas, se sentaba, nos sentábamos, os sentabais, se sentaban
 		- me senté, te sentaste, se sentó, nos sentamos, os sentasteis, se sentaron
@@ -178,8 +197,9 @@
 		- me sentaría, te sentarías, se sentaría, nos sentaríamos, os sentaríais, se sentarían
 		- me siente, te sientes, se siente, nos sentemos, os sentéis, se sienten
 		- me sentara, te sentaras, se sentara, nos sentáramos, os sentarais, se sentaran
+		- *, siéntate, siéntese, sentémonos, sentaos, siéntense
 		- sentándose, sentado
-	- acordarse
+	- acordarse (irregular)
 		- me acuerdo, te acuerdas, se acuerda, nos acordamos, os acordáis, se acuerdan
 		- me acordaba, te acordabas, se acordaba, nos acordábamos, os acordabais, se acordaban
 		- me acordé, te acordaste, se acordó, nos acordamos, os acordasteis, se acordaron
@@ -187,8 +207,9 @@
 		- me acordaría, te acordarías, se acordaría, nos acordaríamos, os acordaríais, se acordarían
 		- me acuerde, te acuerdes, se acuerde, nos acordemos, os acordéis, se acuerden
 		- me acordara, te acordaras, se acordara, nos acordáramos, os acordarais, se acordaran
+		- *, acuérdate, acuérdese, acordémonos, acordaos, acuérdense
 		- acordándose, acordado
-	- verse
+	- verse (irregular)
 		- me veo, te ves, se ve, nos vemos, os veis, se ven
 		- me veía, te veías, se veía, nos veíamos, os veíais, se veían
 		- me vi, te viste, se vio, nos vimos, os visteis, se vieron
@@ -196,8 +217,9 @@
 		- me vería, te verías, se vería, nos veríamos, os veríais, se verían
 		- me vea, te veas, se vea, nos veamos, os veáis, se vean
 		- me viera, te vieras, se viera, nos viéramos, os vierais, se vieran
+		- *, vete, véase, veámonos, veos, véanse
 		- viéndose, visto
-	- venir
+	- venir (irregular)
 		- vengo, vienes, viene, venimos, venís, vienen
 		- venía, venías, venía, veníamos, veníais, venían
 		- vine, viniste, vino, vinimos, vinisteis, vinieron
@@ -205,8 +227,9 @@
 		- vendría, vendrías, vendría, vendríamos, vendríais, vendrían
 		- venga, vengas, venga, vengamos, vengáis, vengan
 		- viniera, vinieras, viniera, viniéramos, vinierais, vinieran
+		- *, ven, venga, vengamos, venid, vengan
 		- viniendo, venido
-	- deber
+	- deber (regular)
 		- debo, debes, debe, debemos, debéis, deben
 		- debía, debías, debía, debíamos, debíais, debían
 		- debí, debiste, debió, debimos, debisteis, debieron
@@ -214,8 +237,9 @@
 		- debería, deberías, debería, deberíamos, debíais, deberían
 		- deba, debas, deba, debamos, debáis, deban
 		- debiera, debieras, debiera, debiéramos, debierais, debieran
+		- *, debe, deba, debamos, debed, deban
 		- debiendo, debido
-	- poder
+	- poder (irregular)
 		- puedo, puedes, puede, podemos, podéis, pueden
 		- podía, podías, podía, podíamos, podíais, podían
 		- pude, pudiste, pudo, pudimos, pudisteis, pudieron
@@ -223,8 +247,9 @@
 		- podría, podrías, podría, podríamos, podríais, podrían
 		- pueda, puedas, pueda, podamos, podáis, puedan
 		- pudiera, pudieras, pudiera, pudiéramos, pudierais, pudieran
+		- *, puede, pueda, podamos, poded, puedan
 		- pudiendo, podido
-	- poner
+	- poner (irregular)
 		- pongo, pones, pone, ponemos, ponéis, ponen
 		- ponía, ponías, ponía, poníamos, poníais, ponían
 		- puse, pusiste, puso, pusimos, pusisteis, pusieron
@@ -232,8 +257,9 @@
 		- pondría, pondrías, pondría, pondríamos, pondríais, pondrían
 		- ponga, pongas, ponga, pongamos, pongáis, pongan
 		- pusiera, pusieras, pusiera, pusiéramos, pusierais, pusieran
+		- *, pon, ponga, pongamos, poned, pongan
 		- poniendo, puesto
-	- salir
+	- salir (irregular)
 		- salgo, sales, sale, salimos, salís, salen
 		- salía, salías, salía, salíamos, salíais, salían
 		- salí, saliste, salió, salimos, salisteis, salieron
@@ -241,8 +267,9 @@
 		- saldría, saldrías, saldría, saldríamos, saldríais, saldrían
 		- salga, salgas, salga, salgamos, salgáis, salgan
 		- saliera, salieras, saliera, saliéramos, salierais, salieran
+		- *, sal, salga, salgamos, salid, salgan
 		- saliendo, salido
-	- decir
+	- decir (irregular)
 		- digo, dices, dice, decimos, decís, dicen
 		- decía, decías, decía, decíamos, decíais, decían
 		- dije, dijiste, dijo, dijimos, dijisteis, dijeron
@@ -250,8 +277,9 @@
 		- diría, dirías, diría, diríamos, diríais, dirían
 		- diga, digas, diga, digamos, digáis, digan
 		- dijera, dijeras, dijera, dijéramos, dijerais, dijeran
+		- *, di, diga, digamos, decid, digan
 		- diciendo, dicho
-	- saber
+	- saber (irregular)
 		- sé, sabes, sabe, sabemos, sabéis, saben
 		- sabía, sabías, sabía, sabíamos, sabíais, sabían
 		- supe, supiste, supo, supimos, supisteis, supieron
@@ -259,8 +287,9 @@
 		- sabría, sabrías, sabría, sabríamos, sabríais, sabrían
 		- sepa, sepas, sepa, sepamos, sepáis, sepan
 		- supiera, supieras, supiera, supiéramos, supierais, supieran
+		- *, sabe, sepa, sepamos, sabed, sepan
 		- sabiendo, sabido
-	- dormir
+	- dormir (irregular)
 		- duermo, duermes, duerme, dormimos, dormís, duermen
 		- dormía, dormías, dormía, dormíamos, dormíais, dormían
 		- dormí, dormiste, durmió, dormimos, dormisteis, durmieron
@@ -268,8 +297,9 @@
 		- dormiría, dormirías, dormiría, dormiríamos, dormiríais, dormirían
 		- duerma, duermas, duerma, durmamos, durmáis, duerman
 		- durmiera, durmieras, durmiera, durmiéramos, durmierais, durmieran
+		- *, duerme, duerma, durmamos, dormid, duerman
 		- durmiendo, dormido
-	- oír
+	- oír (irregular)
 		- oigo, oyes, oye, oímos, oís, oyen
 		- oía, oías, oía, oíamos, oíais, oían
 		- oí, oíste, oyó, oímos, oísteis, oyeron
@@ -277,8 +307,9 @@
 		- oiría, oirías, oiría, oiríamos, oiríais, oirían
 		- oiga, oigas, oiga, oigamos, oigáis, oigan
 		- oyera, oyeras, oyera, oyéramos, oyerais, oyeran
+		- *, oye, oiga, oigamos, oíd, oigan
 		- oyendo, oído
-	- corregir
+	- corregir (irregular)
 		- corrijo, corriges, corrige, corregimos, corregís, corrigen
 		- corregía, corregías, corregía, corregíamos, corregíais, corregían
 		- corregí, corregiste, corrigió, corregimos, corregisteis, corrigieron
@@ -286,8 +317,9 @@
 		- corregiría, corregirías, corregiría, corregiríamos, corregiríais, corregirían
 		- corrija, corrijas, corrija, corrijamos, corrijáis, corrijan
 		- corrigiera, corrigieras, corrigiera, corrigiéramos, corrigierais, corrigieran
+		- *, corrige, corrija, corrijamos, corregid, corrijan
 		- corrigiendo, corregido
-	- prohibir
+	- prohibir (regular)
 		- prohíbo, prohíbes, prohíbe, prohibimos, prohibís, prohíben
 		- prohibía, prohibías, prohibía, prohibíamos, prohibíais, prohibían
 		- prohibí, prohibiste, prohibió, prohibimos, prohibisteis, prohibieron
@@ -295,8 +327,9 @@
 		- prohibiría, prohibirías, prohibiría, prohibiríamos, prohibiríais, prohibirían
 		- prohíba, prohíbas, prohíba, prohibamos, prohibáis, prohíban
 		- prohibiera, prohibieras, prohibiera, prohibiéramos, prohibierais, prohibieran
+		- *, prohíbe, prohíba, prohibamos, prohibid, prohíban
 		- prohibiendo, prohibido
-	- practicar
+	- practicar (regular)
 		- practico, practicas, practica, practicamos, practicáis, practican
 		- practicaba, practicabas, practicaba, practicábamos, practicabais, practicaban
 		- practiqué, practicaste, practicó, practicamos, practicasteis, practicaron
@@ -304,8 +337,9 @@
 		- practicaría, practicarías, practicaría, practicaríamos, practicaríais, practicarían
 		- practique, practiques, practique, practiquemos, practiquéis, practiquen
 		- practicara, practicaras, practicara, practicáramos, practicarais, practicaran
+		- *, practica, practique, practiquemos, practicad, practiquen
 		- practicando, practicado
-	- caer
+	- caer (irregular)
 		- caigo, caes, cae, caemos, caéis, caen
 		- caía, caías, caía, caíamos, caíais, caían
 		- caí, caíste, cayó, caímos, caísteis, cayeron
@@ -313,8 +347,9 @@
 		- caería, caerías, caería, caeríamos, caeríais, caerían
 		- caiga, caigas, caiga, caigamos, caigáis, caigan
 		- cayera, cayeras, cayera, cayéramos, cayerais, cayeran
+		- *, cae, caiga, caigamos, caed, caigan
 		- cayendo, caído
-	- querer
+	- querer (irregular)
 		- quiero, quieres, quiere, queremos, queréis, quieren
 		- quería, querías, quería, queríamos, queríais, querían
 		- quise, quisiste, quiso, quisimos, quisisteis, quisieron
@@ -322,8 +357,9 @@
 		- querría, querrías, querría, querríamos, querríais, querrían
 		- quiera, quieras, quiera, queramos, queráis, quieran
 		- quisiera, quisieras, quisiera, quisiéramos, quisierais, quisieran
+		- *, quiere, quiera, queramos, quered, quieran
 		- queriendo, querido
-	- soler
+	- soler (irregular)
 		- suelo, sueles, suele, solemos, soléis, suelen
 		- solía, solías, solía, solíamos, solíais, solían
 		- solí, soliste, solió, solimos, solisteis, solieron
@@ -331,8 +367,9 @@
 		- solería, solerías, solería, soleríamos, soleríais, solerían
 		- suela, suelas, suela, solamos, soláis, suelan
 		- soliera, solieras, soliera, soliéramos, solierais, solieran
+		- *, *, *, *, *, *
 		- soliendo, solido
-	- necesitar
+	- necesitar (regular)
 		- necesito, necesitas, necesita, necesitamos, necesitáis, necesitan
 		- necesitaba, necesitabas, necesitaba, necesitábamos, necesitabais, necesitaban
 		- necesité, necesitaste, necesitó, necesitamos, necesitasteis, necesitaron
@@ -340,8 +377,9 @@
 		- necesitaría, necesitarías, necesitaría, necesitaríamos, necesitaríais, necesitarían
 		- necesite, necesites, necesite, necesitemos, necesitéis, necesiten
 		- necesitara, necesitaras, necesitara, necesitáramos, necesitarais, necesitaran
+		- *, necesita, necesite, necesitemos, necesitad, necesiten
 		- necesitando, necesitado
-	- gustar
+	- gustar (regular)
 		- gusto, gustas, gusta, gustamos, gustáis, gustan
 		- gustaba, gustabas, gustaba, gustábamos, gustabais, gustaban
 		- gusté, gustaste, gustó, gustamos, gustasteis, gustaron
@@ -349,8 +387,9 @@
 		- gustaría, gustarías, gustaría, gustaríamos, gustaríais, gustarían
 		- guste, gustes, guste, gustemos, gustéis, gusten
 		- gustara, gustaras, gustara, gustáramos, gustarais, gustaran
+		- *, gusta, guste, gustemos, gustad, gusten
 		- gustando, gustado
-	- trabajar
+	- trabajar (regular)
 		- trabajo, trabajas, trabaja, trabajamos, trabajáis, trabajan
 		- trabajaba, trabajabas, trabajaba, trabajábamos, trabajabais, trabajaban
 		- trabajé, trabajaste, trabajó, trabajamos, trabajasteis, trabajaron
@@ -358,8 +397,9 @@
 		- trabajaría, trabajarías, trabajaría, trabajaríamos, trabajaríais, trabajarían
 		- trabaje, trabajes, trabaje, trabajemos, trabajéis, trabajen
 		- trabajara, trabajaras, trabajara, trabajáramos, trabajarais, trabajaran
+		- *, trabaja, trabaje, trabajemos, trabajad, trabajen
 		- trabajando, trabajado
-	- aprender
+	- aprender (regular)
 		- aprendo, aprendes, aprende, aprendemos, aprendéis, aprenden
 		- aprendía, aprendías, aprendía, aprendíamos, aprendíais, aprendían
 		- aprendí, aprendiste, aprendió, aprendimos, aprendisteis, aprendieron
@@ -367,8 +407,9 @@
 		- aprendería, aprenderías, aprendería, aprenderíamos, aprenderíais, aprenderían
 		- aprenda, aprendas, aprenda, aprendamos, aprendáis, aprendan
 		- aprendiera, aprendieras, aprendiera, aprendiéramos, aprendierais, aprendieran
+		- *, aprende, aprenda, aprendamos, aprended, aprendan
 		- aprendiendo, aprendido
-	- abrir
+	- abrir (regular)
 		- abro, abres, abre, abrimos, abrís, abren
 		- abría, abrías, abría, abríamos, abríais, abrían
 		- abrí, abriste, abrió, abrimos, abristeis, abrieron
@@ -376,8 +417,9 @@
 		- abriría, abrirías, abriría, abriríamos, abriríais, abrirían
 		- abra, abras, abra, abramos, abráis, abran
 		- abriera, abrieras, abriera, abriéramos, abrierais, abrieran
+		- *, abre, abra, abramos, abrid, abran
 		- abriendo, abierto
-	- tomar
+	- tomar (regular)
 		- tomo, tomas, toma, tomamos, tomáis, toman
 		- tomaba, tomabas, tomaba, tomábamos, tomabais, tomaban
 		- tomé, tomaste, tomó, tomamos, tomasteis, tomaron
@@ -385,8 +427,9 @@
 		- tomaría, tomarías, tomaría, tomaríamos, tomaríais, tomarían
 		- tome, tomes, tome, tomemos, toméis, tomen
 		- tomara, tomaras, tomara, tomáramos, tomarais, tomaran
+		- *, toma, tome, tomemos, tomad, tomen
 		- tomando, tomado
-	- beber
+	- beber (regular)
 		- bebo, bebes, bebe, bebemos, bebéis, beben
 		- bebía, bebías, bebía, bebíamos, bebíais, bebían
 		- bebí, bebiste, bebió, bebimos, bebisteis, bebieron
@@ -394,8 +437,9 @@
 		- bebería, beberías, bebería, beberíamos, beberíais, beberían
 		- beba, bebas, beba, bebamos, bebáis, beban
 		- bebiera, bebieras, bebiera, bebiéramos, bebierais, bebieran
+		- *, bebe, beba, bebamos, bebed, beban
 		- bebiendo, bebido
-	- escribir
+	- escribir (regular)
 		- escribo, escribes, escribe, escribimos, escribís, escriben
 		- escribía, escribías, escribía, escribíamos, escribíais, escribían
 		- escribí, escribiste, escribió, escribimos, escribisteis, escribieron
@@ -403,8 +447,9 @@
 		- escribiría, escribirías, escribiría, escribiríamos, escribiríais, escribirían
 		- escriba, escribas, escriba, escribamos, escribáis, escriban
 		- escribiera, escribieras, escribiera, escribiéramos, escribierais, escribieran
+		- *, escribe, escriba, escribamos, escribid, escriban
 		- escribiendo, escrito
-	- llegar
+	- llegar (regular)
 		- llego, llegas, llega, llegamos, llegáis, llegan
 		- llegaba, llegabas, llegaba, llegábamos, llegabais, llegaban
 		- llegué, llegaste, llegó, llegamos, llegasteis, llegaron
@@ -412,8 +457,9 @@
 		- llegaría, llegarías, llegaría, llegaríamos, llegaríais, llegarían
 		- llegue, llegues, llegue, lleguemos, lleguéis, lleguen
 		- llegara, llegaras, llegara, llegáramos, llegarais, llegaran
+		- *, llega, llegue, lleguemos, llegad, lleguen
 		- llegando, llegado
-	- llevar
+	- llevar (regular)
 		- llevo, llevas, lleva, llevamos, lleváis, llevan
 		- llevaba, llevabas, llevaba, llevábamos, llevabais, llevaban
 		- llevé, llevaste, llevó, llevamos, llevasteis, llevaron
@@ -421,8 +467,9 @@
 		- llevaría, llevarías, llevaría, llevaríamos, llevaríais, llevarían
 		- lleve, lleves, lleve, llevemos, llevéis, lleven
 		- llevara, llevaras, llevara, lleváramos, llevarais, llevaran
+		- *, lleva, lleve, llevemos, llevad, lleven
 		- llevando, llevado
-	- llamar
+	- llamar (regular)
 		- llamo, llamas, llama, llamamos, llamáis, llaman
 		- llamaba, llamabas, llamaba, llamábamos, llamabais, llamaban
 		- llamé, llamaste, llamó, llamamos, llamasteis, llamaron
@@ -430,8 +477,9 @@
 		- llamaría, llamarías, llamaría, llamaríamos, llamaríais, llamarían
 		- llame, llames, llame, llamemos, llaméis, llamen
 		- llamara, llamaras, llamara, llamáramos, llamarais, llamaran
+		- *, llama, llame, llamemos, llamad, llamen
 		- llamando, llamado
-	- llenar
+	- llenar (regular)
 		- lleno, llenas, llena, llenamos, llenáis, llenan
 		- llenaba, llenabas, llenaba, llenábamos, llenabais, llenaban
 		- llené, llenaste, llenó, llenamos, llenasteis, llenaron
@@ -439,8 +487,9 @@
 		- llenaría, llenarías, llenaría, llenaríamos, llenaríais, llenarían
 		- llene, llenes, llene, llenemos, llenéis, llenen
 		- llenara, llenaras, llenara, llenáramos, llenarais, llenaran
+		- *, llena, llene, llenemos, llenad, llenen
 		- llenando, llenado
-	- llorar
+	- llorar (regular)
 		- lloro, lloras, llora, lloramos, lloráis, lloran
 		- lloraba, llorabas, lloraba, llorábamos, llorabais, lloraban
 		- lloré, lloraste, lloró, lloramos, llorasteis, lloraron
@@ -448,8 +497,9 @@
 		- lloraría, llorarías, lloraría, lloraríamos, lloraríais, llorarían
 		- llore, llores, llore, lloremos, lloréis, lloren
 		- llorara, lloraras, llorara, lloráramos, llorarais, lloraran
+		- *, llora, llore, lloremos, llorad, lloren
 		- llorando, llorado
-	- llover
+	- llover (irregular)
 		- -, -, llueve, -, -, -
 		- -, -, llovía, -, -, -
 		- -, -, llovió, -, -, -
@@ -457,8 +507,9 @@
 		- -, -, llovería, -, -, -
 		- -, -, llueva, -, -, -
 		- -, -, lloviera, -, -, -
+		- *, *, llueva, *, *, lluevan
 		- lloviendo, llovido
-	- echar
+	- echar (regular)
 		- echo, echas, echa, echamos, echáis, echan
 		- echaba, echabas, echaba, echábamos, echabais, echaban
 		- eché, echaste, echó, echamos, echasteis, echaron
@@ -466,8 +517,9 @@
 		- echaría, echarías, echaría, echaríamos, echaríais, echarían
 		- eche, eches, eche, echemos, echéis, echen
 		- echara, echaras, echara, echáramos, echarais, echaran
+		- *, echa, eche, echemos, echad, echen
 		- echando, echado
-	- coger
+	- coger (regular)
 		- cojo, coges, coge, cogemos, cogéis, cogen
 		- cogía, cogías, cogía, cogíamos, cogíais, cogían
 		- cogí, cogiste, cogió, cogimos, cogisteis, cogieron
@@ -475,4 +527,225 @@
 		- cogería, cogerías, cogería, cogeríamos, cogeríais, cogerían
 		- coja, cojas, coja, cojamos, cojáis, cojan
 		- cogiera, cogieras, cogiera, cogiéramos, cogierais, cogieran
+		- *, coge, coja, cojamos, coged, cojan
 		- cogiendo, cogido
+	- visitar (regular)
+		- visito, visitas, visita, visitamos, visitáis, visitan
+		- visitaba, visitabas, visitaba, visitábamos, visitabais, visitaban
+		- visité, visitaste, visitó, visitamos, visitasteis, visitaron
+		- visitaré, visitarás, visitará, visitaremos, visitaréis, visitarán
+		- visitaría, visitarías, visitaría, visitaríamos, visitaríais, visitarían
+		- visite, visites, visite, visitemos, visitéis, visiten
+		- visitara, visitaras, visitara, visitáramos, visitarais, visitaran
+		- *, visita, visite, visitemos, visitad, visiten
+		- visitando, visitado
+	- bailar (regular)
+		- bailo, bailas, baila, bailamos, bailáis, bailan
+		- bailaba, bailabas, bailaba, bailábamos, bailabais, bailaban
+		- bailé, bailaste, bailó, bailamos, bailasteis, bailaron
+		- bailaré, bailarás, bailará, bailaremos, bailaréis, bailarán
+		- bailaría, bailarías, bailaría, bailaríamos, bailaríais, bailarían
+		- baile, bailes, baile, bailemos, bailéis, bailen
+		- bailara, bailaras, bailara, bailáramos, bailarais, bailaran
+		- *, baila, baile, bailemos, bailad, bailen
+		- bailando, bailado
+	- cenar (regular)
+		- ceno, cenas, cena, cenamos, cenáis, cenan
+		- cenaba, cenabas, cenaba, cenábamos, cenabais, cenaban
+		- cené, cenaste, cenó, cenamos, cenasteis, cenaron
+		- cenaré, cenarás, cenará, cenaremos, cenaréis, cenarán
+		- cenaría, cenarías, cenaría, cenaríamos, cenaríais, cenarían
+		- cene, cenes, cene, cenemos, cenéis, cenen
+		- cenara, cenaras, cenara, cenáramos, cenarais, cenaran
+		- *, cena, cene, cenemos, cenad, cenen
+		- cenando, cenado
+	- cancelar (regular)
+		- cancelo, cancelas, cancela, cancelamos, canceláis, cancelan
+		- cancelaba, cancelabas, cancelaba, cancelábamos, cancelabais, cancelaban
+		- cancelé, cancelaste, canceló, cancelamos, cancelasteis, cancelaron
+		- cancelaré, cancelarás, cancelará, cancelaremos, cancelaréis, cancelarán
+		- cancelaría, cancelarías, cancelaría, cancelaríamos, cancelaríais, cancelarían
+		- cancele, canceles, cancele, cancelemos, canceléis, cancelen
+		- cancelara, cancelaras, cancelara, canceláramos, cancelarais, cancelaran
+		- *, cancela, cancele, cancelemos, cancelad, cancelen
+		- cancelando, cancelado
+	- nadar (regular)
+		- nado, nadas, nada, nadamos, nadáis, nadan
+		- nadaba, nadabas, nadaba, nadábamos, nadabais, nadaban
+		- nadé, nadaste, nadó, nadamos, nadasteis, nadaron
+		- nadaré, nadarás, nadará, nadaremos, nadaréis, nadarán
+		- nadaría, nadarías, nadaría, nadaríamos, nadaríais, nadarían
+		- nade, nades, nade, nademos, nadéis, naden
+		- nadara, nadaras, nadara, nadáramos, nadarais, nadaran
+		- *, nada, nade, nademos, nadad, naden
+		- nadando, nadado
+	- entrar (regular)
+		- entro, entras, entra, entramos, entráis, entran
+		- entraba, entrabas, entraba, entrábamos, entrabais, entraban
+		- entré, entraste, entró, entramos, entrasteis, entraron
+		- entraré, entrarás, entrará, entraremos, entraréis, entrarán
+		- entraría, entrarías, entraría, entraríamos, entraríais, entrarían
+		- entre, entres, entre, entremos, entréis, entren
+		- entrara, entraras, entrara, entráramos, entrarais, entraran
+		- *, entra, entre, entremos, entrad, entren
+		- entrando, entrado
+	- estudiar (regular)
+		- estudio, estudias, estudia, estudiamos, estudiáis, estudian
+		- estudiaba, estudiabas, estudiaba, estudiábamos, estudiabais, estudiaban
+		- estudié, estudiaste, estudió, estudiamos, estudiasteis, estudiaron
+		- estudiaré, estudiarás, estudiará, estudiaremos, estudiaréis, estudiarán
+		- estudiaría, estudiarías, estudiaría, estudiaríamos, estudiaríais, estudiarían
+		- estudie, estudies, estudie, estudiemos, estudiéis, estudien
+		- estudiara, estudiaras, estudiara, estudiáramos, estudiarais, estudiaran
+		- *, estudia, estudie, estudiemos, estudiad, estudien
+		- estudiando, estudiado
+	- entender (irregular)
+		- entiendo, entiendes, entiende, entendemos, entendéis, entienden
+		- entendía, entendías, entendía, entendíamos, entendíais, entendían
+		- entendí, entendiste, entendió, entendimos, entendisteis, entendieron
+		- entenderé, entenderás, entenderá, entenderemos, entenderéis, entenderán
+		- entendería, entenderías, entendería, entenderíamos, entenderíais, entenderían
+		- entienda, entiendas, entienda, entendamos, entendáis, entiendan
+		- entendiera, entendieras, entendiera, entendiéramos, entendierais, entendieran
+		- *, entiende, entienda, entendamos, entended, entiendan
+		- entendiendo, entendido
+	- comprender (regular)
+		- comprendo, comprendes, comprende, comprendemos, comprendéis, comprenden
+		- comprendía, comprendías, comprendía, comprendíamos, comprendíais, comprendían
+		- comprendí, comprendiste, comprendió, comprendimos, comprendisteis, comprendieron
+		- comprenderé, comprenderás, comprenderá, comprenderemos, comprenderéis, comprenderán
+		- comprendería, comprenderías, comprendería, comprenderíamos, comprenderíais, comprenderían
+		- comprenda, comprendas, comprenda, comprendamos, comprendáis, comprendan
+		- comprendiera, comprendieras, comprendiera, comprendiéramos, comprendierais, comprendieran
+		- *, comprende, comprenda, comprendamos, comprended, comprendan
+		- comprendiendo, comprendido
+	- escuchar (regular)
+		- escucho, escuchas, escucha, escuchamos, escucháis, escuchan
+		- escuchaba, escuchabas, escuchaba, escuchábamos, escuchabais, escuchaban
+		- escuché, escuchaste, escuchó, escuchamos, escuchasteis, escucharon
+		- escucharé, escucharás, escuchará, escucharemos, escucharéis, escucharán
+		- escucharía, escucharías, escucharía, escucharíamos, escucharíais, escucharían
+		- escuche, escuches, escuche, escuchemos, escuchéis, escuchen
+		- escuchara, escucharas, escuchara, escucháramos, escucharais, escucharan
+		- *, escucha, escuche, escuchemos, escuchad, escuchen
+		- escuchando, escuchado
+	- comenzar (irregular)
+		- comienzo, comienzas, comienza, comenzamos, comenzáis, comienzan
+		- comenzaba, comenzabas, comenzaba, comenzábamos, comenzabais, comenzaban
+		- comencé, comenzaste, comenzó, comenzamos, comenzasteis, comenzaron
+		- comenzaré, comenzarás, comenzará, comenzaremos, comenzaréis, comenzarán
+		- comenzaría, comenzarías, comenzaría, comenzaríamos, comenzaríais, comenzarían
+		- comience, comiences, comience, comencemos, comencéis, comiencen
+		- comenzara, comenzaras, comenzara, comenzáramos, comenzarais, comenzaran
+		- *, comienza, comience, comencemos, comenzad, comiencen
+		- comenzando, comenzado
+	- molestar (regular)
+		- molesto, molestas, molesta, molestamos, molestáis, molestan
+		- molestaba, molestabas, molestaba, molestábamos, molestabais, molestaban
+		- molesté, molestaste, molestó, molestamos, molestasteis, molestaron
+		- molestaré, molestarás, molestará, molestaremos, molestaréis, molestarán
+		- molestaría, molestarías, molestaría, molestaríamos, molestaríais, molestarían
+		- moleste, molestes, moleste, molestemos, molestéis, molesten
+		- molestara, molestaras, molestara, molestáramos, molestarais, molestaran
+		- *, molesta, moleste, molestemos, molestad, molesten
+		- molestando, molestado
+	- saludar (regular)
+		- saludo, saludas, saluda, saludamos, saludáis, saludan
+		- saludaba, saludabas, saludaba, saludábamos, saludabais, saludaban
+		- saludé, saludaste, saludó, saludamos, saludasteis, saludaron
+		- saludaré, saludarás, saludará, saludaremos, saludaréis, saludarán
+		- saludaría, saludarías, saludaría, saludaríamos, saludaríais, saludarían
+		- salude, saludes, salude, saludemos, saludéis, saluden
+		- saludara, saludaras, saludara, saludáramos, saludarais, saludaran
+		- *, saluda, salude, saludemos, saludad, saluden
+		- saludando, saludado
+	- incomodar (regular)
+		- incomodo, incomodas, incomoda, incomodamos, incomodáis, incomodan
+		- incomodaba, incomodabas, incomodaba, incomodábamos, incomodabais, incomodaban
+		- incomodé, incomodaste, incomodó, incomodamos, incomodasteis, incomodaron
+		- incomodaré, incomodarás, incomodará, incomodaremos, incomodaréis, incomodarán
+		- incomodaría, incomodarías, incomodaría, incomodaríamos, incomodaríais, incomodarían
+		- incomode, incomodes, incomode, incomodemos, incomodéis, incomoden
+		- incomodara, incomodaras, incomodara, incomodáramos, incomodarais, incomodaran
+		- *, incomoda, incomode, incomodemos, incomodad, incomoden
+		- incomodando, incomodado
+	- invitar (regular)
+		- invito, invitas, invita, invitamos, invitáis, invitan
+		- invitaba, invitabas, invitaba, invitábamos, invitabais, invitaban
+		- invité, invitaste, invitó, invitamos, invitasteis, invitaron
+		- invitaré, invitarás, invitará, invitaremos, invitaréis, invitarán
+		- invitaría, invitarías, invitaría, invitaríamos, invitaríais, invitarían
+		- invite, invites, invite, invitemos, invitéis, inviten
+		- invitara, invitaras, invitara, invitáramos, invitarais, invitaran
+		- *, invita, invite, invitemos, invitad, inviten
+		- invitando, invitado
+	- sentir (irregular)
+		- siento, sientes, siente, sentimos, sentís, sienten
+		- sentía, sentías, sentía, sentíamos, sentíais, sentían
+		- sentí, sentiste, sintió, sentimos, sentisteis, sintieron
+		- sentiré, sentirás, sentirá, sentiremos, sentiréis, sentirán
+		- sentiría, sentirías, sentiría, sentiríamos, sentiríais, sentirían
+		- sienta, sientas, sienta, sintamos, sintáis, sientan
+		- sintiera, sintieras, sintiera, sintiéramos, sintierais, sintieran
+		- *, siente, sienta, sintamos, sentid, sientan
+		- sintiendo, sentido
+	- lastimar (regular)
+		- lastimo, lastimas, lastima, lastimamos, lastimáis, lastiman
+		- lastimaba, lastimabas, lastimaba, lastimábamos, lastimabais, lastimaban
+		- lastimé, lastimaste, lastimó, lastimamos, lastimasteis, lastimaron
+		- lastimaré, lastimarás, lastimará, lastimaremos, lastimaréis, lastimarán
+		- lastimaría, lastimarías, lastimaría, lastimaríamos, lastimaríais, lastimarían
+		- lastime, lastimes, lastime, lastimemos, lastiméis, lastimen
+		- lastimara, lastimaras, lastimara, lastimáramos, lastimarais, lastimaran
+		- *, lastima, lastime, lastimemos, lastimad, lastimen
+		- lastimando, lastimado
+	- sufrir (regular)
+		- sufro, sufres, sufre, sufrimos, sufrís, sufren
+		- sufría, sufrías, sufría, sufríamos, sufríais, sufrían
+		- sufrí, sufriste, sufrió, sufrimos, sufristeis, sufrieron
+		- sufriré, sufrirás, sufrirá, sufriremos, sufriréis, sufrirán
+		- sufriría, sufrirías, sufriría, sufriríamos, sufriríais, sufrirían
+		- sufra, sufras, sufra, suframos, sufráis, sufran
+		- sufriera, sufrieras, sufriera, sufriéramos, sufrierais, sufrieran
+		- *, sufre, sufra, suframos, sufrid, sufran
+		- sufriendo, sufrido
+	- enviar (regular)
+		- envío, envías, envía, enviamos, enviáis, envían
+		- enviaba, enviabas, enviaba, enviábamos, enviabais, enviaban
+		- envié, enviaste, envió, enviamos, enviasteis, enviaron
+		- enviaré, enviarás, enviará, enviaremos, enviaréis, enviarán
+		- enviaría, enviarías, enviaría, enviaríamos, enviaríais, enviarían
+		- envíe, envíes, envíe, enviemos, enviéis, envíen
+		- enviara, enviaras, enviara, enviáramos, enviarais, enviaran
+		- *, envía, envíe, enviemos, enviad, envíen
+		- enviando, enviado
+	- preocupar (regular)
+		- preocupo, preocupas, preocupa, preocupamos, preocupáis, preocupan
+		- preocupaba, preocupabas, preocupaba, preocupábamos, preocupabais, preocupaban
+		- preocupé, preocupaste, preocupó, preocupamos, preocupasteis, preocuparon
+		- preocuparé, preocuparás, preocupará, preocuparemos, preocuparéis, preocuparán
+		- preocuparía, preocuparías, preocuparía, preocuparíamos, preocuparíais, preocuparían
+		- preocupe, preocupes, preocupe, preocupemos, preocupéis, preocupen
+		- preocupara, preocuparas, preocupara, preocupáramos, preocuparais, preocuparan
+		- *, preocupa, preocupe, preocupemos, preocupad, preocupen
+		- preocupando, preocupado
+	- responder (regular)
+		- respondo, respondes, responde, respondemos, respondéis, responden
+		- respondía, respondías, respondía, respondíamos, respondíais, respondían
+		- respondí, respondiste, respondió, respondimos, respondisteis, respondieron
+		- responderé, responderás, responderá, responderemos, responderéis, responderán
+		- respondería, responderías, respondería, responderíamos, responderíais, responderían
+		- responda, respondas, responda, respondamos, respondáis, respondan
+		- respondiera, respondieras, respondiera, respondiéramos, respondierais, respondieran
+		- *, responde, responda, respondamos, responded, respondan
+		- respondiendo, respondido
+	- contestar (regular)
+		- contesto, contestas, contesta, contestamos, contestáis, contestan
+		- contestaba, contestabas, contestaba, contestábamos, contestabais, contestaban
+		- contesté, contestaste, contestó, contestamos, contestasteis, contestaron
+		- contestaré, contestarás, contestará, contestaremos, contestaréis, contestarán
+		- contestaría, contestarías, contestaría, contestaríamos, contestaríais, contestarían
+		- conteste, contestes, conteste, contestemos, contestéis, contesten
+		- contestara, contestaras, contestara, contestáramos, contestarais, contestaran
+		- *, contesta, conteste, contestemos, contestad, contesten
+		- contestando, contestado

@@ -1,6 +1,7 @@
 [
   {
     "verb": "hablar",
+    "kind": "regular",
     "present": [
       "hablo",
       "hablas",
@@ -57,11 +58,20 @@
       "hablarais",
       "hablaran"
     ],
+    "imperative": [
+      "*",
+      "habla",
+      "hable",
+      "hablemos",
+      "hablad",
+      "hablen"
+    ],
     "gerund": "hablando",
     "pastParticiple": "hablado"
   },
   {
     "verb": "comer",
+    "kind": "regular",
     "present": [
       "como",
       "comes",
@@ -118,11 +128,20 @@
       "comierais",
       "comieran"
     ],
+    "imperative": [
+      "*",
+      "come",
+      "coma",
+      "comamos",
+      "comed",
+      "coman"
+    ],
     "gerund": "comiendo",
     "pastParticiple": "comido"
   },
   {
     "verb": "creer",
+    "kind": "regular",
     "present": [
       "creo",
       "crees",
@@ -179,11 +198,20 @@
       "creyerais",
       "creyeran"
     ],
+    "imperative": [
+      "*",
+      "cree",
+      "crea",
+      "creamos",
+      "creed",
+      "crean"
+    ],
     "gerund": "creyendo",
     "pastParticiple": "creído"
   },
   {
     "verb": "vivir",
+    "kind": "regular",
     "present": [
       "vivo",
       "vives",
@@ -240,11 +268,20 @@
       "vivierais",
       "vivieran"
     ],
+    "imperative": [
+      "*",
+      "vive",
+      "viva",
+      "vivamos",
+      "vivid",
+      "vivan"
+    ],
     "gerund": "viviendo",
     "pastParticiple": "vivido"
   },
   {
     "verb": "ir",
+    "kind": "irregular",
     "present": [
       "voy",
       "vas",
@@ -301,11 +338,20 @@
       "fuerais",
       "fueran"
     ],
+    "imperative": [
+      "*",
+      "ve",
+      "vaya",
+      "vamos",
+      "id",
+      "vayan"
+    ],
     "gerund": "yendo",
     "pastParticiple": "ido"
   },
   {
     "verb": "ser",
+    "kind": "irregular",
     "present": [
       "soy",
       "eres",
@@ -362,11 +408,20 @@
       "fuerais",
       "fueran"
     ],
+    "imperative": [
+      "*",
+      "sé",
+      "sea",
+      "seamos",
+      "sed",
+      "sean"
+    ],
     "gerund": "siendo",
     "pastParticiple": "sido"
   },
   {
     "verb": "estar",
+    "kind": "irregular",
     "present": [
       "estoy",
       "estás",
@@ -423,11 +478,20 @@
       "estuvierais",
       "estuvieran"
     ],
+    "imperative": [
+      "*",
+      "está",
+      "esté",
+      "estemos",
+      "estad",
+      "estén"
+    ],
     "gerund": "estando",
     "pastParticiple": "estado"
   },
   {
     "verb": "haber",
+    "kind": "irregular",
     "present": [
       "he",
       "has",
@@ -484,11 +548,20 @@
       "hubierais",
       "hubieran"
     ],
+    "imperative": [
+      "*",
+      "*",
+      "haya",
+      "*",
+      "*",
+      "hayan"
+    ],
     "gerund": "habiendo",
     "pastParticiple": "habido"
   },
   {
     "verb": "tener",
+    "kind": "irregular",
     "present": [
       "tengo",
       "tienes",
@@ -545,11 +618,20 @@
       "tuvierais",
       "tuvieran"
     ],
+    "imperative": [
+      "*",
+      "ten",
+      "tenga",
+      "tengamos",
+      "tened",
+      "tengan"
+    ],
     "gerund": "teniendo",
     "pastParticiple": "tenido"
   },
   {
     "verb": "hacer",
+    "kind": "irregular",
     "present": [
       "hago",
       "haces",
@@ -606,11 +688,20 @@
       "hicierais",
       "hicieran"
     ],
+    "imperative": [
+      "*",
+      "haz",
+      "haga",
+      "hagamos",
+      "haced",
+      "hagan"
+    ],
     "gerund": "haciendo",
     "pastParticiple": "hecho"
   },
   {
     "verb": "dar",
+    "kind": "irregular",
     "present": [
       "doy",
       "das",
@@ -667,11 +758,20 @@
       "dierais",
       "dieran"
     ],
+    "imperative": [
+      "*",
+      "da",
+      "dé",
+      "demos",
+      "dad",
+      "den"
+    ],
     "gerund": "dando",
     "pastParticiple": "dado"
   },
   {
     "verb": "ver",
+    "kind": "irregular",
     "present": [
       "veo",
       "ves",
@@ -728,11 +828,20 @@
       "vierais",
       "vieran"
     ],
+    "imperative": [
+      "*",
+      "ve",
+      "vea",
+      "veamos",
+      "ved",
+      "vean"
+    ],
     "gerund": "viendo",
     "pastParticiple": "visto"
   },
   {
     "verb": "quedar",
+    "kind": "regular",
     "present": [
       "quedo",
       "quedas",
@@ -789,11 +898,20 @@
       "quedarais",
       "quedaran"
     ],
+    "imperative": [
+      "*",
+      "queda",
+      "quede",
+      "quedemos",
+      "quedad",
+      "queden"
+    ],
     "gerund": "quedando",
     "pastParticiple": "quedado"
   },
   {
     "verb": "quedarse",
+    "kind": "regular",
     "present": [
       "me quedo",
       "te quedas",
@@ -850,11 +968,20 @@
       "os quedarais",
       "se quedaran"
     ],
+    "imperative": [
+      "*",
+      "quédate",
+      "quédese",
+      "quedémonos",
+      "quedaos",
+      "quédense"
+    ],
     "gerund": "quedándose",
     "pastParticiple": "quedado"
   },
   {
     "verb": "irse",
+    "kind": "irregular",
     "present": [
       "me voy",
       "te vas",
@@ -911,11 +1038,20 @@
       "os fuerais",
       "se fueran"
     ],
+    "imperative": [
+      "*",
+      "vete",
+      "váyase",
+      "vámonos",
+      "idos",
+      "váyanse"
+    ],
     "gerund": "yéndose",
     "pastParticiple": "ido"
   },
   {
     "verb": "ponerse",
+    "kind": "irregular",
     "present": [
       "me pongo",
       "te pones",
@@ -972,11 +1108,20 @@
       "os pusierais",
       "se pusieran"
     ],
+    "imperative": [
+      "*",
+      "ponte",
+      "póngase",
+      "pongámonos",
+      "poneos",
+      "pónganse"
+    ],
     "gerund": "poniéndose",
     "pastParticiple": "puesto"
   },
   {
     "verb": "sentirse",
+    "kind": "irregular",
     "present": [
       "me siento",
       "te sientes",
@@ -1033,11 +1178,20 @@
       "os sintierais",
       "se sintieran"
     ],
+    "imperative": [
+      "*",
+      "siéntete",
+      "siéntase",
+      "sintámonos",
+      "sentíos",
+      "siéntanse"
+    ],
     "gerund": "sintiéndose",
     "pastParticiple": "sentido"
   },
   {
     "verb": "darse",
+    "kind": "irregular",
     "present": [
       "me doy",
       "te das",
@@ -1094,11 +1248,20 @@
       "os dierais",
       "se dieran"
     ],
+    "imperative": [
+      "*",
+      "date",
+      "dese",
+      "démonos",
+      "daos",
+      "dense"
+    ],
     "gerund": "dándose",
     "pastParticiple": "dado"
   },
   {
     "verb": "enterarse",
+    "kind": "regular",
     "present": [
       "me entero",
       "te enteras",
@@ -1155,11 +1318,20 @@
       "os enterarais",
       "se enteraran"
     ],
+    "imperative": [
+      "*",
+      "entérate",
+      "entérese",
+      "enterémonos",
+      "enteraos",
+      "entérense"
+    ],
     "gerund": "enterándose",
     "pastParticiple": "enterado"
   },
   {
     "verb": "sentarse",
+    "kind": "irregular",
     "present": [
       "me siento",
       "te sientas",
@@ -1216,11 +1388,20 @@
       "os sentarais",
       "se sentaran"
     ],
+    "imperative": [
+      "*",
+      "siéntate",
+      "siéntese",
+      "sentémonos",
+      "sentaos",
+      "siéntense"
+    ],
     "gerund": "sentándose",
     "pastParticiple": "sentado"
   },
   {
     "verb": "acordarse",
+    "kind": "irregular",
     "present": [
       "me acuerdo",
       "te acuerdas",
@@ -1277,11 +1458,20 @@
       "os acordarais",
       "se acordaran"
     ],
+    "imperative": [
+      "*",
+      "acuérdate",
+      "acuérdese",
+      "acordémonos",
+      "acordaos",
+      "acuérdense"
+    ],
     "gerund": "acordándose",
     "pastParticiple": "acordado"
   },
   {
     "verb": "verse",
+    "kind": "irregular",
     "present": [
       "me veo",
       "te ves",
@@ -1338,11 +1528,20 @@
       "os vierais",
       "se vieran"
     ],
+    "imperative": [
+      "*",
+      "vete",
+      "véase",
+      "veámonos",
+      "veos",
+      "véanse"
+    ],
     "gerund": "viéndose",
     "pastParticiple": "visto"
   },
   {
     "verb": "venir",
+    "kind": "irregular",
     "present": [
       "vengo",
       "vienes",
@@ -1399,11 +1598,20 @@
       "vinierais",
       "vinieran"
     ],
+    "imperative": [
+      "*",
+      "ven",
+      "venga",
+      "vengamos",
+      "venid",
+      "vengan"
+    ],
     "gerund": "viniendo",
     "pastParticiple": "venido"
   },
   {
     "verb": "deber",
+    "kind": "regular",
     "present": [
       "debo",
       "debes",
@@ -1460,11 +1668,20 @@
       "debierais",
       "debieran"
     ],
+    "imperative": [
+      "*",
+      "debe",
+      "deba",
+      "debamos",
+      "debed",
+      "deban"
+    ],
     "gerund": "debiendo",
     "pastParticiple": "debido"
   },
   {
     "verb": "poder",
+    "kind": "irregular",
     "present": [
       "puedo",
       "puedes",
@@ -1521,11 +1738,20 @@
       "pudierais",
       "pudieran"
     ],
+    "imperative": [
+      "*",
+      "puede",
+      "pueda",
+      "podamos",
+      "poded",
+      "puedan"
+    ],
     "gerund": "pudiendo",
     "pastParticiple": "podido"
   },
   {
     "verb": "poner",
+    "kind": "irregular",
     "present": [
       "pongo",
       "pones",
@@ -1582,11 +1808,20 @@
       "pusierais",
       "pusieran"
     ],
+    "imperative": [
+      "*",
+      "pon",
+      "ponga",
+      "pongamos",
+      "poned",
+      "pongan"
+    ],
     "gerund": "poniendo",
     "pastParticiple": "puesto"
   },
   {
     "verb": "salir",
+    "kind": "irregular",
     "present": [
       "salgo",
       "sales",
@@ -1643,11 +1878,20 @@
       "salierais",
       "salieran"
     ],
+    "imperative": [
+      "*",
+      "sal",
+      "salga",
+      "salgamos",
+      "salid",
+      "salgan"
+    ],
     "gerund": "saliendo",
     "pastParticiple": "salido"
   },
   {
     "verb": "decir",
+    "kind": "irregular",
     "present": [
       "digo",
       "dices",
@@ -1704,11 +1948,20 @@
       "dijerais",
       "dijeran"
     ],
+    "imperative": [
+      "*",
+      "di",
+      "diga",
+      "digamos",
+      "decid",
+      "digan"
+    ],
     "gerund": "diciendo",
     "pastParticiple": "dicho"
   },
   {
     "verb": "saber",
+    "kind": "irregular",
     "present": [
       "sé",
       "sabes",
@@ -1765,11 +2018,20 @@
       "supierais",
       "supieran"
     ],
+    "imperative": [
+      "*",
+      "sabe",
+      "sepa",
+      "sepamos",
+      "sabed",
+      "sepan"
+    ],
     "gerund": "sabiendo",
     "pastParticiple": "sabido"
   },
   {
     "verb": "dormir",
+    "kind": "irregular",
     "present": [
       "duermo",
       "duermes",
@@ -1826,11 +2088,20 @@
       "durmierais",
       "durmieran"
     ],
+    "imperative": [
+      "*",
+      "duerme",
+      "duerma",
+      "durmamos",
+      "dormid",
+      "duerman"
+    ],
     "gerund": "durmiendo",
     "pastParticiple": "dormido"
   },
   {
     "verb": "oír",
+    "kind": "irregular",
     "present": [
       "oigo",
       "oyes",
@@ -1887,11 +2158,20 @@
       "oyerais",
       "oyeran"
     ],
+    "imperative": [
+      "*",
+      "oye",
+      "oiga",
+      "oigamos",
+      "oíd",
+      "oigan"
+    ],
     "gerund": "oyendo",
     "pastParticiple": "oído"
   },
   {
     "verb": "corregir",
+    "kind": "irregular",
     "present": [
       "corrijo",
       "corriges",
@@ -1948,11 +2228,20 @@
       "corrigierais",
       "corrigieran"
     ],
+    "imperative": [
+      "*",
+      "corrige",
+      "corrija",
+      "corrijamos",
+      "corregid",
+      "corrijan"
+    ],
     "gerund": "corrigiendo",
     "pastParticiple": "corregido"
   },
   {
     "verb": "prohibir",
+    "kind": "regular",
     "present": [
       "prohíbo",
       "prohíbes",
@@ -2009,11 +2298,20 @@
       "prohibierais",
       "prohibieran"
     ],
+    "imperative": [
+      "*",
+      "prohíbe",
+      "prohíba",
+      "prohibamos",
+      "prohibid",
+      "prohíban"
+    ],
     "gerund": "prohibiendo",
     "pastParticiple": "prohibido"
   },
   {
     "verb": "practicar",
+    "kind": "regular",
     "present": [
       "practico",
       "practicas",
@@ -2070,11 +2368,20 @@
       "practicarais",
       "practicaran"
     ],
+    "imperative": [
+      "*",
+      "practica",
+      "practique",
+      "practiquemos",
+      "practicad",
+      "practiquen"
+    ],
     "gerund": "practicando",
     "pastParticiple": "practicado"
   },
   {
     "verb": "caer",
+    "kind": "irregular",
     "present": [
       "caigo",
       "caes",
@@ -2131,11 +2438,20 @@
       "cayerais",
       "cayeran"
     ],
+    "imperative": [
+      "*",
+      "cae",
+      "caiga",
+      "caigamos",
+      "caed",
+      "caigan"
+    ],
     "gerund": "cayendo",
     "pastParticiple": "caído"
   },
   {
     "verb": "querer",
+    "kind": "irregular",
     "present": [
       "quiero",
       "quieres",
@@ -2192,11 +2508,20 @@
       "quisierais",
       "quisieran"
     ],
+    "imperative": [
+      "*",
+      "quiere",
+      "quiera",
+      "queramos",
+      "quered",
+      "quieran"
+    ],
     "gerund": "queriendo",
     "pastParticiple": "querido"
   },
   {
     "verb": "soler",
+    "kind": "irregular",
     "present": [
       "suelo",
       "sueles",
@@ -2253,11 +2578,20 @@
       "solierais",
       "solieran"
     ],
+    "imperative": [
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*"
+    ],
     "gerund": "soliendo",
     "pastParticiple": "solido"
   },
   {
     "verb": "necesitar",
+    "kind": "regular",
     "present": [
       "necesito",
       "necesitas",
@@ -2314,11 +2648,20 @@
       "necesitarais",
       "necesitaran"
     ],
+    "imperative": [
+      "*",
+      "necesita",
+      "necesite",
+      "necesitemos",
+      "necesitad",
+      "necesiten"
+    ],
     "gerund": "necesitando",
     "pastParticiple": "necesitado"
   },
   {
     "verb": "gustar",
+    "kind": "regular",
     "present": [
       "gusto",
       "gustas",
@@ -2375,11 +2718,20 @@
       "gustarais",
       "gustaran"
     ],
+    "imperative": [
+      "*",
+      "gusta",
+      "guste",
+      "gustemos",
+      "gustad",
+      "gusten"
+    ],
     "gerund": "gustando",
     "pastParticiple": "gustado"
   },
   {
     "verb": "trabajar",
+    "kind": "regular",
     "present": [
       "trabajo",
       "trabajas",
@@ -2436,11 +2788,20 @@
       "trabajarais",
       "trabajaran"
     ],
+    "imperative": [
+      "*",
+      "trabaja",
+      "trabaje",
+      "trabajemos",
+      "trabajad",
+      "trabajen"
+    ],
     "gerund": "trabajando",
     "pastParticiple": "trabajado"
   },
   {
     "verb": "aprender",
+    "kind": "regular",
     "present": [
       "aprendo",
       "aprendes",
@@ -2497,11 +2858,20 @@
       "aprendierais",
       "aprendieran"
     ],
+    "imperative": [
+      "*",
+      "aprende",
+      "aprenda",
+      "aprendamos",
+      "aprended",
+      "aprendan"
+    ],
     "gerund": "aprendiendo",
     "pastParticiple": "aprendido"
   },
   {
     "verb": "abrir",
+    "kind": "regular",
     "present": [
       "abro",
       "abres",
@@ -2558,11 +2928,20 @@
       "abrierais",
       "abrieran"
     ],
+    "imperative": [
+      "*",
+      "abre",
+      "abra",
+      "abramos",
+      "abrid",
+      "abran"
+    ],
     "gerund": "abriendo",
     "pastParticiple": "abierto"
   },
   {
     "verb": "tomar",
+    "kind": "regular",
     "present": [
       "tomo",
       "tomas",
@@ -2619,11 +2998,20 @@
       "tomarais",
       "tomaran"
     ],
+    "imperative": [
+      "*",
+      "toma",
+      "tome",
+      "tomemos",
+      "tomad",
+      "tomen"
+    ],
     "gerund": "tomando",
     "pastParticiple": "tomado"
   },
   {
     "verb": "beber",
+    "kind": "regular",
     "present": [
       "bebo",
       "bebes",
@@ -2680,11 +3068,20 @@
       "bebierais",
       "bebieran"
     ],
+    "imperative": [
+      "*",
+      "bebe",
+      "beba",
+      "bebamos",
+      "bebed",
+      "beban"
+    ],
     "gerund": "bebiendo",
     "pastParticiple": "bebido"
   },
   {
     "verb": "escribir",
+    "kind": "regular",
     "present": [
       "escribo",
       "escribes",
@@ -2741,11 +3138,20 @@
       "escribierais",
       "escribieran"
     ],
+    "imperative": [
+      "*",
+      "escribe",
+      "escriba",
+      "escribamos",
+      "escribid",
+      "escriban"
+    ],
     "gerund": "escribiendo",
     "pastParticiple": "escrito"
   },
   {
     "verb": "llegar",
+    "kind": "regular",
     "present": [
       "llego",
       "llegas",
@@ -2802,11 +3208,20 @@
       "llegarais",
       "llegaran"
     ],
+    "imperative": [
+      "*",
+      "llega",
+      "llegue",
+      "lleguemos",
+      "llegad",
+      "lleguen"
+    ],
     "gerund": "llegando",
     "pastParticiple": "llegado"
   },
   {
     "verb": "llevar",
+    "kind": "regular",
     "present": [
       "llevo",
       "llevas",
@@ -2863,11 +3278,20 @@
       "llevarais",
       "llevaran"
     ],
+    "imperative": [
+      "*",
+      "lleva",
+      "lleve",
+      "llevemos",
+      "llevad",
+      "lleven"
+    ],
     "gerund": "llevando",
     "pastParticiple": "llevado"
   },
   {
     "verb": "llamar",
+    "kind": "regular",
     "present": [
       "llamo",
       "llamas",
@@ -2924,11 +3348,20 @@
       "llamarais",
       "llamaran"
     ],
+    "imperative": [
+      "*",
+      "llama",
+      "llame",
+      "llamemos",
+      "llamad",
+      "llamen"
+    ],
     "gerund": "llamando",
     "pastParticiple": "llamado"
   },
   {
     "verb": "llenar",
+    "kind": "regular",
     "present": [
       "lleno",
       "llenas",
@@ -2985,11 +3418,20 @@
       "llenarais",
       "llenaran"
     ],
+    "imperative": [
+      "*",
+      "llena",
+      "llene",
+      "llenemos",
+      "llenad",
+      "llenen"
+    ],
     "gerund": "llenando",
     "pastParticiple": "llenado"
   },
   {
     "verb": "llorar",
+    "kind": "regular",
     "present": [
       "lloro",
       "lloras",
@@ -3046,11 +3488,20 @@
       "llorarais",
       "lloraran"
     ],
+    "imperative": [
+      "*",
+      "llora",
+      "llore",
+      "lloremos",
+      "llorad",
+      "lloren"
+    ],
     "gerund": "llorando",
     "pastParticiple": "llorado"
   },
   {
     "verb": "llover",
+    "kind": "irregular",
     "present": [
       "-",
       "-",
@@ -3107,11 +3558,20 @@
       "-",
       "-"
     ],
+    "imperative": [
+      "*",
+      "*",
+      "llueva",
+      "*",
+      "*",
+      "lluevan"
+    ],
     "gerund": "lloviendo",
     "pastParticiple": "llovido"
   },
   {
     "verb": "echar",
+    "kind": "regular",
     "present": [
       "echo",
       "echas",
@@ -3168,11 +3628,20 @@
       "echarais",
       "echaran"
     ],
+    "imperative": [
+      "*",
+      "echa",
+      "eche",
+      "echemos",
+      "echad",
+      "echen"
+    ],
     "gerund": "echando",
     "pastParticiple": "echado"
   },
   {
     "verb": "coger",
+    "kind": "regular",
     "present": [
       "cojo",
       "coges",
@@ -3229,7 +3698,1555 @@
       "cogierais",
       "cogieran"
     ],
+    "imperative": [
+      "*",
+      "coge",
+      "coja",
+      "cojamos",
+      "coged",
+      "cojan"
+    ],
     "gerund": "cogiendo",
     "pastParticiple": "cogido"
+  },
+  {
+    "verb": "visitar",
+    "kind": "regular",
+    "present": [
+      "visito",
+      "visitas",
+      "visita",
+      "visitamos",
+      "visitáis",
+      "visitan"
+    ],
+    "imperfect": [
+      "visitaba",
+      "visitabas",
+      "visitaba",
+      "visitábamos",
+      "visitabais",
+      "visitaban"
+    ],
+    "preterite": [
+      "visité",
+      "visitaste",
+      "visitó",
+      "visitamos",
+      "visitasteis",
+      "visitaron"
+    ],
+    "future": [
+      "visitaré",
+      "visitarás",
+      "visitará",
+      "visitaremos",
+      "visitaréis",
+      "visitarán"
+    ],
+    "conditional": [
+      "visitaría",
+      "visitarías",
+      "visitaría",
+      "visitaríamos",
+      "visitaríais",
+      "visitarían"
+    ],
+    "presentSubjunctive": [
+      "visite",
+      "visites",
+      "visite",
+      "visitemos",
+      "visitéis",
+      "visiten"
+    ],
+    "imperfectSubjunctive": [
+      "visitara",
+      "visitaras",
+      "visitara",
+      "visitáramos",
+      "visitarais",
+      "visitaran"
+    ],
+    "imperative": [
+      "*",
+      "visita",
+      "visite",
+      "visitemos",
+      "visitad",
+      "visiten"
+    ],
+    "gerund": "visitando",
+    "pastParticiple": "visitado"
+  },
+  {
+    "verb": "bailar",
+    "kind": "regular",
+    "present": [
+      "bailo",
+      "bailas",
+      "baila",
+      "bailamos",
+      "bailáis",
+      "bailan"
+    ],
+    "imperfect": [
+      "bailaba",
+      "bailabas",
+      "bailaba",
+      "bailábamos",
+      "bailabais",
+      "bailaban"
+    ],
+    "preterite": [
+      "bailé",
+      "bailaste",
+      "bailó",
+      "bailamos",
+      "bailasteis",
+      "bailaron"
+    ],
+    "future": [
+      "bailaré",
+      "bailarás",
+      "bailará",
+      "bailaremos",
+      "bailaréis",
+      "bailarán"
+    ],
+    "conditional": [
+      "bailaría",
+      "bailarías",
+      "bailaría",
+      "bailaríamos",
+      "bailaríais",
+      "bailarían"
+    ],
+    "presentSubjunctive": [
+      "baile",
+      "bailes",
+      "baile",
+      "bailemos",
+      "bailéis",
+      "bailen"
+    ],
+    "imperfectSubjunctive": [
+      "bailara",
+      "bailaras",
+      "bailara",
+      "bailáramos",
+      "bailarais",
+      "bailaran"
+    ],
+    "imperative": [
+      "*",
+      "baila",
+      "baile",
+      "bailemos",
+      "bailad",
+      "bailen"
+    ],
+    "gerund": "bailando",
+    "pastParticiple": "bailado"
+  },
+  {
+    "verb": "cenar",
+    "kind": "regular",
+    "present": [
+      "ceno",
+      "cenas",
+      "cena",
+      "cenamos",
+      "cenáis",
+      "cenan"
+    ],
+    "imperfect": [
+      "cenaba",
+      "cenabas",
+      "cenaba",
+      "cenábamos",
+      "cenabais",
+      "cenaban"
+    ],
+    "preterite": [
+      "cené",
+      "cenaste",
+      "cenó",
+      "cenamos",
+      "cenasteis",
+      "cenaron"
+    ],
+    "future": [
+      "cenaré",
+      "cenarás",
+      "cenará",
+      "cenaremos",
+      "cenaréis",
+      "cenarán"
+    ],
+    "conditional": [
+      "cenaría",
+      "cenarías",
+      "cenaría",
+      "cenaríamos",
+      "cenaríais",
+      "cenarían"
+    ],
+    "presentSubjunctive": [
+      "cene",
+      "cenes",
+      "cene",
+      "cenemos",
+      "cenéis",
+      "cenen"
+    ],
+    "imperfectSubjunctive": [
+      "cenara",
+      "cenaras",
+      "cenara",
+      "cenáramos",
+      "cenarais",
+      "cenaran"
+    ],
+    "imperative": [
+      "*",
+      "cena",
+      "cene",
+      "cenemos",
+      "cenad",
+      "cenen"
+    ],
+    "gerund": "cenando",
+    "pastParticiple": "cenado"
+  },
+  {
+    "verb": "cancelar",
+    "kind": "regular",
+    "present": [
+      "cancelo",
+      "cancelas",
+      "cancela",
+      "cancelamos",
+      "canceláis",
+      "cancelan"
+    ],
+    "imperfect": [
+      "cancelaba",
+      "cancelabas",
+      "cancelaba",
+      "cancelábamos",
+      "cancelabais",
+      "cancelaban"
+    ],
+    "preterite": [
+      "cancelé",
+      "cancelaste",
+      "canceló",
+      "cancelamos",
+      "cancelasteis",
+      "cancelaron"
+    ],
+    "future": [
+      "cancelaré",
+      "cancelarás",
+      "cancelará",
+      "cancelaremos",
+      "cancelaréis",
+      "cancelarán"
+    ],
+    "conditional": [
+      "cancelaría",
+      "cancelarías",
+      "cancelaría",
+      "cancelaríamos",
+      "cancelaríais",
+      "cancelarían"
+    ],
+    "presentSubjunctive": [
+      "cancele",
+      "canceles",
+      "cancele",
+      "cancelemos",
+      "canceléis",
+      "cancelen"
+    ],
+    "imperfectSubjunctive": [
+      "cancelara",
+      "cancelaras",
+      "cancelara",
+      "canceláramos",
+      "cancelarais",
+      "cancelaran"
+    ],
+    "imperative": [
+      "*",
+      "cancela",
+      "cancele",
+      "cancelemos",
+      "cancelad",
+      "cancelen"
+    ],
+    "gerund": "cancelando",
+    "pastParticiple": "cancelado"
+  },
+  {
+    "verb": "nadar",
+    "kind": "regular",
+    "present": [
+      "nado",
+      "nadas",
+      "nada",
+      "nadamos",
+      "nadáis",
+      "nadan"
+    ],
+    "imperfect": [
+      "nadaba",
+      "nadabas",
+      "nadaba",
+      "nadábamos",
+      "nadabais",
+      "nadaban"
+    ],
+    "preterite": [
+      "nadé",
+      "nadaste",
+      "nadó",
+      "nadamos",
+      "nadasteis",
+      "nadaron"
+    ],
+    "future": [
+      "nadaré",
+      "nadarás",
+      "nadará",
+      "nadaremos",
+      "nadaréis",
+      "nadarán"
+    ],
+    "conditional": [
+      "nadaría",
+      "nadarías",
+      "nadaría",
+      "nadaríamos",
+      "nadaríais",
+      "nadarían"
+    ],
+    "presentSubjunctive": [
+      "nade",
+      "nades",
+      "nade",
+      "nademos",
+      "nadéis",
+      "naden"
+    ],
+    "imperfectSubjunctive": [
+      "nadara",
+      "nadaras",
+      "nadara",
+      "nadáramos",
+      "nadarais",
+      "nadaran"
+    ],
+    "imperative": [
+      "*",
+      "nada",
+      "nade",
+      "nademos",
+      "nadad",
+      "naden"
+    ],
+    "gerund": "nadando",
+    "pastParticiple": "nadado"
+  },
+  {
+    "verb": "entrar",
+    "kind": "regular",
+    "present": [
+      "entro",
+      "entras",
+      "entra",
+      "entramos",
+      "entráis",
+      "entran"
+    ],
+    "imperfect": [
+      "entraba",
+      "entrabas",
+      "entraba",
+      "entrábamos",
+      "entrabais",
+      "entraban"
+    ],
+    "preterite": [
+      "entré",
+      "entraste",
+      "entró",
+      "entramos",
+      "entrasteis",
+      "entraron"
+    ],
+    "future": [
+      "entraré",
+      "entrarás",
+      "entrará",
+      "entraremos",
+      "entraréis",
+      "entrarán"
+    ],
+    "conditional": [
+      "entraría",
+      "entrarías",
+      "entraría",
+      "entraríamos",
+      "entraríais",
+      "entrarían"
+    ],
+    "presentSubjunctive": [
+      "entre",
+      "entres",
+      "entre",
+      "entremos",
+      "entréis",
+      "entren"
+    ],
+    "imperfectSubjunctive": [
+      "entrara",
+      "entraras",
+      "entrara",
+      "entráramos",
+      "entrarais",
+      "entraran"
+    ],
+    "imperative": [
+      "*",
+      "entra",
+      "entre",
+      "entremos",
+      "entrad",
+      "entren"
+    ],
+    "gerund": "entrando",
+    "pastParticiple": "entrado"
+  },
+  {
+    "verb": "estudiar",
+    "kind": "regular",
+    "present": [
+      "estudio",
+      "estudias",
+      "estudia",
+      "estudiamos",
+      "estudiáis",
+      "estudian"
+    ],
+    "imperfect": [
+      "estudiaba",
+      "estudiabas",
+      "estudiaba",
+      "estudiábamos",
+      "estudiabais",
+      "estudiaban"
+    ],
+    "preterite": [
+      "estudié",
+      "estudiaste",
+      "estudió",
+      "estudiamos",
+      "estudiasteis",
+      "estudiaron"
+    ],
+    "future": [
+      "estudiaré",
+      "estudiarás",
+      "estudiará",
+      "estudiaremos",
+      "estudiaréis",
+      "estudiarán"
+    ],
+    "conditional": [
+      "estudiaría",
+      "estudiarías",
+      "estudiaría",
+      "estudiaríamos",
+      "estudiaríais",
+      "estudiarían"
+    ],
+    "presentSubjunctive": [
+      "estudie",
+      "estudies",
+      "estudie",
+      "estudiemos",
+      "estudiéis",
+      "estudien"
+    ],
+    "imperfectSubjunctive": [
+      "estudiara",
+      "estudiaras",
+      "estudiara",
+      "estudiáramos",
+      "estudiarais",
+      "estudiaran"
+    ],
+    "imperative": [
+      "*",
+      "estudia",
+      "estudie",
+      "estudiemos",
+      "estudiad",
+      "estudien"
+    ],
+    "gerund": "estudiando",
+    "pastParticiple": "estudiado"
+  },
+  {
+    "verb": "entender",
+    "kind": "irregular",
+    "present": [
+      "entiendo",
+      "entiendes",
+      "entiende",
+      "entendemos",
+      "entendéis",
+      "entienden"
+    ],
+    "imperfect": [
+      "entendía",
+      "entendías",
+      "entendía",
+      "entendíamos",
+      "entendíais",
+      "entendían"
+    ],
+    "preterite": [
+      "entendí",
+      "entendiste",
+      "entendió",
+      "entendimos",
+      "entendisteis",
+      "entendieron"
+    ],
+    "future": [
+      "entenderé",
+      "entenderás",
+      "entenderá",
+      "entenderemos",
+      "entenderéis",
+      "entenderán"
+    ],
+    "conditional": [
+      "entendería",
+      "entenderías",
+      "entendería",
+      "entenderíamos",
+      "entenderíais",
+      "entenderían"
+    ],
+    "presentSubjunctive": [
+      "entienda",
+      "entiendas",
+      "entienda",
+      "entendamos",
+      "entendáis",
+      "entiendan"
+    ],
+    "imperfectSubjunctive": [
+      "entendiera",
+      "entendieras",
+      "entendiera",
+      "entendiéramos",
+      "entendierais",
+      "entendieran"
+    ],
+    "imperative": [
+      "*",
+      "entiende",
+      "entienda",
+      "entendamos",
+      "entended",
+      "entiendan"
+    ],
+    "gerund": "entendiendo",
+    "pastParticiple": "entendido"
+  },
+  {
+    "verb": "comprender",
+    "kind": "regular",
+    "present": [
+      "comprendo",
+      "comprendes",
+      "comprende",
+      "comprendemos",
+      "comprendéis",
+      "comprenden"
+    ],
+    "imperfect": [
+      "comprendía",
+      "comprendías",
+      "comprendía",
+      "comprendíamos",
+      "comprendíais",
+      "comprendían"
+    ],
+    "preterite": [
+      "comprendí",
+      "comprendiste",
+      "comprendió",
+      "comprendimos",
+      "comprendisteis",
+      "comprendieron"
+    ],
+    "future": [
+      "comprenderé",
+      "comprenderás",
+      "comprenderá",
+      "comprenderemos",
+      "comprenderéis",
+      "comprenderán"
+    ],
+    "conditional": [
+      "comprendería",
+      "comprenderías",
+      "comprendería",
+      "comprenderíamos",
+      "comprenderíais",
+      "comprenderían"
+    ],
+    "presentSubjunctive": [
+      "comprenda",
+      "comprendas",
+      "comprenda",
+      "comprendamos",
+      "comprendáis",
+      "comprendan"
+    ],
+    "imperfectSubjunctive": [
+      "comprendiera",
+      "comprendieras",
+      "comprendiera",
+      "comprendiéramos",
+      "comprendierais",
+      "comprendieran"
+    ],
+    "imperative": [
+      "*",
+      "comprende",
+      "comprenda",
+      "comprendamos",
+      "comprended",
+      "comprendan"
+    ],
+    "gerund": "comprendiendo",
+    "pastParticiple": "comprendido"
+  },
+  {
+    "verb": "escuchar",
+    "kind": "regular",
+    "present": [
+      "escucho",
+      "escuchas",
+      "escucha",
+      "escuchamos",
+      "escucháis",
+      "escuchan"
+    ],
+    "imperfect": [
+      "escuchaba",
+      "escuchabas",
+      "escuchaba",
+      "escuchábamos",
+      "escuchabais",
+      "escuchaban"
+    ],
+    "preterite": [
+      "escuché",
+      "escuchaste",
+      "escuchó",
+      "escuchamos",
+      "escuchasteis",
+      "escucharon"
+    ],
+    "future": [
+      "escucharé",
+      "escucharás",
+      "escuchará",
+      "escucharemos",
+      "escucharéis",
+      "escucharán"
+    ],
+    "conditional": [
+      "escucharía",
+      "escucharías",
+      "escucharía",
+      "escucharíamos",
+      "escucharíais",
+      "escucharían"
+    ],
+    "presentSubjunctive": [
+      "escuche",
+      "escuches",
+      "escuche",
+      "escuchemos",
+      "escuchéis",
+      "escuchen"
+    ],
+    "imperfectSubjunctive": [
+      "escuchara",
+      "escucharas",
+      "escuchara",
+      "escucháramos",
+      "escucharais",
+      "escucharan"
+    ],
+    "imperative": [
+      "*",
+      "escucha",
+      "escuche",
+      "escuchemos",
+      "escuchad",
+      "escuchen"
+    ],
+    "gerund": "escuchando",
+    "pastParticiple": "escuchado"
+  },
+  {
+    "verb": "comenzar",
+    "kind": "irregular",
+    "present": [
+      "comienzo",
+      "comienzas",
+      "comienza",
+      "comenzamos",
+      "comenzáis",
+      "comienzan"
+    ],
+    "imperfect": [
+      "comenzaba",
+      "comenzabas",
+      "comenzaba",
+      "comenzábamos",
+      "comenzabais",
+      "comenzaban"
+    ],
+    "preterite": [
+      "comencé",
+      "comenzaste",
+      "comenzó",
+      "comenzamos",
+      "comenzasteis",
+      "comenzaron"
+    ],
+    "future": [
+      "comenzaré",
+      "comenzarás",
+      "comenzará",
+      "comenzaremos",
+      "comenzaréis",
+      "comenzarán"
+    ],
+    "conditional": [
+      "comenzaría",
+      "comenzarías",
+      "comenzaría",
+      "comenzaríamos",
+      "comenzaríais",
+      "comenzarían"
+    ],
+    "presentSubjunctive": [
+      "comience",
+      "comiences",
+      "comience",
+      "comencemos",
+      "comencéis",
+      "comiencen"
+    ],
+    "imperfectSubjunctive": [
+      "comenzara",
+      "comenzaras",
+      "comenzara",
+      "comenzáramos",
+      "comenzarais",
+      "comenzaran"
+    ],
+    "imperative": [
+      "*",
+      "comienza",
+      "comience",
+      "comencemos",
+      "comenzad",
+      "comiencen"
+    ],
+    "gerund": "comenzando",
+    "pastParticiple": "comenzado"
+  },
+  {
+    "verb": "molestar",
+    "kind": "regular",
+    "present": [
+      "molesto",
+      "molestas",
+      "molesta",
+      "molestamos",
+      "molestáis",
+      "molestan"
+    ],
+    "imperfect": [
+      "molestaba",
+      "molestabas",
+      "molestaba",
+      "molestábamos",
+      "molestabais",
+      "molestaban"
+    ],
+    "preterite": [
+      "molesté",
+      "molestaste",
+      "molestó",
+      "molestamos",
+      "molestasteis",
+      "molestaron"
+    ],
+    "future": [
+      "molestaré",
+      "molestarás",
+      "molestará",
+      "molestaremos",
+      "molestaréis",
+      "molestarán"
+    ],
+    "conditional": [
+      "molestaría",
+      "molestarías",
+      "molestaría",
+      "molestaríamos",
+      "molestaríais",
+      "molestarían"
+    ],
+    "presentSubjunctive": [
+      "moleste",
+      "molestes",
+      "moleste",
+      "molestemos",
+      "molestéis",
+      "molesten"
+    ],
+    "imperfectSubjunctive": [
+      "molestara",
+      "molestaras",
+      "molestara",
+      "molestáramos",
+      "molestarais",
+      "molestaran"
+    ],
+    "imperative": [
+      "*",
+      "molesta",
+      "moleste",
+      "molestemos",
+      "molestad",
+      "molesten"
+    ],
+    "gerund": "molestando",
+    "pastParticiple": "molestado"
+  },
+  {
+    "verb": "saludar",
+    "kind": "regular",
+    "present": [
+      "saludo",
+      "saludas",
+      "saluda",
+      "saludamos",
+      "saludáis",
+      "saludan"
+    ],
+    "imperfect": [
+      "saludaba",
+      "saludabas",
+      "saludaba",
+      "saludábamos",
+      "saludabais",
+      "saludaban"
+    ],
+    "preterite": [
+      "saludé",
+      "saludaste",
+      "saludó",
+      "saludamos",
+      "saludasteis",
+      "saludaron"
+    ],
+    "future": [
+      "saludaré",
+      "saludarás",
+      "saludará",
+      "saludaremos",
+      "saludaréis",
+      "saludarán"
+    ],
+    "conditional": [
+      "saludaría",
+      "saludarías",
+      "saludaría",
+      "saludaríamos",
+      "saludaríais",
+      "saludarían"
+    ],
+    "presentSubjunctive": [
+      "salude",
+      "saludes",
+      "salude",
+      "saludemos",
+      "saludéis",
+      "saluden"
+    ],
+    "imperfectSubjunctive": [
+      "saludara",
+      "saludaras",
+      "saludara",
+      "saludáramos",
+      "saludarais",
+      "saludaran"
+    ],
+    "imperative": [
+      "*",
+      "saluda",
+      "salude",
+      "saludemos",
+      "saludad",
+      "saluden"
+    ],
+    "gerund": "saludando",
+    "pastParticiple": "saludado"
+  },
+  {
+    "verb": "incomodar",
+    "kind": "regular",
+    "present": [
+      "incomodo",
+      "incomodas",
+      "incomoda",
+      "incomodamos",
+      "incomodáis",
+      "incomodan"
+    ],
+    "imperfect": [
+      "incomodaba",
+      "incomodabas",
+      "incomodaba",
+      "incomodábamos",
+      "incomodabais",
+      "incomodaban"
+    ],
+    "preterite": [
+      "incomodé",
+      "incomodaste",
+      "incomodó",
+      "incomodamos",
+      "incomodasteis",
+      "incomodaron"
+    ],
+    "future": [
+      "incomodaré",
+      "incomodarás",
+      "incomodará",
+      "incomodaremos",
+      "incomodaréis",
+      "incomodarán"
+    ],
+    "conditional": [
+      "incomodaría",
+      "incomodarías",
+      "incomodaría",
+      "incomodaríamos",
+      "incomodaríais",
+      "incomodarían"
+    ],
+    "presentSubjunctive": [
+      "incomode",
+      "incomodes",
+      "incomode",
+      "incomodemos",
+      "incomodéis",
+      "incomoden"
+    ],
+    "imperfectSubjunctive": [
+      "incomodara",
+      "incomodaras",
+      "incomodara",
+      "incomodáramos",
+      "incomodarais",
+      "incomodaran"
+    ],
+    "imperative": [
+      "*",
+      "incomoda",
+      "incomode",
+      "incomodemos",
+      "incomodad",
+      "incomoden"
+    ],
+    "gerund": "incomodando",
+    "pastParticiple": "incomodado"
+  },
+  {
+    "verb": "invitar",
+    "kind": "regular",
+    "present": [
+      "invito",
+      "invitas",
+      "invita",
+      "invitamos",
+      "invitáis",
+      "invitan"
+    ],
+    "imperfect": [
+      "invitaba",
+      "invitabas",
+      "invitaba",
+      "invitábamos",
+      "invitabais",
+      "invitaban"
+    ],
+    "preterite": [
+      "invité",
+      "invitaste",
+      "invitó",
+      "invitamos",
+      "invitasteis",
+      "invitaron"
+    ],
+    "future": [
+      "invitaré",
+      "invitarás",
+      "invitará",
+      "invitaremos",
+      "invitaréis",
+      "invitarán"
+    ],
+    "conditional": [
+      "invitaría",
+      "invitarías",
+      "invitaría",
+      "invitaríamos",
+      "invitaríais",
+      "invitarían"
+    ],
+    "presentSubjunctive": [
+      "invite",
+      "invites",
+      "invite",
+      "invitemos",
+      "invitéis",
+      "inviten"
+    ],
+    "imperfectSubjunctive": [
+      "invitara",
+      "invitaras",
+      "invitara",
+      "invitáramos",
+      "invitarais",
+      "invitaran"
+    ],
+    "imperative": [
+      "*",
+      "invita",
+      "invite",
+      "invitemos",
+      "invitad",
+      "inviten"
+    ],
+    "gerund": "invitando",
+    "pastParticiple": "invitado"
+  },
+  {
+    "verb": "sentir",
+    "kind": "irregular",
+    "present": [
+      "siento",
+      "sientes",
+      "siente",
+      "sentimos",
+      "sentís",
+      "sienten"
+    ],
+    "imperfect": [
+      "sentía",
+      "sentías",
+      "sentía",
+      "sentíamos",
+      "sentíais",
+      "sentían"
+    ],
+    "preterite": [
+      "sentí",
+      "sentiste",
+      "sintió",
+      "sentimos",
+      "sentisteis",
+      "sintieron"
+    ],
+    "future": [
+      "sentiré",
+      "sentirás",
+      "sentirá",
+      "sentiremos",
+      "sentiréis",
+      "sentirán"
+    ],
+    "conditional": [
+      "sentiría",
+      "sentirías",
+      "sentiría",
+      "sentiríamos",
+      "sentiríais",
+      "sentirían"
+    ],
+    "presentSubjunctive": [
+      "sienta",
+      "sientas",
+      "sienta",
+      "sintamos",
+      "sintáis",
+      "sientan"
+    ],
+    "imperfectSubjunctive": [
+      "sintiera",
+      "sintieras",
+      "sintiera",
+      "sintiéramos",
+      "sintierais",
+      "sintieran"
+    ],
+    "imperative": [
+      "*",
+      "siente",
+      "sienta",
+      "sintamos",
+      "sentid",
+      "sientan"
+    ],
+    "gerund": "sintiendo",
+    "pastParticiple": "sentido"
+  },
+  {
+    "verb": "lastimar",
+    "kind": "regular",
+    "present": [
+      "lastimo",
+      "lastimas",
+      "lastima",
+      "lastimamos",
+      "lastimáis",
+      "lastiman"
+    ],
+    "imperfect": [
+      "lastimaba",
+      "lastimabas",
+      "lastimaba",
+      "lastimábamos",
+      "lastimabais",
+      "lastimaban"
+    ],
+    "preterite": [
+      "lastimé",
+      "lastimaste",
+      "lastimó",
+      "lastimamos",
+      "lastimasteis",
+      "lastimaron"
+    ],
+    "future": [
+      "lastimaré",
+      "lastimarás",
+      "lastimará",
+      "lastimaremos",
+      "lastimaréis",
+      "lastimarán"
+    ],
+    "conditional": [
+      "lastimaría",
+      "lastimarías",
+      "lastimaría",
+      "lastimaríamos",
+      "lastimaríais",
+      "lastimarían"
+    ],
+    "presentSubjunctive": [
+      "lastime",
+      "lastimes",
+      "lastime",
+      "lastimemos",
+      "lastiméis",
+      "lastimen"
+    ],
+    "imperfectSubjunctive": [
+      "lastimara",
+      "lastimaras",
+      "lastimara",
+      "lastimáramos",
+      "lastimarais",
+      "lastimaran"
+    ],
+    "imperative": [
+      "*",
+      "lastima",
+      "lastime",
+      "lastimemos",
+      "lastimad",
+      "lastimen"
+    ],
+    "gerund": "lastimando",
+    "pastParticiple": "lastimado"
+  },
+  {
+    "verb": "sufrir",
+    "kind": "regular",
+    "present": [
+      "sufro",
+      "sufres",
+      "sufre",
+      "sufrimos",
+      "sufrís",
+      "sufren"
+    ],
+    "imperfect": [
+      "sufría",
+      "sufrías",
+      "sufría",
+      "sufríamos",
+      "sufríais",
+      "sufrían"
+    ],
+    "preterite": [
+      "sufrí",
+      "sufriste",
+      "sufrió",
+      "sufrimos",
+      "sufristeis",
+      "sufrieron"
+    ],
+    "future": [
+      "sufriré",
+      "sufrirás",
+      "sufrirá",
+      "sufriremos",
+      "sufriréis",
+      "sufrirán"
+    ],
+    "conditional": [
+      "sufriría",
+      "sufrirías",
+      "sufriría",
+      "sufriríamos",
+      "sufriríais",
+      "sufrirían"
+    ],
+    "presentSubjunctive": [
+      "sufra",
+      "sufras",
+      "sufra",
+      "suframos",
+      "sufráis",
+      "sufran"
+    ],
+    "imperfectSubjunctive": [
+      "sufriera",
+      "sufrieras",
+      "sufriera",
+      "sufriéramos",
+      "sufrierais",
+      "sufrieran"
+    ],
+    "imperative": [
+      "*",
+      "sufre",
+      "sufra",
+      "suframos",
+      "sufrid",
+      "sufran"
+    ],
+    "gerund": "sufriendo",
+    "pastParticiple": "sufrido"
+  },
+  {
+    "verb": "enviar",
+    "kind": "regular",
+    "present": [
+      "envío",
+      "envías",
+      "envía",
+      "enviamos",
+      "enviáis",
+      "envían"
+    ],
+    "imperfect": [
+      "enviaba",
+      "enviabas",
+      "enviaba",
+      "enviábamos",
+      "enviabais",
+      "enviaban"
+    ],
+    "preterite": [
+      "envié",
+      "enviaste",
+      "envió",
+      "enviamos",
+      "enviasteis",
+      "enviaron"
+    ],
+    "future": [
+      "enviaré",
+      "enviarás",
+      "enviará",
+      "enviaremos",
+      "enviaréis",
+      "enviarán"
+    ],
+    "conditional": [
+      "enviaría",
+      "enviarías",
+      "enviaría",
+      "enviaríamos",
+      "enviaríais",
+      "enviarían"
+    ],
+    "presentSubjunctive": [
+      "envíe",
+      "envíes",
+      "envíe",
+      "enviemos",
+      "enviéis",
+      "envíen"
+    ],
+    "imperfectSubjunctive": [
+      "enviara",
+      "enviaras",
+      "enviara",
+      "enviáramos",
+      "enviarais",
+      "enviaran"
+    ],
+    "imperative": [
+      "*",
+      "envía",
+      "envíe",
+      "enviemos",
+      "enviad",
+      "envíen"
+    ],
+    "gerund": "enviando",
+    "pastParticiple": "enviado"
+  },
+  {
+    "verb": "preocupar",
+    "kind": "regular",
+    "present": [
+      "preocupo",
+      "preocupas",
+      "preocupa",
+      "preocupamos",
+      "preocupáis",
+      "preocupan"
+    ],
+    "imperfect": [
+      "preocupaba",
+      "preocupabas",
+      "preocupaba",
+      "preocupábamos",
+      "preocupabais",
+      "preocupaban"
+    ],
+    "preterite": [
+      "preocupé",
+      "preocupaste",
+      "preocupó",
+      "preocupamos",
+      "preocupasteis",
+      "preocuparon"
+    ],
+    "future": [
+      "preocuparé",
+      "preocuparás",
+      "preocupará",
+      "preocuparemos",
+      "preocuparéis",
+      "preocuparán"
+    ],
+    "conditional": [
+      "preocuparía",
+      "preocuparías",
+      "preocuparía",
+      "preocuparíamos",
+      "preocuparíais",
+      "preocuparían"
+    ],
+    "presentSubjunctive": [
+      "preocupe",
+      "preocupes",
+      "preocupe",
+      "preocupemos",
+      "preocupéis",
+      "preocupen"
+    ],
+    "imperfectSubjunctive": [
+      "preocupara",
+      "preocuparas",
+      "preocupara",
+      "preocupáramos",
+      "preocuparais",
+      "preocuparan"
+    ],
+    "imperative": [
+      "*",
+      "preocupa",
+      "preocupe",
+      "preocupemos",
+      "preocupad",
+      "preocupen"
+    ],
+    "gerund": "preocupando",
+    "pastParticiple": "preocupado"
+  },
+  {
+    "verb": "responder",
+    "kind": "regular",
+    "present": [
+      "respondo",
+      "respondes",
+      "responde",
+      "respondemos",
+      "respondéis",
+      "responden"
+    ],
+    "imperfect": [
+      "respondía",
+      "respondías",
+      "respondía",
+      "respondíamos",
+      "respondíais",
+      "respondían"
+    ],
+    "preterite": [
+      "respondí",
+      "respondiste",
+      "respondió",
+      "respondimos",
+      "respondisteis",
+      "respondieron"
+    ],
+    "future": [
+      "responderé",
+      "responderás",
+      "responderá",
+      "responderemos",
+      "responderéis",
+      "responderán"
+    ],
+    "conditional": [
+      "respondería",
+      "responderías",
+      "respondería",
+      "responderíamos",
+      "responderíais",
+      "responderían"
+    ],
+    "presentSubjunctive": [
+      "responda",
+      "respondas",
+      "responda",
+      "respondamos",
+      "respondáis",
+      "respondan"
+    ],
+    "imperfectSubjunctive": [
+      "respondiera",
+      "respondieras",
+      "respondiera",
+      "respondiéramos",
+      "respondierais",
+      "respondieran"
+    ],
+    "imperative": [
+      "*",
+      "responde",
+      "responda",
+      "respondamos",
+      "responded",
+      "respondan"
+    ],
+    "gerund": "respondiendo",
+    "pastParticiple": "respondido"
+  },
+  {
+    "verb": "contestar",
+    "kind": "regular",
+    "present": [
+      "contesto",
+      "contestas",
+      "contesta",
+      "contestamos",
+      "contestáis",
+      "contestan"
+    ],
+    "imperfect": [
+      "contestaba",
+      "contestabas",
+      "contestaba",
+      "contestábamos",
+      "contestabais",
+      "contestaban"
+    ],
+    "preterite": [
+      "contesté",
+      "contestaste",
+      "contestó",
+      "contestamos",
+      "contestasteis",
+      "contestaron"
+    ],
+    "future": [
+      "contestaré",
+      "contestarás",
+      "contestará",
+      "contestaremos",
+      "contestaréis",
+      "contestarán"
+    ],
+    "conditional": [
+      "contestaría",
+      "contestarías",
+      "contestaría",
+      "contestaríamos",
+      "contestaríais",
+      "contestarían"
+    ],
+    "presentSubjunctive": [
+      "conteste",
+      "contestes",
+      "conteste",
+      "contestemos",
+      "contestéis",
+      "contesten"
+    ],
+    "imperfectSubjunctive": [
+      "contestara",
+      "contestaras",
+      "contestara",
+      "contestáramos",
+      "contestarais",
+      "contestaran"
+    ],
+    "imperative": [
+      "*",
+      "contesta",
+      "conteste",
+      "contestemos",
+      "contestad",
+      "contesten"
+    ],
+    "gerund": "contestando",
+    "pastParticiple": "contestado"
   }
 ]
