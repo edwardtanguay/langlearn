@@ -2276,27 +2276,15 @@ onUnmounted(() => {
   <div class="max-w-6xl mx-auto px-2.5 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
     <!-- Mobile Header & Actions Bar (<sm) -->
     <div class="sm:hidden space-y-2.5">
-      <!-- Mobile Top Header Bar -->
-      <div class="flex items-center justify-between gap-2">
-        <NuxtLink
-          to="/activities"
-          class="inline-flex items-center text-xs font-semibold !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white opacity-70 hover:opacity-100 transition-all"
-        >
-          ← Activities
-        </NuxtLink>
-        <div class="flex items-center gap-2">
-          <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-            <h1 class="text-base font-black text-gray-900 dark:text-white tracking-tight">
-              <span class="text-[#194d19] dark:text-[#4ade80]">Italian Verbs</span>
-            </h1>
-            <NuxtLink
-              to="/activities/spanish-verbs"
-              class="ml-1 text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
-              title="Go to Spanish Verbs"
-            >
-              Spanish verbs
-            </NuxtLink>
-          </div>
+      <!-- Mobile Top Header Bar (Line 1: Back + Filters, Line 2: Title + Links) -->
+      <div class="space-y-1.5">
+        <div class="flex items-center justify-between gap-2">
+          <NuxtLink
+            to="/activities"
+            class="inline-flex items-center whitespace-nowrap text-xs font-semibold !text-gray-300 dark:!text-gray-300 hover:!text-gray-900 dark:hover:!text-white opacity-70 hover:opacity-100 transition-all"
+          >
+            ← Activities
+          </NuxtLink>
           <!-- Filter & Settings Drawer Button -->
           <button
             v-if="!isSearching"
@@ -2309,6 +2297,18 @@ onUnmounted(() => {
             <span>Filters</span>
             <span class="text-[10px] font-mono opacity-70">({{ selectedVerbs.length }})</span>
           </button>
+        </div>
+        <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+          <h1 class="!mb-0 text-lg font-black text-gray-900 dark:text-white tracking-tight">
+            <span class="text-[#194d19] dark:text-[#4ade80]">Italian Verbs</span>
+          </h1>
+          <NuxtLink
+            to="/activities/spanish-verbs"
+            class="ml-0.5 text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
+            title="Go to Spanish Verbs"
+          >
+            Spanish verbs
+          </NuxtLink>
         </div>
       </div>
 
