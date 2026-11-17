@@ -146,6 +146,15 @@ const dailyLabel = computed(() => {
   return `${dailyDaysAgo.value} days ago`
 })
 
+const dailyDateStr = computed(() => {
+  const d = new Date()
+  d.setDate(d.getDate() - dailyDaysAgo.value)
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+})
+
 const fetchDailyActivity = async (daysAgo: number) => {
   isDailyLoading.value = true
   try {
@@ -154,11 +163,15 @@ const fetchDailyActivity = async (daysAgo: number) => {
       query: { daysAgo, ...(tz ? { tz } : {}) },
       headers: tz ? { 'x-client-timezone': tz } : undefined
     })
-    dailyActivity.value = data
+    if (daysAgo === dailyDaysAgo.value) {
+      dailyActivity.value = data
+    }
   } catch (err) {
     console.error('Failed to fetch daily activity:', err)
   } finally {
-    isDailyLoading.value = false
+    if (daysAgo === dailyDaysAgo.value) {
+      isDailyLoading.value = false
+    }
   }
 }
 
@@ -425,35 +438,6 @@ const handleSaveGroupSize = async () => {
           </div>
         </div>
 
-        <!-- Sun Mode Setting Section (Visible for both members and admins) -->
-        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <SunIcon class="w-5 h-5 text-amber-500 shrink-0" />
-              <span class="text-sm font-semibold text-gray-900 dark:text-white">
-                Sun Mode
-              </span>
-            </div>
-            <!-- Toggle Switch -->
-            <button
-              type="button"
-              @click="toggleSunMode"
-              class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden"
-              :class="isSunMode ? 'bg-amber-500' : 'bg-gray-200 dark:bg-gray-700'"
-              role="switch"
-              :aria-checked="isSunMode"
-            >
-              <span
-                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
-                :class="isSunMode ? 'translate-x-5' : 'translate-x-0'"
-              />
-            </button>
-          </div>
-          <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-            Sun mode is designed for when you use LangLearn outside in bright sunlight. It keeps your dark background while making all text and symbols much brighter and bolder so everything remains easier to read under the sun.
-          </p>
-        </div>
-
         <!-- Language Learning Preferences Section (Source & Target Languages) -->
         <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-5">
           <!-- Source Language Dropdown -->
@@ -695,8 +679,8 @@ const handleSaveGroupSize = async () => {
           <div class="flex items-center justify-between">
             <div>
               <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Daily Activity</h2>
-              <p v-if="dailyActivity" class="text-xs text-gray-500 dark:text-gray-400">
-                {{ dailyLabel }} ({{ dailyActivity.date }})
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                {{ dailyLabel }} ({{ dailyDateStr }})
               </p>
             </div>
             <div class="flex items-center gap-1.5">
@@ -774,6 +758,35 @@ const handleSaveGroupSize = async () => {
               Dev
             </NuxtLink>
           </div>
+        </div>
+
+        <!-- Sun Mode Setting Section (Visible for both members and admins) -->
+        <div class="border-t border-gray-100 dark:border-gray-800 pt-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <SunIcon class="w-5 h-5 text-amber-500 shrink-0" />
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                Sun Mode
+              </span>
+            </div>
+            <!-- Toggle Switch -->
+            <button
+              type="button"
+              @click="toggleSunMode"
+              class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden"
+              :class="isSunMode ? 'bg-amber-500' : 'bg-gray-200 dark:bg-gray-700'"
+              role="switch"
+              :aria-checked="isSunMode"
+            >
+              <span
+                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
+                :class="isSunMode ? 'translate-x-5' : 'translate-x-0'"
+              />
+            </button>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+            Sun mode is designed for when you use LangLearn outside in bright sunlight. It keeps your dark background while making all text and symbols much brighter and bolder so everything remains easier to read under the sun.
+          </p>
         </div>
 
         <!-- Immediate Save Notice -->

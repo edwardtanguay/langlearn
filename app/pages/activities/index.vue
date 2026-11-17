@@ -60,6 +60,20 @@ const activities = [
     badgeColor: 'bg-pink-50 dark:bg-pink-950/40 text-[#be185d] dark:text-[#f43f5e] border-pink-200/60 dark:border-pink-900/40'
   },
   {
+    title: 'Italian Verbs',
+    path: '/activities/italian-verbs',
+    description: 'Master Italian verb conjugations across tenses and pronouns with interactive tables, test mode, and difficult word retesting.',
+    icon: LanguageIcon,
+    badgeColor: 'bg-emerald-50 dark:bg-emerald-950/40 text-[#194d19] dark:text-[#4ade80] border-emerald-200/60 dark:border-emerald-900/40'
+  },
+  {
+    title: 'Spanish Subjunctive',
+    path: '/activities/spanish-subjunctive',
+    description: 'Practice Spanish subjunctive trigger phrases with progressive reveal from English to Spanish, Indicative, and Subjunctive.',
+    icon: LanguageIcon,
+    badgeColor: 'bg-pink-50 dark:bg-pink-950/40 text-[#be185d] dark:text-[#f43f5e] border-pink-200/60 dark:border-pink-900/40'
+  },
+  {
     title: 'Pronunciation Practice',
     path: '/activities/pronunciation-practice',
     description: 'Test your pronunciation recall with phonetics reveal, independent progress tracking, and audio pronunciation.',

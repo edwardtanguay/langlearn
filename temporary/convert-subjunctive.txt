@@ -1,0 +1,38 @@
+== CORRECT ======
+- it is advisable that
+	- conviene que
+		- comes demasiado antes de correr
+			- no conviene que comas demasiado antes de correr
+- after
+	- después de que
+		- Llegaremos a París e iremos directamente al hotel.
+			- Después de que lleguemos a París, iremos directamente al hotel
+- to doubt that
+	- dudar que
+		- podemos terminar el trabajo hoy
+			- ella duda que podamos terminar el trabajo hoy
+== TODO ======
+- it is possible that
+	- puede que
+		- llueve mañana por la tarde
+			- puede que llueva mañana por la tarde
+- it surprises me that
+	- me extraña que
+		- no contestan el teléfono
+			- me extraña que no contesten el teléfono
+- it is a shame that
+	- es una pena que
+		- no puedes venir a la fiesta
+			- es una pena que no puedas venir a la fiesta
+- we hope that
+	- esperamos que
+		- tienes un buen viaje
+			- esperamos que tengas un buen viaje
+- it saddens me that
+	- me apena que
+		- se van tan pronto
+			- me apena que se vayan tan pronto
+- it is regrettable that
+	- es lamentable que
+		- pierden tanto tiempo en eso
+			- es lamentable que pierdan tanto tiempo en eso

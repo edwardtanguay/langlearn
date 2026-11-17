@@ -5455,5 +5455,402 @@
         "nl": "blijkbaar"
       }
     ]
+  },
+  {
+    "id": "verbs",
+    "title": "Verbs",
+    "titles": {
+      "en": "Verbs",
+      "fr": "Verbes",
+      "es": "Verbos",
+      "it": "Verbi",
+      "nl": "Werkwoorden"
+    },
+    "items": [
+      {
+        "id": "verbs-1",
+        "en": "I am",
+        "fr": "je suis",
+        "es": "soy / estoy",
+        "it": "sono",
+        "nl": "ik ben"
+      },
+      {
+        "id": "verbs-2",
+        "en": "you are",
+        "fr": "tu es",
+        "es": "eres / estás",
+        "it": "sei",
+        "nl": "jij bent"
+      },
+      {
+        "id": "verbs-3",
+        "en": "he/she is",
+        "fr": "il/elle est",
+        "es": "es / está",
+        "it": "è",
+        "nl": "hij/zij is"
+      },
+      {
+        "id": "verbs-4",
+        "en": "we are",
+        "fr": "nous sommes",
+        "es": "somos / estamos",
+        "it": "siamo",
+        "nl": "wij zijn"
+      },
+      {
+        "id": "verbs-5",
+        "en": "you (pl.) are",
+        "fr": "vous êtes",
+        "es": "sois / estáis",
+        "it": "siete",
+        "nl": "jullie zijn"
+      },
+      {
+        "id": "verbs-6",
+        "en": "they are",
+        "fr": "ils/elles sont",
+        "es": "son / están",
+        "it": "sono",
+        "nl": "zij zijn"
+      },
+      {
+        "id": "verbs-7",
+        "en": "I was (habit/desc.)",
+        "fr": "j'étais",
+        "es": "era / estaba",
+        "it": "ero",
+        "nl": "ik was"
+      },
+      {
+        "id": "verbs-8",
+        "en": "you were (habit/desc.)",
+        "fr": "tu étais",
+        "es": "eras / estabas",
+        "it": "eri",
+        "nl": "jij was"
+      },
+      {
+        "id": "verbs-9",
+        "en": "he/she was (habit/desc.)",
+        "fr": "il/elle était",
+        "es": "era / estaba",
+        "it": "era",
+        "nl": "hij/zij was"
+      },
+      {
+        "id": "verbs-10",
+        "en": "we were (habit/desc.)",
+        "fr": "nous étions",
+        "es": "éramos / estábamos",
+        "it": "eravamo",
+        "nl": "wij waren"
+      },
+      {
+        "id": "verbs-11",
+        "en": "you (pl.) were (habit/desc.)",
+        "fr": "vous étiez",
+        "es": "erais / estabais",
+        "it": "eravate",
+        "nl": "jullie waren"
+      },
+      {
+        "id": "verbs-12",
+        "en": "they were (habit/desc.)",
+        "fr": "ils/elles étaient",
+        "es": "eran / estaban",
+        "it": "erano",
+        "nl": "zij waren"
+      },
+      {
+        "id": "verbs-13",
+        "en": "I was (completed)",
+        "fr": "je fus",
+        "es": "fui / estuve",
+        "it": "fui",
+        "nl": "ik was (verleden)"
+      },
+      {
+        "id": "verbs-14",
+        "en": "you were (completed)",
+        "fr": "tu fus",
+        "es": "fuiste / estuviste",
+        "it": "fosti",
+        "nl": "jij was (verleden)"
+      },
+      {
+        "id": "verbs-15",
+        "en": "he/she was (completed)",
+        "fr": "il/elle fut",
+        "es": "fue / estuvo",
+        "it": "fu",
+        "nl": "hij/zij was (verleden)"
+      },
+      {
+        "id": "verbs-16",
+        "en": "we were (completed)",
+        "fr": "nous fûmes",
+        "es": "fuimos / estuvimos",
+        "it": "fummo",
+        "nl": "wij waren (verleden)"
+      },
+      {
+        "id": "verbs-17",
+        "en": "you (pl.) were (completed)",
+        "fr": "vous fûtes",
+        "es": "fuisteis / estuvisteis",
+        "it": "foste",
+        "nl": "jullie waren (verleden)"
+      },
+      {
+        "id": "verbs-18",
+        "en": "they were (completed)",
+        "fr": "ils/elles furent",
+        "es": "fueron / estuvieron",
+        "it": "furono",
+        "nl": "zij waren (verleden)"
+      },
+      {
+        "id": "verbs-19",
+        "en": "I have been",
+        "fr": "j'ai été",
+        "es": "he sido / he estado",
+        "it": "sono stato/a",
+        "nl": "ik ben geweest"
+      },
+      {
+        "id": "verbs-20",
+        "en": "you have been",
+        "fr": "tu as été",
+        "es": "has sido / has estado",
+        "it": "sei stato/a",
+        "nl": "jij bent geweest"
+      },
+      {
+        "id": "verbs-21",
+        "en": "he/she has been",
+        "fr": "il/elle a été",
+        "es": "ha sido / ha estado",
+        "it": "è stato/a",
+        "nl": "hij/zij is geweest"
+      },
+      {
+        "id": "verbs-22",
+        "en": "we have been",
+        "fr": "nous avons été",
+        "es": "hemos sido / hemos estado",
+        "it": "siamo stati/e",
+        "nl": "wij zijn geweest"
+      },
+      {
+        "id": "verbs-23",
+        "en": "you (pl.) have been",
+        "fr": "vous avez été",
+        "es": "habéis sido / habéis estado",
+        "it": "siete stati/e",
+        "nl": "jullie zijn geweest"
+      },
+      {
+        "id": "verbs-24",
+        "en": "they have been",
+        "fr": "ils/elles ont été",
+        "es": "han sido / han estado",
+        "it": "sono stati/e",
+        "nl": "zij zijn geweest"
+      },
+      {
+        "id": "verbs-25",
+        "en": "I have",
+        "fr": "j'ai",
+        "es": "tengo",
+        "it": "ho",
+        "nl": "ik heb"
+      },
+      {
+        "id": "verbs-26",
+        "en": "you have",
+        "fr": "tu as",
+        "es": "tienes",
+        "it": "hai",
+        "nl": "jij hebt"
+      },
+      {
+        "id": "verbs-27",
+        "en": "he/she has",
+        "fr": "il/elle a",
+        "es": "tiene",
+        "it": "ha",
+        "nl": "hij/zij heeft"
+      },
+      {
+        "id": "verbs-28",
+        "en": "we have",
+        "fr": "nous avons",
+        "es": "tenemos",
+        "it": "abbiamo",
+        "nl": "wij hebben"
+      },
+      {
+        "id": "verbs-29",
+        "en": "you (pl.) have",
+        "fr": "vous avez",
+        "es": "tenéis",
+        "it": "avete",
+        "nl": "jullie hebben"
+      },
+      {
+        "id": "verbs-30",
+        "en": "they have",
+        "fr": "ils/elles ont",
+        "es": "tienen",
+        "it": "hanno",
+        "nl": "zij hebben"
+      },
+      {
+        "id": "verbs-31",
+        "en": "I had (habit/desc.)",
+        "fr": "j'avais",
+        "es": "tenía",
+        "it": "avevo",
+        "nl": "ik had"
+      },
+      {
+        "id": "verbs-32",
+        "en": "you had (habit/desc.)",
+        "fr": "tu avais",
+        "es": "tenías",
+        "it": "avevi",
+        "nl": "jij had"
+      },
+      {
+        "id": "verbs-33",
+        "en": "he/she had (habit/desc.)",
+        "fr": "il/elle avait",
+        "es": "tenía",
+        "it": "aveva",
+        "nl": "hij/zij had"
+      },
+      {
+        "id": "verbs-34",
+        "en": "we had (habit/desc.)",
+        "fr": "nous avions",
+        "es": "teníamos",
+        "it": "avevamo",
+        "nl": "wij hadden"
+      },
+      {
+        "id": "verbs-35",
+        "en": "you (pl.) had (habit/desc.)",
+        "fr": "vous aviez",
+        "es": "teníais",
+        "it": "avevate",
+        "nl": "jullie hadden"
+      },
+      {
+        "id": "verbs-36",
+        "en": "they had (habit/desc.)",
+        "fr": "ils/elles avaient",
+        "es": "tenían",
+        "it": "avevano",
+        "nl": "zij hadden"
+      },
+      {
+        "id": "verbs-37",
+        "en": "I had (completed)",
+        "fr": "j'eus",
+        "es": "tuve",
+        "it": "ebbi",
+        "nl": "ik had (verleden)"
+      },
+      {
+        "id": "verbs-38",
+        "en": "you had (completed)",
+        "fr": "tu eus",
+        "es": "tuviste",
+        "it": "avesti",
+        "nl": "jij had (verleden)"
+      },
+      {
+        "id": "verbs-39",
+        "en": "he/she had (completed)",
+        "fr": "il/elle eut",
+        "es": "tuvo",
+        "it": "ebbe",
+        "nl": "hij/zij had (verleden)"
+      },
+      {
+        "id": "verbs-40",
+        "en": "we had (completed)",
+        "fr": "nous eûmes",
+        "es": "tuvimos",
+        "it": "avemmo",
+        "nl": "wij hadden (verleden)"
+      },
+      {
+        "id": "verbs-41",
+        "en": "you (pl.) had (completed)",
+        "fr": "vous eûtes",
+        "es": "tuvisteis",
+        "it": "aveste",
+        "nl": "jullie hadden (verleden)"
+      },
+      {
+        "id": "verbs-42",
+        "en": "they had (completed)",
+        "fr": "ils/elles eurent",
+        "es": "tuvieron",
+        "it": "ebbero",
+        "nl": "zij hadden (verleden)"
+      },
+      {
+        "id": "verbs-43",
+        "en": "I have had",
+        "fr": "j'ai eu",
+        "es": "he tenido",
+        "it": "ho avuto",
+        "nl": "ik heb gehad"
+      },
+      {
+        "id": "verbs-44",
+        "en": "you have had",
+        "fr": "tu as eu",
+        "es": "has tenido",
+        "it": "hai avuto",
+        "nl": "jij hebt gehad"
+      },
+      {
+        "id": "verbs-45",
+        "en": "he/she has had",
+        "fr": "il/elle a eu",
+        "es": "ha tenido",
+        "it": "ha avuto",
+        "nl": "hij/zij heeft gehad"
+      },
+      {
+        "id": "verbs-46",
+        "en": "we have had",
+        "fr": "nous avons eu",
+        "es": "hemos tenido",
+        "it": "abbiamo avuto",
+        "nl": "wij hebben gehad"
+      },
+      {
+        "id": "verbs-47",
+        "en": "you (pl.) have had",
+        "fr": "vous avez eu",
+        "es": "habéis tenido",
+        "it": "avete avuto",
+        "nl": "jullie hebben gehad"
+      },
+      {
+        "id": "verbs-48",
+        "en": "they have had",
+        "fr": "ils/elles ont eu",
+        "es": "han tenido",
+        "it": "hanno avuto",
+        "nl": "zij hebben gehad"
+      }
+    ]
   }
 ]

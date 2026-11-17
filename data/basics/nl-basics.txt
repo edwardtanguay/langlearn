@@ -100,3 +100,12 @@
 	- het zelfstandig naamwoord, het werkwoord, het bijvoeglijk naamwoord, het bijwoord, het voornaamwoord, het voorzetsel, het voegwoord, het lidwoord, het onderwerp, het lijdend voorwerp, de werkwoordstijd, de vervoeging, de grammatica, de woordenschat, de uitspraak, de lettergreep, de zin, de alinea, het enkelvoud, het meervoud, het accent grave, het accent aigu
 - startzinnen
 	- hoe dan ook, wat dan ook, ondertussen, hoe het ook zij, dat gezegd hebbende, in ieder geval, verdergaand, kort gezegd, voor wat het waard is, desondanks, nu ik erover nadenk, trouwens, bij nader inzien, in beide gevallen, afgezien daarvan, daarover gesproken, in elk geval, ten goede of ten kwade, bovendien, oftewel, blijkbaar
+- werkwoorden
+	- ik ben, jij bent, hij/zij is, wij zijn, jullie zijn, zij zijn
+	- ik was, jij was, hij/zij was, wij waren, jullie waren, zij waren
+	- ik was (verleden), jij was (verleden), hij/zij was (verleden), wij waren (verleden), jullie waren (verleden), zij waren (verleden)
+	- ik ben geweest, jij bent geweest, hij/zij is geweest, wij zijn geweest, jullie zijn geweest, zij zijn geweest
+	- ik heb, jij hebt, hij/zij heeft, wij hebben, jullie hebben, zij hebben
+	- ik had, jij had, hij/zij had, wij hadden, jullie hadden, zij hadden
+	- ik had (verleden), jij had (verleden), hij/zij had (verleden), wij hadden (verleden), jullie hadden (verleden), zij hadden (verleden)
+	- ik heb gehad, jij hebt gehad, hij/zij heeft gehad, wij hebben gehad, jullie hebben gehad, zij hebben gehad

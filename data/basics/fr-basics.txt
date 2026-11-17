@@ -99,3 +99,12 @@
 	- le nom, le verbe, l'adjectif (m), l'adverbe (m), le pronom, la préposition, la conjonction, l'article (m), le sujet, le complément, le temps, la conjugaison, la grammaire, le vocabulaire, la prononciation, la syllabe, la phrase, le paragraphe, le singulier, le pluriel, l'accent grave (m), l'accent aigu (m)
 - amorces
 	- de toute façon, peu importe, en attendant, quoi qu'il en soit, cela dit, en tout cas, passons, pour faire court, pour ce que ça vaut, quand même, à bien y penser, au fait, à la réflexion, dans les deux cas, ceci étant dit, à ce propos, dans tous les cas, pour le meilleur ou pour le pire, en plus, c'est-à-dire, apparemment
+- verbes
+	- je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont
+	- j'étais, tu étais, il/elle était, nous étions, vous étiez, ils/elles étaient
+	- je fus, tu fus, il/elle fut, nous fûmes, vous fûtes, ils/elles furent
+	- j'ai été, tu as été, il/elle a été, nous avons été, vous avez été, ils/elles ont été
+	- j'ai, tu as, il/elle a, nous avons, vous avez, ils/elles ont
+	- j'avais, tu avais, il/elle avait, nous avions, vous aviez, ils/elles avaient
+	- j'eus, tu eus, il/elle eut, nous eûmes, vous eûtes, ils/elles eurent
+	- j'ai eu, tu as eu, il/elle a eu, nous avons eu, vous avez eu, ils/elles ont eu

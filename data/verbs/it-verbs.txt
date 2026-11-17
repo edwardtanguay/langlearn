@@ -1,0 +1,782 @@
+- verbs
+	- essere (irregular)
+		- sono, sei, è, siamo, siete, sono
+		- ero, eri, era, eravamo, eravate, erano
+		- sono stato, sei stato, è stato, siamo stati, siete stati, sono stati
+		- fui, fosti, fu, fummo, foste, furono
+		- sarò, sarai, sarà, saremo, sarete, saranno
+		- sarei, saresti, sarebbe, saremmo, sareste, sarebbero
+		- sia, sia, sia, siamo, siate, siano
+		- fossi, fossi, fosse, fossimo, foste, fossero
+		- *, sii, sia, siamo, siate, siano
+		- essendo, stato
+	- avere (irregular)
+		- ho, hai, ha, abbiamo, avete, hanno
+		- avevo, avevi, aveva, avevamo, avevate, avevano
+		- ho avuto, hai avuto, ha avuto, abbiamo avuto, avete avuto, hanno avuto
+		- ebbi, avesti, ebbe, avemmo, aveste, ebbero
+		- avrò, avrai, avrà, avremo, avrete, avranno
+		- avrei, avresti, avrebbe, avremmo, avreste, avrebbero
+		- abbia, abbia, abbia, abbiamo, abbiate, abbiano
+		- avessi, avessi, avesse, avessimo, aveste, avessero
+		- *, abbi, abbia, abbiamo, abbiate, abbiano
+		- avendo, avuto
+	- fare (irregular)
+		- faccio, fai, fa, facciamo, fate, fanno
+		- facevo, facevi, faceva, facevamo, facevate, facevano
+		- ho fatto, hai fatto, ha fatto, abbiamo fatto, avete fatto, hanno fatto
+		- feci, facesti, fece, facemmo, faceste, fecero
+		- farò, farai, farà, faremo, farete, faranno
+		- farei, faresti, farebbe, faremmo, fareste, farebbero
+		- faccia, faccia, faccia, facciamo, facciate, facciano
+		- facessi, facessi, facesse, facessimo, faceste, facessero
+		- *, fai, faccia, facciamo, fate, facciano
+		- facendo, fatto
+	- andare (irregular)
+		- vado, vai, va, andiamo, andate, vanno
+		- andavo, andavi, andava, andavamo, andavate, andavano
+		- sono andato, sei andato, è andato, siamo andati, siete andati, sono andati
+		- andai, andasti, andò, andammo, andaste, andarono
+		- andrò, andrai, andrà, andremo, andrete, andranno
+		- andrei, andresti, andrebbe, andremmo, andreste, andrebbero
+		- vada, vada, vada, andiamo, andiate, vadano
+		- andassi, andassi, andasse, andassimo, andaste, andassero
+		- *, vai, vada, andiamo, andate, vadano
+		- andando, andato
+	- stare (irregular)
+		- sto, stai, sta, stiamo, state, stanno
+		- stavo, stavi, stava, stavamo, stavate, stavano
+		- sono stato, sei stato, è stato, siamo stati, siete stati, sono stati
+		- stetti, stesti, stette, stemmo, steste, stettero
+		- starò, starai, starà, staremo, starete, staranno
+		- starei, staresti, starebbe, staremmo, stareste, starebbero
+		- stia, stia, stia, stiamo, stiate, stiano
+		- stessi, stessi, stesse, stessimo, steste, stessero
+		- *, stai, stia, stiamo, state, stiano
+		- stando, stato
+	- dare (irregular)
+		- do, dai, dà, diamo, date, danno
+		- davo, davi, dava, davamo, davate, davano
+		- ho dato, hai dato, ha dato, abbiamo dato, avete dato, hanno dato
+		- diedi, desti, diede, demmo, deste, diedero
+		- darò, darai, darà, daremo, darete, daranno
+		- darei, daresti, darebbe, daremmo, dareste, darebbero
+		- dia, dia, dia, diamo, diate, diano
+		- dessi, dessi, desse, dessimo, deste, dessero
+		- *, dai, dia, diamo, date, diano
+		- dando, dato
+	- dire (irregular)
+		- dico, dici, dice, diciamo, dite, dicono
+		- dicevo, dicevi, diceva, dicevamo, dicevate, dicevano
+		- ho detto, hai detto, ha detto, abbiamo detto, avete detto, hanno detto
+		- dissi, dicesti, disse, dicemmo, diceste, dissero
+		- dirò, dirai, dirà, diremo, direte, diranno
+		- direi, diresti, direbbe, diremmo, direste, direbbero
+		- dica, dica, dica, diciamo, diciate, dicano
+		- dicessi, dicessi, dicesse, dicessimo, diceste, dicessero
+		- *, di', dica, diciamo, dite, dicano
+		- dicendo, detto
+	- potere (irregular)
+		- posso, puoi, può, possiamo, potete, possono
+		- potevo, potevi, poteva, potevamo, potevate, potevano
+		- ho potuto, hai potuto, ha potuto, abbiamo potuto, avete potuto, hanno potuto
+		- potei, potesti, poté, potemmo, poteste, poterono
+		- potrò, potrai, potrà, potremo, potrete, potranno
+		- potrei, potresti, potrebbe, potremmo, potreste, potrebbero
+		- possa, possa, possa, possiamo, possiate, possano
+		- potessi, potessi, potesse, potessimo, poteste, potessero
+		- *, *, *, *, *, *
+		- potendo, potuto
+	- volere (irregular)
+		- voglio, vuoi, vuole, vogliamo, volete, vogliono
+		- volevo, volevi, voleva, volevamo, volevate, volevano
+		- ho voluto, hai voluto, ha voluto, abbiamo voluto, avete voluto, hanno voluto
+		- volli, volesti, volle, volemmo, voleste, vollero
+		- vorrò, vorrai, vorrà, vorremo, vorrete, vorranno
+		- vorrei, vorresti, vorrebbe, vorremmo, vorreste, vorrebbero
+		- voglia, voglia, voglia, vogliamo, vogliate, vogliano
+		- volessi, volessi, volesse, volessimo, voleste, volessero
+		- *, vogli, voglia, vogliamo, vogliate, vogliano
+		- volendo, voluto
+	- dovere (irregular)
+		- devo, devi, deve, dobbiamo, dovete, devono
+		- dovevo, dovevi, doveva, dovevamo, dovevate, dovevano
+		- ho dovuto, hai dovuto, ha dovuto, abbiamo dovuto, avete dovuto, hanno dovuto
+		- dovei, dovesti, dové, dovemmo, doveste, doverono
+		- dovrò, dovrai, dovrà, dovremo, dovrete, dovranno
+		- dovrei, dovresti, dovrebbe, dovremmo, dovreste, dovrebbero
+		- deva, deva, deva, dobbiamo, dobbiate, devano
+		- dovessi, dovessi, dovesse, dovessimo, doveste, dovessero
+		- *, *, *, *, *, *
+		- dovendo, dovuto
+	- sapere (irregular)
+		- so, sai, sa, sappiamo, sapete, sanno
+		- sapevo, sapevi, sapeva, sapevamo, sapevate, sapevano
+		- ho saputo, hai saputo, ha saputo, abbiamo saputo, avete saputo, hanno saputo
+		- seppi, sapesti, seppe, sapemmo, sapeste, seppero
+		- saprò, saprai, saprà, sapremo, saprete, sapranno
+		- saprei, sapresti, saprebbe, sapremmo, sapreste, saprebbero
+		- sappia, sappia, sappia, sappiamo, sappiate, sappiano
+		- sapessi, sapessi, sapesse, sapessimo, sapeste, sapessero
+		- *, sappi, sappia, sappiamo, sappiate, sappiano
+		- sapendo, saputo
+	- venire (irregular)
+		- vengo, vieni, viene, veniamo, venite, vengono
+		- venivo, venivi, veniva, venivamo, venivate, venivano
+		- sono venuto, sei venuto, è venuto, siamo venuti, siete venuti, sono venuti
+		- venni, venisti, venne, venimmo, veniste, vennero
+		- verrò, verrai, verrà, verremo, verrete, verranno
+		- verrei, verresti, verrebbe, verremmo, verreste, verrebbero
+		- venga, venga, venga, veniamo, veniate, vengano
+		- venissi, venissi, venisse, venissimo, veniste, venissero
+		- *, vieni, venga, veniamo, venite, vengano
+		- venendo, venuto
+	- vedere (irregular)
+		- vedo, vedi, vede, vediamo, vedete, vedono
+		- vedevo, vedevi, vedeva, vedevamo, vedevate, vedevano
+		- ho visto, hai visto, ha visto, abbiamo visto, avete visto, hanno visto
+		- vidi, vedesti, vide, vedemmo, vedeste, videro
+		- vedrò, vedrai, vedrà, vedremo, vedrete, vedranno
+		- vedrei, vedresti, vedrebbe, vedremmo, vedreste, vedrebbero
+		- veda, veda, veda, vediamo, vediate, vedano
+		- vedessi, vedessi, vedesse, vedessimo, vedeste, vedessero
+		- *, vedi, veda, vediamo, vedete, vedano
+		- vedendo, visto
+	- prendere (irregular)
+		- prendo, prendi, prende, prendiamo, prendete, prendono
+		- prendevo, prendevi, prendeva, prendevamo, prendevate, prendevano
+		- ho preso, hai preso, ha preso, abbiamo preso, avete preso, hanno preso
+		- presi, prendesti, prese, prendemmo, prendeste, presero
+		- prenderò, prenderai, prenderà, prenderemo, prenderete, prenderanno
+		- prenderei, prenderesti, prenderebbe, prenderemmo, prendereste, prenderebbero
+		- prenda, prenda, prenda, prendiamo, prendiate, prendano
+		- prendessi, prendessi, prendesse, prendessimo, prendeste, prendessero
+		- *, prendi, prenda, prendiamo, prendete, prendano
+		- prendendo, preso
+	- parlare (regular)
+		- parlo, parli, parla, parliamo, parlate, parlano
+		- parlavo, parlavi, parlava, parlavamo, parlavate, parlavano
+		- ho parlato, hai parlato, ha parlato, abbiamo parlato, avete parlato, hanno parlato
+		- parlai, parlasti, parlò, parlammo, parlaste, parlarono
+		- parlerò, parlerai, parlerà, parleremo, parlerete, parleranno
+		- parlerei, parleresti, parlerebbe, parleremmo, parlereste, parlerebbero
+		- parli, parli, parli, parliamo, parliate, parlino
+		- parlassi, parlassi, parlasse, parlassimo, parlaste, parlassero
+		- *, parla, parli, parliamo, parlate, parlino
+		- parlando, parlato
+	- mangiare (regular)
+		- mangio, mangi, mangia, mangiamo, mangiate, mangiano
+		- mangiavo, mangiavi, mangiava, mangiavamo, mangiavate, mangiavano
+		- ho mangiato, hai mangiato, ha mangiato, abbiamo mangiato, avete mangiato, hanno mangiato
+		- mangiai, mangiasti, mangiò, mangiammo, mangiaste, mangiarono
+		- mangerò, mangerai, mangerà, mangeremo, mangerete, mangeranno
+		- mangerei, mangeresti, mangerebbe, mangeremmo, mangereste, mangerebbero
+		- mangi, mangi, mangi, mangiamo, mangiate, mangino
+		- mangiassi, mangiassi, mangiasse, mangiassimo, mangiaste, mangiassero
+		- *, mangia, mangi, mangiamo, mangiate, mangino
+		- mangiando, mangiato
+	- bere (irregular)
+		- bevo, bevi, beve, beviamo, bevete, bevono
+		- bevevo, bevevi, beveva, bevevamo, bevevate, bevevano
+		- ho bevuto, hai bevuto, ha bevuto, abbiamo bevuto, avete bevuto, hanno bevuto
+		- bevvi, bevesti, bevve, bevemmo, beveste, bevvero
+		- berrò, berrai, berrà, berremo, berrete, berranno
+		- berrei, berresti, berrebbe, berremmo, berreste, berrebbero
+		- beva, beva, beva, beviamo, beviate, bevano
+		- bevessi, bevessi, bevesse, bevessimo, beveste, bevessero
+		- *, bevi, beva, beviamo, bevete, bevano
+		- bevendo, bevuto
+	- uscire (irregular)
+		- esco, esci, esce, usciamo, uscite, escono
+		- uscivo, uscivi, usciva, uscivamo, uscivate, uscivano
+		- sono uscito, sei uscito, è uscito, siamo usciti, siete usciti, sono usciti
+		- uscii, uscisti, uscì, uscimmo, usciste, uscirono
+		- uscirò, uscirai, uscirà, usciremo, uscirete, usciranno
+		- uscirei, usciresti, uscirebbe, usciremmo, uscireste, uscirebbero
+		- esca, esca, esca, usciamo, usciate, escano
+		- uscissi, uscissi, uscisse, uscissimo, usciste, uscissero
+		- *, esci, esca, usciamo, uscite, escano
+		- uscendo, uscito
+	- capire (regular)
+		- capisco, capisci, capisce, capiamo, capite, capiscono
+		- capivo, capivi, capiva, capivamo, capivate, capivano
+		- ho capito, hai capito, ha capito, abbiamo capito, avete capito, hanno capito
+		- capii, capisti, capì, capimmo, capiste, capirono
+		- capirò, capirai, capirà, capiremo, capirete, capiranno
+		- capirei, capiresti, capirebbe, capiremmo, capireste, capirebbero
+		- capisca, capisca, capisca, capiamo, capiate, capiscano
+		- capissi, capissi, capisse, capissimo, capiste, capissero
+		- *, capisci, capisca, capiamo, capite, capiscano
+		- capendo, capito
+	- trovare (regular)
+		- trovo, trovi, trova, troviamo, trovate, trovano
+		- trovavo, trovavi, trovava, trovavamo, trovavate, trovavano
+		- ho trovato, hai trovato, ha trovato, abbiamo trovato, avete trovato, hanno trovato
+		- trovai, trovasti, trovò, trovammo, trovaste, trovarono
+		- troverò, troverai, troverà, troveremo, troverete, troveranno
+		- troverei, troveresti, troverebbe, troveremmo, trovereste, troverebbero
+		- trovi, trovi, trovi, troviamo, troviate, trovino
+		- trovassi, trovassi, trovasse, trovassimo, trovaste, trovassero
+		- *, trova, trovi, troviamo, trovate, trovino
+		- trovando, trovato
+	- pensare (regular)
+		- penso, pensi, pensa, pensiamo, pensate, pensano
+		- pensavo, pensavi, pensava, pensavamo, pensavate, pensavano
+		- ho pensato, hai pensato, ha pensato, abbiamo pensato, avete pensato, hanno pensato
+		- pensai, pensasti, pensò, pensammo, pensaste, pensarono
+		- penserò, penserai, penserà, penseremo, penserete, penseranno
+		- penserei, penseresti, penserebbe, penseremmo, pensereste, penserebbero
+		- pensi, pensi, pensi, pensiamo, pensiate, pensino
+		- pensassi, pensassi, pensasse, pensassimo, pensaste, pensassero
+		- *, pensa, pensi, pensiamo, pensate, pensino
+		- pensando, pensato
+	- conoscere (irregular)
+		- conosco, conosci, conosce, conosciamo, conoscete, conoscono
+		- conoscevo, conoscevi, conosceva, conoscevamo, conoscevavate, conoscevano
+		- ho conosciuto, hai conosciuto, ha conosciuto, abbiamo conosciuto, avete conosciuto, hanno conosciuto
+		- conobbi, conoscesti, conobbe, conoscemmo, conosceste, conobbero
+		- conoscerò, conoscerai, conoscerà, conosceremo, conoscerete, conosceranno
+		- conoscerei, conosceresti, conoscerebbe, conosceremmo, conoscereste, conoscerebbero
+		- conosca, conosca, conosca, conosciamo, conosciate, conoscano
+		- conoscessi, conoscessi, conoscesse, conoscessimo, conosceste, conoscessero
+		- *, conosci, conosca, conosciamo, conoscete, conoscano
+		- conoscendo, conosciuto
+	- rimanere (irregular)
+		- rimango, rimani, rimane, rimaniamo, rimanete, rimangono
+		- rimanevo, rimanevi, rimaneva, rimanevamo, rimanevate, rimanevano
+		- sono rimasto, sei rimasto, è rimasto, siamo rimasti, siete rimasti, sono rimasti
+		- rimasi, rimanesti, rimase, rimanemmo, rimaneste, rimasero
+		- rimarrò, rimarrai, rimarrà, rimarremo, rimarrete, rimarranno
+		- rimarrei, rimarresti, rimarrebbe, rimarremmo, rimarreste, rimarrebbero
+		- rimanga, rimanga, rimanga, rimaniamo, rimaniate, rimangano
+		- rimanessi, rimanessi, rimanesse, rimanessimo, rimaneste, rimanessero
+		- *, rimani, rimanga, rimaniamo, rimanete, rimangano
+		- rimanendo, rimasto
+	- chiedere (irregular)
+		- chiedo, chiedi, chiede, chiediamo, chiedete, chiedono
+		- chiedevo, chiedevi, chiedeva, chiedevamo, chiedevate, chiedevano
+		- ho chiesto, hai chiesto, ha chiesto, abbiamo chiesto, avete chiesto, hanno chiesto
+		- chiesi, chiedesti, chiese, chiedemmo, chiedeste, chiesero
+		- chiederò, chiederai, chiederà, chiederemo, chiederete, chiederanno
+		- chiederei, chiederesti, chiederebbe, chiederemmo, chiedereste, chiederebbero
+		- chieda, chieda, chieda, chiediamo, chiediate, chiedano
+		- chiedessi, chiedessi, chiedesse, chiedessimo, chiedeste, chiedessero
+		- *, chiedi, chieda, chiediamo, chiedete, chiedano
+		- chiedendo, chiesto
+	- cercare (regular)
+		- cerco, cerchi, cerca, cerchiamo, cercate, cercano
+		- cercavo, cercavi, cercava, cercavamo, cercavate, cercavano
+		- ho cercato, hai cercato, ha cercato, abbiamo cercato, avete cercato, hanno cercato
+		- cercai, cercasti, cercò, cercammo, cercaste, cercarono
+		- cercherò, cercherai, cercherà, cercheremo, cercherete, cercheranno
+		- cercherei, cercheresti, cercherebbe, cercheremmo, cerchereste, cercherebbero
+		- cerchi, cerchi, cerchi, cerchiamo, cerchiate, cerchino
+		- cercassi, cercassi, cercasse, cercassimo, cercaste, cercassero
+		- *, cerca, cerchi, cerchiamo, cercate, cerchino
+		- cercando, cercato
+	- mettere (irregular)
+		- metto, metti, mette, mettiamo, mettete, mettono
+		- mettevo, mettevi, metteva, mettevamo, mettevate, mettevano
+		- ho messo, hai messo, ha messo, abbiamo messo, avete messo, hanno messo
+		- misi, mettesti, mise, mettemmo, metteste, misero
+		- metterò, metterai, metterà, metteremo, metterete, metteranno
+		- metterei, metteresti, metterebbe, metteremmo, mettereste, metterebbero
+		- metta, metta, metta, mettiamo, mettiate, mettano
+		- mettessi, mettessi, mettesse, mettessimo, metteste, mettessero
+		- *, metti, metta, mettiamo, mettete, mettano
+		- mettendo, messo
+	- portare (regular)
+		- porto, porti, porta, portiamo, portate, portano
+		- portavo, portavi, portava, portavamo, portavate, portavano
+		- ho portato, hai portato, ha portato, abbiamo portato, avete portato, hanno portato
+		- portai, portasti, portò, portammo, portaste, portarono
+		- porterò, porterai, porterà, porteremo, porterete, porteranno
+		- porterei, porteresti, porterebbe, porteremmo, portereste, porterebbero
+		- porti, porti, porti, portiamo, portiate, portino
+		- portassi, portassi, portasse, portassimo, portaste, portassero
+		- *, porta, porti, portiamo, portate, portino
+		- portando, portato
+	- arrivare (regular)
+		- arrivo, arrivi, arriva, arriviamo, arrivate, arrivano
+		- arrivavo, arrivavi, arrivava, arrivavamo, arrivavate, arrivavano
+		- sono arrivato, sei arrivato, è arrivato, siamo arrivati, siete arrivati, sono arrivati
+		- arrivai, arrivasti, arrivò, arrivammo, arrivaste, arrivarono
+		- arriverò, arriverai, arriverà, arriveremo, arriverete, arriveranno
+		- arriverei, arriveresti, arriverebbe, arriveremmo, arrivereste, arriverebbero
+		- arrivi, arrivi, arrivi, arriviamo, arriviate, arrivino
+		- arrivassi, arrivassi, arrivasse, arrivassimo, arrivaste, arrivassero
+		- *, arriva, arrivi, arriviamo, arrivate, arrivino
+		- arrivando, arrivato
+	- passare (regular)
+		- passo, passi, passa, passiamo, passate, passano
+		- passavo, passavi, passava, passavamo, passavate, passavano
+		- sono passato, sei passato, è passato, siamo passati, siete passati, sono passati
+		- passai, passasti, passò, passammo, passaste, passarono
+		- passerò, passerai, passerà, passeremo, passerete, passeranno
+		- passerei, passeresti, passerebbe, passeremmo, passereste, passerebbero
+		- passi, passi, passi, passiamo, passiate, passino
+		- passassi, passassi, passasse, passassimo, passaste, passassero
+		- *, passa, passi, passiamo, passate, passino
+		- passando, passato
+	- credere (regular)
+		- credo, credi, crede, crediamo, credete, credono
+		- credevo, credevi, credeva, credevamo, credevate, credevano
+		- ho creduto, hai creduto, ha creduto, abbiamo creduto, avete creduto, hanno creduto
+		- credei, credesti, credé, credemmo, credeste, crederono
+		- crederò, crederai, crederà, crederemo, crederete, crederanno
+		- crederei, crederesti, crederebbe, crederemmo, credereste, crederebbero
+		- creda, creda, creda, crediamo, crediate, credano
+		- credessi, credessi, credesse, credessimo, credeste, credessero
+		- *, credi, creda, crediamo, credete, credano
+		- credendo, creduto
+	- sentire (regular)
+		- sento, senti, sente, sentiamo, sentite, sentono
+		- sentivo, sentivi, sentiva, sentivamo, sentivate, sentivano
+		- ho sentito, hai sentito, ha sentito, abbiamo sentito, avete sentito, hanno sentito
+		- sentii, sentisti, sentì, sentimmo, sentiste, sentirono
+		- sentirò, sentirai, sentirà, sentiremo, sentirete, sentiranno
+		- sentirei, sentiresti, sentirebbe, sentiremmo, sentireste, sentirebbero
+		- senta, senta, senta, sentiamo, sentiate, sentano
+		- sentissi, sentissi, sentisse, sentissimo, sentiste, sentissero
+		- *, senti, senta, sentiamo, sentite, sentano
+		- sentendo, sentito
+	- lasciare (regular)
+		- lascio, lasci, lascia, lasciamo, lasciate, lasciano
+		- lasciavo, lasciavi, lasciava, lasciavamo, lasciavate, lasciavano
+		- ho lasciato, hai lasciato, ha lasciato, abbiamo lasciato, avete lasciato, hanno lasciato
+		- lasciai, lasciasti, lasciò, lasciammo, lasciaste, lasciarono
+		- lascerò, lascerai, lascerà, lasceremo, lascerete, lasceranno
+		- lascerei, lasceresti, lascerebbe, lasceremmo, lascereste, lascerebbero
+		- lasci, lasci, lasci, lasciamo, lasciate, lascino
+		- lasciassi, lasciassi, lasciasse, lasciassimo, lasciaste, lasciassero
+		- *, lascia, lasci, lasciamo, lasciate, lascino
+		- lasciando, lasciato
+	- tornare (regular)
+		- torno, torni, torna, torniamo, tornate, tornano
+		- tornavo, tornavi, tornava, tornavamo, tornavate, tornavano
+		- sono tornato, sei tornato, è tornato, siamo tornati, siete tornati, sono tornati
+		- tornai, tornasti, tornò, tornammo, tornaste, tornarono
+		- tornerò, tornerai, tornerà, torneremo, tornerete, torneranno
+		- tornerei, torneresti, tornerebbe, torneremmo, tornereste, tornerebbero
+		- torni, torni, torni, torniamo, torniate, tornino
+		- tornassi, tornassi, tornasse, tornassimo, tornaste, tornassero
+		- *, torna, torni, torniamo, tornate, tornino
+		- tornando, tornato
+	- sembrare (regular)
+		- sembro, sembri, sembra, sembriamo, sembrate, sembrano
+		- sembravo, sembravi, sembrava, sembravamo, sembravate, sembravano
+		- sono sembrato, sei sembrato, è sembrato, siamo sembrati, siete sembrati, sono sembrati
+		- sembrai, sembrasti, sembrò, sembrammo, sembraste, sembrarono
+		- sembrerò, sembrerai, sembrerà, sembreremo, sembrerete, sembreranno
+		- sembrerei, sembreresti, sembrerebbe, sembreremmo, sembrereste, sembrerebbero
+		- sembri, sembri, sembri, sembriamo, sembriate, sembrino
+		- sembrassi, sembrassi, sembrasse, sembrassimo, sembraste, sembrassero
+		- *, sembra, sembri, sembriamo, sembrate, sembrino
+		- sembrando, sembrato
+	- tenere (irregular)
+		- tengo, tieni, tiene, teniamo, tenete, tengono
+		- tenevo, tenevi, teneva, tenevamo, tenevate, tenevano
+		- ho tenuto, hai tenuto, ha tenuto, abbiamo tenuto, avete tenuto, hanno tenuto
+		- tenni, tenesti, tenne, tenemmo, teneste, tennero
+		- terrò, terrai, terrà, terremo, terrete, terranno
+		- terrei, terresti, terrebbe, terremmo, terreste, terrebbero
+		- tenga, tenga, tenga, teniamo, teniate, tengano
+		- tenessi, tenessi, tenesse, tenessimo, teneste, tenessero
+		- *, tieni, tenga, teniamo, tenete, tengano
+		- tenendo, tenuto
+	- chiamare (regular)
+		- chiamo, chiami, chiama, chiamiamo, chiamate, chiamano
+		- chiamavo, chiamavi, chiamava, chiamavamo, chiamavate, chiamavano
+		- ho chiamato, hai chiamato, ha chiamato, abbiamo chiamato, avete chiamato, hanno chiamato
+		- chiamai, chiamasti, chiamò, chiamammo, chiamaste, chiamarono
+		- chiamerò, chiamerai, chiamerà, chiameremo, chiamerete, chiameranno
+		- chiamerei, chiameresti, chiamerebbe, chiameremmo, chiamereste, chiamerebbero
+		- chiami, chiami, chiami, chiamiamo, chiamiate, chiamino
+		- chiamassi, chiamassi, chiamasse, chiamassimo, chiamaste, chiamassero
+		- *, chiama, chiami, chiamiamo, chiamate, chiamino
+		- chiamando, chiamato
+	- vivere (irregular)
+		- vivo, vivi, vive, viviamo, vivete, vivono
+		- vivevo, vivevi, viveva, vivevamo, vivevate, vivevano
+		- ho vissuto, hai vissuto, ha vissuto, abbiamo vissuto, avete vissuto, hanno vissuto
+		- vissi, vivesti, visse, vivemmo, viveste, vissero
+		- vivrò, vivrai, vivrà, vivremo, vivrete, vivranno
+		- vivrei, vivresti, vivrebbe, vivremmo, vivreste, vivrebbero
+		- viva, viva, viva, viviamo, viviate, vivano
+		- vivessi, vivessi, vivesse, vivessimo, viveste, vivessero
+		- *, vivi, viva, viviamo, vivete, vivano
+		- vivendo, vissuto
+	- guardare (regular)
+		- guardo, guardi, guarda, guardiamo, guardate, guardano
+		- guardavo, guardavi, guardava, guardavamo, guardavate, guardavano
+		- ho guardato, hai guardato, ha guardato, abbiamo guardato, avete guardato, hanno guardato
+		- guardai, guardasti, guardò, guardammo, guardaste, guardarono
+		- guarderò, guarderai, guarderà, guarderemo, guarderete, guarderanno
+		- guarderei, guarderesti, guarderebbe, guarderemmo, guardereste, guarderebbero
+		- guardi, guardi, guardi, guardiamo, guardiate, guardino
+		- guardassi, guardassi, guardasse, guardassimo, guardaste, guardassero
+		- *, guarda, guardi, guardiamo, guardate, guardino
+		- guardando, guardato
+	- scrivere (irregular)
+		- scrivo, scrivi, scrive, scriviamo, scrivete, scrivono
+		- scrivevo, scrivevi, scriveva, scrivevamo, scrivevate, scrivevano
+		- ho scritto, hai scritto, ha scritto, abbiamo scritto, avete scritto, hanno scritto
+		- scrissi, scrivesti, scrisse, scrivemmo, scriveste, scrissero
+		- scriverò, scriverai, scriverà, scriveremo, scriverete, scriveranno
+		- scriverei, scriveresti, scriverebbe, scriveremmo, scrivereste, scriverebbero
+		- scriva, scriva, scriva, scriviamo, scriviate, scrivano
+		- scrivessi, scrivessi, scrivesse, scrivessimo, scriveste, scrivessero
+		- *, scrivi, scriva, scriviamo, scrivete, scrivano
+		- scrivendo, scritto
+	- leggere (irregular)
+		- leggo, leggi, legge, leggiamo, leggete, leggono
+		- leggevo, leggevi, leggeva, leggevamo, leggevate, leggevano
+		- ho letto, hai letto, ha letto, abbiamo letto, avete letto, hanno letto
+		- lessi, leggesti, lesse, leggemmo, leggeste, lessero
+		- leggerò, leggerai, leggerà, leggeremo, leggerete, leggeranno
+		- leggerei, leggeresti, leggerebbe, leggeremmo, leggereste, leggerebbero
+		- legga, legga, legga, leggiamo, leggiate, leggano
+		- leggessi, leggessi, leggesse, leggessimo, leggeste, leggessero
+		- *, leggi, legga, leggiamo, leggete, leggano
+		- leggendo, letto
+	- aprire (irregular)
+		- apro, apri, apre, apriamo, aprite, aprono
+		- aprivo, aprivi, apriva, aprivamo, aprivate, aprivano
+		- ho aperto, hai aperto, ha aperto, abbiamo aperto, avete aperto, hanno aperto
+		- aprii, apristi, aprì, aprimmo, apriste, aprirono
+		- aprirò, aprirai, aprirà, apriremo, aprirete, apriranno
+		- aprirei, apriresti, aprirebbe, apriremmo, aprireste, aprirebbero
+		- apra, apra, apra, apriamo, apriate, aprano
+		- aprissi, aprissi, aprisse, aprissimo, apriste, aprissero
+		- *, apri, apra, apriamo, aprite, aprano
+		- aprendo, aperto
+	- chiudere (irregular)
+		- chiudo, chiudi, chiude, chiudiamo, chiudete, chiudono
+		- chiudevo, chiudevi, chiudeva, chiudevamo, chiudevate, chiudevano
+		- ho chiuso, hai chiuso, ha chiuso, abbiamo chiuso, avete chiuso, hanno chiuso
+		- chiusi, chiudesti, chiuse, chiudemmo, chiudeste, chiusero
+		- chiuderò, chiuderai, chiuderà, chiuderemo, chiuderete, chiuderanno
+		- chiuderei, chiuderesti, chiuderebbe, chiuderemmo, chiudereste, chiuderebbero
+		- chiuda, chiuda, chiuda, chiudiamo, chiudiate, chiudano
+		- chiudessi, chiudessi, chiudesse, chiudessimo, chiudeste, chiudessero
+		- *, chiudi, chiuda, chiudiamo, chiudete, chiudano
+		- chiudendo, chiuso
+	- cominciare (regular)
+		- comincio, cominci, comincia, cominciamo, cominciate, cominciano
+		- cominciavo, cominciavi, cominciava, cominciavamo, cominciavate, cominciavano
+		- ho cominciato, hai cominciato, ha cominciato, abbiamo cominciato, avete cominciato, hanno cominciato
+		- cominciai, cominciasti, cominciò, cominciammo, cominciaste, cominciarono
+		- comincerò, comincerai, comincerà, cominceremo, comincerete, cominceranno
+		- comincerei, cominceresti, comincerebbe, cominceremmo, comincereste, comincerebbero
+		- cominci, cominci, cominci, cominciamo, cominciate, comincino
+		- cominciassi, cominciassi, cominciasse, cominciassimo, cominciaste, cominciassero
+		- *, comincia, cominci, cominciamo, cominciate, comincino
+		- cominciando, cominciato
+	- finire (regular)
+		- finisco, finisci, finisce, finiamo, finite, finiscono
+		- finivo, finivi, finiva, finivamo, finivate, finivano
+		- ho finito, hai finito, ha finito, abbiamo finito, avete finito, hanno finito
+		- finii, finisti, finì, finimmo, finiste, finirono
+		- finirò, finirai, finirà, finiremo, finirete, finiranno
+		- finirei, finiresti, finirebbe, finiremmo, finireste, finirebbero
+		- finisca, finisca, finisca, finiamo, finiate, finiscano
+		- finissi, finissi, finisse, finissimo, finiste, finissero
+		- *, finisci, finisca, finiamo, finite, finiscano
+		- finendo, finito
+	- lavorare (regular)
+		- lavoro, lavori, lavora, lavoriamo, lavorate, lavorano
+		- lavoravo, lavoravi, lavorava, lavoravamo, lavoravate, lavoravano
+		- ho lavorato, hai lavorato, ha lavorato, abbiamo lavorato, avete lavorato, hanno lavorato
+		- lavorai, lavorasti, lavorò, lavorammo, lavoraste, lavorarono
+		- lavorerò, lavorerai, lavorerà, lavoreremo, lavorerete, lavoreranno
+		- lavorerei, lavoreresti, lavorerebbe, lavoreremmo, lavorereste, lavorerebbero
+		- lavori, lavori, lavori, lavoriamo, lavoriate, lavorino
+		- lavorassi, lavorassi, lavorasse, lavorassimo, lavoraste, lavorassero
+		- *, lavora, lavori, lavoriamo, lavorate, lavorino
+		- lavorando, lavorato
+	- studiare (regular)
+		- studio, studi, studia, studiamo, studiate, studiano
+		- studiavo, studiavi, studiava, studiavamo, studiavate, studiavano
+		- ho studiato, hai studiato, ha studiato, abbiamo studiato, avete studiato, hanno studiato
+		- studiai, studiasti, studiò, studiammo, studiaste, studiarono
+		- studierò, studierai, studierà, studieremo, studierete, studieranno
+		- studierei, studieresti, studierebbe, studieremmo, studiereste, studierebbero
+		- studi, studi, studi, studiamo, studiate, studino
+		- studiassi, studiassi, studiasse, studiassimo, studiaste, studiassero
+		- *, studia, studi, studiamo, studiate, studino
+		- studiando, studiato
+	- imparare (regular)
+		- imparo, impari, impara, impariamo, imparate, imparano
+		- imparavo, imparavi, imparava, imparavamo, imparavate, imparavano
+		- ho imparato, hai imparato, ha imparato, abbiamo imparato, avete imparato, hanno imparato
+		- imparai, imparasti, imparò, imparammo, imparaste, impararono
+		- imparerò, imparerai, imparerà, impareremo, imparerete, impareranno
+		- imparerei, impareresti, imparerebbe, impareremmo, imparereste, imparerebbero
+		- impari, impari, impari, impariamo, impariate, imparino
+		- imparassi, imparassi, imparasse, imparassimo, imparaste, imparassero
+		- *, impara, impari, impariamo, imparate, imparino
+		- imparando, imparato
+	- ricordare (regular)
+		- ricordo, ricordi, ricorda, ricordiamo, ricordate, ricordano
+		- ricordavo, ricordavi, ricordava, ricordavamo, ricordavate, ricordavano
+		- ho ricordato, hai ricordato, ha ricordato, abbiamo ricordato, avete ricordato, hanno ricordato
+		- ricordai, ricordasti, ricordò, ricordammo, ricordaste, ricordarono
+		- ricorderò, ricorderai, ricorderà, ricorderemo, ricorderete, ricorderanno
+		- ricorderei, ricorderesti, ricorderebbe, ricorderemmo, ricordereste, ricorderebbero
+		- ricordi, ricordi, ricordi, ricordiamo, ricordiate, ricordino
+		- ricordassi, ricordassi, ricordasse, ricordassimo, ricordaste, ricordassero
+		- *, ricorda, ricordi, ricordiamo, ricordate, ricordino
+		- ricordando, ricordato
+	- dimenticare (regular)
+		- dimentico, dimentichi, dimentica, dimentichiamo, dimenticate, dimenticano
+		- dimenticavo, dimenticavi, dimenticava, dimenticavamo, dimenticavate, dimenticavano
+		- ho dimenticato, hai dimenticato, ha dimenticato, abbiamo dimenticato, avete dimenticato, hanno dimenticato
+		- dimenticai, dimenticasti, dimenticò, dimenticammo, dimenticaste, dimenticarono
+		- dimenticherò, dimenticherai, dimenticherà, dimenticheremo, dimenticherete, dimenticheranno
+		- dimenticherei, dimenticheresti, dimenticherebbe, dimenticheremmo, dimentichereste, dimenticherebbero
+		- dimentichi, dimentichi, dimentichi, dimentichiamo, dimentichiate, dimentichino
+		- dimenticassi, dimenticassi, dimenticasse, dimenticassimo, dimenticaste, dimenticassero
+		- *, dimentica, dimentichi, dimentichiamo, dimenticate, dimentichino
+		- dimenticando, dimenticato
+	- aspettare (regular)
+		- aspetto, aspetti, aspetta, aspettiamo, aspettate, aspettano
+		- aspettavo, aspettavi, aspettava, aspettavamo, aspettavate, aspettavano
+		- ho aspettato, hai aspettato, ha aspettato, abbiamo aspettato, avete aspettato, hanno aspettato
+		- aspettai, aspettasti, aspettò, aspettammo, aspettaste, aspettarono
+		- aspetterò, aspetterai, aspetterà, aspetteremo, aspetterete, aspetteranno
+		- aspetterei, aspetteresti, aspetterebbe, aspetteremmo, aspettereste, aspetterebbero
+		- aspetti, aspetti, aspetti, aspettiamo, aspettiate, aspettino
+		- aspettassi, aspettassi, aspettasse, aspettassimo, aspettaste, aspettassero
+		- *, aspetta, aspetti, aspettiamo, aspettate, aspettino
+		- aspettando, aspettato
+	- usare (regular)
+		- uso, usi, usa, usiamo, usate, usano
+		- usavo, usavi, usava, usavamo, usavate, usavano
+		- ho usato, hai usato, ha usato, abbiamo usato, avete usato, hanno usato
+		- usai, usasti, usò, usammo, usaste, usarono
+		- userò, userai, userà, useremo, userete, useranno
+		- userei, useresti, userebbe, useremmo, usereste, userebbero
+		- usi, usi, usi, usiamo, usiate, usino
+		- usassi, usassi, usasse, usassimo, usaste, usassero
+		- *, usa, usi, usiamo, usate, usino
+		- usando, usato
+	- comprare (regular)
+		- compro, compri, compra, compriamo, comprate, comprano
+		- compravo, compravi, comprava, compravamo, compravate, compravano
+		- ho comprato, hai comprato, ha comprato, abbiamo comprato, avete comprato, hanno comprato
+		- comprai, comprasti, comprò, comprammo, compraste, comprarono
+		- comprerò, comprerai, comprerà, compreremo, comprerete, compreranno
+		- comprerei, compreresti, comprerebbe, compreremmo, comprereste, comprerebbero
+		- compri, compri, compri, compriamo, compriate, comprino
+		- comprassi, comprassi, comprasse, comprassimo, compraste, comprassero
+		- *, compra, compri, compriamo, comprate, comprino
+		- comprando, comprato
+	- vendere (regular)
+		- vendo, vendi, vende, vendiamo, vendete, vendono
+		- vendevo, vendevi, vendeva, vendevamo, vendevate, vendevano
+		- ho venduto, hai venduto, ha venduto, abbiamo venduto, avete venduto, hanno venduto
+		- vendei, vendesti, vendé, vendemmo, vendeste, venderono
+		- venderò, venderai, venderà, venderemo, venderete, venderanno
+		- venderei, venderesti, venderebbe, venderemmo, vendereste, venderebbero
+		- venda, venda, venda, vendiamo, vendiate, vendano
+		- vendessi, vendessi, vendesse, vendessimo, vendeste, vendessero
+		- *, vendi, venda, vendiamo, vendete, vendano
+		- vendendo, venduto
+	- pagare (regular)
+		- pago, paghi, paga, paghiamo, pagate, pagano
+		- pagavo, pagavi, pagava, pagavamo, pagavate, pagavano
+		- ho pagato, hai pagato, ha pagato, abbiamo pagato, avete pagato, hanno pagato
+		- pagai, pagasti, pagò, pagammo, pagaste, pagarono
+		- pagherò, pagherai, pagherà, pagheremo, pagherete, pagheranno
+		- pagherei, pagheresti, pagherebbe, pagheremmo, paghereste, pagherebbero
+		- paghi, paghi, paghi, paghiamo, paghiate, paghino
+		- pagassi, pagassi, pagasse, pagassimo, pagaste, pagassero
+		- *, paga, paghi, paghiamo, pagate, paghino
+		- pagando, pagato
+	- aiutare (regular)
+		- aiuto, aiuti, aiuta, aiutiamo, aiutate, aiutano
+		- aiutavo, aiutavi, aiutava, aiutavamo, aiutavate, aiutavano
+		- ho aiutato, hai aiutato, ha aiutato, abbiamo aiutato, avete aiutato, hanno aiutato
+		- aiutai, aiutasti, aiutò, aiutammo, aiutaste, aiutarono
+		- aiuterò, aiuterai, aiuterà, aiuteremo, aiuterete, aiuteranno
+		- aiuterei, aiuteresti, aiuterebbe, aiuteremmo, aiutereste, aiuterebbero
+		- aiuti, aiuti, aiuti, aiutiamo, aiutiate, aiutino
+		- aiutassi, aiutassi, aiutasse, aiutassimo, aiutaste, aiutassero
+		- *, aiuta, aiuti, aiutiamo, aiutate, aiutino
+		- aiutando, aiutato
+	- giocare (regular)
+		- gioco, giochi, gioca, giochiamo, giocate, giocano
+		- giocavo, giocavi, giocava, giocavamo, giocavate, giocavano
+		- ho giocato, hai giocato, ha giocato, abbiamo giocato, avete giocato, hanno giocato
+		- giocai, giocasti, giocò, giocammo, giocaste, giocarono
+		- giocherò, giocherai, giocherà, giocheremo, giocherete, giocheranno
+		- giocherei, giocheresti, giocherebbe, giocheremmo, giochereste, giocherebbero
+		- giochi, giochi, giochi, giochiamo, giochiate, giochino
+		- giocassi, giocassi, giocasse, giocassimo, giocaste, giocassero
+		- *, gioca, giochi, giochiamo, giocate, giochino
+		- giocando, giocato
+	- dormire (regular)
+		- dormo, dormi, dorme, dormiamo, dormite, dormono
+		- dormivo, dormivi, dormiva, dormivamo, dormivate, dormivano
+		- ho dormito, hai dormito, ha dormito, abbiamo dormito, avete dormito, hanno dormito
+		- dormii, dormisti, dormì, dormimmo, dormiste, dormirono
+		- dormirò, dormirai, dormirà, dormiremo, dormirete, dormiranno
+		- dormirei, dormiresti, dormirebbe, dormiremmo, dormireste, dormirebbero
+		- dorma, dorma, dorma, dormiamo, dormiate, dormano
+		- dormissi, dormissi, dormisse, dormissimo, dormiste, dormissero
+		- *, dormi, dorma, dormiamo, dormite, dormano
+		- dormendo, dormito
+	- partire (regular)
+		- parto, parti, parte, partiamo, partite, partono
+		- partivo, partivi, partiva, partivamo, partivate, partivano
+		- sono partito, sei partito, è partito, siamo partiti, siete partiti, sono partiti
+		- partii, partisti, partì, partimmo, partiste, partirono
+		- partirò, partirai, partirà, partiremo, partirete, partiranno
+		- partirei, partiresti, partirebbe, partiremmo, partireste, partirebbero
+		- parta, parta, parta, partiamo, partiate, partano
+		- partissi, partissi, partisse, partissimo, partiste, partissero
+		- *, parti, parta, partiamo, partite, partano
+		- partendo, partito
+	- entrare (regular)
+		- entro, entri, entra, entriamo, entrate, entrano
+		- entravo, entravi, entrava, entravamo, entravate, entravano
+		- sono entrato, sei entrato, è entrato, siamo entrati, siete entrati, sono entrati
+		- entrai, entrasti, entrò, entrammo, entraste, entrarono
+		- entrerò, entrerai, entrerà, entreremo, entrerete, entreranno
+		- entrerei, entreresti, entrerebbe, entreremmo, entrereste, entrerebbero
+		- entri, entri, entri, entriamo, entriate, entrino
+		- entrassi, entrassi, entrasse, entrassimo, entraste, entrassero
+		- *, entra, entri, entriamo, entrate, entrino
+		- entrando, entrato
+	- cadere (irregular)
+		- cado, cadi, cade, cadiamo, cadete, cadono
+		- cadevo, cadevi, cadeva, cadevamo, cadevate, cadevano
+		- sono caduto, sei caduto, è caduto, siamo caduti, siete caduti, sono caduti
+		- caddi, cadesti, cadde, cademmo, cadeste, caddero
+		- cadrò, cadrai, cadrà, cadremo, cadrete, cadranno
+		- cadrei, cadresti, cadrebbe, cadremmo, cadreste, cadrebbero
+		- cada, cada, cada, cadiamo, cadiate, cadano
+		- cadessi, cadessi, cadesse, cadessimo, cadeste, cadessero
+		- *, cadi, cada, cadiamo, cadete, cadano
+		- cadendo, caduto
+	- correre (irregular)
+		- corro, corri, corre, corriamo, correte, corrono
+		- correvo, correvi, correva, correvamo, correvate, correvano
+		- ho corso, hai corso, ha corso, abbiamo corso, avete corso, hanno corso
+		- corsi, corresti, corse, corremmo, correste, corsero
+		- correrò, correrai, correrà, correremo, correrete, correranno
+		- correrei, correresti, correrebbe, correremmo, correreste, correrebbero
+		- corra, corra, corra, corriamo, corriate, corrano
+		- corressi, corressi, corresse, corressimo, correste, corressero
+		- *, corri, corra, corriamo, correte, corrano
+		- correndo, corso
+	- scegliere (irregular)
+		- scelgo, scegli, sceglie, scegliamo, scegliete, scelgono
+		- sceglievo, sceglievi, sceglieva, sceglievamo, sceglievate, sceglievano
+		- ho scelto, hai scelto, ha scelto, abbiamo scelto, avete scelto, hanno scelto
+		- scelsi, scegliesti, scelse, scegliemmo, sceglieste, scelsero
+		- sceglierò, sceglierai, sceglierà, sceglieremo, sceglierete, sceglieranno
+		- sceglierei, sceglieresti, sceglierebbe, sceglieremmo, scegliereste, sceglierebbero
+		- scelga, scelga, scelga, scegliamo, scegliate, scelgano
+		- scegliessi, scegliessi, scegliesse, scegliessimo, sceglieste, scegliessero
+		- *, scegli, scelga, scegliamo, scegliete, scelgano
+		- scegliendo, scelto
+	- decidere (irregular)
+		- decido, decidi, decide, decidiamo, decidete, decidono
+		- decidevo, decidevi, decideva, decidevamo, decidevate, decidevano
+		- ho deciso, hai deciso, ha deciso, abbiamo deciso, avete deciso, hanno deciso
+		- decisi, decidesti, decise, decidemmo, decideste, decisero
+		- deciderò, deciderai, deciderà, decideremo, deciderete, decideranno
+		- deciderei, decideresti, deciderebbe, decideremmo, decidereste, deciderebbero
+		- decida, decida, decida, decidiamo, decidiate, decidano
+		- decidessi, decidessi, decidesse, decidessimo, decideste, decidessero
+		- *, decidi, decida, decidiamo, decidete, decidano
+		- decidendo, deciso
+	- rispondere (irregular)
+		- rispondo, rispondi, risponde, rispondiamo, rispondete, rispondono
+		- rispondevo, rispondevi, rispondeva, rispondevamo, rispondevate, rispondevano
+		- ho risposto, hai risposto, ha risposto, abbiamo risposto, avete risposto, hanno risposto
+		- risposi, rispondesti, rispose, rispondemmo, rispondeste, risposero
+		- risponderò, risponderai, risponderà, risponderemo, risponderete, risponderanno
+		- risponderei, risponderesti, risponderebbe, risponderemmo, rispondereste, risponderebbero
+		- risponda, risponda, risponda, rispondiamo, rispondiate, rispondano
+		- rispondessi, rispondessi, rispondesse, rispondessimo, rispondeste, rispondessero
+		- *, rispondi, risponda, rispondiamo, rispondete, rispondano
+		- rispondendo, risposto
+	- spiegare (regular)
+		- spiego, spieghi, spiega, spieghiamo, spiegate, spiegano
+		- spiegavo, spiegavi, spiegava, spiegavamo, spiegavate, spiegavano
+		- ho spiegato, hai spiegato, ha spiegato, abbiamo spiegato, avete spiegato, hanno spiegato
+		- spiegai, spiegasti, spiegò, spiegammo, spiegaste, spiegarono
+		- spiegherò, spiegherai, spiegherà, spiegheremo, spiegherete, spiegheranno
+		- spiegherei, spiegheresti, spiegherebbe, spiegheremmo, spieghereste, spiegherebbero
+		- spieghi, spieghi, spieghi, spieghiamo, spieghiate, spieghino
+		- spiegassi, spiegassi, spiegasse, spiegassimo, spiegaste, spiegassero
+		- *, spiega, spieghi, spieghiamo, spiegate, spieghino
+		- spiegando, spiegato
+	- provare (regular)
+		- provo, provi, prova, proviamo, provate, provano
+		- provavo, provavi, provava, provavamo, provavate, provavano
+		- ho provato, hai provato, ha provato, abbiamo provato, avete provato, hanno provato
+		- provai, provasti, provò, provammo, provaste, provarono
+		- proverò, proverai, proverà, proveremo, proverete, proveranno
+		- proverei, proveresti, proverebbe, proveremmo, provereste, proverebbero
+		- provi, provi, provi, proviamo, proviate, provino
+		- provassi, provassi, provasse, provassimo, provaste, provassero
+		- *, prova, provi, proviamo, provate, provino
+		- provando, provato
+	- cambiare (regular)
+		- cambio, cambi, cambia, cambiamo, cambiate, cambiano
+		- cambiavo, cambiavi, cambiava, cambiavamo, cambiavate, cambiavano
+		- ho cambiato, hai cambiato, ha cambiato, abbiamo cambiato, avete cambiato, hanno cambiato
+		- cambiai, cambiasti, cambiò, cambiammo, cambiaste, cambiarono
+		- cambierò, cambierai, cambierà, cambieremo, cambierete, cambieranno
+		- cambierei, cambieresti, cambierebbe, cambieremmo, cambiereste, cambierebbero
+		- cambi, cambi, cambi, cambiamo, cambiate, cambino
+		- cambiassi, cambiassi, cambiasse, cambiassimo, cambiaste, cambiassero
+		- *, cambia, cambi, cambiamo, cambiate, cambino
+		- cambiando, cambiato
+	- offrire (irregular)
+		- offro, offri, offre, offriamo, offrite, offrono
+		- offrivo, offrivi, offriva, offrivamo, offrivate, offrivano
+		- ho offerto, hai offerto, ha offerto, abbiamo offerto, avete offerto, hanno offerto
+		- offrii, offristi, offrì, offrimmo, offriste, offrirono
+		- offrirò, offrirai, offrirà, offriremo, offrirete, offriranno
+		- offrirei, offriresti, offrirebbe, offriremmo, offrireste, offrirebbero
+		- offra, offra, offra, offriamo, offriate, offrano
+		- offrissi, offrissi, offrisse, offrissimo, offriste, offrissero
+		- *, offri, offra, offriamo, offrite, offrano
+		- offrendo, offerto
+	- perdere (irregular)
+		- perdo, perdi, perde, perdiamo, perdete, perdono
+		- perdevo, perdevi, perdeva, perdevamo, perdevate, perdevano
+		- ho perso, hai perso, ha perso, abbiamo perso, avete perso, hanno perso
+		- persi, perdesti, perse, perdemmo, perdeste, persero
+		- perderò, perderai, perderà, perderemo, perderete, perderanno
+		- perderei, perderesti, perderebbe, perderemmo, perdereste, perderebbero
+		- perda, perda, perda, perdiamo, perdiate, perdano
+		- perdessi, perdessi, perdesse, perdessimo, perdeste, perdessero
+		- *, perdi, perda, perdiamo, perdete, perdano
+		- perdendo, perso
+	- vincere (irregular)
+		- vinco, vinci, vince, vinciamo, vincete, vincono
+		- vincevo, vincevi, vinceva, vincevamo, vincevate, vincevano
+		- ho vinto, hai vinto, ha vinto, abbiamo vinto, avete vinto, hanno vinto
+		- vinsi, vincesti, vinse, vincemmo, vinceste, vinsero
+		- vincerò, vincerai, vincerà, vinceremo, vincerete, vinceranno
+		- vincerei, vinceresti, vincerebbe, vinceremmo, vincereste, vincerebbero
+		- vinca, vinca, vinca, vinciamo, vinciate, vincano
+		- vincessi, vincessi, vincesse, vincessimo, vinceste, vincessero
+		- *, vinci, vinca, vinciamo, vincete, vincano
+		- vincendo, vinto
+	- morire (irregular)
+		- muoio, muori, muore, moriamo, morite, muoiono
+		- morivo, morivi, moriva, morivamo, morivate, morivano
+		- sono morto, sei morto, è morto, siamo morti, siete morti, sono morti
+		- morii, moristi, morì, morimmo, moriste, morirono
+		- morirò, morirai, morirà, moriremo, morirete, moriranno
+		- morirei, moriresti, morirebbe, moriremmo, morireste, morirebbero
+		- muoia, muoia, muoia, moriamo, moriate, muoiano
+		- morissi, morissi, morisse, morissimo, moriste, morissero
+		- *, muori, muoia, moriamo, morite, muoiano
+		- morendo, morto

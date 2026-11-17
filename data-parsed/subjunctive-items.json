@@ -1,0 +1,392 @@
+[
+  {
+    "english": "it is possible that",
+    "spanish": "puede que",
+    "indicative": "llueve mañana por la tarde",
+    "subjunctive": "puede que llueva mañana por la tarde"
+  },
+  {
+    "english": "it surprises me that",
+    "spanish": "me extraña que",
+    "indicative": "no contestan el teléfono",
+    "subjunctive": "me extraña que no contesten el teléfono"
+  },
+  {
+    "english": "it is a shame that",
+    "spanish": "es una pena que",
+    "indicative": "no puedes venir a la fiesta",
+    "subjunctive": "es una pena que no puedas venir a la fiesta"
+  },
+  {
+    "english": "we hope that",
+    "spanish": "esperamos que",
+    "indicative": "tienes un buen viaje",
+    "subjunctive": "esperamos que tengas un buen viaje"
+  },
+  {
+    "english": "it saddens me that",
+    "spanish": "me apena que",
+    "indicative": "se van tan pronto",
+    "subjunctive": "me apena que se vayan tan pronto"
+  },
+  {
+    "english": "it is regrettable that",
+    "spanish": "es lamentable que",
+    "indicative": "pierden tanto tiempo en eso",
+    "subjunctive": "es lamentable que pierdan tanto tiempo en eso"
+  },
+  {
+    "english": "it is advisable that",
+    "spanish": "conviene que",
+    "indicative": "comes demasiado antes de correr",
+    "subjunctive": "no conviene que comas demasiado antes de correr"
+  },
+  {
+    "english": "after",
+    "spanish": "después de que",
+    "indicative": "Llegaremos a París e iremos directamente al hotel.",
+    "subjunctive": "Después de que lleguemos a París, iremos directamente al hotel"
+  },
+  {
+    "english": "to doubt that",
+    "spanish": "dudar que",
+    "indicative": "podemos terminar el trabajo hoy",
+    "subjunctive": "ella duda que podamos terminar el trabajo hoy"
+  },
+  {
+    "english": "in case",
+    "spanish": "en caso que",
+    "indicative": "vamos a Paris",
+    "subjunctive": "en caso de que vayamos a París"
+  },
+  {
+    "english": "as soon as",
+    "spanish": "en cuanto",
+    "indicative": "ellos nos dan el dinero",
+    "subjunctive": "en cuanto nos den el dinero"
+  },
+  {
+    "english": "it's advisable that",
+    "spanish": "es aconsejable que",
+    "indicative": "rellenas este formulario todos los días",
+    "subjunctive": "es asconsejable que rellenes este formulario ahora (it's advisable that...)"
+  },
+  {
+    "english": "it's good that",
+    "spanish": "es bueno que",
+    "indicative": "tenemos suficiente dinero",
+    "subjunctive": "es bueno que tengamos suficiente dinero"
+  },
+  {
+    "english": "it's unlikely that",
+    "spanish": "es difícil que",
+    "indicative": "él tiene que ir allí",
+    "subjunctive": "es difícil que él tenga que ir allí"
+  },
+  {
+    "english": "it is doubtful that",
+    "spanish": "es dudoso que",
+    "indicative": "ellos llevan un disfraz en esta fiesta",
+    "subjunctive": "es dudoso que lleven disfraz en esta fiesta"
+  },
+  {
+    "english": "it's likely that",
+    "spanish": "es fácil que",
+    "indicative": "mañana llueve en esta región",
+    "subjunctive": "es fácil que mañana llueva en esta región"
+  },
+  {
+    "english": "it's fantasic that",
+    "spanish": "es fantástico que",
+    "indicative": "te preparas para tus exámenes",
+    "subjunctive": "es fantástico que prepares tus propias comidas"
+  },
+  {
+    "english": "it's important that",
+    "spanish": "es importante que",
+    "indicative": "ellas nadan todos los dias",
+    "subjunctive": "es importante que naden todos los días"
+  },
+  {
+    "english": "it's impossible that",
+    "spanish": "es imposible que",
+    "indicative": "él puede abrir esta puerta",
+    "subjunctive": "es imposible que alguien pueda abrir esta puerta"
+  },
+  {
+    "english": "it's improbable that",
+    "spanish": "es improbable que",
+    "indicative": "encontramos un hotel barato en el centro de París",
+    "subjunctive": "es improbable que encontremos un hotel barato en el centro de París"
+  },
+  {
+    "english": "it's uncertain that",
+    "spanish": "es improbable que",
+    "indicative": "no sabemos si mañana hará buen tiempo",
+    "subjunctive": "es incierto que mañana haga buen tiempo"
+  },
+  {
+    "english": "it's incredible that",
+    "spanish": "es increíble que",
+    "indicative": "todavía hay personas que no utilizan Internet",
+    "subjunctive": "es increíble que todavía haya gente que no utilizan Internet"
+  },
+  {
+    "english": "it's a pity that",
+    "spanish": "es una lástima que",
+    "indicative": "estas enfermo",
+    "subjunctive": "es una lástima que estés enfermo"
+  },
+  {
+    "english": "it's bad that",
+    "spanish": "es malo que",
+    "indicative": "comes demasiado azúcar",
+    "subjunctive": "Es malo que comas demasiado azúcar"
+  },
+  {
+    "english": "it's better that",
+    "spanish": "es mejor que",
+    "indicative": "salimos temprano para evitar el tráfico",
+    "subjunctive": "es mejor que salgamos temprano para evitar el tráfico"
+  },
+  {
+    "english": "it's necessary that",
+    "spanish": "es menester que",
+    "indicative": "eres puntual",
+    "subjunctive": "es menester que seas puntual"
+  },
+  {
+    "english": "it's necessary that",
+    "spanish": "es necesario que",
+    "indicative": "haces ejercicio",
+    "subjunctive": "es necesario que hagas ejercicio"
+  },
+  {
+    "english": "to wish that",
+    "spanish": "esperar que",
+    "indicative": "mañana hace buen tiempo",
+    "subjunctive": "espero que mañana haga buen tiempo"
+  },
+  {
+    "english": "it's possible that",
+    "spanish": "es posible que",
+    "indicative": "mañana tenemos que trabajar hasta tarde",
+    "subjunctive": "es posible que mañana tengamos que trabajar hasta tarde"
+  },
+  {
+    "english": "it's necessary that",
+    "spanish": "es preciso que",
+    "indicative": "todos los participantes llegan a tiempo",
+    "subjunctive": "es preciso que todos los participantes lleguen a tiempo"
+  },
+  {
+    "english": "it's preferable that",
+    "spanish": "es preferible que",
+    "indicative": "tu reservas el hotel con antelación",
+    "subjunctive": "es preferible que reserves el hotel con antelación"
+  },
+  {
+    "english": "it's probable that",
+    "spanish": "es probable que",
+    "indicative": "mañana llueve todo el día",
+    "subjunctive": "es probable que mañana llueva durante todo el día"
+  },
+  {
+    "english": "it's rare that",
+    "spanish": "es raro que",
+    "indicative": "Pedro no ha respondido todavía a mi mensaje",
+    "subjunctive": "es raro que Pedro no haya respondido todavía a mi mensaje"
+  },
+  {
+    "english": "it's ridiculous that",
+    "spanish": "es ridículo que",
+    "indicative": "el gobierno no hace nada para resolver este problema.",
+    "subjunctive": "es ridículo que el Gobierno no haga nada para resolver este problema"
+  },
+  {
+    "english": "to be happy that",
+    "spanish": "estar contento que",
+    "indicative": "sus amigos vienen a visitarlo mañana",
+    "subjunctive": "está contento de que sus amigos vengan a visitarlo mañana"
+  },
+  {
+    "english": "it's terrible that",
+    "spanish": "es terrible que",
+    "indicative": "muchos personas mueren en guerras cada año",
+    "subjunctive": "es terrible que tantas personas mueran en guerras cada año"
+  },
+  {
+    "english": "until",
+    "spanish": "hasta que",
+    "indicative": "todos están presentes",
+    "subjunctive": "no podemos empezar la reunión hasta que todos estén presentes"
+  },
+  {
+    "english": "to insist that",
+    "spanish": "insistir en que",
+    "indicative": "estudio español todos los días",
+    "subjunctive": "mi profesor insiste en que estudie español todos los días"
+  },
+  {
+    "english": "to order that",
+    "spanish": "mandar que",
+    "indicative": "limpio mi habitación",
+    "subjunctive": "mi madre me manda que limpie mi habitación"
+  },
+  {
+    "english": "it's better that",
+    "spanish": "más vale que",
+    "indicative": "tu sales temprano",
+    "subjunctive": "más vale que salgas temprano si no quieres llegar tarde al trabajo"
+  },
+  {
+    "english": "to deny that",
+    "spanish": "negar que",
+    "indicative": "el político no ha cometido ningún delito",
+    "subjunctive": "el político niega que haya cometido ningún delito"
+  },
+  {
+    "english": "not to believe that",
+    "spanish": "no creer que",
+    "indicative": "mañana hará buen tiempo",
+    "subjunctive": "no creo que mañana haga buen tiempo"
+  },
+  {
+    "english": "it's not certain that",
+    "spanish": "no es cierto que",
+    "indicative": "nosotros hemos perdido el tren",
+    "subjunctive": "no es cierto que hayamos perdido el tren"
+  },
+  {
+    "english": "to not be convinced that",
+    "spanish": "no estar convencido de que",
+    "indicative": "esta es la mejor solución al problema",
+    "subjunctive": "no estoy convencido de que esta sea la mejor solución al problema"
+  },
+  {
+    "english": "to not be sure that",
+    "spanish": "no estar seguro de que",
+    "indicative": "mañana tendremos tiempo suficiente para visitar el museo",
+    "subjunctive": "no estoy seguro de que mañana tengamos suficiente tiempo para visitar el museo"
+  },
+  {
+    "english": "it's not true that",
+    "spanish": "no es verdad que",
+    "indicative": "es cierto que ella ha dejado su trabajo",
+    "subjunctive": "no es verdad que ella haya dejado su trabajo"
+  },
+  {
+    "english": "to not imagine that",
+    "spanish": "no imaginarse que",
+    "indicative": "me imagino que podemos terminar todo el trabajo en un solo día",
+    "subjunctive": "no me imagino que podamos terminar todo el trabajo en un solo día"
+  },
+  {
+    "english": "to not seem that",
+    "spanish": "no parecer que",
+    "indicative": "parece que mañana va a llover",
+    "subjunctive": "no parece que vaya a llover mañana"
+  },
+  {
+    "english": "to not think that",
+    "spanish": "no pensar que",
+    "indicative": "pienso que tiene razón",
+    "subjunctive": "no pienso que tenga razón"
+  },
+  {
+    "english": "to not suppose that",
+    "spanish": "no suponer que",
+    "indicative": "supongo que es verdad",
+    "subjunctive": "no supongo que sea verdad"
+  },
+  {
+    "english": "hopefully",
+    "spanish": "ojalá que",
+    "indicative": "mañana hace buen tiempo, así que puedo salir a correr",
+    "subjunctive": "ojalá que mañana haga buen tiempo para poder salir a correr"
+  },
+  {
+    "english": "in order that",
+    "spanish": "para que",
+    "indicative": "lo entiendes mejor",
+    "subjunctive": "te explicaré la gramática otra vez para que la entiendas mejor"
+  },
+  {
+    "english": "to ask that",
+    "spanish": "pedir que",
+    "indicative": "mi profesor corrige mis errores cuando hablo español",
+    "subjunctive": "le pido a mi profesor que me corrija los errores cuando hablo español"
+  },
+  {
+    "english": "to prefer that",
+    "spanish": "preferir que",
+    "indicative": "vienes mañana",
+    "subjunctive": "prefiero que vengas mañana"
+  },
+  {
+    "english": "to prohibit that",
+    "spanish": "prohibir que",
+    "indicative": "los coches circulan por esta zona del centro de la ciudad",
+    "subjunctive": "el Gobierno ha prohibido que los coches circulen por esta zona del centro"
+  },
+  {
+    "english": "it may be that",
+    "spanish": "puede ser que",
+    "indicative": "mañana lloverá",
+    "subjunctive": "puede ser que mañana llueva"
+  },
+  {
+    "english": "to want that",
+    "spanish": "querer que",
+    "indicative": "tienes éxito",
+    "subjunctive": "queremos que tengas éxito"
+  },
+  {
+    "english": "to recommend that",
+    "spanish": "recomendar que",
+    "indicative": "visitas Dijon cuando viajas a Francia",
+    "subjunctive": "te recomiendo que visites Dijon si viajas a Francia"
+  },
+  {
+    "english": "to plead that",
+    "spanish": "rogar que",
+    "indicative": "esperan unos minutos antes de entrar en la sala",
+    "subjunctive": "les ruego que esperen unos minutos antes de entrar en la sala"
+  },
+  {
+    "english": "to feel that",
+    "spanish": "sentir que",
+    "indicative": "no tenemos suficiente tiempo para terminar el proyecto",
+    "subjunctive": "siento que no tengamos suficiente tiempo para terminar el proyecto"
+  },
+  {
+    "english": "without",
+    "spanish": "sin que",
+    "indicative": "sus padres no se dieron cuenta",
+    "subjunctive": "salió de casa sin que sus padres se dieran cuenta"
+  },
+  {
+    "english": "to suggest that",
+    "spanish": "sugerir que",
+    "indicative": "practicas español todos los días para mejorar tu fluidez",
+    "subjunctive": "te sugiero que practiques español todos los días para mejorar tu fluidez"
+  },
+  {
+    "english": "as soon as",
+    "spanish": "tan pronto como",
+    "indicative": "sé algo.",
+    "subjunctive": "te avisaré tan pronto como sepa algo"
+  },
+  {
+    "english": "to fear that",
+    "spanish": "temer que",
+    "indicative": "mañana lloverá y no podremos salir a correr",
+    "subjunctive": "temo que mañana llueva y no podamos salir a correr"
+  },
+  {
+    "english": "to be afraid that",
+    "spanish": "tener miedo de que",
+    "indicative": "mañana lloverá",
+    "subjunctive": "tengo miedo de que llueva mañana"
+  }
+]

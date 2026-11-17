@@ -381,7 +381,7 @@ function showBackActionNote(msg: string) {
 
 function cleanPunctuationFromEnds(text: string): string {
   if (!text) return ''
-  return text.replace(/^[\s\p{P}\p{S}]+|[\s\p{P}\p{S}]+$/gu, '').trim()
+  return text.replace(/;/g, ',').replace(/^[\s\p{P}\p{S}]+|[\s\p{P}\p{S}]+$/gu, '').trim()
 }
 
 async function cleanCurrentCardFront() {
@@ -1578,7 +1578,7 @@ onBeforeUnmount(() => {
             @click="showControls = !showControls"
             class="inline-flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors py-1 cursor-pointer"
           >
-            <span>{{ showControls ? 'Hide panel' : 'Search & Filter' }}</span>
+            <span>{{ showControls ? 'Hide panel' : (selectedLanguage === 'all' ? selectedStrategyLabel : `${selectedLanguageLabel} - ${selectedStrategyLabel}`) }}</span>
             <svg
               class="w-3.5 h-3.5 transition-transform duration-200"
               :class="{ 'rotate-180': showControls }"

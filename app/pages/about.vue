@@ -247,6 +247,8 @@ const inProgressVersions = computed(() => {
     .sort((a, b) => compareSemVerAsc(a.versionNumber, b.versionNumber))
 })
 
+const nextInProgressVersionId = computed(() => inProgressVersions.value[0]?.id ?? null)
+
 function scrollToVersion(verId: string) {
   if (typeof document !== 'undefined') {
     const el = document.getElementById(`version-${verId}`)
@@ -672,16 +674,20 @@ const saveAdminVersion = async () => {
 
   let tempVersionId: string | null = null
 
-  // Optimistic update & immediate smooth close
+  // Optimistic update & immediate smooth close (replace object reference so v-memo re-renders immediately)
   if (!isNewVersion.value) {
-    const existing = versions.value.find(v => v.id === editingVersion.value.id)
-    if (existing) {
-      existing.versionNumber = payload.versionNumber
-      existing.title = payload.title
-      existing.description = payload.description
-      existing.status = payload.status
-      existing.publishDate = payload.publishDate
-    }
+    versions.value = versions.value.map(v =>
+      v.id === editingVersion.value.id
+        ? {
+            ...v,
+            versionNumber: payload.versionNumber,
+            title: payload.title,
+            description: payload.description,
+            status: payload.status,
+            publishDate: payload.publishDate
+          }
+        : v
+    )
   } else {
     tempVersionId = `temp-${Date.now()}`
     const newVer: Version = {
@@ -1923,7 +1929,8 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             :key="ipv.id"
             type="button"
             @click="scrollToVersion(ipv.id)"
-            class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 underline cursor-pointer"
+            class="text-xs font-mono font-bold underline cursor-pointer"
+            :class="ipv.id === nextInProgressVersionId ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'"
             :title="`Scroll to version ${ipv.versionNumber}`"
           >
             v{{ ipv.versionNumber }}
@@ -1951,7 +1958,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versionsForDisplay" :key="ver.id" v-memo="[ver, ver.versionItems, categories, adminEditMode, searchQuery, inlineEditingCategoryId, inlineCategoryTitle, recentlyEditedItemId, recentlyEditedCategoryId, versionViewMode[ver.id], recentlyEditedVersionId === ver.id, isAdmin]" class="relative group/card">
+        <div v-for="ver in versionsForDisplay" :key="ver.id" v-memo="[ver, ver.versionItems, categories, adminEditMode, searchQuery, inlineEditingCategoryId, inlineCategoryTitle, recentlyEditedItemId, recentlyEditedCategoryId, versionViewMode[ver.id], recentlyEditedVersionId === ver.id, nextInProgressVersionId, isAdmin]" class="relative group/card">
           <!-- Outside Top Button in Admin Mode -->
           <button
             v-if="isAdmin && adminEditMode"
@@ -1973,9 +1980,11 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   ? 'border-2 border-orange-500'
                   : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0')
                     ? 'border-2 border-dashed border-red-500 dark:border-red-600'
-                    : ver.status === 'IN_PROGRESS'
-                      ? 'border-2 border-dashed border-amber-500 dark:border-amber-600'
-                      : 'border border-gray-200 dark:border-gray-700/80',
+                    : ver.id === nextInProgressVersionId
+                      ? 'border-2 border-dashed border-emerald-500 dark:border-emerald-500'
+                      : ver.status === 'IN_PROGRESS'
+                        ? 'border-2 border-dashed border-amber-500 dark:border-amber-600'
+                        : 'border border-gray-200 dark:border-gray-700/80',
               !adminEditMode && ver.description && ver.description.trim() ? 'cursor-pointer select-text' : ''
             ]"
           >
