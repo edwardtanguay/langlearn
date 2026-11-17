@@ -61,6 +61,15 @@ function prevItem() {
   revealStep.value = 0
 }
 
+function selectFromList(rotatedIdx: number) {
+  if (items.value.length === 0) return
+  currentIndex.value = (currentIndex.value + rotatedIdx) % items.value.length
+  revealStep.value = 0
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+
 function toggleShuffle() {
   isShuffled.value = !isShuffled.value
   if (isShuffled.value) {
@@ -265,7 +274,9 @@ function toggleShuffle() {
             <tr
               v-for="(item, idx) in rotatedShowAllItems"
               :key="item.spanish + idx"
-              :class="idx === 0 ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : ''"
+              @click="selectFromList(idx)"
+              class="cursor-pointer transition-colors"
+              :class="idx === 0 ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : 'hover:bg-gray-800/60'"
             >
               <td class="px-5 py-3 text-sm sm:text-base font-bold text-white">
                 {{ item.spanish }}
@@ -276,7 +287,7 @@ function toggleShuffle() {
               <td class="px-5 py-3 text-right whitespace-nowrap">
                 <button
                   type="button"
-                  @click="openGoogleExamples(item.spanish)"
+                  @click.stop="openGoogleExamples(item.spanish)"
                   title="Look up 3 examples in Google Search"
                   class="inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
                 >
@@ -293,8 +304,9 @@ function toggleShuffle() {
           <div
             v-for="(item, idx) in rotatedShowAllItems"
             :key="item.spanish + idx"
-            class="px-4 py-3 space-y-1.5"
-            :class="idx === 0 ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : ''"
+            @click="selectFromList(idx)"
+            class="px-4 py-3 space-y-1.5 cursor-pointer transition-colors"
+            :class="idx === 0 ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : 'hover:bg-gray-800/60'"
           >
             <div class="flex items-start justify-between gap-2">
               <div class="text-sm font-bold text-white leading-snug">
@@ -302,7 +314,7 @@ function toggleShuffle() {
               </div>
               <button
                 type="button"
-                @click="openGoogleExamples(item.spanish)"
+                @click.stop="openGoogleExamples(item.spanish)"
                 title="Look up 3 examples in Google Search"
                 class="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
               >

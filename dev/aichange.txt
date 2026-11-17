@@ -84,27 +84,44 @@
 			- x no hover on these and no click, instead a "3 examples" button like above in another column
 			- x make sure you have a nice mobile solution here with the three columns
 		----------------------------------
-	- .. langlearn004
+	- x langlearn004
 		----------------------------------
 		## Both Verbs pages
 		
-		- move "combine" up so that it is vertically centered with its checkbox on the left
-		- make "select all" and "deselect all" all lowercase
-		- when clicking on "select all" there is a lag, make it immediate
-			- same with "all regular" and "all irregular"
-		- only show the list of words when the filter is closed
-		- when searching and finding a full word, don't bold face it, just normal text like the others (since it's black, it is noticeable enough)
-		- After the title "Spanish Verbs" to the right, add a link "IT" to go to Italian verbs
-			- to the visa versa on Italian Verbs
-		- on the edge of the text area scroll box put a super fine outline just enough so the user knows that there is nothing wrong with the buttons when e.g. 1px or 2px is cut off the top, i.e. they see that it is under the edge of the scroll area
-		- now that we have localstorage saving state, when the page loads, it shows the old default, then switchs to localstorage state; make it so that it shows that the selections are loading (loading state look, a bit blurry, disabled perhaps) and then when localstorage state is there, set it
-		- for items that are found on search that match completely, a lighter yellow, adn the text not so black and, just normal dark text
-		- for the X in the search box to be easier to click, show faintly the area without hovering
+		- x move "combine" up so that it is vertically centered with its checkbox on the left
+		- x make "select all" and "deselect all" all lowercase
+		- x when clicking on "select all" there is a lag, make it immediate
+			- x same with "all regular" and "all irregular"
+		- x only show the list of words when the filter is closed
+		- x when searching and finding a full word, don't bold face it, just normal text like the others (since it's black, it is noticeable enough)
+		- x After the title "Spanish Verbs" to the right, add a link "IT" to go to Italian verbs
+			- x to the visa versa on Italian Verbs
+		- x on the edge of the text area scroll box put a super fine outline just enough so the user knows that there is nothing wrong with the buttons when e.g. 1px or 2px is cut off the top, i.e. they see that it is under the edge of the scroll area
+		- x now that we have localstorage saving state, when the page loads, it shows the old default, then switchs to localstorage state; make it so that it shows that the selections are loading (loading state look, a bit blurry, disabled perhaps) and then when localstorage state is there, set it
+		- x for items that are found on search that match completely, a lighter yellow, adn the text not so black and, just normal dark text
+		- x for the X in the search box to be easier to click, show faintly the area without hovering
 		
 		## Spanish Subjunctive
 		
 		- allow user to click on any item in the list before the card, which loads that card so they can test on it
 		
+		----------------------------------
+	- ,, langlearn004
+		----------------------------------
+		## Both Verbs pages
+		
+		- x move "combine" up 2px so it is more vertical centered with checkbox
+		- when showing the list of verbs, if it is a group, then show "<group name>: " followed by the words
+			- the longer the list, the smaller the font, but always large enough to read
+			- and any list that has left than give words, as big as the font is now
+		- change the "it" and "es" after the title so it "Italian verbs" and "Spanish verbs" is much smaller, the language color text, no pill and underlined, and at the base line of the title
+			- it shouldn't look like it is a part of the title, but a different language altogether
+			- on the "Spanish Verbs" page, also list as a small link "Spanish subjunctive"
+		
+		## Spanish Subjunctive page
+		
+		- change title to same color as Spanish Verbs title
+			- to the right of the title, in small font and red, make a link to "Spanish verbs"
 		----------------------------------
 		
 	
