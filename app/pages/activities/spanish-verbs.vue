@@ -463,12 +463,12 @@ const VERB_GROUPS: VerbGroup[] = [
   },
   {
     id: 'all-regular',
-    name: 'All Regular',
+    name: 'all regular',
     verbs: []
   },
   {
     id: 'all-irregular',
-    name: 'All Irregular',
+    name: 'all irregular',
     verbs: []
   }
 ]
@@ -558,16 +558,31 @@ function escapeHtml(str: string): string {
 
 function highlightWordMatches(word: string, normQuery: string): string {
   const normWord = normalizeForSearch(word)
+  const isCompleteWord = normWord === normQuery
   let res = ''
   let lastIdx = 0
   let searchPos = 0
   while ((searchPos = normWord.indexOf(normQuery, lastIdx)) !== -1) {
-    res += escapeHtml(word.slice(lastIdx, searchPos))
+    const unmatchedBefore = word.slice(lastIdx, searchPos)
+    if (unmatchedBefore) {
+      res += isCompleteWord
+        ? escapeHtml(unmatchedBefore)
+        : `<span class="text-gray-400 dark:text-gray-300/75">${escapeHtml(unmatchedBefore)}</span>`
+    }
     const matchSlice = word.slice(searchPos, searchPos + normQuery.length)
-    res += `<span class="bg-yellow-300 text-zinc-950 font-black rounded px-0.5">${escapeHtml(matchSlice)}</span>`
+    if (isCompleteWord) {
+      res += `<span class="font-black">${escapeHtml(matchSlice)}</span>`
+    } else {
+      res += `<span class="text-yellow-500 dark:text-yellow-300 font-bold">${escapeHtml(matchSlice)}</span>`
+    }
     lastIdx = searchPos + normQuery.length
   }
-  res += escapeHtml(word.slice(lastIdx))
+  const unmatchedAfter = word.slice(lastIdx)
+  if (unmatchedAfter) {
+    res += isCompleteWord
+      ? escapeHtml(unmatchedAfter)
+      : `<span class="text-gray-400 dark:text-gray-300/75">${escapeHtml(unmatchedAfter)}</span>`
+  }
   return res
 }
 
@@ -638,9 +653,9 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-yellow-300 text-zinc-950 border-yellow-100 shadow-[0_0_26px_rgba(253,224,71,1)] ring-4 ring-yellow-300/90 animate-pulse-bright relative z-10'
+    return 'bg-yellow-300 text-zinc-950 border-yellow-100 shadow-[0_0_16px_rgba(253,224,71,0.75)] ring-2 ring-yellow-300/80 animate-pulse-bright relative z-10'
   }
-  return 'bg-amber-950/75 dark:bg-amber-950/85 text-amber-100 border-amber-600/70'
+  return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 border-gray-200 dark:border-gray-700'
 }
 
 interface StudyRow {
@@ -1100,10 +1115,18 @@ function formatVerbPromptTarget(word: string, context?: VerbExampleContext): str
     return `"${word}"`
   }
   const parts: string[] = [`verb: ${context.verb}`]
-  if (context.tenseLabel) {
+  if (context.tenseKey === 'infinitive' || (!context.tenseLabel && word === context.verb)) {
+    parts.push('being used as an infinitive (not conjugated)')
+  } else if (context.tenseKey === 'fut-present') {
+    parts.push('present tense being used to express the future')
+  } else if (context.tenseKey?.startsWith('past-') || context.tenseKey?.startsWith('fut-')) {
+    if (context.tenseLabel) {
+      parts.push(`usage: ${context.tenseLabel}`)
+    }
+  } else if (context.tenseLabel) {
     parts.push(`tense: ${context.tenseLabel}`)
   }
-  if (context.pronounLabel && context.tenseKey !== 'gerund' && context.tenseKey !== 'pastParticiple') {
+  if (context.pronounLabel && context.tenseKey !== 'gerund' && context.tenseKey !== 'pastParticiple' && context.tenseKey !== 'infinitive') {
     parts.push(`pronoun: ${context.pronounLabel}`)
   }
   return `"${word}" (${parts.join(', ')})`
@@ -1358,29 +1381,93 @@ function resetTestInputs() {
   activeFocusedPronounIdx.value = null
 }
 
-function toggleAllVerbs() {
-  if (selectedVerbs.value.length === verbs.length) {
-    selectedVerbs.value = []
-  } else {
-    selectedVerbs.value = verbs.map(v => v.verb)
+function selectAllVerbs() {
+  selectedVerbs.value = verbs.map(v => v.verb)
+}
+
+function deselectAllVerbs() {
+  selectedVerbs.value = []
+}
+
+function selectAllTenses() {
+  selectedTenses.value = TENSES.map(t => t.key)
+}
+
+function deselectAllTenses() {
+  selectedTenses.value = []
+}
+
+function selectAllPronouns() {
+  selectedPronouns.value = PRONOUNS.map(p => p.idx)
+}
+
+function deselectAllPronouns() {
+  selectedPronouns.value = []
+}
+
+const STORAGE_STATE_KEY = 'langlearn_spanish_verbs_state'
+const hasLoadedState = ref(false)
+
+function loadSelectionState() {
+  if (!import.meta.client) return
+  try {
+    const raw = localStorage.getItem(STORAGE_STATE_KEY)
+    if (raw) {
+      const parsed = JSON.parse(raw)
+      const validVerbSet = new Set(verbs.map(v => v.verb))
+      const validTenseSet = new Set(TENSES.map(t => t.key))
+      const validPronounSet = new Set(PRONOUNS.map(p => p.idx))
+      if (Array.isArray(parsed.selectedVerbs)) {
+        selectedVerbs.value = parsed.selectedVerbs.filter((v: string) => validVerbSet.has(v))
+      }
+      if (Array.isArray(parsed.selectedTenses)) {
+        selectedTenses.value = parsed.selectedTenses.filter((t: string) => validTenseSet.has(t as TenseKey))
+      }
+      if (Array.isArray(parsed.selectedPronouns)) {
+        selectedPronouns.value = parsed.selectedPronouns.filter((p: number) => validPronounSet.has(p))
+      }
+      if (typeof parsed.combineGroups === 'boolean') {
+        combineGroups.value = parsed.combineGroups
+      }
+      if (parsed.studyTenseMode === 'standard' || parsed.studyTenseMode === 'past' || parsed.studyTenseMode === 'future') {
+        studyTenseMode.value = parsed.studyTenseMode
+      }
+    }
+  } catch (e) {
+    console.error('Failed to load Spanish verbs state', e)
+  } finally {
+    hasLoadedState.value = true
   }
 }
 
-function toggleAllTenses() {
-  if (selectedTenses.value.length === TENSES.length) {
-    selectedTenses.value = []
-  } else {
-    selectedTenses.value = TENSES.map(t => t.key)
+function saveSelectionState() {
+  if (!import.meta.client || !hasLoadedState.value) return
+  try {
+    localStorage.setItem(STORAGE_STATE_KEY, JSON.stringify({
+      selectedVerbs: selectedVerbs.value,
+      selectedTenses: selectedTenses.value,
+      selectedPronouns: selectedPronouns.value,
+      combineGroups: combineGroups.value,
+      studyTenseMode: studyTenseMode.value
+    }))
+  } catch (e) {
+    console.error('Failed to save Spanish verbs state', e)
   }
 }
 
-function toggleAllPronouns() {
-  if (selectedPronouns.value.length === PRONOUNS.length) {
-    selectedPronouns.value = []
-  } else {
-    selectedPronouns.value = PRONOUNS.map(p => p.idx)
-  }
+function resetSelectionState() {
+  selectedVerbs.value = ['hablar', 'comer', 'vivir']
+  selectedTenses.value = TENSES.map(t => t.key)
+  selectedPronouns.value = PRONOUNS.map(p => p.idx)
+  combineGroups.value = false
+  studyTenseMode.value = 'standard'
 }
+
+watch(
+  [selectedVerbs, selectedTenses, selectedPronouns, combineGroups, studyTenseMode],
+  () => saveSelectionState(),
+  { deep: true }
+)
 
 const filteredVerbList = computed(() => {
   if (isSearching.value) {
@@ -2131,6 +2218,7 @@ function handleGlobalKeyDown(e: KeyboardEvent) {
 }
 
 onMounted(() => {
+  loadSelectionState()
   loadDifficultWords()
   checkMobile()
   pageLoadTimer = setTimeout(() => {
@@ -2238,14 +2326,14 @@ onUnmounted(() => {
           @mousedown="handleSearchFocus"
           @keydown.esc="clearSearch"
           placeholder="Search conjugations..."
-          class="w-full pl-9 pr-8 py-1.5 text-xs rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#be185d] focus:border-[#be185d] transition-all shadow-xs"
+          class="w-full pl-9 pr-10 py-1.5 text-xs rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#be185d] focus:border-[#be185d] transition-all shadow-xs"
         />
         <button
           v-if="searchQuery"
           type="button"
           @mousedown.prevent
           @click="clearSearch"
-          class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
+          class="absolute inset-y-0 right-0 w-9 flex items-center justify-center rounded-r-xl text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/60 transition-colors cursor-pointer"
           title="Clear search"
         >
           <XMarkIcon class="w-4 h-4" />
@@ -2278,7 +2366,7 @@ onUnmounted(() => {
           @mousedown="handleSearchFocus"
           @keydown.esc="clearSearch"
           placeholder="Search conjugations..."
-          class="w-full pl-9 pr-8 py-1.5 text-xs sm:text-sm rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#be185d] focus:border-[#be185d] transition-all shadow-xs"
+          class="w-full pl-9 pr-10 py-1.5 text-xs sm:text-sm rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#182030] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#be185d] focus:border-[#be185d] transition-all shadow-xs"
         />
         <button
           v-if="searchQuery"
@@ -2286,7 +2374,7 @@ onUnmounted(() => {
           type="button"
           @mousedown.prevent
           @click="clearSearch"
-          class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer"
+          class="absolute inset-y-0 right-0 w-9 flex items-center justify-center rounded-r-xl text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/60 transition-colors cursor-pointer"
           title="Clear search"
         >
           <XMarkIcon class="w-4 h-4" />
@@ -2361,14 +2449,24 @@ onUnmounted(() => {
             <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-500 dark:text-gray-400">
               Groups
             </span>
-            <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                v-model="combineGroups"
-                class="rounded border-gray-300 dark:border-gray-600 text-[#be185d] focus:ring-[#be185d] cursor-pointer"
-              />
-              <span>combine</span>
-            </label>
+            <div class="flex items-center gap-3">
+              <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  v-model="combineGroups"
+                  class="w-3.5 h-3.5 rounded-none border border-gray-400 dark:border-gray-500 text-[#be185d] accent-[#be185d] focus:ring-[#be185d] focus:ring-offset-0 cursor-pointer"
+                />
+                <span>combine</span>
+              </label>
+              <button
+                type="button"
+                @click="resetSelectionState"
+                class="px-2 py-0.5 rounded-none border border-gray-300 dark:border-gray-600 text-[11px] font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-700/40 transition-colors cursor-pointer select-none"
+                title="Reset to default selection"
+              >
+                reset
+              </button>
+            </div>
           </div>
           <div class="flex flex-wrap gap-2">
             <button
@@ -2379,7 +2477,7 @@ onUnmounted(() => {
               class="px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border select-none"
               :class="isGroupActive(group)
                 ? 'bg-[#be185d] text-white border-[#be185d] shadow-xs'
-                : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200/60 dark:hover:bg-gray-700/40'"
             >
               <span :class="isGroupActive(group) && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">{{ group.name }}</span>
             </button>
@@ -2392,13 +2490,23 @@ onUnmounted(() => {
             <span class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
               Verbs to Show ({{ selectedVerbs.length }} of {{ verbs.length }})
             </span>
-            <button
-              type="button"
-              @click="toggleAllVerbs"
-              class="text-xs font-semibold text-white hover:underline cursor-pointer"
-            >
-              {{ selectedVerbs.length === verbs.length ? 'Deselect All' : 'Select All' }}
-            </button>
+            <div class="flex items-center gap-2 text-xs font-semibold">
+              <button
+                type="button"
+                @click="selectAllVerbs"
+                class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+              >
+                Select All
+              </button>
+              <span class="text-gray-400 dark:text-gray-600 select-none">|</span>
+              <button
+                type="button"
+                @click="deselectAllVerbs"
+                class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+              >
+                Deselect All
+              </button>
+            </div>
           </div>
           <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto pr-1">
             <button
@@ -2409,7 +2517,7 @@ onUnmounted(() => {
               class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border select-none"
               :class="selectedVerbs.includes(v.verb)
                 ? 'bg-[#be185d] text-white border-[#be185d]'
-                : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200/60 dark:hover:bg-gray-700/40'"
             >
               <span :class="selectedVerbs.includes(v.verb) && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">{{ v.verb }}</span>
             </button>
@@ -2423,13 +2531,23 @@ onUnmounted(() => {
           <span class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
             Tenses to Test ({{ selectedTenses.length }} of {{ TENSES.length }})
           </span>
-          <button
-            type="button"
-            @click="toggleAllTenses"
-            class="text-xs font-semibold text-white hover:underline cursor-pointer"
-          >
-            {{ selectedTenses.length === TENSES.length ? 'Deselect All' : 'Select All' }}
-          </button>
+          <div class="flex items-center gap-2 text-xs font-semibold">
+            <button
+              type="button"
+              @click="selectAllTenses"
+              class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+            >
+              Select All
+            </button>
+            <span class="text-gray-400 dark:text-gray-600 select-none">|</span>
+            <button
+              type="button"
+              @click="deselectAllTenses"
+              class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+            >
+              Deselect All
+            </button>
+          </div>
         </div>
         <div class="flex flex-wrap gap-2">
           <button
@@ -2440,7 +2558,7 @@ onUnmounted(() => {
             class="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer border select-none"
             :class="selectedTenses.includes(t.key)
               ? 'bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 border-gray-900 dark:border-white font-bold'
-              : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+              : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200/60 dark:hover:bg-gray-700/40'"
           >
             {{ t.label }}
           </button>
@@ -2453,13 +2571,23 @@ onUnmounted(() => {
           <span class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
             Pronouns to Test ({{ selectedPronouns.length }} of {{ PRONOUNS.length }})
           </span>
-          <button
-            type="button"
-            @click="toggleAllPronouns"
-            class="text-xs font-semibold text-white hover:underline cursor-pointer"
-          >
-            {{ selectedPronouns.length === PRONOUNS.length ? 'Deselect All' : 'Select All' }}
-          </button>
+          <div class="flex items-center gap-2 text-xs font-semibold">
+            <button
+              type="button"
+              @click="selectAllPronouns"
+              class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+            >
+              Select All
+            </button>
+            <span class="text-gray-400 dark:text-gray-600 select-none">|</span>
+            <button
+              type="button"
+              @click="deselectAllPronouns"
+              class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+            >
+              Deselect All
+            </button>
+          </div>
         </div>
         <div class="flex flex-wrap gap-2">
           <button
@@ -2470,7 +2598,7 @@ onUnmounted(() => {
             class="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer border select-none"
             :class="selectedPronouns.includes(p.idx)
               ? 'bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 border-gray-900 dark:border-white font-bold'
-              : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+              : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200/60 dark:hover:bg-gray-700/40'"
           >
             {{ p.label }}
           </button>
@@ -2508,14 +2636,24 @@ onUnmounted(() => {
               <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                 Groups
               </span>
-              <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  v-model="combineGroups"
-                  class="rounded border-gray-300 dark:border-gray-600 text-[#be185d] focus:ring-[#be185d] cursor-pointer"
-                />
-                <span>combine</span>
-              </label>
+              <div class="flex items-center gap-3">
+                <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    v-model="combineGroups"
+                    class="w-3.5 h-3.5 rounded-none border border-gray-400 dark:border-gray-500 text-[#be185d] accent-[#be185d] focus:ring-[#be185d] focus:ring-offset-0 cursor-pointer"
+                  />
+                  <span>combine</span>
+                </label>
+                <button
+                  type="button"
+                  @click="resetSelectionState"
+                  class="px-2 py-0.5 rounded-none border border-gray-300 dark:border-gray-600 text-[11px] font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-700/40 transition-colors cursor-pointer select-none"
+                  title="Reset to default selection"
+                >
+                  reset
+                </button>
+              </div>
             </div>
             <div class="flex flex-wrap gap-1.5">
               <button
@@ -2526,7 +2664,7 @@ onUnmounted(() => {
                 class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border select-none"
                 :class="isGroupActive(group)
                   ? 'bg-[#be185d] text-white border-[#be185d] shadow-xs'
-                  : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                  : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200/60 dark:hover:bg-gray-700/40'"
               >
                 <span :class="isGroupActive(group) && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">{{ group.name }}</span>
               </button>
@@ -2539,13 +2677,23 @@ onUnmounted(() => {
               <span class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
                 Verbs ({{ selectedVerbs.length }}/{{ verbs.length }})
               </span>
-              <button
-                type="button"
-                @click="toggleAllVerbs"
-                class="text-xs font-semibold text-white hover:underline cursor-pointer"
-              >
-                {{ selectedVerbs.length === verbs.length ? 'Deselect All' : 'Select All' }}
-              </button>
+              <div class="flex items-center gap-2 text-xs font-semibold">
+                <button
+                  type="button"
+                  @click="selectAllVerbs"
+                  class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+                >
+                  Select All
+                </button>
+                <span class="text-gray-400 dark:text-gray-600 select-none">|</span>
+                <button
+                  type="button"
+                  @click="deselectAllVerbs"
+                  class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+                >
+                  Deselect All
+                </button>
+              </div>
             </div>
             <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-gray-200 dark:border-gray-700">
               <button
@@ -2556,7 +2704,7 @@ onUnmounted(() => {
                 class="px-2 py-0.5 rounded-md text-xs font-semibold transition-all cursor-pointer border select-none"
                 :class="selectedVerbs.includes(v.verb)
                   ? 'bg-[#be185d] text-white border-[#be185d]'
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700'"
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200/60 dark:hover:bg-gray-700/40'"
               >
                 <span :class="selectedVerbs.includes(v.verb) && !isAndroidChrome ? 'inline-block -translate-y-[2px]' : ''">{{ v.verb }}</span>
               </button>
@@ -2569,13 +2717,23 @@ onUnmounted(() => {
               <span class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
                 Tenses ({{ selectedTenses.length }}/{{ TENSES.length }})
               </span>
-              <button
-                type="button"
-                @click="toggleAllTenses"
-                class="text-xs font-semibold text-white hover:underline cursor-pointer"
-              >
-                {{ selectedTenses.length === TENSES.length ? 'Deselect All' : 'Select All' }}
-              </button>
+              <div class="flex items-center gap-2 text-xs font-semibold">
+                <button
+                  type="button"
+                  @click="selectAllTenses"
+                  class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+                >
+                  Select All
+                </button>
+                <span class="text-gray-400 dark:text-gray-600 select-none">|</span>
+                <button
+                  type="button"
+                  @click="deselectAllTenses"
+                  class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+                >
+                  Deselect All
+                </button>
+              </div>
             </div>
             <div class="flex flex-wrap gap-1.5">
               <button
@@ -2586,7 +2744,7 @@ onUnmounted(() => {
                 class="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer border select-none"
                 :class="selectedTenses.includes(t.key)
                   ? 'bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 border-gray-900 dark:border-white font-bold'
-                  : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                  : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200/60 dark:hover:bg-gray-700/40'"
               >
                 {{ t.label }}
               </button>
@@ -2599,13 +2757,23 @@ onUnmounted(() => {
               <span class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
                 Pronouns ({{ selectedPronouns.length }}/{{ PRONOUNS.length }})
               </span>
-              <button
-                type="button"
-                @click="toggleAllPronouns"
-                class="text-xs font-semibold text-white hover:underline cursor-pointer"
-              >
-                {{ selectedPronouns.length === PRONOUNS.length ? 'Deselect All' : 'Select All' }}
-              </button>
+              <div class="flex items-center gap-2 text-xs font-semibold">
+                <button
+                  type="button"
+                  @click="selectAllPronouns"
+                  class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+                >
+                  Select All
+                </button>
+                <span class="text-gray-400 dark:text-gray-600 select-none">|</span>
+                <button
+                  type="button"
+                  @click="deselectAllPronouns"
+                  class="text-gray-700 dark:text-white hover:underline cursor-pointer"
+                >
+                  Deselect All
+                </button>
+              </div>
             </div>
             <div class="flex flex-wrap gap-1.5">
               <button
@@ -2616,7 +2784,7 @@ onUnmounted(() => {
                 class="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer border select-none"
                 :class="selectedPronouns.includes(p.idx)
                   ? 'bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 border-gray-900 dark:border-white font-bold'
-                  : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750'"
+                  : 'bg-gray-50 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200/60 dark:hover:bg-gray-700/40'"
               >
                 {{ p.label }}
               </button>
@@ -3147,14 +3315,16 @@ onUnmounted(() => {
           <div class="space-y-0.5">
             <h2
               v-if="isSearching && cellMatchesSearch(verb.verb)"
-              @click.stop="openGoogleExamples(verb.verb, { verb: verb.verb })"
+              @click.stop="openGoogleExamples(verb.verb, { verb: verb.verb, tenseKey: 'infinitive' })"
               class="!mb-0 inline-block px-3.5 py-1 rounded-xl text-xl sm:text-2xl font-black border capitalize tracking-tight cursor-pointer"
               :class="getSearchCellClass(verb.verb)"
               v-html="highlightText(verb.verb)"
             ></h2>
             <h2
               v-else
-              class="!mb-0 text-2xl font-black text-[#be185d] dark:text-[#f43f5e] capitalize tracking-tight"
+              @click.stop="openGoogleExamples(verb.verb, { verb: verb.verb, tenseKey: 'infinitive' })"
+              class="!mb-0 text-2xl font-black text-[#be185d] dark:text-[#f43f5e] capitalize tracking-tight cursor-pointer hover:opacity-80 transition-opacity"
+              title="Click for 3 examples using this verb as an infinitive"
             >
               {{ verb.verb }}
             </h2>
@@ -3886,16 +4056,14 @@ onUnmounted(() => {
 
 @keyframes pulse-bright {
   0%, 100% {
-    box-shadow: 0 0 18px rgba(253, 224, 71, 0.85), 0 0 0 3px rgba(253, 224, 71, 0.75);
-    transform: scale(1);
+    box-shadow: 0 0 10px rgba(253, 224, 71, 0.55), 0 0 0 2px rgba(253, 224, 71, 0.5);
   }
   50% {
-    box-shadow: 0 0 34px rgba(254, 240, 138, 1), 0 0 0 5px rgba(254, 240, 138, 0.95);
-    transform: scale(1.04);
+    box-shadow: 0 0 18px rgba(254, 240, 138, 0.8), 0 0 0 3px rgba(254, 240, 138, 0.7);
   }
 }
 
 .animate-pulse-bright {
-  animation: pulse-bright 1.4s ease-in-out infinite;
+  animation: pulse-bright 2s ease-in-out infinite;
 }
 </style>

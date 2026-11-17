@@ -26,6 +26,11 @@ const revealStep = ref<0 | 1 | 2 | 3>(0)
 
 const currentItem = computed(() => items.value[currentIndex.value] || null)
 const showAllTable = ref(false)
+const rotatedShowAllItems = computed(() => {
+  if (items.value.length === 0) return []
+  const idx = currentIndex.value % items.value.length
+  return [...items.value.slice(idx), ...items.value.slice(0, idx)]
+})
 
 function openGoogleExamples(phrase: string) {
   if (!phrase || !import.meta.client) return
@@ -158,10 +163,10 @@ function toggleShuffle() {
             v-if="revealStep < 2"
             class="relative overflow-hidden rounded-lg bg-gray-900/50 px-3.5 py-2 select-none pointer-events-none"
           >
-            <span class="block text-base sm:text-lg font-semibold text-gray-300 blur-[6px] opacity-40">
+            <span class="block text-base sm:text-lg font-semibold text-gray-300 blur-[4px] opacity-55">
               algo interesante pasa cada día aquí
             </span>
-            <div class="absolute inset-0 bg-gradient-to-r from-gray-800/40 via-gray-700/30 to-gray-800/40 backdrop-blur-[2px]"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-800/35 via-gray-700/25 to-gray-800/35 backdrop-blur-[1px]"></div>
           </div>
           <div
             v-else
@@ -195,10 +200,10 @@ function toggleShuffle() {
             v-if="revealStep < 3"
             class="relative overflow-hidden rounded-lg bg-[#be185d]/10 px-3.5 py-2 select-none pointer-events-none"
           >
-            <span class="block text-base sm:text-lg font-bold text-rose-200 blur-[6px] opacity-40">
+            <span class="block text-base sm:text-lg font-bold text-rose-200 blur-[4px] opacity-55">
               espero que todo salga muy bien hoy
             </span>
-            <div class="absolute inset-0 bg-gradient-to-r from-[#be185d]/20 via-gray-800/35 to-[#be185d]/20 backdrop-blur-[2px]"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#be185d]/15 via-gray-800/30 to-[#be185d]/15 backdrop-blur-[1px]"></div>
           </div>
           <div
             v-else
@@ -247,30 +252,69 @@ function toggleShuffle() {
         v-if="showAllTable"
         class="overflow-hidden rounded-2xl border border-gray-700/80 bg-[#182030] shadow-lg"
       >
-        <table class="w-full text-left border-collapse">
+        <!-- Desktop 3-column table -->
+        <table class="hidden sm:table w-full text-left border-collapse">
           <thead>
             <tr class="border-b border-gray-700/80 bg-gray-900/50 text-[11px] font-mono uppercase tracking-wider text-gray-400">
               <th class="px-5 py-3">Spanish</th>
               <th class="px-5 py-3">English</th>
+              <th class="px-5 py-3 text-right">Examples</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-800/80">
             <tr
-              v-for="(item, idx) in baseItems"
-              :key="idx"
-              @click="openGoogleExamples(item.spanish)"
-              class="hover:bg-[#be185d]/15 transition-colors cursor-pointer group"
-              title="Click for 3 example sentences on Google"
+              v-for="(item, idx) in rotatedShowAllItems"
+              :key="item.spanish + idx"
+              :class="idx === 0 ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : ''"
             >
-              <td class="px-5 py-3 text-sm sm:text-base font-bold text-white group-hover:text-[#f43f5e] transition-colors">
+              <td class="px-5 py-3 text-sm sm:text-base font-bold text-white">
                 {{ item.spanish }}
               </td>
               <td class="px-5 py-3 text-sm sm:text-base text-gray-300">
                 {{ item.english }}
               </td>
+              <td class="px-5 py-3 text-right whitespace-nowrap">
+                <button
+                  type="button"
+                  @click="openGoogleExamples(item.spanish)"
+                  title="Look up 3 examples in Google Search"
+                  class="inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
+                >
+                  <MagnifyingGlassIcon class="w-3 h-3" />
+                  <span>3 examples</span>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
+
+        <!-- Mobile stacked layout -->
+        <div class="sm:hidden divide-y divide-gray-800/80">
+          <div
+            v-for="(item, idx) in rotatedShowAllItems"
+            :key="item.spanish + idx"
+            class="px-4 py-3 space-y-1.5"
+            :class="idx === 0 ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : ''"
+          >
+            <div class="flex items-start justify-between gap-2">
+              <div class="text-sm font-bold text-white leading-snug">
+                {{ item.spanish }}
+              </div>
+              <button
+                type="button"
+                @click="openGoogleExamples(item.spanish)"
+                title="Look up 3 examples in Google Search"
+                class="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
+              >
+                <MagnifyingGlassIcon class="w-3 h-3" />
+                <span>3 examples</span>
+              </button>
+            </div>
+            <div class="text-xs text-gray-300 leading-snug">
+              {{ item.english }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
