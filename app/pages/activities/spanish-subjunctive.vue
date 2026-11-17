@@ -100,9 +100,18 @@ function toggleShuffle() {
           <span>Activities</span>
         </NuxtLink>
         <span class="text-gray-500">/</span>
-        <h1 class="text-xl sm:text-2xl font-black text-white tracking-tight">
-          Spanish Subjunctive
-        </h1>
+        <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+          <h1 class="text-xl sm:text-2xl font-black text-[#be185d] dark:text-[#f43f5e] tracking-tight">
+            Spanish Subjunctive
+          </h1>
+          <NuxtLink
+            to="/activities/spanish-verbs"
+            class="text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
+            title="Go to Spanish Verbs"
+          >
+            Spanish verbs
+          </NuxtLink>
+        </div>
       </div>
 
       <div class="flex items-center gap-3">

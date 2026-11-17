@@ -523,6 +523,28 @@ function isGroupActive(group: VerbGroup): boolean {
   return groupVerbs.every(v => activeSet.has(v))
 }
 
+const activeExactGroupName = computed<string | null>(() => {
+  const activeSet = selectedVerbsSet.value
+  const matched = VERB_GROUPS.filter(group => {
+    if (group.id === 'all') return false
+    const groupVerbs = getGroupVerbs(group)
+    return (
+      groupVerbs.length > 0 &&
+      selectedVerbs.value.length === groupVerbs.length &&
+      groupVerbs.every(v => activeSet.has(v))
+    )
+  })
+  return matched.length === 1 ? matched[0]!.name : null
+})
+
+const activeVerbListTextClass = computed(() => {
+  const count = selectedVerbs.value.length
+  if (count < 5) return 'text-base sm:text-lg'
+  if (count <= 10) return 'text-sm sm:text-base'
+  if (count <= 20) return 'text-xs sm:text-sm'
+  return 'text-xs'
+})
+
 function toggleIndividualVerb(verbName: string) {
   if (!combineGroups.value) {
     selectedVerbs.value = [verbName]
@@ -2324,16 +2346,23 @@ onUnmounted(() => {
           ← Activities
         </NuxtLink>
         <div class="flex items-center gap-2">
-          <div class="flex items-center gap-1.5">
+          <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
             <h1 class="text-base font-black text-gray-900 dark:text-white tracking-tight">
               <span class="text-[#be185d] dark:text-[#f43f5e]">Spanish Verbs</span>
             </h1>
             <NuxtLink
               to="/activities/italian-verbs"
-              class="px-1.5 py-0.5 rounded-md text-[10px] font-black tracking-wide bg-[#194d19] hover:bg-[#1e5e1e] text-white border border-[#2d7a2d]/60 transition-colors"
+              class="ml-1 text-xs font-semibold underline text-[#194d19] dark:text-[#4ade80] hover:opacity-80 transition-opacity"
               title="Go to Italian Verbs"
             >
-              IT
+              Italian verbs
+            </NuxtLink>
+            <NuxtLink
+              to="/activities/spanish-subjunctive"
+              class="text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
+              title="Go to Spanish Subjunctive"
+            >
+              Spanish subjunctive
             </NuxtLink>
           </div>
           <!-- Filter & Settings Drawer Button -->
@@ -2471,16 +2500,23 @@ onUnmounted(() => {
           <AdjustmentsHorizontalIcon v-else class="w-5 h-5 text-[#be185d] dark:text-[#f43f5e]" />
         </button>
 
-        <div class="flex items-center gap-2.5">
+        <div class="flex items-baseline gap-3">
           <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
             <span class="text-[#be185d] dark:text-[#f43f5e]">Spanish Verbs</span>
           </h1>
           <NuxtLink
             to="/activities/italian-verbs"
-            class="px-2 py-0.5 rounded-lg text-xs font-black tracking-wide bg-[#194d19] hover:bg-[#1e5e1e] text-white border border-[#2d7a2d]/60 transition-colors"
+            class="ml-1 text-xs font-semibold underline text-[#194d19] dark:text-[#4ade80] hover:opacity-80 transition-opacity"
             title="Go to Italian Verbs"
           >
-            IT
+            Italian verbs
+          </NuxtLink>
+          <NuxtLink
+            to="/activities/spanish-subjunctive"
+            class="text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
+            title="Go to Spanish Subjunctive"
+          >
+            Spanish subjunctive
           </NuxtLink>
         </div>
       </div>
@@ -2541,7 +2577,7 @@ onUnmounted(() => {
                   v-model="combineGroups"
                   class="w-3.5 h-3.5 rounded-none border border-gray-400 dark:border-gray-500 text-[#be185d] accent-[#be185d] focus:ring-[#be185d] focus:ring-offset-0 cursor-pointer"
                 />
-                <span class="-translate-y-[0.5px]">combine</span>
+                <span class="-translate-y-[2.5px]">combine</span>
               </label>
               <button
                 type="button"
@@ -2731,7 +2767,7 @@ onUnmounted(() => {
                     v-model="combineGroups"
                     class="w-3.5 h-3.5 rounded-none border border-gray-400 dark:border-gray-500 text-[#be185d] accent-[#be185d] focus:ring-[#be185d] focus:ring-offset-0 cursor-pointer"
                   />
-                  <span class="-translate-y-[0.5px]">combine</span>
+                  <span class="-translate-y-[2.5px]">combine</span>
                 </label>
                 <button
                   type="button"
@@ -2891,9 +2927,9 @@ onUnmounted(() => {
       <!-- Active Words Title when 2+ words selected (hidden if all words are selected or filter is open on desktop) -->
       <div
         v-if="!isSearching && (!showControls || isMobile) && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
-        class="text-base sm:text-lg font-black uppercase tracking-wider text-center text-[#be185d] dark:text-[#f43f5e] leading-none"
+        :class="[activeVerbListTextClass, 'font-black tracking-wider text-center text-[#be185d] dark:text-[#f43f5e] leading-snug']"
       >
-        {{ selectedVerbs.join(', ') }}
+        <span v-if="activeExactGroupName" class="uppercase opacity-90">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
       </div>
 
       <!-- Single Verb Table for Random Target -->
@@ -3394,9 +3430,9 @@ onUnmounted(() => {
       <!-- Active Words Title when 2+ words selected (hidden if all words are selected or filter is open on desktop) -->
       <div
         v-if="!isSearching && (!showControls || isMobile) && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
-        class="text-base sm:text-lg font-black uppercase tracking-wider text-center text-[#be185d] dark:text-[#f43f5e] leading-none"
+        :class="[activeVerbListTextClass, 'font-black tracking-wider text-center text-[#be185d] dark:text-[#f43f5e] leading-snug']"
       >
-        {{ selectedVerbs.join(', ') }}
+        <span v-if="activeExactGroupName" class="uppercase opacity-90">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
       </div>
 
       <div

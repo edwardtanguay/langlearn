@@ -106,25 +106,29 @@
 		- allow user to click on any item in the list before the card, which loads that card so they can test on it
 		
 		----------------------------------
-	- ,, langlearn004
+	- x langlearn005
 		----------------------------------
 		## Both Verbs pages
 		
 		- x move "combine" up 2px so it is more vertical centered with checkbox
-		- when showing the list of verbs, if it is a group, then show "<group name>: " followed by the words
-			- the longer the list, the smaller the font, but always large enough to read
-			- and any list that has left than give words, as big as the font is now
-		- change the "it" and "es" after the title so it "Italian verbs" and "Spanish verbs" is much smaller, the language color text, no pill and underlined, and at the base line of the title
-			- it shouldn't look like it is a part of the title, but a different language altogether
-			- on the "Spanish Verbs" page, also list as a small link "Spanish subjunctive"
+		- x when showing the list of verbs, if it is a group, then show "<group name>: " followed by the words
+			- x the longer the list, the smaller the font, but always large enough to read
+			- x and any list that has left than give words, as big as the font is now
+		- x change the "it" and "es" after the title so it "Italian verbs" and "Spanish verbs" is much smaller, the language color text, no pill and underlined, and at the base line of the title
+			- x it shouldn't look like it is a part of the title, but a different language altogether
+			- x on the "Spanish Verbs" page, also list as a small link "Spanish subjunctive"
 		
 		## Spanish Subjunctive page
 		
-		- change title to same color as Spanish Verbs title
-			- to the right of the title, in small font and red, make a link to "Spanish verbs"
+		- x change title to same color as Spanish Verbs title
+			- xto the right of the title, in small font and red, make a link to "Spanish verbs"
 		----------------------------------
-		
-	
+	- x langlearn006
+		----------------------------------
+		## Both Verbs pages
+			
+		- x change the "it" and "es" after the title so it "Italian verbs" and "Spanish verbs" 
+		----------------------------------
 
 
 
