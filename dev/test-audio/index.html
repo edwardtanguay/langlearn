@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compréhension orale B1 — L'intelligence artificielle</title>
+  <style>
+    :root {
+      --fr-accent: #333388;
+      --fr-accent-light: #4f4fb8;
+      --bg: #0e0e12;
+      --surface: #17171f;
+      --surface-hover: #1f1f2a;
+      --border: #2a2a38;
+      --text: #f4f4f6;
+      --muted: #a1a1b3;
+      --correct-bg: rgba(34, 197, 94, 0.14);
+      --correct-border: #22c55e;
+      --wrong-bg: rgba(239, 68, 68, 0.14);
+      --wrong-border: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 2rem 1rem 4rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: var(--fr-accent);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: 1.65rem;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 0.5rem;
+      border-radius: 8px;
+    }
+
+    .speed-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .speed-btn {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .speed-btn.active {
+      background: var(--fr-accent);
+      border-color: var(--fr-accent-light);
+    }
+
+    .question-title {
+      margin: 0 0 0.85rem;
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.7rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .option-label:hover {
+      background: var(--surface-hover);
+    }
+
+    .option-label input[type="radio"] {
+      margin-top: 0.25rem;
+      accent-color: var(--fr-accent-light);
+    }
+
+    .option-label.correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+    }
+
+    .option-label.wrong {
+      background: var(--wrong-bg);
+      border-color: var(--wrong-border);
+    }
+
+    .feedback {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      display: none;
+    }
+
+    .feedback.visible {
+      display: block;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .btn-primary {
+      background: var(--fr-accent);
+      color: #ffffff;
+      border: 1px solid var(--fr-accent-light);
+      border-radius: 8px;
+      padding: 0.7rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--fr-accent-light);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 1.1rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+    }
+
+    .score-banner {
+      margin-top: 1.25rem;
+      padding: 0.9rem 1.1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-weight: 600;
+      display: none;
+    }
+
+    .score-banner.visible {
+      display: block;
+    }
+
+    details {
+      margin-top: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1.2rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    details p {
+      margin: 0.85rem 0 0;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="badge">Français · Niveau B1</span>
+    <h1>L'intelligence artificielle au quotidien</h1>
+    <p class="subtitle">Écoutez l'enregistrement audio (30 secondes), puis répondez aux trois questions ci-dessous.</p>
+
+    <section class="card" aria-label="Lecteur audio">
+      <strong>Audio</strong>
+      <audio id="audio-player" controls preload="metadata">
+        <source src="tech-b1-french.mp3" type="audio/mpeg" />
+        Votre navigateur ne prend pas en charge la lecture audio.
+      </audio>
+      <div class="speed-controls">
+        <span>Vitesse :</span>
+        <button type="button" class="speed-btn" data-speed="0.85">0,85x</button>
+        <button type="button" class="speed-btn active" data-speed="1">1x</button>
+        <button type="button" class="speed-btn" data-speed="1.15">1,15x</button>
+      </div>
+    </section>
+
+    <form id="quiz-form">
+      <section class="card" data-question="q1">
+        <p class="question-title">1. À quoi servent les assistants vocaux mentionnés dans l'audio ?</p>
+        <div class="options">
+          <label class="option-label">
+            <input type="radio" name="q1" value="a" />
+            <span>À jouer à des jeux vidéo en ligne</span>
+          </label>
+          <label class="option-label">
+            <input type="radio" name="q1" value="b" />
+            <span>À organiser sa journée et traduire des textes</span>
+          </label>
+          <label class="option-label">
+            <input type="radio" name="q1" value="c" />
+            <span>À réparer des ordinateurs en panne</span>
+          </label>
+        </div>
+        <p class="feedback" id="feedback-q1"></p>
+      </section>
+
+      <section class="card" data-question="q2">
+        <p class="question-title">2. Comment ces outils permettent-ils de gagner du temps au travail ?</p>
+        <div class="options">
+          <label class="option-label">
+            <input type="radio" name="q2" value="a" />
+            <span>En rédigeant des courriels et en résumant de longs documents</span>
+          </label>
+          <label class="option-label">
+            <input type="radio" name="q2" value="b" />
+            <span>En remplaçant tous les employés de bureau</span>
+          </label>
+          <label class="option-label">
+            <input type="radio" name="q2" value="c" />
+            <span>En gérant les salaires automatiquement</span>
+          </label>
+        </div>
+        <p class="feedback" id="feedback-q2"></p>
+      </section>
+
+      <section class="card" data-question="q3">
+        <p class="question-title">3. Quelle précaution faut-il prendre selon la personne qui parle ?</p>
+        <div class="options">
+          <label class="option-label">
+            <input type="radio" name="q3" value="a" />
+            <span>Acheter un nouvel appareil chaque année</span>
+          </label>
+          <label class="option-label">
+            <input type="radio" name="q3" value="b" />
+            <span>Ne jamais utiliser Internet au travail</span>
+          </label>
+          <label class="option-label">
+            <input type="radio" name="q3" value="c" />
+            <span>Rester prudent avec ses données personnelles et vérifier les informations</span>
+          </label>
+        </div>
+        <p class="feedback" id="feedback-q3"></p>
+      </section>
+
+      <div class="actions">
+        <button type="submit" class="btn-primary">Vérifier mes réponses</button>
+        <button type="button" id="reset-btn" class="btn-secondary">Réessayer</button>
+      </div>
+    </form>
+
+    <div id="score-banner" class="score-banner" role="status" aria-live="polite"></div>
+
+    <details>
+      <summary>Afficher la transcription</summary>
+      <p>
+        « Aujourd'hui, l'intelligence artificielle fait partie de notre vie quotidienne. Par exemple, beaucoup de personnes utilisent des assistants vocaux pour organiser leur journée ou pour traduire des textes rapidement. Au travail, ces outils permettent de gagner du temps en rédigeant des courriels ou en résumant de longs documents. Cependant, il faut toujours rester prudent avec nos données personnelles et vérifier les informations, car la technologie peut parfois faire des erreurs. C'est donc un outil utile si on l'utilise bien. »
+      </p>
+    </details>
+  </main>
+
+  <script>
+    const ANSWERS = {
+      q1: {
+        correct: "b",
+        explanation: "Exact : beaucoup de personnes utilisent des assistants vocaux pour organiser leur journée ou traduire des textes rapidement."
+      },
+      q2: {
+        correct: "a",
+        explanation: "Exact : au travail, ces outils font gagner du temps en rédigeant des courriels ou en résumant de longs documents."
+      },
+      q3: {
+        correct: "c",
+        explanation: "Exact : il faut rester prudent avec nos données personnelles et vérifier les informations, car la technologie peut faire des erreurs."
+      }
+    };
+
+    const audio = document.getElementById("audio-player");
+    const speedButtons = document.querySelectorAll(".speed-btn");
+    const form = document.getElementById("quiz-form");
+    const resetBtn = document.getElementById("reset-btn");
+    const scoreBanner = document.getElementById("score-banner");
+
+    speedButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        audio.playbackRate = Number(btn.dataset.speed);
+        speedButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let score = 0;
+      const total = Object.keys(ANSWERS).length;
+
+      Object.entries(ANSWERS).forEach(([qKey, data]) => {
+        const card = document.querySelector(`[data-question="${qKey}"]`);
+        const labels = card.querySelectorAll(".option-label");
+        const selected = form.querySelector(`input[name="${qKey}"]:checked`);
+        const feedbackEl = document.getElementById(`feedback-${qKey}`);
+
+        labels.forEach((label) => {
+          label.classList.remove("correct", "wrong");
+          const input = label.querySelector("input");
+          if (input.value === data.correct) {
+            label.classList.add("correct");
+          } else if (selected && input.value === selected.value) {
+            label.classList.add("wrong");
+          }
+        });
+
+        if (selected && selected.value === data.correct) {
+          score += 1;
+          feedbackEl.textContent = data.explanation;
+        } else if (!selected) {
+          feedbackEl.textContent = "Aucune réponse sélectionnée. " + data.explanation;
+        } else {
+          feedbackEl.textContent = "Pas tout à fait. " + data.explanation;
+        }
+        feedbackEl.classList.add("visible");
+      });
+
+      scoreBanner.textContent = `Résultat : ${score} / ${total}`;
+      scoreBanner.classList.add("visible");
+    });
+
+    resetBtn.addEventListener("click", () => {
+      form.reset();
+      document.querySelectorAll(".option-label").forEach((label) => {
+        label.classList.remove("correct", "wrong");
+      });
+      document.querySelectorAll(".feedback").forEach((el) => {
+        el.textContent = "";
+        el.classList.remove("visible");
+      });
+      scoreBanner.textContent = "";
+      scoreBanner.classList.remove("visible");
+    });
+  </script>
+</body>
+</html>

@@ -200,8 +200,11 @@
 		--------------------------------------
 		
 - activities
-	- On all activities, remove all instructions everywhere.
-	
+	- x On all activities, remove all instructions everywhere.
+	- when importing an image, retain any hyphens and parentheses in the title, e.g. "notresalut-Marshal Pétain (1856-1951)"
+		- and retain the hyphens in the file name
+	- fix the styling of the audio control, it's broken again
+	- 
 	
 	
 ================= TODO
