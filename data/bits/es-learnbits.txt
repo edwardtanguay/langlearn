@@ -499,6 +499,9 @@
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
+	- antes de que
+	- a menos que
+	- aunque
 	- I don't think that
 		- no creo que
 			- tienen razón

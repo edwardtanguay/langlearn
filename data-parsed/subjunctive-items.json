@@ -1,5 +1,26 @@
 [
   {
+    "english": "",
+    "spanish": "antes de que",
+    "indicative": "",
+    "subjunctive": "",
+    "todo": true
+  },
+  {
+    "english": "",
+    "spanish": "a menos que",
+    "indicative": "",
+    "subjunctive": "",
+    "todo": true
+  },
+  {
+    "english": "",
+    "spanish": "aunque",
+    "indicative": "",
+    "subjunctive": "",
+    "todo": true
+  },
+  {
     "english": "I don't think that",
     "spanish": "no creo que",
     "indicative": "tienen razón",

@@ -56,19 +56,36 @@
 		----------------------------------
 		## Spanish Subjuntive activity
 		
-		- for the Spanish text areas under Indictative and Subjunctive on the card:
+		- x for the Spanish text areas under Indictative and Subjunctive on the card:
 			- remove the outline from both backgrounds
 			- leave the color of the background color on indicative
 			- for subjunctive, chnage the background color to that of indicative, but a bit brighter (to show a difference between the two)
-		- on the "todo" items in the list
+		- x on the "todo" items in the list
 			- change the word "todo" to "to import"
 			- across the columns TESTED and EXAMPLES, make a similar button "copy import prompt" 
 				- the prompt that it copies to the clipboard is: in the file data\bits\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, then create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again
-		- make the "found text" on searching only half bold, not full bold
+		- x make the "found text" on searching only half bold, not full bold
 			- and make sure there is no artifical space between found and non-found text
 		- mobile view
 			- make title on top "Spanish Subjunctive" a bit smaller
 			- take the 6/17 tested out of the pill and put it close to the red box on top, over on the far right
+		----------------------------------
+	- .. langacts004
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- if the user is on level three of a card and they leave the site and come back, then show the same card but make it show level 1 again (only English)
+		- when you hide the list, it clears the search box
+		- instead of "Show list..." write "show list..." on the link to show the list
+		- on the "to import" message, take off the outline so it doesn't look like a button
+		- if there are more than one to import, then only show "copy import prompt" on the first one, not all of them
+		- when showing English, when the user clicks, then open level 2 then a half second later open up level 3
+		- when level 4 is showing, a click on the card is the same as next
+		- allow all text on this page to be selected and copied
+		- mobile view
+			- put the reset icon on the right side of "7 / 71 tested" 
+			- and change "7 / 71 tested" to "7/71 tested" 
+			- put a top margin of 1.5 lines above e.g. "tested 3 times"
 		----------------------------------
 		
 		

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
-import { ArrowLeftIcon, ArrowRightIcon, ArrowPathIcon, ArrowUturnLeftIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftIcon, ArrowRightIcon, ArrowPathIcon, ArrowUturnLeftIcon, MagnifyingGlassIcon, XMarkIcon, ClipboardDocumentIcon, CheckIcon } from '@heroicons/vue/24/outline'
 import rawSubjunctiveItems from '../../../data-parsed/subjunctive-items.json'
 
 interface SubjunctiveItem {
@@ -52,6 +52,10 @@ const canGoPrev = computed(() => historyIndex.value > 0)
 const showAllTable = ref(false)
 const searchQuery = ref('')
 const searchInputRef = ref<HTMLInputElement | null>(null)
+const copiedPromptKey = ref<string | null>(null)
+let copyPromptTimer: ReturnType<typeof setTimeout> | null = null
+
+const IMPORT_PROMPT = 'in the file data\\bits\\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, then create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again'
 
 function getItemKey(item: SubjunctiveItem): string {
   return `${item.spanish}::${item.english}`
@@ -138,6 +142,10 @@ const orderedShowAllItems = computed(() => {
     normalizeForSearch(item.english).includes(normQuery)
   )
 })
+
+const mobileShowAllItems = computed(() =>
+  orderedShowAllItems.value.filter(item => !item.todo)
+)
 
 function saveState() {
   if (!import.meta.client) return
@@ -257,7 +265,26 @@ onUnmounted(() => {
   if (statsLoadingTimer) {
     clearTimeout(statsLoadingTimer)
   }
+  if (copyPromptTimer) {
+    clearTimeout(copyPromptTimer)
+  }
 })
+
+async function copyImportPrompt(item: SubjunctiveItem) {
+  if (!import.meta.client || !navigator.clipboard) return
+  try {
+    await navigator.clipboard.writeText(IMPORT_PROMPT)
+    copiedPromptKey.value = getItemKey(item)
+    if (copyPromptTimer) {
+      clearTimeout(copyPromptTimer)
+    }
+    copyPromptTimer = setTimeout(() => {
+      copiedPromptKey.value = null
+    }, 2000)
+  } catch {
+    // Ignore clipboard errors
+  }
+}
 
 function openGoogleExamples(phrase: string) {
   if (!phrase || !import.meta.client) return
@@ -378,7 +405,7 @@ function confirmResetAll() {
         </NuxtLink>
         <span class="text-gray-500">/</span>
         <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
-          <h1 class="text-xl sm:text-2xl font-black text-[#be185d] dark:text-[#f43f5e] tracking-tight">
+          <h1 class="text-lg sm:text-2xl font-black text-[#be185d] dark:text-[#f43f5e] tracking-tight">
             Spanish Subjunctive
           </h1>
         </div>
@@ -386,7 +413,7 @@ function confirmResetAll() {
 
       <div class="flex items-center gap-2">
         <span
-          class="text-xs font-mono font-bold text-gray-300 bg-gray-800/80 px-2.5 py-1.5 rounded-lg border border-gray-700 transition-all duration-300"
+          class="hidden sm:inline-block text-xs font-mono font-bold text-gray-300 bg-gray-800/80 px-2.5 py-1.5 rounded-lg border border-gray-700 transition-all duration-300"
           :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
         >
           {{ isStatsLoading ? `-- / ${baseItems.length} tested` : `${testedUniqueCount} / ${baseItems.length} tested` }}
@@ -427,11 +454,21 @@ function confirmResetAll() {
     </div>
 
     <!-- Main Interactive Card -->
-    <div
-      v-if="currentItem"
-      @click="handleCardClick"
-      class="relative min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/60 hover:border-[#be185d] p-6 sm:p-10 shadow-lg flex flex-col justify-center items-center text-center cursor-pointer transition-all"
-    >
+    <div>
+      <div class="sm:hidden flex justify-end mb-1.5 pr-1">
+        <span
+          class="text-xs font-mono font-bold text-gray-400 transition-all duration-300"
+          :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
+        >
+          {{ isStatsLoading ? `-- / ${baseItems.length} tested` : `${testedUniqueCount} / ${baseItems.length} tested` }}
+        </span>
+      </div>
+
+      <div
+        v-if="currentItem"
+        @click="handleCardClick"
+        class="relative min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/60 hover:border-[#be185d] p-6 sm:p-10 shadow-lg flex flex-col justify-center items-center text-center cursor-pointer transition-all"
+      >
       <div
         class="absolute bottom-3 right-4 text-[11px] font-mono text-gray-400/50 transition-all duration-300 pointer-events-none select-none"
         :class="isStatsLoading ? 'blur-[4px] opacity-40' : ''"
@@ -485,7 +522,7 @@ function confirmResetAll() {
               <span>3 examples</span>
             </button>
           </div>
-          <div class="text-base sm:text-lg font-semibold text-[#f43f5e] bg-gray-800/80 px-3.5 py-2 rounded-lg border border-gray-700">
+          <div class="text-base sm:text-lg font-semibold text-[#f43f5e] bg-gray-800/80 px-3.5 py-2 rounded-lg">
             {{ currentItem.indicative }}
           </div>
         </div>
@@ -511,17 +548,18 @@ function confirmResetAll() {
               <span>3 examples</span>
             </button>
           </div>
-          <div class="text-base sm:text-lg font-bold text-[#f43f5e] bg-[#be185d]/25 px-3.5 py-2 rounded-lg border border-[#be185d]/60">
+          <div class="text-base sm:text-lg font-bold text-[#f43f5e] bg-gray-700/80 px-3.5 py-2 rounded-lg">
             {{ currentItem.subjunctive }}
           </div>
         </div>
       </div>
     </div>
 
-    <div
-      v-else
-      class="min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/30 p-6 sm:p-10 shadow-lg"
-    />
+      <div
+        v-else
+        class="min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/30 p-6 sm:p-10 shadow-lg"
+      />
+    </div>
 
     <!-- Navigation Buttons -->
     <div class="flex items-center justify-between gap-3">
@@ -599,7 +637,7 @@ function confirmResetAll() {
 
         <div
           v-if="orderedShowAllItems.length === 0"
-          class="px-5 py-8 text-center text-sm text-gray-400"
+          class="hidden sm:block px-5 py-8 text-center text-sm text-gray-400"
         >
           No matching cards found.
         </div>
@@ -631,7 +669,7 @@ function confirmResetAll() {
                   <span
                     v-for="(seg, sIdx) in getHighlightSegments(item.spanish, searchQuery)"
                     :key="sIdx"
-                    :class="seg.match ? 'font-bold text-white bg-white/15 rounded px-0.5' : 'text-white/50'"
+                    :class="seg.match ? 'font-medium text-white bg-white/15 rounded' : 'text-white/50'"
                   >{{ seg.text }}</span>
                 </template>
                 <span v-else class="text-gray-300">{{ item.spanish }}</span>
@@ -641,84 +679,39 @@ function confirmResetAll() {
                   v-if="item.todo"
                   class="inline-block px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/40"
                 >
-                  todo
+                  to import
                 </span>
                 <template v-else-if="searchQuery.trim()">
                   <span
                     v-for="(seg, sIdx) in getHighlightSegments(item.english, searchQuery)"
                     :key="sIdx"
-                    :class="seg.match ? 'font-bold text-white bg-white/15 rounded px-0.5' : 'text-white/50'"
+                    :class="seg.match ? 'font-medium text-white bg-white/15 rounded' : 'text-white/50'"
                   >{{ seg.text }}</span>
                 </template>
                 <span v-else class="text-gray-300">{{ item.english }}</span>
               </td>
-              <td class="px-5 py-3 text-right whitespace-nowrap">
-                <span v-if="item.todo" class="text-xs font-mono text-gray-500">—</span>
-                <span
-                  v-else
-                  class="text-xs font-mono text-gray-400/70 transition-all duration-300"
-                  :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
-                >
-                  {{ isStatsLoading ? '--×' : `${getTestedCount(item)}×` }}
-                </span>
-              </td>
-              <td class="px-5 py-3 text-right whitespace-nowrap">
+              <td v-if="item.todo" colspan="2" class="px-5 py-3 text-right whitespace-nowrap">
                 <button
-                  v-if="!item.todo"
                   type="button"
-                  @click.stop="openGoogleExamples(item.spanish)"
-                  title="Look up 3 examples in Google Search"
+                  @click.stop="copyImportPrompt(item)"
+                  title="Copy import prompt to clipboard"
                   class="inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
                 >
-                  <MagnifyingGlassIcon class="w-3 h-3" />
-                  <span>3 examples</span>
+                  <CheckIcon v-if="copiedPromptKey === getItemKey(item)" class="w-3 h-3 text-emerald-400" />
+                  <ClipboardDocumentIcon v-else class="w-3 h-3" />
+                  <span>{{ copiedPromptKey === getItemKey(item) ? 'Copied!' : 'copy import prompt' }}</span>
                 </button>
               </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Mobile stacked layout -->
-        <div
-          v-if="orderedShowAllItems.length > 0"
-          class="sm:hidden divide-y divide-gray-800/80"
-        >
-          <div
-            v-for="item in orderedShowAllItems"
-            :key="getItemKey(item)"
-            @click="!item.todo && selectFromList(item)"
-            class="px-4 py-3 space-y-1.5 transition-colors"
-            :class="item.todo
-              ? 'bg-amber-500/5 cursor-default'
-              : currentItem && getItemKey(item) === getItemKey(currentItem)
-                ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d] cursor-pointer'
-                : 'hover:bg-gray-800/60 cursor-pointer'"
-          >
-            <div class="flex items-start justify-between gap-2">
-              <div class="text-sm font-normal leading-snug">
-                <template v-if="searchQuery.trim()">
+              <template v-else>
+                <td class="px-5 py-3 text-right whitespace-nowrap">
                   <span
-                    v-for="(seg, sIdx) in getHighlightSegments(item.spanish, searchQuery)"
-                    :key="sIdx"
-                    :class="seg.match ? 'font-bold text-white bg-white/15 rounded px-0.5' : 'text-white/50'"
-                  >{{ seg.text }}</span>
-                </template>
-                <span v-else class="text-gray-300">{{ item.spanish }}</span>
-              </div>
-              <div class="shrink-0 flex items-center gap-2">
-                <span
-                  v-if="item.todo"
-                  class="inline-block px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/40"
-                >
-                  todo
-                </span>
-                <template v-else>
-                  <span
-                    class="text-[11px] font-mono text-gray-400/70 transition-all duration-300"
+                    class="text-xs font-mono text-gray-400/70 transition-all duration-300"
                     :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
                   >
                     {{ isStatsLoading ? '--×' : `${getTestedCount(item)}×` }}
                   </span>
+                </td>
+                <td class="px-5 py-3 text-right whitespace-nowrap">
                   <button
                     type="button"
                     @click.stop="openGoogleExamples(item.spanish)"
@@ -728,15 +721,67 @@ function confirmResetAll() {
                     <MagnifyingGlassIcon class="w-3 h-3" />
                     <span>3 examples</span>
                   </button>
+                </td>
+              </template>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Mobile stacked layout -->
+        <div
+          v-if="mobileShowAllItems.length === 0"
+          class="sm:hidden px-5 py-8 text-center text-sm text-gray-400"
+        >
+          No matching cards found.
+        </div>
+        <div
+          v-else
+          class="sm:hidden divide-y divide-gray-800/80"
+        >
+          <div
+            v-for="item in mobileShowAllItems"
+            :key="getItemKey(item)"
+            @click="selectFromList(item)"
+            class="px-4 py-3 space-y-1.5 transition-colors cursor-pointer"
+            :class="currentItem && getItemKey(item) === getItemKey(currentItem)
+              ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]'
+              : 'hover:bg-gray-800/60'"
+          >
+            <div class="flex items-start justify-between gap-2">
+              <div class="text-sm font-normal leading-snug">
+                <template v-if="searchQuery.trim()">
+                  <span
+                    v-for="(seg, sIdx) in getHighlightSegments(item.spanish, searchQuery)"
+                    :key="sIdx"
+                    :class="seg.match ? 'font-medium text-white bg-white/15 rounded' : 'text-white/50'"
+                  >{{ seg.text }}</span>
                 </template>
+                <span v-else class="text-gray-300">{{ item.spanish }}</span>
+              </div>
+              <div class="shrink-0 flex items-center gap-2">
+                <span
+                  class="text-[11px] font-mono text-gray-400/70 transition-all duration-300"
+                  :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
+                >
+                  {{ isStatsLoading ? '--×' : `${getTestedCount(item)}×` }}
+                </span>
+                <button
+                  type="button"
+                  @click.stop="openGoogleExamples(item.spanish)"
+                  title="Look up 3 examples in Google Search"
+                  class="inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
+                >
+                  <MagnifyingGlassIcon class="w-3 h-3" />
+                  <span>3 examples</span>
+                </button>
               </div>
             </div>
-            <div v-if="!item.todo" class="text-xs font-normal leading-snug">
+            <div class="text-xs font-normal leading-snug">
               <template v-if="searchQuery.trim()">
                 <span
                   v-for="(seg, sIdx) in getHighlightSegments(item.english, searchQuery)"
                   :key="sIdx"
-                  :class="seg.match ? 'font-bold text-white bg-white/15 rounded px-0.5' : 'text-white/50'"
+                  :class="seg.match ? 'font-medium text-white bg-white/15 rounded' : 'text-white/50'"
                 >{{ seg.text }}</span>
               </template>
               <span v-else class="text-gray-300">{{ item.english }}</span>
