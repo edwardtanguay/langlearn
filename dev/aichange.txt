@@ -52,7 +52,7 @@
 			- when parsing the data\bits\es-learnbits.txt file everything under "subjunctive trigger phrases"
 				- if there is line that has no children, e.g. "- quiero que" then treat this as a "entry to create" so create the other three lines for it, save the file, and process it so that item is in the JSON file
 		----------------------------------
-	- ,, langacts003
+	- x langacts003
 		----------------------------------
 		## Spanish Subjuntive activity
 		
@@ -70,23 +70,31 @@
 			- make title on top "Spanish Subjunctive" a bit smaller
 			- take the 6/17 tested out of the pill and put it close to the red box on top, over on the far right
 		----------------------------------
-	- .. langacts004
+	- ,, langacts004
 		----------------------------------
 		## Spanish Subjuntive activity
 		
-		- if the user is on level three of a card and they leave the site and come back, then show the same card but make it show level 1 again (only English)
-		- when you hide the list, it clears the search box
-		- instead of "Show list..." write "show list..." on the link to show the list
-		- on the "to import" message, take off the outline so it doesn't look like a button
-		- if there are more than one to import, then only show "copy import prompt" on the first one, not all of them
-		- when showing English, when the user clicks, then open level 2 then a half second later open up level 3
-		- when level 4 is showing, a click on the card is the same as next
-		- allow all text on this page to be selected and copied
-		- mobile view
-			- put the reset icon on the right side of "7 / 71 tested" 
-			- and change "7 / 71 tested" to "7/71 tested" 
-			- put a top margin of 1.5 lines above e.g. "tested 3 times"
+		- x if the user is on level three of a card and they leave the site and come back, then show the same card but make it show level 1 again (only English)
+		- x when you hide the list, it clears the search box
+		- x instead of "Show list..." write "show list..." on the link to show the list
+		- x on the "to import" message, take off the outline so it doesn't look like a button
+		- x if there are more than one to import, then only show "copy import prompt" on the first one, not all of them
+		- x when showing English, when the user clicks, then open level 2 then a half second later open up level 3
+		- x when level 4 is showing, a click on the card is the same as next
+		- x allow all text on this page to be selected and copied
+		- x mobile view
+			- x put the reset icon on the right side of "7 / 71 tested" 
+			- x and change "7 / 71 tested" to "7/71 tested" 
+			- x put a top margin of 1.5 lines above e.g. "tested 3 times"
 		----------------------------------
+	- ,, langacts005
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- remove the 500ms wait for revealing level 3, just reveal 2 and 3 at the same time
+		
+		----------------------------------
+		
 		
 		
 

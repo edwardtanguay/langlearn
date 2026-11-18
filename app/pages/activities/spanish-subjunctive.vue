@@ -54,6 +54,8 @@ const searchQuery = ref('')
 const searchInputRef = ref<HTMLInputElement | null>(null)
 const copiedPromptKey = ref<string | null>(null)
 let copyPromptTimer: ReturnType<typeof setTimeout> | null = null
+let autoRevealTimer: ReturnType<typeof setTimeout> | null = null
+const isAutoRevealing = ref(false)
 
 const IMPORT_PROMPT = 'in the file data\\bits\\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, then create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again'
 
@@ -146,6 +148,11 @@ const orderedShowAllItems = computed(() => {
 const mobileShowAllItems = computed(() =>
   orderedShowAllItems.value.filter(item => !item.todo)
 )
+
+const firstVisibleTodoKey = computed(() => {
+  const first = orderedShowAllItems.value.find(item => item.todo)
+  return first ? getItemKey(first) : null
+})
 
 function saveState() {
   if (!import.meta.client) return
@@ -246,20 +253,23 @@ onMounted(() => {
     history.value = [initialItem]
     historyIndex.value = 0
     inProgressKey.value = getItemKey(initialItem)
-    if (restoredFromStorage) {
-      revealStep.value = loaded.revealStep
-      hasRecordedCurrentPresentation.value = loaded.hasRecordedCurrentPresentation
-    } else {
-      revealStep.value = 0
-      hasRecordedCurrentPresentation.value = false
-      saveState()
-    }
+    revealStep.value = 0
+    hasRecordedCurrentPresentation.value = false
+    saveState()
   }
 
   statsLoadingTimer = setTimeout(() => {
     isStatsLoading.value = false
   }, 250)
 })
+
+function clearAutoRevealTimer() {
+  if (autoRevealTimer) {
+    clearTimeout(autoRevealTimer)
+    autoRevealTimer = null
+  }
+  isAutoRevealing.value = false
+}
 
 onUnmounted(() => {
   if (statsLoadingTimer) {
@@ -268,6 +278,7 @@ onUnmounted(() => {
   if (copyPromptTimer) {
     clearTimeout(copyPromptTimer)
   }
+  clearAutoRevealTimer()
 })
 
 async function copyImportPrompt(item: SubjunctiveItem) {
@@ -293,12 +304,24 @@ function openGoogleExamples(phrase: string) {
 }
 
 function handleCardClick() {
-  if (!currentItem.value) return
+  if (!currentItem.value || isAutoRevealing.value) return
   if (typeof window !== 'undefined' && window.getSelection()?.toString().trim()) {
     return
   }
   const key = getItemKey(currentItem.value)
   inProgressKey.value = key
+  if (revealStep.value === 0) {
+    revealStep.value = 1
+    saveState()
+    isAutoRevealing.value = true
+    autoRevealTimer = setTimeout(() => {
+      autoRevealTimer = null
+      isAutoRevealing.value = false
+      revealStep.value = 2
+      saveState()
+    }, 500)
+    return
+  }
   if (revealStep.value < 3) {
     const nextStep = (revealStep.value + 1) as 0 | 1 | 2 | 3
     revealStep.value = nextStep
@@ -309,13 +332,14 @@ function handleCardClick() {
       }
       hasRecordedCurrentPresentation.value = true
     }
+    saveState()
   } else {
-    revealStep.value = 0
+    nextItem()
   }
-  saveState()
 }
 
 function resetPresentationState() {
+  clearAutoRevealTimer()
   revealStep.value = 0
   hasRecordedCurrentPresentation.value = false
 }
@@ -377,7 +401,11 @@ function selectFromList(item: SubjunctiveItem) {
 
 async function toggleShowAllTable() {
   showAllTable.value = !showAllTable.value
-  if (showAllTable.value && import.meta.client && window.innerWidth >= 640) {
+  if (!showAllTable.value) {
+    searchQuery.value = ''
+    return
+  }
+  if (import.meta.client && window.innerWidth >= 640) {
     await nextTick()
     searchInputRef.value?.focus()
   }
@@ -411,12 +439,12 @@ function confirmResetAll() {
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
+      <div class="hidden sm:flex items-center gap-2">
         <span
-          class="hidden sm:inline-block text-xs font-mono font-bold text-gray-300 bg-gray-800/80 px-2.5 py-1.5 rounded-lg border border-gray-700 transition-all duration-300"
+          class="text-xs font-mono font-bold text-gray-300 bg-gray-800/80 px-2.5 py-1.5 rounded-lg border border-gray-700 transition-all duration-300"
           :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
         >
-          {{ isStatsLoading ? `-- / ${baseItems.length} tested` : `${testedUniqueCount} / ${baseItems.length} tested` }}
+          {{ isStatsLoading ? `--/${baseItems.length} tested` : `${testedUniqueCount}/${baseItems.length} tested` }}
         </span>
 
         <template v-if="!isConfirmingReset">
@@ -455,13 +483,45 @@ function confirmResetAll() {
 
     <!-- Main Interactive Card -->
     <div>
-      <div class="sm:hidden flex justify-end mb-1.5 pr-1">
+      <div class="sm:hidden flex items-center justify-end gap-2 mb-1.5 pr-1">
         <span
           class="text-xs font-mono font-bold text-gray-400 transition-all duration-300"
           :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
         >
-          {{ isStatsLoading ? `-- / ${baseItems.length} tested` : `${testedUniqueCount} / ${baseItems.length} tested` }}
+          {{ isStatsLoading ? `--/${baseItems.length} tested` : `${testedUniqueCount}/${baseItems.length} tested` }}
         </span>
+
+        <template v-if="!isConfirmingReset">
+          <button
+            type="button"
+            @click="isConfirmingReset = true"
+            title="Reset testing status for all cards"
+            aria-label="Reset testing status for all cards"
+            class="p-1 rounded-lg text-gray-500 hover:text-red-400 hover:bg-gray-800/80 border border-transparent hover:border-gray-700 transition-colors cursor-pointer"
+          >
+            <ArrowUturnLeftIcon class="w-3.5 h-3.5" />
+          </button>
+        </template>
+        <div
+          v-else
+          class="flex items-center gap-2 text-xs bg-gray-900/90 border border-red-900/60 px-2.5 py-1 rounded-lg"
+        >
+          <span class="text-gray-300">Are you sure?</span>
+          <button
+            type="button"
+            @click="confirmResetAll"
+            class="text-red-400 hover:text-red-300 font-semibold underline cursor-pointer"
+          >
+            Yes
+          </button>
+          <button
+            type="button"
+            @click="isConfirmingReset = false"
+            class="text-gray-400 hover:text-white cursor-pointer"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
 
       <div
@@ -469,13 +529,6 @@ function confirmResetAll() {
         @click="handleCardClick"
         class="relative min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/60 hover:border-[#be185d] p-6 sm:p-10 shadow-lg flex flex-col justify-center items-center text-center cursor-pointer transition-all"
       >
-      <div
-        class="absolute bottom-3 right-4 text-[11px] font-mono text-gray-400/50 transition-all duration-300 pointer-events-none select-none"
-        :class="isStatsLoading ? 'blur-[4px] opacity-40' : ''"
-      >
-        {{ isStatsLoading ? 'tested -- times' : `tested ${getTestedCount(currentItem)} ${getTestedCount(currentItem) === 1 ? 'time' : 'times'}` }}
-      </div>
-
       <div class="w-full max-w-xl space-y-5">
         <!-- 1. English (always visible) -->
         <div class="space-y-1">
@@ -553,6 +606,13 @@ function confirmResetAll() {
           </div>
         </div>
       </div>
+
+      <div
+        class="mt-[1.5em] self-end sm:mt-0 sm:self-auto sm:absolute sm:bottom-3 sm:right-4 text-[11px] font-mono text-gray-400/50 transition-all duration-300"
+        :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
+      >
+        {{ isStatsLoading ? 'tested -- times' : `tested ${getTestedCount(currentItem)} ${getTestedCount(currentItem) === 1 ? 'time' : 'times'}` }}
+      </div>
     </div>
 
       <div
@@ -567,7 +627,7 @@ function confirmResetAll() {
         type="button"
         @click="prevItem"
         :disabled="!canGoPrev"
-        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold bg-gray-800 text-white border border-gray-700 transition-all select-none"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold bg-gray-800 text-white border border-gray-700 transition-all"
         :class="canGoPrev ? 'hover:bg-gray-700 cursor-pointer' : 'opacity-40 cursor-not-allowed'"
       >
         <ArrowLeftIcon class="w-4 h-4" />
@@ -579,7 +639,7 @@ function confirmResetAll() {
         @click="reshuffleItem"
         :disabled="baseItems.length <= 1"
         title="Pick another card tested the same number of times"
-        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold bg-gray-800 text-white border border-gray-700 transition-all select-none"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold bg-gray-800 text-white border border-gray-700 transition-all"
         :class="baseItems.length > 1 ? 'hover:bg-gray-700 cursor-pointer' : 'opacity-40 cursor-not-allowed'"
       >
         <ArrowPathIcon class="w-4 h-4" />
@@ -589,7 +649,7 @@ function confirmResetAll() {
       <button
         type="button"
         @click="nextItem"
-        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-[#be185d] hover:bg-[#9d174d] text-white transition-all cursor-pointer select-none"
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-[#be185d] hover:bg-[#9d174d] text-white transition-all cursor-pointer"
       >
         <span>Next</span>
         <ArrowRightIcon class="w-4 h-4" />
@@ -604,7 +664,7 @@ function confirmResetAll() {
           @click="toggleShowAllTable"
           class="text-sm font-semibold text-white/80 hover:text-white underline underline-offset-4 cursor-pointer transition-colors"
         >
-          {{ showAllTable ? 'hide list of upcoming cards' : 'Show list of upcoming cards' }}
+          {{ showAllTable ? 'hide list of upcoming cards' : 'show list of upcoming cards' }}
         </button>
       </div>
 
@@ -677,7 +737,7 @@ function confirmResetAll() {
               <td class="px-5 py-3 text-sm sm:text-base font-normal">
                 <span
                   v-if="item.todo"
-                  class="inline-block px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/40"
+                  class="inline-block px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider rounded bg-amber-500/20 text-amber-300"
                 >
                   to import
                 </span>
@@ -692,6 +752,7 @@ function confirmResetAll() {
               </td>
               <td v-if="item.todo" colspan="2" class="px-5 py-3 text-right whitespace-nowrap">
                 <button
+                  v-if="firstVisibleTodoKey === getItemKey(item)"
                   type="button"
                   @click.stop="copyImportPrompt(item)"
                   title="Copy import prompt to clipboard"

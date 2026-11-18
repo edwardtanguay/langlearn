@@ -1,24 +1,21 @@
 [
   {
-    "english": "",
+    "english": "before",
     "spanish": "antes de que",
-    "indicative": "",
-    "subjunctive": "",
-    "todo": true
+    "indicative": "empieza la película",
+    "subjunctive": "compramos entradas antes de que empiece la película"
   },
   {
-    "english": "",
+    "english": "unless",
     "spanish": "a menos que",
-    "indicative": "",
-    "subjunctive": "",
-    "todo": true
+    "indicative": "llueve mañana",
+    "subjunctive": "iremos a la playa mañana a menos que llueva"
   },
   {
-    "english": "",
+    "english": "even if",
     "spanish": "aunque",
-    "indicative": "",
-    "subjunctive": "",
-    "todo": true
+    "indicative": "hace frío mañana",
+    "subjunctive": "saldremos a caminar aunque haga frío"
   },
   {
     "english": "I don't think that",

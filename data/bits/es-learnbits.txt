@@ -499,9 +499,18 @@
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
-	- antes de que
-	- a menos que
-	- aunque
+	- before
+		- antes de que
+			- empieza la película
+				- compramos entradas antes de que empiece la película
+	- unless
+		- a menos que
+			- llueve mañana
+				- iremos a la playa mañana a menos que llueva
+	- even if
+		- aunque
+			- hace frío mañana
+				- saldremos a caminar aunque haga frío
 	- I don't think that
 		- no creo que
 			- tienen razón
