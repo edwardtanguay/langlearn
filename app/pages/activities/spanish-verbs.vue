@@ -683,7 +683,7 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-[#be185d] text-white border-[#f43f5e]/70 shadow-[0_0_12px_rgba(244,63,94,0.65)] ring-2 ring-[#f43f5e]/80 animate-pulse-bright relative z-10'
+    return 'bg-[#be185d] text-white border-[#f43f5e]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
   }
   return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 border-gray-200 dark:border-gray-700'
 }
@@ -2601,7 +2601,7 @@ onUnmounted(() => {
               </button>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-xl border border-[#be185d]/50 dark:border-[#f43f5e]/45">
+          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-xl border-2 border-gray-300 dark:border-white/80">
             <button
               v-for="v in alphabetizedVerbs"
               :key="v.verb"
@@ -2791,7 +2791,7 @@ onUnmounted(() => {
                 </button>
               </div>
             </div>
-            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-[#be185d]/50 dark:border-[#f43f5e]/45">
+            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-xl border-2 border-gray-300 dark:border-white/80">
               <button
                 v-for="v in alphabetizedVerbs"
                 :key="v.verb"
@@ -2901,7 +2901,7 @@ onUnmounted(() => {
         v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
         :class="[activeVerbListTextClass, 'font-black tracking-wider text-center text-[#be185d] dark:text-[#f43f5e] leading-snug']"
       >
-        <span v-if="activeExactGroupName" class="uppercase opacity-90">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
+        <span v-if="activeExactGroupName" class="uppercase text-gray-900 dark:text-white">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
       </div>
 
       <!-- Single Verb Table for Random Target -->
@@ -3404,7 +3404,7 @@ onUnmounted(() => {
         v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
         :class="[activeVerbListTextClass, 'font-black tracking-wider text-center text-[#be185d] dark:text-[#f43f5e] leading-snug']"
       >
-        <span v-if="activeExactGroupName" class="uppercase opacity-90">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
+        <span v-if="activeExactGroupName" class="uppercase text-gray-900 dark:text-white">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
       </div>
 
       <div

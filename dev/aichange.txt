@@ -99,7 +99,7 @@
 		
 		- make clicking directly on the area of the two bottom Spanish texts copy the text to the clipboard, and afterward, write a small nuanced note on the upper right of the area on the right "text copied", display for 2 seconds, then fade it off
 		----------------------------------
-	- .. langacts007
+	- x langacts007
 		----------------------------------
 		## Spanish and Italian Verb activities
 		
@@ -112,18 +112,27 @@
 		- make the appearance of the "text copied" brighter and the animation/fade snappier
 			- and when clicking, give a "quick pulse" of the whole area to show the user that it was clicked and did something
 		----------------------------------
-	- .. langacts008
+	- ,, langacts008
 		----------------------------------
 		## Spanish and Italian Verb activities
 		
-		- for the listing of the verbs on top of the verb area, e.g. "core 1: ir, ser, estar" show "core 1:" white
-		- in the filter area, make the small outline around the "verbs to show" area white again and 1px thicker
-		- on the "full word" found, take the pulsing off and just put a light, white shadow
+		- x for the listing of the verbs on top of the verb area, e.g. "core 1: ir, ser, estar" show "core 1:" white
+		- x in the filter area, make the small outline around the "verbs to show" area white again and 1px thicker
+		- x on the "full word" found, take the pulsing off and just put a light, white shadow
 		
 		## Spanish Subjuntive activity
 		
 		- when clicking the two spanish text areas to give a "quick pulse" of the whole area, make it just a little movement (enlarging/shrinking), but very little and otherwise no change, e.g. no color change
 		----------------------------------
+	- ,, langacts008
+		----------------------------------
+		## Spanish and Italian Verb activities
+		
+		- in the filter area, make the small outline around the "verbs to show" area 1px smaller, but as white as possible, and make the left corners top/bottom square like the ones on the right
+		- the verbs in the verb tables, e.g. espero, esperas, etc. are all not vertically centered, move themp up 1px inside their pill
+		- when searching, for words that have partial text found in them, change their pill border to the language color
+		----------------------------------
+		
 		
 		
 		

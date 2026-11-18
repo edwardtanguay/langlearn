@@ -613,7 +613,7 @@ function confirmResetAll() {
             @click.stop="copySpanishText('indicative', currentItem.indicative)"
             title="Click to copy"
             class="text-base sm:text-lg font-semibold text-[#f43f5e] bg-gray-800/80 hover:bg-gray-800 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
-            :class="pulsingTextField === 'indicative' ? 'animate-copy-pulse ring-1 ring-[#f43f5e]/60' : ''"
+            :class="pulsingTextField === 'indicative' ? 'animate-copy-pulse' : ''"
           >
             {{ currentItem.indicative }}
           </div>
@@ -651,7 +651,7 @@ function confirmResetAll() {
             @click.stop="copySpanishText('subjunctive', currentItem.subjunctive)"
             title="Click to copy"
             class="text-base sm:text-lg font-bold text-[#f43f5e] bg-gray-700/80 hover:bg-gray-700 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
-            :class="pulsingTextField === 'subjunctive' ? 'animate-copy-pulse ring-1 ring-[#f43f5e]/60' : ''"
+            :class="pulsingTextField === 'subjunctive' ? 'animate-copy-pulse' : ''"
           >
             {{ currentItem.subjunctive }}
           </div>
@@ -909,15 +909,12 @@ function confirmResetAll() {
 @keyframes copy-area-pulse {
   0% {
     transform: scale(1);
-    filter: brightness(1);
   }
   40% {
-    transform: scale(1.015);
-    filter: brightness(1.3);
+    transform: scale(1.008);
   }
   100% {
     transform: scale(1);
-    filter: brightness(1);
   }
 }
 
