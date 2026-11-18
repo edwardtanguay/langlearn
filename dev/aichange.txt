@@ -32,27 +32,27 @@
 		- where the "in order / shuffled" button was, but a button "reshuffle" which chooses another card that has been taken the same amount of times
 		- change "tested 0x" to "tested 0 times"
 		----------------------------------
-	- ,, langacts002
+	- x langacts002
 		----------------------------------
 		## Spanish Subjuntive activity
 		
 		- x on desktop view, when opening the bottom list to show, focus the cursor in the search
-		- make the "x" in the search box a visible square area with a light grey background so it looks easier to click
-		- make all the blurs a little less strong so that it is more evident how the 
-		- make the blur-to-clear speed a bit snappier
-		- let's keep the card abiding by the rules "text in Spanish is red"
+		- x make the "x" in the search box a visible square area with a light grey background so it looks easier to click
+		- x make all the blurs a little less strong so that it is more evident how the 
+		- x make the blur-to-clear speed a bit snappier
+		- x let's keep the card abiding by the rules "text in Spanish is red"
 			- change the word "Spanish" to white
 			- change "SUBJUNCTIVE:" to white and the "3 examples" after it also white
 			- then the actual Spanish phrases for indicative and subjunctive should be red
-		- to the right of the "2/65 tested" put a small button with a "reset" icon
+		- x to the right of the "2/65 tested" put a small button with a "reset" icon
 			- give it a "are you sure" step, and if yes, then reset the testing status for all cards
-		- change "hide list" to "hide list of upcoming cards" to make it easier to click
-		- when searching, make the found text a bit more highlighted/pronounced/bold
-		- "npm run pd" script
+		- x change "hide list" to "hide list of upcoming cards" to make it easier to click
+		- x when searching, make the found text a bit more highlighted/pronounced/bold
+		- x "npm run pd" script
 			- when parsing the data\bits\es-learnbits.txt file everything under "subjunctive trigger phrases"
 				- if there is line that has no children, e.g. "- quiero que" then treat this as a "entry to create" so create the other three lines for it, save the file, and process it so that item is in the JSON file
 		----------------------------------
-	- ,, langacts002
+	- ,, langacts003
 		----------------------------------
 		## Spanish Subjuntive activity
 		
@@ -63,7 +63,12 @@
 		- on the "todo" items in the list
 			- change the word "todo" to "to import"
 			- across the columns TESTED and EXAMPLES, make a similar button "copy import prompt" 
-				- the prompt that it copies to the clipboard is: in the file data\bits\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, the create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again
+				- the prompt that it copies to the clipboard is: in the file data\bits\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, then create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again
+		- make the "found text" on searching only half bold, not full bold
+			- and make sure there is no artifical space between found and non-found text
+		- mobile view
+			- make title on top "Spanish Subjunctive" a bit smaller
+			- take the 6/17 tested out of the pill and put it close to the red box on top, over on the far right
 		----------------------------------
 		
 		

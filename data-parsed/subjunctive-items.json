@@ -1,10 +1,39 @@
 [
   {
-    "english": "",
+    "english": "I don't think that",
+    "spanish": "no creo que",
+    "indicative": "tienen razón",
+    "subjunctive": "no creo que tengan razón"
+  },
+  {
+    "english": "I want that",
     "spanish": "quiero que",
-    "indicative": "",
-    "subjunctive": "",
-    "todo": true
+    "indicative": "vienes conmigo al cine",
+    "subjunctive": "quiero que vengas conmigo al cine"
+  },
+  {
+    "english": "I hope that",
+    "spanish": "espero que",
+    "indicative": "tienes tiempo para descansar",
+    "subjunctive": "espero que tengas tiempo para descansar"
+  },
+  {
+    "english": "I am glad that",
+    "spanish": "me alegra que",
+    "indicative": "estás aquí con nosotros",
+    "subjunctive": "me alegra que estés aquí con nosotros"
+  },
+  {
+    "english": "it bothers me that",
+    "spanish": "me molesta que",
+    "indicative": "hablan tan alto en el tren",
+    "subjunctive": "me molesta que hablen tan alto en el tren"
+  },
+  {
+    "english": "I doubt that",
+    "spanish": "dudo que",
+    "indicative": "saben la respuesta correcta",
+    "subjunctive": "dudo que sepan la respuesta correcta"
   },
   {
     "english": "it is possible that",

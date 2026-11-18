@@ -499,11 +499,30 @@
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
-	- quiero que
-	- espero que
-	- me alegra que
-	- me molesta que
-	- dudo que
+	- I don't think that
+		- no creo que
+			- tienen razón
+				- no creo que tengan razón
+	- I want that
+		- quiero que
+			- vienes conmigo al cine
+				- quiero que vengas conmigo al cine
+	- I hope that
+		- espero que
+			- tienes tiempo para descansar
+				- espero que tengas tiempo para descansar
+	- I am glad that
+		- me alegra que
+			- estás aquí con nosotros
+				- me alegra que estés aquí con nosotros
+	- it bothers me that
+		- me molesta que
+			- hablan tan alto en el tren
+				- me molesta que hablen tan alto en el tren
+	- I doubt that
+		- dudo que
+			- saben la respuesta correcta
+				- dudo que sepan la respuesta correcta
 	- it is possible that
 		- puede que
 			- llueve mañana por la tarde
