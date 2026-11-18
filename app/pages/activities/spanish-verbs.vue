@@ -685,7 +685,7 @@ function getSearchCellClass(text?: string | null): string {
   if (isExactSearchMatch(text)) {
     return 'bg-[#be185d] text-white border-[#f43f5e]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
   }
-  return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 border-gray-200 dark:border-gray-700'
+  return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 border-[#be185d] dark:border-[#f43f5e]'
 }
 
 interface StudyRow {
@@ -2601,7 +2601,7 @@ onUnmounted(() => {
               </button>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-xl border-2 border-gray-300 dark:border-white/80">
+          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-l-none rounded-r-xl border border-gray-300 dark:border-white">
             <button
               v-for="v in alphabetizedVerbs"
               :key="v.verb"
@@ -2791,7 +2791,7 @@ onUnmounted(() => {
                 </button>
               </div>
             </div>
-            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-xl border-2 border-gray-300 dark:border-white/80">
+            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-l-none rounded-r-xl border border-gray-300 dark:border-white">
               <button
                 v-for="v in alphabetizedVerbs"
                 :key="v.verb"
@@ -3558,7 +3558,7 @@ onUnmounted(() => {
                 <span
                   v-else
                   @click.stop="openGoogleExamples(verb.gerund, { verb: verb.verb, tenseKey: 'gerund', tenseLabel: 'Gerundio' })"
-                  class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
+                  class="px-1.5 pt-[1px] pb-[3px] rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
                   :class="getSearchCellClass(verb.gerund)"
                   v-html="highlightText(verb.gerund)"
                 >
@@ -3620,7 +3620,7 @@ onUnmounted(() => {
                 <span
                   v-else
                   @click.stop="openGoogleExamples(verb.pastParticiple, { verb: verb.verb, tenseKey: 'pastParticiple', tenseLabel: 'Participio' })"
-                  class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
+                  class="px-1.5 pt-[1px] pb-[3px] rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
                   :class="getSearchCellClass(verb.pastParticiple)"
                   v-html="highlightText(verb.pastParticiple)"
                 >
@@ -3717,7 +3717,7 @@ onUnmounted(() => {
                         <span
                           v-else
                           @click.stop="openGoogleExamples(verb.gerund, { verb: verb.verb, tenseKey: 'gerund', tenseLabel: 'Gerundio' })"
-                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
+                          class="px-1.5 pt-[1px] pb-[3px] rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
                           :class="getSearchCellClass(verb.gerund)"
                           v-html="highlightText(verb.gerund)"
                         >
@@ -3783,7 +3783,7 @@ onUnmounted(() => {
                         <span
                           v-else
                           @click.stop="openGoogleExamples(verb.pastParticiple, { verb: verb.verb, tenseKey: 'pastParticiple', tenseLabel: 'Participio' })"
-                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
+                          class="px-1.5 pt-[1px] pb-[3px] rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
                           :class="getSearchCellClass(verb.pastParticiple)"
                           v-html="highlightText(verb.pastParticiple)"
                         >
@@ -3931,7 +3931,7 @@ onUnmounted(() => {
                     <span
                       v-else
                       @click.stop="openGoogleExamples(tense.forms[p.idx], { verb: verb.verb, tenseKey: tense.key, tenseLabel: tense.label, pronounLabel: p.label })"
-                      class="inline-block px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold border min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
+                      class="inline-block px-1.5 pt-[1px] pb-[3px] sm:px-3 sm:pt-[3px] sm:pb-[5px] rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold border min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
                       :class="getSearchCellClass(tense.forms[p.idx])"
                       v-html="highlightText(tense.forms[p.idx] || '—')"
                     >

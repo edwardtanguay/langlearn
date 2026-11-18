@@ -112,7 +112,7 @@
 		- make the appearance of the "text copied" brighter and the animation/fade snappier
 			- and when clicking, give a "quick pulse" of the whole area to show the user that it was clicked and did something
 		----------------------------------
-	- ,, langacts008
+	- x langacts008
 		----------------------------------
 		## Spanish and Italian Verb activities
 		
@@ -122,16 +122,24 @@
 		
 		## Spanish Subjuntive activity
 		
-		- when clicking the two spanish text areas to give a "quick pulse" of the whole area, make it just a little movement (enlarging/shrinking), but very little and otherwise no change, e.g. no color change
+		- x when clicking the two spanish text areas to give a "quick pulse" of the whole area, make it just a little movement (enlarging/shrinking), but very little and otherwise no change, e.g. no color change
 		----------------------------------
 	- ,, langacts008
 		----------------------------------
 		## Spanish and Italian Verb activities
 		
-		- in the filter area, make the small outline around the "verbs to show" area 1px smaller, but as white as possible, and make the left corners top/bottom square like the ones on the right
-		- the verbs in the verb tables, e.g. espero, esperas, etc. are all not vertically centered, move themp up 1px inside their pill
-		- when searching, for words that have partial text found in them, change their pill border to the language color
+		- x in the filter area, make the small outline around the "verbs to show" area 1px smaller, but as white as possible, and make the left corners top/bottom square like the ones on the right
+		- x the verbs in the verb tables, e.g. espero, esperas, etc. (see screenshot) are all not vertically centered, move themp up 1px inside their pill
+		- x when searching, for words that have partial text found in them, change their pill border to the language color
 		----------------------------------
+	- .. langacts009
+		----------------------------------
+		## Spanish and Italian Verb activities
+		
+		- in the filter area, make the small outline around the "verbs to show" a bit dimmer
+		- when searching, for words that have partial text found in them, change their pill border to the language color
+			- for instance, if you search for "vamo" then "vivamos" should have "vamo" red and its pill border should be red
+		
 		
 		
 		
