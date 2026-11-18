@@ -1092,4 +1092,8 @@
 	
 - app todos
 	- Enabled users to see activities and links for their own language, so a user who has a mother language listed as "Spanish" is now able to see Spanish links on the links page, and can see the Spanish Verbs activity on the activity page.
-			
+- Presente de subjuntivo vs. Imperfecto de subjuntivo
+	- presente de subjuntivo
+		- actions in the present or future that are uncertain, desired, doubted, recommended
+		- 
+	- imperfecto de subjuntivo

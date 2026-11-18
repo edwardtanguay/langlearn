@@ -2302,13 +2302,6 @@ onUnmounted(() => {
           <h1 class="!mb-0 text-lg font-black text-gray-900 dark:text-white tracking-tight">
             <span class="text-[#194d19] dark:text-[#4ade80]">Italian Verbs</span>
           </h1>
-          <NuxtLink
-            to="/activities/spanish-verbs"
-            class="ml-0.5 text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
-            title="Go to Spanish Verbs"
-          >
-            Spanish verbs
-          </NuxtLink>
         </div>
       </div>
 
@@ -2436,13 +2429,6 @@ onUnmounted(() => {
           <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
             <span class="text-[#194d19] dark:text-[#4ade80]">Italian Verbs</span>
           </h1>
-          <NuxtLink
-            to="/activities/spanish-verbs"
-            class="ml-1 text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
-            title="Go to Spanish Verbs"
-          >
-            Spanish verbs
-          </NuxtLink>
         </div>
       </div>
 

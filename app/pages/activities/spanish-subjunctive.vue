@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { ArrowLeftIcon, ArrowRightIcon, ArrowsRightLeftIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ArrowLeftIcon, ArrowRightIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import rawSubjunctiveItems from '../../../data-parsed/subjunctive-items.json'
 
 interface SubjunctiveItem {
@@ -10,6 +10,13 @@ interface SubjunctiveItem {
   subjunctive: string
 }
 
+interface StoredSubjunctiveState {
+  counts: Record<string, number>
+  inProgressKey: string | null
+}
+
+const STORAGE_KEY = 'langlearn-spanish-subjunctive-v1'
+
 useHead({
   title: 'LangLearn - Spanish Subjunctive',
   meta: [
@@ -18,72 +25,190 @@ useHead({
 })
 
 const baseItems = rawSubjunctiveItems as SubjunctiveItem[]
-const isShuffled = ref(false)
-const items = ref<SubjunctiveItem[]>([...baseItems])
-const currentIndex = ref(0)
-// 0 = English, 1 = Spanish + covered Indicative, 2 = Spanish + Indicative + covered Subjunctive, 3 = all revealed
-const revealStep = ref<0 | 1 | 2 | 3>(0)
+const testedCounts = ref<Record<string, number>>({})
+const inProgressKey = ref<string | null>(null)
+const isStatsLoading = ref(true)
+let statsLoadingTimer: ReturnType<typeof setTimeout> | null = null
 
-const currentItem = computed(() => items.value[currentIndex.value] || null)
+const history = ref<SubjunctiveItem[]>([])
+const historyIndex = ref(0)
+// 0 = English, 1 = +Spanish, 2 = +Indicative, 3 = +Subjunctive
+const revealStep = ref<0 | 1 | 2 | 3>(0)
+const hasRecordedCurrentPresentation = ref(false)
+
+const currentItem = computed(() => history.value[historyIndex.value] || null)
+const canGoPrev = computed(() => historyIndex.value > 0)
 const showAllTable = ref(false)
-const rotatedShowAllItems = computed(() => {
-  if (items.value.length === 0) return []
-  const idx = currentIndex.value % items.value.length
-  return [...items.value.slice(idx), ...items.value.slice(0, idx)]
+
+function getItemKey(item: SubjunctiveItem): string {
+  return `${item.spanish}::${item.english}`
+}
+
+function getTestedCount(item: SubjunctiveItem): number {
+  return testedCounts.value[getItemKey(item)] ?? 0
+}
+
+const testedUniqueCount = computed(() =>
+  baseItems.filter(item => getTestedCount(item) > 0).length
+)
+
+const orderedShowAllItems = computed(() => {
+  if (!currentItem.value) return baseItems
+  const activeKey = getItemKey(currentItem.value)
+  const rest = baseItems.filter(item => getItemKey(item) !== activeKey)
+  return [currentItem.value, ...rest]
+})
+
+function saveState() {
+  if (!import.meta.client) return
+  try {
+    const payload: StoredSubjunctiveState = {
+      counts: testedCounts.value,
+      inProgressKey: inProgressKey.value
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
+  } catch {
+    // Ignore storage quota or private mode errors
+  }
+}
+
+function loadState(): StoredSubjunctiveState {
+  if (!import.meta.client) return { counts: {}, inProgressKey: null }
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return { counts: {}, inProgressKey: null }
+    const parsed = JSON.parse(raw) as Partial<StoredSubjunctiveState>
+    const counts: Record<string, number> = {}
+    if (parsed.counts && typeof parsed.counts === 'object') {
+      for (const [k, v] of Object.entries(parsed.counts)) {
+        if (typeof v === 'number' && Number.isFinite(v) && v >= 0) {
+          counts[k] = Math.floor(v)
+        }
+      }
+    }
+    const resumeKey = typeof parsed.inProgressKey === 'string' ? parsed.inProgressKey : null
+    return { counts, inProgressKey: resumeKey }
+  } catch {
+    return { counts: {}, inProgressKey: null }
+  }
+}
+
+function pickLeastTestedItem(excludeKey?: string): SubjunctiveItem | null {
+  if (baseItems.length === 0) return null
+  let minCount = Infinity
+  for (const item of baseItems) {
+    const c = getTestedCount(item)
+    if (c < minCount) minCount = c
+  }
+  let candidates = baseItems.filter(item => getTestedCount(item) === minCount)
+  if (excludeKey && candidates.length > 1) {
+    candidates = candidates.filter(item => getItemKey(item) !== excludeKey)
+  }
+  const idx = Math.floor(Math.random() * candidates.length)
+  return candidates[idx] ?? null
+}
+
+onMounted(() => {
+  const loaded = loadState()
+  testedCounts.value = loaded.counts
+  inProgressKey.value = loaded.inProgressKey
+
+  let initialItem: SubjunctiveItem | null = null
+  if (loaded.inProgressKey) {
+    initialItem = baseItems.find(item => getItemKey(item) === loaded.inProgressKey) ?? null
+  }
+  if (!initialItem) {
+    initialItem = pickLeastTestedItem()
+  }
+  if (initialItem) {
+    history.value = [initialItem]
+    historyIndex.value = 0
+  }
+
+  statsLoadingTimer = setTimeout(() => {
+    isStatsLoading.value = false
+  }, 250)
+})
+
+onUnmounted(() => {
+  if (statsLoadingTimer) {
+    clearTimeout(statsLoadingTimer)
+  }
 })
 
 function openGoogleExamples(phrase: string) {
   if (!phrase || !import.meta.client) return
-  const query = `give me three Spanish sentences using "${phrase}" with English translations`
+  const query = `create three Spanish example sentences using "${phrase}", each of the sentences with an English translation`
   window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank')
 }
 
 function handleCardClick() {
+  if (!currentItem.value) return
   if (typeof window !== 'undefined' && window.getSelection()?.toString().trim()) {
     return
   }
   if (revealStep.value < 3) {
-    revealStep.value = (revealStep.value + 1) as 0 | 1 | 2 | 3
+    const nextStep = (revealStep.value + 1) as 0 | 1 | 2 | 3
+    revealStep.value = nextStep
+    const key = getItemKey(currentItem.value)
+    if (nextStep === 1 || nextStep === 2) {
+      inProgressKey.value = key
+      saveState()
+    } else if (nextStep === 3) {
+      if (!hasRecordedCurrentPresentation.value) {
+        testedCounts.value = {
+          ...testedCounts.value,
+          [key]: (testedCounts.value[key] ?? 0) + 1
+        }
+        hasRecordedCurrentPresentation.value = true
+      }
+      inProgressKey.value = null
+      saveState()
+    }
   } else {
     revealStep.value = 0
   }
 }
 
-function nextItem() {
-  if (items.value.length === 0) return
-  currentIndex.value = (currentIndex.value + 1) % items.value.length
+function resetPresentationState() {
   revealStep.value = 0
+  hasRecordedCurrentPresentation.value = false
+  if (inProgressKey.value !== null) {
+    inProgressKey.value = null
+    saveState()
+  }
+}
+
+function nextItem() {
+  if (baseItems.length === 0) return
+  resetPresentationState()
+  if (historyIndex.value < history.value.length - 1) {
+    historyIndex.value++
+    return
+  }
+  const excludeKey = currentItem.value ? getItemKey(currentItem.value) : undefined
+  const next = pickLeastTestedItem(excludeKey)
+  if (next) {
+    history.value.push(next)
+    historyIndex.value = history.value.length - 1
+  }
 }
 
 function prevItem() {
-  if (items.value.length === 0) return
-  currentIndex.value = (currentIndex.value - 1 + items.value.length) % items.value.length
-  revealStep.value = 0
+  if (!canGoPrev.value) return
+  resetPresentationState()
+  historyIndex.value--
 }
 
-function selectFromList(rotatedIdx: number) {
-  if (items.value.length === 0) return
-  currentIndex.value = (currentIndex.value + rotatedIdx) % items.value.length
-  revealStep.value = 0
+function selectFromList(item: SubjunctiveItem) {
+  resetPresentationState()
+  if (!currentItem.value || getItemKey(currentItem.value) !== getItemKey(item)) {
+    history.value = [...history.value.slice(0, historyIndex.value + 1), item]
+    historyIndex.value = history.value.length - 1
+  }
   if (import.meta.client) {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-}
-
-function toggleShuffle() {
-  isShuffled.value = !isShuffled.value
-  if (isShuffled.value) {
-    const copy = [...baseItems]
-    for (let i = copy.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[copy[i], copy[j]] = [copy[j]!, copy[i]!]
-    }
-    items.value = copy
-  } else {
-    items.value = [...baseItems]
-  }
-  currentIndex.value = 0
-  revealStep.value = 0
 }
 </script>
 
@@ -104,31 +229,15 @@ function toggleShuffle() {
           <h1 class="text-xl sm:text-2xl font-black text-[#be185d] dark:text-[#f43f5e] tracking-tight">
             Spanish Subjunctive
           </h1>
-          <NuxtLink
-            to="/activities/spanish-verbs"
-            class="text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
-            title="Go to Spanish Verbs"
-          >
-            Spanish verbs
-          </NuxtLink>
         </div>
       </div>
 
       <div class="flex items-center gap-3">
-        <button
-          type="button"
-          @click="toggleShuffle"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all cursor-pointer select-none"
-          :class="isShuffled
-            ? 'bg-[#be185d] text-white border-[#be185d]'
-            : 'bg-gray-800/70 text-gray-200 border-gray-700 hover:bg-gray-700'"
+        <span
+          class="text-xs font-mono font-bold text-gray-300 bg-gray-800/80 px-2.5 py-1.5 rounded-lg border border-gray-700 transition-all duration-300"
+          :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
         >
-          <ArrowsRightLeftIcon class="w-3.5 h-3.5" />
-          <span>{{ isShuffled ? 'Shuffled' : 'In Order' }}</span>
-        </button>
-
-        <span class="text-xs font-mono font-bold text-gray-300 bg-gray-800/80 px-2.5 py-1.5 rounded-lg border border-gray-700">
-          {{ items.length > 0 ? currentIndex + 1 : 0 }} / {{ items.length }}
+          {{ isStatsLoading ? `-- / ${baseItems.length} tested` : `${testedUniqueCount} / ${baseItems.length} tested` }}
         </span>
       </div>
     </div>
@@ -137,21 +246,32 @@ function toggleShuffle() {
     <div
       v-if="currentItem"
       @click="handleCardClick"
-      class="min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/60 hover:border-[#be185d] p-6 sm:p-10 shadow-lg flex flex-col justify-center items-center text-center cursor-pointer transition-all space-y-6"
+      class="relative min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/60 hover:border-[#be185d] p-6 sm:p-10 shadow-lg flex flex-col justify-center items-center text-center cursor-pointer transition-all"
     >
-      <!-- Step 0: English -->
-      <div v-if="revealStep === 0" class="space-y-3">
-        <div class="text-[11px] font-mono uppercase tracking-widest text-gray-400">
-          English
-        </div>
-        <div class="text-2xl sm:text-3xl font-black text-white leading-snug">
-          {{ currentItem.english }}
-        </div>
+      <div
+        class="absolute bottom-3 right-4 text-[11px] font-mono text-gray-400/50 transition-all duration-300 pointer-events-none select-none"
+        :class="isStatsLoading ? 'blur-[4px] opacity-40' : ''"
+      >
+        {{ isStatsLoading ? 'tested --×' : `tested ${getTestedCount(currentItem)}×` }}
       </div>
 
-      <!-- Steps 1..3: Spanish + Indicative + Subjunctive -->
-      <div v-else class="w-full max-w-xl space-y-5">
+      <div class="w-full max-w-xl space-y-5">
+        <!-- 1. English (always visible) -->
         <div class="space-y-1">
+          <div class="text-[11px] font-mono uppercase tracking-widest text-gray-400">
+            English
+          </div>
+          <div class="text-2xl sm:text-3xl font-black text-white leading-snug">
+            {{ currentItem.english }}
+          </div>
+        </div>
+
+        <!-- 2. Spanish (revealed at step 1+) -->
+        <div
+          class="pt-4 border-t border-gray-700/80 space-y-1 transition-opacity duration-200"
+          :class="revealStep >= 1 ? 'opacity-100' : 'opacity-0 pointer-events-none select-none'"
+          :aria-hidden="revealStep < 1"
+        >
           <div class="text-[11px] font-mono uppercase tracking-widest text-[#f43f5e]">
             Spanish
           </div>
@@ -160,8 +280,12 @@ function toggleShuffle() {
           </div>
         </div>
 
-        <!-- Indicative row (shown from step 1+) -->
-        <div class="pt-4 border-t border-gray-700/80 text-left space-y-1.5">
+        <!-- 3. Indicative (revealed at step 2+) -->
+        <div
+          class="pt-4 border-t border-gray-700/80 text-left space-y-1.5 transition-opacity duration-200"
+          :class="revealStep >= 2 ? 'opacity-100' : 'opacity-0 pointer-events-none select-none'"
+          :aria-hidden="revealStep < 2"
+        >
           <div class="flex items-center gap-2">
             <span class="text-xs font-mono uppercase tracking-wider text-gray-400">
               Indicative:
@@ -177,27 +301,16 @@ function toggleShuffle() {
               <span>3 examples</span>
             </button>
           </div>
-          <div
-            v-if="revealStep < 2"
-            class="relative overflow-hidden rounded-lg bg-gray-900/50 px-3.5 py-2 select-none pointer-events-none"
-          >
-            <span class="block text-base sm:text-lg font-semibold text-gray-300 blur-[4px] opacity-55">
-              algo interesante pasa cada día aquí
-            </span>
-            <div class="absolute inset-0 bg-gradient-to-r from-gray-800/35 via-gray-700/25 to-gray-800/35 backdrop-blur-[1px]"></div>
-          </div>
-          <div
-            v-else
-            class="text-base sm:text-lg font-semibold text-gray-100 bg-gray-800/80 px-3.5 py-2 rounded-lg border border-gray-700"
-          >
+          <div class="text-base sm:text-lg font-semibold text-gray-100 bg-gray-800/80 px-3.5 py-2 rounded-lg border border-gray-700">
             {{ currentItem.indicative }}
           </div>
         </div>
 
-        <!-- Subjunctive row (shown from step 2+) -->
+        <!-- 4. Subjunctive (revealed at step 3) -->
         <div
-          v-if="revealStep >= 2"
-          class="pt-2 text-left space-y-1.5"
+          class="pt-2 text-left space-y-1.5 transition-opacity duration-200"
+          :class="revealStep >= 3 ? 'opacity-100' : 'opacity-0 pointer-events-none select-none'"
+          :aria-hidden="revealStep < 3"
         >
           <div class="flex items-center gap-2">
             <span class="text-xs font-mono uppercase tracking-wider text-[#f43f5e]">
@@ -214,31 +327,26 @@ function toggleShuffle() {
               <span>3 examples</span>
             </button>
           </div>
-          <div
-            v-if="revealStep < 3"
-            class="relative overflow-hidden rounded-lg bg-[#be185d]/10 px-3.5 py-2 select-none pointer-events-none"
-          >
-            <span class="block text-base sm:text-lg font-bold text-rose-200 blur-[4px] opacity-55">
-              espero que todo salga muy bien hoy
-            </span>
-            <div class="absolute inset-0 bg-gradient-to-r from-[#be185d]/15 via-gray-800/30 to-[#be185d]/15 backdrop-blur-[1px]"></div>
-          </div>
-          <div
-            v-else
-            class="text-base sm:text-lg font-bold text-white bg-[#be185d]/25 px-3.5 py-2 rounded-lg border border-[#be185d]/60"
-          >
+          <div class="text-base sm:text-lg font-bold text-white bg-[#be185d]/25 px-3.5 py-2 rounded-lg border border-[#be185d]/60">
             {{ currentItem.subjunctive }}
           </div>
         </div>
       </div>
     </div>
 
+    <div
+      v-else
+      class="min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/30 p-6 sm:p-10 shadow-lg"
+    />
+
     <!-- Navigation Buttons -->
     <div class="flex items-center justify-between gap-4">
       <button
         type="button"
         @click="prevItem"
-        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 transition-all cursor-pointer select-none"
+        :disabled="!canGoPrev"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold bg-gray-800 text-white border border-gray-700 transition-all select-none"
+        :class="canGoPrev ? 'hover:bg-gray-700 cursor-pointer' : 'opacity-40 cursor-not-allowed'"
       >
         <ArrowLeftIcon class="w-4 h-4" />
         <span>Previous</span>
@@ -270,20 +378,21 @@ function toggleShuffle() {
         v-if="showAllTable"
         class="overflow-hidden rounded-2xl border border-gray-700/80 bg-[#182030] shadow-lg"
       >
-        <!-- Desktop 3-column table -->
+        <!-- Desktop table -->
         <table class="hidden sm:table w-full text-left border-collapse">
           <thead>
             <tr class="border-b border-gray-700/80 bg-gray-900/50 text-[11px] font-mono uppercase tracking-wider text-gray-400">
               <th class="px-5 py-3">Spanish</th>
               <th class="px-5 py-3">English</th>
+              <th class="px-5 py-3 text-right">Tested</th>
               <th class="px-5 py-3 text-right">Examples</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-800/80">
             <tr
-              v-for="(item, idx) in rotatedShowAllItems"
-              :key="item.spanish + idx"
-              @click="selectFromList(idx)"
+              v-for="(item, idx) in orderedShowAllItems"
+              :key="getItemKey(item)"
+              @click="selectFromList(item)"
               class="cursor-pointer transition-colors"
               :class="idx === 0 ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : 'hover:bg-gray-800/60'"
             >
@@ -292,6 +401,14 @@ function toggleShuffle() {
               </td>
               <td class="px-5 py-3 text-sm sm:text-base text-gray-300">
                 {{ item.english }}
+              </td>
+              <td class="px-5 py-3 text-right whitespace-nowrap">
+                <span
+                  class="text-xs font-mono text-gray-400/70 transition-all duration-300"
+                  :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
+                >
+                  {{ isStatsLoading ? '--×' : `${getTestedCount(item)}×` }}
+                </span>
               </td>
               <td class="px-5 py-3 text-right whitespace-nowrap">
                 <button
@@ -311,9 +428,9 @@ function toggleShuffle() {
         <!-- Mobile stacked layout -->
         <div class="sm:hidden divide-y divide-gray-800/80">
           <div
-            v-for="(item, idx) in rotatedShowAllItems"
-            :key="item.spanish + idx"
-            @click="selectFromList(idx)"
+            v-for="(item, idx) in orderedShowAllItems"
+            :key="getItemKey(item)"
+            @click="selectFromList(item)"
             class="px-4 py-3 space-y-1.5 cursor-pointer transition-colors"
             :class="idx === 0 ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : 'hover:bg-gray-800/60'"
           >
@@ -321,15 +438,23 @@ function toggleShuffle() {
               <div class="text-sm font-bold text-white leading-snug">
                 {{ item.spanish }}
               </div>
-              <button
-                type="button"
-                @click.stop="openGoogleExamples(item.spanish)"
-                title="Look up 3 examples in Google Search"
-                class="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
-              >
-                <MagnifyingGlassIcon class="w-3 h-3" />
-                <span>3 examples</span>
-              </button>
+              <div class="shrink-0 flex items-center gap-2">
+                <span
+                  class="text-[11px] font-mono text-gray-400/70 transition-all duration-300"
+                  :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
+                >
+                  {{ isStatsLoading ? '--×' : `${getTestedCount(item)}×` }}
+                </span>
+                <button
+                  type="button"
+                  @click.stop="openGoogleExamples(item.spanish)"
+                  title="Look up 3 examples in Google Search"
+                  class="inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
+                >
+                  <MagnifyingGlassIcon class="w-3 h-3" />
+                  <span>3 examples</span>
+                </button>
+              </div>
             </div>
             <div class="text-xs text-gray-300 leading-snug">
               {{ item.english }}
