@@ -500,6 +500,10 @@
 	- Gracias por la explicación.
 - subjunctive trigger phrases
 	- quiero que
+	- espero que
+	- me alegra que
+	- me molesta que
+	- dudo que
 	- it is possible that
 		- puede que
 			- llueve mañana por la tarde

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { ArrowLeftIcon, ArrowRightIcon, ArrowPathIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
+import { ArrowLeftIcon, ArrowRightIcon, ArrowPathIcon, ArrowUturnLeftIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import rawSubjunctiveItems from '../../../data-parsed/subjunctive-items.json'
 
 interface SubjunctiveItem {
@@ -8,6 +8,7 @@ interface SubjunctiveItem {
   spanish: string
   indicative: string
   subjunctive: string
+  todo?: boolean
 }
 
 interface StoredSubjunctiveState {
@@ -31,10 +32,13 @@ useHead({
   ]
 })
 
-const baseItems = rawSubjunctiveItems as SubjunctiveItem[]
+const allItems = rawSubjunctiveItems as SubjunctiveItem[]
+const todoItems = allItems.filter(item => item.todo)
+const baseItems = allItems.filter(item => !item.todo)
 const testedCounts = ref<Record<string, number>>({})
 const inProgressKey = ref<string | null>(null)
 const isStatsLoading = ref(true)
+const isConfirmingReset = ref(false)
 let statsLoadingTimer: ReturnType<typeof setTimeout> | null = null
 
 const history = ref<SubjunctiveItem[]>([])
@@ -47,6 +51,7 @@ const currentItem = computed(() => history.value[historyIndex.value] || null)
 const canGoPrev = computed(() => historyIndex.value > 0)
 const showAllTable = ref(false)
 const searchQuery = ref('')
+const searchInputRef = ref<HTMLInputElement | null>(null)
 
 function getItemKey(item: SubjunctiveItem): string {
   return `${item.spanish}::${item.english}`
@@ -119,15 +124,16 @@ const testedUniqueCount = computed(() =>
 )
 
 const orderedShowAllItems = computed(() => {
-  let ordered = baseItems
+  let orderedCards = baseItems
   if (currentItem.value) {
     const activeKey = getItemKey(currentItem.value)
     const rest = baseItems.filter(item => getItemKey(item) !== activeKey)
-    ordered = [currentItem.value, ...rest]
+    orderedCards = [currentItem.value, ...rest]
   }
+  const combined = [...todoItems, ...orderedCards]
   const normQuery = normalizeForSearch(searchQuery.value.trim())
-  if (!normQuery) return ordered
-  return ordered.filter(item =>
+  if (!normQuery) return combined
+  return combined.filter(item =>
     normalizeForSearch(item.spanish).includes(normQuery) ||
     normalizeForSearch(item.english).includes(normQuery)
   )
@@ -329,6 +335,7 @@ function reshuffleItem() {
 }
 
 function selectFromList(item: SubjunctiveItem) {
+  if (item.todo) return
   resetPresentationState()
   if (!currentItem.value || getItemKey(currentItem.value) !== getItemKey(item)) {
     history.value = [...history.value.slice(0, historyIndex.value + 1), item]
@@ -339,6 +346,21 @@ function selectFromList(item: SubjunctiveItem) {
   if (import.meta.client) {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+}
+
+async function toggleShowAllTable() {
+  showAllTable.value = !showAllTable.value
+  if (showAllTable.value && import.meta.client && window.innerWidth >= 640) {
+    await nextTick()
+    searchInputRef.value?.focus()
+  }
+}
+
+function confirmResetAll() {
+  testedCounts.value = {}
+  hasRecordedCurrentPresentation.value = false
+  isConfirmingReset.value = false
+  saveState()
 }
 </script>
 
@@ -362,13 +384,45 @@ function selectFromList(item: SubjunctiveItem) {
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         <span
           class="text-xs font-mono font-bold text-gray-300 bg-gray-800/80 px-2.5 py-1.5 rounded-lg border border-gray-700 transition-all duration-300"
           :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
         >
           {{ isStatsLoading ? `-- / ${baseItems.length} tested` : `${testedUniqueCount} / ${baseItems.length} tested` }}
         </span>
+
+        <template v-if="!isConfirmingReset">
+          <button
+            type="button"
+            @click="isConfirmingReset = true"
+            title="Reset testing status for all cards"
+            aria-label="Reset testing status for all cards"
+            class="p-1.5 rounded-lg text-gray-500 hover:text-red-400 hover:bg-gray-800/80 border border-transparent hover:border-gray-700 transition-colors cursor-pointer"
+          >
+            <ArrowUturnLeftIcon class="w-3.5 h-3.5" />
+          </button>
+        </template>
+        <div
+          v-else
+          class="flex items-center gap-2 text-xs bg-gray-900/90 border border-red-900/60 px-2.5 py-1 rounded-lg"
+        >
+          <span class="text-gray-300">Are you sure?</span>
+          <button
+            type="button"
+            @click="confirmResetAll"
+            class="text-red-400 hover:text-red-300 font-semibold underline cursor-pointer"
+          >
+            Yes
+          </button>
+          <button
+            type="button"
+            @click="isConfirmingReset = false"
+            class="text-gray-400 hover:text-white cursor-pointer"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
 
@@ -398,22 +452,22 @@ function selectFromList(item: SubjunctiveItem) {
 
         <!-- 2. Spanish (revealed at step 1+) -->
         <div
-          class="pt-4 border-t border-gray-700/80 space-y-1 transition-all duration-300"
-          :class="revealStep >= 1 ? 'blur-0 opacity-100' : 'blur-[8px] opacity-40 pointer-events-none select-none'"
+          class="pt-4 border-t border-gray-700/80 space-y-1 transition-all duration-150"
+          :class="revealStep >= 1 ? 'blur-0 opacity-100' : 'blur-[5px] opacity-50 pointer-events-none select-none'"
           :aria-hidden="revealStep < 1"
         >
-          <div class="text-[11px] font-mono uppercase tracking-widest text-[#f43f5e]">
+          <div class="text-[11px] font-mono uppercase tracking-widest text-white">
             Spanish
           </div>
-          <div class="text-2xl sm:text-3xl font-black text-white leading-snug">
+          <div class="text-2xl sm:text-3xl font-black text-[#f43f5e] leading-snug">
             {{ currentItem.spanish }}
           </div>
         </div>
 
         <!-- 3. Indicative (revealed at step 2+) -->
         <div
-          class="pt-4 border-t border-gray-700/80 text-left space-y-1.5 transition-all duration-300"
-          :class="revealStep >= 2 ? 'blur-0 opacity-100' : 'blur-[8px] opacity-40 pointer-events-none select-none'"
+          class="pt-4 border-t border-gray-700/80 text-left space-y-1.5 transition-all duration-150"
+          :class="revealStep >= 2 ? 'blur-0 opacity-100' : 'blur-[5px] opacity-50 pointer-events-none select-none'"
           :aria-hidden="revealStep < 2"
         >
           <div class="flex items-center gap-2">
@@ -431,19 +485,19 @@ function selectFromList(item: SubjunctiveItem) {
               <span>3 examples</span>
             </button>
           </div>
-          <div class="text-base sm:text-lg font-semibold text-gray-100 bg-gray-800/80 px-3.5 py-2 rounded-lg border border-gray-700">
+          <div class="text-base sm:text-lg font-semibold text-[#f43f5e] bg-gray-800/80 px-3.5 py-2 rounded-lg border border-gray-700">
             {{ currentItem.indicative }}
           </div>
         </div>
 
         <!-- 4. Subjunctive (revealed at step 3) -->
         <div
-          class="pt-2 text-left space-y-1.5 transition-all duration-300"
-          :class="revealStep >= 3 ? 'blur-0 opacity-100' : 'blur-[8px] opacity-40 pointer-events-none select-none'"
+          class="pt-2 text-left space-y-1.5 transition-all duration-150"
+          :class="revealStep >= 3 ? 'blur-0 opacity-100' : 'blur-[5px] opacity-50 pointer-events-none select-none'"
           :aria-hidden="revealStep < 3"
         >
           <div class="flex items-center gap-2">
-            <span class="text-xs font-mono uppercase tracking-wider text-[#f43f5e]">
+            <span class="text-xs font-mono uppercase tracking-wider text-white">
               Subjunctive:
             </span>
             <button
@@ -451,13 +505,13 @@ function selectFromList(item: SubjunctiveItem) {
               :tabindex="revealStep >= 3 ? 0 : -1"
               @click.stop="openGoogleExamples(currentItem.subjunctive)"
               title="Look up 3 examples in Google Search"
-              class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#be185d]/30 hover:bg-[#be185d]/50 text-white border border-[#be185d]/60 text-[10px] font-mono transition-colors cursor-pointer"
+              class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
             >
               <MagnifyingGlassIcon class="w-3 h-3" />
               <span>3 examples</span>
             </button>
           </div>
-          <div class="text-base sm:text-lg font-bold text-white bg-[#be185d]/25 px-3.5 py-2 rounded-lg border border-[#be185d]/60">
+          <div class="text-base sm:text-lg font-bold text-[#f43f5e] bg-[#be185d]/25 px-3.5 py-2 rounded-lg border border-[#be185d]/60">
             {{ currentItem.subjunctive }}
           </div>
         </div>
@@ -509,10 +563,10 @@ function selectFromList(item: SubjunctiveItem) {
       <div class="flex justify-center">
         <button
           type="button"
-          @click="showAllTable = !showAllTable"
+          @click="toggleShowAllTable"
           class="text-sm font-semibold text-white/80 hover:text-white underline underline-offset-4 cursor-pointer transition-colors"
         >
-          {{ showAllTable ? 'hide list' : 'Show list of upcoming cards' }}
+          {{ showAllTable ? 'hide list of upcoming cards' : 'Show list of upcoming cards' }}
         </button>
       </div>
 
@@ -525,17 +579,18 @@ function selectFromList(item: SubjunctiveItem) {
           <div class="relative flex items-center">
             <MagnifyingGlassIcon class="w-4 h-4 text-gray-400 absolute left-3 pointer-events-none" />
             <input
+              ref="searchInputRef"
               v-model="searchQuery"
               type="text"
               placeholder="Search Spanish or English triggers (e.g. a menos que)..."
-              class="w-full pl-9 pr-9 py-2 rounded-lg bg-gray-900/80 border border-gray-700 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#be185d]"
+              class="w-full pl-9 pr-11 py-2 rounded-lg bg-gray-900/80 border border-gray-700 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#be185d]"
             />
             <button
               v-if="searchQuery"
               type="button"
               @click="searchQuery = ''"
               aria-label="Clear search"
-              class="absolute right-2.5 p-0.5 text-gray-400 hover:text-white cursor-pointer"
+              class="absolute right-2 w-6 h-6 flex items-center justify-center rounded bg-gray-600/80 hover:bg-gray-500 text-gray-100 hover:text-white transition-colors cursor-pointer"
             >
               <XMarkIcon class="w-4 h-4" />
             </button>
@@ -563,32 +618,44 @@ function selectFromList(item: SubjunctiveItem) {
             <tr
               v-for="item in orderedShowAllItems"
               :key="getItemKey(item)"
-              @click="selectFromList(item)"
-              class="cursor-pointer transition-colors"
-              :class="currentItem && getItemKey(item) === getItemKey(currentItem) ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : 'hover:bg-gray-800/60'"
+              @click="!item.todo && selectFromList(item)"
+              class="transition-colors"
+              :class="item.todo
+                ? 'bg-amber-500/5 cursor-default'
+                : currentItem && getItemKey(item) === getItemKey(currentItem)
+                  ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d] cursor-pointer'
+                  : 'hover:bg-gray-800/60 cursor-pointer'"
             >
               <td class="px-5 py-3 text-sm sm:text-base font-normal">
                 <template v-if="searchQuery.trim()">
                   <span
                     v-for="(seg, sIdx) in getHighlightSegments(item.spanish, searchQuery)"
                     :key="sIdx"
-                    :class="seg.match ? 'text-white' : 'text-white/70'"
+                    :class="seg.match ? 'font-bold text-white bg-white/15 rounded px-0.5' : 'text-white/50'"
                   >{{ seg.text }}</span>
                 </template>
                 <span v-else class="text-gray-300">{{ item.spanish }}</span>
               </td>
               <td class="px-5 py-3 text-sm sm:text-base font-normal">
-                <template v-if="searchQuery.trim()">
+                <span
+                  v-if="item.todo"
+                  class="inline-block px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/40"
+                >
+                  todo
+                </span>
+                <template v-else-if="searchQuery.trim()">
                   <span
                     v-for="(seg, sIdx) in getHighlightSegments(item.english, searchQuery)"
                     :key="sIdx"
-                    :class="seg.match ? 'text-white' : 'text-white/70'"
+                    :class="seg.match ? 'font-bold text-white bg-white/15 rounded px-0.5' : 'text-white/50'"
                   >{{ seg.text }}</span>
                 </template>
                 <span v-else class="text-gray-300">{{ item.english }}</span>
               </td>
               <td class="px-5 py-3 text-right whitespace-nowrap">
+                <span v-if="item.todo" class="text-xs font-mono text-gray-500">—</span>
                 <span
+                  v-else
                   class="text-xs font-mono text-gray-400/70 transition-all duration-300"
                   :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
                 >
@@ -597,6 +664,7 @@ function selectFromList(item: SubjunctiveItem) {
               </td>
               <td class="px-5 py-3 text-right whitespace-nowrap">
                 <button
+                  v-if="!item.todo"
                   type="button"
                   @click.stop="openGoogleExamples(item.spanish)"
                   title="Look up 3 examples in Google Search"
@@ -618,9 +686,13 @@ function selectFromList(item: SubjunctiveItem) {
           <div
             v-for="item in orderedShowAllItems"
             :key="getItemKey(item)"
-            @click="selectFromList(item)"
-            class="px-4 py-3 space-y-1.5 cursor-pointer transition-colors"
-            :class="currentItem && getItemKey(item) === getItemKey(currentItem) ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d]' : 'hover:bg-gray-800/60'"
+            @click="!item.todo && selectFromList(item)"
+            class="px-4 py-3 space-y-1.5 transition-colors"
+            :class="item.todo
+              ? 'bg-amber-500/5 cursor-default'
+              : currentItem && getItemKey(item) === getItemKey(currentItem)
+                ? 'bg-[#be185d]/20 border-l-4 border-l-[#be185d] cursor-pointer'
+                : 'hover:bg-gray-800/60 cursor-pointer'"
           >
             <div class="flex items-start justify-between gap-2">
               <div class="text-sm font-normal leading-snug">
@@ -628,35 +700,43 @@ function selectFromList(item: SubjunctiveItem) {
                   <span
                     v-for="(seg, sIdx) in getHighlightSegments(item.spanish, searchQuery)"
                     :key="sIdx"
-                    :class="seg.match ? 'text-white' : 'text-white/70'"
+                    :class="seg.match ? 'font-bold text-white bg-white/15 rounded px-0.5' : 'text-white/50'"
                   >{{ seg.text }}</span>
                 </template>
                 <span v-else class="text-gray-300">{{ item.spanish }}</span>
               </div>
               <div class="shrink-0 flex items-center gap-2">
                 <span
-                  class="text-[11px] font-mono text-gray-400/70 transition-all duration-300"
-                  :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
+                  v-if="item.todo"
+                  class="inline-block px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/40"
                 >
-                  {{ isStatsLoading ? '--×' : `${getTestedCount(item)}×` }}
+                  todo
                 </span>
-                <button
-                  type="button"
-                  @click.stop="openGoogleExamples(item.spanish)"
-                  title="Look up 3 examples in Google Search"
-                  class="inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
-                >
-                  <MagnifyingGlassIcon class="w-3 h-3" />
-                  <span>3 examples</span>
-                </button>
+                <template v-else>
+                  <span
+                    class="text-[11px] font-mono text-gray-400/70 transition-all duration-300"
+                    :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
+                  >
+                    {{ isStatsLoading ? '--×' : `${getTestedCount(item)}×` }}
+                  </span>
+                  <button
+                    type="button"
+                    @click.stop="openGoogleExamples(item.spanish)"
+                    title="Look up 3 examples in Google Search"
+                    class="inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
+                  >
+                    <MagnifyingGlassIcon class="w-3 h-3" />
+                    <span>3 examples</span>
+                  </button>
+                </template>
               </div>
             </div>
-            <div class="text-xs font-normal leading-snug">
+            <div v-if="!item.todo" class="text-xs font-normal leading-snug">
               <template v-if="searchQuery.trim()">
                 <span
                   v-for="(seg, sIdx) in getHighlightSegments(item.english, searchQuery)"
                   :key="sIdx"
-                  :class="seg.match ? 'text-white' : 'text-white/70'"
+                  :class="seg.match ? 'font-bold text-white bg-white/15 rounded px-0.5' : 'text-white/50'"
                 >{{ seg.text }}</span>
               </template>
               <span v-else class="text-gray-300">{{ item.english }}</span>

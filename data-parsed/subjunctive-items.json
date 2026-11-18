@@ -1,5 +1,12 @@
 [
   {
+    "english": "",
+    "spanish": "quiero que",
+    "indicative": "",
+    "subjunctive": "",
+    "todo": true
+  },
+  {
     "english": "it is possible that",
     "spanish": "puede que",
     "indicative": "llueve mañana por la tarde",
