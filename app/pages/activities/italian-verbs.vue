@@ -629,9 +629,9 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-[#194d19]/40 text-white border-[#4ade80]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
+    return 'bg-gray-100 dark:bg-gray-800 text-[#194d19] dark:text-[#4ade80] !border-[#194d19] dark:!border-[#4ade80] shadow-[0_0_10px_rgba(255,255,255,0.4)] animate-pulse-bright relative z-10'
   }
-  return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 !border-[#194d19] dark:!border-[#4ade80]'
+  return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 !border-[#194d19]/50 dark:!border-[#4ade80]/50'
 }
 
 interface StudyRow {
@@ -4099,10 +4099,10 @@ onUnmounted(() => {
 
 @keyframes pulse-bright {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(253, 224, 71, 0.55), 0 0 0 2px rgba(253, 224, 71, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.58);
   }
   50% {
-    box-shadow: 0 0 18px rgba(254, 240, 138, 0.8), 0 0 0 3px rgba(254, 240, 138, 0.7);
+    box-shadow: 0 0 19px rgba(255, 255, 255, 0.72);
   }
 }
 
