@@ -629,7 +629,7 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-[#194d19] text-white border-[#4ade80]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
+    return 'bg-[#194d19]/45 text-white border-[#4ade80]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
   }
   return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 !border-[#194d19] dark:!border-[#4ade80]'
 }
@@ -2540,7 +2540,7 @@ onUnmounted(() => {
               </button>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-l-none rounded-r-xl border border-gray-300 dark:border-white/50">
+          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-l-none rounded-r-xl border border-gray-300 dark:border-white/25">
             <button
               v-for="v in alphabetizedVerbs"
               :key="v.verb"
@@ -2730,7 +2730,7 @@ onUnmounted(() => {
                 </button>
               </div>
             </div>
-            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-l-none rounded-r-xl border border-gray-300 dark:border-white/50">
+            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-l-none rounded-r-xl border border-gray-300 dark:border-white/25">
               <button
                 v-for="v in alphabetizedVerbs"
                 :key="v.verb"
