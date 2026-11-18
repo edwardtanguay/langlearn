@@ -15,7 +15,7 @@
 			- x this insures that the user always has a new card to test and that they test the cards evenly
 		- x but if a user clicked halfway through a card (not all the way to where they see the subjunctive), then the next time they come to the page, show this card from the top again, e.g. showing English 
 		----------------------------------
-	- ,, langacts002
+	- x langacts002
 		----------------------------------
 		## Spanish Subjuntive activity
 		
@@ -32,6 +32,27 @@
 		- where the "in order / shuffled" button was, but a button "reshuffle" which chooses another card that has been taken the same amount of times
 		- change "tested 0x" to "tested 0 times"
 		----------------------------------
+	- x langacts002
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- on desktop view, when opening the bottom list to show, focus the cursor in the search
+		- make the "x" in the search box a visible square area with a light grey background so it looks easier to click
+		- make all the blurs a little less strong so that it is more evident how the 
+		- make the blur-to-clear speed a bit snappier
+		- let's keep the card abiding by the rules "text in Spanish is red"
+			- change the word "Spanish" to white
+			- change "SUBJUNCTIVE:" to white and the "3 examples" after it also white
+			- then the actual Spanish phrases for indicative and subjunctive should be red
+		- to the right of the "2/65 tested" put a small button with a "reset" icon
+			- give it a "are you sure" step, and if yes, then reset the testing status for all cards
+		- change "hide list" to "hide list of upcoming cards" to make it easier to click
+		- when searching, make the found text a bit more highlighted/pronounced/bold
+		- "npm run pd" script
+			- when parsing the data\bits\es-learnbits.txt file everything under "subjunctive trigger phrases"
+				- if there is line that has no children, e.g. "- quiero que" then treat this as a "entry to create" so create the other three lines for it, save the file, and process it so that item is in the JSON file
+		----------------------------------
+		
 
 
 

@@ -499,6 +499,7 @@
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
+	- quiero que
 	- it is possible that
 		- puede que
 			- llueve mañana por la tarde
@@ -759,10 +760,6 @@
 		- tener miedo de que
 			- mañana lloverá
 				- tengo miedo de que llueva mañana
-	- PROCESS
-		- Quiero que sepas que
-		- que seáis muy felices
-		- que te mejores
 - moving on words
 	- gracias por el consejo, no lo sabía
 	- perfecto, pasemos a lo siguiente
@@ -1094,6 +1091,6 @@
 	- Enabled users to see activities and links for their own language, so a user who has a mother language listed as "Spanish" is now able to see Spanish links on the links page, and can see the Spanish Verbs activity on the activity page.
 - Presente de subjuntivo vs. Imperfecto de subjuntivo
 	- presente de subjuntivo
-		- actions in the present or future that are uncertain, desired, doubted, recommended
-		- 
+		- used with actions in the PRESENT or FUTURE that are uncertain, desired, doubted, recommended
+		- expresses feelings, wishes, doubts, and possibilities about something that hasn’t happened yet or is not confirmed
 	- imperfecto de subjuntivo
