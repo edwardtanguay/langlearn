@@ -683,7 +683,7 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-[#be185d]/45 text-white border-[#f43f5e]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
+    return 'bg-[#be185d]/30 text-white border-[#f43f5e]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
   }
   return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 !border-[#be185d] dark:!border-[#f43f5e]'
 }

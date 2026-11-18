@@ -629,7 +629,7 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-[#194d19]/45 text-white border-[#4ade80]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
+    return 'bg-[#194d19]/40 text-white border-[#4ade80]/70 shadow-[0_0_10px_rgba(255,255,255,0.4)] relative z-10'
   }
   return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 !border-[#194d19] dark:!border-[#4ade80]'
 }
