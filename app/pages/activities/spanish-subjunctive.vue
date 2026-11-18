@@ -54,8 +54,6 @@ const searchQuery = ref('')
 const searchInputRef = ref<HTMLInputElement | null>(null)
 const copiedPromptKey = ref<string | null>(null)
 let copyPromptTimer: ReturnType<typeof setTimeout> | null = null
-let autoRevealTimer: ReturnType<typeof setTimeout> | null = null
-const isAutoRevealing = ref(false)
 
 const IMPORT_PROMPT = 'in the file data\\bits\\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, then create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again'
 
@@ -263,14 +261,6 @@ onMounted(() => {
   }, 250)
 })
 
-function clearAutoRevealTimer() {
-  if (autoRevealTimer) {
-    clearTimeout(autoRevealTimer)
-    autoRevealTimer = null
-  }
-  isAutoRevealing.value = false
-}
-
 onUnmounted(() => {
   if (statsLoadingTimer) {
     clearTimeout(statsLoadingTimer)
@@ -278,7 +268,6 @@ onUnmounted(() => {
   if (copyPromptTimer) {
     clearTimeout(copyPromptTimer)
   }
-  clearAutoRevealTimer()
 })
 
 async function copyImportPrompt(item: SubjunctiveItem) {
@@ -304,22 +293,15 @@ function openGoogleExamples(phrase: string) {
 }
 
 function handleCardClick() {
-  if (!currentItem.value || isAutoRevealing.value) return
+  if (!currentItem.value) return
   if (typeof window !== 'undefined' && window.getSelection()?.toString().trim()) {
     return
   }
   const key = getItemKey(currentItem.value)
   inProgressKey.value = key
   if (revealStep.value === 0) {
-    revealStep.value = 1
+    revealStep.value = 2
     saveState()
-    isAutoRevealing.value = true
-    autoRevealTimer = setTimeout(() => {
-      autoRevealTimer = null
-      isAutoRevealing.value = false
-      revealStep.value = 2
-      saveState()
-    }, 500)
     return
   }
   if (revealStep.value < 3) {
@@ -339,7 +321,6 @@ function handleCardClick() {
 }
 
 function resetPresentationState() {
-  clearAutoRevealTimer()
   revealStep.value = 0
   hasRecordedCurrentPresentation.value = false
 }
