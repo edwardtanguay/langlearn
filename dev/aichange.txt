@@ -93,7 +93,7 @@
 		
 		- x remove the 500ms wait for revealing level 3, just reveal 2 and 3 at the same time
 		----------------------------------
-	- ,, langacts006
+	- x langacts006
 		----------------------------------
 		## Spanish Subjuntive activity
 		
@@ -103,13 +103,26 @@
 		----------------------------------
 		## Spanish and Italian Verb activities
 		
-		- in the filter area, make the small outline the color of the language
-		- and put the list of words back under the filter even when the filter is showing (since now that we have so many verbs, sometimes the verbs that are selected are not showing)
+		- x in the filter area, make the small outline the color of the language
+		- x and put the list of words back under the filter even when the filter is showing (since now that we have so many verbs, sometimes the verbs that are selected are not showing)
+		- x change the color of the "found text" from yellow to the language color, but keep the night brightness and pulsing etc. as it is
 		
 		## Spanish Subjuntive activity
 		
 		- make the appearance of the "text copied" brighter and the animation/fade snappier
 			- and when clicking, give a "quick pulse" of the whole area to show the user that it was clicked and did something
+		----------------------------------
+	- .. langacts008
+		----------------------------------
+		## Spanish and Italian Verb activities
+		
+		- for the listing of the verbs on top of the verb area, e.g. "core 1: ir, ser, estar" show "core 1:" white
+		- in the filter area, make the small outline around the "verbs to show" area white again and 1px thicker
+		- on the "full word" found, take the pulsing off and just put a light, white shadow
+		
+		## Spanish Subjuntive activity
+		
+		- when clicking the two spanish text areas to give a "quick pulse" of the whole area, make it just a little movement (enlarging/shrinking), but very little and otherwise no change, e.g. no color change
 		----------------------------------
 		
 		

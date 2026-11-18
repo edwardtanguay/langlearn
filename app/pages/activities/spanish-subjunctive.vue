@@ -56,6 +56,8 @@ const copiedPromptKey = ref<string | null>(null)
 let copyPromptTimer: ReturnType<typeof setTimeout> | null = null
 const copiedTextField = ref<'indicative' | 'subjunctive' | null>(null)
 let copyTextTimer: ReturnType<typeof setTimeout> | null = null
+const pulsingTextField = ref<'indicative' | 'subjunctive' | null>(null)
+let pulseTextTimer: ReturnType<typeof setTimeout> | null = null
 
 const IMPORT_PROMPT = 'in the file data\\bits\\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, then create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again'
 
@@ -273,6 +275,9 @@ onUnmounted(() => {
   if (copyTextTimer) {
     clearTimeout(copyTextTimer)
   }
+  if (pulseTextTimer) {
+    clearTimeout(pulseTextTimer)
+  }
 })
 
 async function copyImportPrompt(item: SubjunctiveItem) {
@@ -298,6 +303,17 @@ async function copySpanishText(field: 'indicative' | 'subjunctive', text: string
   }
   try {
     await navigator.clipboard.writeText(text)
+    pulsingTextField.value = null
+    if (pulseTextTimer) {
+      clearTimeout(pulseTextTimer)
+    }
+    requestAnimationFrame(() => {
+      pulsingTextField.value = field
+      pulseTextTimer = setTimeout(() => {
+        pulsingTextField.value = null
+        pulseTextTimer = null
+      }, 260)
+    })
     copiedTextField.value = field
     if (copyTextTimer) {
       clearTimeout(copyTextTimer)
@@ -586,7 +602,7 @@ function confirmResetAll() {
               <span>3 examples</span>
             </button>
             <span
-              class="ml-auto text-[11px] font-mono text-gray-400/70 transition-opacity duration-500"
+              class="ml-auto text-[11px] font-mono font-semibold text-white transition-opacity duration-150"
               :class="copiedTextField === 'indicative' ? 'opacity-100' : 'opacity-0 pointer-events-none'"
               aria-live="polite"
             >
@@ -597,6 +613,7 @@ function confirmResetAll() {
             @click.stop="copySpanishText('indicative', currentItem.indicative)"
             title="Click to copy"
             class="text-base sm:text-lg font-semibold text-[#f43f5e] bg-gray-800/80 hover:bg-gray-800 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
+            :class="pulsingTextField === 'indicative' ? 'animate-copy-pulse ring-1 ring-[#f43f5e]/60' : ''"
           >
             {{ currentItem.indicative }}
           </div>
@@ -623,7 +640,7 @@ function confirmResetAll() {
               <span>3 examples</span>
             </button>
             <span
-              class="ml-auto text-[11px] font-mono text-gray-400/70 transition-opacity duration-500"
+              class="ml-auto text-[11px] font-mono font-semibold text-white transition-opacity duration-150"
               :class="copiedTextField === 'subjunctive' ? 'opacity-100' : 'opacity-0 pointer-events-none'"
               aria-live="polite"
             >
@@ -634,6 +651,7 @@ function confirmResetAll() {
             @click.stop="copySpanishText('subjunctive', currentItem.subjunctive)"
             title="Click to copy"
             class="text-base sm:text-lg font-bold text-[#f43f5e] bg-gray-700/80 hover:bg-gray-700 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
+            :class="pulsingTextField === 'subjunctive' ? 'animate-copy-pulse ring-1 ring-[#f43f5e]/60' : ''"
           >
             {{ currentItem.subjunctive }}
           </div>
@@ -886,3 +904,24 @@ function confirmResetAll() {
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes copy-area-pulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  40% {
+    transform: scale(1.015);
+    filter: brightness(1.3);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.animate-copy-pulse {
+  animation: copy-area-pulse 0.26s ease-out both;
+}
+</style>

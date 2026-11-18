@@ -549,7 +549,7 @@ function highlightWordMatches(word: string, normQuery: string): string {
     if (isCompleteWord) {
       res += escapeHtml(matchSlice)
     } else {
-      res += `<span class="text-yellow-500 dark:text-yellow-300 font-bold">${escapeHtml(matchSlice)}</span>`
+      res += `<span class="text-[#194d19] dark:text-[#4ade80] font-bold">${escapeHtml(matchSlice)}</span>`
     }
     lastIdx = searchPos + normQuery.length
   }
@@ -629,7 +629,7 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-yellow-200 text-gray-800 border-yellow-300/70 shadow-[0_0_12px_rgba(254,240,138,0.65)] ring-2 ring-yellow-200/80 animate-pulse-bright relative z-10'
+    return 'bg-[#194d19] text-white border-[#4ade80]/70 shadow-[0_0_12px_rgba(74,222,128,0.65)] ring-2 ring-[#4ade80]/80 animate-pulse-bright relative z-10'
   }
   return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 border-gray-200 dark:border-gray-700'
 }
@@ -2540,7 +2540,7 @@ onUnmounted(() => {
               </button>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-xl border border-gray-200/80 dark:border-gray-700/80">
+          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-xl border border-[#194d19]/50 dark:border-[#4ade80]/45">
             <button
               v-for="v in alphabetizedVerbs"
               :key="v.verb"
@@ -2730,7 +2730,7 @@ onUnmounted(() => {
                 </button>
               </div>
             </div>
-            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-[#194d19]/50 dark:border-[#4ade80]/45">
               <button
                 v-for="v in alphabetizedVerbs"
                 :key="v.verb"
@@ -2835,9 +2835,9 @@ onUnmounted(() => {
       class="space-y-4 transition-all duration-200"
       :class="!hasLoadedState ? 'blur-[3px] opacity-40 pointer-events-none select-none' : ''"
     >
-      <!-- Active Words Title when 2+ words selected (hidden if all words are selected or filter is open on desktop) -->
+      <!-- Active Words Title when 2+ words selected (hidden if all words are selected) -->
       <div
-        v-if="!isSearching && (!showControls || isMobile) && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
+        v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
         :class="[activeVerbListTextClass, 'font-black tracking-wider text-center text-[#194d19] dark:text-[#4ade80] leading-snug']"
       >
         <span v-if="activeExactGroupName" class="uppercase opacity-90">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
@@ -3338,9 +3338,9 @@ onUnmounted(() => {
       class="space-y-3 sm:space-y-8 transition-all duration-200"
       :class="!hasLoadedState ? 'blur-[3px] opacity-40 pointer-events-none select-none' : ''"
     >
-      <!-- Active Words Title when 2+ words selected (hidden if all words are selected or filter is open on desktop) -->
+      <!-- Active Words Title when 2+ words selected (hidden if all words are selected) -->
       <div
-        v-if="!isSearching && (!showControls || isMobile) && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
+        v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
         :class="[activeVerbListTextClass, 'font-black tracking-wider text-center text-[#194d19] dark:text-[#4ade80] leading-snug']"
       >
         <span v-if="activeExactGroupName" class="uppercase opacity-90">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
