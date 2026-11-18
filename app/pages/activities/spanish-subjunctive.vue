@@ -54,6 +54,8 @@ const searchQuery = ref('')
 const searchInputRef = ref<HTMLInputElement | null>(null)
 const copiedPromptKey = ref<string | null>(null)
 let copyPromptTimer: ReturnType<typeof setTimeout> | null = null
+const copiedTextField = ref<'indicative' | 'subjunctive' | null>(null)
+let copyTextTimer: ReturnType<typeof setTimeout> | null = null
 
 const IMPORT_PROMPT = 'in the file data\\bits\\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, then create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again'
 
@@ -268,6 +270,9 @@ onUnmounted(() => {
   if (copyPromptTimer) {
     clearTimeout(copyPromptTimer)
   }
+  if (copyTextTimer) {
+    clearTimeout(copyTextTimer)
+  }
 })
 
 async function copyImportPrompt(item: SubjunctiveItem) {
@@ -280,6 +285,26 @@ async function copyImportPrompt(item: SubjunctiveItem) {
     }
     copyPromptTimer = setTimeout(() => {
       copiedPromptKey.value = null
+    }, 2000)
+  } catch {
+    // Ignore clipboard errors
+  }
+}
+
+async function copySpanishText(field: 'indicative' | 'subjunctive', text: string) {
+  if (!import.meta.client || !navigator.clipboard || !text) return
+  if (typeof window !== 'undefined' && window.getSelection()?.toString().trim()) {
+    return
+  }
+  try {
+    await navigator.clipboard.writeText(text)
+    copiedTextField.value = field
+    if (copyTextTimer) {
+      clearTimeout(copyTextTimer)
+    }
+    copyTextTimer = setTimeout(() => {
+      copiedTextField.value = null
+      copyTextTimer = null
     }, 2000)
   } catch {
     // Ignore clipboard errors
@@ -323,6 +348,11 @@ function handleCardClick() {
 function resetPresentationState() {
   revealStep.value = 0
   hasRecordedCurrentPresentation.value = false
+  copiedTextField.value = null
+  if (copyTextTimer) {
+    clearTimeout(copyTextTimer)
+    copyTextTimer = null
+  }
 }
 
 function nextItem() {
@@ -555,8 +585,19 @@ function confirmResetAll() {
               <MagnifyingGlassIcon class="w-3 h-3" />
               <span>3 examples</span>
             </button>
+            <span
+              class="ml-auto text-[11px] font-mono text-gray-400/70 transition-opacity duration-500"
+              :class="copiedTextField === 'indicative' ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+              aria-live="polite"
+            >
+              text copied
+            </span>
           </div>
-          <div class="text-base sm:text-lg font-semibold text-[#f43f5e] bg-gray-800/80 px-3.5 py-2 rounded-lg">
+          <div
+            @click.stop="copySpanishText('indicative', currentItem.indicative)"
+            title="Click to copy"
+            class="text-base sm:text-lg font-semibold text-[#f43f5e] bg-gray-800/80 hover:bg-gray-800 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
+          >
             {{ currentItem.indicative }}
           </div>
         </div>
@@ -581,8 +622,19 @@ function confirmResetAll() {
               <MagnifyingGlassIcon class="w-3 h-3" />
               <span>3 examples</span>
             </button>
+            <span
+              class="ml-auto text-[11px] font-mono text-gray-400/70 transition-opacity duration-500"
+              :class="copiedTextField === 'subjunctive' ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+              aria-live="polite"
+            >
+              text copied
+            </span>
           </div>
-          <div class="text-base sm:text-lg font-bold text-[#f43f5e] bg-gray-700/80 px-3.5 py-2 rounded-lg">
+          <div
+            @click.stop="copySpanishText('subjunctive', currentItem.subjunctive)"
+            title="Click to copy"
+            class="text-base sm:text-lg font-bold text-[#f43f5e] bg-gray-700/80 hover:bg-gray-700 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
+          >
             {{ currentItem.subjunctive }}
           </div>
         </div>

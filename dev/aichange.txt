@@ -70,7 +70,7 @@
 			- make title on top "Spanish Subjunctive" a bit smaller
 			- take the 6/17 tested out of the pill and put it close to the red box on top, over on the far right
 		----------------------------------
-	- ,, langacts004
+	- x langacts004
 		----------------------------------
 		## Spanish Subjuntive activity
 		
@@ -87,12 +87,29 @@
 			- x and change "7 / 71 tested" to "7/71 tested" 
 			- x put a top margin of 1.5 lines above e.g. "tested 3 times"
 		----------------------------------
-	- ,, langacts005
+	- x langacts005
 		----------------------------------
 		## Spanish Subjuntive activity
 		
-		- remove the 500ms wait for revealing level 3, just reveal 2 and 3 at the same time
+		- x remove the 500ms wait for revealing level 3, just reveal 2 and 3 at the same time
+		----------------------------------
+	- ,, langacts006
+		----------------------------------
+		## Spanish Subjuntive activity
 		
+		- make clicking directly on the area of the two bottom Spanish texts copy the text to the clipboard, and afterward, write a small nuanced note on the upper right of the area on the right "text copied", display for 2 seconds, then fade it off
+		----------------------------------
+	- .. langacts007
+		----------------------------------
+		## Spanish and Italian Verb activities
+		
+		- in the filter area, make the small outline the color of the language
+		- and put the list of words back under the filter even when the filter is showing (since now that we have so many verbs, sometimes the verbs that are selected are not showing)
+		
+		## Spanish Subjuntive activity
+		
+		- make the appearance of the "text copied" brighter and the animation/fade snappier
+			- and when clicking, give a "quick pulse" of the whole area to show the user that it was clicked and did something
 		----------------------------------
 		
 		
