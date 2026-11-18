@@ -55,6 +55,7 @@ const searchInputRef = ref<HTMLInputElement | null>(null)
 const copiedPromptKey = ref<string | null>(null)
 let copyPromptTimer: ReturnType<typeof setTimeout> | null = null
 const copiedTextField = ref<'indicative' | 'subjunctive' | null>(null)
+const copyTriggerCount = ref(0)
 let copyTextTimer: ReturnType<typeof setTimeout> | null = null
 const pulsingTextField = ref<'indicative' | 'subjunctive' | null>(null)
 let pulseTextTimer: ReturnType<typeof setTimeout> | null = null
@@ -304,24 +305,29 @@ async function copySpanishText(field: 'indicative' | 'subjunctive', text: string
   try {
     await navigator.clipboard.writeText(text)
     pulsingTextField.value = null
+    copiedTextField.value = null
     if (pulseTextTimer) {
       clearTimeout(pulseTextTimer)
+      pulseTextTimer = null
     }
+    if (copyTextTimer) {
+      clearTimeout(copyTextTimer)
+      copyTextTimer = null
+    }
+    await nextTick()
     requestAnimationFrame(() => {
+      copyTriggerCount.value++
       pulsingTextField.value = field
+      copiedTextField.value = field
       pulseTextTimer = setTimeout(() => {
         pulsingTextField.value = null
         pulseTextTimer = null
-      }, 260)
+      }, 280)
+      copyTextTimer = setTimeout(() => {
+        copiedTextField.value = null
+        copyTextTimer = null
+      }, 2000)
     })
-    copiedTextField.value = field
-    if (copyTextTimer) {
-      clearTimeout(copyTextTimer)
-    }
-    copyTextTimer = setTimeout(() => {
-      copiedTextField.value = null
-      copyTextTimer = null
-    }, 2000)
   } catch {
     // Ignore clipboard errors
   }
@@ -365,9 +371,14 @@ function resetPresentationState() {
   revealStep.value = 0
   hasRecordedCurrentPresentation.value = false
   copiedTextField.value = null
+  pulsingTextField.value = null
   if (copyTextTimer) {
     clearTimeout(copyTextTimer)
     copyTextTimer = null
+  }
+  if (pulseTextTimer) {
+    clearTimeout(pulseTextTimer)
+    pulseTextTimer = null
   }
 }
 
@@ -468,7 +479,7 @@ function confirmResetAll() {
 
       <div class="hidden sm:flex items-center gap-2">
         <span
-          class="text-xs font-mono font-bold text-gray-300 bg-gray-800/80 px-2.5 py-1.5 rounded-lg border border-gray-700 transition-all duration-300"
+          class="text-xs font-mono font-bold text-gray-400 transition-all duration-300"
           :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
         >
           {{ isStatsLoading ? `--/${baseItems.length} tested` : `${testedUniqueCount}/${baseItems.length} tested` }}
@@ -591,23 +602,24 @@ function confirmResetAll() {
             <span class="text-xs font-mono uppercase tracking-wider text-gray-400">
               Indicative:
             </span>
+            <span
+              :key="copiedTextField === 'indicative' ? `ind-${copyTriggerCount}` : 'ind-idle'"
+              class="text-[11px] font-mono font-semibold text-white"
+              :class="copiedTextField === 'indicative' ? 'animate-copied-fade' : 'opacity-0 pointer-events-none'"
+              aria-live="polite"
+            >
+              text copied
+            </span>
             <button
               type="button"
               :tabindex="revealStep >= 2 ? 0 : -1"
               @click.stop="openGoogleExamples(currentItem.indicative)"
               title="Look up 3 examples in Google Search"
-              class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
+              class="ml-auto inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
             >
               <MagnifyingGlassIcon class="w-3 h-3" />
               <span>3 examples</span>
             </button>
-            <span
-              class="ml-auto text-[11px] font-mono font-semibold text-white transition-opacity duration-150"
-              :class="copiedTextField === 'indicative' ? 'opacity-100' : 'opacity-0 pointer-events-none'"
-              aria-live="polite"
-            >
-              text copied
-            </span>
           </div>
           <div
             @click.stop="copySpanishText('indicative', currentItem.indicative)"
@@ -629,28 +641,29 @@ function confirmResetAll() {
             <span class="text-xs font-mono uppercase tracking-wider text-white">
               Subjunctive:
             </span>
+            <span
+              :key="copiedTextField === 'subjunctive' ? `sub-${copyTriggerCount}` : 'sub-idle'"
+              class="text-[11px] font-mono font-semibold text-white"
+              :class="copiedTextField === 'subjunctive' ? 'animate-copied-fade' : 'opacity-0 pointer-events-none'"
+              aria-live="polite"
+            >
+              text copied
+            </span>
             <button
               type="button"
               :tabindex="revealStep >= 3 ? 0 : -1"
               @click.stop="openGoogleExamples(currentItem.subjunctive)"
               title="Look up 3 examples in Google Search"
-              class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
+              class="ml-auto inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 text-[10px] font-mono transition-colors cursor-pointer"
             >
               <MagnifyingGlassIcon class="w-3 h-3" />
               <span>3 examples</span>
             </button>
-            <span
-              class="ml-auto text-[11px] font-mono font-semibold text-white transition-opacity duration-150"
-              :class="copiedTextField === 'subjunctive' ? 'opacity-100' : 'opacity-0 pointer-events-none'"
-              aria-live="polite"
-            >
-              text copied
-            </span>
           </div>
           <div
             @click.stop="copySpanishText('subjunctive', currentItem.subjunctive)"
             title="Click to copy"
-            class="text-base sm:text-lg font-bold text-[#f43f5e] bg-gray-700/80 hover:bg-gray-700 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
+            class="text-base sm:text-lg font-bold text-[#f43f5e] bg-gray-700/40 hover:bg-gray-700/55 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
             :class="pulsingTextField === 'subjunctive' ? 'animate-copy-pulse' : ''"
           >
             {{ currentItem.subjunctive }}
@@ -920,5 +933,18 @@ function confirmResetAll() {
 
 .animate-copy-pulse {
   animation: copy-area-pulse 0.28s ease-out both;
+}
+
+@keyframes copied-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-copied-fade {
+  animation: copied-fade-out 2s ease-out forwards;
 }
 </style>
