@@ -908,17 +908,17 @@ function confirmResetAll() {
 <style scoped>
 @keyframes copy-area-pulse {
   0% {
-    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
   }
-  40% {
-    transform: scale(1.008);
+  25% {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
   }
   100% {
-    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
   }
 }
 
 .animate-copy-pulse {
-  animation: copy-area-pulse 0.26s ease-out both;
+  animation: copy-area-pulse 0.28s ease-out both;
 }
 </style>
