@@ -670,7 +670,10 @@ function confirmResetAll() {
             @click.stop="copySpanishText('indicative', currentItem.indicative)"
             title="Click to copy"
             class="text-base sm:text-lg font-semibold text-[#f43f5e] bg-gray-800/80 hover:bg-gray-800 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
-            :class="pulsingTextField === 'indicative' ? 'animate-copy-pulse' : ''"
+            :class="[
+              pulsingTextField === 'indicative' ? 'animate-copy-pulse' : '',
+              revealStep < 2 ? 'truncate' : ''
+            ]"
           >
             {{ currentItem.indicative }}
           </div>
@@ -709,7 +712,10 @@ function confirmResetAll() {
             @click.stop="copySpanishText('subjunctive', currentItem.subjunctive)"
             title="Click to copy"
             class="text-base sm:text-lg font-bold text-[#f43f5e] bg-gray-700/40 hover:bg-gray-700/55 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
-            :class="pulsingTextField === 'subjunctive' ? 'animate-copy-pulse' : ''"
+            :class="[
+              pulsingTextField === 'subjunctive' ? 'animate-copy-pulse' : '',
+              revealStep < 3 ? 'truncate' : ''
+            ]"
           >
             {{ currentItem.subjunctive }}
           </div>
