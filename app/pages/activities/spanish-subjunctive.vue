@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
-import { ArrowLeftIcon, ArrowRightIcon, ArrowPathIcon, ArrowUturnLeftIcon, MagnifyingGlassIcon, XMarkIcon, ClipboardDocumentIcon, CheckIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftIcon, ArrowRightIcon, ArrowPathIcon, ArrowUturnLeftIcon, MagnifyingGlassIcon, XMarkIcon, ClipboardDocumentIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
 import rawSubjunctiveItems from '../../../data-parsed/subjunctive-items.json'
+import rawSpanishVerbs from '../../../data-parsed/spanish-verbs.json'
 
 interface SubjunctiveItem {
   english: string
@@ -9,6 +10,11 @@ interface SubjunctiveItem {
   indicative: string
   subjunctive: string
   todo?: boolean
+}
+
+interface SpanishVerbEntry {
+  verb: string
+  presentSubjunctive?: string[]
 }
 
 interface StoredSubjunctiveState {
@@ -24,6 +30,18 @@ interface HighlightSegment {
 }
 
 const STORAGE_KEY = 'langlearn-spanish-subjunctive-v1'
+const TOP_10_TRIGGERS = new Set([
+  'espero que',
+  'quiero que',
+  'es importante que',
+  'es necesario que',
+  'dudo que',
+  'temer que',
+  'me gustaría que',
+  'no creo que',
+  'aunque',
+  'ojalá que'
+])
 
 useHead({
   title: 'LangLearn - Spanish Subjunctive',
@@ -34,12 +52,53 @@ useHead({
 
 const allItems = rawSubjunctiveItems as SubjunctiveItem[]
 const todoItems = allItems.filter(item => item.todo)
-const baseItems = allItems.filter(item => !item.todo)
+const allBaseItems = allItems.filter(item => !item.todo)
+const isTop10Only = ref(false)
+const baseItems = computed(() =>
+  isTop10Only.value
+    ? allBaseItems.filter(item => TOP_10_TRIGGERS.has(item.spanish.trim().toLowerCase()))
+    : allBaseItems
+)
 const testedCounts = ref<Record<string, number>>({})
 const inProgressKey = ref<string | null>(null)
 const isStatsLoading = ref(true)
 const isConfirmingReset = ref(false)
 let statsLoadingTimer: ReturnType<typeof setTimeout> | null = null
+
+const uniquePresentSubjunctiveForms: string[] = Array.from(
+  new Set(
+    (rawSpanishVerbs as SpanishVerbEntry[])
+      .flatMap(v => v.presentSubjunctive ?? [])
+      .map(form => form.trim())
+      .filter(Boolean)
+  )
+)
+const randomSubjunctiveVerbs = ref<string[]>(uniquePresentSubjunctiveForms)
+const randomVerbIndex = ref(0)
+const currentRandomVerb = computed(() => randomSubjunctiveVerbs.value[randomVerbIndex.value] ?? '')
+
+function shuffleStrings(list: string[]): string[] {
+  const copy = [...list]
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const tmp = copy[i]!
+    copy[i] = copy[j]!
+    copy[j] = tmp
+  }
+  return copy
+}
+
+function prevRandomVerb() {
+  const len = randomSubjunctiveVerbs.value.length
+  if (len === 0) return
+  randomVerbIndex.value = (randomVerbIndex.value - 1 + len) % len
+}
+
+function nextRandomVerb() {
+  const len = randomSubjunctiveVerbs.value.length
+  if (len === 0) return
+  randomVerbIndex.value = (randomVerbIndex.value + 1) % len
+}
 
 const history = ref<SubjunctiveItem[]>([])
 const historyIndex = ref(0)
@@ -52,8 +111,8 @@ const showAllTable = ref(false)
 const searchQuery = ref('')
 const navigableListItems = computed(() => {
   const normQuery = normalizeForSearch(searchQuery.value.trim())
-  if (!normQuery) return baseItems
-  return baseItems.filter(item =>
+  if (!normQuery) return baseItems.value
+  return baseItems.value.filter(item =>
     normalizeForSearch(item.spanish).includes(normQuery) ||
     normalizeForSearch(item.english).includes(normQuery)
   )
@@ -139,17 +198,19 @@ function getHighlightSegments(text: string, query: string): HighlightSegment[] {
 }
 
 const testedUniqueCount = computed(() =>
-  baseItems.filter(item => getTestedCount(item) > 0).length
+  baseItems.value.filter(item => getTestedCount(item) > 0).length
 )
 
 const orderedShowAllItems = computed(() => {
   const normQuery = normalizeForSearch(searchQuery.value.trim())
-  const filteredTodos = normQuery
-    ? todoItems.filter(item =>
-        normalizeForSearch(item.spanish).includes(normQuery) ||
-        normalizeForSearch(item.english).includes(normQuery)
-      )
-    : todoItems
+  const filteredTodos = isTop10Only.value
+    ? []
+    : (normQuery
+        ? todoItems.filter(item =>
+            normalizeForSearch(item.spanish).includes(normQuery) ||
+            normalizeForSearch(item.english).includes(normQuery)
+          )
+        : todoItems)
 
   let orderedCards = navigableListItems.value
   if (currentItem.value && orderedCards.length > 0) {
@@ -228,13 +289,14 @@ function loadState(): StoredSubjunctiveState {
 }
 
 function pickLeastTestedItem(excludeKey?: string): SubjunctiveItem | null {
-  if (baseItems.length === 0) return null
+  const items = baseItems.value
+  if (items.length === 0) return null
   let minCount = Infinity
-  for (const item of baseItems) {
+  for (const item of items) {
     const c = getTestedCount(item)
     if (c < minCount) minCount = c
   }
-  let candidates = baseItems.filter(item => getTestedCount(item) === minCount)
+  let candidates = items.filter(item => getTestedCount(item) === minCount)
   if (excludeKey && candidates.length > 1) {
     candidates = candidates.filter(item => getItemKey(item) !== excludeKey)
   }
@@ -243,7 +305,7 @@ function pickLeastTestedItem(excludeKey?: string): SubjunctiveItem | null {
 }
 
 function pickSameCountItem(targetCount: number, excludeKey: string): SubjunctiveItem | null {
-  const sameCountCandidates = baseItems.filter(
+  const sameCountCandidates = baseItems.value.filter(
     item => getTestedCount(item) === targetCount && getItemKey(item) !== excludeKey
   )
   if (sameCountCandidates.length > 0) {
@@ -253,18 +315,53 @@ function pickSameCountItem(targetCount: number, excludeKey: string): Subjunctive
   return pickLeastTestedItem(excludeKey)
 }
 
+function triggerStatsLoadingBlur() {
+  isStatsLoading.value = true
+  if (statsLoadingTimer) {
+    clearTimeout(statsLoadingTimer)
+  }
+  statsLoadingTimer = setTimeout(() => {
+    isStatsLoading.value = false
+    statsLoadingTimer = null
+  }, 250)
+}
+
+function setTop10Mode(top10: boolean) {
+  if (isTop10Only.value === top10) return
+  isTop10Only.value = top10
+  triggerStatsLoadingBlur()
+  const activeKey = currentItem.value ? getItemKey(currentItem.value) : null
+  const stillVisible = activeKey
+    ? baseItems.value.some(item => getItemKey(item) === activeKey)
+    : false
+  if (!stillVisible) {
+    const next = pickLeastTestedItem()
+    resetPresentationState()
+    if (next) {
+      history.value = [next]
+      historyIndex.value = 0
+      inProgressKey.value = getItemKey(next)
+    } else {
+      history.value = []
+      historyIndex.value = 0
+      inProgressKey.value = null
+    }
+  }
+  saveState()
+}
+
 onMounted(() => {
+  randomSubjunctiveVerbs.value = shuffleStrings(uniquePresentSubjunctiveForms)
+  randomVerbIndex.value = 0
+
   const loaded = loadState()
   testedCounts.value = loaded.counts
   inProgressKey.value = loaded.inProgressKey
+  isTop10Only.value = false
 
   let initialItem: SubjunctiveItem | null = null
-  let restoredFromStorage = false
   if (loaded.inProgressKey) {
-    initialItem = baseItems.find(item => getItemKey(item) === loaded.inProgressKey) ?? null
-    if (initialItem) {
-      restoredFromStorage = true
-    }
+    initialItem = baseItems.value.find(item => getItemKey(item) === loaded.inProgressKey) ?? null
   }
   if (!initialItem) {
     initialItem = pickLeastTestedItem()
@@ -278,9 +375,7 @@ onMounted(() => {
     saveState()
   }
 
-  statsLoadingTimer = setTimeout(() => {
-    isStatsLoading.value = false
-  }, 250)
+  triggerStatsLoadingBlur()
 })
 
 onUnmounted(() => {
@@ -420,7 +515,7 @@ function stepInList(direction: 1 | -1) {
 }
 
 function nextItem() {
-  if (baseItems.length === 0) return
+  if (baseItems.value.length === 0) return
   if (showAllTable.value) {
     stepInList(1)
     return
@@ -457,7 +552,7 @@ function prevItem() {
 }
 
 function reshuffleItem() {
-  if (!currentItem.value || baseItems.length <= 1) return
+  if (!currentItem.value || baseItems.value.length <= 1) return
   const currentKey = getItemKey(currentItem.value)
   const targetCount = getTestedCount(currentItem.value)
   const replacement = pickSameCountItem(targetCount, currentKey)
@@ -522,7 +617,37 @@ function confirmResetAll() {
         </div>
       </div>
 
-      <div class="hidden sm:flex items-center gap-2">
+      <div class="hidden sm:flex items-center gap-2.5">
+        <div
+          role="group"
+          aria-label="Filter trigger phrases"
+          class="inline-flex items-center gap-0.5 bg-gray-800/90 p-0.5 rounded-lg border border-gray-700"
+        >
+          <button
+            type="button"
+            @click="setTop10Mode(false)"
+            :aria-pressed="!isTop10Only"
+            class="px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer select-none"
+            :class="!isTop10Only
+              ? 'bg-[#be185d] text-white shadow-xs'
+              : 'text-gray-400 hover:text-white'"
+          >
+            All
+          </button>
+          <button
+            type="button"
+            @click="setTop10Mode(true)"
+            :aria-pressed="isTop10Only"
+            title="Focus on the 10 most important subjunctive trigger phrases"
+            class="px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer select-none"
+            :class="isTop10Only
+              ? 'bg-[#be185d] text-white shadow-xs'
+              : 'text-gray-400 hover:text-white'"
+          >
+            Top 10
+          </button>
+        </div>
+
         <span
           class="text-xs font-mono font-bold text-gray-400 transition-all duration-300"
           :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
@@ -566,52 +691,94 @@ function confirmResetAll() {
 
     <!-- Main Interactive Card -->
     <div>
-      <div class="sm:hidden flex items-center justify-end gap-2 mb-1.5 pr-1">
-        <span
-          class="text-xs font-mono font-bold text-gray-400 transition-all duration-300"
-          :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
-        >
-          {{ isStatsLoading ? `--/${baseItems.length} tested` : `${testedUniqueCount}/${baseItems.length} tested` }}
-        </span>
-
-        <template v-if="!isConfirmingReset">
-          <button
-            type="button"
-            @click="isConfirmingReset = true"
-            title="Reset testing status for all cards"
-            aria-label="Reset testing status for all cards"
-            class="p-1 rounded-lg text-gray-500 hover:text-red-400 hover:bg-gray-800/80 border border-transparent hover:border-gray-700 transition-colors cursor-pointer"
-          >
-            <ArrowUturnLeftIcon class="w-3.5 h-3.5" />
-          </button>
-        </template>
+      <div class="sm:hidden flex items-center justify-between gap-2 mb-1.5 px-1">
         <div
-          v-else
-          class="flex items-center gap-2 text-xs bg-gray-900/90 border border-red-900/60 px-2.5 py-1 rounded-lg"
+          role="group"
+          aria-label="Filter trigger phrases"
+          class="inline-flex items-center gap-0.5 bg-gray-800/90 p-0.5 rounded-lg border border-gray-700"
         >
-          <span class="text-gray-300">Are you sure?</span>
           <button
             type="button"
-            @click="confirmResetAll"
-            class="text-red-400 hover:text-red-300 font-semibold underline cursor-pointer"
+            @click="setTop10Mode(false)"
+            :aria-pressed="!isTop10Only"
+            class="px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer select-none"
+            :class="!isTop10Only
+              ? 'bg-[#be185d] text-white shadow-xs'
+              : 'text-gray-400 hover:text-white'"
           >
-            Yes
+            All
           </button>
           <button
             type="button"
-            @click="isConfirmingReset = false"
-            class="text-gray-400 hover:text-white cursor-pointer"
+            @click="setTop10Mode(true)"
+            :aria-pressed="isTop10Only"
+            title="Focus on the 10 most important subjunctive trigger phrases"
+            class="px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer select-none"
+            :class="isTop10Only
+              ? 'bg-[#be185d] text-white shadow-xs'
+              : 'text-gray-400 hover:text-white'"
           >
-            Cancel
+            Top 10
           </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span
+            class="text-xs font-mono font-bold text-gray-400 transition-all duration-300"
+            :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
+          >
+            {{ isStatsLoading ? `--/${baseItems.length} tested` : `${testedUniqueCount}/${baseItems.length} tested` }}
+          </span>
+
+          <template v-if="!isConfirmingReset">
+            <button
+              type="button"
+              @click="isConfirmingReset = true"
+              title="Reset testing status for all cards"
+              aria-label="Reset testing status for all cards"
+              class="p-1 rounded-lg text-gray-500 hover:text-red-400 hover:bg-gray-800/80 border border-transparent hover:border-gray-700 transition-colors cursor-pointer"
+            >
+              <ArrowUturnLeftIcon class="w-3.5 h-3.5" />
+            </button>
+          </template>
+          <div
+            v-else
+            class="flex items-center gap-2 text-xs bg-gray-900/90 border border-red-900/60 px-2.5 py-1 rounded-lg"
+          >
+            <span class="text-gray-300">Are you sure?</span>
+            <button
+              type="button"
+              @click="confirmResetAll"
+              class="text-red-400 hover:text-red-300 font-semibold underline cursor-pointer"
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              @click="isConfirmingReset = false"
+              class="text-gray-400 hover:text-white cursor-pointer"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
 
       <div
         v-if="currentItem"
         @click="handleCardClick"
-        class="relative min-h-[280px] sm:min-h-[320px] rounded-2xl bg-[#182030] border-2 border-[#be185d]/60 hover:border-[#be185d] p-6 sm:p-10 shadow-lg flex flex-col justify-center items-center text-center cursor-pointer transition-all"
+        class="relative min-h-[280px] sm:min-h-[320px] rounded-2xl border-2 p-6 sm:p-10 flex flex-col justify-center items-center text-center cursor-pointer transition-all duration-300"
+        :class="isTop10Only
+          ? 'bg-[#121826] border-[#be185d] shadow-[0_0_28px_-6px_rgba(190,24,93,0.45)] ring-1 ring-[#be185d]/30'
+          : 'bg-[#182030] border-[#be185d]/60 hover:border-[#be185d] shadow-lg'"
       >
+        <div
+          v-if="isTop10Only"
+          class="mb-4 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#be185d]/15 border border-[#be185d]/40 text-[10px] font-mono uppercase tracking-[0.18em] text-[#f43f5e]/90"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-[#f43f5e]" />
+          <span>Top 10 Focus</span>
+        </div>
       <div class="w-full max-w-xl space-y-5">
         <!-- 1. English (always visible) -->
         <div class="space-y-1">
@@ -720,13 +887,46 @@ function confirmResetAll() {
             {{ currentItem.subjunctive }}
           </div>
         </div>
-      </div>
+        <!-- Random Subjunctive Verb Browser (visible at level 4) -->
+        <div
+          v-if="revealStep >= 3 && currentRandomVerb"
+          @click.stop
+          class="pt-6 mt-2 border-t border-gray-700/50 flex items-center justify-center gap-2 flex-wrap"
+        >
+          <div class="inline-flex items-stretch rounded-md border border-gray-700/70 bg-gray-800/50 overflow-hidden">
+            <button
+              type="button"
+              @click.stop="prevRandomVerb"
+              aria-label="Previous random subjunctive verb"
+              class="flex items-center justify-center px-2 py-1 text-gray-400 hover:text-white hover:bg-gray-700/70 transition-colors cursor-pointer"
+            >
+              <ChevronLeftIcon class="w-3 h-3" />
+            </button>
 
-      <div
-        class="mt-[1.5em] self-end sm:mt-0 sm:self-auto sm:absolute sm:bottom-3 sm:right-4 text-[11px] font-mono text-gray-400/50 transition-all duration-300"
-        :class="isStatsLoading ? 'blur-[4px] opacity-40 select-none' : ''"
-      >
-        {{ isStatsLoading ? 'tested -- times' : `tested ${getTestedCount(currentItem)} ${getTestedCount(currentItem) === 1 ? 'time' : 'times'}` }}
+            <span class="min-w-[5.25rem] px-2.5 py-1 bg-white/[0.05] border-x border-gray-700/60 flex items-center justify-center text-center text-xs sm:text-sm font-normal text-[#f43f5e] select-text">
+              {{ currentRandomVerb }}
+            </span>
+
+            <button
+              type="button"
+              @click.stop="nextRandomVerb"
+              aria-label="Next random subjunctive verb"
+              class="flex items-center justify-center px-2 py-1 text-gray-400 hover:text-white hover:bg-gray-700/70 transition-colors cursor-pointer"
+            >
+              <ChevronRightIcon class="w-3 h-3" />
+            </button>
+          </div>
+
+          <button
+            type="button"
+            @click.stop="openGoogleExamples(currentRandomVerb)"
+            title="Look up 3 examples in Google Search"
+            class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-gray-800/70 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700/70 text-[10px] font-mono transition-colors cursor-pointer"
+          >
+            <MagnifyingGlassIcon class="w-3 h-3" />
+            <span>3 examples</span>
+          </button>
+        </div>
       </div>
     </div>
 

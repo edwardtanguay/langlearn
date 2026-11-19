@@ -339,3 +339,141 @@
 			
 		- x change the "it" and "es" after the title so it "Italian verbs" and "Spanish verbs" 
 		----------------------------------
+		
+		
+	- x langacts001
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- x remove the toggle button "shuffled/in-order" and make it ALWAYS shuffled
+		- x record which items have been "clicked all the way through to subjunctive" as tested
+		- show how many times they have been tested somewhere in a small print and nuances, e.g. faded a bit
+		- x always show a random card that has been tested the LEAST amount of times
+			- x this insures that the user always has a new card to test and that they test the cards evenly
+		- x but if a user clicked halfway through a card (not all the way to where they see the subjunctive), then the next time they come to the page, show this card from the top again, e.g. showing English 
+		----------------------------------
+	- x langacts002
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- change "show all" to "Show list of upcoming cards" and then "hide list"
+		- create a search at the top of the lower list of cards (when not hidden) so that e.g. when I find a new "subjunctive trigger" such as "a menos que", I can search for it and see if it is in or not
+			- when searching, cards are immediately shown that match
+				- show it as: matching letters are white, other letters as less than white, but still normal and almost white
+			- you can AT ALL TIMES change the words in the Spanish column to non-bold so they look just like the words in the English column
+		- at all levels, e.g. on the first level when English is shown, also show some blurred but almost identifiable skeletons of the other three parts so that the user understands what is coming
+			- each click then "unblurs" the next section downward
+		- in localstorage, also save the level the user was on
+			- and also save if it was just the first level as well
+			- so if the user is looking at the page and refreshes, they always see the same thing
+		- where the "in order / shuffled" button was, but a button "reshuffle" which chooses another card that has been taken the same amount of times
+		- change "tested 0x" to "tested 0 times"
+		----------------------------------
+	- x langacts002
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- x on desktop view, when opening the bottom list to show, focus the cursor in the search
+		- x make the "x" in the search box a visible square area with a light grey background so it looks easier to click
+		- x make all the blurs a little less strong so that it is more evident how the 
+		- x make the blur-to-clear speed a bit snappier
+		- x let's keep the card abiding by the rules "text in Spanish is red"
+			- change the word "Spanish" to white
+			- change "SUBJUNCTIVE:" to white and the "3 examples" after it also white
+			- then the actual Spanish phrases for indicative and subjunctive should be red
+		- x to the right of the "2/65 tested" put a small button with a "reset" icon
+			- give it a "are you sure" step, and if yes, then reset the testing status for all cards
+		- x change "hide list" to "hide list of upcoming cards" to make it easier to click
+		- x when searching, make the found text a bit more highlighted/pronounced/bold
+		- x "npm run pd" script
+			- when parsing the data\bits\es-learnbits.txt file everything under "subjunctive trigger phrases"
+				- if there is line that has no children, e.g. "- quiero que" then treat this as a "entry to create" so create the other three lines for it, save the file, and process it so that item is in the JSON file
+		----------------------------------
+	- x langacts003
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- x for the Spanish text areas under Indictative and Subjunctive on the card:
+			- remove the outline from both backgrounds
+			- leave the color of the background color on indicative
+			- for subjunctive, chnage the background color to that of indicative, but a bit brighter (to show a difference between the two)
+		- x on the "todo" items in the list
+			- change the word "todo" to "to import"
+			- across the columns TESTED and EXAMPLES, make a similar button "copy import prompt" 
+				- the prompt that it copies to the clipboard is: in the file data\bits\es-learnbits.txt, search for the text "subjunctive trigger phrases" and every 1x indented line that has no children, e.g. if there is just a line "- quiero que" and no 2x indented line under it, then create an entry for it based on the structure of the other entries in this section under "subjunctive trigger phrases", then run the script "npm run pd" so it parsed this file again
+		- x make the "found text" on searching only half bold, not full bold
+			- and make sure there is no artifical space between found and non-found text
+		- mobile view
+			- make title on top "Spanish Subjunctive" a bit smaller
+			- take the 6/17 tested out of the pill and put it close to the red box on top, over on the far right
+		----------------------------------
+	- x langacts004
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- x if the user is on level three of a card and they leave the site and come back, then show the same card but make it show level 1 again (only English)
+		- x when you hide the list, it clears the search box
+		- x instead of "Show list..." write "show list..." on the link to show the list
+		- x on the "to import" message, take off the outline so it doesn't look like a button
+		- x if there are more than one to import, then only show "copy import prompt" on the first one, not all of them
+		- x when showing English, when the user clicks, then open level 2 then a half second later open up level 3
+		- x when level 4 is showing, a click on the card is the same as next
+		- x allow all text on this page to be selected and copied
+		- x mobile view
+			- x put the reset icon on the right side of "7 / 71 tested" 
+			- x and change "7 / 71 tested" to "7/71 tested" 
+			- x put a top margin of 1.5 lines above e.g. "tested 3 times"
+		----------------------------------
+	- x langacts005
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- x remove the 500ms wait for revealing level 3, just reveal 2 and 3 at the same time
+		----------------------------------
+	- x langacts006
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- make clicking directly on the area of the two bottom Spanish texts copy the text to the clipboard, and afterward, write a small nuanced note on the upper right of the area on the right "text copied", display for 2 seconds, then fade it off
+		----------------------------------
+	- x langacts007
+		----------------------------------
+		## Spanish and Italian Verb activities
+		
+		- x in the filter area, make the small outline the color of the language
+		- x and put the list of words back under the filter even when the filter is showing (since now that we have so many verbs, sometimes the verbs that are selected are not showing)
+		- x change the color of the "found text" from yellow to the language color, but keep the night brightness and pulsing etc. as it is
+		
+		## Spanish Subjuntive activity
+		
+		- make the appearance of the "text copied" brighter and the animation/fade snappier
+			- and when clicking, give a "quick pulse" of the whole area to show the user that it was clicked and did something
+		----------------------------------
+	- x langacts008
+		----------------------------------
+		## Spanish and Italian Verb activities
+		
+		- x for the listing of the verbs on top of the verb area, e.g. "core 1: ir, ser, estar" show "core 1:" white
+		- x in the filter area, make the small outline around the "verbs to show" area white again and 1px thicker
+		- x on the "full word" found, take the pulsing off and just put a light, white shadow
+		
+		## Spanish Subjuntive activity
+		
+		- x when clicking the two spanish text areas to give a "quick pulse" of the whole area, make it just a little movement (enlarging/shrinking), but very little and otherwise no change, e.g. no color change
+		----------------------------------
+	- x langacts008
+		----------------------------------
+		## Spanish and Italian Verb activities
+		
+		- x in the filter area, make the small outline around the "verbs to show" area 1px smaller, but as white as possible, and make the left corners top/bottom square like the ones on the right
+		- x the verbs in the verb tables, e.g. espero, esperas, etc. (see screenshot) are all not vertically centered, move themp up 1px inside their pill
+		- x when searching, for words that have partial text found in them, change their pill border to the language color
+		----------------------------------
+	- x langacts009
+		----------------------------------
+		## Spanish and Italian Verb activities
+		
+		- in the filter area, make the small outline around the "verbs to show" a bit dimmer
+		- when searching, for words that have partial text found in them, change their pill border to the language color
+			- for instance, if you search for "vamo" then "vivamos" should have "vamo" red and its pill border should be red
+				
