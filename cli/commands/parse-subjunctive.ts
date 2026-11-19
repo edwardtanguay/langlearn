@@ -11,6 +11,7 @@ export interface SubjunctiveItem {
   spanish: string;
   indicative: string;
   subjunctive: string;
+  todo?: boolean;
 }
 
 export function parseSubjunctive(): { items: SubjunctiveItem[]; totalItems: number } {
@@ -30,6 +31,22 @@ export function parseSubjunctive(): { items: SubjunctiveItem[]; totalItems: numb
   let currentEnglish = '';
   let currentSpanish = '';
   let currentIndicative = '';
+  let pendingLevel1 = '';
+  let pendingLevel1HasChildren = false;
+
+  function flushPendingTodo() {
+    if (pendingLevel1 && !pendingLevel1HasChildren) {
+      items.push({
+        english: '',
+        spanish: pendingLevel1,
+        indicative: '',
+        subjunctive: '',
+        todo: true,
+      });
+    }
+    pendingLevel1 = '';
+    pendingLevel1HasChildren = false;
+  }
 
   for (const line of lines) {
     if (line.startsWith('- ')) {
@@ -37,6 +54,7 @@ export function parseSubjunctive(): { items: SubjunctiveItem[]; totalItems: numb
       if (sectionName === 'subjunctive trigger phrases') {
         inSection = true;
       } else if (inSection) {
+        flushPendingTodo();
         break;
       }
       continue;
@@ -47,6 +65,7 @@ export function parseSubjunctive(): { items: SubjunctiveItem[]; totalItems: numb
     // 4 tabs: subjunctive
     const match4 = line.match(/^\t{4}-\s+(.*)$/);
     if (match4) {
+      pendingLevel1HasChildren = true;
       const subjunctive = match4[1].trim();
       if (currentEnglish && currentSpanish && currentIndicative && subjunctive) {
         items.push({
@@ -62,6 +81,7 @@ export function parseSubjunctive(): { items: SubjunctiveItem[]; totalItems: numb
     // 3 tabs: indicative
     const match3 = line.match(/^\t{3}-\s+(.*)$/);
     if (match3) {
+      pendingLevel1HasChildren = true;
       currentIndicative = match3[1].trim();
       continue;
     }
@@ -69,18 +89,27 @@ export function parseSubjunctive(): { items: SubjunctiveItem[]; totalItems: numb
     // 2 tabs: spanish
     const match2 = line.match(/^\t{2}-\s+(.*)$/);
     if (match2) {
+      pendingLevel1HasChildren = true;
       currentSpanish = match2[1].trim();
       currentIndicative = '';
       continue;
     }
 
-    // 1 tab: english
+    // 1 tab: english (or childless todo Spanish trigger phrase)
     const match1 = line.match(/^\t{1}-\s+(.*)$/);
     if (match1) {
-      currentEnglish = match1[1].trim();
+      flushPendingTodo();
+      const text = match1[1].trim();
+      pendingLevel1 = text;
+      pendingLevel1HasChildren = false;
+      currentEnglish = text;
       currentSpanish = '';
       currentIndicative = '';
     }
+  }
+
+  if (inSection) {
+    flushPendingTodo();
   }
 
   if (!fs.existsSync(parsedDir)) {

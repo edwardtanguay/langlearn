@@ -549,7 +549,7 @@ function highlightWordMatches(word: string, normQuery: string): string {
     if (isCompleteWord) {
       res += escapeHtml(matchSlice)
     } else {
-      res += `<span class="text-yellow-500 dark:text-yellow-300 font-bold">${escapeHtml(matchSlice)}</span>`
+      res += `<span class="text-[#194d19] dark:text-[#4ade80] font-bold">${escapeHtml(matchSlice)}</span>`
     }
     lastIdx = searchPos + normQuery.length
   }
@@ -629,9 +629,9 @@ function getSearchCellClass(text?: string | null): string {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
-    return 'bg-yellow-200 text-gray-800 border-yellow-300/70 shadow-[0_0_12px_rgba(254,240,138,0.65)] ring-2 ring-yellow-200/80 animate-pulse-bright relative z-10'
+    return 'bg-gray-100 dark:bg-gray-800 text-[#194d19] dark:text-[#4ade80] !border-[#194d19] dark:!border-[#4ade80] shadow-[0_0_10px_rgba(255,255,255,0.4)] animate-pulse-bright relative z-10'
   }
-  return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 border-gray-200 dark:border-gray-700'
+  return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 !border-[#194d19]/50 dark:!border-[#4ade80]/50'
 }
 
 interface StudyRow {
@@ -2302,13 +2302,6 @@ onUnmounted(() => {
           <h1 class="!mb-0 text-lg font-black text-gray-900 dark:text-white tracking-tight">
             <span class="text-[#194d19] dark:text-[#4ade80]">Italian Verbs</span>
           </h1>
-          <NuxtLink
-            to="/activities/spanish-verbs"
-            class="ml-0.5 text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
-            title="Go to Spanish Verbs"
-          >
-            Spanish verbs
-          </NuxtLink>
         </div>
       </div>
 
@@ -2436,13 +2429,6 @@ onUnmounted(() => {
           <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
             <span class="text-[#194d19] dark:text-[#4ade80]">Italian Verbs</span>
           </h1>
-          <NuxtLink
-            to="/activities/spanish-verbs"
-            class="ml-1 text-xs font-semibold underline text-[#be185d] dark:text-[#f43f5e] hover:opacity-80 transition-opacity"
-            title="Go to Spanish Verbs"
-          >
-            Spanish verbs
-          </NuxtLink>
         </div>
       </div>
 
@@ -2554,7 +2540,7 @@ onUnmounted(() => {
               </button>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-xl border border-gray-200/80 dark:border-gray-700/80">
+          <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-1.5 rounded-l-none rounded-r-xl border border-gray-300 dark:border-white/25">
             <button
               v-for="v in alphabetizedVerbs"
               :key="v.verb"
@@ -2744,7 +2730,7 @@ onUnmounted(() => {
                 </button>
               </div>
             </div>
-            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div class="flex flex-wrap gap-1.5 p-1.5 max-h-40 overflow-y-auto bg-gray-50 dark:bg-[#121824]/50 rounded-l-none rounded-r-xl border border-gray-300 dark:border-white/25">
               <button
                 v-for="v in alphabetizedVerbs"
                 :key="v.verb"
@@ -2849,12 +2835,12 @@ onUnmounted(() => {
       class="space-y-4 transition-all duration-200"
       :class="!hasLoadedState ? 'blur-[3px] opacity-40 pointer-events-none select-none' : ''"
     >
-      <!-- Active Words Title when 2+ words selected (hidden if all words are selected or filter is open on desktop) -->
+      <!-- Active Words Title when 2+ words selected (hidden if all words are selected) -->
       <div
-        v-if="!isSearching && (!showControls || isMobile) && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
+        v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
         :class="[activeVerbListTextClass, 'font-black tracking-wider text-center text-[#194d19] dark:text-[#4ade80] leading-snug']"
       >
-        <span v-if="activeExactGroupName" class="uppercase opacity-90">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
+        <span v-if="activeExactGroupName" class="uppercase text-gray-900 dark:text-white">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
       </div>
 
       <!-- Single Verb Table for Random Target -->
@@ -3352,12 +3338,12 @@ onUnmounted(() => {
       class="space-y-3 sm:space-y-8 transition-all duration-200"
       :class="!hasLoadedState ? 'blur-[3px] opacity-40 pointer-events-none select-none' : ''"
     >
-      <!-- Active Words Title when 2+ words selected (hidden if all words are selected or filter is open on desktop) -->
+      <!-- Active Words Title when 2+ words selected (hidden if all words are selected) -->
       <div
-        v-if="!isSearching && (!showControls || isMobile) && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
+        v-if="!isSearching && selectedVerbs.length > 1 && selectedVerbs.length < verbs.length"
         :class="[activeVerbListTextClass, 'font-black tracking-wider text-center text-[#194d19] dark:text-[#4ade80] leading-snug']"
       >
-        <span v-if="activeExactGroupName" class="uppercase opacity-90">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
+        <span v-if="activeExactGroupName" class="uppercase text-gray-900 dark:text-white">{{ activeExactGroupName }}: </span><span class="lowercase">{{ selectedVerbs.join(', ') }}</span>
       </div>
 
       <div
@@ -3511,7 +3497,7 @@ onUnmounted(() => {
                 <span
                   v-else
                   @click.stop="openGoogleExamples(verb.gerund, { verb: verb.verb, tenseKey: 'gerund', tenseLabel: 'Gerundio' })"
-                  class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
+                  class="px-1.5 pt-[1px] pb-[3px] rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
                   :class="getSearchCellClass(verb.gerund)"
                   v-html="highlightText(verb.gerund)"
                 >
@@ -3573,7 +3559,7 @@ onUnmounted(() => {
                 <span
                   v-else
                   @click.stop="openGoogleExamples(verb.pastParticiple, { verb: verb.verb, tenseKey: 'pastParticiple', tenseLabel: 'Participio' })"
-                  class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
+                  class="px-1.5 pt-[1px] pb-[3px] rounded-md text-[11px] font-bold border min-w-[50px] text-center cursor-pointer"
                   :class="getSearchCellClass(verb.pastParticiple)"
                   v-html="highlightText(verb.pastParticiple)"
                 >
@@ -3670,7 +3656,7 @@ onUnmounted(() => {
                         <span
                           v-else
                           @click.stop="openGoogleExamples(verb.gerund, { verb: verb.verb, tenseKey: 'gerund', tenseLabel: 'Gerundio' })"
-                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
+                          class="px-1.5 pt-[1px] pb-[3px] rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
                           :class="getSearchCellClass(verb.gerund)"
                           v-html="highlightText(verb.gerund)"
                         >
@@ -3736,7 +3722,7 @@ onUnmounted(() => {
                         <span
                           v-else
                           @click.stop="openGoogleExamples(verb.pastParticiple, { verb: verb.verb, tenseKey: 'pastParticiple', tenseLabel: 'Participio' })"
-                          class="px-1.5 py-0.5 rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
+                          class="px-1.5 pt-[1px] pb-[3px] rounded-md text-[11px] font-bold border min-w-[54px] text-center cursor-pointer"
                           :class="getSearchCellClass(verb.pastParticiple)"
                           v-html="highlightText(verb.pastParticiple)"
                         >
@@ -3884,7 +3870,7 @@ onUnmounted(() => {
                     <span
                       v-else
                       @click.stop="openGoogleExamples(tense.forms[p.idx], { verb: verb.verb, tenseKey: tense.key, tenseLabel: tense.label, pronounLabel: p.label })"
-                      class="inline-block px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold border min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
+                      class="inline-block px-1.5 pt-[1px] pb-[3px] sm:px-3 sm:pt-[3px] sm:pb-[5px] rounded-md sm:rounded-xl text-[11px] sm:text-xs font-bold border min-w-[50px] sm:min-w-[90px] text-center cursor-pointer"
                       :class="getSearchCellClass(tense.forms[p.idx])"
                       v-html="highlightText(tense.forms[p.idx] || '—')"
                     >
@@ -4113,10 +4099,10 @@ onUnmounted(() => {
 
 @keyframes pulse-bright {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(253, 224, 71, 0.55), 0 0 0 2px rgba(253, 224, 71, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.58);
   }
   50% {
-    box-shadow: 0 0 18px rgba(254, 240, 138, 0.8), 0 0 0 3px rgba(254, 240, 138, 0.7);
+    box-shadow: 0 0 19px rgba(255, 255, 255, 0.72);
   }
 }
 

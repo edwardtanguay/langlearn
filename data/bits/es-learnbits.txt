@@ -499,6 +499,42 @@
 	- suena muy claro
 	- Gracias por la explicación.
 - subjunctive trigger phrases
+	- before
+		- antes de que
+			- empieza la película
+				- compramos entradas antes de que empiece la película
+	- unless
+		- a menos que
+			- llueve mañana
+				- iremos a la playa mañana a menos que llueva
+	- even if
+		- aunque
+			- hace frío mañana
+				- saldremos a caminar aunque haga frío
+	- I don't think that
+		- no creo que
+			- tienen razón
+				- no creo que tengan razón
+	- I want that
+		- quiero que
+			- vienes conmigo al cine
+				- quiero que vengas conmigo al cine
+	- I hope that
+		- espero que
+			- tienes tiempo para descansar
+				- espero que tengas tiempo para descansar
+	- I am glad that
+		- me alegra que
+			- estás aquí con nosotros
+				- me alegra que estés aquí con nosotros
+	- it bothers me that
+		- me molesta que
+			- hablan tan alto en el tren
+				- me molesta que hablen tan alto en el tren
+	- I doubt that
+		- dudo que
+			- saben la respuesta correcta
+				- dudo que sepan la respuesta correcta
 	- it is possible that
 		- puede que
 			- llueve mañana por la tarde
@@ -759,10 +795,6 @@
 		- tener miedo de que
 			- mañana lloverá
 				- tengo miedo de que llueva mañana
-	- PROCESS
-		- Quiero que sepas que
-		- que seáis muy felices
-		- que te mejores
 - moving on words
 	- gracias por el consejo, no lo sabía
 	- perfecto, pasemos a lo siguiente
@@ -1092,4 +1124,8 @@
 	
 - app todos
 	- Enabled users to see activities and links for their own language, so a user who has a mother language listed as "Spanish" is now able to see Spanish links on the links page, and can see the Spanish Verbs activity on the activity page.
-			
+- Presente de subjuntivo vs. Imperfecto de subjuntivo
+	- presente de subjuntivo
+		- used with actions in the PRESENT or FUTURE that are uncertain, desired, doubted, recommended
+		- expresses feelings, wishes, doubts, and possibilities about something that hasn’t happened yet or is not confirmed
+	- imperfecto de subjuntivo
