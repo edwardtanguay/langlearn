@@ -186,12 +186,23 @@ function shouldShowVersionDropdown(item: VersionItem, ver: Version): boolean {
 
 const nuxtApp = useNuxtApp()
 let removeHookListener: (() => void) | null = null
+const isScrolledFromTop = ref(false)
+
+function handleWindowScroll() {
+  if (typeof window !== 'undefined') {
+    isScrolledFromTop.value = window.scrollY > 10
+  }
+}
 
 onMounted(() => {
   checkMobileView()
+  handleWindowScroll()
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', checkMobileView)
-    if (window.innerWidth >= 768) {
+    window.addEventListener('scroll', handleWindowScroll, { passive: true })
+    if (isSingleVersionView.value) {
+      adminEditMode.value = false
+    } else if (window.innerWidth >= 768) {
       const saved = localStorage.getItem('adminEditMode')
       if (saved !== null) {
         adminEditMode.value = saved === 'true'
@@ -216,14 +227,21 @@ onMounted(() => {
 })
 
 watch(adminEditMode, (newVal) => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined' && !isSingleVersionView.value) {
     localStorage.setItem('adminEditMode', newVal ? 'true' : 'false')
+  }
+})
+
+watch(isSingleVersionView, (isSingle) => {
+  if (isSingle) {
+    adminEditMode.value = false
   }
 })
 
 onUnmounted(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('resize', checkMobileView)
+    window.removeEventListener('scroll', handleWindowScroll)
   }
   if (typeof document !== 'undefined') {
     document.removeEventListener('click', handleClickOutsideTypeDropdown)
@@ -678,13 +696,13 @@ const saveAdminVersion = async () => {
   // Optimistic update & immediate smooth close (replace object reference so v-memo re-renders immediately)
   if (!isNewVersion.value) {
     let cleanAndAssignCatId: string | null = null
-    let generalCat: Category | undefined
+    let generalCat: VersionCategory | undefined
     if (payload.status === 'PUBLISHED') {
       const cleanAndAssignCat = categories.value.find(c => c.title === 'Clean and assign')
       const targetVer = versions.value.find(v => v.id === editingVersion.value.id)
       const hasCleanItems = Boolean(
         cleanAndAssignCat &&
-        targetVer?.versionItems.some(item => item.categoryId === cleanAndAssignCat.id)
+        targetVer?.versionItems.some(item => item.versionCategoryId === cleanAndAssignCat.id)
       )
       if (hasCleanItems && cleanAndAssignCat) {
         cleanAndAssignCatId = cleanAndAssignCat.id
@@ -704,8 +722,8 @@ const saveAdminVersion = async () => {
       if (v.id !== editingVersion.value.id) return v
       const updatedItems = cleanAndAssignCatId && generalCat
         ? v.versionItems.map(item =>
-            item.categoryId === cleanAndAssignCatId
-              ? { ...item, categoryId: generalCat!.id, category: generalCat! }
+            item.versionCategoryId === cleanAndAssignCatId
+              ? { ...item, versionCategoryId: generalCat!.id, versionCategory: generalCat! }
               : item
           )
         : v.versionItems
@@ -1895,20 +1913,20 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
     <!-- 2. VERSIONS DISPLAY -->
     <div class="space-y-6">
-      <div v-if="!isSingleVersionView || isAdmin" class="flex items-start" :class="isSingleVersionView ? 'justify-end' : 'justify-between'">
-        <h2 v-if="!isSingleVersionView" class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+      <div v-if="!isSingleVersionView" class="flex items-start justify-between">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <span>Version History</span>
         </h2>
         <div v-if="isAdmin" class="hidden md:flex items-center space-x-3">
           <button
-            v-if="adminEditMode && !isSingleVersionView"
+            v-if="adminEditMode"
             @click="openAddVersion"
             class="px-2.5 py-1 text-xs text-gray-300 dark:text-gray-400 hover:text-white bg-gray-800 dark:bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 transition-colors"
           >
             + New Version
           </button>
           <button
-            v-if="adminEditMode && !isSingleVersionView"
+            v-if="adminEditMode"
             @click="openAddCategory()"
             class="px-2.5 py-1 text-xs text-gray-300 dark:text-gray-400 hover:text-white bg-gray-800 dark:bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 transition-colors cursor-pointer"
           >
@@ -1985,13 +2003,16 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versionsForDisplay" :key="ver.id" v-memo="[ver, ver.versionItems, categories, adminEditMode, searchQuery, inlineEditingCategoryId, inlineCategoryTitle, recentlyEditedItemId, recentlyEditedCategoryId, versionViewMode[ver.id], recentlyEditedVersionId === ver.id, nextInProgressVersionId, isAdmin, isSingleVersionView, copyNoticeVersionId === ver.id, copyNoticeText, copyNoticeTriggerCount]" class="relative group/card">
+        <div v-for="ver in versionsForDisplay" :key="ver.id" v-memo="[ver, ver.versionItems, categories, adminEditMode, searchQuery, inlineEditingCategoryId, inlineCategoryTitle, recentlyEditedItemId, recentlyEditedCategoryId, versionViewMode[ver.id], recentlyEditedVersionId === ver.id, nextInProgressVersionId, isAdmin, isSingleVersionView, isScrolledFromTop, copyNoticeVersionId === ver.id, copyNoticeText, copyNoticeTriggerCount]" class="relative group/card">
           <!-- Outside Top Button in Admin Mode -->
           <button
-            v-if="isAdmin && adminEditMode"
+            v-if="isAdmin && adminEditMode && !isSingleVersionView"
             type="button"
             @click.stop="scrollToTop"
-            class="absolute -top-3 right-2 md:-right-8 md:top-2 w-6 h-6 rounded-full bg-white hover:bg-amber-50 dark:bg-gray-800 dark:hover:bg-amber-950/80 border border-amber-300 hover:border-amber-400 dark:border-amber-700 dark:hover:border-amber-600 text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 flex items-center justify-center shadow-xs transition-colors cursor-pointer z-20"
+            :tabindex="isScrolledFromTop ? 0 : -1"
+            :aria-hidden="!isScrolledFromTop"
+            class="absolute -top-3 right-2 md:-right-8 md:top-2 w-6 h-6 rounded-full bg-white hover:bg-amber-50 dark:bg-gray-800 dark:hover:bg-amber-950/80 border border-amber-300 hover:border-amber-400 dark:border-amber-700 dark:hover:border-amber-600 text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 flex items-center justify-center shadow-xs transition-all duration-200 z-20"
+            :class="isScrolledFromTop ? 'opacity-100 cursor-pointer' : 'opacity-0 pointer-events-none'"
             title="Scroll back to top"
           >
             <ArrowUpIcon class="w-3.5 h-3.5" />

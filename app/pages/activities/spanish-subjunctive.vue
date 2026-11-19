@@ -22,7 +22,6 @@ interface StoredSubjunctiveState {
   inProgressKey: string | null
   revealStep: 0 | 1 | 2 | 3
   hasRecordedCurrentPresentation: boolean
-  isTop10Only: boolean
 }
 
 interface HighlightSegment {
@@ -243,8 +242,7 @@ function saveState() {
       counts: testedCounts.value,
       inProgressKey: currentItem.value ? getItemKey(currentItem.value) : inProgressKey.value,
       revealStep: revealStep.value,
-      hasRecordedCurrentPresentation: hasRecordedCurrentPresentation.value,
-      isTop10Only: isTop10Only.value
+      hasRecordedCurrentPresentation: hasRecordedCurrentPresentation.value
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
   } catch {
@@ -257,8 +255,7 @@ function loadState(): StoredSubjunctiveState {
     counts: {},
     inProgressKey: null,
     revealStep: 0,
-    hasRecordedCurrentPresentation: false,
-    isTop10Only: false
+    hasRecordedCurrentPresentation: false
   }
   if (!import.meta.client) return defaultState
   try {
@@ -280,13 +277,11 @@ function loadState(): StoredSubjunctiveState {
     const recorded = typeof parsed.hasRecordedCurrentPresentation === 'boolean'
       ? parsed.hasRecordedCurrentPresentation
       : step === 3
-    const top10 = typeof parsed.isTop10Only === 'boolean' ? parsed.isTop10Only : false
     return {
       counts,
       inProgressKey: resumeKey,
       revealStep: step,
-      hasRecordedCurrentPresentation: recorded,
-      isTop10Only: top10
+      hasRecordedCurrentPresentation: recorded
     }
   } catch {
     return defaultState
@@ -331,8 +326,9 @@ function triggerStatsLoadingBlur() {
   }, 250)
 }
 
-function toggleTop10() {
-  isTop10Only.value = !isTop10Only.value
+function setTop10Mode(top10: boolean) {
+  if (isTop10Only.value === top10) return
+  isTop10Only.value = top10
   triggerStatsLoadingBlur()
   const activeKey = currentItem.value ? getItemKey(currentItem.value) : null
   const stillVisible = activeKey
@@ -361,7 +357,7 @@ onMounted(() => {
   const loaded = loadState()
   testedCounts.value = loaded.counts
   inProgressKey.value = loaded.inProgressKey
-  isTop10Only.value = loaded.isTop10Only
+  isTop10Only.value = false
 
   let initialItem: SubjunctiveItem | null = null
   if (loaded.inProgressKey) {
@@ -622,18 +618,35 @@ function confirmResetAll() {
       </div>
 
       <div class="hidden sm:flex items-center gap-2.5">
-        <button
-          type="button"
-          @click="toggleTop10"
-          :aria-pressed="isTop10Only"
-          title="Focus on the 10 most important subjunctive trigger phrases"
-          class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border transition-all cursor-pointer"
-          :class="isTop10Only
-            ? 'bg-[#be185d] text-white border-[#f43f5e]/60 shadow-[0_0_12px_-2px_rgba(190,24,93,0.7)]'
-            : 'bg-gray-800/80 text-gray-300 hover:text-white border-gray-700 hover:border-gray-600'"
+        <div
+          role="group"
+          aria-label="Filter trigger phrases"
+          class="inline-flex items-center gap-0.5 bg-gray-800/90 p-0.5 rounded-lg border border-gray-700"
         >
-          Top 10
-        </button>
+          <button
+            type="button"
+            @click="setTop10Mode(false)"
+            :aria-pressed="!isTop10Only"
+            class="px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer select-none"
+            :class="!isTop10Only
+              ? 'bg-[#be185d] text-white shadow-xs'
+              : 'text-gray-400 hover:text-white'"
+          >
+            All
+          </button>
+          <button
+            type="button"
+            @click="setTop10Mode(true)"
+            :aria-pressed="isTop10Only"
+            title="Focus on the 10 most important subjunctive trigger phrases"
+            class="px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer select-none"
+            :class="isTop10Only
+              ? 'bg-[#be185d] text-white shadow-xs'
+              : 'text-gray-400 hover:text-white'"
+          >
+            Top 10
+          </button>
+        </div>
 
         <span
           class="text-xs font-mono font-bold text-gray-400 transition-all duration-300"
@@ -679,18 +692,35 @@ function confirmResetAll() {
     <!-- Main Interactive Card -->
     <div>
       <div class="sm:hidden flex items-center justify-between gap-2 mb-1.5 px-1">
-        <button
-          type="button"
-          @click="toggleTop10"
-          :aria-pressed="isTop10Only"
-          title="Focus on the 10 most important subjunctive trigger phrases"
-          class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border transition-all cursor-pointer"
-          :class="isTop10Only
-            ? 'bg-[#be185d] text-white border-[#f43f5e]/60 shadow-[0_0_12px_-2px_rgba(190,24,93,0.7)]'
-            : 'bg-gray-800/80 text-gray-300 hover:text-white border-gray-700 hover:border-gray-600'"
+        <div
+          role="group"
+          aria-label="Filter trigger phrases"
+          class="inline-flex items-center gap-0.5 bg-gray-800/90 p-0.5 rounded-lg border border-gray-700"
         >
-          Top 10
-        </button>
+          <button
+            type="button"
+            @click="setTop10Mode(false)"
+            :aria-pressed="!isTop10Only"
+            class="px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer select-none"
+            :class="!isTop10Only
+              ? 'bg-[#be185d] text-white shadow-xs'
+              : 'text-gray-400 hover:text-white'"
+          >
+            All
+          </button>
+          <button
+            type="button"
+            @click="setTop10Mode(true)"
+            :aria-pressed="isTop10Only"
+            title="Focus on the 10 most important subjunctive trigger phrases"
+            class="px-2.5 py-1 rounded-md text-xs font-mono font-bold transition-all cursor-pointer select-none"
+            :class="isTop10Only
+              ? 'bg-[#be185d] text-white shadow-xs'
+              : 'text-gray-400 hover:text-white'"
+          >
+            Top 10
+          </button>
+        </div>
 
         <div class="flex items-center gap-2">
           <span
@@ -863,35 +893,37 @@ function confirmResetAll() {
           @click.stop
           class="pt-4 mt-2 border-t border-gray-700/70 flex items-center justify-center gap-2.5 flex-wrap"
         >
-          <button
-            type="button"
-            @click.stop="prevRandomVerb"
-            title="Previous random subjunctive verb"
-            aria-label="Previous random subjunctive verb"
-            class="p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 transition-colors cursor-pointer"
-          >
-            <ChevronLeftIcon class="w-4 h-4" />
-          </button>
+          <div class="inline-flex items-center rounded-lg border border-gray-700/90 bg-gray-800/70 overflow-hidden shadow-xs">
+            <button
+              type="button"
+              @click.stop="prevRandomVerb"
+              title="Previous random subjunctive verb"
+              aria-label="Previous random subjunctive verb"
+              class="px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-700/80 transition-colors cursor-pointer"
+            >
+              <ChevronLeftIcon class="w-4 h-4" />
+            </button>
 
-          <span class="min-w-[6.5rem] text-center text-base sm:text-lg font-bold text-[#f43f5e] tracking-tight select-text">
-            {{ currentRandomVerb }}
-          </span>
+            <span class="min-w-[6.5rem] px-3 py-1 bg-white/[0.06] border-x border-gray-700/70 text-center text-base sm:text-lg font-bold text-[#f43f5e] tracking-tight select-text">
+              {{ currentRandomVerb }}
+            </span>
 
-          <button
-            type="button"
-            @click.stop="nextRandomVerb"
-            title="Next random subjunctive verb"
-            aria-label="Next random subjunctive verb"
-            class="p-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 transition-colors cursor-pointer"
-          >
-            <ChevronRightIcon class="w-4 h-4" />
-          </button>
+            <button
+              type="button"
+              @click.stop="nextRandomVerb"
+              title="Next random subjunctive verb"
+              aria-label="Next random subjunctive verb"
+              class="px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-700/80 transition-colors cursor-pointer"
+            >
+              <ChevronRightIcon class="w-4 h-4" />
+            </button>
+          </div>
 
           <button
             type="button"
             @click.stop="openGoogleExamples(currentRandomVerb)"
             title="Look up 3 examples in Google Search"
-            class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 text-[11px] font-mono transition-colors cursor-pointer"
+            class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 text-[11px] font-mono transition-colors cursor-pointer"
           >
             <MagnifyingGlassIcon class="w-3.5 h-3.5" />
             <span>3 examples</span>

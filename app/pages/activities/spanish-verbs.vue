@@ -692,6 +692,7 @@ function getSearchCellClass(text?: string | null): string {
 }
 
 const STANDARD_GROUP_STARTS = new Set(['imperfect', 'future', 'presentSubjunctive', 'imperative'])
+const STANDARD_TINTED_GROUP_KEYS = new Set(['imperfect', 'preterite', 'presentSubjunctive', 'imperfectSubjunctive'])
 
 function getRowBorderClass(tenseKey: string, tenseIdx: number): string {
   if (tenseIdx === 0) return ''
@@ -700,6 +701,14 @@ function getRowBorderClass(tenseKey: string, tenseIdx: number): string {
     return 'border-t border-gray-200 dark:border-gray-700'
   }
   return 'border-t border-dashed border-gray-200/70 dark:border-gray-700/60'
+}
+
+function getRowGroupBgClass(tenseKey: string): string {
+  const isStandardView = studyTenseMode.value === 'standard' || isTestMode.value || isRandomTestMode.value || isSearching.value
+  if (isStandardView && STANDARD_TINTED_GROUP_KEYS.has(tenseKey)) {
+    return 'bg-gray-100/60 dark:bg-white/[0.035]'
+  }
+  return ''
 }
 
 interface StudyRow {
@@ -3842,6 +3851,7 @@ onUnmounted(() => {
                   v-for="(tense, tenseIdx) in getStudyRowsForVerb(verb)"
                   :key="tense.key"
                   class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
+                  :class="getRowGroupBgClass(tense.key)"
                 >
                   <!-- Tense Name Left Column -->
                   <td

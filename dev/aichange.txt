@@ -4,25 +4,38 @@
 		----------------------------------
 
 - %%langlearn
-	- x langacts001
+	- ,, langacts001
 		----------------------------------
 		## Spanish Subjuntive activity
 		
-		- change the top 10 switch so that it shows modern switch between [ All | Top 10 ] and the current choice is selected, the default on the page is All
-		- on the "< sean > [3 examples]" lines, put come kind of light background between the arrows behind the word so that it makes the arrows-and-word look more like a unit instead of three separate pieces
-		- give a very slight background change to alternate groups in the verb table, e.g. a bit brighter for imperfecto/préterito and the subjunctive group
+		- x change the top 10 switch so that it shows modern switch between [ All | Top 10 ] and the current choice is selected, the default on the page is All
+		- x on the "< sean > [3 examples]" lines, put come kind of light background between the arrows behind the word so that it makes the arrows-and-word look more like a unit instead of three separate pieces
+		- x give a very slight background change to alternate groups in the verb table, e.g. a bit brighter for imperfecto/préterito and the subjunctive group
 		
 		
 		## Italian Verbs Page
 		
-		- in "Learn Mode" it still shows "---" for the tenses, it should show the words as it does on the Spanish verb page
-		- 
+		- x in "Learn Mode" it still shows "---" for the tenses, it should show the words as it does on the Spanish verb page
 		
 		## Versioning
 		
-		- when showing the permalink, do not show the "up arrow" on the right, even in admin mode
-		- in fact, when showing permalink, never show it in admin mode
+		- x when showing the permalink, do not show the "up arrow" on the right, even in admin mode
+		- x in fact, when showing permalink, never show it in admin mode
 		- if screen is scrolled all the way to the top, don't show the up-arrows on the right at all
 			- blend then in with a quick fade as soon as the page scrolls down from the top
 		----------------------------------
+	- ,, langacts002
+		----------------------------------
+		## Verb Pages
+		
+		- make the alternate row in the verb tables a little bit brighter to distinguish it as its own area
 
+		## Spanish Subjuntive activity
+		
+		- for the "< sean > [3 examples]" lines, make this smaller so it looks "minor" as if to say, "here, you can test your knowledge on these, too, if you want, but it's not that important", e.g. the font should not be bold and should be smaller
+		
+		## Versioning
+		
+		- when fading in and out the arrows on the right that go back up to the top, make the fade twice as long
+		----------------------------------
+		
