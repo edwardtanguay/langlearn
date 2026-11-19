@@ -48,9 +48,19 @@ const revealStep = ref<0 | 1 | 2 | 3>(0)
 const hasRecordedCurrentPresentation = ref(false)
 
 const currentItem = computed(() => history.value[historyIndex.value] || null)
-const canGoPrev = computed(() => historyIndex.value > 0)
 const showAllTable = ref(false)
 const searchQuery = ref('')
+const navigableListItems = computed(() => {
+  const normQuery = normalizeForSearch(searchQuery.value.trim())
+  if (!normQuery) return baseItems
+  return baseItems.filter(item =>
+    normalizeForSearch(item.spanish).includes(normQuery) ||
+    normalizeForSearch(item.english).includes(normQuery)
+  )
+})
+const canGoPrev = computed(() =>
+  historyIndex.value > 0 || (showAllTable.value && navigableListItems.value.length > 1)
+)
 const searchInputRef = ref<HTMLInputElement | null>(null)
 const copiedPromptKey = ref<string | null>(null)
 let copyPromptTimer: ReturnType<typeof setTimeout> | null = null
@@ -133,19 +143,26 @@ const testedUniqueCount = computed(() =>
 )
 
 const orderedShowAllItems = computed(() => {
-  let orderedCards = baseItems
-  if (currentItem.value) {
-    const activeKey = getItemKey(currentItem.value)
-    const rest = baseItems.filter(item => getItemKey(item) !== activeKey)
-    orderedCards = [currentItem.value, ...rest]
-  }
-  const combined = [...todoItems, ...orderedCards]
   const normQuery = normalizeForSearch(searchQuery.value.trim())
-  if (!normQuery) return combined
-  return combined.filter(item =>
-    normalizeForSearch(item.spanish).includes(normQuery) ||
-    normalizeForSearch(item.english).includes(normQuery)
-  )
+  const filteredTodos = normQuery
+    ? todoItems.filter(item =>
+        normalizeForSearch(item.spanish).includes(normQuery) ||
+        normalizeForSearch(item.english).includes(normQuery)
+      )
+    : todoItems
+
+  let orderedCards = navigableListItems.value
+  if (currentItem.value && orderedCards.length > 0) {
+    const activeKey = getItemKey(currentItem.value)
+    const activeIdx = orderedCards.findIndex(item => getItemKey(item) === activeKey)
+    if (activeIdx !== -1) {
+      orderedCards = [
+        ...orderedCards.slice(activeIdx),
+        ...orderedCards.slice(0, activeIdx)
+      ]
+    }
+  }
+  return [...filteredTodos, ...orderedCards]
 })
 
 const mobileShowAllItems = computed(() =>
@@ -382,8 +399,32 @@ function resetPresentationState() {
   }
 }
 
+function stepInList(direction: 1 | -1) {
+  const list = navigableListItems.value
+  if (list.length === 0) return
+  const activeKey = currentItem.value ? getItemKey(currentItem.value) : null
+  const activeIdx = activeKey ? list.findIndex(item => getItemKey(item) === activeKey) : -1
+  let targetIdx: number
+  if (activeIdx === -1) {
+    targetIdx = direction === 1 ? 0 : list.length - 1
+  } else {
+    targetIdx = (activeIdx + direction + list.length) % list.length
+  }
+  const target = list[targetIdx]
+  if (!target) return
+  resetPresentationState()
+  history.value = [...history.value.slice(0, historyIndex.value + 1), target]
+  historyIndex.value = history.value.length - 1
+  inProgressKey.value = getItemKey(target)
+  saveState()
+}
+
 function nextItem() {
   if (baseItems.length === 0) return
+  if (showAllTable.value) {
+    stepInList(1)
+    return
+  }
   resetPresentationState()
   if (historyIndex.value < history.value.length - 1) {
     historyIndex.value++
@@ -403,6 +444,10 @@ function nextItem() {
 
 function prevItem() {
   if (!canGoPrev.value) return
+  if (showAllTable.value) {
+    stepInList(-1)
+    return
+  }
   resetPresentationState()
   historyIndex.value--
   if (currentItem.value) {
