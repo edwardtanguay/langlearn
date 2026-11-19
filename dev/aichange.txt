@@ -4,7 +4,7 @@
 		----------------------------------
 
 - %%langlearn
-	- ,, langacts001
+	- x langacts001
 		----------------------------------
 		## Spanish Subjuntive activity
 		
@@ -24,18 +24,25 @@
 		- if screen is scrolled all the way to the top, don't show the up-arrows on the right at all
 			- blend then in with a quick fade as soon as the page scrolls down from the top
 		----------------------------------
-	- ,, langacts002
+	- x langacts002
 		----------------------------------
 		## Verb Pages
 		
-		- make the alternate row in the verb tables a little bit brighter to distinguish it as its own area
+		- x make the alternate row in the verb tables a little bit brighter to distinguish it as its own area
 
 		## Spanish Subjuntive activity
 		
-		- for the "< sean > [3 examples]" lines, make this smaller so it looks "minor" as if to say, "here, you can test your knowledge on these, too, if you want, but it's not that important", e.g. the font should not be bold and should be smaller
+		- x for the "< sean > [3 examples]" lines, make this smaller so it looks "minor" as if to say, "here, you can test your knowledge on these, too, if you want, but it's not that important", e.g. the font should not be bold and should be smaller
 		
 		## Versioning
 		
-		- when fading in and out the arrows on the right that go back up to the top, make the fade twice as long
+		- x when fading in and out the arrows on the right that go back up to the top, make the fade twice as long
+		----------------------------------
+	- .. langacts003
+		----------------------------------
+		## Spanish Subjuntive activity
+		
+		- for the "< sean > [3 examples]" lines, put double padding above it so it is not so close to the dividing line above it, it should have the sense that it is "separate activity if the user wants to do this"
+		
 		----------------------------------
 		

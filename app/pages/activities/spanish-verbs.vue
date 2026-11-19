@@ -706,7 +706,7 @@ function getRowBorderClass(tenseKey: string, tenseIdx: number): string {
 function getRowGroupBgClass(tenseKey: string): string {
   const isStandardView = studyTenseMode.value === 'standard' || isTestMode.value || isRandomTestMode.value || isSearching.value
   if (isStandardView && STANDARD_TINTED_GROUP_KEYS.has(tenseKey)) {
-    return 'bg-gray-100/60 dark:bg-white/[0.035]'
+    return 'bg-gray-100 dark:bg-white/[0.065]'
   }
   return ''
 }
@@ -3855,9 +3855,10 @@ onUnmounted(() => {
                 >
                   <!-- Tense Name Left Column -->
                   <td
-                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-72"
+                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold w-[42%] sm:w-72"
                     :class="[
                       getRowBorderClass(tense.key, tenseIdx),
+                      !getRowGroupBgClass(tense.key) ? 'bg-gray-50/30 dark:bg-[#151d2c]/30' : '',
                       !isTestMode && !isRandomTestMode && !isSearching && studyTenseMode !== 'standard'
                         ? 'whitespace-normal sm:whitespace-nowrap leading-tight'
                         : 'whitespace-nowrap',

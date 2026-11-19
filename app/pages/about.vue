@@ -2011,7 +2011,7 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
             @click.stop="scrollToTop"
             :tabindex="isScrolledFromTop ? 0 : -1"
             :aria-hidden="!isScrolledFromTop"
-            class="absolute -top-3 right-2 md:-right-8 md:top-2 w-6 h-6 rounded-full bg-white hover:bg-amber-50 dark:bg-gray-800 dark:hover:bg-amber-950/80 border border-amber-300 hover:border-amber-400 dark:border-amber-700 dark:hover:border-amber-600 text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 flex items-center justify-center shadow-xs transition-all duration-200 z-20"
+            class="absolute -top-3 right-2 md:-right-8 md:top-2 w-6 h-6 rounded-full bg-white hover:bg-amber-50 dark:bg-gray-800 dark:hover:bg-amber-950/80 border border-amber-300 hover:border-amber-400 dark:border-amber-700 dark:hover:border-amber-600 text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 flex items-center justify-center shadow-xs transition-all duration-400 z-20"
             :class="isScrolledFromTop ? 'opacity-100 cursor-pointer' : 'opacity-0 pointer-events-none'"
             title="Scroll back to top"
           >

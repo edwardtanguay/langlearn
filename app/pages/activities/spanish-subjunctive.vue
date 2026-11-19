@@ -891,20 +891,20 @@ function confirmResetAll() {
         <div
           v-if="revealStep >= 3 && currentRandomVerb"
           @click.stop
-          class="pt-4 mt-2 border-t border-gray-700/70 flex items-center justify-center gap-2.5 flex-wrap"
+          class="pt-3 mt-1 border-t border-gray-700/50 flex items-center justify-center gap-2 flex-wrap opacity-85 hover:opacity-100 transition-opacity"
         >
-          <div class="inline-flex items-center rounded-lg border border-gray-700/90 bg-gray-800/70 overflow-hidden shadow-xs">
+          <div class="inline-flex items-center rounded-md border border-gray-700/70 bg-gray-800/50 overflow-hidden">
             <button
               type="button"
               @click.stop="prevRandomVerb"
               title="Previous random subjunctive verb"
               aria-label="Previous random subjunctive verb"
-              class="px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-700/80 transition-colors cursor-pointer"
+              class="px-1.5 py-1 text-gray-400 hover:text-white hover:bg-gray-700/70 transition-colors cursor-pointer"
             >
-              <ChevronLeftIcon class="w-4 h-4" />
+              <ChevronLeftIcon class="w-3 h-3" />
             </button>
 
-            <span class="min-w-[6.5rem] px-3 py-1 bg-white/[0.06] border-x border-gray-700/70 text-center text-base sm:text-lg font-bold text-[#f43f5e] tracking-tight select-text">
+            <span class="min-w-[5.25rem] px-2.5 py-0.5 bg-white/[0.05] border-x border-gray-700/60 text-center text-xs sm:text-sm font-normal text-[#f43f5e]/85 select-text">
               {{ currentRandomVerb }}
             </span>
 
@@ -913,9 +913,9 @@ function confirmResetAll() {
               @click.stop="nextRandomVerb"
               title="Next random subjunctive verb"
               aria-label="Next random subjunctive verb"
-              class="px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-700/80 transition-colors cursor-pointer"
+              class="px-1.5 py-1 text-gray-400 hover:text-white hover:bg-gray-700/70 transition-colors cursor-pointer"
             >
-              <ChevronRightIcon class="w-4 h-4" />
+              <ChevronRightIcon class="w-3 h-3" />
             </button>
           </div>
 
@@ -923,9 +923,9 @@ function confirmResetAll() {
             type="button"
             @click.stop="openGoogleExamples(currentRandomVerb)"
             title="Look up 3 examples in Google Search"
-            class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 text-[11px] font-mono transition-colors cursor-pointer"
+            class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-gray-800/70 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700/70 text-[10px] font-mono transition-colors cursor-pointer"
           >
-            <MagnifyingGlassIcon class="w-3.5 h-3.5" />
+            <MagnifyingGlassIcon class="w-3 h-3" />
             <span>3 examples</span>
           </button>
         </div>
