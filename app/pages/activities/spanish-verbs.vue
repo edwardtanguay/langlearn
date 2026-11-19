@@ -679,13 +679,27 @@ function isExactSearchMatch(text?: string | null): boolean {
 }
 
 function getSearchCellClass(text?: string | null): string {
-  if (!isSearching.value || !cellMatchesSearch(text)) {
+  if (!isSearching.value) {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
+  }
+  if (!cellMatchesSearch(text)) {
+    return 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-300/75 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
     return 'bg-gray-100 dark:bg-gray-800 text-[#be185d] dark:text-[#f43f5e] !border-[#be185d] dark:!border-[#f43f5e] shadow-[0_0_10px_rgba(255,255,255,0.4)] animate-pulse-bright relative z-10'
   }
   return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 !border-[#be185d]/50 dark:!border-[#f43f5e]/50'
+}
+
+const STANDARD_GROUP_STARTS = new Set(['imperfect', 'future', 'presentSubjunctive', 'imperative'])
+
+function getRowBorderClass(tenseKey: string, tenseIdx: number): string {
+  if (tenseIdx === 0) return ''
+  const isStandardView = studyTenseMode.value === 'standard' || isTestMode.value || isRandomTestMode.value || isSearching.value
+  if (!isStandardView || STANDARD_GROUP_STARTS.has(tenseKey)) {
+    return 'border-t border-gray-200 dark:border-gray-700'
+  }
+  return 'border-t border-dashed border-gray-200/70 dark:border-gray-700/60'
 }
 
 interface StudyRow {
@@ -3415,7 +3429,7 @@ onUnmounted(() => {
         :class="activeStudyVerb === verb.verb ? 'ring-2 ring-[#be185d]/40' : ''"
       >
         <!-- Verb Header & Action Buttons (Mobile) -->
-        <div class="px-3 sm:px-5 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-row items-center justify-between gap-2 sm:gap-4">
+        <div class="px-3 sm:px-5 py-2.5 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
           <div class="space-y-0.5">
             <h2
               v-if="isSearching && cellMatchesSearch(verb.verb)"
@@ -3434,66 +3448,68 @@ onUnmounted(() => {
             </h2>
           </div>
 
-          <!-- Study Mode Tense View Switcher (Standard / Past / Future) -->
-          <div
-            v-if="!isTestMode && !isRandomTestMode && !isSearching"
-            class="flex items-center gap-1 bg-gray-200/70 dark:bg-gray-800/80 p-0.5 rounded-lg border border-gray-300/70 dark:border-gray-700"
-            @click.stop
-          >
-            <button
-              v-for="modeOption in (['standard', 'past', 'future'] as const)"
-              :key="modeOption"
-              type="button"
-              @click.stop="studyTenseMode = modeOption"
-              class="px-2.5 py-1 rounded-md text-[11px] font-bold capitalize transition-all cursor-pointer select-none"
-              :class="studyTenseMode === modeOption
-                ? 'bg-[#be185d] text-white shadow-xs'
-                : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'"
+          <div class="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+            <!-- Study Mode Tense View Switcher (Standard / Past / Future) -->
+            <div
+              v-if="!isTestMode && !isRandomTestMode && !isSearching"
+              class="flex items-center gap-1 bg-gray-200/70 dark:bg-gray-800/80 p-0.5 rounded-lg border border-gray-300/70 dark:border-gray-700 shrink-0"
+              @click.stop
             >
-              {{ modeOption }}
-            </button>
-          </div>
+              <button
+                v-for="modeOption in (['standard', 'past', 'future'] as const)"
+                :key="modeOption"
+                type="button"
+                @click.stop="studyTenseMode = modeOption"
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold capitalize transition-all cursor-pointer select-none"
+                :class="studyTenseMode === modeOption
+                  ? 'bg-[#be185d] text-white shadow-xs'
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'"
+              >
+                {{ modeOption }}
+              </button>
+            </div>
 
-          <!-- Mobile: Peek, Hint (in Full Testing) and <, > buttons in title area -->
-          <div class="flex sm:hidden items-center gap-1.5 shrink-0">
-            <template v-if="isTestMode && !isSearching">
+            <!-- Mobile: Peek, Hint (in Full Testing) and <, > buttons -->
+            <div class="flex sm:hidden items-center gap-1.5 shrink-0 ml-auto">
+              <template v-if="isTestMode && !isSearching">
+                <button
+                  type="button"
+                  @click.stop="triggerPeekForVerb(verb.verb)"
+                  class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                >
+                  Peek
+                </button>
+                <button
+                  type="button"
+                  @click.stop="triggerMobileHintForVerb(verb.verb)"
+                  class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                >
+                  Hint
+                </button>
+              </template>
               <button
                 type="button"
-                @click.stop="triggerPeekForVerb(verb.verb)"
-                class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                @pointerdown="blurActiveSearchInput"
+                @keydown.enter.prevent.stop="prevVerbMobilePronoun(verb.verb)"
+                @keydown.space.prevent.stop="prevVerbMobilePronoun(verb.verb)"
+                @click.stop.prevent="prevVerbMobilePronoun(verb.verb)"
+                class="w-8 h-6 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                title="Previous pronoun"
               >
-                Peek
+                <ChevronLeftIcon class="w-3.5 h-3.5" />
               </button>
               <button
                 type="button"
-                @click.stop="triggerMobileHintForVerb(verb.verb)"
-                class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                @pointerdown="blurActiveSearchInput"
+                @keydown.enter.prevent.stop="nextVerbMobilePronoun(verb.verb)"
+                @keydown.space.prevent.stop="nextVerbMobilePronoun(verb.verb)"
+                @click.stop.prevent="nextVerbMobilePronoun(verb.verb)"
+                class="w-8 h-6 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                title="Next pronoun"
               >
-                Hint
+                <ChevronRightIcon class="w-3.5 h-3.5" />
               </button>
-            </template>
-            <button
-              type="button"
-              @pointerdown="blurActiveSearchInput"
-              @keydown.enter.prevent.stop="prevVerbMobilePronoun(verb.verb)"
-              @keydown.space.prevent.stop="prevVerbMobilePronoun(verb.verb)"
-              @click.stop.prevent="prevVerbMobilePronoun(verb.verb)"
-              class="w-8 h-6 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
-              title="Previous pronoun"
-            >
-              <ChevronLeftIcon class="w-3.5 h-3.5" />
-            </button>
-            <button
-              type="button"
-              @pointerdown="blurActiveSearchInput"
-              @keydown.enter.prevent.stop="nextVerbMobilePronoun(verb.verb)"
-              @keydown.space.prevent.stop="nextVerbMobilePronoun(verb.verb)"
-              @click.stop.prevent="nextVerbMobilePronoun(verb.verb)"
-              class="w-8 h-6 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
-              title="Next pronoun"
-            >
-              <ChevronRightIcon class="w-3.5 h-3.5" />
-            </button>
+            </div>
           </div>
         </div>
 
@@ -3816,7 +3832,7 @@ onUnmounted(() => {
                   </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody>
                 <tr
                   v-for="(tense, tenseIdx) in getStudyRowsForVerb(verb)"
                   :key="tense.key"
@@ -3825,9 +3841,12 @@ onUnmounted(() => {
                   <!-- Tense Name Left Column -->
                   <td
                     class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-72"
-                    :class="isTestMode && activeFocusedVerb === verb.verb && activeFocusedTenseKey === tense.key
-                      ? 'text-[#be185d] dark:text-[#f43f5e]'
-                      : 'text-gray-600 dark:text-gray-400'"
+                    :class="[
+                      getRowBorderClass(tense.key, tenseIdx),
+                      isTestMode && activeFocusedVerb === verb.verb && activeFocusedTenseKey === tense.key
+                        ? 'text-[#be185d] dark:text-[#f43f5e]'
+                        : 'text-gray-600 dark:text-gray-400'
+                    ]"
                   >
                     {{ tense.label }}
                   </td>
@@ -3838,6 +3857,7 @@ onUnmounted(() => {
                     :key="p.idx"
                     class="py-2 px-2 sm:px-3 text-center"
                     :class="[
+                      getRowBorderClass(tense.key, tenseIdx),
                       isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[calc((100%-18rem)/6)]',
                       p.idx !== getVerbMobilePronounIdx(verb.verb) ? 'hidden sm:table-cell' : '',
                       { 'border-r border-dotted border-gray-300 dark:border-gray-600': !isMobile && p.idx === 2 }

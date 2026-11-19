@@ -671,23 +671,54 @@ const saveAdminVersion = async () => {
   }
 
   const snapshot = JSON.parse(JSON.stringify(versions.value))
+  const categoriesSnapshot = JSON.parse(JSON.stringify(categories.value))
 
   let tempVersionId: string | null = null
 
   // Optimistic update & immediate smooth close (replace object reference so v-memo re-renders immediately)
   if (!isNewVersion.value) {
-    versions.value = versions.value.map(v =>
-      v.id === editingVersion.value.id
-        ? {
-            ...v,
-            versionNumber: payload.versionNumber,
-            title: payload.title,
-            description: payload.description,
-            status: payload.status,
-            publishDate: payload.publishDate
+    let cleanAndAssignCatId: string | null = null
+    let generalCat: Category | undefined
+    if (payload.status === 'PUBLISHED') {
+      const cleanAndAssignCat = categories.value.find(c => c.title === 'Clean and assign')
+      const targetVer = versions.value.find(v => v.id === editingVersion.value.id)
+      const hasCleanItems = Boolean(
+        cleanAndAssignCat &&
+        targetVer?.versionItems.some(item => item.categoryId === cleanAndAssignCat.id)
+      )
+      if (hasCleanItems && cleanAndAssignCat) {
+        cleanAndAssignCatId = cleanAndAssignCat.id
+        generalCat = categories.value.find(c => c.title === 'General')
+        if (!generalCat) {
+          generalCat = {
+            id: `temp-general-${Date.now()}`,
+            title: 'General',
+            rank: 0
           }
-        : v
-    )
+          categories.value = [...categories.value, generalCat]
+        }
+      }
+    }
+
+    versions.value = versions.value.map(v => {
+      if (v.id !== editingVersion.value.id) return v
+      const updatedItems = cleanAndAssignCatId && generalCat
+        ? v.versionItems.map(item =>
+            item.categoryId === cleanAndAssignCatId
+              ? { ...item, categoryId: generalCat!.id, category: generalCat! }
+              : item
+          )
+        : v.versionItems
+      return {
+        ...v,
+        versionNumber: payload.versionNumber,
+        title: payload.title,
+        description: payload.description,
+        status: payload.status,
+        publishDate: payload.publishDate,
+        versionItems: updatedItems
+      }
+    })
   } else {
     tempVersionId = `temp-${Date.now()}`
     const newVer: Version = {
@@ -739,6 +770,7 @@ const saveAdminVersion = async () => {
     await loadData(false)
   } catch (err: any) {
     versions.value = snapshot
+    categories.value = categoriesSnapshot
     alert(err.data?.statusMessage || err.message || 'Failed to save version')
   }
 }
@@ -1467,9 +1499,29 @@ const deleteCategory = async () => {
   }
 }
 
-// Issue Markdown Copy Generator
-const copiedVersionId = ref<string | null>(null)
-let copiedTimeout: ReturnType<typeof setTimeout> | null = null
+// Clipboard Copy Notice (fades out like Spanish Subjunctive activity)
+const copyNoticeVersionId = ref<string | null>(null)
+const copyNoticeText = ref('')
+const copyNoticeTriggerCount = ref(0)
+let copyNoticeTimer: ReturnType<typeof setTimeout> | null = null
+
+async function triggerCopyNotice(verId: string, label: string) {
+  copyNoticeVersionId.value = null
+  if (copyNoticeTimer) {
+    clearTimeout(copyNoticeTimer)
+    copyNoticeTimer = null
+  }
+  await nextTick()
+  requestAnimationFrame(() => {
+    copyNoticeTriggerCount.value++
+    copyNoticeVersionId.value = verId
+    copyNoticeText.value = label
+    copyNoticeTimer = setTimeout(() => {
+      copyNoticeVersionId.value = null
+      copyNoticeTimer = null
+    }, 2000)
+  })
+}
 
 function generateIssueMarkdown(ver: Version): string {
   const isIncoming = ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0'
@@ -1513,18 +1565,11 @@ async function copyIssueMarkdown(ver: Version) {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       await navigator.clipboard.writeText(md)
     }
-    copiedVersionId.value = ver.id
-    if (copiedTimeout) clearTimeout(copiedTimeout)
-    copiedTimeout = setTimeout(() => {
-      copiedVersionId.value = null
-    }, 2500)
+    await triggerCopyNotice(ver.id, 'issue markdown copied')
   } catch (err) {
     console.error('Failed to copy to clipboard', err)
   }
 }
-
-const copiedBranchVersionId = ref<string | null>(null)
-let copiedBranchTimeout: ReturnType<typeof setTimeout> | null = null
 
 function getBranchName(ver: Version): string {
   const versionSlug = ver.versionNumber.replace(/\./g, '-')
@@ -1537,21 +1582,11 @@ async function copyBranchName(ver: Version) {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       await navigator.clipboard.writeText(branchName)
     }
-    copiedBranchVersionId.value = ver.id
-    if (copiedBranchTimeout) clearTimeout(copiedBranchTimeout)
-    copiedBranchTimeout = setTimeout(() => {
-      copiedBranchVersionId.value = null
-    }, 2500)
+    await triggerCopyNotice(ver.id, 'branch name copied')
   } catch (err) {
     console.error('Failed to copy branch name to clipboard', err)
   }
 }
-
-const copiedPromptVersionId = ref<string | null>(null)
-let copiedPromptTimeout: ReturnType<typeof setTimeout> | null = null
-
-const copiedPermalinkVersionId = ref<string | null>(null)
-let copiedPermalinkTimeout: ReturnType<typeof setTimeout> | null = null
 
 async function copyPermalink(ver: Version) {
   if (typeof window === 'undefined') return
@@ -1561,11 +1596,7 @@ async function copyPermalink(ver: Version) {
     if (navigator.clipboard) {
       await navigator.clipboard.writeText(url)
     }
-    copiedPermalinkVersionId.value = ver.id
-    if (copiedPermalinkTimeout) clearTimeout(copiedPermalinkTimeout)
-    copiedPermalinkTimeout = setTimeout(() => {
-      copiedPermalinkVersionId.value = null
-    }, 2000)
+    await triggerCopyNotice(ver.id, 'permalink copied')
   } catch (err) {
     console.error('Failed to copy permalink to clipboard', err)
   }
@@ -1605,11 +1636,7 @@ async function copyVersionPrompt(ver: Version) {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       await navigator.clipboard.writeText(promptText)
     }
-    copiedPromptVersionId.value = ver.id
-    if (copiedPromptTimeout) clearTimeout(copiedPromptTimeout)
-    copiedPromptTimeout = setTimeout(() => {
-      copiedPromptVersionId.value = null
-    }, 2500)
+    await triggerCopyNotice(ver.id, 'version prompt copied')
   } catch (err) {
     console.error('Failed to copy version prompt to clipboard', err)
   }
@@ -1958,16 +1985,16 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 
       <!-- Version Cards List -->
       <div v-else class="space-y-6 text-sm text-gray-800 dark:text-gray-200">
-        <div v-for="ver in versionsForDisplay" :key="ver.id" v-memo="[ver, ver.versionItems, categories, adminEditMode, searchQuery, inlineEditingCategoryId, inlineCategoryTitle, recentlyEditedItemId, recentlyEditedCategoryId, versionViewMode[ver.id], recentlyEditedVersionId === ver.id, nextInProgressVersionId, isAdmin]" class="relative group/card">
+        <div v-for="ver in versionsForDisplay" :key="ver.id" v-memo="[ver, ver.versionItems, categories, adminEditMode, searchQuery, inlineEditingCategoryId, inlineCategoryTitle, recentlyEditedItemId, recentlyEditedCategoryId, versionViewMode[ver.id], recentlyEditedVersionId === ver.id, nextInProgressVersionId, isAdmin, isSingleVersionView, copyNoticeVersionId === ver.id, copyNoticeText, copyNoticeTriggerCount]" class="relative group/card">
           <!-- Outside Top Button in Admin Mode -->
           <button
             v-if="isAdmin && adminEditMode"
             type="button"
             @click.stop="scrollToTop"
-            class="absolute -top-3 right-2 md:-right-8 md:top-2 w-6 h-6 rounded-full bg-white hover:bg-amber-50 dark:bg-gray-800 dark:hover:bg-amber-950/80 border border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400 flex items-center justify-center shadow-xs hover:shadow-md hover:scale-110 active:scale-95 transition-all cursor-pointer z-20 group"
+            class="absolute -top-3 right-2 md:-right-8 md:top-2 w-6 h-6 rounded-full bg-white hover:bg-amber-50 dark:bg-gray-800 dark:hover:bg-amber-950/80 border border-amber-300 hover:border-amber-400 dark:border-amber-700 dark:hover:border-amber-600 text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300 flex items-center justify-center shadow-xs transition-colors cursor-pointer z-20"
             title="Scroll back to top"
           >
-            <ArrowUpIcon class="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUpIcon class="w-3.5 h-3.5" />
           </button>
 
           <div :id="`version-${ver.id}`"
@@ -1980,9 +2007,9 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                   ? 'border-2 border-orange-500'
                   : (ver.status === 'INCOMING' || ver.status === 'PROPOSED_ITEMS' || ver.versionNumber === '0.0.0')
                     ? 'border-2 border-dashed border-red-500 dark:border-red-600'
-                    : ver.id === nextInProgressVersionId
+                    : (isAdmin && adminEditMode && !isSingleVersionView && ver.id === nextInProgressVersionId)
                       ? 'border-2 border-dashed border-emerald-500 dark:border-emerald-500'
-                      : ver.status === 'IN_PROGRESS'
+                      : (isAdmin && adminEditMode && !isSingleVersionView && ver.status === 'IN_PROGRESS')
                         ? 'border-2 border-dashed border-amber-500 dark:border-amber-600'
                         : 'border border-gray-200 dark:border-gray-700/80',
               !adminEditMode && ver.description && ver.description.trim() ? 'cursor-pointer select-text' : ''
@@ -2033,9 +2060,8 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                     title="Copy issue markdown to clipboard"
                     class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
                   >
-                    <CheckIcon v-if="copiedVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <DocumentTextIcon v-else class="w-3.5 h-3.5" />
-                    <span>{{ copiedVersionId === ver.id ? 'Copied!' : 'Issue Markdown' }}</span>
+                    <DocumentTextIcon class="w-3.5 h-3.5" />
+                    <span>Issue Markdown</span>
                   </button>
 
                   <button
@@ -2043,9 +2069,8 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                     :title="getBranchName(ver)"
                     class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
                   >
-                    <CheckIcon v-if="copiedBranchVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <ClipboardDocumentIcon v-else class="w-3.5 h-3.5" />
-                    <span>{{ copiedBranchVersionId === ver.id ? 'Copied!' : 'Branch name' }}</span>
+                    <ClipboardDocumentIcon class="w-3.5 h-3.5" />
+                    <span>Branch name</span>
                   </button>
 
                   <button
@@ -2053,9 +2078,8 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                     title="Copy version summary prompt for AI"
                     class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
                   >
-                    <CheckIcon v-if="copiedPromptVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <BoltIcon v-else class="w-3.5 h-3.5" />
-                    <span>{{ copiedPromptVersionId === ver.id ? 'Copied!' : 'Version prompt' }}</span>
+                    <BoltIcon class="w-3.5 h-3.5" />
+                    <span>Version prompt</span>
                   </button>
 
                   <button
@@ -2063,10 +2087,18 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
                     title="Copy permalink to this version"
                     class="px-2.5 py-1 text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/80 rounded transition-colors cursor-pointer font-medium flex items-center gap-1.5 shadow-sm"
                   >
-                    <CheckIcon v-if="copiedPermalinkVersionId === ver.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <LinkIcon v-else class="w-3.5 h-3.5" />
-                    <span>{{ copiedPermalinkVersionId === ver.id ? 'Copied!' : 'Permalink' }}</span>
+                    <LinkIcon class="w-3.5 h-3.5" />
+                    <span>Permalink</span>
                   </button>
+
+                  <span
+                    v-if="copyNoticeVersionId === ver.id"
+                    :key="`copy-notice-${ver.id}-${copyNoticeTriggerCount}`"
+                    class="text-[11px] font-mono font-semibold text-gray-700 dark:text-white animate-copied-fade pointer-events-none select-none"
+                    aria-live="polite"
+                  >
+                    {{ copyNoticeText }}
+                  </span>
                 </div>
                 <div v-else></div>
 
@@ -2639,6 +2671,19 @@ async function moveItemRank(item: VersionItem, direction: 'up' | 'down', list: V
 }
 .animate-subtle-bounce {
   animation: subtleBounce 0.6s ease-in-out;
+}
+
+@keyframes copied-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-copied-fade {
+  animation: copied-fade-out 2s ease-out forwards;
 }
 
 </style>

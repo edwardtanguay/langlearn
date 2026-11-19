@@ -53,12 +53,12 @@ useHead({
 const verbs = rawItalianVerbs as ItalianVerb[]
 
 const PRONOUNS = [
-  { idx: 0, label: 'yo' },
-  { idx: 1, label: 'tú' },
-  { idx: 2, label: 'él/ella/Ud.' },
-  { idx: 3, label: 'nosotros' },
-  { idx: 4, label: 'vosotros' },
-  { idx: 5, label: 'ellos/ellas/Uds.' }
+  { idx: 0, label: 'io' },
+  { idx: 1, label: 'tu' },
+  { idx: 2, label: 'lui/lei' },
+  { idx: 3, label: 'noi' },
+  { idx: 4, label: 'voi' },
+  { idx: 5, label: 'loro' }
 ]
 
 const FINITE_TENSES = [
@@ -74,13 +74,15 @@ const FINITE_TENSES = [
 ] as const
 
 const TENSES = [
-  { key: 'present', label: 'Presente' },
-  { key: 'imperfect', label: 'Imperfecto' },
-  { key: 'preterite', label: 'Pretérito' },
-  { key: 'future', label: 'Futuro' },
-  { key: 'conditional', label: 'Condicional' },
-  { key: 'presentSubjunctive', label: 'Pres. subj.' },
-  { key: 'imperfectSubjunctive', label: 'Imp. subj.' },
+  { key: 'presente', label: 'Presente' },
+  { key: 'imperfetto', label: 'Imperfetto' },
+  { key: 'passatoProssimo', label: 'Passato Prossimo' },
+  { key: 'passatoRemoto', label: 'Passato Remoto' },
+  { key: 'futuro', label: 'Futuro' },
+  { key: 'condizionale', label: 'Condizionale' },
+  { key: 'congiuntivoPresente', label: 'Cong. pres.' },
+  { key: 'congiuntivoImperfetto', label: 'Cong. imp.' },
+  { key: 'imperativo', label: 'Imperativo' },
   { key: 'gerund', label: 'Gerundio' },
   { key: 'pastParticiple', label: 'Participio' }
 ] as const
@@ -625,13 +627,27 @@ function isExactSearchMatch(text?: string | null): boolean {
 }
 
 function getSearchCellClass(text?: string | null): string {
-  if (!isSearching.value || !cellMatchesSearch(text)) {
+  if (!isSearching.value) {
     return 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700'
+  }
+  if (!cellMatchesSearch(text)) {
+    return 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-300/75 border-gray-200 dark:border-gray-700'
   }
   if (isExactSearchMatch(text)) {
     return 'bg-gray-100 dark:bg-gray-800 text-[#194d19] dark:text-[#4ade80] !border-[#194d19] dark:!border-[#4ade80] shadow-[0_0_10px_rgba(255,255,255,0.4)] animate-pulse-bright relative z-10'
   }
   return 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300/75 !border-[#194d19]/50 dark:!border-[#4ade80]/50'
+}
+
+const STANDARD_GROUP_STARTS = new Set(['imperfetto', 'futuro', 'congiuntivoPresente', 'imperativo'])
+
+function getRowBorderClass(tenseKey: string, tenseIdx: number): string {
+  if (tenseIdx === 0) return ''
+  const isStandardView = studyTenseMode.value === 'standard' || isTestMode.value || isRandomTestMode.value || isSearching.value
+  if (!isStandardView || STANDARD_GROUP_STARTS.has(tenseKey)) {
+    return 'border-t border-gray-200 dark:border-gray-700'
+  }
+  return 'border-t border-dashed border-gray-200/70 dark:border-gray-700/60'
 }
 
 interface StudyRow {
@@ -1154,7 +1170,7 @@ function handleCellClick(
   }
 }
 
-const STORAGE_DIFFICULT_KEY = 'langlearn_spanish_verb_difficulties'
+const STORAGE_DIFFICULT_KEY = 'langlearn_italian_verb_difficulties'
 
 function loadDifficultWords() {
   if (import.meta.client) {
@@ -1956,7 +1972,7 @@ function toggleFullTest() {
       }
       const firstVerb = filteredVerbList.value[0]?.verb
       if (firstVerb) {
-        let target = document.getElementById(`input-${firstVerb}-present-0`) as HTMLInputElement | null
+        let target = document.getElementById(`input-${firstVerb}-presente-0`) as HTMLInputElement | null
         if (!target) {
           target = document.querySelector(`input[id^="input-${firstVerb}"]`) as HTMLInputElement | null
         }
@@ -2905,7 +2921,7 @@ onUnmounted(() => {
             <button
               type="button"
               @click.stop="pickNextRandomTarget()"
-              class="pl-3.5 pr-2.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer transition-colors shadow-xs inline-flex items-center justify-center gap-1 whitespace-nowrap bg-[#194d19] text-white hover:bg-[#a2134e] select-none"
+              class="pl-3.5 pr-2.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer transition-colors shadow-xs inline-flex items-center justify-center gap-1 whitespace-nowrap bg-[#194d19] text-white hover:bg-[#133b13] select-none"
             >
               <span class="leading-none -translate-y-[1px] translate-x-[1px]">NEXT</span>
               <ChevronRightIcon class="w-4 h-4 shrink-0 -translate-y-[1px] translate-x-[1px]" />
@@ -2957,7 +2973,7 @@ onUnmounted(() => {
                     <button
                       type="button"
                       @click.stop="pickNextRandomTarget()"
-                      class="w-[24px] h-[24px] rounded-md bg-[#194d19] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none shrink-0 z-10"
+                      class="w-[24px] h-[24px] rounded-md bg-[#194d19] hover:bg-[#133b13] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none shrink-0 z-10"
                       title="Next"
                     >
                       <ChevronRightIcon class="w-3.5 h-3.5" />
@@ -3017,7 +3033,7 @@ onUnmounted(() => {
                     <button
                       type="button"
                       @click.stop="pickNextRandomTarget()"
-                      class="w-[24px] h-[24px] rounded-md bg-[#194d19] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none shrink-0 z-10"
+                      class="w-[24px] h-[24px] rounded-md bg-[#194d19] hover:bg-[#133b13] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none shrink-0 z-10"
                       title="Next"
                     >
                       <ChevronRightIcon class="w-3.5 h-3.5" />
@@ -3254,7 +3270,7 @@ onUnmounted(() => {
                         <button
                           type="button"
                           @click.stop="pickNextRandomTarget()"
-                          class="absolute left-full top-0 ml-1.5 w-[26px] h-[26px] rounded-lg bg-[#194d19] hover:bg-[#a2134e] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none z-10"
+                          class="absolute left-full top-0 ml-1.5 w-[26px] h-[26px] rounded-lg bg-[#194d19] hover:bg-[#133b13] text-white font-black text-xs inline-flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition-all select-none z-10"
                           title="Next"
                         >
                           <ChevronRightIcon class="w-4 h-4" />
@@ -3318,7 +3334,7 @@ onUnmounted(() => {
         v-if="isSearching"
         type="button"
         @click="clearSearch"
-        class="px-4 py-2 rounded-xl text-xs font-bold bg-[#194d19] text-white hover:bg-[#a2134e] cursor-pointer"
+        class="px-4 py-2 rounded-xl text-xs font-bold bg-[#194d19] text-white hover:bg-[#133b13] cursor-pointer"
       >
         Clear Search
       </button>
@@ -3354,7 +3370,7 @@ onUnmounted(() => {
         :class="activeStudyVerb === verb.verb ? 'ring-2 ring-[#194d19]/40' : ''"
       >
         <!-- Verb Header & Action Buttons (Mobile) -->
-        <div class="px-3 sm:px-5 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-row items-center justify-between gap-2 sm:gap-4">
+        <div class="px-3 sm:px-5 py-2.5 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/70 dark:bg-[#151d2c] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
           <div class="space-y-0.5">
             <h2
               v-if="isSearching && cellMatchesSearch(verb.verb)"
@@ -3373,66 +3389,68 @@ onUnmounted(() => {
             </h2>
           </div>
 
-          <!-- Study Mode Tense View Switcher (Standard / Past / Future) -->
-          <div
-            v-if="!isTestMode && !isRandomTestMode && !isSearching"
-            class="flex items-center gap-1 bg-gray-200/70 dark:bg-gray-800/80 p-0.5 rounded-lg border border-gray-300/70 dark:border-gray-700"
-            @click.stop
-          >
-            <button
-              v-for="modeOption in (['standard', 'past', 'future'] as const)"
-              :key="modeOption"
-              type="button"
-              @click.stop="studyTenseMode = modeOption"
-              class="px-2.5 py-1 rounded-md text-[11px] font-bold capitalize transition-all cursor-pointer select-none"
-              :class="studyTenseMode === modeOption
-                ? 'bg-[#194d19] text-white shadow-xs'
-                : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'"
+          <div class="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+            <!-- Study Mode Tense View Switcher (Standard / Past / Future) -->
+            <div
+              v-if="!isTestMode && !isRandomTestMode && !isSearching"
+              class="flex items-center gap-1 bg-gray-200/70 dark:bg-gray-800/80 p-0.5 rounded-lg border border-gray-300/70 dark:border-gray-700 shrink-0"
+              @click.stop
             >
-              {{ modeOption }}
-            </button>
-          </div>
+              <button
+                v-for="modeOption in (['standard', 'past', 'future'] as const)"
+                :key="modeOption"
+                type="button"
+                @click.stop="studyTenseMode = modeOption"
+                class="px-2.5 py-1 rounded-md text-[11px] font-bold capitalize transition-all cursor-pointer select-none"
+                :class="studyTenseMode === modeOption
+                  ? 'bg-[#194d19] text-white shadow-xs'
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'"
+              >
+                {{ modeOption }}
+              </button>
+            </div>
 
-          <!-- Mobile: Peek, Hint (in Full Testing) and <, > buttons in title area -->
-          <div class="flex sm:hidden items-center gap-1.5 shrink-0">
-            <template v-if="isTestMode && !isSearching">
+            <!-- Mobile: Peek, Hint (in Full Testing) and <, > buttons -->
+            <div class="flex sm:hidden items-center gap-1.5 shrink-0 ml-auto">
+              <template v-if="isTestMode && !isSearching">
+                <button
+                  type="button"
+                  @click.stop="triggerPeekForVerb(verb.verb)"
+                  class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                >
+                  Peek
+                </button>
+                <button
+                  type="button"
+                  @click.stop="triggerMobileHintForVerb(verb.verb)"
+                  class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                >
+                  Hint
+                </button>
+              </template>
               <button
                 type="button"
-                @click.stop="triggerPeekForVerb(verb.verb)"
-                class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                @pointerdown="blurActiveSearchInput"
+                @keydown.enter.prevent.stop="prevVerbMobilePronoun(verb.verb)"
+                @keydown.space.prevent.stop="prevVerbMobilePronoun(verb.verb)"
+                @click.stop.prevent="prevVerbMobilePronoun(verb.verb)"
+                class="w-8 h-6 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                title="Previous pronoun"
               >
-                Peek
+                <ChevronLeftIcon class="w-3.5 h-3.5" />
               </button>
               <button
                 type="button"
-                @click.stop="triggerMobileHintForVerb(verb.verb)"
-                class="h-6 px-2.5 rounded-lg text-[11px] font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                @pointerdown="blurActiveSearchInput"
+                @keydown.enter.prevent.stop="nextVerbMobilePronoun(verb.verb)"
+                @keydown.space.prevent.stop="nextVerbMobilePronoun(verb.verb)"
+                @click.stop.prevent="nextVerbMobilePronoun(verb.verb)"
+                class="w-8 h-6 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
+                title="Next pronoun"
               >
-                Hint
+                <ChevronRightIcon class="w-3.5 h-3.5" />
               </button>
-            </template>
-            <button
-              type="button"
-              @pointerdown="blurActiveSearchInput"
-              @keydown.enter.prevent.stop="prevVerbMobilePronoun(verb.verb)"
-              @keydown.space.prevent.stop="prevVerbMobilePronoun(verb.verb)"
-              @click.stop.prevent="prevVerbMobilePronoun(verb.verb)"
-              class="w-8 h-6 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
-              title="Previous pronoun"
-            >
-              <ChevronLeftIcon class="w-3.5 h-3.5" />
-            </button>
-            <button
-              type="button"
-              @pointerdown="blurActiveSearchInput"
-              @keydown.enter.prevent.stop="nextVerbMobilePronoun(verb.verb)"
-              @keydown.space.prevent.stop="nextVerbMobilePronoun(verb.verb)"
-              @click.stop.prevent="nextVerbMobilePronoun(verb.verb)"
-              class="w-8 h-6 rounded-lg text-xs font-bold bg-gray-200/70 dark:bg-gray-700/70 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 cursor-pointer inline-flex items-center justify-center shrink-0 select-none touch-manipulation"
-              title="Next pronoun"
-            >
-              <ChevronRightIcon class="w-3.5 h-3.5" />
-            </button>
+            </div>
           </div>
         </div>
 
@@ -3755,7 +3773,7 @@ onUnmounted(() => {
                   </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody>
                 <tr
                   v-for="(tense, tenseIdx) in getStudyRowsForVerb(verb)"
                   :key="tense.key"
@@ -3764,9 +3782,12 @@ onUnmounted(() => {
                   <!-- Tense Name Left Column -->
                   <td
                     class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-72"
-                    :class="isTestMode && activeFocusedVerb === verb.verb && activeFocusedTenseKey === tense.key
-                      ? 'text-[#194d19] dark:text-[#4ade80]'
-                      : 'text-gray-600 dark:text-gray-400'"
+                    :class="[
+                      getRowBorderClass(tense.key, tenseIdx),
+                      isTestMode && activeFocusedVerb === verb.verb && activeFocusedTenseKey === tense.key
+                        ? 'text-[#194d19] dark:text-[#4ade80]'
+                        : 'text-gray-600 dark:text-gray-400'
+                    ]"
                   >
                     {{ tense.label }}
                   </td>
@@ -3777,6 +3798,7 @@ onUnmounted(() => {
                     :key="p.idx"
                     class="py-2 px-2 sm:px-3 text-center"
                     :class="[
+                      getRowBorderClass(tense.key, tenseIdx),
                       isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[calc((100%-18rem)/6)]',
                       p.idx !== getVerbMobilePronounIdx(verb.verb) ? 'hidden sm:table-cell' : '',
                       { 'border-r border-dotted border-gray-300 dark:border-gray-600': !isMobile && p.idx === 2 }

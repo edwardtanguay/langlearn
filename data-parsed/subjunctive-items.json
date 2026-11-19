@@ -36,6 +36,12 @@
     "subjunctive": "espero que tengas tiempo para descansar"
   },
   {
+    "english": "I would like that",
+    "spanish": "me gustaría que",
+    "indicative": "vienes a la fiesta conmigo",
+    "subjunctive": "me gustaría que vinieras a la fiesta conmigo"
+  },
+  {
     "english": "I am glad that",
     "spanish": "me alegra que",
     "indicative": "estás aquí con nosotros",

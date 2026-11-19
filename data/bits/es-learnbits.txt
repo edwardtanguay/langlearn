@@ -523,6 +523,10 @@
 		- espero que
 			- tienes tiempo para descansar
 				- espero que tengas tiempo para descansar
+	- I would like that
+		- me gustaría que
+			- vienes a la fiesta conmigo
+				- me gustaría que vinieras a la fiesta conmigo
 	- I am glad that
 		- me alegra que
 			- estás aquí con nosotros
