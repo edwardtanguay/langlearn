@@ -677,9 +677,9 @@ function getStudyRowsForVerb(verb: ItalianVerb): StudyRow[] {
 
   if (studyTenseMode.value === 'past') {
     return [
-      { key: 'past-prossimo', label: 'completed / recent past (Passato Prossimo)', forms: verb.passatoProssimo || [] },
-      { key: 'past-imperfetto', label: 'habit / description / background (Imperfetto)', forms: verb.imperfetto || [] },
-      { key: 'past-remoto', label: 'distant / literary past (Passato Remoto)', forms: verb.passatoRemoto || [] },
+      { key: 'past-prossimo', label: 'completed, recent past (Passato Prossimo)', forms: verb.passatoProssimo || [] },
+      { key: 'past-imperfetto', label: 'habit, description, background (Imperfetto)', forms: verb.imperfetto || [] },
+      { key: 'past-remoto', label: 'distant, literary past (Passato Remoto)', forms: verb.passatoRemoto || [] },
       { key: 'past-progressive', label: 'was in the middle of doing', forms: STARE_IMPERFECT.map(e => `${e} ${ger}`) },
       { key: 'past-trapassato', label: 'had already done (Trapassato)', forms: AVERE_IMPERFECT.map(h => `${h} ${pp}`) },
     ]
@@ -687,7 +687,7 @@ function getStudyRowsForVerb(verb: ItalianVerb): StudyRow[] {
 
   return [
     { key: 'fut-simple', label: 'I will do (Futuro Semplice)', forms: verb.futuro || [] },
-    { key: 'fut-present', label: 'present for near/scheduled future', forms: verb.presente || [] },
+    { key: 'fut-present', label: 'present for near, scheduled future', forms: verb.presente || [] },
     { key: 'fut-stare-per', label: 'about to do (stare per)', forms: STARE_PRESENT.map(i => `${i} per ${inf}`) },
     { key: 'fut-progressive', label: 'I will be doing', forms: STARE_FUTURE.map(e => `${e} ${ger}`) },
     { key: 'fut-anteriore', label: 'I will have done (Futuro Anteriore)', forms: AVERE_FUTURE.map(h => `${h} ${pp}`) },
@@ -3585,8 +3585,13 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <!-- Right side: Red pronoun text centered above verb column -->
-            <div class="absolute inset-y-0 right-0 w-[58%] flex items-center justify-center px-2 pointer-events-none">
+            <!-- Right side: Pronoun text centered (or right-aligned in past/future) above verb column -->
+            <div
+              class="absolute inset-y-0 right-0 w-[58%] flex items-center pointer-events-none"
+              :class="!isTestMode && !isRandomTestMode && !isSearching && studyTenseMode !== 'standard'
+                ? 'justify-end pr-3'
+                : 'justify-center px-2'"
+            >
               <span
                 v-if="isPageLoading"
                 class="inline-block h-3.5 w-8 rounded bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
@@ -3781,9 +3786,12 @@ onUnmounted(() => {
                 >
                   <!-- Tense Name Left Column -->
                   <td
-                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-72"
+                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-72"
                     :class="[
                       getRowBorderClass(tense.key, tenseIdx),
+                      !isTestMode && !isRandomTestMode && !isSearching && studyTenseMode !== 'standard'
+                        ? 'whitespace-normal sm:whitespace-nowrap leading-tight'
+                        : 'whitespace-nowrap',
                       isTestMode && activeFocusedVerb === verb.verb && activeFocusedTenseKey === tense.key
                         ? 'text-[#194d19] dark:text-[#4ade80]'
                         : 'text-gray-600 dark:text-gray-400'
@@ -3796,9 +3804,12 @@ onUnmounted(() => {
                   <td
                     v-for="p in getDisplayedPronounsForVerb(verb.verb)"
                     :key="p.idx"
-                    class="py-2 px-2 sm:px-3 text-center"
+                    class="py-2 px-2 sm:px-3"
                     :class="[
                       getRowBorderClass(tense.key, tenseIdx),
+                      !isTestMode && !isRandomTestMode && !isSearching && studyTenseMode !== 'standard'
+                        ? 'text-right pr-3 sm:text-center'
+                        : 'text-center',
                       isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[calc((100%-18rem)/6)]',
                       p.idx !== getVerbMobilePronounIdx(verb.verb) ? 'hidden sm:table-cell' : '',
                       { 'border-r border-dotted border-gray-300 dark:border-gray-600': !isMobile && p.idx === 2 }

@@ -734,7 +734,7 @@ function getStudyRowsForVerb(verb: SpanishVerb): StudyRow[] {
   if (studyTenseMode.value === 'past') {
     return [
       { key: 'past-preterite', label: 'completed action', forms: verb.preterite || [] },
-      { key: 'past-imperfect', label: 'habit / description / background', forms: verb.imperfect || [] },
+      { key: 'past-imperfect', label: 'habit, description, background', forms: verb.imperfect || [] },
       { key: 'past-perfect', label: 'recent past or experience (Spain)', forms: HABER_PRESENT.map(h => `${h} ${pp}`) },
       { key: 'past-progressive', label: 'was in the middle of doing', forms: ESTAR_IMPERFECT.map(e => `${e} ${ger}`) },
       { key: 'past-pluperfect', label: 'had already done', forms: HABER_IMPERFECT.map(h => `${h} ${pp}`) },
@@ -747,7 +747,7 @@ function getStudyRowsForVerb(verb: SpanishVerb): StudyRow[] {
   return [
     { key: 'fut-ir-a', label: "I'm going to do", forms: IR_PRESENT.map(i => `${i} a ${inf}`) },
     { key: 'fut-simple', label: 'I will do', forms: verb.future || [] },
-    { key: 'fut-present', label: 'present for near/scheduled future', forms: verb.present || [] },
+    { key: 'fut-present', label: 'present for near, scheduled future', forms: verb.present || [] },
     { key: 'fut-progressive', label: 'I will be doing', forms: ESTAR_FUTURE.map(e => `${e} ${ger}`) },
     { key: 'fut-perfect', label: 'I will have done', forms: HABER_FUTURE.map(h => `${h} ${pp}`) },
   ]
@@ -3644,8 +3644,13 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <!-- Right side: Red pronoun text centered above verb column -->
-            <div class="absolute inset-y-0 right-0 w-[58%] flex items-center justify-center px-2 pointer-events-none">
+            <!-- Right side: Red pronoun text centered (or right-aligned in past/future) above verb column -->
+            <div
+              class="absolute inset-y-0 right-0 w-[58%] flex items-center pointer-events-none"
+              :class="!isTestMode && !isRandomTestMode && !isSearching && studyTenseMode !== 'standard'
+                ? 'justify-end pr-3'
+                : 'justify-center px-2'"
+            >
               <span
                 v-if="isPageLoading"
                 class="inline-block h-3.5 w-8 rounded bg-gray-200/80 dark:bg-gray-700/60 animate-pulse"
@@ -3840,9 +3845,12 @@ onUnmounted(() => {
                 >
                   <!-- Tense Name Left Column -->
                   <td
-                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold whitespace-nowrap bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-72"
+                    class="py-2.5 px-3 sm:px-4 font-mono text-[10px] sm:text-[11px] uppercase font-bold bg-gray-50/30 dark:bg-[#151d2c]/30 w-[42%] sm:w-72"
                     :class="[
                       getRowBorderClass(tense.key, tenseIdx),
+                      !isTestMode && !isRandomTestMode && !isSearching && studyTenseMode !== 'standard'
+                        ? 'whitespace-normal sm:whitespace-nowrap leading-tight'
+                        : 'whitespace-nowrap',
                       isTestMode && activeFocusedVerb === verb.verb && activeFocusedTenseKey === tense.key
                         ? 'text-[#be185d] dark:text-[#f43f5e]'
                         : 'text-gray-600 dark:text-gray-400'
@@ -3855,9 +3863,12 @@ onUnmounted(() => {
                   <td
                     v-for="p in getDisplayedPronounsForVerb(verb.verb)"
                     :key="p.idx"
-                    class="py-2 px-2 sm:px-3 text-center"
+                    class="py-2 px-2 sm:px-3"
                     :class="[
                       getRowBorderClass(tense.key, tenseIdx),
+                      !isTestMode && !isRandomTestMode && !isSearching && studyTenseMode !== 'standard'
+                        ? 'text-right pr-3 sm:text-center'
+                        : 'text-center',
                       isMobile ? 'w-[58%]' : 'w-[58%] sm:w-[calc((100%-18rem)/6)]',
                       p.idx !== getVerbMobilePronounIdx(verb.verb) ? 'hidden sm:table-cell' : '',
                       { 'border-r border-dotted border-gray-300 dark:border-gray-600': !isMobile && p.idx === 2 }
