@@ -891,29 +891,27 @@ function confirmResetAll() {
         <div
           v-if="revealStep >= 3 && currentRandomVerb"
           @click.stop
-          class="pt-3 mt-1 border-t border-gray-700/50 flex items-center justify-center gap-2 flex-wrap opacity-85 hover:opacity-100 transition-opacity"
+          class="pt-6 mt-2 border-t border-gray-700/50 flex items-center justify-center gap-2 flex-wrap"
         >
-          <div class="inline-flex items-center rounded-md border border-gray-700/70 bg-gray-800/50 overflow-hidden">
+          <div class="inline-flex items-stretch rounded-md border border-gray-700/70 bg-gray-800/50 overflow-hidden">
             <button
               type="button"
               @click.stop="prevRandomVerb"
-              title="Previous random subjunctive verb"
               aria-label="Previous random subjunctive verb"
-              class="px-1.5 py-1 text-gray-400 hover:text-white hover:bg-gray-700/70 transition-colors cursor-pointer"
+              class="flex items-center justify-center px-2 py-1 text-gray-400 hover:text-white hover:bg-gray-700/70 transition-colors cursor-pointer"
             >
               <ChevronLeftIcon class="w-3 h-3" />
             </button>
 
-            <span class="min-w-[5.25rem] px-2.5 py-0.5 bg-white/[0.05] border-x border-gray-700/60 text-center text-xs sm:text-sm font-normal text-[#f43f5e]/85 select-text">
+            <span class="min-w-[5.25rem] px-2.5 py-1 bg-white/[0.05] border-x border-gray-700/60 flex items-center justify-center text-center text-xs sm:text-sm font-normal text-[#f43f5e] select-text">
               {{ currentRandomVerb }}
             </span>
 
             <button
               type="button"
               @click.stop="nextRandomVerb"
-              title="Next random subjunctive verb"
               aria-label="Next random subjunctive verb"
-              class="px-1.5 py-1 text-gray-400 hover:text-white hover:bg-gray-700/70 transition-colors cursor-pointer"
+              class="flex items-center justify-center px-2 py-1 text-gray-400 hover:text-white hover:bg-gray-700/70 transition-colors cursor-pointer"
             >
               <ChevronRightIcon class="w-3 h-3" />
             </button>

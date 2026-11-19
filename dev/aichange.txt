@@ -38,11 +38,10 @@
 		
 		- x when fading in and out the arrows on the right that go back up to the top, make the fade twice as long
 		----------------------------------
-	- .. langacts003
+	- x langacts003
 		----------------------------------
 		## Spanish Subjuntive activity
 		
-		- for the "< sean > [3 examples]" lines, put double padding above it so it is not so close to the dividing line above it, it should have the sense that it is "separate activity if the user wants to do this"
-		
+		- x for the "< sean > [3 examples]" lines, put double padding above it so it is not so close to the dividing line above it, it should have the sense that it is "separate activity if the user wants to do this"
 		----------------------------------
 		
